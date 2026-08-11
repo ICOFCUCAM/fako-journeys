@@ -96,6 +96,10 @@ def check_country(country, taxonomy, global_images, global_subjects):
             if not entry.image.get("photographer"):
                 findings.append(Finding("error", country.slug, cat["id"],
                                         "image has no photographer credit"))
+            if entry.image.get("queryTier") == "category":
+                findings.append(Finding("warn", country.slug, cat["id"],
+                                        "matched on a broadened query — accurate for the "
+                                        "category, not for the specific subject"))
             if not entry.image.get("verifiedAt"):
                 findings.append(Finding("warn", country.slug, cat["id"],
                                         "image has never been HTTP-verified"))

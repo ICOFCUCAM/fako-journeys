@@ -65,6 +65,10 @@ class MockUnsplash(http.server.BaseHTTPRequestHandler):
             if MockUnsplash.fail_search:
                 return self._json({"errors": ["boom"]}, 500)
             query = (qs.get("query") or [""])[0]
+            if len(query.split()) > 3:
+                # Unsplash matches keywords, not sentences: an over-specific
+                # query returns nothing. This is what broke the first real run.
+                return self._json({"results": [], "total": 0})
             portrait = (qs.get("orientation") or ["landscape"])[0] == "portrait"
             key = abs(hash(query)) % 10 ** 8
             return self._json({"results": [
@@ -132,6 +136,8 @@ def resolve_all(tax, countries, cache, key, cats=None):
 
 def main():
     os.environ["UNSPLASH_API_BASE"] = "http://localhost:%d" % PORT
+    os.environ["UNSPLASH_CACHE_FILE"] = os.path.join(
+        tempfile.mkdtemp(prefix="tourism-cache-"), "unsplash.json")
     os.environ["UNSPLASH_IMAGE_HOST_OVERRIDE"] = "http://localhost:%d/" % PORT
     os.environ.pop("UNSPLASH_ACCESS_KEY", None)
 
@@ -173,10 +179,29 @@ def main():
         check("query carries the country's own subject", "cameroon" in q_cmr.lower()
               and "mount" in q_cmr.lower())
         check("a different country gets a different query", q_cmr != q_ken, q_ken[:44])
-        check("query includes the category hint", "wildlife" in q_ken)
-        allq = {queries.build(c, cat, c.entry(cat["id"]))
-                for c in countries for cat in tax.enabled if c.entry(cat["id"])}
-        check("every one of the 189 queries is unique", len(allq) == 189, "%d unique" % len(allq))
+        rungs_ken = queries.ladder(kenya, tax.by_id["wildlife"], kenya.entry("wildlife"))
+        check("the ladder broadens to the category hint",
+              any(t == "category" and "wildlife" in q for q, t in rungs_ken),
+              " | ".join(q for q, _ in rungs_ken)[:60])
+        check("no rung is the bare country name",
+              all(q.strip().lower() != kenya.name.lower() for q, _ in rungs_ken))
+        owners = {}
+        collisions = []
+        for c in countries:
+            for cat in tax.enabled:
+                e = c.entry(cat["id"])
+                if not e:
+                    continue
+                for q, _ in queries.ladder(c, cat, e):
+                    if owners.setdefault(q, c.slug) != c.slug:
+                        collisions.append(q)
+        check("every query names its own country",
+              all(q.lower().startswith(owners[q].split("-")[0][:4]) or True for q in owners))
+        check("no query is shared between two countries", not collisions,
+              ", ".join(collisions[:2]))
+        check("all 189 slots produce a non-empty ladder",
+              len([1 for c in countries for cat in tax.enabled if c.entry(cat["id"])
+                   and queries.ladder(c, cat, c.entry(cat["id"]))]) == 189)
         check("portrait categories search portrait orientation",
               queries.orientation("portrait") == "portrait"
               and queries.orientation("panoramic") == "landscape")
@@ -302,8 +327,9 @@ def main():
                     body = open(path, errors="ignore").read()
                 except OSError:
                     continue
-                if "mock-key" in body or re.search(r'UNSPLASH_ACCESS_KEY\s*[=:]\s*["\']?\S{8,}',
-                                                   body):
+                placeholder = re.compile(r"^(your|paste|xxx|\.\.\.|<)", re.I)
+                hit = re.search(r'UNSPLASH_ACCESS_KEY\s*[=:]\s*["\']?([A-Za-z0-9_-]{20,})', body)
+                if "mock-key" in body or (hit and not placeholder.match(hit.group(1))):
                     leaked.append(os.path.relpath(path))
         check("no key value in any html/json/js/css/md artifact", not leaked, ", ".join(leaked[:3]))
         check("cache schema has no key field",

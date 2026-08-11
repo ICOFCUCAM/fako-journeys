@@ -38,6 +38,11 @@ class Unavailable(Exception):
     """No key, or no route to Unsplash. An environment problem, not a data one."""
 
 
+class RateLimited(Exception):
+    """The hourly quota is spent. Everything resolved so far is already cached,
+    so the fix is to run again later, not to start over."""
+
+
 def access_key():
     key = os.environ.get("UNSPLASH_ACCESS_KEY") or os.environ.get("UNSPLASH_API_KEY")
     if not key:
@@ -83,8 +88,19 @@ def search(query, orientation, key, per_page=15):
         {"query": query, "orientation": orientation, "per_page": per_page,
          "content_filter": "high"}
     )
-    with _get(url, key=key) as r:
-        payload = json.loads(r.read().decode("utf-8"))
+    try:
+        with _get(url, key=key) as r:
+            remaining = r.headers.get("X-Ratelimit-Remaining")
+            payload = json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        if exc.code == 403:
+            # Unsplash returns 403, not 429, when the hourly quota is spent.
+            raise RateLimited("hourly rate limit reached")
+        raise
+    if remaining is not None and remaining.isdigit() and int(remaining) <= 1:
+        # Stop while one request is still in hand rather than discovering the
+        # limit through a wall of identical failures.
+        raise RateLimited("hourly rate limit nearly reached (%s left)" % remaining)
     return payload.get("results", [])
 
 
@@ -163,19 +179,37 @@ def resolve_entry(country, category, entry, role, key, seen):
 
     Returns (record, error). A record is only ever built from `results`.
     """
+    orient = queries.orientation(category["role"])
+    rungs = queries.ladder(country, category, entry)
+    rejected = []
+
+    for depth, (query, tier) in enumerate(rungs):
+        try:
+            results = search(query, orient, key)
+        except RateLimited:
+            raise
+        except Exception as exc:
+            return None, "search failed: %s" % exc
+        if not results:
+            rejected.append("%r: no results" % query)
+            continue
+        record = _pick(results, country, category, entry, role, key, query,
+                       seen, rejected, tier)
+        if record:
+            record["queryDepth"] = depth
+            record["queryTier"] = tier
+            return record, None
+
+    return None, "nothing usable across %d queries (%s)" % (
+        len(rungs), "; ".join(rejected[:3]))
+
+
+def _pick(results, country, category, entry, role, key, query, seen, rejected,
+          tier="subject"):
+    """First candidate that is unused, suitable and actually fetchable."""
     from . import imaging
     from .validate import alt_text
 
-    query = queries.build(country, category, entry)
-    orient = queries.orientation(category["role"])
-    try:
-        results = search(query, orient, key)
-    except Exception as exc:
-        return None, "search failed: %s" % exc
-    if not results:
-        return None, "no results for %r" % query
-
-    rejected = []
     for photo in results:
         pid = photo.get("id")
         if not pid:
@@ -187,7 +221,9 @@ def resolve_entry(country, category, entry, role, key, seen):
         if not ok:
             rejected.append("%s %s" % (pid, why))
             continue
-        record = photo_record(photo, country, category, entry, query, alt_text(country, entry))
+        alt = (alt_text(country, entry) if tier == "subject"
+               else queries.generic_alt(country, category))
+        record = photo_record(photo, country, category, entry, query, alt)
         if not record:
             rejected.append("%s no usable urls.raw/full" % pid)
             continue
@@ -206,7 +242,5 @@ def resolve_entry(country, category, entry, role, key, seen):
         record["resolvedAt"] = now()
         record["verifiedAt"] = now()
         seen.add(pid)
-        return record, None
-
-    return None, ("no suitable result among %d for %r (%s)"
-                  % (len(results), query, "; ".join(rejected[:3])))
+        return record
+    return None

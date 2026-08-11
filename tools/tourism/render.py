@@ -15,6 +15,15 @@ import re
 
 from . import imaging, validate
 from .resolve import MISSING_KEY_WARNING
+
+
+def alt_for(country, entry):
+    """The resolved photo's own alt wins: if the match came from a broadened
+    query it is a waterfall in Cameroon, not the Lobe falls, and the page must
+    not claim otherwise."""
+    if entry.image and entry.image.get("alt"):
+        return entry.image["alt"]
+    return validate.alt_text(country, entry)
 from .model import ROOT
 
 OUT_DIR = os.path.join(ROOT, "tourism")
@@ -206,7 +215,7 @@ def credit(entry):
 
 def render_hero(country, entry, cat, taxonomy):
     role = taxonomy.role(cat["id"])
-    alt = validate.alt_text(country, entry)
+    alt = alt_for(country, entry)
     facts = [
         (country.region or "Africa", "Region"),
         ("27", "Tourism experiences"),
@@ -234,7 +243,7 @@ def render_cards(country, items, taxonomy, cols=3):
     out = []
     role = taxonomy.roles["card"]          # one shape for the whole grid
     for cat, entry in items:
-        alt = validate.alt_text(country, entry)
+        alt = alt_for(country, entry)
         out.append("""
       <article class="tq-item fj-rise" data-category="%s">
         <figure>%s<span class="tq-tag">%s</span></figure>
@@ -250,7 +259,7 @@ def render_features(country, items, taxonomy):
     out = []
     role = taxonomy.roles["feature"]
     for cat, entry in items:
-        alt = validate.alt_text(country, entry)
+        alt = alt_for(country, entry)
         out.append("""
       <div class="tq-feature fj-rise" data-category="%s">
         <figure>%s</figure>
@@ -266,7 +275,7 @@ def render_features(country, items, taxonomy):
 
 def render_band(country, cat, entry, taxonomy, role_name=None):
     role = taxonomy.roles[role_name] if role_name else taxonomy.role(cat["id"])
-    alt = validate.alt_text(country, entry)
+    alt = alt_for(country, entry)
     return """
 <section class="tq-band" data-category="%s">
   %s
@@ -377,7 +386,7 @@ def render_index(countries, taxonomy, shell):
         if not entry:
             continue
         role = taxonomy.roles["card"]
-        alt = validate.alt_text(c, entry)
+        alt = alt_for(c, entry)
         cards.append("""
       <a href="/tourism/%s" class="fj-rise">
         <figure>%s</figure>
