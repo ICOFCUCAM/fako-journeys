@@ -150,32 +150,34 @@ ul,ol{list-style:none}
    element stays because it is the documented place a scrim would go, and the
    answer for these pictures is that there isn't one. */
 .fj-vista-veil{position:absolute;inset:0;background:none}
-.fj-vista-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px}
-/* The plate. Two things make bare type impossible here. The band pictures are
-   finished artwork carrying their own set headlines, so loose words on top read
-   as a collision; and the copy travels across a picture that does not move, so
-   there is no safe corner to sit in — every corner passes under the copy at some
-   scroll position. An opaque plate in the site's own paper answers both: it is
-   lighter than the photograph rather than darker, and it stays readable over
-   whatever part of the picture it happens to be crossing. */
-.fj-vista-inner{max-width:600px;background:var(--c-bg);color:var(--c-ink);border-top:3px solid var(--c-accent);padding:36px 40px 40px;box-shadow:0 14px 40px rgba(20,19,16,.22)}
-.fj-vista-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
-.fj-vista-copy h2{font-size:clamp(32px,4.2vw,52px);margin:16px 0 18px;color:var(--c-primary)}
-.fj-vista-copy p{max-width:42ch;font-size:17.5px;color:var(--c-muted)}
-.fj-ledger{display:grid;grid-template-columns:repeat(3,auto);gap:0 34px;justify-content:start;margin-top:28px;padding-top:18px;border-top:var(--fj-rule)}
+/* Band 1 carries no plate: the copy sits straight on the photograph. With no
+   panel and no wash, the only thing holding the type up is a shadow on the
+   glyphs themselves — two of them, a tight one for edge contrast and a wide
+   soft one to lift the whole block off whatever is behind it. That is why the
+   type is light here and dark in band 2. */
+.fj-vista-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;color:var(--fj-onphoto);
+  text-shadow:0 1px 2px rgba(20,19,16,.7),0 2px 26px rgba(20,19,16,.6)}
+.fj-vista-inner{max-width:600px}
+.fj-vista-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--fj-onphoto)}
+.fj-vista-copy h2{font-size:clamp(36px,5vw,66px);margin:18px 0 20px;color:var(--fj-onphoto)}
+.fj-vista-copy p{max-width:42ch;font-size:18px;color:var(--fj-onphoto)}
+/* Small type needs more help than the headline: a 66px letter carries its own
+   mass against a busy frame, an 11px mono caption carries none. Same technique,
+   turned up — a wider dark halo hugging the glyphs. */
+.fj-vista-stamp,.fj-vista-copy p,.fj-ledger dt{
+  text-shadow:0 1px 2px rgba(20,19,16,.85),0 0 12px rgba(20,19,16,.8),0 0 30px rgba(20,19,16,.6)}
+.fj-ledger{display:grid;grid-template-columns:repeat(3,auto);gap:0 34px;justify-content:start;margin-top:30px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--fj-onphoto) 45%,transparent)}
 .fj-ledger div{min-width:96px}
-.fj-ledger dt{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
-.fj-ledger dd{font-family:var(--fj-display);font-size:26px;font-weight:700;margin-top:4px;color:var(--c-primary)}
+.fj-ledger dt{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
+.fj-ledger dd{font-family:var(--fj-display);font-size:26px;font-weight:700;margin-top:4px;color:var(--fj-onphoto)}
 @media(max-width:1010px){
   .fj-vista-veil{background:none}
   .fj-vista-copy{padding:0 28px}
-  .fj-vista-inner{padding:26px 26px 30px}
-  .fj-vista-copy h2{font-size:clamp(28px,5.2vw,40px);margin:14px 0 16px}
+  .fj-vista-copy h2{font-size:clamp(30px,6vw,46px);margin:14px 0 16px}
   .fj-vista-copy p{font-size:16.5px}
   .fj-ledger{gap:0 24px;margin-top:22px}
   .fj-ledger dd{font-size:21px}
 }
-@media(max-width:560px){.fj-vista-inner{padding:22px 20px 26px}}
 @media(max-width:520px){.fj-ledger{grid-template-columns:1fr 1fr;gap:14px 20px}}
 
 /* ==== FIXED-WINDOW BAND 2 — THE SEAM ============================================
