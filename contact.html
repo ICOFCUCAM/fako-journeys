@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enquire — Douala & Buea Offices, Seasons and Booking Process | Fako Journeys</title>
+<meta name="description" content="Write in French or English and get an answer within one working day. Douala handles bookings, Buea runs the mountain — with the season-by-season calendar, the five-step booking process, visa and vaccination notes and the enquiry form.">
+<style>
+:root{
+  /* master tokens (rebrandable) — laterite-relief: raffia paper, basalt ink, laterite road */
+  --c-bg:#F7F2E7;
+  --c-primary:#1C2A25;
+  --c-accent:#BE5527;
+  --c-ink:#1F211C;
+  --c-muted:#6E7166;
+  --c-border:#DDD4C1;
+  /* derived surfaces */
+  --fj-raffia:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
+  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
+  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
+  --fj-canopy:color-mix(in srgb,var(--c-primary) 82%,var(--c-accent));
+  --fj-ember:color-mix(in srgb,var(--c-accent) 14%,var(--c-bg));
+  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
+  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
+  --fj-rule:1px solid var(--c-border);
+  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
+  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
+  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
+  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+  /* photograph-relative values: these sit ON imagery, so they are tuned to the photograph
+     rather than to the brand palette and stay legible whatever picture is dropped in */
+  --fj-shade:#141310;
+  --fj-onphoto:#FAF5EA;
+  --fj-onphoto-soft:#F2EBDB;
+  --fj-onphoto-dim:#EBE2CE;
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fj-text);background:var(--c-bg);color:var(--c-ink);line-height:1.66;font-size:17px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+p{margin:0}
+ul,ol{list-style:none}
+::selection{background:var(--c-accent);color:var(--c-bg)}
+
+.fj-frame{max-width:1240px;margin:0 auto;padding:0 44px}
+.fj-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
+.fj-stamp i{font-style:normal;color:var(--c-muted)}
+.fj-lede{font-size:19px;color:var(--c-muted);max-width:40em}
+
+/* reveal — never applied to a fixed-window band or to any ancestor of one */
+.fj-rise{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.fj-rise.seen{opacity:1;transform:none}
+
+/* ---- masthead ---------------------------------------------------------------- */
+.fj-mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+.fj-mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
+.fj-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.fj-mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:1;white-space:nowrap}
+.fj-mark span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+.fj-routes{display:flex;gap:26px}
+.fj-routes a{font-family:var(--fj-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.fj-routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
+.fj-mast-tel{font-family:var(--fj-mono);font-size:11px;letter-spacing:.1em;color:var(--c-muted)}
+.btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
+.btn:hover{background:var(--c-accent)}
+@media(max-width:1010px){.fj-routes,.fj-mast-tel{display:none}}
+@media(max-width:560px){
+  .fj-frame{padding:0 20px}
+  .fj-mast-in{gap:12px;padding:11px 0}
+  .fj-mark b{font-size:20px}
+  .fj-mark span{font-size:8px;letter-spacing:.16em}
+  .btn{padding:10px 14px;font-size:10px;letter-spacing:.12em;white-space:nowrap}
+}
+
+/* ---- page opener -------------------------------------------------------------- */
+.fj-open{padding:78px 0 66px;border-bottom:var(--fj-rule)}
+.fj-open-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:64px;align-items:end}
+.fj-open h1{font-size:clamp(38px,4.8vw,68px);margin:20px 0 0;max-width:16ch}
+.fj-open h1 em{font-style:normal;color:var(--c-accent)}
+.fj-open .fj-lede{margin-top:24px}
+.fj-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.fj-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 20px;border:1px solid var(--c-primary);transition:background .2s,color .2s,border-color .2s}
+.fj-act:hover{background:var(--c-primary);color:var(--c-bg)}
+.fj-act.faint{border-color:var(--c-border);color:var(--c-muted)}
+.fj-act.faint:hover{border-color:var(--c-primary);background:transparent;color:var(--c-primary)}
+.fj-open-plate{position:relative}
+.fj-open-plate img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.fj-open-tag{position:absolute;left:0;bottom:0;right:24%;background:var(--c-primary);color:var(--fj-onbasalt);padding:13px 16px}
+.fj-open-tag b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.fj-open-tag span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onbasalt-dim);margin-top:5px}
+.fj-key{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border-top:2px solid var(--c-primary)}
+.fj-key-item{padding:18px 22px 0 0}
+.fj-key-item b{display:block;font-family:var(--fj-display);font-size:31px;font-weight:700;letter-spacing:-.01em;color:var(--c-primary)}
+.fj-key-item span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted);margin-top:7px}
+@media(max-width:940px){.fj-open{padding:52px 0 48px}.fj-open-grid{grid-template-columns:1fr;gap:38px;align-items:start}.fj-open-plate img{aspect-ratio:4/3}.fj-key{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.fj-key{grid-template-columns:1fr}.fj-key-item{padding:14px 0 12px;border-bottom:var(--fj-rule)}}
+
+/* ---- zones and gutter-marked heads --------------------------------------------- */
+.fj-zone{padding:96px 0}
+.fj-zone.close{padding-top:64px}
+.fj-zone.dust{background:var(--fj-dust)}
+.fj-zone.basalt{background:var(--fj-basalt);color:var(--fj-onbasalt)}
+.fj-zone.basalt h1,.fj-zone.basalt h2,.fj-zone.basalt h3{color:var(--c-bg)}
+.fj-zone.basalt .fj-lede,.fj-zone.basalt .fj-note{color:var(--fj-onbasalt-dim)}
+.fj-head{display:grid;grid-template-columns:150px 1fr;gap:40px;align-items:start;margin-bottom:54px}
+.fj-head-no{border-top:2px solid var(--c-accent);padding-top:12px}
+.fj-head-no b{display:block;font-family:var(--fj-display);font-size:38px;font-weight:700;line-height:1;color:var(--c-accent)}
+.fj-head-no span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);margin-top:8px}
+.fj-zone.basalt .fj-head-no span{color:var(--fj-onbasalt-dim)}
+.fj-head h2{font-size:clamp(30px,4vw,54px);max-width:24ch}
+.fj-head h2 em{font-style:normal;color:var(--c-accent)}
+.fj-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+@media(max-width:880px){.fj-zone{padding:66px 0}.fj-head{grid-template-columns:1fr;gap:18px;margin-bottom:38px}.fj-head-no b{font-size:30px}}
+
+/* ---- transect (the coast-to-Sahel gradient bar) -------------------------------- */
+.fj-transect{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;align-items:end;border-bottom:2px solid var(--c-primary)}
+.fj-transect-step{background:var(--fj-dust);padding:16px 14px 14px;display:flex;flex-direction:column;justify-content:flex-end}
+.fj-transect-step.lv1{min-height:120px}
+.fj-transect-step.lv2{min-height:168px}
+.fj-transect-step.lv3{min-height:300px;background:var(--c-primary);color:var(--fj-onbasalt)}
+.fj-transect-step.lv4{min-height:216px}
+.fj-transect-step.lv5{min-height:150px}
+.fj-transect-step.lv6{min-height:132px}
+.fj-transect-alt{font-family:var(--fj-display);font-size:23px;font-weight:700;line-height:1}
+.fj-transect-step.lv3 .fj-transect-alt{color:var(--c-bg)}
+.fj-transect-step b{display:block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:10px;font-weight:400;color:var(--c-accent)}
+.fj-transect-step.lv3 b{color:var(--fj-ember)}
+.fj-transect-step p{font-size:13.5px;line-height:1.45;color:var(--c-muted);margin-top:6px}
+.fj-transect-step.lv3 p{color:var(--fj-onbasalt-dim)}
+.fj-transect-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:14px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+@media(max-width:900px){.fj-transect{grid-template-columns:repeat(3,1fr)}.fj-transect-step{min-height:0 !important;padding:14px 12px}}
+@media(max-width:520px){.fj-transect{grid-template-columns:1fr 1fr}}
+
+/* ==== FIXED-WINDOW BAND 1 — THE ASCENT ==========================================
+   The photograph is pinned to the viewport and the section is a window travelling
+   across it. clip-path keeps the fixed child inside the band — but the band must
+   never BECOME that child's containing block, so do not add transform, filter,
+   backdrop-filter, perspective, will-change or contain to .fj-vista, to
+   .fj-vista-pic, or to anything between them and <html>: `fixed` would silently
+   degrade to `absolute` and the effect would vanish with no error at all.
+   background-attachment:fixed is not a substitute — iOS Safari ignores it.
+   No script drives this. Verified by `npm run test:fixedwindow`. */
+.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
+.fj-vista-pic{position:fixed;inset:0;z-index:0}
+.fj-vista-pic img{width:100%;height:100%;object-fit:cover}
+/* Veil 1 — a directional wash off the western flank: deep across the reading column
+   on the left, releasing to near-clear over the open right of the frame, so the
+   mountain keeps its own light instead of turning into a grey rectangle. */
+.fj-vista-veil{position:absolute;inset:0;background:linear-gradient(93deg,
+  color-mix(in srgb,var(--fj-shade) 90%,transparent) 0%,
+  color-mix(in srgb,var(--fj-shade) 86%,transparent) 34%,
+  color-mix(in srgb,var(--fj-shade) 78%,transparent) 56%,
+  color-mix(in srgb,var(--fj-shade) 34%,transparent) 80%,
+  color-mix(in srgb,var(--fj-shade) 16%,transparent) 100%)}
+.fj-vista-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;color:var(--fj-onphoto)}
+.fj-vista-inner{max-width:600px}
+.fj-vista-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
+.fj-vista-copy h2{font-size:clamp(38px,5.4vw,74px);margin:18px 0 20px;color:var(--fj-onphoto)}
+.fj-vista-copy p{max-width:42ch;font-size:18px;color:var(--fj-onphoto-soft)}
+.fj-ledger{display:grid;grid-template-columns:repeat(3,auto);gap:0 34px;justify-content:start;margin-top:30px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--fj-onphoto) 40%,transparent)}
+.fj-ledger div{min-width:96px}
+.fj-ledger dt{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
+.fj-ledger dd{font-family:var(--fj-display);font-size:26px;font-weight:700;margin-top:4px;color:var(--fj-onphoto)}
+@media(max-width:1010px){
+  .fj-vista-veil{background:linear-gradient(170deg,
+    color-mix(in srgb,var(--fj-shade) 44%,transparent) 0%,
+    color-mix(in srgb,var(--fj-shade) 78%,transparent) 20%,
+    color-mix(in srgb,var(--fj-shade) 88%,transparent) 52%,
+    color-mix(in srgb,var(--fj-shade) 80%,transparent) 86%,
+    color-mix(in srgb,var(--fj-shade) 48%,transparent) 100%)}
+  .fj-vista-copy{padding:0 28px}
+  .fj-vista-copy h2{font-size:clamp(30px,6vw,46px);margin:14px 0 16px}
+  .fj-vista-copy p{font-size:16.5px}
+  .fj-ledger{gap:0 24px;margin-top:22px}
+  .fj-ledger dd{font-size:21px}
+}
+@media(max-width:520px){.fj-ledger{grid-template-columns:1fr 1fr;gap:14px 20px}}
+
+/* ==== FIXED-WINDOW BAND 2 — THE SEAM ============================================
+   Same mechanism, a different moment: the copy sits in the middle of the frame and
+   the veil is a horizontal seam rather than a side wash. Every containing-block
+   caution above applies here too — nothing on .fj-seam, .fj-seam-pic or any
+   ancestor may carry transform / filter / backdrop-filter / perspective /
+   will-change / contain. */
+.fj-seam{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
+.fj-seam-pic{position:fixed;inset:0;z-index:0}
+.fj-seam-pic img{width:100%;height:100%;object-fit:cover}
+/* Veil 2 — a band of shade laid across the middle of the picture and released at the
+   top and the bottom, so the sky above and the black sand below keep their light. */
+.fj-seam-veil{position:absolute;inset:0;background:linear-gradient(180deg,
+  color-mix(in srgb,var(--fj-shade) 14%,transparent) 0%,
+  color-mix(in srgb,var(--fj-shade) 40%,transparent) 14%,
+  color-mix(in srgb,var(--fj-shade) 84%,transparent) 25%,
+  color-mix(in srgb,var(--fj-shade) 88%,transparent) 50%,
+  color-mix(in srgb,var(--fj-shade) 84%,transparent) 75%,
+  color-mix(in srgb,var(--fj-shade) 40%,transparent) 87%,
+  color-mix(in srgb,var(--fj-shade) 14%,transparent) 100%)}
+.fj-seam-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;color:var(--fj-onphoto);display:flex;justify-content:center}
+.fj-seam-inner{max-width:660px;text-align:center}
+.fj-seam-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
+.fj-seam-copy h2{font-family:var(--fj-text);font-weight:400;text-transform:none;letter-spacing:-.005em;line-height:1.16;font-size:clamp(29px,3.9vw,50px);margin:20px auto 0;color:var(--fj-onphoto)}
+.fj-seam-hr{display:block;width:64px;height:2px;margin:26px auto;background:color-mix(in srgb,var(--fj-onphoto) 70%,transparent)}
+.fj-seam-copy p{font-size:17px;color:var(--fj-onphoto-soft);max-width:52ch;margin:0 auto}
+.fj-seam-cite{display:block;margin-top:22px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
+@media(max-width:1010px){
+  .fj-seam-veil{background:linear-gradient(180deg,
+    color-mix(in srgb,var(--fj-shade) 30%,transparent) 0%,
+    color-mix(in srgb,var(--fj-shade) 62%,transparent) 9%,
+    color-mix(in srgb,var(--fj-shade) 86%,transparent) 20%,
+    color-mix(in srgb,var(--fj-shade) 89%,transparent) 50%,
+    color-mix(in srgb,var(--fj-shade) 86%,transparent) 80%,
+    color-mix(in srgb,var(--fj-shade) 62%,transparent) 91%,
+    color-mix(in srgb,var(--fj-shade) 30%,transparent) 100%)}
+  .fj-seam-copy{padding:0 28px}
+  .fj-seam-copy h2{font-size:clamp(25px,5.2vw,38px)}
+  .fj-seam-copy p{font-size:16px}
+  .fj-seam-hr{margin:20px auto}
+}
+
+/* ---- circuit slips ------------------------------------------------------------- */
+.fj-slips{display:grid;gap:0;border-top:2px solid var(--c-primary)}
+.fj-slip{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;padding:40px 0;border-bottom:var(--fj-rule);align-items:start}
+.fj-slip-pic img{width:100%;aspect-ratio:5/4;object-fit:cover}
+.fj-slip-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+.fj-slip-code{font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;background:var(--c-primary);color:var(--c-bg);padding:5px 10px}
+.fj-slip-grade{font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--c-accent);color:var(--c-accent);padding:4px 9px}
+.fj-slip-days{font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.fj-slip-body h3{font-size:clamp(24px,2.7vw,34px);margin-bottom:12px}
+.fj-slip-body p{color:var(--c-muted);max-width:40em}
+.fj-slip-spec{display:grid;grid-template-columns:repeat(3,1fr);gap:0 22px;margin-top:22px;border-top:var(--fj-rule);padding-top:16px}
+.fj-slip-spec dt{font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted)}
+.fj-slip-spec dd{font-family:var(--fj-display);font-size:19px;font-weight:700;margin-top:4px}
+.fj-slip-more{display:inline-block;margin-top:22px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px;transition:color .2s}
+.fj-slip-more:hover{color:var(--c-accent)}
+@media(max-width:900px){.fj-slip{grid-template-columns:1fr;gap:24px;padding:30px 0}.fj-slip-spec{grid-template-columns:1fr 1fr;gap:14px 20px}}
+
+/* ---- craft feature -------------------------------------------------------------- */
+.fj-craft{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.fj-craft-pic img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.fj-craft-copy h2{font-size:clamp(28px,3.6vw,48px);max-width:20ch}
+.fj-craft-copy h2 em{font-style:normal;color:var(--c-accent)}
+.fj-craft-copy p{color:var(--c-muted);margin-top:18px;max-width:38em}
+.fj-listing{margin-top:28px;border-top:2px solid var(--c-primary)}
+.fj-listing li{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:baseline;padding:15px 0;border-bottom:var(--fj-rule)}
+.fj-listing li b{font-family:var(--fj-display);font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.01em}
+.fj-listing li span{font-size:14.5px;color:var(--c-muted)}
+.fj-listing li i{font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-accent);white-space:nowrap}
+@media(max-width:900px){.fj-craft{grid-template-columns:1fr;gap:30px}.fj-craft-pic img{aspect-ratio:4/3}.fj-listing li{grid-template-columns:1fr;gap:4px}}
+
+/* ---- calendar of seasons --------------------------------------------------------- */
+.fj-cal{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.fj-cal-col img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.fj-cal-col b{display:block;font-family:var(--fj-display);font-size:21px;font-weight:700;text-transform:uppercase;margin-top:16px}
+.fj-cal-col span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-accent);margin-top:6px}
+.fj-cal-col p{font-size:14.5px;color:var(--c-muted);margin-top:10px}
+.fj-zone.basalt .fj-cal-col p{color:var(--fj-onbasalt-dim)}
+@media(max-width:900px){.fj-cal{grid-template-columns:1fr 1fr;gap:22px}}
+@media(max-width:520px){.fj-cal{grid-template-columns:1fr}}
+
+/* ---- words from travellers -------------------------------------------------------- */
+.fj-words{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.fj-word{padding:30px 34px 0 0}
+.fj-word-q{font-size:17.5px;line-height:1.5}
+.fj-word-who{display:block;margin-top:18px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted)}
+.fj-word-who i{font-style:normal;color:var(--c-accent)}
+@media(max-width:880px){.fj-words{grid-template-columns:1fr}.fj-word{padding:24px 0 22px;border-bottom:var(--fj-rule)}}
+
+/* ---- rate table --------------------------------------------------------------------- */
+.fj-rates{border-top:2px solid var(--c-primary)}
+.fj-rate{display:grid;grid-template-columns:1.5fr 1fr .9fr .9fr;gap:24px;padding:20px 0;border-bottom:var(--fj-rule);align-items:baseline}
+.fj-rate-head{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted);padding:12px 0}
+.fj-rate b{display:block;font-family:var(--fj-display);font-size:20px;font-weight:700;text-transform:uppercase}
+.fj-rate p{font-size:14px;color:var(--c-muted);margin-top:4px}
+.fj-rate-num{font-family:var(--fj-display);font-size:24px;font-weight:700;color:var(--c-primary)}
+.fj-rate-num small{display:block;font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--c-muted);margin-top:4px}
+.fj-rate-plain{font-family:var(--fj-mono);font-size:12px;letter-spacing:.06em;color:var(--c-muted)}
+@media(max-width:880px){.fj-rate{grid-template-columns:1fr 1fr;gap:12px 20px}.fj-rate-head{display:none}}
+
+.fj-fees{display:grid;grid-template-columns:repeat(2,1fr);gap:0 52px}
+.fj-fee{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:baseline;padding:16px 0;border-bottom:var(--fj-rule)}
+.fj-fee b{font-family:var(--fj-display);font-size:18px;font-weight:700;text-transform:uppercase}
+.fj-fee p{font-size:14px;color:var(--c-muted);margin-top:3px}
+.fj-fee i{font-style:normal;font-family:var(--fj-mono);font-size:12px;letter-spacing:.08em;color:var(--c-accent);white-space:nowrap}
+@media(max-width:820px){.fj-fees{grid-template-columns:1fr}}
+
+.fj-incl{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+.fj-incl-col b{display:block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);padding-bottom:12px;border-bottom:2px solid var(--c-primary)}
+.fj-incl-col.out b{color:var(--c-muted)}
+.fj-incl-col li{padding:12px 0;border-bottom:var(--fj-rule);font-size:15.5px;color:var(--c-muted)}
+.fj-incl-col li em{font-style:normal;color:var(--c-ink);font-weight:600}
+@media(max-width:820px){.fj-incl{grid-template-columns:1fr;gap:36px}}
+
+/* ---- crew and logbook (about) --------------------------------------------------------- */
+.fj-crew{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+.fj-crew-card img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.fj-crew-card b{display:block;font-family:var(--fj-display);font-size:21px;font-weight:700;text-transform:uppercase;margin-top:16px}
+.fj-crew-card span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-accent);margin-top:6px}
+.fj-crew-card p{font-size:14.5px;color:var(--c-muted);margin-top:11px}
+@media(max-width:820px){.fj-crew{grid-template-columns:1fr;gap:30px}}
+
+.fj-log{border-top:2px solid var(--c-primary)}
+.fj-log-row{display:grid;grid-template-columns:110px 1fr;gap:32px;padding:22px 0;border-bottom:var(--fj-rule)}
+.fj-log-row b{font-family:var(--fj-display);font-size:22px;font-weight:700;color:var(--c-accent)}
+.fj-log-row h3{font-size:19px;margin-bottom:6px}
+.fj-log-row p{color:var(--c-muted);font-size:15px;max-width:54em}
+@media(max-width:640px){.fj-log-row{grid-template-columns:1fr;gap:6px}}
+
+.fj-prose{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.fj-prose p{color:var(--c-muted)}
+.fj-prose p+p{margin-top:18px}
+.fj-prose .fj-prose-open{font-size:22px;line-height:1.45;color:var(--c-ink)}
+@media(max-width:860px){.fj-prose{grid-template-columns:1fr;gap:24px}}
+
+/* ---- questions ------------------------------------------------------------------------- */
+.fj-asks{display:grid;grid-template-columns:1fr 1fr;gap:0 56px}
+.fj-ask{border-top:var(--fj-rule);padding:22px 0 20px}
+.fj-ask h3{font-size:18px;margin-bottom:8px}
+.fj-ask p{color:var(--c-muted);font-size:15px}
+.fj-zone.basalt .fj-ask{border-top:var(--fj-rule-dark)}
+.fj-zone.basalt .fj-ask p{color:var(--fj-onbasalt-dim)}
+@media(max-width:820px){.fj-asks{grid-template-columns:1fr}}
+
+/* ---- enquiry ----------------------------------------------------------------------------- */
+.fj-enq-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:start}
+.fj-enq-grid h2{font-size:clamp(28px,3.6vw,48px);margin:18px 0 16px;max-width:18ch}
+.fj-enq-grid h2 em{font-style:normal;color:var(--c-accent)}
+.fj-enq-grid .fj-note{max-width:34em}
+.fj-facts{margin-top:28px;border-top:2px solid var(--c-primary)}
+.fj-facts div{display:grid;grid-template-columns:132px 1fr;gap:16px;padding:13px 0;border-bottom:var(--fj-rule);font-size:15px}
+.fj-facts dt{font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);padding-top:4px}
+.fj-form{background:var(--fj-raffia);border:1px solid var(--c-primary);padding:34px 32px 30px}
+.fj-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.fj-cell{margin-bottom:18px}
+.fj-cell label{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);margin-bottom:7px}
+.fj-cell input,.fj-cell select,.fj-cell textarea{width:100%;font-family:var(--fj-text);font-size:16px;color:var(--c-ink);background:var(--c-bg);border:var(--fj-rule);padding:11px 13px;transition:border-color .2s}
+.fj-cell textarea{resize:vertical}
+.fj-cell input:focus,.fj-cell select:focus,.fj-cell textarea:focus{outline:none;border-color:var(--c-accent)}
+.fj-send{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);border:0;padding:14px 28px;cursor:pointer;transition:background .2s}
+.fj-send:hover{background:var(--c-accent)}
+.fj-fine{margin-top:14px;font-size:13px;color:var(--c-muted)}
+.fj-flash{display:none;margin-top:14px;font-size:14.5px;padding:12px 14px;border-left:3px solid var(--c-accent);background:var(--fj-ember);color:var(--c-ink)}
+.fj-flash.show{display:block}
+@media(max-width:900px){.fj-enq-grid{grid-template-columns:1fr;gap:34px}.fj-row{grid-template-columns:1fr;gap:0}.fj-form{padding:26px 20px 24px}}
+
+/* ---- footer ------------------------------------------------------------------------------- */
+.fj-foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:66px 0 0}
+.fj-foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:40px}
+.fj-foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
+.fj-foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
+.fj-foot-grid p{margin-top:16px;font-size:14.5px;max-width:32em;color:var(--fj-onbasalt-dim)}
+.fj-foot-col b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px;font-weight:400}
+.fj-foot-col a,.fj-foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--fj-onbasalt-dim);transition:color .2s}
+.fj-foot-col a:hover{color:var(--c-bg)}
+.fj-foot-bar{margin-top:48px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.fj-foot-bar em{font-style:normal;color:var(--c-accent)}
+@media(max-width:900px){.fj-foot-grid{grid-template-columns:1fr 1fr;gap:30px}}
+@media(max-width:560px){.fj-foot-grid{grid-template-columns:1fr}}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important;animation-iteration-count:1 !important}
+  .fj-rise{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<!-- nav -->
+<header class="fj-mast">
+  <div class="fj-frame fj-mast-in">
+    <a class="fj-mark" href="/"><b>Fako Journeys</b><span>Cameroun &middot; Circuits guid&eacute;s / Guided circuits</span></a>
+    <nav class="fj-routes">
+      <a href="/services">Circuits</a>
+      <a href="/pricing">Rates &amp; Fees</a>
+      <a href="/about">The Operator</a>
+      <a href="/contact">Enquire</a>
+    </nav>
+    <span class="fj-mast-tel">Douala +237 233 42 09 61</span>
+    <a class="btn" href="#quote">Plan a circuit</a>
+  </div>
+</header>
+<!-- opening -->
+<section class="fj-open">
+  <div class="fj-frame">
+    <div class="fj-open-grid">
+      <div class="fj-rise seen">
+        <span class="fj-stamp">Enquire &middot; <i>nous &eacute;crire</i></span>
+        <h1>Two offices, two people, <em>one working day</em> to answer you.</h1>
+        <p class="fj-lede">Write in French or in English, whichever you are quicker in. Every enquiry lands with the same two people who plan the circuits, and neither of them will send you a brochure instead of an answer.</p>
+        <div class="fj-acts">
+          <a class="fj-act" href="#quote">Go to the form</a>
+          <a class="fj-act faint" href="/pricing">Check the rates first</a>
+        </div>
+      </div>
+      <div class="fj-open-plate fj-rise">
+        <img src="/images/hero.1.svg" alt="The street frontage of a small tour operator office with a hand-painted sign">
+        <div class="fj-open-tag"><b>Douala &amp; Buea</b><span>Walk in, telephone, or WhatsApp</span></div>
+      </div>
+    </div>
+    <div class="fj-key fj-rise">
+      <div class="fj-key-item"><b>1 day</b><span>Typical reply to an enquiry</span></div>
+      <div class="fj-key-item"><b>FR / EN</b><span>Both offices, both languages</span></div>
+      <div class="fj-key-item"><b>08:00</b><span>Lines open, Douala and Buea</span></div>
+      <div class="fj-key-item"><b>+237</b><span>WhatsApp on the office number</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- offices -->
+<section class="fj-zone">
+  <div class="fj-frame">
+    <div class="fj-head fj-rise">
+      <div class="fj-head-no"><b>01</b><span>Where we are</span></div>
+      <div>
+        <h2>Douala takes the bookings. Buea <em>runs the mountain</em>.</h2>
+        <p class="fj-note">If your question is about dates, money or paperwork, Douala. If it is about the hill, the weather on it or what to carry, Buea. Either will find the other within the hour.</p>
+      </div>
+    </div>
+    <div class="fj-slips">
+      <article class="fj-slip fj-rise">
+        <div class="fj-slip-pic"><img src="/images/coverage.1.svg" alt="A quiet office street in the Bonapriso quarter of Douala" loading="lazy"></div>
+        <div class="fj-slip-body">
+          <div class="fj-slip-top">
+            <span class="fj-slip-code">Douala</span>
+            <span class="fj-slip-grade">Bookings</span>
+            <span class="fj-slip-days">Mon to Fri, 08:00&ndash;17:00</span>
+          </div>
+          <h3>Rue Njo-Njo, Bonapriso</h3>
+          <p>Ten minutes from the airport road and walkable from most of the Bonapriso hotels. This is where quotes, deposits, insurance certificates and internal flight bookings are handled, and where arriving travellers are met the evening before a circuit starts.</p>
+          <dl class="fj-slip-spec">
+            <div><dt>Telephone</dt><dd>+237 233 42 09 61</dd></div>
+            <div><dt>WhatsApp</dt><dd>+237 677 04 21 88</dd></div>
+            <div><dt>Airport</dt><dd>DLA, 20 min</dd></div>
+          </dl>
+          <a class="fj-slip-more" href="#quote">Send an enquiry</a>
+        </div>
+      </article>
+      <article class="fj-slip fj-rise">
+        <div class="fj-slip-pic"><img src="/images/coverage.2.svg" alt="A small operations office in Buea with the mountain rising behind the town" loading="lazy"></div>
+        <div class="fj-slip-body">
+          <div class="fj-slip-top">
+            <span class="fj-slip-code">Buea</span>
+            <span class="fj-slip-grade">Operations</span>
+            <span class="fj-slip-days">Mon to Sat, 08:00&ndash;18:00</span>
+          </div>
+          <h3>Sandpit Road, Molyko</h3>
+          <p>Five minutes from the Mount Cameroon Ecotourism Organisation office where every trek is registered. Kit issue, briefings and guide allocation happen here, and the store has boots, jackets and sleeping bags to lend at no charge.</p>
+          <dl class="fj-slip-spec">
+            <div><dt>Telephone</dt><dd>+237 233 32 18 40</dd></div>
+            <div><dt>Briefings</dt><dd>17:00, day before</dd></div>
+            <div><dt>Kit loan</dt><dd>Free, sizes 36&ndash;47</dd></div>
+          </dl>
+          <a class="fj-slip-more" href="/services">Mountain circuits</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- process -->
+<section class="fj-zone dust">
+  <div class="fj-frame">
+    <div class="fj-head fj-rise">
+      <div class="fj-head-no"><b>02</b><span>Booking process</span></div>
+      <div>
+        <h2>From first email to <em>the vehicle at your hotel</em>.</h2>
+        <p class="fj-note">Five steps, and you can stop at any of the first three without owing us anything.</p>
+      </div>
+    </div>
+    <div class="fj-log fj-rise">
+      <div class="fj-log-row">
+        <b>01</b>
+        <div>
+          <h3>You write, we answer</h3>
+          <p>Month, rough dates, how many of you and what you want to see. We come back within one working day with a suggested circuit and an honest view of whether the season suits it.</p>
+        </div>
+      </div>
+      <div class="fj-log-row">
+        <b>02</b>
+        <div>
+          <h3>Written quote and day-by-day</h3>
+          <p>One page of itinerary, one page of price in FCFA and euro with the park fees itemised. Revise it as many times as you like &mdash; most bookings go through three or four versions.</p>
+        </div>
+      </div>
+      <div class="fj-log-row">
+        <b>03</b>
+        <div>
+          <h3>Provisional hold</h3>
+          <p>We block guides, vehicle and rooms for seven days at no cost while you check flights and leave. Internal flights are the one thing we cannot hold without payment.</p>
+        </div>
+      </div>
+      <div class="fj-log-row">
+        <b>04</b>
+        <div>
+          <h3>Deposit and confirmation</h3>
+          <p>Twenty-five per cent confirms it. You receive the full terms, the insurance requirement, the kit list and the name and telephone number of your guide.</p>
+        </div>
+      </div>
+      <div class="fj-log-row">
+        <b>05</b>
+        <div>
+          <h3>Briefing, then departure</h3>
+          <p>Balance at 45 days. A briefing the evening before &mdash; in person in Douala or Buea, or by video call &mdash; and then the vehicle at your hotel at the hour written on the itinerary.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- calendar -->
+<section class="fj-zone">
+  <div class="fj-frame">
+    <div class="fj-head fj-rise">
+      <div class="fj-head-no"><b>03</b><span>Season by season</span></div>
+      <div>
+        <h2>Book the country <em>to the calendar</em>, not the other way round.</h2>
+        <p class="fj-note">Cameroon does not have one season, it has several running against each other. Tell us your month and we will tell you which half of the country to spend it in.</p>
+      </div>
+    </div>
+    <div class="fj-cal">
+      <div class="fj-cal-col fj-rise">
+        <img src="/images/services-grid.1.svg" alt="Clear dry-season conditions on the open upper mountain" loading="lazy">
+        <b>Nov &ndash; Feb</b><span>Everything open</span>
+        <p>Dry in both halves. Trekking, coast, highlands and north all work. Our busiest period; the mountain huts and the February Race of Hope week go first.</p>
+      </div>
+      <div class="fj-cal-col fj-rise">
+        <img src="/images/services-grid.2.svg" alt="Animals gathered at a shrinking dry-season waterhole" loading="lazy">
+        <b>Mar &ndash; May</b><span>North peaks, coast turns</span>
+        <p>The best weeks at Waza and B&eacute;nou&eacute;, and hot with it. The south-west begins to break by late April and the mountain closes toward the end of May.</p>
+      </div>
+      <div class="fj-cal-col fj-rise">
+        <img src="/images/services-grid.3.svg" alt="Low cloud and rain on the forested slopes above a coastal town" loading="lazy">
+        <b>Jun &ndash; Sep</b><span>The Buea rains</span>
+        <p>Serious rain in the south-west &mdash; the wettest month at Debundscha can pass two metres. No summit treks. Highlands, Foumban and Yaound&eacute; run normally and cost less.</p>
+      </div>
+      <div class="fj-cal-col fj-rise">
+        <img src="/images/services-grid.4.svg" alt="Green highland country under clearing October skies" loading="lazy">
+        <b>Oct</b><span>The quiet turn</span>
+        <p>Rain easing, everything green, almost nobody travelling. Excellent for the Ring Road and Foumban, marginal for the mountain, too early for the north.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- questions -->
+<section class="fj-zone basalt">
+  <div class="fj-frame">
+    <div class="fj-head fj-rise">
+      <div class="fj-head-no"><b>04</b><span>Before you write</span></div>
+      <div>
+        <h2>The questions that arrive <em>every week</em>.</h2>
+        <p class="fj-note">If yours is not here, telephone. Neither office minds a long question.</p>
+      </div>
+    </div>
+    <div class="fj-asks fj-rise">
+      <div class="fj-ask">
+        <h3>Do we need a visa?</h3>
+        <p>Almost every nationality does. The e-visa is issued online before travel and we send the invitation and confirmed itinerary the application asks for as soon as your deposit clears.</p>
+      </div>
+      <div class="fj-ask">
+        <h3>Is yellow fever vaccination required?</h3>
+        <p>Yes, and the certificate is checked on arrival at Douala. Antimalarials are strongly advised for every region and essential in the north.</p>
+      </div>
+      <div class="fj-ask">
+        <h3>How fit do we need to be for the mountain?</h3>
+        <p>Fit enough to walk nine hours uphill on a rough path two days running. No technical skill and no rope work, but it is a long way up and the altitude is real above 3,000 metres.</p>
+      </div>
+      <div class="fj-ask">
+        <h3>Can you take a single traveller?</h3>
+        <p>On fixed departures, yes, at the group rate. Privately, we can run for one, though the per-person figure is close to the two-traveller price for the whole vehicle.</p>
+      </div>
+      <div class="fj-ask">
+        <h3>What about mobile signal and cash?</h3>
+        <p>MTN and Orange cover most of the route. There is no signal on the mountain above Hut 1 and none in Korup. Carry cash for the north &mdash; the last dependable machine is in Maroua.</p>
+      </div>
+      <div class="fj-ask">
+        <h3>Do you take regional travellers?</h3>
+        <p>Constantly. CEMAC and Cameroonian residents pay the resident park tariff, and we run short weekend departures out of Douala and Yaound&eacute; through the dry season.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- quote -->
+<section class="fj-zone dust" id="quote">
+  <div class="fj-frame">
+    <div class="fj-enq-grid">
+      <div class="fj-rise">
+        <span class="fj-stamp">Enquiry form &middot; formulaire</span>
+        <h2>Tell us what you have in mind.</h2>
+        <p class="fj-note">Nothing here commits you to anything. The more you tell us about how you like to travel &mdash; early starts or slow mornings, walking or watching &mdash; the closer the first suggestion will be.</p>
+        <dl class="fj-facts">
+          <div><dt>Douala</dt><dd>Rue Njo-Njo, Bonapriso &mdash; Mon to Fri, 08:00&ndash;17:00</dd></div>
+          <div><dt>Buea</dt><dd>Sandpit Road, Molyko &mdash; Mon to Sat, 08:00&ndash;18:00</dd></div>
+          <div><dt>Telephone</dt><dd>+237 233 42 09 61</dd></div>
+          <div><dt>WhatsApp</dt><dd>+237 677 04 21 88</dd></div>
+        </dl>
+      </div>
+      <form class="fj-form fj-rise" data-lead-mailto="bonjour@fakojourneys.cm" data-lead-form data-lead-success="Thank you — your enquiry has reached the Douala office. We will reply within one working day, in French or English, with a suggested circuit and a realistic price per person." data-lead-error="That did not send. Please telephone +237 233 42 09 61 or write to bonjour@fakojourneys.cm and we will pick it up from there.">
+        <div class="fj-row">
+          <div class="fj-cell"><label for="cnm">Your name</label><input id="cnm" name="name" required></div>
+          <div class="fj-cell"><label for="cph">Telephone or WhatsApp</label><input id="cph" name="phone"></div>
+        </div>
+        <div class="fj-row">
+          <div class="fj-cell"><label for="cem">Email</label><input id="cem" name="email" type="email" required></div>
+          <div class="fj-cell"><label for="cdt">Dates or month</label><input id="cdt" name="dates" placeholder="e.g. late November, two weeks"></div>
+        </div>
+        <div class="fj-row">
+          <div class="fj-cell"><label for="cpx">Travellers</label><input id="cpx" name="party" placeholder="e.g. 2 adults"></div>
+          <div class="fj-cell"><label for="clg">Reply in</label><select id="clg" name="language"><option>English</option><option>Fran&ccedil;ais</option><option>Either is fine</option></select></div>
+        </div>
+        <div class="fj-cell"><label for="cms">What you have in mind</label><textarea id="cms" name="message" rows="4" placeholder="e.g. Ten days, the mountain if the season allows it, then somewhere quiet on the coast"></textarea></div>
+        <button class="fj-send" type="submit">Send the enquiry</button>
+        <p class="fj-fine">Your details stay with our office. No mailing list, no agents, no forwarding to third parties.</p>
+        <p class="fj-flash" data-lead-success-msg></p>
+        <p class="fj-flash" data-lead-error-msg></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var rise=document.querySelectorAll('.fj-rise');
+  if('IntersectionObserver' in window && !rm){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('seen');io.unobserve(en.target)}})},{threshold:.1});
+    rise.forEach(function(el){io.observe(el)});
+  }else{rise.forEach(function(el){el.classList.add('seen')})}
+  document.querySelectorAll('[data-lead-form]').forEach(function(fm){
+    fm.addEventListener('submit',function(e){
+      e.preventDefault();
+      var to=fm.getAttribute('data-lead-mailto')||'';
+      var lines=[];
+      fm.querySelectorAll('input,textarea,select').forEach(function(i){
+        if(i.type==='hidden'||!i.value)return;
+        var lab=fm.querySelector('label[for="'+i.id+'"]');
+        lines.push((lab?lab.textContent.trim():(i.name||i.id))+': '+i.value);
+      });
+      var note=fm.querySelector('[data-lead-success-msg]');
+      if(note){note.textContent='Opening your email app with this enquiry ready to send. If nothing happens, write to '+to+' directly.';note.className=note.className.replace(/\bon\b/,'')+' on';}
+      window.location.href='mailto:'+to+'?subject='+encodeURIComponent('Website enquiry')+'&body='+encodeURIComponent(lines.join('\n'));
+    });
+  });
+})();
+</script>
+<!-- footer -->
+<footer class="fj-foot">
+  <div class="fj-frame">
+    <div class="fj-foot-grid">
+      <div>
+        <div class="fj-foot-brand">Fako<span>Tour operator &middot; Buea &amp; Douala</span></div>
+        <p>Licensed circuits across the whole country &mdash; volcano, rainforest, highlands, coast and Sahel &mdash; run by guides who live in the regions they walk you through. Bookings taken in French and in English.</p>
+      </div>
+      <div class="fj-foot-col">
+        <b>Circuits</b>
+        <a href="/services">Mount Cameroon trek</a>
+        <a href="/services">Coast &amp; Lob&eacute; falls</a>
+        <a href="/services">Ring Road &amp; Foumban</a>
+        <a href="/services">Waza &amp; the north</a>
+      </div>
+      <div class="fj-foot-col">
+        <b>Practical</b>
+        <a href="/pricing">Rates per person</a>
+        <a href="/pricing">Park &amp; guide fees</a>
+        <a href="/about">Guides &amp; licensing</a>
+        <a href="/contact">Seasons &amp; booking</a>
+      </div>
+      <div class="fj-foot-col">
+        <b>Offices</b>
+        <span>Rue Njo-Njo, Bonapriso, Douala</span>
+        <span>Sandpit Road, Molyko, Buea</span>
+        <span>+237 233 42 09 61</span>
+        <span>bonjour@fakojourneys.cm</span>
+      </div>
+    </div>
+    <div class="fj-foot-bar">&copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
+  </div>
+</footer>
+</body>
+</html>
