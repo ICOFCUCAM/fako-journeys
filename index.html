@@ -142,41 +142,40 @@ ul,ol{list-style:none}
    .fj-vista-pic, or to anything between them and <html>: `fixed` would silently
    degrade to `absolute` and the effect would vanish with no error at all.
    background-attachment:fixed is not a substitute — iOS Safari ignores it.
-   No script drives this. Verified by `npm run test:fixedwindow`. */
+   No script drives this. */
 .fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
 .fj-vista-pic{position:fixed;inset:0;z-index:0}
 .fj-vista-pic img{width:100%;height:100%;object-fit:cover}
-/* Veil 1 — a directional wash off the western flank: deep across the reading column
-   on the left, releasing to near-clear over the open right of the frame, so the
-   mountain keeps its own light instead of turning into a grey rectangle. */
-.fj-vista-veil{position:absolute;inset:0;background:linear-gradient(93deg,
-  color-mix(in srgb,var(--fj-shade) 90%,transparent) 0%,
-  color-mix(in srgb,var(--fj-shade) 86%,transparent) 34%,
-  color-mix(in srgb,var(--fj-shade) 78%,transparent) 56%,
-  color-mix(in srgb,var(--fj-shade) 34%,transparent) 80%,
-  color-mix(in srgb,var(--fj-shade) 16%,transparent) 100%)}
-.fj-vista-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;color:var(--fj-onphoto)}
-.fj-vista-inner{max-width:600px}
-.fj-vista-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
-.fj-vista-copy h2{font-size:clamp(38px,5.4vw,74px);margin:18px 0 20px;color:var(--fj-onphoto)}
-.fj-vista-copy p{max-width:42ch;font-size:18px;color:var(--fj-onphoto-soft)}
-.fj-ledger{display:grid;grid-template-columns:repeat(3,auto);gap:0 34px;justify-content:start;margin-top:30px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--fj-onphoto) 40%,transparent)}
+/* Veil 1 — nothing is laid over the photograph: no wash, no band of shade. The
+   element stays because it is the documented place a scrim would go, and the
+   answer for these pictures is that there isn't one. */
+.fj-vista-veil{position:absolute;inset:0;background:none}
+.fj-vista-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px}
+/* The plate. Two things make bare type impossible here. The band pictures are
+   finished artwork carrying their own set headlines, so loose words on top read
+   as a collision; and the copy travels across a picture that does not move, so
+   there is no safe corner to sit in — every corner passes under the copy at some
+   scroll position. An opaque plate in the site's own paper answers both: it is
+   lighter than the photograph rather than darker, and it stays readable over
+   whatever part of the picture it happens to be crossing. */
+.fj-vista-inner{max-width:600px;background:var(--c-bg);color:var(--c-ink);border-top:3px solid var(--c-accent);padding:36px 40px 40px;box-shadow:0 14px 40px rgba(20,19,16,.22)}
+.fj-vista-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
+.fj-vista-copy h2{font-size:clamp(32px,4.2vw,52px);margin:16px 0 18px;color:var(--c-primary)}
+.fj-vista-copy p{max-width:42ch;font-size:17.5px;color:var(--c-muted)}
+.fj-ledger{display:grid;grid-template-columns:repeat(3,auto);gap:0 34px;justify-content:start;margin-top:28px;padding-top:18px;border-top:var(--fj-rule)}
 .fj-ledger div{min-width:96px}
-.fj-ledger dt{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
-.fj-ledger dd{font-family:var(--fj-display);font-size:26px;font-weight:700;margin-top:4px;color:var(--fj-onphoto)}
+.fj-ledger dt{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.fj-ledger dd{font-family:var(--fj-display);font-size:26px;font-weight:700;margin-top:4px;color:var(--c-primary)}
 @media(max-width:1010px){
-  .fj-vista-veil{background:linear-gradient(170deg,
-    color-mix(in srgb,var(--fj-shade) 44%,transparent) 0%,
-    color-mix(in srgb,var(--fj-shade) 78%,transparent) 20%,
-    color-mix(in srgb,var(--fj-shade) 88%,transparent) 52%,
-    color-mix(in srgb,var(--fj-shade) 80%,transparent) 86%,
-    color-mix(in srgb,var(--fj-shade) 48%,transparent) 100%)}
+  .fj-vista-veil{background:none}
   .fj-vista-copy{padding:0 28px}
-  .fj-vista-copy h2{font-size:clamp(30px,6vw,46px);margin:14px 0 16px}
+  .fj-vista-inner{padding:26px 26px 30px}
+  .fj-vista-copy h2{font-size:clamp(28px,5.2vw,40px);margin:14px 0 16px}
   .fj-vista-copy p{font-size:16.5px}
   .fj-ledger{gap:0 24px;margin-top:22px}
   .fj-ledger dd{font-size:21px}
 }
+@media(max-width:560px){.fj-vista-inner{padding:22px 20px 26px}}
 @media(max-width:520px){.fj-ledger{grid-template-columns:1fr 1fr;gap:14px 20px}}
 
 /* ==== FIXED-WINDOW BAND 2 — THE SEAM ============================================
@@ -188,37 +187,25 @@ ul,ol{list-style:none}
 .fj-seam{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
 .fj-seam-pic{position:fixed;inset:0;z-index:0}
 .fj-seam-pic img{width:100%;height:100%;object-fit:cover}
-/* Veil 2 — a band of shade laid across the middle of the picture and released at the
-   top and the bottom, so the sky above and the black sand below keep their light. */
-.fj-seam-veil{position:absolute;inset:0;background:linear-gradient(180deg,
-  color-mix(in srgb,var(--fj-shade) 14%,transparent) 0%,
-  color-mix(in srgb,var(--fj-shade) 40%,transparent) 14%,
-  color-mix(in srgb,var(--fj-shade) 84%,transparent) 25%,
-  color-mix(in srgb,var(--fj-shade) 88%,transparent) 50%,
-  color-mix(in srgb,var(--fj-shade) 84%,transparent) 75%,
-  color-mix(in srgb,var(--fj-shade) 40%,transparent) 87%,
-  color-mix(in srgb,var(--fj-shade) 14%,transparent) 100%)}
-.fj-seam-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;color:var(--fj-onphoto);display:flex;justify-content:center}
-.fj-seam-inner{max-width:660px;text-align:center}
-.fj-seam-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
-.fj-seam-copy h2{font-family:var(--fj-text);font-weight:400;text-transform:none;letter-spacing:-.005em;line-height:1.16;font-size:clamp(29px,3.9vw,50px);margin:20px auto 0;color:var(--fj-onphoto)}
-.fj-seam-hr{display:block;width:64px;height:2px;margin:26px auto;background:color-mix(in srgb,var(--fj-onphoto) 70%,transparent)}
-.fj-seam-copy p{font-size:17px;color:var(--fj-onphoto-soft);max-width:52ch;margin:0 auto}
-.fj-seam-cite{display:block;margin-top:22px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
+/* Veil 2 — as above: no wash, no band of shade. The picture is shown as it is,
+   and the copy carries its own paper. */
+.fj-seam-veil{position:absolute;inset:0;background:none}
+.fj-seam-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;display:flex;justify-content:center}
+.fj-seam-inner{max-width:660px;text-align:center;background:var(--c-bg);color:var(--c-ink);border-top:3px solid var(--c-accent);padding:36px 44px 40px;box-shadow:0 14px 40px rgba(20,19,16,.22)}
+.fj-seam-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--c-accent)}
+.fj-seam-copy h2{font-family:var(--fj-text);font-weight:400;text-transform:none;letter-spacing:-.005em;line-height:1.16;font-size:clamp(26px,3.2vw,40px);margin:18px auto 0;color:var(--c-primary)}
+.fj-seam-hr{display:block;width:64px;height:2px;margin:24px auto;background:var(--c-accent)}
+.fj-seam-copy p{font-size:17px;color:var(--c-muted);max-width:52ch;margin:0 auto}
+.fj-seam-cite{display:block;margin-top:22px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--c-muted)}
 @media(max-width:1010px){
-  .fj-seam-veil{background:linear-gradient(180deg,
-    color-mix(in srgb,var(--fj-shade) 30%,transparent) 0%,
-    color-mix(in srgb,var(--fj-shade) 62%,transparent) 9%,
-    color-mix(in srgb,var(--fj-shade) 86%,transparent) 20%,
-    color-mix(in srgb,var(--fj-shade) 89%,transparent) 50%,
-    color-mix(in srgb,var(--fj-shade) 86%,transparent) 80%,
-    color-mix(in srgb,var(--fj-shade) 62%,transparent) 91%,
-    color-mix(in srgb,var(--fj-shade) 30%,transparent) 100%)}
+  .fj-seam-veil{background:none}
   .fj-seam-copy{padding:0 28px}
-  .fj-seam-copy h2{font-size:clamp(25px,5.2vw,38px)}
+  .fj-seam-inner{padding:26px 26px 30px}
+  .fj-seam-copy h2{font-size:clamp(23px,4.4vw,32px)}
   .fj-seam-copy p{font-size:16px}
   .fj-seam-hr{margin:20px auto}
 }
+@media(max-width:560px){.fj-seam-inner{padding:22px 20px 26px}}
 
 /* ---- circuit slips ------------------------------------------------------------- */
 .fj-slips{display:grid;gap:0;border-top:2px solid var(--c-primary)}
@@ -461,7 +448,7 @@ ul,ol{list-style:none}
 <!-- ascent -->
 <section class="fj-vista" data-fixed-window>
   <div class="fj-vista-pic" data-fixed-window-picture>
-    <img src="https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&fit=crop&crop=focalpoint&fp-x=0.520&fp-y=0.580&w=2400&h=1350&q=82" srcset="https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&fit=crop&crop=focalpoint&fp-x=0.520&fp-y=0.580&w=1200&h=675&q=82 1200w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&fit=crop&crop=focalpoint&fp-x=0.520&fp-y=0.580&w=1800&h=1012&q=82 1800w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&fit=crop&crop=focalpoint&fp-x=0.520&fp-y=0.580&w=2400&h=1350&q=82 2400w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&fit=crop&crop=focalpoint&fp-x=0.520&fp-y=0.580&w=3000&h=1688&q=82 3000w" sizes="100vw" alt="the upper slopes of Mount Cameroon at dawn above the Atlantic" loading="lazy" decoding="async" style="object-position:52% 58%" data-illustration="/images/mount-dawn-cinder.svg" data-illustration-alt="The upper cinder slopes of Mount Cameroon at dawn with the Atlantic far below" data-provider="unsplash">
+    <img src="/images/band-cameroon.png" alt="Explore Cameroon: Mount Cameroon, the Atlantic coast, rainforest and city in one view" loading="lazy" decoding="async" data-locked="true">
     <span class="fj-vista-veil" aria-hidden="true"></span>
   </div>
   <div class="fj-vista-copy">
@@ -570,7 +557,7 @@ ul,ol{list-style:none}
 <!-- shoreline -->
 <section class="fj-seam" data-fixed-window>
   <div class="fj-seam-pic" data-fixed-window-picture>
-    <img src="https://images.pexels.com/photos/15456412/pexels-photo-15456412.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400&h=1350" srcset="https://images.pexels.com/photos/15456412/pexels-photo-15456412.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1200&h=675 1200w, https://images.pexels.com/photos/15456412/pexels-photo-15456412.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1800&h=1012 1800w, https://images.pexels.com/photos/15456412/pexels-photo-15456412.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400&h=1350 2400w, https://images.pexels.com/photos/15456412/pexels-photo-15456412.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=3000&h=1688 3000w" sizes="100vw" alt="surf breaking on volcanic black sand at dusk on the Cameroon coast near Limbe" loading="lazy" decoding="async" style="object-position:50% 56%" data-illustration="/images/coast-black-sand-dusk.svg" data-illustration-alt="Surf breaking on volcanic black sand at dusk on the Cameroon coast" data-provider="pexels">
+    <img src="/images/band-africa.png" alt="One continent, endless wonders: African landscapes, wildlife, cities and coastline" loading="lazy" decoding="async" data-locked="true">
     <span class="fj-seam-veil" aria-hidden="true"></span>
   </div>
   <div class="fj-seam-copy">

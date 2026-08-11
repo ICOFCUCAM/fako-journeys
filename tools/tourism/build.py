@@ -220,10 +220,11 @@ def cmd_adopt(args):
     for page, changed in r["pages"]:
         print("  %-16s %d image(s) rewritten" % (page, changed))
     if args.revert:
-        print("\nreverted %d slot(s) to their illustrations" % r["reverted"])
+        print("\nreverted %d slot(s) to their illustrations, "
+              "left %d locked slot(s) alone" % (r["reverted"], r["locked"]))
     else:
-        print("\nadopted %d photograph(s), kept %d illustration(s)"
-              % (r["adopted"], r["kept"]))
+        print("\nadopted %d photograph(s), kept %d illustration(s), "
+              "left %d locked slot(s) alone" % (r["adopted"], r["kept"], r["locked"]))
         if r["missing"]:
             print("no resolved photo for: %s" % ", ".join(r["missing"]))
     return 0

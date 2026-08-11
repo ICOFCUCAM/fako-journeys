@@ -41,7 +41,8 @@ Prices, itineraries and figures are illustrative too. Check them before publishi
 
 ## The pictures
 
-Every image in `images/` is an original SVG illustration — twenty-seven scenes drawn in
+Apart from the two band posters, every image in `images/` is an original SVG
+illustration — twenty-seven scenes drawn in
 the site's own five colours, in a flat relief-print style: the upper slopes of Fako, the
 Lobé falls, the Waza waterholes, the Bénoué, the Mandara spires, Foumban's craft street,
 the offices in Buea and Bonapriso. Each one is drawn to match the `alt` text of the slot
@@ -69,7 +70,9 @@ were written *from* the drawings in the first place.
 extension and the `src` (grep for the name). Landscape, roughly 3:2, at least
 1600px wide for the full-bleed bands. The page crops these to 3/4, 4/5, 5/4 and
 1/1 with `object-fit: cover`, so keep the subject near the centre — the
-illustrations are composed the same way, inside the middle 800px.
+illustrations are composed the same way, inside the middle 800px. Add
+`data-locked="true"` to the `<img>` if the choice is deliberate and the resolver
+should never overwrite it.
 
 ## The tourism image system
 
@@ -245,8 +248,21 @@ block* — so **do not add `transform`, `filter`, `backdrop-filter`, `perspectiv
 with the page, nothing errors, and the effect is silently gone. `background-attachment:
 fixed` is not a substitute — iOS Safari ignores it.
 
-The scrim lives inside the picture, not on the band, and is a tint rather than a
-blackout, so the picture keeps its own light.
+**Nothing is laid over the photograph.** Both bands run a chosen poster —
+`images/band-cameroon.png` and `images/band-africa.png` — which already carries
+its own set headline, so there is no scrim, no tint and no wash: the veil spans
+are still there, but their `background` is `none`.
+
+Legibility comes from an opaque plate instead. That is not decoration. Bare type
+fails here twice over: it collides with the wording baked into the artwork, and
+the copy travels across a picture that does not move, so there is no safe corner
+to place it in — every corner passes under the copy at some scroll position. A
+plate in the site's own paper answers both, and it lightens the area it covers
+rather than darkening it.
+
+Those two `<img>` tags carry `data-locked="true"`. That is what keeps
+`tourism:adopt` from replacing hand-picked artwork with a search result; it is
+honoured in both directions, so `--revert` leaves them alone as well.
 
 ## Origin
 

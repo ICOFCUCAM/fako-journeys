@@ -25,6 +25,8 @@ Rules it follows:
   * the illustration is remembered in data-illustration, so a slot can be put
     back, re-pointed at a better photo later, or fall back if a photo is dropped.
   * a slot with no resolved photo keeps its drawing. Nothing is left broken.
+  * an <img data-locked="true"> is never touched, by adopt or by revert: it is
+    artwork somebody chose, not a slot for a search result.
   * idempotent: running it twice changes nothing the second time.
 """
 
@@ -187,7 +189,8 @@ def run(country_slug="cameroon", revert=False, write=True):
         if e and e.local:
             focal_by_local.setdefault(e.local, e.focal)
 
-    report = {"adopted": 0, "kept": 0, "reverted": 0, "pages": [], "missing": set()}
+    report = {"adopted": 0, "kept": 0, "reverted": 0, "locked": 0,
+              "pages": [], "missing": set()}
 
     for page in PAGES:
         path = os.path.join(ROOT, page)
@@ -199,10 +202,18 @@ def run(country_slug="cameroon", revert=False, write=True):
             tag = m.group(0)
             attrs = dict(ATTR_RE.findall(tag))
             if revert:
+                if attrs.get("data-locked") == "true":
+                    report["locked"] += 1
+                    return tag
                 if attrs.get("data-illustration"):
                     changed += 1
                     report["reverted"] += 1
                     return revert_tag(tag)
+                return tag
+            if attrs.get("data-locked") == "true":
+                # Artwork chosen by hand. A resolver result must never displace
+                # a picture somebody deliberately put there.
+                report["locked"] += 1
                 return tag
             illustration = attrs.get("data-illustration") or attrs.get("src", "")
             record = photos.get(illustration)
