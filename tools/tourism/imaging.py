@@ -53,8 +53,17 @@ def cdn_url(record, role, focal, width=None):
 
 
 def srcset(record, role, focal):
+    """The width ladder — or the single real width, for a provider that has no
+    CDN to ask for another size. Four identical URLs carrying four different
+    width descriptors would be three lies, and the browser believes descriptors:
+    told a 1024px file is 2400px wide, it will pick it for a 2400px slot and
+    scale it up."""
     if not record:
         return None
+    provider = provider_for(record)
+    if not provider.supports_resize:
+        width = record.get("width") or role["width"]
+        return "%s %dw" % (cdn_url(record, role, focal), int(width))
     return ", ".join("%s %dw" % (cdn_url(record, role, focal, width=w), w)
                      for w in role["srcset"])
 

@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "note": "The photographic brief. tools/tourism/prompting.py compiles this plus one country entry into a generation instruction; nothing here is model-specific except `model`. Edit this file to change how every generated image looks — no code change.",
+
+  "model": {
+    "provider": "openai",
+    "model": "gpt-image-1",
+    "quality": "high",
+    "sizes": {
+      "landscape": "1536x1024",
+      "portrait": "1024x1536",
+      "square": "1024x1024"
+    }
+  },
+
+  "look": [
+    "Documentary travel photography, shot on a full-frame camera in available light.",
+    "Believable colour: the greens are the greens of that place, not a preset.",
+    "Natural contrast with detail held in both the highlights and the shadows.",
+    "Sharp where the subject is, with the depth of field a real lens at this distance would give."
+  ],
+
+  "people": [
+    "Anyone in frame is doing something, not posing for a camera.",
+    "Photograph people as individuals with their own business to attend to, at a respectful distance, in the clothes they would actually be wearing to do it.",
+    "No staged smiles at the lens, no visitor-and-local tableau, no one arranged as scenery."
+  ],
+
+  "avoid": [
+    "any text, lettering, captions, titles, watermarks, signatures or logos anywhere in the frame",
+    "collage, split-screen, montage, multiple panels, borders, frames or vignettes",
+    "map shapes, continent outlines, flags or travel-poster layouts",
+    "HDR, heavy vignetting, orange-and-teal grading, crushed blacks, oversaturation",
+    "fisheye and ultra-wide distortion",
+    "obvious stock-photo staging, or a composition with a hole left in it for type"
+  ],
+
+  "$comment_direction": "One line per category: what the photograph is actually of, and what would make it a good one rather than a generic one. This is the part worth editing.",
+  "direction": {
+    "hero": "The single establishing frame for the whole country — the landform or skyline it is known for, at the hour it looks most like itself. Wide, deep, and calm enough to carry a headline over.",
+    "nature": "A landscape read as terrain rather than as scenery: the shape of the ground, the way the vegetation changes with height, weather doing something.",
+    "wildlife": "One animal or a small group, in its own habitat, at a distance a real photographer would have kept. Behaviour, not a portrait.",
+    "safari": "A game drive as it actually looks — an open vehicle, dust, long light, guides working. The animals may be far off; that is the truth of it.",
+    "mountains": "Relief and scale: ridgelines receding, a route legible across the slope, cloud sitting where cloud sits on that massif.",
+    "waterfalls": "Moving water with the rock it falls over and the forest it falls through, at a shutter speed that keeps texture in the water rather than turning it to smoke.",
+    "lakes-rivers": "Water as a working part of the landscape — a shoreline, a crossing, a boat that belongs to someone.",
+    "beaches": "The specific coast, not a generic tropical beach: the real sand colour, the real vegetation behind it, the fishing boats and people who use it.",
+    "forests": "Inside the canopy rather than above it — light coming down in shafts, understorey, the density and the scale of the trunks.",
+    "adventure": "Effort in progress. Someone mid-activity with the terrain that makes it hard, equipment that has been used before.",
+    "culture": "A cultural practice being performed for the people it belongs to, in its own setting.",
+    "traditional-people": "A person or small group in traditional dress, photographed as individuals engaged in something, in their own surroundings and at their own eye level.",
+    "food": "Food as it is actually eaten and sold — a cooking fire, a market stall, a plate on a real table — not a styled overhead flat lay.",
+    "festivals": "A crowd and a moment inside it: movement, colour, the thing everyone is watching.",
+    "crafts": "Hands and tools at the point of work, with the material and the workshop around them.",
+    "historic-sites": "A built site with its age visible, given a sense of scale by the ground it stands on.",
+    "heritage": "An inherited object, building or practice still in use, in the setting that gives it meaning.",
+    "cities": "A working city: streets in use, real traffic, the mixture of buildings a city actually has, at a time of day with people in it.",
+    "architecture": "One building or a coherent group, read for its structure — the material, the rhythm of the openings, the light raking across it.",
+    "local-life": "An ordinary hour in an ordinary place. Nothing staged, nothing picturesque for its own sake.",
+    "family-community": "People working or gathering together on something shared, with the task visible.",
+    "outdoor": "Open country used for something — a track, a trail, a river — with the weather and the hour honest.",
+    "luxury": "Comfort placed in a landscape: a well-made room, terrace or camp with the view it was built for. Restrained, not glossy.",
+    "eco-tourism": "Conservation as work: a guide, a researcher, a ranger, or a trail crew doing the thing, with the habitat around them.",
+    "photography": "A view worth carrying a camera to, at the hour that makes it — the picture a photographer went there for.",
+    "hidden-gems": "Somewhere quiet and specific that is plainly not the famous view, and plainly worth the trip.",
+    "why-visit": "One frame that argues the case: something particular to this country happening in front of a landscape only this country has."
+  },
+
+  "$comment_composition": "Focal points in the country datasets are percentages. These turn them into words the model can act on, because a generated frame has no focal-point crop parameter — the composition has to be right in the original.",
+  "composition": {
+    "x": [[33, "with the subject set to the left of centre"],
+          [67, "with the subject near the centre of the frame"],
+          [101, "with the subject set to the right of centre"]],
+    "y": [[33, "and the interest high in the frame"],
+          [67, "and the horizon around the middle"],
+          [101, "and the interest low in the frame, with sky above"]]
+  }
+}

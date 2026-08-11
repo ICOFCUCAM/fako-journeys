@@ -9,6 +9,12 @@
     build.py verify              check the rendered HTML
     build.py test                run the resolver test suite against a local mock
     build.py adopt               put resolved photographs on the five main pages
+    build.py placements          every image slot on the site, and what belongs in it
+    build.py prompts             the generation instruction for each of those slots
+    build.py generate            make candidate images from them
+    build.py intake              read incoming/ and propose a slot for each upload
+    build.py compare             contact sheet: every candidate for every slot
+    build.py place               put chosen candidates into their slots
     build.py scaffold            create a new country with 27 empty slots
     build.py report              write tourism/REPORT.md
     build.py all                 validate, render, verify, report
@@ -312,6 +318,141 @@ def cmd_providers(args):
     return 0
 
 
+def _one_country(args, default="cameroon"):
+    """The generation commands work against one country's site pages."""
+    _tax, countries, _cache = dataset(args.country or default)
+    return countries[0]
+
+
+def cmd_placements(args):
+    """Every image slot on the five hand-written pages, and what belongs in it."""
+    from tourism import placements as pl
+    tax, countries, _cache = dataset(args.country or "cameroon")
+    country = countries[0]
+    rows = pl.scan(country)
+    page = None
+    for p in rows:
+        if p["page"] != page:
+            page = p["page"]
+            print("\n# %s" % page)
+        flag = "  [LOCKED]" if p["locked"] else ("" if p["category"] else "  [no category]")
+        print("  %-26s %-14s %d:%d%s" % (p["id"], p["wrapper"] or "default",
+                                         p["aspect"][0], p["aspect"][1], flag))
+        print("      %s" % (p["instruction"] or "(no instruction — slot has no alt text)"))
+    s = pl.summarise(rows)
+    print("\n%d slot(s): %d targetable, %d locked, %d with no category"
+          % (s["total"], s["targetable"], s["locked"], s["uncategorised"]))
+    print("shapes in use: %s" % ", ".join(s["shapes"]))
+    dupes = pl.duplicates(rows)
+    if dupes:
+        print("\nthe same illustration fills more than one slot — each gets its own "
+              "picture, cut for its own shape:")
+        for slot_id, items in sorted(dupes.items()):
+            print("  %-26s %s" % (slot_id, ", ".join("%s %d:%d" % (i["page"], i["aspect"][0],
+                                                                   i["aspect"][1])
+                                                     for i in items)))
+    return 0
+
+
+def cmd_prompts(args):
+    """The generation instruction for every slot. Read before spending money."""
+    from tourism import candidates as pool, generate as gen, prompting
+    tax, countries, _cache = dataset(args.country or "cameroon")
+    country = countries[0]
+    style = prompting.load_style()
+    jobs = gen.plan_jobs(country, tax, pool.load(), style, args.scope, args.only)
+    for j in jobs:
+        print("\n%s  [%s]  ->  %s" % (j.label, j.size, j.where))
+        print("  %s" % j.prompt)
+    print("\n%d instruction(s). Nothing was sent; this is what would be." % len(jobs))
+    return 0
+
+
+def cmd_generate(args):
+    """Make candidate images from those instructions."""
+    from tourism import generate as gen
+    tax, countries, _cache = dataset(args.country or "cameroon")
+    country = countries[0]
+    try:
+        summary = gen.run(country, tax, scope=args.scope, only=args.only,
+                          n=args.n, dry_run=args.dry_run, force=args.force)
+    except gen.Unavailable as exc:
+        print("GENERATION UNAVAILABLE: %s" % exc)
+        print("\nSet OPENAI_API_KEY, or run with --dry-run to see the instructions "
+              "without sending anything.")
+        return 2
+    except gen.RateLimited as exc:
+        print("\nSTOPPED: %s" % exc)
+        print("Everything generated so far is saved. Run again to continue.")
+        return 1
+    return 0 if not summary.get("failed") else 1
+
+
+def cmd_intake(args):
+    """Read uploaded images and propose a slot for each."""
+    from tourism import intake
+    tax, countries, _cache = dataset(args.country or "cameroon")
+    directory = args.source_dir
+    if not os.path.isabs(directory):
+        directory = os.path.join(ROOT, directory)
+    try:
+        intake.run(countries[0], tax, directory=directory,
+                   do_describe=args.describe, dry_run=args.dry_run)
+    except intake.Unavailable as exc:
+        print("INTAKE: %s" % exc)
+        print("\nRun without --describe to match on shape and filename alone.")
+        return 2
+    except intake.RateLimited as exc:
+        print("\nSTOPPED: %s" % exc)
+        return 1
+    return 0
+
+
+def cmd_compare(args):
+    """Write the contact sheet."""
+    from tourism import compare
+    tax, countries, cache = dataset(args.country or "cameroon")
+    counts, path = compare.build(countries[0], tax, cache)
+    print("wrote %s" % os.path.relpath(path, ROOT))
+    print("%d slot(s), %d generated candidate(s), %d slot(s) with none yet"
+          % (counts["slots"], counts["generated"], counts["empty"]))
+    print("open it, pick one per slot, download picks.json, then: build.py place picks.json")
+    return 0
+
+
+def cmd_place(args):
+    """Put chosen candidates into the slots they were generated for."""
+    from tourism import place
+    country = _one_country(args)
+    picks = {}
+    if not args.revert:
+        if not args.picks:
+            print("place needs a picks.json — download one from the contact sheet "
+                  "(build.py compare), or pass --revert to undo.")
+            return 2
+        picks = place.load_picks(args.picks)
+    report = place.run(picks, country, revert=args.revert, dry_run=args.dry_run)
+    for err in report["errors"]:
+        print("  error: %s" % err)
+    if report["errors"]:
+        print("\nnothing was written — fix the picks file and run again.")
+        return 2
+    for page, changed in report["pages"]:
+        print("  %-16s %d image(s) rewritten" % (page, changed))
+    if args.revert:
+        print("\nreverted %d placed slot(s) to their illustrations" % report["reverted"])
+        if report["reverted"]:
+            print("run `adopt` to put resolved stock photographs back where there "
+                  "were any — that pair is a byte-identical round trip.")
+    else:
+        print("\nplaced %d image(s), left %d slot(s) as they were, "
+              "%d locked slot(s) alone" % (report["placed"], report["skipped"],
+                                           report["locked"]))
+        if args.dry_run:
+            print("dry run: no page and no file was written.")
+    return 0
+
+
 def cmd_all(args):
     rc = cmd_validate(args)
     print()
@@ -328,6 +469,8 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "adopt": cmd_adopt, "all": cmd_all,
+    "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
+    "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,
 }
 
 
@@ -342,6 +485,20 @@ def main():
                    help="adopt: put the illustrations back")
     p.add_argument("--force", action="store_true",
                    help="re-resolve slots that are already cached")
+    # generation and intake
+    p.add_argument("--scope", choices=("site", "tourism", "all"), default="site",
+                   help="site: the five hand-written pages (default). "
+                        "tourism: the generated country page. all: both")
+    p.add_argument("--only", help="one slot id, page or category")
+    p.add_argument("-n", type=int, default=1,
+                   help="candidates to generate per slot (default 1)")
+    p.add_argument("--dry-run", action="store_true",
+                   help="show what would happen; send nothing, write nothing")
+    p.add_argument("--from", dest="source_dir", default="incoming",
+                   help="intake: the folder of uploaded images (default incoming/)")
+    p.add_argument("--describe", action="store_true",
+                   help="intake: ask the vision model what each upload shows")
+    p.add_argument("picks", nargs="?", help="place: the picks.json to apply")
     args = p.parse_args()
     return COMMANDS[args.command](args)
 

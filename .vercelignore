@@ -5,3 +5,7 @@ tourism/REPORT.md
 .github/
 .env.example
 README.md
+tourism/candidates/
+tourism/compare.html
+tourism/style.json
+incoming/

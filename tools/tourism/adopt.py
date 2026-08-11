@@ -26,7 +26,10 @@ Rules it follows:
     back, re-pointed at a better photo later, or fall back if a photo is dropped.
   * a slot with no resolved photo keeps its drawing. Nothing is left broken.
   * an <img data-locked="true"> is never touched, by adopt or by revert: it is
-    artwork somebody chose, not a slot for a search result.
+    artwork somebody chose, not a slot for a search result. The same goes for
+    data-placed="true", which `place` sets on a generated or uploaded picture
+    somebody selected from the contact sheet — use `place --revert` to undo
+    those, so the two tools never fight over the same slot.
   * idempotent: running it twice changes nothing the second time.
 """
 
@@ -201,8 +204,9 @@ def run(country_slug="cameroon", revert=False, write=True):
             nonlocal changed
             tag = m.group(0)
             attrs = dict(ATTR_RE.findall(tag))
+            held = attrs.get("data-locked") == "true" or attrs.get("data-placed") == "true"
             if revert:
-                if attrs.get("data-locked") == "true":
+                if held:
                     report["locked"] += 1
                     return tag
                 if attrs.get("data-illustration"):
@@ -210,7 +214,7 @@ def run(country_slug="cameroon", revert=False, write=True):
                     report["reverted"] += 1
                     return revert_tag(tag)
                 return tag
-            if attrs.get("data-locked") == "true":
+            if held:
                 # Artwork chosen by hand. A resolver result must never displace
                 # a picture somebody deliberately put there.
                 report["locked"] += 1

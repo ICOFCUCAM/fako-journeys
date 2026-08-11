@@ -41,6 +41,8 @@ class Provider:
     key_env = ""
     image_host = ""            # every stored imageUrl must start with this
     supports_focal_crop = False   # can the CDN crop around a focal point?
+    supports_resize = True        # can it serve the same picture at another width?
+    generates = False             # makes images rather than finding them
 
     # -- configuration ----------------------------------------------------------
 

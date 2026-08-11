@@ -13,8 +13,11 @@ verification, caching, resumability and render.
 Nothing here writes tourism/cache/ or tourism/countries/.
 """
 
+import base64
 import http.server
 import json
+import struct
+import zlib
 import os
 import re
 import shutil
@@ -29,6 +32,22 @@ sys.path.insert(0, os.path.dirname(HERE))
 
 PORT = 8791
 JPEG = b"\xff\xd8\xff\xe0" + b"\x00" * 4000 + b"\xff\xd9"
+
+
+def png(width, height, seed=0):
+    """A real PNG at exactly these dimensions, so the header the code parses is
+    the header a generator would actually send."""
+    rows = [b"\x00" + bytes([(x + y + seed) % 256 for x in range(width * 3)])
+            for y in range(height)]
+
+    def chunk(tag, data):
+        block = tag + data
+        return (struct.pack(">I", len(data)) + block
+                + struct.pack(">I", zlib.crc32(block) & 0xFFFFFFFF))
+
+    header = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", header)
+            + chunk(b"IDAT", zlib.compress(b"".join(rows))) + chunk(b"IEND", b""))
 
 RESULTS = []
 CALLS = []
@@ -45,6 +64,7 @@ class Mocks(http.server.BaseHTTPRequestHandler):
     unsplash_empty = False
     unsplash_irrelevant = False
     pexels_empty = False
+    openai_down = False
 
     def log_message(self, *a):
         pass
@@ -92,6 +112,24 @@ class Mocks(http.server.BaseHTTPRequestHandler):
         }
 
     # -- routes -----------------------------------------------------------------
+
+    def do_POST(self):
+        """gpt-image-1 and the vision endpoint. Returns real PNG bytes at the
+        requested size, so the caller has to measure them like it would in
+        production rather than trusting what it asked for."""
+        body = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
+        if not self.headers.get("Authorization", "").startswith("Bearer "):
+            return self._json({"error": {"message": "no key"}}, status=401)
+        if self.openai_down:
+            return self._json({"error": {"message": "rate limited"}}, status=429)
+        CALLS.append(("openai", self.path))
+        if self.path.endswith("/images/generations"):
+            w, h = (int(v) for v in body["size"].split("x"))
+            return self._json({"data": [
+                {"b64_json": base64.b64encode(png(w, h, i)).decode()}
+                for i in range(body.get("n", 1))]})
+        return self._json({"choices": [{"message": {"content":
+            "Elephants at a waterhole in dry acacia savanna."}}]})
 
     def do_GET(self):
         url = urllib.parse.urlparse(self.path)
@@ -171,6 +209,7 @@ def no_keys():
     os.environ.pop("UNSPLASH_ACCESS_KEY", None)
     os.environ.pop("UNSPLASH_API_KEY", None)
     os.environ.pop("PEXELS_API_KEY", None)
+    os.environ.pop("OPENAI_API_KEY", None)
 
 
 def resolve_all(tax, country, cache, seen=None, only=None):
@@ -510,6 +549,168 @@ def main():
               and not re.search(r"(UNSPLASH_ACCESS_KEY|PEXELS_API_KEY)=\S", body))
         check("the cache schema has no key field",
               not any("key" in f.lower() for f in cache_mod.FIELDS))
+        check(".env.example declares OPENAI_API_KEY, empty",
+              "OPENAI_API_KEY=" in body and not re.search(r"OPENAI_API_KEY=\S", body))
+
+        # ---- the generation engine ------------------------------------------
+        print("\ngeneration engine")
+        from tourism import candidates as pool, generate as gen
+        from tourism import intake, place as place_mod, placements as pl, prompting
+
+        style = prompting.load_style()
+        placements = pl.scan(cameroon)
+        targets = pl.targetable(placements)
+
+        check("every image slot on the five pages is found",
+              len(placements) >= 30, "%d slots" % len(placements))
+        check("locked artwork is never a generation target",
+              all(not p["locked"] for p in targets)
+              and any(p["locked"] for p in placements))
+        check("each slot carries the shape its own stylesheet imposes",
+              {tuple(p["aspect"]) for p in placements} >= {(3, 4), (4, 5), (5, 4)})
+        check("one illustration used at two shapes is two different jobs",
+              any(len({tuple(i["aspect"]) for i in items}) > 1
+                  for items in pl.duplicates(placements).values()))
+
+        jobs = gen.plan_jobs(cameroon, tax, pool.Pool(path=os.path.join(tmp, "p.json")),
+                             style, "site")
+        prompts = {j.slot: j.prompt for j in jobs}
+        check("every targetable slot compiles to an instruction",
+              len(jobs) == len(targets) and all(prompts.values()))
+        check("the instruction names the slot's own subject",
+              all(j.prompt.startswith("A documentary travel photograph. Subject:")
+                  for j in jobs))
+        check("the instruction states the delivered crop",
+              all("cropped to %d:%d" % tuple(j.aspect) in j.prompt for j in jobs))
+        check("the instruction forbids text baked into the picture",
+              all("watermarks" in j.prompt and "travel-poster" in j.prompt for j in jobs))
+        check("prompts are deterministic",
+              prompts == {j.slot: j.prompt for j in
+                          gen.plan_jobs(cameroon, tax,
+                                        pool.Pool(path=os.path.join(tmp, "p2.json")),
+                                        style, "site")})
+        check("a portrait slot asks for a portrait frame",
+              all(prompting.size_for_aspect(j.aspect, style) == "1024x1536"
+                  for j in jobs if j.aspect[1] > j.aspect[0]))
+
+        # generation against the mock, which returns real PNG bytes
+        os.environ["OPENAI_API_BASE"] = "http://localhost:%d/openai/v1" % PORT
+        os.environ["TOURISM_CANDIDATES_FILE"] = os.path.join(tmp, "candidates.json")
+        gen.CANDIDATE_DIR = os.path.join(tmp, "candidates")
+        place_mod.DESTINATIONS = {
+            "openai": (os.path.join(tmp, "images", "generated"), "/images/generated/"),
+            "upload": (os.path.join(tmp, "images", "uploads"), "/images/uploads/"),
+        }
+
+        os.environ.pop("OPENAI_API_KEY", None)
+        check("no key means no generation, and a clear reason",
+              _raises(lambda: gen.run(cameroon, tax, scope="site", only="waza-elephants",
+                                      log=lambda *a: None),
+                      gen.Unavailable))
+        check("a dry run sends nothing and needs no key",
+              gen.run(cameroon, tax, scope="site", only="waza-elephants",
+                      dry_run=True, log=lambda *a: None)["generated"] == 0)
+
+        os.environ["OPENAI_API_KEY"] = "mock-openai-key"
+        summary = gen.run(cameroon, tax, scope="site", only="waza-elephants",
+                          log=lambda *a: None)
+        index = pool.load()
+        made = [c for slot in index.slots for c in index.generated(slot)]
+        check("generation writes real image files",
+              summary["generated"] == 2 and len(made) == 2)
+        check("dimensions are read from the bytes, not from the request",
+              all(c["width"] and c["height"] and
+                  os.path.exists(os.path.join(root, c["file"])) for c in made))
+        check("the same subject at two shapes gets two different pictures",
+              len({c["id"] for c in made}) == 2
+              and len({tuple(c["aspect"]) for c in made}) == 2)
+        check("a generated candidate records the instruction it came from",
+              all(c.get("prompt") and c.get("where") for c in made))
+        check("a second run generates nothing already held",
+              gen.run(cameroon, tax, scope="site", only="waza-elephants",
+                      log=lambda *a: None)["generated"] == 0)
+
+        check("nothing generated is in the live cache",
+              not any(r.get("provider") in ("openai", "upload")
+                      for r in cache_mod.load().entries.values()))
+
+        # placement
+        slot = "site:index:waza-elephants"
+        cand = index.generated(slot)[0]
+        before = open(os.path.join(root, "index.html")).read()
+        report = place_mod.run({slot: cand["id"]}, cameroon, dry_run=True, log=lambda *a: None)
+        check("a dry-run placement writes no page and no file",
+              report["placed"] == 1
+              and open(os.path.join(root, "index.html")).read() == before)
+        check("a pick naming a slot that does not exist fails the whole run",
+              place_mod.run({"site:index:nope": cand["id"]}, cameroon,
+                            dry_run=True, log=lambda *a: None)["errors"])
+        check("a stock candidate cannot be placed by `place`",
+              place_mod.run({slot: "unsplash:abc"}, cameroon,
+                            dry_run=True, log=lambda *a: None)["errors"])
+
+        tag = place_mod.rewrite_tag(
+            '<img src="/images/waza-elephants.svg" alt="Elephants" loading="lazy">',
+            "/images/generated/x.png", cand, "Elephants at a waterhole", {"x": 50, "y": 55})
+        check("a placed tag keeps the illustration it replaced",
+              'data-illustration="/images/waza-elephants.svg"' in tag
+              and 'data-illustration-alt="Elephants"' in tag)
+        check("a placed tag is marked so `adopt` cannot overwrite it",
+              'data-placed="true"' in tag and 'data-generated="true"' in tag)
+        check("a placed tag has no width or height attribute",
+              " width=" not in tag and " height=" not in tag)
+        check("srcset states the one width there actually is",
+              'srcset="/images/generated/x.png %dw"' % cand["width"] in tag)
+        check("reverting a placed tag restores the drawing exactly",
+              place_mod.revert_tag(tag) ==
+              '<img src="/images/waza-elephants.svg" alt="Elephants" loading="lazy">')
+
+        # a generated record is deliverable through the ordinary imaging path
+        rec = {"provider": "openai", "photoId": "x", "photographer": "AI",
+               "imageUrl": "/images/generated/x.png", "width": 1536, "height": 1024}
+        role = tax.role("wildlife")
+        check("a generated record delivers through the normal imaging path",
+              imaging.cdn_url(rec, role, {"x": 50, "y": 50}) == "/images/generated/x.png")
+        check("a provider with no CDN gets one honest srcset entry",
+              imaging.srcset(rec, role, {"x": 50, "y": 50})
+              == "/images/generated/x.png 1536w")
+        check("a generated image is credited as generated, not as a photographer",
+              providers.BY_NAME["openai"].attribution(
+                  dict(rec, model="gpt-image-1"))[0] == "AI-generated · gpt-image-1")
+        check("an uploaded image is never labelled AI",
+              providers.BY_NAME["upload"].attribution({"photographer": "A Name"})
+              == ("A Name", None))
+        check("generators are not searchable",
+              _raises(lambda: providers.BY_NAME["openai"].search("x", "landscape"),
+                      NotImplementedError)
+              and "openai" not in [p.name for p in providers.all_providers()])
+
+        # intake
+        up = os.path.join(tmp, "incoming")
+        os.makedirs(up, exist_ok=True)
+        shutil.copy(os.path.join(root, cand["file"]),
+                    os.path.join(up, "waza-elephants-waterhole-savanna.png"))
+        shutil.copy(os.path.join(root, cand["file"]), os.path.join(up, "IMG_9931.png"))
+        found = intake.scan_folder(up)
+        check("intake reads dimensions out of the uploaded files",
+              len(found) == 2 and all(f["width"] and f["height"] for f in found))
+        matched, unmatched = intake.assign(found, targets)
+        check("a named upload is matched to the slot it describes",
+              any(m["placement"]["id"] == "waza-elephants" for m in matched))
+        check("an unnamed upload is reported, not guessed at",
+              any(f["name"] == "IMG_9931.png" for f in unmatched))
+        check("intake never matches two images to one slot",
+              len({m["slot"] for m in matched}) == len(matched))
+        wrong = dict(found[0], width=1000, height=3000)
+        check("a shape the crop would ruin scores zero",
+              intake.score(wrong, [p for p in targets
+                                   if tuple(p["aspect"]) == (16, 9)] [0]
+                           if any(tuple(p["aspect"]) == (16, 9) for p in targets)
+                           else targets[0])[0] == 0.0)
+        check("intake proposes only; it never writes a page",
+              intake.run(cameroon, tax, directory=up, dry_run=True,
+                         log=lambda *a: None)["matched"] >= 1
+              and open(os.path.join(root, "index.html")).read() == before)
 
     finally:
         httpd.shutdown()

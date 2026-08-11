@@ -74,6 +74,100 @@ illustrations are composed the same way, inside the middle 800px. Add
 `data-locked="true"` to the `<img>` if the choice is deliberate and the resolver
 should never overwrite it.
 
+## The image generation engine
+
+Every `<img>` on the five hand-written pages is a **slot**: a shape the
+stylesheet already decided, and a sentence already written about what belongs in
+it. That sentence is the slot's alt text, written for the drawing before any
+photograph existed — so it describes intent, not a search result. The engine
+compiles it into an instruction, generates a picture from it, and puts the
+result beside the stock photograph so you can choose.
+
+    npm run tourism:placements      # the 34 slots, and what belongs in each
+    npm run tourism:prompts         # the instruction each one compiles to
+    npm run tourism:generate -- --dry-run    # what it would send, and the cost
+    npm run tourism:generate        # make the candidates
+    npm run tourism:intake          # match images you uploaded to slots
+    npm run tourism:compare         # contact sheet: every option, side by side
+    npm run tourism:place -- picks.json      # publish the ones you chose
+
+**A category is not a placement.** "Waterfalls" is a subject; the third picture
+down on services.html is a *place*, and generating for one is not generating for
+the other. The Lobé falls appear on two pages at two ratios, so they are two
+jobs and two pictures — a 4:5 crop of a frame composed for 5:4 is a photograph
+of the middle third of a waterfall. `placements` prints exactly where each
+duplicate lands and at what shape.
+
+**Instructions are readable before they are expensive.** `prompts` prints all 32
+without sending anything; `generate --dry-run` adds the size and the estimated
+cost per slot. Every instruction is built from `tourism/style.json` — the
+photographic look, the direction for each of the 27 categories, the composition
+phrases and the things to avoid — so changing how every generated image looks is
+one edit to a data file, not a code change. Same input, same instruction, every
+time.
+
+The avoid-list is not boilerplate. It bans text, lettering, watermarks, collage
+and travel-poster layouts, because the two band pictures on the home page
+arrived as finished posters with their own headlines baked in and the whole page
+had to be rebuilt around them. A generator will produce exactly that unless told
+not to.
+
+### Choosing
+
+Nothing generated goes near the site. Candidates land in `tourism/candidates/`,
+and `compare` writes a contact sheet — one row per slot, showing what the page
+uses now next to every generated and uploaded candidate, **all cropped to the
+shape that slot actually imposes**, because judging a 3:2 frame that will be
+delivered at 4:5 tells you nothing.
+
+Picking writes to localStorage and downloads a `picks.json`; `place` applies it.
+That round trip is deliberate — a static page cannot write to the repository,
+and a review tool that could silently change the site would be a worse tool.
+
+`place` copies the chosen file into `images/generated/` (or `images/uploads/`),
+rewrites that one `<img>`, and marks it `data-placed="true"` so `adopt` can
+never overwrite a picture a person chose. `place --revert` returns a slot to its
+illustration; run `adopt` after it to put a resolved stock photograph back,
+which together is a byte-identical round trip.
+
+### Images you upload
+
+Drop files in `incoming/` and run `npm run tourism:intake`. Each one is measured
+and matched against every slot, using three signals in ascending cost:
+
+    shape        an upright picture cannot fill a 16:9 band. A hard filter,
+                 free to compute, and it rejects rather than ranks.
+    filename     "mount-cameroon-trekkers.jpg" says more about where it belongs
+                 than any pixel analysis, and costs nothing.
+    description  with --describe, the vision model is asked what the picture
+                 shows, and that sentence is scored against each slot's
+                 instruction.
+
+Without `--describe` it says so, so a confident-looking match is never mistaken
+for one the machine actually looked at. Matches are **proposals**: they go into
+the same pool, appear on the same contact sheet, and are placed by the same
+command. An unmatched file is reported by name rather than guessed at.
+
+### Disclosure
+
+A generated picture and an uploaded photograph are two different things to a
+visitor, so they are two providers with two hosts rather than one with a flag.
+A generated image's credit line reads *"AI-generated · gpt-image-1"* — a
+synthetic photograph of a real place presented as a photograph of that place is
+a lie told to a visitor. An uploaded photograph carries its owner's credit, or
+none, and is never labelled AI.
+
+Neither has a CDN behind it, so `srcset` carries the one real width instead of
+four identical URLs with four different width descriptors — the browser believes
+descriptors, and told a 1024px file is 2400px wide it will pick it for a 2400px
+slot and scale it up.
+
+`OPENAI_API_KEY` is server-side only, on exactly the same terms as the other
+two: read from the environment by a CLI on a developer or CI machine, never
+written to the cache, never rendered into a page, never committed.
+`.github/workflows/tourism-generate.yml` runs it on a runner, defaults to a dry
+run, and fails if the key appears anywhere in the working tree.
+
 ## The tourism image system
 
 `/tourism/<country>` pages are generated, one per country, each covering the same
