@@ -142,12 +142,13 @@ def cmd_resolve(args):
     print("%d slot(s) to resolve, %d already cached and skipped" % (len(todo), skipped))
 
     filled, failures, by_provider = 0, [], {}
+    exhausted = set()
     try:
         for c, cat in todo:
             entry = c.entry(cat["id"])
             try:
                 record, err = resolve.resolve_entry(c, cat, entry, tax.role(cat["id"]),
-                                                    seen, args.provider)
+                                                    seen, args.provider, exhausted)
             except resolve.RateLimited as exc:
                 print("\n  STOPPED: %s" % exc)
                 print("  %d slot(s) still unresolved. Everything resolved so far is "

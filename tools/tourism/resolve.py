@@ -148,25 +148,43 @@ def _best_from(provider, query, orient, country, category, entry, role, seen):
     return None, 0.0, notes, None
 
 
-def resolve_entry(country, category, entry, role, seen, only=None):
+def resolve_entry(country, category, entry, role, seen, only=None, exhausted=None):
     """Fill one slot. Returns (record, error).
 
     Walks the query ladder; at each rung tries every available provider in
     priority order before broadening the query, because a precise query on the
     fallback beats a vague one on the primary.
+
+    `exhausted` carries rate-limit state across slots for one run. When a
+    provider spends its quota it is dropped for the rest of the run and the
+    others carry on — Unsplash allowing 50 requests an hour is no reason to stop
+    using Pexels, which allows 200. Only when every provider is spent does the
+    run stop, and then RateLimited propagates.
     """
     orient = queries.orientation(category["role"])
     rungs = queries.ladder(country, category, entry)
-    usable = providers.available(only)
+    exhausted = exhausted if exhausted is not None else set()
+    usable = [p for p in providers.available(only) if p.name not in exhausted]
     if not usable:
+        if exhausted:
+            raise RateLimited("every provider has spent its quota (%s)"
+                              % ", ".join(sorted(exhausted)))
         return None, MISSING_KEY_WARNING
     notes = []
 
     for query, tier in rungs:
         results = []
-        for provider in usable:
-            record, score, why, cand = _best_from(provider, query, orient, country,
-                                                  category, entry, role, seen)
+        for provider in list(usable):
+            try:
+                record, score, why, cand = _best_from(provider, query, orient, country,
+                                                      category, entry, role, seen)
+            except RateLimited as exc:
+                exhausted.add(provider.name)
+                usable = [p for p in usable if p.name is not provider.name]
+                notes.append("%s stopped: %s" % (provider.name, exc))
+                if not usable:
+                    raise
+                continue
             notes.extend(why)
             if record:
                 record["queryTier"] = tier
