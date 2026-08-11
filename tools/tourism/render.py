@@ -14,6 +14,7 @@ import os
 import re
 
 from . import imaging, validate
+from .resolve import MISSING_KEY_WARNING
 from .model import ROOT
 
 OUT_DIR = os.path.join(ROOT, "tourism")
@@ -124,6 +125,8 @@ TOURISM_CSS = """
 .tq-hero-pic .tq-empty{width:100%;height:100%;aspect-ratio:auto;align-items:flex-start;
   justify-content:flex-end;padding:100px 28px 0;background:var(--fj-basalt);border:0;
   color:var(--fj-onphoto-dim)}
+.tq-empty em{display:block;margin-top:8px;font-style:normal;text-transform:none;
+  letter-spacing:.02em;font-family:var(--fj-text);font-size:13px;opacity:.75}
 .tq-empty{display:flex;align-items:center;justify-content:center;background:var(--fj-raffia);
   border:1px dashed var(--c-border);color:var(--c-muted);font-family:var(--fj-mono);
   font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-align:center;padding:20px}
@@ -167,8 +170,11 @@ def img_tag(entry, role, alt, extra_class=""):
     box = 'width="%d" height="%d" style="aspect-ratio:%s;object-position:%s"' % (
         d["width"], d["height"], d["aspect"], d["objectPosition"])
     if not d["src"]:
-        return ('<div class="tq-empty %s" style="aspect-ratio:%s">image pending &mdash; %s</div>'
-                % (extra_class, d["aspect"], esc(alt[:60])))
+        # No resolved photo and no local stand-in. Show an honest placeholder that
+        # names the missing prerequisite, rather than a broken <img> or a guess.
+        return ('<div class="tq-empty %s" style="aspect-ratio:%s" data-unresolved="true">'
+                '<span>%s<br><em>%s</em></span></div>'
+                % (extra_class, d["aspect"], esc(MISSING_KEY_WARNING), esc(alt[:70])))
     attrs = ['src="%s"' % esc(d["src"]), 'alt="%s"' % esc(alt), box]
     if d["srcset"]:
         attrs.append('srcset="%s"' % esc(d["srcset"]))
@@ -188,7 +194,7 @@ def credit(entry):
     if not entry.image:
         return ""
     name = entry.image.get("photographer")
-    link = entry.image.get("photoLink") or entry.image.get("photographerLink")
+    link = entry.image.get("unsplashUrl") or entry.image.get("photographerUrl")
     if not name:
         return ""
     who = '<a href="%s" rel="nofollow noopener">%s</a>' % (esc(link), esc(name)) if link else esc(name)
@@ -405,19 +411,20 @@ def render_index(countries, taxonomy, shell):
     }
 
 
-def write_all(countries, taxonomy, publishable=None):
+def write_all(countries, taxonomy, publishable=None, out_dir=None):
     """Write a page per country plus the index. Countries that failed validation
     are skipped — incomplete tourism data does not get published."""
     shell = Shell()
-    os.makedirs(OUT_DIR, exist_ok=True)
+    out = out_dir or OUT_DIR
+    os.makedirs(out, exist_ok=True)
     written = []
     ok = [c for c in countries if c.published and (publishable is None or c.slug in publishable)]
     for c in ok:
-        path = os.path.join(OUT_DIR, c.slug + ".html")
+        path = os.path.join(out, c.slug + ".html")
         with open(path, "w") as f:
             f.write(render_country(c, taxonomy, shell))
         written.append(path)
-    path = os.path.join(OUT_DIR, "index.html")
+    path = os.path.join(out, "index.html")
     with open(path, "w") as f:
         f.write(render_index(ok, taxonomy, shell))
     written.append(path)

@@ -9,6 +9,7 @@ every image boxed so the page does not jump, and every image carrying alt text.
 import os
 import re
 
+from . import imaging
 from .model import ROOT
 
 TOURISM = os.path.join(ROOT, "tourism")
@@ -62,7 +63,7 @@ def check_page(path, taxonomy, expect_categories=True):
             problems.append("%s: <img> without aspect-ratio (%s)" % (name, src_url[:60]))
         if "object-position" not in style:
             problems.append("%s: <img> without object-position (%s)" % (name, src_url[:60]))
-        if src_url.startswith("https://images.unsplash.com/"):
+        if src_url.startswith(imaging.allowed_host()):
             if "srcset" not in a:
                 problems.append("%s: remote image without srcset (%s)" % (name, src_url[:60]))
             if "sizes" not in a:

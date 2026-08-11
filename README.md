@@ -53,51 +53,89 @@ centre — the illustrations are composed the same way, inside the middle 800px.
 component, no code change.
 
     tourism/categories.json          the 27 categories, their order, and delivery presets
-    tourism/countries/<slug>.json    one file per country, 27 entries each
+    tourism/countries/<slug>.json    editorial content: caption, description, subject, focal
+    tourism/cache/unsplash.json      resolved image metadata — written only by the resolver
     tourism/<slug>.html              GENERATED — do not edit by hand
     tourism/REPORT.md                GENERATED — completeness report
     tools/tourism/                   the engine
 
+Content and resolved images are deliberately separate files. An editor can rewrite
+every caption without refetching an image, the resolver can refresh every image
+without touching a word of copy, and no one editing content can hand-write an
+image URL that nobody fetched.
+
 ### Commands
 
-    python3 tools/tourism/build.py scaffold --country ghana   # new country, 27 empty slots
-    python3 tools/tourism/build.py validate                   # completeness per country
-    python3 tools/tourism/build.py queries                    # the search query for every slot
-    python3 tools/tourism/build.py resolve                    # fill images from Unsplash
-    python3 tools/tourism/build.py render                     # write tourism/<slug>.html
-    python3 tools/tourism/build.py verify                     # check the rendered HTML
-    python3 tools/tourism/build.py all                        # validate, render, verify, report
+    npm run tourism:resolve-images     # fill image slots from Unsplash
+    npm run tourism:validate           # completeness + integrity per country
+    npm run tourism:status             # Country | Category | Photo ID | CDN URL | Status
+    npm run tourism:queries            # the search query for every slot
+    npm run tourism:render             # write tourism/<slug>.html
+    npm run tourism:verify             # check the rendered HTML
+    npm run tourism:scaffold -- --country ghana
+    npm run tourism:all                # validate, render, verify, report
+    npm test                           # the resolver suite, against a local mock
 
-Stdlib only. The deployed site is still static files; the engine is a developer
-tool, not a runtime dependency.
+Each is a one-line wrapper over `python3 tools/tourism/build.py <command>`; use
+either. Flags: `--country <slug>`, `--category <id>`, `--force`.
+
+Stdlib only, no npm dependencies, and deliberately **no `build` script** — the
+deployed site is static files, and a build script here would make the host try to
+run one.
 
 ### Where the images come from
 
 Every image is resolved from **Unsplash**, by the API, and then fetched to prove
 it works before the URL is stored:
 
-    export UNSPLASH_ACCESS_KEY=...        # free, https://unsplash.com/developers
-    python3 tools/tourism/build.py resolve
+    cp .env.example .env && echo "UNSPLASH_ACCESS_KEY=your-key" >> .env
+    export UNSPLASH_ACCESS_KEY=...       # free, https://unsplash.com/developers
+    npm run tourism:resolve-images
 
-`resolve` searches a query built from the country name and the entry's `subject`,
-rejects photos the intended crop would ruin, rejects any photo already used
-anywhere in the dataset, fetches the delivery URL, and only then writes it into
-the country JSON with its photographer credit.
+`resolve` calls `GET https://api.unsplash.com/search/photos` with a query built
+from the country name and the entry's `subject`, rejects photos the intended crop
+would ruin, rejects any photo already used anywhere in the dataset, fetches the
+delivery URL to prove it works, pings Unsplash's download endpoint as their API
+guidelines require, and only then writes the record to the cache:
+
+    { photoId, photographer, photographerUrl, unsplashUrl, imageUrl,
+      category, country, query, alt, width, height, focalPoint,
+      resolvedAt, verifiedAt }
+
+`imageUrl` comes from `urls.raw` (falling back to `urls.full`) with the query
+string stripped. Nothing is ever assembled from an id.
+
+**The key is server-side only.** It is read from the environment by a CLI that
+runs on a developer or CI machine. It is never written to the cache, never
+rendered into HTML, never committed, and never reaches a browser — the site is
+static files, so a visitor's browser talks to images.unsplash.com and nothing
+else. `.env` is git-ignored; `.env.example` declares the variable with no value.
+
+The run is **resumable**: anything already cached is skipped and its photo id
+stays reserved, so re-running after a rate limit costs nothing and cannot hand
+the same picture to a second slot. `--force` re-resolves anyway. The cache is
+saved even if the run is interrupted.
 
 **There is no offline path that produces an image URL.** With no key or no route
-to Unsplash, `resolve` reports why and writes nothing. A photo id nobody has
-fetched is a broken image with extra steps, so the system will not invent one.
+to Unsplash, `resolve` reports *"Unsplash image resolution requires
+UNSPLASH_ACCESS_KEY."* and writes nothing; unresolved slots render that same
+sentence in place of the picture rather than a broken `<img>`. A photo id nobody
+has fetched is a broken image with extra steps, so the system will not invent one.
 
 Until a slot is resolved, the page renders the entry's `local` illustration if it
-has one, and an honest "image pending" tile if it does not. Nothing breaks; the
-page is only less specific.
+has one, and the warning above if it does not. Nothing breaks; the page is only
+less specific.
 
-The resolver has an end-to-end test that runs it against a local mock of the
-Unsplash API — search, suitability, de-duplication, URL construction, HTTP
-verification, write-back and round-trip — so the first real run is not also the
-first time anyone finds out whether it works:
+### Tests
 
-    python3 tools/tourism/test_resolve.py
+    npm test
+
+53 checks against a local mock of the Unsplash API — no key, no network. They
+prove that responses are parsed correctly, that ids and URLs come from the
+response, that no code path fabricates an id, that a missing key fails safely,
+that duplicates are detected, that the cache prevents repeat requests, that a
+half-finished run resumes, that all 27 categories resolve, that queries are
+country-specific, and that no key ever appears in a generated artifact.
 
 ### Delivery
 

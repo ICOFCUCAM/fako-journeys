@@ -75,7 +75,10 @@ class Entry:
         self.focal = {"x": focal[0], "y": focal[1]}
         # image is populated by the Unsplash resolver and never hand-written:
         # a URL nobody has fetched is a URL nobody can trust.
-        self.image = raw.get("image")
+        # Populated from tourism/cache/unsplash.json by attach_cache(). Content
+        # files never carry image URLs: an editor writing copy must not be able
+        # to hand-write an imageUrl that nobody fetched.
+        self.image = None
         self.local = raw.get("local")
 
 
@@ -106,6 +109,14 @@ def load_country(path):
         except ValueError as exc:
             raise DataError("%s is not valid JSON: %s" % (os.path.basename(path), exc))
     return Country(raw, path)
+
+
+def attach_cache(countries, cache):
+    """Bind resolved image metadata onto the content entries."""
+    for country in countries:
+        for entry in country.entries:
+            entry.image = cache.get(country.slug, entry.category)
+    return countries
 
 
 def load_countries(directory=COUNTRY_DIR):

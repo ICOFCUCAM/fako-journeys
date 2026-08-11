@@ -89,14 +89,17 @@ def check_country(country, taxonomy, global_images, global_subjects):
                                     "caption is just the category title; write country-specific copy"))
 
         if entry.image:
-            url = entry.image.get("url") or ""
+            url = entry.image.get("imageUrl") or ""
             if not url.startswith(imaging.UNSPLASH_HOST):
                 findings.append(Finding("error", country.slug, cat["id"],
                                         "image is not an images.unsplash.com URL"))
+            if not entry.image.get("photographer"):
+                findings.append(Finding("error", country.slug, cat["id"],
+                                        "image has no photographer credit"))
             if not entry.image.get("verifiedAt"):
                 findings.append(Finding("warn", country.slug, cat["id"],
                                         "image has never been HTTP-verified"))
-            key = entry.image.get("id") or url
+            key = entry.image.get("photoId") or url
             if key in global_images:
                 findings.append(Finding("error", country.slug, cat["id"],
                                         "duplicate image, already used by %s" % global_images[key]))
@@ -134,7 +137,7 @@ def report(countries, taxonomy):
         findings.extend(f)
         present = [c["id"] for c in taxonomy.enabled if country.entry(c["id"])]
         resolved = [c["id"] for c in taxonomy.enabled
-                    if country.entry(c["id"]) and (country.entry(c["id"]).image or {}).get("url")]
+                    if country.entry(c["id"]) and (country.entry(c["id"]).image or {}).get("imageUrl")]
         missing = [c["id"] for c in taxonomy.enabled if c["id"] not in present]
         errors = [x for x in f if x.level == "error"]
         rows.append({

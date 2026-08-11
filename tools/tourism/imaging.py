@@ -21,7 +21,8 @@ UNSPLASH_HOST = "https://images.unsplash.com/"
 # not the Unsplash CDN; the end-to-end test needs to point that at a local mock.
 # Never set this outside tests — validate.py still checks stored data against the
 # real host, so a dataset resolved against a mock will fail validation.
-ALLOWED_HOST = os.environ.get("UNSPLASH_IMAGE_HOST_OVERRIDE") or UNSPLASH_HOST
+def allowed_host():
+    return os.environ.get("UNSPLASH_IMAGE_HOST_OVERRIDE") or UNSPLASH_HOST
 
 
 def dimensions(role, width=None):
@@ -38,7 +39,7 @@ def cdn_url(photo_url, role, focal, width=None):
     """
     if not photo_url:
         return None
-    if not photo_url.startswith(ALLOWED_HOST):
+    if not photo_url.startswith(allowed_host()):
         raise ValueError("refusing to build a delivery URL for a non-Unsplash source: %r" % photo_url)
     base = photo_url.split("?", 1)[0]
     w, h = dimensions(role, width)
@@ -76,7 +77,7 @@ def delivery(entry, role):
     """
     w, h = dimensions(role)
     focal = entry.focal
-    resolved = bool(entry.image and entry.image.get("url"))
+    resolved = bool(entry.image and entry.image.get("imageUrl"))
     out = {
         "resolved": resolved,
         "width": w,
@@ -92,12 +93,12 @@ def delivery(entry, role):
     }
     if resolved:
         photo = entry.image
-        out["src"] = cdn_url(photo["url"], role, focal)
-        out["srcset"] = srcset(photo["url"], role, focal)
+        out["src"] = cdn_url(photo["imageUrl"], role, focal)
+        out["srcset"] = srcset(photo["imageUrl"], role, focal)
         out["credit"] = {
             "name": photo.get("photographer"),
-            "link": photo.get("photographerLink"),
-            "photo": photo.get("photoLink"),
+            "link": photo.get("photographerUrl"),
+            "photo": photo.get("unsplashUrl"),
         }
     elif entry.local:
         out["src"] = entry.local
