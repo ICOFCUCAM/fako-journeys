@@ -8,6 +8,7 @@
     build.py render              write tourism/<slug>.html
     build.py verify              check the rendered HTML
     build.py test                run the resolver test suite against a local mock
+    build.py adopt               put resolved photographs on the five main pages
     build.py scaffold            create a new country with 27 empty slots
     build.py report              write tourism/REPORT.md
     build.py all                 validate, render, verify, report
@@ -212,6 +213,22 @@ def cmd_test(args):
     return tests.main()
 
 
+def cmd_adopt(args):
+    """Put the resolved photographs onto the five hand-written pages."""
+    from tourism import adopt
+    r = adopt.run(args.country or "cameroon", revert=args.revert)
+    for page, changed in r["pages"]:
+        print("  %-16s %d image(s) rewritten" % (page, changed))
+    if args.revert:
+        print("\nreverted %d slot(s) to their illustrations" % r["reverted"])
+    else:
+        print("\nadopted %d photograph(s), kept %d illustration(s)"
+              % (r["adopted"], r["kept"]))
+        if r["missing"]:
+            print("no resolved photo for: %s" % ", ".join(r["missing"]))
+    return 0
+
+
 def cmd_scaffold(args):
     from tourism.model import COUNTRY_DIR, dump_country
     if not args.country:
@@ -308,7 +325,8 @@ COMMANDS = {
     "validate": cmd_validate, "status": cmd_status, "queries": cmd_queries,
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
-    "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report, "all": cmd_all,
+    "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
+    "adopt": cmd_adopt, "all": cmd_all,
 }
 
 
@@ -319,6 +337,8 @@ def main():
     p.add_argument("--country", help="limit to one country slug")
     p.add_argument("--category", help="limit to one category id")
     p.add_argument("--provider", help="limit to one provider (unsplash, pexels)")
+    p.add_argument("--revert", action="store_true",
+                   help="adopt: put the illustrations back")
     p.add_argument("--force", action="store_true",
                    help="re-resolve slots that are already cached")
     args = p.parse_args()

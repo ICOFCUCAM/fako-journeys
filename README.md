@@ -54,11 +54,22 @@ They are generated, not hand-edited. The source is `tools/build_images.py`:
 Nothing on the site depends on that script — it is a static folder of SVGs at deploy
 time, and there is still no build step.
 
-**Swapping in photographs.** Drop a photograph in at the same path and change the
-extension and the `src` (each file is referenced once or twice; grep for the name).
-Landscape, roughly 3:2, at least 1600px wide for the full-bleed bands. The page crops
-these to 3/4, 4/5, 5/4 and 1/1 with `object-fit: cover`, so keep the subject near the
-centre — the illustrations are composed the same way, inside the middle 800px.
+**They are stand-ins, and the site no longer uses most of them.** Once the tourism
+resolver has fetched real photographs, `npm run tourism:adopt` swaps them onto the
+five hand-written pages — 32 of the 34 slots at the time of writing. The drawing
+stays behind in `data-illustration` on each `<img>`, so `npm run tourism:adopt --
+--revert` puts every one back, byte for byte, and a slot with no resolved photo
+keeps its drawing rather than breaking.
+
+The mapping is exact rather than guessed: each Cameroon category names the
+illustration it stands in for (`local` in the country dataset), and those subjects
+were written *from* the drawings in the first place.
+
+**Swapping in your own photographs.** Drop one in at the same path and change the
+extension and the `src` (grep for the name). Landscape, roughly 3:2, at least
+1600px wide for the full-bleed bands. The page crops these to 3/4, 4/5, 5/4 and
+1/1 with `object-fit: cover`, so keep the subject near the centre — the
+illustrations are composed the same way, inside the middle 800px.
 
 ## The tourism image system
 
