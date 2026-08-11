@@ -1,0 +1,200 @@
+{
+  "slug": "zambia",
+  "name": "Zambia",
+  "adjective": "Zambian",
+  "region": "Southern Africa",
+  "tagline": "The real wilderness",
+  "summary": "Victoria Falls from the side that gets wet, the walking safari where it was invented, the Lower Zambezi by canoe, and parks with almost no traffic in them.",
+  "published": true,
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "The Smoke That Thunders",
+      "description": "Mosi-oa-Tunya: a kilometre and a half of the Zambezi falling into a basalt gorge, and spray you can see from thirty kilometres away.",
+      "subject": "Victoria Falls in full flood with spray rising from the gorge",
+      "focal": [50, 48]
+    },
+    {
+      "category": "nature",
+      "caption": "The Zambezi Valley",
+      "description": "Escarpment, floodplain and winterthorn forest, with the river braiding through the middle of all of it.",
+      "subject": "the Zambezi river and escarpment in the Lower Zambezi valley",
+      "focal": [50, 54]
+    },
+    {
+      "category": "wildlife",
+      "caption": "Leopard Country",
+      "description": "The South Luangwa has one of the densest leopard populations in Africa, and the best chance of seeing one hunting.",
+      "subject": "a leopard in a sausage tree in the South Luangwa valley",
+      "focal": [52, 46]
+    },
+    {
+      "category": "safari",
+      "caption": "The Walking Safari",
+      "description": "Invented in the Luangwa in the 1950s: no vehicle, an armed scout, and everything at eye level.",
+      "subject": "a walking safari group and guide in the South Luangwa bush",
+      "focal": [50, 56]
+    },
+    {
+      "category": "mountains",
+      "caption": "The Nyika Plateau",
+      "description": "Two thousand metres of rolling montane grassland on the Malawi border, with roan antelope and no heat.",
+      "subject": "rolling montane grassland on the Nyika plateau",
+      "focal": [50, 52]
+    },
+    {
+      "category": "waterfalls",
+      "caption": "Victoria and Kalambo",
+      "description": "Victoria Falls needs no introduction; Kalambo, on the Tanzanian border, drops 235 metres in a single uninterrupted fall.",
+      "subject": "the single 235 metre drop of Kalambo Falls",
+      "focal": [50, 40]
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "Zambezi, Kafue, Tanganyika",
+      "description": "Three great river systems and the southern tip of Lake Tanganyika, the second deepest lake on earth.",
+      "subject": "sunset over the Zambezi river with hippo in the shallows",
+      "focal": [50, 54]
+    },
+    {
+      "category": "beaches",
+      "caption": "Lake Tanganyika Shore",
+      "description": "Clear freshwater, sand and forested hills at Nsumbu, about as far from anywhere as Zambia gets.",
+      "subject": "the clear freshwater shore of Lake Tanganyika at Nsumbu",
+      "focal": [50, 56]
+    },
+    {
+      "category": "forests",
+      "caption": "Miombo and Winterthorn",
+      "description": "Miombo woodland turning red at the start of the rains, and the winterthorn groves the elephants feed under.",
+      "subject": "elephants under winterthorn trees in the Lower Zambezi",
+      "focal": [50, 52]
+    },
+    {
+      "category": "adventure",
+      "caption": "Devil's Pool and the Gorge",
+      "description": "Swim to the lip of Victoria Falls in low water, then raft the grade five rapids in the Batoka gorge below it.",
+      "subject": "rafting the grade five rapids in the Batoka gorge below Victoria Falls",
+      "focal": [50, 54]
+    },
+    {
+      "category": "culture",
+      "caption": "Lozi, Bemba, Tonga",
+      "description": "Seventy-three ethnic groups, seven official languages, and a royal barge ceremony older than the country.",
+      "subject": "Lozi paddlers and drummers on the Zambezi floodplain",
+      "focal": [50, 50]
+    },
+    {
+      "category": "traditional-people",
+      "caption": "The Barotse Floodplain",
+      "description": "The Lozi live with the flood — moving cattle, homes and the king himself when the Zambezi rises.",
+      "subject": "a Lozi fisherman poling a dugout on the Barotse floodplain",
+      "focal": [50, 52]
+    },
+    {
+      "category": "food",
+      "caption": "Nshima and Kapenta",
+      "description": "Maize nshima with relish, dried kapenta from the lakes, and fresh bream out of the Zambezi.",
+      "subject": "nshima with relish served at a Zambian table",
+      "focal": [50, 52]
+    },
+    {
+      "category": "festivals",
+      "caption": "Kuomboka",
+      "description": "When the floodplain fills, the Litunga is paddled to high ground on the Nalikwanda barge, drummed the whole way.",
+      "subject": "the Nalikwanda royal barge during the Kuomboka ceremony",
+      "focal": [50, 48]
+    },
+    {
+      "category": "crafts",
+      "caption": "Basketry and Copper",
+      "description": "Tight coiled baskets from the Western Province, and copper worked on the belt that built the economy.",
+      "subject": "coiled baskets woven in Zambia's Western Province",
+      "focal": [50, 50]
+    },
+    {
+      "category": "historic-sites",
+      "caption": "Livingstone",
+      "description": "The old colonial capital above the falls, its museum, and the tree where the man himself is said to have camped.",
+      "subject": "the colonial-era museum building in Livingstone, Zambia",
+      "focal": [50, 50]
+    },
+    {
+      "category": "heritage",
+      "caption": "Mosi-oa-Tunya, UNESCO",
+      "description": "World Heritage since 1989, shared with Zimbabwe, and named by the Kololo long before anyone renamed it.",
+      "subject": "the knife-edge bridge and gorge at Mosi-oa-Tunya, Victoria Falls",
+      "focal": [50, 48]
+    },
+    {
+      "category": "cities",
+      "caption": "Lusaka",
+      "description": "The centre of everything: Kabwata market, the Great East Road, and the flights that get you to the parks.",
+      "subject": "a busy market street in Lusaka",
+      "focal": [50, 52]
+    },
+    {
+      "category": "architecture",
+      "caption": "Livingstone's Verandas",
+      "description": "Corrugated iron and deep colonial verandas along Mosi-oa-Tunya Road, built for heat and never modernised.",
+      "subject": "a colonial veranda building on Mosi-oa-Tunya Road in Livingstone",
+      "focal": [50, 46]
+    },
+    {
+      "category": "local-life",
+      "caption": "Markets and the Great North Road",
+      "description": "Roadside charcoal and tomatoes, long-haul trucks to the copperbelt, and a bus that leaves when it fills.",
+      "subject": "a roadside produce market on the Great North Road in Zambia",
+      "focal": [50, 54]
+    },
+    {
+      "category": "family-community",
+      "caption": "Village Around the Park",
+      "description": "Community campsites and craft cooperatives on the Luangwa boundary, funded by the same beds that fill the lodges.",
+      "subject": "a community craft cooperative near the South Luangwa park boundary",
+      "focal": [50, 52]
+    },
+    {
+      "category": "outdoor",
+      "caption": "Canoeing the Lower Zambezi",
+      "description": "Three days downstream past hippo pods and elephant crossings, camping on islands, no engine at any point.",
+      "subject": "canoeing past elephants on the Lower Zambezi river",
+      "focal": [50, 54]
+    },
+    {
+      "category": "luxury",
+      "caption": "Bush Camps, Six Beds",
+      "description": "Seasonal bush camps in the Luangwa that take six guests, close at the rains, and are walked between.",
+      "subject": "a small thatched bush camp overlooking the Luangwa river",
+      "focal": [50, 52]
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Kafue and the Carnivores",
+      "description": "Kafue is the size of Wales; the conservation programmes there fund anti-poaching across the whole Greater Kafue system.",
+      "subject": "wild dogs on the Busanga plains in Kafue National Park",
+      "focal": [50, 56]
+    },
+    {
+      "category": "photography",
+      "caption": "Luangwa at Last Light",
+      "description": "The river bends, the hippo surface and the dust goes gold about forty minutes before the drive has to end.",
+      "subject": "hippos in the Luangwa river at last light",
+      "focal": [50, 54]
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "Liuwa Plain",
+      "description": "The second largest wildebeest migration in Africa, on a plain almost nobody has heard of, reachable only in the dry.",
+      "subject": "wildebeest massed on the open grass of Liuwa Plain",
+      "focal": [50, 58]
+    },
+    {
+      "category": "why-visit",
+      "caption": "Wilderness, Still Unmanaged",
+      "description": "Zambia kept the walking safari, the small camp and the empty park while its neighbours scaled up.",
+      "subject": "a lone safari vehicle on an empty track in the South Luangwa",
+      "focal": [50, 56]
+    }
+  ]
+}

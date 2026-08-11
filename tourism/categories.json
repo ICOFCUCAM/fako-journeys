@@ -1,0 +1,42 @@
+{
+  "$comment": "The 27 tourism categories. This file is the taxonomy; every country dataset in tourism/countries/ must cover all 27 ids. Editing order here reorders every country page. Setting enabled:false disables a category everywhere without deleting country data.",
+  "version": 1,
+  "categories": [
+    { "id": "hero",               "order":  1, "title": "Hero / Destination",        "role": "hero",      "enabled": true, "queryHint": "landscape iconic" },
+    { "id": "nature",             "order":  2, "title": "Nature & Landscapes",       "role": "feature",   "enabled": true, "queryHint": "landscape nature" },
+    { "id": "wildlife",           "order":  3, "title": "Wildlife",                  "role": "feature",   "enabled": true, "queryHint": "wildlife animal" },
+    { "id": "safari",             "order":  4, "title": "Safari",                    "role": "card",      "enabled": true, "queryHint": "safari game drive" },
+    { "id": "mountains",          "order":  5, "title": "Mountains",                 "role": "feature",   "enabled": true, "queryHint": "mountain peak" },
+    { "id": "waterfalls",         "order":  6, "title": "Waterfalls",                "role": "portrait",  "enabled": true, "queryHint": "waterfall" },
+    { "id": "lakes-rivers",       "order":  7, "title": "Lakes & Rivers",            "role": "panoramic", "enabled": true, "queryHint": "lake river water" },
+    { "id": "beaches",            "order":  8, "title": "Beaches & Coast",           "role": "feature",   "enabled": true, "queryHint": "beach coast ocean" },
+    { "id": "forests",            "order":  9, "title": "Forests & Rainforest",      "role": "card",      "enabled": true, "queryHint": "forest rainforest" },
+    { "id": "adventure",          "order": 10, "title": "Adventure",                 "role": "card",      "enabled": true, "queryHint": "adventure trekking" },
+    { "id": "culture",            "order": 11, "title": "Culture",                   "role": "feature",   "enabled": true, "queryHint": "culture traditional" },
+    { "id": "traditional-people", "order": 12, "title": "Traditional People",        "role": "portrait",  "enabled": true, "queryHint": "portrait traditional dress" },
+    { "id": "food",               "order": 13, "title": "Food & Cuisine",            "role": "card",      "enabled": true, "queryHint": "food cuisine dish" },
+    { "id": "festivals",          "order": 14, "title": "Festivals & Celebrations",  "role": "feature",   "enabled": true, "queryHint": "festival celebration dance" },
+    { "id": "crafts",             "order": 15, "title": "Traditional Arts & Crafts", "role": "card",      "enabled": true, "queryHint": "craft artisan handmade" },
+    { "id": "historic-sites",     "order": 16, "title": "Historic Sites",            "role": "card",      "enabled": true, "queryHint": "historic monument ruins" },
+    { "id": "heritage",           "order": 17, "title": "Heritage",                  "role": "feature",   "enabled": true, "queryHint": "heritage unesco" },
+    { "id": "cities",             "order": 18, "title": "Cities",                    "role": "panoramic", "enabled": true, "queryHint": "city skyline urban" },
+    { "id": "architecture",       "order": 19, "title": "Architecture",              "role": "portrait",  "enabled": true, "queryHint": "architecture building" },
+    { "id": "local-life",         "order": 20, "title": "Local Life",                "role": "card",      "enabled": true, "queryHint": "street market daily life" },
+    { "id": "family-community",   "order": 21, "title": "Family & Community",        "role": "card",      "enabled": true, "queryHint": "community people village" },
+    { "id": "outdoor",            "order": 22, "title": "Outdoor Experiences",       "role": "feature",   "enabled": true, "queryHint": "hiking outdoors" },
+    { "id": "luxury",             "order": 23, "title": "Luxury Travel",             "role": "feature",   "enabled": true, "queryHint": "luxury lodge resort" },
+    { "id": "eco-tourism",        "order": 24, "title": "Eco Tourism",               "role": "card",      "enabled": true, "queryHint": "ecotourism conservation" },
+    { "id": "photography",        "order": 25, "title": "Photography / Scenic Views","role": "panoramic", "enabled": true, "queryHint": "scenic viewpoint golden hour" },
+    { "id": "hidden-gems",        "order": 26, "title": "Hidden Gems",               "role": "card",      "enabled": true, "queryHint": "remote off the beaten path" },
+    { "id": "why-visit",          "order": 27, "title": "Why Visit This Country",    "role": "panoramic", "enabled": true, "queryHint": "travel inspiration landscape" }
+  ],
+  "roles": {
+    "$comment": "Delivery presets. aspect drives width/height + CSS aspect-ratio (no layout shift). width is the CDN target for the 1x slot; srcset multiplies it. sizes is the browser hint. eager+priority only for above-the-fold heroes.",
+    "hero":      { "aspect": [16, 9],  "width": 2400, "srcset": [1200, 1800, 2400, 3000], "sizes": "100vw",                                                        "loading": "eager", "priority": true,  "quality": 82 },
+    "feature":   { "aspect": [16, 9],  "width": 1800, "srcset": [900, 1400, 1800, 2400],  "sizes": "(min-width: 1240px) 1152px, 100vw",                             "loading": "lazy",  "priority": false, "quality": 82 },
+    "card":      { "aspect": [4, 3],   "width": 1000, "srcset": [500, 750, 1000, 1400],   "sizes": "(min-width: 1000px) 368px, (min-width: 640px) 45vw, 92vw",      "loading": "lazy",  "priority": false, "quality": 80 },
+    "portrait":  { "aspect": [3, 4],   "width": 1000, "srcset": [500, 750, 1000, 1400],   "sizes": "(min-width: 1000px) 368px, (min-width: 640px) 45vw, 92vw",      "loading": "lazy",  "priority": false, "quality": 80 },
+    "panoramic": { "aspect": [21, 9],  "width": 2400, "srcset": [1200, 1800, 2400, 3000], "sizes": "100vw",                                                        "loading": "lazy",  "priority": false, "quality": 82 },
+    "thumb":     { "aspect": [4, 3],   "width": 800,  "srcset": [400, 600, 800],          "sizes": "(min-width: 1000px) 240px, 40vw",                               "loading": "lazy",  "priority": false, "quality": 78 }
+  }
+}
