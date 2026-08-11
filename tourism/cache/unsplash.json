@@ -78,6 +78,48 @@
       "resolvedAt": "2026-08-11T16:26:01Z",
       "verifiedAt": "2026-08-11T16:26:01Z"
     },
+    "cameroon/mountains": {
+      "photoId": "wqDNF4KcHuI",
+      "photographer": "Christian Aime Nanga",
+      "photographerUrl": "https://unsplash.com/@christiannanga",
+      "unsplashUrl": "https://unsplash.com/photos/a-view-of-a-small-town-from-a-hill-wqDNF4KcHuI",
+      "imageUrl": "https://images.unsplash.com/photo-1696541665406-a2517f84f934",
+      "category": "mountains",
+      "country": "cameroon",
+      "query": "Cameroon Mount Cameroon",
+      "alt": "trekkers on the open upper slopes of Mount Cameroon above the tree line",
+      "width": 4032,
+      "height": 1908,
+      "focalPoint": {
+        "x": 50,
+        "y": 62
+      },
+      "resolvedAt": "2026-08-11T16:34:26Z",
+      "verifiedAt": "2026-08-11T16:34:26Z",
+      "queryDepth": 0,
+      "queryTier": "subject"
+    },
+    "cameroon/nature": {
+      "photoId": "YMk8h7xoja0",
+      "photographer": "Ariel Nathan ADA MBITA",
+      "photographerUrl": "https://unsplash.com/@adambita237",
+      "unsplashUrl": "https://unsplash.com/photos/a-road-with-trees-and-houses-along-it-YMk8h7xoja0",
+      "imageUrl": "https://images.unsplash.com/photo-1659947234286-213fd15f0bcc",
+      "category": "nature",
+      "country": "cameroon",
+      "query": "Cameroon landscape",
+      "alt": "Nature in Cameroon",
+      "width": 4128,
+      "height": 3096,
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "resolvedAt": "2026-08-11T16:34:23Z",
+      "verifiedAt": "2026-08-11T16:34:23Z",
+      "queryDepth": 3,
+      "queryTier": "category"
+    },
     "cameroon/safari": {
       "photoId": "Y0GY5hKDOJc",
       "photographer": "Angelo Casto",
@@ -96,6 +138,27 @@
       },
       "resolvedAt": "2026-08-11T16:25:59Z",
       "verifiedAt": "2026-08-11T16:25:59Z"
+    },
+    "cameroon/wildlife": {
+      "photoId": "jp6NY2IPP6s",
+      "photographer": "Angelo Casto",
+      "photographerUrl": "https://unsplash.com/@jddartphotographer",
+      "unsplashUrl": "https://unsplash.com/photos/an-empty-road-in-the-middle-of-a-jungle-jp6NY2IPP6s",
+      "imageUrl": "https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f",
+      "category": "wildlife",
+      "country": "cameroon",
+      "query": "Cameroon forest elephants among",
+      "alt": "forest elephants among buttressed trees in Korup National Park, Cameroon",
+      "width": 6889,
+      "height": 4593,
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "resolvedAt": "2026-08-11T16:34:25Z",
+      "verifiedAt": "2026-08-11T16:34:25Z",
+      "queryDepth": 1,
+      "queryTier": "subject"
     }
   }
 }
