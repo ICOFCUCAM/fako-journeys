@@ -37,33 +37,61 @@ from .model import ROOT, attach_cache, load_countries, load_taxonomy
 
 PAGES = ("index.html", "services.html", "about.html", "contact.html", "pricing.html")
 
-# The main pages crop with CSS; the wrapper class says which shape, which decides
-# how big a file to ask the CDN for. Getting this wrong means a 368px card
-# downloading a 2400px hero.
-CLASS_ROLE = (
-    ("fj-vista-pic", "hero"),
-    ("fj-seam-pic", "hero"),
-    ("fj-open-plate", "portrait"),
-    ("fj-act", "portrait"),
-    ("fj-craft-pic", "portrait"),
-    ("fj-cal-col", "portrait"),
-    ("fj-crew-card", "card"),
-    ("fj-slip-pic", "feature"),
+# These are not the tourism taxonomy roles. They are the shapes the five
+# hand-written pages already impose in their own CSS:
+#
+#   .fj-open-plate img { aspect-ratio: 3/4 }      .fj-slip-pic  img { 5/4 }
+#   .fj-craft-pic  img { aspect-ratio: 4/5 }      .fj-cal-col   img { 4/5 }
+#   .fj-crew-card  img { aspect-ratio: 1/1 }      .fj-vista/seam: height:100%
+#
+# Delivering a taxonomy role instead means the CDN crops to one shape and CSS
+# then crops that to another — the picture arrives the wrong shape, gets cut a
+# second time, and the page looks off. So each slot is delivered at exactly the
+# ratio its own stylesheet asks for, and the width/height attributes agree with
+# it, which is what keeps the box reserved correctly.
+#
+# `sizes` is computed from the real layout: .fj-frame is 1240px with 44px
+# padding, so the content column is 1152px, divided by that slot's grid.
+SLOT_SPECS = (
+    ("fj-vista-pic",  {"aspect": [16, 9], "width": 2400, "srcset": [1200, 1800, 2400, 3000],
+                       "sizes": "100vw", "quality": 82, "box": False}),
+    ("fj-seam-pic",   {"aspect": [16, 9], "width": 2400, "srcset": [1200, 1800, 2400, 3000],
+                       "sizes": "100vw", "quality": 82, "box": False}),
+    ("fj-open-plate", {"aspect": [3, 4], "width": 960, "srcset": [480, 720, 960, 1440],
+                       "sizes": "(min-width: 1240px) 480px, (min-width: 940px) 40vw, 92vw",
+                       "quality": 82}),
+    ("fj-slip-pic",   {"aspect": [5, 4], "width": 1000, "srcset": [500, 750, 1000, 1500],
+                       "sizes": "(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw",
+                       "quality": 82}),
+    ("fj-craft-pic",  {"aspect": [4, 5], "width": 880, "srcset": [440, 660, 880, 1320],
+                       "sizes": "(min-width: 1240px) 440px, (min-width: 900px) 38vw, 92vw",
+                       "quality": 82}),
+    ("fj-cal-col",    {"aspect": [4, 5], "width": 600, "srcset": [300, 450, 600, 900],
+                       "sizes": "(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw",
+                       "quality": 80}),
+    ("fj-crew-card",  {"aspect": [1, 1], "width": 720, "srcset": [360, 540, 720, 1080],
+                       "sizes": "(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw",
+                       "quality": 80}),
 )
+
+# Anything the classes above do not cover kept its shape from the illustration,
+# which is 3:2. Deliver 3:2 so nothing about the layout changes.
+DEFAULT_SPEC = {"aspect": [3, 2], "width": 1600, "srcset": [800, 1200, 1600, 2400],
+                "sizes": "100vw", "quality": 82}
 
 IMG_RE = re.compile(r"<img\b[^>]*>", re.S)
 ATTR_RE = re.compile(r'(\w[\w-]*)\s*=\s*"([^"]*)"')
 
 
-def role_for(html, position, taxonomy):
-    """Nearest preceding wrapper class decides the delivery shape."""
+def spec_for(html, position):
+    """Nearest preceding wrapper class decides the delivered shape."""
     before = html[max(0, position - 400):position]
-    best, best_at = "feature", -1
-    for cls, role in CLASS_ROLE:
+    best, best_at = DEFAULT_SPEC, -1
+    for cls, spec in SLOT_SPECS:
         at = before.rfind(cls)
         if at > best_at:
-            best, best_at = role, at
-    return taxonomy.roles[best]
+            best, best_at = spec, at
+    return best
 
 
 def build_map(country, taxonomy):
@@ -92,8 +120,20 @@ def rewrite_tag(tag, record, role, focal):
     attrs["srcset"] = srcset
     attrs["sizes"] = role["sizes"]
     attrs["alt"] = record.get("alt") or attrs.get("alt", "")
-    attrs["width"] = str(w)
-    attrs["height"] = str(h)
+    # Deliberately no width/height attributes.
+    #
+    # They look like the right thing — they are exactly what prevents layout
+    # shift on the generated tourism pages. Here they break the layout. The
+    # attributes become presentational hints, and these slots are styled
+    # `width:100%; aspect-ratio:3/4` with no height. The hint supplies the
+    # missing height, both dimensions become definite, and aspect-ratio is
+    # ignored: the picture renders at 479x1280 instead of 479x638.
+    #
+    # Measured, not assumed: with the attributes an image box is 479x1280,
+    # without them 479x638, which is byte-identical to the illustration it
+    # replaced. The CSS aspect-ratio already reserves the box, so nothing
+    # shifts while the photograph loads.
+    _ = (w, h)
     attrs["data-illustration"] = illustration
     attrs["data-illustration-alt"] = original_alt
     attrs["data-provider"] = record.get("provider", "")
@@ -103,7 +143,7 @@ def rewrite_tag(tag, record, role, focal):
         attrs["style"] = (style + ";" if style else "") + \
             "object-position:%s" % imaging.object_position(focal)
 
-    order = ["src", "srcset", "sizes", "alt", "width", "height", "loading",
+    order = ["src", "srcset", "sizes", "alt", "loading",
              "decoding", "fetchpriority", "class", "style", "data-illustration",
              "data-illustration-alt", "data-provider"]
     parts = []
@@ -170,7 +210,7 @@ def run(country_slug="cameroon", revert=False, write=True):
                 report["kept"] += 1
                 report["missing"].add(os.path.basename(illustration))
                 return tag
-            role = role_for(src, m.start(), taxonomy)
+            role = spec_for(src, m.start())
             focal = focal_by_local.get(illustration, {"x": 50, "y": 50})
             new = rewrite_tag(tag, record, role, focal)
             if new != tag:
