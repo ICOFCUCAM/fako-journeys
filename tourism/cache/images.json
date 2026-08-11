@@ -2,6 +2,197 @@
   "version": 1,
   "note": "Written only by tools/tourism/build.py resolve, only from an Unsplash API response that was then fetched over HTTP. Never hand-write an imageUrl here.",
   "entries": {
+    "cameroon/adventure": {
+      "country": "cameroon",
+      "category": "adventure",
+      "caption": "Summit, Crater, Coast",
+      "description": "The Guinness route to 4,095 m, down the north flank to Mann's Spring, and out to the sea on the same trip.",
+      "provider": "pexels",
+      "photoId": "4994530",
+      "imageUrl": "https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/view-into-active-volcano-4994530/",
+      "photographer": "Thasura Kumarasinghe",
+      "photographerUrl": "https://www.pexels.com/@thasura-kumarasinghe-3341471",
+      "width": 6016,
+      "height": 4016,
+      "aspectRatio": 1.498,
+      "alt": "walkers crossing grass slopes below the summit huts on Mount Cameroon",
+      "query": "Cameroon Mount Cameroon",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 46,
+        "y": 60
+      },
+      "createdAt": "2026-08-11T20:57:23Z",
+      "verifiedAt": "2026-08-11T20:57:23Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: crater,mount"
+        ]
+      }
+    },
+    "cameroon/architecture": {
+      "country": "cameroon",
+      "category": "architecture",
+      "caption": "Chefferie and Colonial Buea",
+      "description": "Bamileke chefferie compounds with carved posts and conical roofs, and the German Schloss on the hill above Buea.",
+      "provider": "pexels",
+      "photoId": "27291181",
+      "imageUrl": "https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-group-of-men-in-african-clothing-playing-drums-27291181/",
+      "photographer": "Dokun  Ayano",
+      "photographerUrl": "https://www.pexels.com/@peacetool",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a Bamileke chieftaincy compound with carved posts and a conical thatched roof, Cameroon",
+      "query": "Cameroon Bamileke",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 42
+      },
+      "createdAt": "2026-08-11T20:57:34Z",
+      "verifiedAt": "2026-08-11T20:57:34Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "cameroon/beaches": {
+      "country": "cameroon",
+      "category": "beaches",
+      "caption": "Black Sand and Warm Water",
+      "description": "Volcanic grey-black sand at Limbe, white sand and fishing pirogues at Kribi, warm all year on both.",
+      "provider": "pexels",
+      "photoId": "15456412",
+      "imageUrl": "https://images.pexels.com/photos/15456412/pexels-photo-15456412.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/15456412/pexels-photo-15456412.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/church-in-tropical-village-15456412/",
+      "photographer": "George Njukeng",
+      "photographerUrl": "https://www.pexels.com/@george-njukeng-424970372",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "surf breaking on volcanic black sand at dusk on the Cameroon coast near Limbe",
+      "query": "Cameroon Limbe",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-11T20:57:20Z",
+      "verifiedAt": "2026-08-11T20:57:21Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: cameroon,limbe"
+        ]
+      }
+    },
+    "cameroon/cities": {
+      "country": "cameroon",
+      "category": "cities",
+      "caption": "Douala and Yaounde",
+      "description": "The port that moves the country and the hill capital that governs it, ninety minutes apart by air and nothing alike.",
+      "provider": "pexels",
+      "photoId": "17290985",
+      "imageUrl": "https://images.pexels.com/photos/17290985/pexels-photo-17290985.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/17290985/pexels-photo-17290985.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/crowded-street-in-nigeria-17290985/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 8064,
+      "height": 6048,
+      "aspectRatio": 1.3333,
+      "alt": "a street in the Bonapriso quarter of Douala, Cameroon",
+      "query": "Cameroon Bonapriso Douala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-11T20:57:33Z",
+      "verifiedAt": "2026-08-11T20:57:33Z",
+      "relevance": {
+        "score": 6.71,
+        "reasons": [
+          "names the country",
+          "subject: and,street",
+          "category: city"
+        ]
+      }
+    },
+    "cameroon/crafts": {
+      "country": "cameroon",
+      "category": "crafts",
+      "caption": "The Foumban Bronze Casters",
+      "description": "Lost-wax bronze, beaded thrones and carved masks made on the craft street the same way they were three centuries ago.",
+      "provider": "unsplash",
+      "photoId": "YdHJrPZjRrY",
+      "imageUrl": "https://images.unsplash.com/photo-1659947234294-b217aaeb25f8",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1659947234294-b217aaeb25f8?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-group-of-cars-parked-in-a-parking-lot-with-buildings-in-the-background-YdHJrPZjRrY",
+      "photographer": "Ariel Nathan ADA MBITA",
+      "photographerUrl": "https://unsplash.com/@adambita237",
+      "width": 4128,
+      "height": 3096,
+      "aspectRatio": 1.3333,
+      "alt": "a bronze caster working molten metal in a workshop at Foumban, Cameroon",
+      "query": "Cameroon Foumban",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 46,
+        "y": 50
+      },
+      "createdAt": "2026-08-11T20:57:29Z",
+      "verifiedAt": "2026-08-11T20:57:29Z",
+      "relevance": {
+        "score": 4.5,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "cameroon/culture": {
+      "country": "cameroon",
+      "category": "culture",
+      "caption": "The Grassfields Kingdoms",
+      "description": "Bamileke and Bamoun chiefdoms in the west, still functioning, with palaces, secret societies and their own calendars.",
+      "provider": "unsplash",
+      "photoId": "f6ruhwz9MFc",
+      "imageUrl": "https://images.unsplash.com/photo-1637244018403-785e7fa8707a",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-view-of-a-town-with-a-body-of-water-in-the-background-f6ruhwz9MFc",
+      "photographer": "Edouard TAMBA",
+      "photographerUrl": "https://unsplash.com/@tamba",
+      "width": 6016,
+      "height": 3704,
+      "aspectRatio": 1.6242,
+      "alt": "a carved and beaded royal throne inside a palace museum at Foumban, Cameroon",
+      "query": "Cameroon Foumban",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-11T20:57:24Z",
+      "verifiedAt": "2026-08-11T20:57:24Z",
+      "relevance": {
+        "score": 4.24,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
     "cameroon/eco-tourism": {
       "photoId": "9ZFn__BKP_s",
       "photographer": "Edouard TAMBA",
@@ -23,6 +214,38 @@
       "createdAt": "2026-08-11T16:26:10Z",
       "aspectRatio": 1.7778,
       "thumbnailUrl": "https://images.unsplash.com/photo-1615463738213-b9381d217b4e?auto=format&fit=crop&w=400&h=300&q=70"
+    },
+    "cameroon/family-community": {
+      "country": "cameroon",
+      "category": "family-community",
+      "caption": "Village and Mountain Together",
+      "description": "Guides and porters come from the mountain villages in rotation, and the trail money goes back into the village fund.",
+      "provider": "unsplash",
+      "photoId": "MLAKGOi9lrk",
+      "imageUrl": "https://images.unsplash.com/photo-1689762063112-a6220c5e1f70",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1689762063112-a6220c5e1f70?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/two-people-in-life-jackets-wading-through-a-body-of-water-MLAKGOi9lrk",
+      "photographer": "Joseph Siewe",
+      "photographerUrl": "https://unsplash.com/@dr_siewe",
+      "width": 11616,
+      "height": 6480,
+      "aspectRatio": 1.7926,
+      "alt": "villagers and guides repairing a stone section of mountain trail together, Cameroon",
+      "query": "Cameroon villagers guides repairing",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 48,
+        "y": 58
+      },
+      "createdAt": "2026-08-11T20:57:37Z",
+      "verifiedAt": "2026-08-11T20:57:38Z",
+      "relevance": {
+        "score": 7.23,
+        "reasons": [
+          "subject: and,village",
+          "category: people,village"
+        ]
+      }
     },
     "cameroon/festivals": {
       "photoId": "lNrp5eNli1M",
@@ -46,6 +269,101 @@
       "aspectRatio": 1.3333,
       "thumbnailUrl": "https://images.unsplash.com/photo-1775138622438-f9568c3e279d?auto=format&fit=crop&w=400&h=300&q=70"
     },
+    "cameroon/food": {
+      "country": "cameroon",
+      "category": "food",
+      "caption": "Ndole, Poulet DG and Grilled Fish",
+      "description": "Bitterleaf and groundnut ndolé, plantain, and whole fish grilled on the sand at Kribi within sight of the boat.",
+      "provider": "unsplash",
+      "photoId": "EysQnRouJ30",
+      "imageUrl": "https://images.unsplash.com/photo-1659947234285-ebf2826cfe15",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1659947234285-ebf2826cfe15?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-beach-with-umbrellas-and-chairs-EysQnRouJ30",
+      "photographer": "Ariel Nathan ADA MBITA",
+      "photographerUrl": "https://unsplash.com/@adambita237",
+      "width": 4032,
+      "height": 1960,
+      "aspectRatio": 2.0571,
+      "alt": "grilled fish and plantain served at a beachside stall in Kribi, Cameroon",
+      "query": "Cameroon Kribi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-11T20:57:27Z",
+      "verifiedAt": "2026-08-11T20:57:27Z",
+      "relevance": {
+        "score": 5.44,
+        "reasons": [
+          "names the country",
+          "subject: and,kribi"
+        ]
+      }
+    },
+    "cameroon/forests": {
+      "country": "cameroon",
+      "category": "forests",
+      "caption": "Inside Korup",
+      "description": "One of the oldest rainforests in Africa, with a canopy suspension bridge over the Mana river and 400 tree species.",
+      "provider": "pexels",
+      "photoId": "34445923",
+      "imageUrl": "https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/remote-village-by-the-river-in-congo-forest-34445923/",
+      "photographer": "Hervé Kashama",
+      "photographerUrl": "https://www.pexels.com/@toza",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a canopy suspension bridge over a river inside Korup rainforest, Cameroon",
+      "query": "Cameroon Korup",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-11T20:57:22Z",
+      "verifiedAt": "2026-08-11T20:57:23Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: rainforest,river",
+          "category: rainforest"
+        ]
+      }
+    },
+    "cameroon/heritage": {
+      "country": "cameroon",
+      "category": "heritage",
+      "caption": "Dja, Rhumsiki and the Mandara",
+      "description": "The Dja Faunal Reserve is UNESCO World Heritage; the volcanic spires above Rhumsiki are the image on the old banknote.",
+      "provider": "pexels",
+      "photoId": "38311726",
+      "imageUrl": "https://images.pexels.com/photos/38311726/pexels-photo-38311726.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38311726/pexels-photo-38311726.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-african-archers-in-cultural-attire-38311726/",
+      "photographer": "Anchau",
+      "photographerUrl": "https://www.pexels.com/@anchau-1663967297",
+      "width": 6557,
+      "height": 4371,
+      "aspectRatio": 1.5001,
+      "alt": "volcanic rock spires rising from farmland at Rhumsiki in the Mandara mountains, Cameroon",
+      "query": "Cameroon Rhumsiki Mandara",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 54,
+        "y": 50
+      },
+      "createdAt": "2026-08-11T20:57:31Z",
+      "verifiedAt": "2026-08-11T20:57:32Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
     "cameroon/hero": {
       "photoId": "MdNOvU9uFuo",
       "photographer": "Edouard TAMBA",
@@ -68,6 +386,72 @@
       "aspectRatio": 1.7778,
       "thumbnailUrl": "https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&fit=crop&w=400&h=300&q=70"
     },
+    "cameroon/hidden-gems": {
+      "country": "cameroon",
+      "category": "hidden-gems",
+      "caption": "The 1999 Lava Fields",
+      "description": "Black lava tongues from the 1999 and 2000 flows running down to the sea near Bakingili, with green already coming back.",
+      "provider": "pexels",
+      "photoId": "9594981",
+      "imageUrl": "https://images.pexels.com/photos/9594981/pexels-photo-9594981.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/9594981/pexels-photo-9594981.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/green-trees-near-mountain-9594981/",
+      "photographer": "Kureng Workx",
+      "photographerUrl": "https://www.pexels.com/@kureng-workx-2546437",
+      "width": 14428,
+      "height": 5744,
+      "aspectRatio": 2.5118,
+      "alt": "black solidified lava flows reaching the sea on the flank of Mount Cameroon",
+      "query": "Cameroon Mount Cameroon",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 62
+      },
+      "createdAt": "2026-08-11T20:57:41Z",
+      "verifiedAt": "2026-08-11T20:57:42Z",
+      "relevance": {
+        "score": 5.09,
+        "reasons": [
+          "subject: mount,the",
+          "category: the",
+          "crop discards 47% of the frame"
+        ]
+      }
+    },
+    "cameroon/historic-sites": {
+      "country": "cameroon",
+      "category": "historic-sites",
+      "caption": "The Sultan's Palace",
+      "description": "The 1917 palace at Foumban and its museum of the Bamoun kings, plus the German colonial buildings still standing in Buea.",
+      "provider": "pexels",
+      "photoId": "17290983",
+      "imageUrl": "https://images.pexels.com/photos/17290983/pexels-photo-17290983.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/17290983/pexels-photo-17290983.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/cameroon-reunification-monument-in-capital-city-of-cameroon-17290983/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 8064,
+      "height": 6048,
+      "aspectRatio": 1.3333,
+      "alt": "the Sultan's Palace at Foumban with its museum of the Bamoun kings, Cameroon",
+      "query": "Cameroon Sultan's Palace Foumban",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-11T20:57:30Z",
+      "verifiedAt": "2026-08-11T20:57:30Z",
+      "relevance": {
+        "score": 6.0,
+        "reasons": [
+          "names the country",
+          "subject: the",
+          "category: monument"
+        ]
+      }
+    },
     "cameroon/lakes-rivers": {
       "photoId": "tFCNJsRespo",
       "photographer": "Joseph Siewe",
@@ -89,6 +473,69 @@
       "createdAt": "2026-08-11T16:26:01Z",
       "aspectRatio": 1.5,
       "thumbnailUrl": "https://images.unsplash.com/photo-1689760034504-568812d8cb01?auto=format&fit=crop&w=400&h=300&q=70"
+    },
+    "cameroon/local-life": {
+      "country": "cameroon",
+      "category": "local-life",
+      "caption": "Marche Central, Motos, Rain",
+      "description": "Bilingual, loud and unbothered: Douala's markets, the moto-taxis, and the sudden rain everyone waits out under an awning.",
+      "provider": "unsplash",
+      "photoId": "bZnciM7XIYw",
+      "imageUrl": "https://images.unsplash.com/photo-1594386479412-fa62932f4cdc",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1594386479412-fa62932f4cdc?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/people-walking-on-street-during-daytime-bZnciM7XIYw",
+      "photographer": "Edouard TAMBA",
+      "photographerUrl": "https://unsplash.com/@tamba",
+      "width": 5628,
+      "height": 4000,
+      "aspectRatio": 1.407,
+      "alt": "traders and moto-taxis in a busy Douala market street, Cameroon",
+      "query": "Cameroon Douala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-11T20:57:35Z",
+      "verifiedAt": "2026-08-11T20:57:36Z",
+      "relevance": {
+        "score": 7.84,
+        "reasons": [
+          "subject: douala,street",
+          "category: life,street"
+        ]
+      }
+    },
+    "cameroon/luxury": {
+      "country": "cameroon",
+      "category": "luxury",
+      "caption": "Kribi, Slowly",
+      "description": "Small beach hotels south of Kribi, a driver who knows the road, and nothing at all scheduled after lunch.",
+      "provider": "pexels",
+      "photoId": "20236312",
+      "imageUrl": "https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/sandstone-on-beach-20236312/",
+      "photographer": "David Iloba",
+      "photographerUrl": "https://www.pexels.com/@david-iloba-28486424",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "a small beach hotel terrace above the sand at Kribi, Cameroon",
+      "query": "Cameroon Kribi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-11T20:57:40Z",
+      "verifiedAt": "2026-08-11T20:57:40Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: beach,sand"
+        ]
+      }
     },
     "cameroon/mountains": {
       "photoId": "wqDNF4KcHuI",
@@ -138,6 +585,69 @@
       "aspectRatio": 1.3333,
       "thumbnailUrl": "https://images.unsplash.com/photo-1659947234286-213fd15f0bcc?auto=format&fit=crop&w=400&h=300&q=70"
     },
+    "cameroon/outdoor": {
+      "country": "cameroon",
+      "category": "outdoor",
+      "caption": "The Ring Road on Foot",
+      "description": "Crater lakes, tea slopes and the Ring Road through the Bamenda highlands, walkable in sections between 1,200 and 2,000 m.",
+      "provider": "pexels",
+      "photoId": "36718132",
+      "imageUrl": "https://images.pexels.com/photos/36718132/pexels-photo-36718132.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36718132/pexels-photo-36718132.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-view-of-mount-vesuvius-crater-italy-36718132/",
+      "photographer": "Balázs Gábor",
+      "photographerUrl": "https://www.pexels.com/@gaborbalazs97",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "open dry-season slopes and ridge lines on Mount Cameroon",
+      "query": "Cameroon Mount Cameroon",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 58
+      },
+      "createdAt": "2026-08-11T20:57:39Z",
+      "verifiedAt": "2026-08-11T20:57:39Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: mount,slopes,the"
+        ]
+      }
+    },
+    "cameroon/photography": {
+      "country": "cameroon",
+      "category": "photography",
+      "caption": "Cloud on the Rainforest",
+      "description": "Wet season cloud sitting on the forest above Buea, and dry season light on the Mandara spires — two countries, one lens.",
+      "provider": "pexels",
+      "photoId": "17290980",
+      "imageUrl": "https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/cameroon-reunification-monument-in-yaounde-17290980/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 7794,
+      "height": 5845,
+      "aspectRatio": 1.3334,
+      "alt": "cloud and rain sitting on the rainforest above Buea, Cameroon",
+      "query": "Cameroon Buea",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-11T20:57:40Z",
+      "verifiedAt": "2026-08-11T20:57:41Z",
+      "relevance": {
+        "score": 3.21,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
     "cameroon/safari": {
       "photoId": "Y0GY5hKDOJc",
       "photographer": "Angelo Casto",
@@ -159,6 +669,100 @@
       "createdAt": "2026-08-11T16:25:59Z",
       "aspectRatio": 1.5001,
       "thumbnailUrl": "https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&w=400&h=300&q=70"
+    },
+    "cameroon/traditional-people": {
+      "country": "cameroon",
+      "category": "traditional-people",
+      "caption": "Fulani, Mafa and Bamileke",
+      "description": "Two hundred and fifty ethnic groups and as many languages, from the Mafa terraces of the Mandara to the Fulani of the Sahel.",
+      "provider": "pexels",
+      "photoId": "38330925",
+      "imageUrl": "https://images.pexels.com/photos/38330925/pexels-photo-38330925.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38330925/pexels-photo-38330925.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/colorful-traditional-architecture-in-keffi-nigeria-38330925/",
+      "photographer": "Abduljalil Attahir",
+      "photographerUrl": "https://www.pexels.com/@abduljalil-attahir-2151751712",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a Mafa farmer on the terraced slopes of the Mandara mountains, Cameroon",
+      "query": "Cameroon Mafa Mandara",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 38
+      },
+      "createdAt": "2026-08-11T20:57:26Z",
+      "verifiedAt": "2026-08-11T20:57:26Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: and",
+          "category: traditional"
+        ]
+      }
+    },
+    "cameroon/waterfalls": {
+      "country": "cameroon",
+      "category": "waterfalls",
+      "caption": "Where the River Meets the Sea",
+      "description": "The Lobé falls near Kribi drop straight over black rock into the Atlantic — one of very few waterfalls on earth that do.",
+      "provider": "pexels",
+      "photoId": "4708941",
+      "imageUrl": "https://images.pexels.com/photos/4708941/pexels-photo-4708941.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/4708941/pexels-photo-4708941.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/rock-formation-in-sea-4708941/",
+      "photographer": "Renato Ponte",
+      "photographerUrl": "https://www.pexels.com/@renato-ponte-3110687",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "the Lobe waterfalls pouring over rock directly into the Atlantic near Kribi, Cameroon",
+      "query": "Cameroon Lobe Atlantic",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 44
+      },
+      "createdAt": "2026-08-11T20:57:19Z",
+      "verifiedAt": "2026-08-11T20:57:19Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: sea,the"
+        ]
+      }
+    },
+    "cameroon/why-visit": {
+      "country": "cameroon",
+      "category": "why-visit",
+      "caption": "Everything, Within One Border",
+      "description": "Sea level to Sahel in nine hundred kilometres, French and English on the same road, and almost nobody else on it.",
+      "provider": "pexels",
+      "photoId": "32915203",
+      "imageUrl": "https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/red-dirt-road-through-australia-s-simpson-desert-32915203/",
+      "photographer": "Mark Direen",
+      "photographerUrl": "https://www.pexels.com/@mark-direen-622749",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a 4x4 on a red laterite road between rainforest and highland farmland, Cameroon",
+      "query": "Cameroon red laterite road",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-11T20:57:43Z",
+      "verifiedAt": "2026-08-11T20:57:43Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: red,road"
+        ]
+      }
     },
     "cameroon/wildlife": {
       "photoId": "jp6NY2IPP6s",
