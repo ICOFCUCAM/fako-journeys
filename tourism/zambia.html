@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rates & Fees — Circuit Prices Per Person, Park Permits and Deposit Terms | Fako Journeys</title>
-<meta name="description" content="Published circuit rates per person in CFA francs and euro, sliding with group size, plus the MINFOF park permits and Mount CEO guide and porter fees itemised, a full inclusions and exclusions list, and clear deposit and cancellation terms.">
+<title>Zambia Tourism — 27 Experiences | Fako Journeys</title>
+<meta name="description" content="Victoria Falls from the side that gets wet, the walking safari where it was invented, the Lower Zambezi by canoe, and parks with almost no traffic in them.">
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <style>
 :root{
   /* master tokens (rebrandable) — laterite-relief: raffia paper, basalt ink, laterite road */
@@ -364,10 +365,92 @@ ul,ol{list-style:none}
   *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important;animation-iteration-count:1 !important}
   .fj-rise{opacity:1;transform:none}
 }
+
+
+/* ---- tourism country pages -------------------------------------------------- */
+.tq-hero{position:relative;background:var(--fj-basalt);color:var(--fj-onphoto)}
+.tq-hero-pic{position:absolute;inset:0;overflow:hidden}
+.tq-hero-pic img{width:100%;height:100%;object-fit:cover}
+.tq-hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,19,16,.22),rgba(20,19,16,.72))}
+.tq-hero-in{position:relative;padding:132px 0 56px;min-height:clamp(440px,66vh,760px);display:flex;flex-direction:column;justify-content:flex-end}
+.tq-hero h1{font-size:clamp(42px,7vw,88px);color:var(--fj-onphoto);max-width:14em}
+.tq-hero .tq-lede{margin-top:18px;max-width:38em;color:var(--fj-onphoto-soft);font-size:19px}
+.tq-hero .fj-stamp{color:var(--fj-onphoto-dim);margin-bottom:18px}
+.tq-facts{display:flex;flex-wrap:wrap;gap:34px;margin-top:34px;padding-top:22px;border-top:var(--fj-rule-dark)}
+.tq-facts div b{display:block;font-family:var(--fj-display);font-size:24px;letter-spacing:.01em}
+.tq-facts div span{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
+
+.tq-sec{padding:84px 0;border-bottom:var(--fj-rule)}
+.tq-sec-head{display:grid;grid-template-columns:150px 1fr;gap:30px;margin-bottom:44px;align-items:start}
+.tq-sec-head .tq-no{font-family:var(--fj-display);font-size:34px;color:var(--c-accent);line-height:1}
+.tq-sec-head h2{font-size:clamp(26px,3.4vw,42px);max-width:16em}
+.tq-sec-head p{margin-top:12px;color:var(--c-muted);max-width:40em}
+
+.tq-grid{display:grid;gap:26px}
+.tq-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.tq-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.tq-item{display:flex;flex-direction:column}
+.tq-item figure{margin:0;position:relative;overflow:hidden;background:var(--fj-dust)}
+.tq-item img{width:100%;height:100%;display:block;object-fit:cover}
+.tq-item h3{margin-top:14px;font-size:17px;letter-spacing:.02em}
+.tq-item p{margin-top:6px;color:var(--c-muted);font-size:15px}
+.tq-tag{position:absolute;left:0;bottom:0;background:var(--fj-basalt);color:var(--fj-onphoto);
+  font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:7px 11px}
+
+.tq-feature{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;margin-bottom:34px}
+.tq-feature:nth-child(even) .tq-feature-txt{order:-1}
+.tq-feature figure{margin:0;overflow:hidden;background:var(--fj-dust)}
+.tq-feature img{width:100%;height:100%;object-fit:cover;display:block}
+.tq-feature h3{font-size:clamp(22px,2.6vw,30px)}
+.tq-feature p{margin-top:12px;color:var(--c-muted)}
+
+.tq-band{position:relative;overflow:hidden;background:var(--fj-basalt)}
+.tq-band img{width:100%;display:block;object-fit:cover}
+.tq-band-txt{position:absolute;inset:auto 0 0 0;padding:44px 0;
+  background:linear-gradient(180deg,rgba(20,19,16,0),rgba(20,19,16,.78))}
+.tq-band-txt h3{color:var(--fj-onphoto);font-size:clamp(24px,3.4vw,40px)}
+.tq-band-txt p{color:var(--fj-onphoto-soft);max-width:40em;margin-top:10px}
+
+.tq-hero-pic .tq-empty{width:100%;height:100%;aspect-ratio:auto;align-items:flex-start;
+  justify-content:flex-end;padding:100px 28px 0;background:var(--fj-basalt);border:0;
+  color:var(--fj-onphoto-dim)}
+.tq-empty em{display:block;margin-top:8px;font-style:normal;text-transform:none;
+  letter-spacing:.02em;font-family:var(--fj-text);font-size:13px;opacity:.75}
+.tq-empty{display:flex;align-items:center;justify-content:center;background:var(--fj-raffia);
+  border:1px dashed var(--c-border);color:var(--c-muted);font-family:var(--fj-mono);
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-align:center;padding:20px}
+.tq-credit{margin-top:6px;font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted)}
+.tq-credit a{border-bottom:1px solid var(--c-border)}
+
+.tq-cta{padding:84px 0;text-align:center}
+.tq-cta h2{font-size:clamp(28px,4vw,54px);max-width:16em;margin:0 auto}
+.tq-cta p{margin:16px auto 0;color:var(--c-muted);max-width:40em}
+.tq-cta .btn{margin-top:28px;display:inline-block}
+
+.tq-countries{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.tq-countries a{display:block}
+.tq-countries figure{margin:0;overflow:hidden;background:var(--fj-dust)}
+.tq-countries img{width:100%;height:100%;object-fit:cover;display:block}
+.tq-countries h3{margin-top:12px;font-size:19px}
+.tq-countries p{color:var(--c-muted);font-size:15px;margin-top:4px}
+
+@media(max-width:1000px){
+  .tq-grid.cols-3{grid-template-columns:repeat(2,1fr)}
+  .tq-countries{grid-template-columns:repeat(2,1fr)}
+  .tq-feature{grid-template-columns:1fr;gap:22px}
+  .tq-feature:nth-child(even) .tq-feature-txt{order:0}
+  .tq-sec-head{grid-template-columns:1fr;gap:10px}
+}
+@media(max-width:640px){
+  .tq-grid.cols-3,.tq-grid.cols-2,.tq-countries{grid-template-columns:1fr}
+  .tq-sec{padding:56px 0}
+  .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
+}
+@media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
 <body>
-<!-- nav -->
 <header class="fj-mast">
   <div class="fj-frame fj-mast-in">
     <a class="fj-mark" href="/"><b>Fako Journeys</b><span>Cameroun &middot; Circuits guid&eacute;s / Guided circuits</span></a>
@@ -378,272 +461,235 @@ ul,ol{list-style:none}
       <a href="/contact">Enquire</a>
     </nav>
     <span class="fj-mast-tel">Douala +237 233 42 09 61</span>
-    <a class="btn" href="#quote">Plan a circuit</a>
+    <a class="btn" href="/contact">Plan a circuit</a>
   </div>
 </header>
-<!-- opening -->
-<section class="fj-open">
+
+<section class="tq-hero" data-category="hero">
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>Victoria Falls in full flood with spray rising from the gorge, Zambia</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="fj-frame tq-hero-in">
+    <span class="fj-stamp">ZAMBIA <i>&middot; Tourism</i></span>
+    <h1>The Smoke That Thunders</h1>
+    <p class="tq-lede">Victoria Falls from the side that gets wet, the walking safari where it was invented, the Lower Zambezi by canoe, and parks with almost no traffic in them.</p>
+    <div class="tq-facts"><div><b>Southern Africa</b><span>Region</span></div><div><b>27</b><span>Tourism experiences</span></div><div><b>The real wilderness</b><span>Known for</span></div></div>
+  </div>
+</section>
+
+<section class="tq-sec">
   <div class="fj-frame">
-    <div class="fj-open-grid">
-      <div class="fj-rise seen">
-        <span class="fj-stamp">Rates &amp; fees <i>&middot; tarifs par personne</i></span>
-        <h1>Published rates, <em>park fees shown</em>, nothing added at the end.</h1>
-        <p class="fj-lede">Every figure below is per person in CFA francs, with the euro equivalent at the fixed rate of 656. Park permits, guide and porter fees, transport and accommodation are already inside the circuit price &mdash; they are itemised further down only so you can see where the money goes.</p>
-        <div class="fj-acts">
-          <a class="fj-act" href="#quote">Ask for a written quote</a>
-          <a class="fj-act faint" href="/services">Read the itineraries</a>
+    <div class="tq-sec-head">
+      <div><span class="tq-no">01</span></div>
+      <div><h2>Featured destinations</h2><p>Where the country actually takes you.</p></div>
+    </div>
+    <div class="tq-grid cols-3">
+      <article class="tq-item fj-rise" data-category="nature">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>the Zambezi river and escarpment in the Lower Zambezi valley, Zambia</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <h3>The Zambezi Valley</h3>
+        <p>Escarpment, floodplain and winterthorn forest, with the river braiding through the middle of all of it.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="mountains">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>rolling montane grassland on the Nyika plateau, Zambia</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <h3>The Nyika Plateau</h3>
+        <p>Two thousand metres of rolling montane grassland on the Malawi border, with roan antelope and no heat.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="waterfalls">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>the single 235 metre drop of Kalambo Falls, Zambia</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <h3>Victoria and Kalambo</h3>
+        <p>Victoria Falls needs no introduction; Kalambo, on the Tanzanian border, drops 235 metres in a single uninterrupted fall.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="lakes-rivers">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>sunset over the Zambezi river with hippo in the shallows, Zambia</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <h3>Zambezi, Kafue, Tanganyika</h3>
+        <p>Three great river systems and the southern tip of Lake Tanganyika, the second deepest lake on earth.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="beaches">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>the clear freshwater shore of Lake Tanganyika at Nsumbu, Zambia</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <h3>Lake Tanganyika Shore</h3>
+        <p>Clear freshwater, sand and forested hills at Nsumbu, about as far from anywhere as Zambia gets.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="forests">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>elephants under winterthorn trees in the Lower Zambezi, Zambia</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <h3>Miombo and Winterthorn</h3>
+        <p>Miombo woodland turning red at the start of the rains, and the winterthorn groves the elephants feed under.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tq-sec">
+  <div class="fj-frame">
+    <div class="tq-sec-head">
+      <div><span class="tq-no">02</span></div>
+      <div><h2>Wildlife &amp; safari</h2><p>What lives here, and how you see it without disturbing it.</p></div>
+    </div>
+    
+      <div class="tq-feature fj-rise" data-category="wildlife">
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a leopard in a sausage tree in the South Luangwa valley, Zambia</em></span></div></figure>
+        <div class="tq-feature-txt">
+          <span class="fj-stamp">Wildlife</span>
+          <h3>Leopard Country</h3>
+          <p>The South Luangwa has one of the densest leopard populations in Africa, and the best chance of seeing one hunting.</p>
         </div>
-      </div>
-      <div class="fj-open-plate fj-rise">
-        <img src="/images/park-permit-post.svg" alt="A guide checking a permit book at a national park entry post">
-        <div class="fj-open-tag"><b>25 per cent deposit</b><span>Balance 45 days before departure</span></div>
-      </div>
-    </div>
-    <div class="fj-key fj-rise">
-      <div class="fj-key-item"><b>2 pax</b><span>Minimum for a private circuit</span></div>
-      <div class="fj-key-item"><b>6 &ndash; 12</b><span>Fixed-departure group size</span></div>
-      <div class="fj-key-item"><b>656</b><span>FCFA to the euro, fixed peg</span></div>
-      <div class="fj-key-item"><b>45 days</b><span>Balance due before departure</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- rates -->
-<section class="fj-zone">
-  <div class="fj-frame">
-    <div class="fj-head fj-rise">
-      <div class="fj-head-no"><b>01</b><span>Circuit rates</span></div>
-      <div>
-        <h2>Per person, and the price <em>falls as the group grows</em>.</h2>
-        <p class="fj-note">Two columns because a 4x4, a driver and a guide cost the same whether two people or eight are sitting in the vehicle. Rates are for the current season and hold for twelve months from the date we quote you in writing.</p>
-      </div>
-    </div>
-    <div class="fj-rates fj-rise">
-      <div class="fj-rate">
-        <span class="fj-rate-head">Circuit</span>
-        <span class="fj-rate-head">Length &amp; grade</span>
-        <span class="fj-rate-head">2 travellers</span>
-        <span class="fj-rate-head">6 or more</span>
-      </div>
-      <div class="fj-rate">
-        <div><b>CIR-01 Fako Ascent</b><p>Buea to the summit and down the northern flank</p></div>
-        <span class="fj-rate-plain">3 days &middot; grade 3</span>
-        <span class="fj-rate-num">268 000<small>FCFA &middot; approx &euro;408</small></span>
-        <span class="fj-rate-num">214 000<small>FCFA &middot; approx &euro;326</small></span>
-      </div>
-      <div class="fj-rate">
-        <div><b>CIR-02 Lava Fields</b><p>Day walk to the 1999 and 2000 flows and Mann's Spring</p></div>
-        <span class="fj-rate-plain">1 day &middot; grade 2</span>
-        <span class="fj-rate-num">62 000<small>FCFA &middot; approx &euro;95</small></span>
-        <span class="fj-rate-num">48 000<small>FCFA &middot; approx &euro;73</small></span>
-      </div>
-      <div class="fj-rate">
-        <div><b>CIR-04 Black Sand</b><p>Limbe, Kribi, the Lob&eacute; falls and the Batanga estuary</p></div>
-        <span class="fj-rate-plain">5 days &middot; grade 1</span>
-        <span class="fj-rate-num">415 000<small>FCFA &middot; approx &euro;633</small></span>
-        <span class="fj-rate-num">338 000<small>FCFA &middot; approx &euro;515</small></span>
-      </div>
-      <div class="fj-rate">
-        <div><b>CIR-05 Korup Rainforest</b><p>Mundemba, the Mana bridge and three days between camps</p></div>
-        <span class="fj-rate-plain">4 days &middot; grade 4</span>
-        <span class="fj-rate-num">392 000<small>FCFA &middot; approx &euro;598</small></span>
-        <span class="fj-rate-num">325 000<small>FCFA &middot; approx &euro;495</small></span>
-      </div>
-      <div class="fj-rate">
-        <div><b>CIR-06 Ring Road</b><p>The full 367 km loop with Menchum falls and Lake Oku</p></div>
-        <span class="fj-rate-plain">6 days &middot; grade 2</span>
-        <span class="fj-rate-num">468 000<small>FCFA &middot; approx &euro;713</small></span>
-        <span class="fj-rate-num">379 000<small>FCFA &middot; approx &euro;578</small></span>
-      </div>
-      <div class="fj-rate">
-        <div><b>CIR-07 Foumban &amp; Bafut</b><p>Palaces, the royal museum and the craft street</p></div>
-        <span class="fj-rate-plain">3 days &middot; grade 1</span>
-        <span class="fj-rate-num">226 000<small>FCFA &middot; approx &euro;345</small></span>
-        <span class="fj-rate-num">182 000<small>FCFA &middot; approx &euro;277</small></span>
-      </div>
-      <div class="fj-rate">
-        <div><b>CIR-08 Sahel Circuit</b><p>B&eacute;nou&eacute;, Waza, Rhumsiki and Maroua, land only</p></div>
-        <span class="fj-rate-plain">9 days &middot; grade 2</span>
-        <span class="fj-rate-num">1 145 000<small>FCFA &middot; approx &euro;1,746</small></span>
-        <span class="fj-rate-num">928 000<small>FCFA &middot; approx &euro;1,415</small></span>
-      </div>
-      <div class="fj-rate">
-        <div><b>CIR-11 Grand Transect</b><p>Coast, volcano, highlands and Sahel in one run</p></div>
-        <span class="fj-rate-plain">14 days &middot; grade 3</span>
-        <span class="fj-rate-num">1 780 000<small>FCFA &middot; approx &euro;2,713</small></span>
-        <span class="fj-rate-num">1 465 000<small>FCFA &middot; approx &euro;2,233</small></span>
-      </div>
+      </div><div class="tq-grid cols-2">
+      <article class="tq-item fj-rise" data-category="safari">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a walking safari group and guide in the South Luangwa bush, Zambia</em></span></div><span class="tq-tag">Safari</span></figure>
+        <h3>The Walking Safari</h3>
+        <p>Invented in the Luangwa in the 1950s: no vehicle, an armed scout, and everything at eye level.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="eco-tourism">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>wild dogs on the Busanga plains in Kafue National Park, Zambia</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <h3>Kafue and the Carnivores</h3>
+        <p>Kafue is the size of Wales; the conservation programmes there fund anti-poaching across the whole Greater Kafue system.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- fees -->
-<section class="fj-zone dust">
+<section class="tq-sec">
   <div class="fj-frame">
-    <div class="fj-head fj-rise">
-      <div class="fj-head-no"><b>02</b><span>Statutory &amp; local fees</span></div>
-      <div>
-        <h2>Where the park and guide money <em>actually goes</em>.</h2>
-        <p class="fj-note">These are already inside the circuit rates above. They are set by MINFOF for the parks and by the Mount Cameroon Ecotourism Organisation for the mountain, not by us, and they are paid to the villages, the park service and the guides directly.</p>
-      </div>
+    <div class="tq-sec-head">
+      <div><span class="tq-no">03</span></div>
+      <div><h2>Culture &amp; heritage</h2><p>The part of a country you cannot photograph from a vehicle.</p></div>
     </div>
-    <div class="fj-fees fj-rise">
-      <div class="fj-fee"><div><b>Mountain guide</b><p>Mount CEO rotation, per guide per day on the hill</p></div><i>15 000 FCFA</i></div>
-      <div class="fj-fee"><div><b>Porter</b><p>Per porter per day, 18 kg limit, from the mountain villages</p></div><i>10 000 FCFA</i></div>
-      <div class="fj-fee"><div><b>Mountain registration</b><p>Per trekker, paid at the Molyko office before departure</p></div><i>5 000 FCFA</i></div>
-      <div class="fj-fee"><div><b>National park entry</b><p>Waza, B&eacute;nou&eacute; or Korup, non-resident, per person per day</p></div><i>5 000 FCFA</i></div>
-      <div class="fj-fee"><div><b>Park vehicle permit</b><p>Per vehicle per day inside a national park</p></div><i>2 500 FCFA</i></div>
-      <div class="fj-fee"><div><b>Armed park guide</b><p>Compulsory for walking safaris in B&eacute;nou&eacute;, per day</p></div><i>12 000 FCFA</i></div>
-      <div class="fj-fee"><div><b>Community levy</b><p>Lob&eacute; falls and Batanga villages, per visitor</p></div><i>2 000 FCFA</i></div>
-      <div class="fj-fee"><div><b>Palace photography</b><p>Foumban and Bafut, per camera, paid at the gate</p></div><i>3 000 FCFA</i></div>
-    </div>
-  </div>
-</section>
-
-<!-- inclusions -->
-<section class="fj-zone">
-  <div class="fj-frame">
-    <div class="fj-head fj-rise">
-      <div class="fj-head-no"><b>03</b><span>In and out</span></div>
-      <div>
-        <h2>What the rate covers, and what it <em>plainly does not</em>.</h2>
-        <p class="fj-note">We would rather lose a booking on an honest list than win one and argue about it in Maroua. If something you expected is not on the left-hand column, ask before you pay the deposit.</p>
-      </div>
-    </div>
-    <div class="fj-incl fj-rise">
-      <div class="fj-incl-col">
-        <b>Included in every circuit rate</b>
-        <ul>
-          <li><em>Licensed guide</em> throughout, working in French and English</li>
-          <li><em>Vehicle and driver</em> &mdash; Land Cruiser or Hilux, fuel, tolls and parking</li>
-          <li><em>All park permits</em> and community levies listed above</li>
-          <li><em>Accommodation</em> on the stated basis, twin share</li>
-          <li><em>Breakfast daily</em>, plus all meals on trekking and camping days</li>
-          <li><em>Porters and camp crew</em> where the circuit requires them</li>
-          <li><em>Drinking water</em> in the vehicle and on the hill, 3 litres per person per day</li>
-          <li><em>Airport transfers</em> at Douala, Garoua or Maroua on circuit days</li>
-        </ul>
-      </div>
-      <div class="fj-incl-col out">
-        <b>Not included &mdash; budget for these separately</b>
-        <ul>
-          <li><em>International flights</em> and the Cameroon visa</li>
-          <li><em>Internal flights</em> Douala&ndash;Garoua, quoted live at time of booking</li>
-          <li><em>Travel insurance</em>, which is a condition of booking with us</li>
-          <li><em>Lunches and dinners</em> on road and city days, roughly 8 000 FCFA a head</li>
-          <li><em>Drinks</em> other than the water we carry</li>
-          <li><em>Single supplement</em>, from 22 000 FCFA per night where a single room exists</li>
-          <li><em>Tips</em> for guides, porters and drivers &mdash; customary, never compulsory</li>
-          <li><em>Yellow fever certificate</em> and antimalarials, both genuinely required</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- terms -->
-<section class="fj-zone basalt">
-  <div class="fj-frame">
-    <div class="fj-head fj-rise">
-      <div class="fj-head-no"><b>04</b><span>Deposits &amp; terms</span></div>
-      <div>
-        <h2>How a booking is held, paid and <em>unwound if it has to be</em>.</h2>
-        <p class="fj-note">The same terms apply to every circuit and to every traveller, whether you book direct or through an agent. They are repeated in full on the confirmation we email you before any money moves.</p>
-      </div>
-    </div>
-    <div class="fj-asks fj-rise">
-      <div class="fj-ask">
-        <h3>What confirms a booking?</h3>
-        <p>Twenty-five per cent of the circuit total, plus the full cost of any internal flight we hold for you. The date, the vehicle and the guides are blocked the moment it clears.</p>
-      </div>
-      <div class="fj-ask">
-        <h3>When is the balance due?</h3>
-        <p>Forty-five days before departure. Inside forty-five days a booking is payable in full at the time it is made.</p>
-      </div>
-      <div class="fj-ask">
-        <h3>How can we pay?</h3>
-        <p>Bank transfer to our Douala account in FCFA or euro, MTN MoMo and Orange Money for regional travellers, or a secure card link that carries a 3.5 per cent processor fee.</p>
-      </div>
-      <div class="fj-ask">
-        <h3>What if we cancel?</h3>
-        <p>Over 60 days, deposit held as credit for eighteen months. 60 to 30 days, 40 per cent of the total. Under 30 days, 75 per cent. Under 7 days, no refund &mdash; the crew and rooms are paid by then.</p>
-      </div>
-      <div class="fj-ask">
-        <h3>What if you cancel?</h3>
-        <p>If we stand a circuit down for weather, security guidance or our own operational failure, you choose between a full refund and a rebooking at the price you originally paid.</p>
-      </div>
-      <div class="fj-ask">
-        <h3>Are there reductions?</h3>
-        <p>Children under twelve travel at 70 per cent on grade 1 and 2 circuits. Cameroonian and CEMAC residents pay the resident park tariff, which we pass straight through.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- quote -->
-<section class="fj-zone dust" id="quote">
-  <div class="fj-frame">
-    <div class="fj-enq-grid">
-      <div class="fj-rise">
-        <span class="fj-stamp">Written quote &middot; devis</span>
-        <h2>Ask for the figure on <em>your dates</em>.</h2>
-        <p class="fj-note">Tell us the circuit, the month and how many of you there are. You will get back a one-page quote in FCFA and euro, with the park fees itemised, the internal flight priced live, and nothing held back for later.</p>
-        <dl class="fj-facts">
-          <div><dt>Deposit</dt><dd>25 per cent to confirm</dd></div>
-          <div><dt>Balance</dt><dd>45 days before departure</dd></div>
-          <div><dt>Quote validity</dt><dd>12 months from issue</dd></div>
-          <div><dt>Written</dt><dd>bonjour@fakojourneys.cm</dd></div>
-        </dl>
-      </div>
-      <form class="fj-form fj-rise" data-lead-mailto="bonjour@fakojourneys.cm" data-lead-form data-lead-success="Thank you — your request has reached the Douala office. We will send a written quote within one working day, in CFA francs and euro, with the park fees itemised line by line." data-lead-error="That did not send. Please telephone +237 233 42 09 61 or write to bonjour@fakojourneys.cm and we will pick it up from there.">
-        <div class="fj-row">
-          <div class="fj-cell"><label for="pnm">Your name</label><input id="pnm" name="name" required></div>
-          <div class="fj-cell"><label for="pph">Telephone or WhatsApp</label><input id="pph" name="phone"></div>
+    
+      <div class="tq-feature fj-rise" data-category="culture">
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>Lozi paddlers and drummers on the Zambezi floodplain, Zambia</em></span></div></figure>
+        <div class="tq-feature-txt">
+          <span class="fj-stamp">Culture</span>
+          <h3>Lozi, Bemba, Tonga</h3>
+          <p>Seventy-three ethnic groups, seven official languages, and a royal barge ceremony older than the country.</p>
         </div>
-        <div class="fj-row">
-          <div class="fj-cell"><label for="pem">Email</label><input id="pem" name="email" type="email" required></div>
-          <div class="fj-cell"><label for="pdt">Dates or month</label><input id="pdt" name="dates" placeholder="e.g. 8 to 22 January"></div>
-        </div>
-        <div class="fj-row">
-          <div class="fj-cell"><label for="ppx">Travellers</label><input id="ppx" name="party" placeholder="e.g. 2 adults, 1 child of 10"></div>
-          <div class="fj-cell"><label for="pcr">Circuit to price</label><select id="pcr" name="circuit"><option>CIR-01 Fako Ascent</option><option>CIR-04 Black Sand coast</option><option>CIR-05 Korup rainforest</option><option>CIR-06 Ring Road</option><option>CIR-07 Foumban &amp; Bafut</option><option>CIR-08 Sahel Circuit</option><option>CIR-11 Grand Transect</option><option>Something built from scratch</option></select></div>
-        </div>
-        <div class="fj-cell"><label for="pms">Anything that changes the figure</label><textarea id="pms" name="message" rows="4" placeholder="e.g. Two single rooms, and we would like to fly rather than drive to Garoua"></textarea></div>
-        <button class="fj-send" type="submit">Request the quote</button>
-        <p class="fj-fine">Your details stay with our office. No mailing list, no agents, no forwarding to third parties.</p>
-        <p class="fj-flash" data-lead-success-msg></p>
-        <p class="fj-flash" data-lead-error-msg></p>
-      </form>
+      </div><div class="tq-grid cols-3">
+      <article class="tq-item fj-rise" data-category="traditional-people">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a Lozi fisherman poling a dugout on the Barotse floodplain, Zambia</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <h3>The Barotse Floodplain</h3>
+        <p>The Lozi live with the flood — moving cattle, homes and the king himself when the Zambezi rises.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="food">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>nshima with relish served at a Zambian table</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <h3>Nshima and Kapenta</h3>
+        <p>Maize nshima with relish, dried kapenta from the lakes, and fresh bream out of the Zambezi.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="festivals">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>the Nalikwanda royal barge during the Kuomboka ceremony, Zambia</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <h3>Kuomboka</h3>
+        <p>When the floodplain fills, the Litunga is paddled to high ground on the Nalikwanda barge, drummed the whole way.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="crafts">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>coiled baskets woven in Zambia&#x27;s Western Province</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <h3>Basketry and Copper</h3>
+        <p>Tight coiled baskets from the Western Province, and copper worked on the belt that built the economy.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="historic-sites">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>the colonial-era museum building in Livingstone, Zambia</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <h3>Livingstone</h3>
+        <p>The old colonial capital above the falls, its museum, and the tree where the man himself is said to have camped.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="heritage">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>the knife-edge bridge and gorge at Mosi-oa-Tunya, Victoria Falls, Zamb</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <h3>Mosi-oa-Tunya, UNESCO</h3>
+        <p>World Heritage since 1989, shared with Zimbabwe, and named by the Kololo long before anyone renamed it.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<script>
-(function(){
-  var rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-  var rise=document.querySelectorAll('.fj-rise');
-  if('IntersectionObserver' in window && !rm){
-    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('seen');io.unobserve(en.target)}})},{threshold:.1});
-    rise.forEach(function(el){io.observe(el)});
-  }else{rise.forEach(function(el){el.classList.add('seen')})}
-  document.querySelectorAll('[data-lead-form]').forEach(function(fm){
-    fm.addEventListener('submit',function(e){
-      e.preventDefault();
-      var to=fm.getAttribute('data-lead-mailto')||'';
-      var lines=[];
-      fm.querySelectorAll('input,textarea,select').forEach(function(i){
-        if(i.type==='hidden'||!i.value)return;
-        var lab=fm.querySelector('label[for="'+i.id+'"]');
-        lines.push((lab?lab.textContent.trim():(i.name||i.id))+': '+i.value);
-      });
-      var note=fm.querySelector('[data-lead-success-msg]');
-      if(note){note.textContent='Opening your email app with this enquiry ready to send. If nothing happens, write to '+to+' directly.';note.className=note.className.replace(/\bon\b/,'')+' on';}
-      window.location.href='mailto:'+to+'?subject='+encodeURIComponent('Website enquiry')+'&body='+encodeURIComponent(lines.join('\n'));
-    });
-  });
-})();
-</script>
-<!-- footer -->
+<section class="tq-sec">
+  <div class="fj-frame">
+    <div class="tq-sec-head">
+      <div><span class="tq-no">04</span></div>
+      <div><h2>Cities &amp; everyday life</h2><p>Where people actually live between the landmarks.</p></div>
+    </div>
+    <div class="tq-grid cols-3">
+      <article class="tq-item fj-rise" data-category="cities">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a busy market street in Lusaka, Zambia</em></span></div><span class="tq-tag">Cities</span></figure>
+        <h3>Lusaka</h3>
+        <p>The centre of everything: Kabwata market, the Great East Road, and the flights that get you to the parks.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="architecture">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a colonial veranda building on Mosi-oa-Tunya Road in Livingstone, Zamb</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <h3>Livingstone&#x27;s Verandas</h3>
+        <p>Corrugated iron and deep colonial verandas along Mosi-oa-Tunya Road, built for heat and never modernised.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="local-life">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a roadside produce market on the Great North Road in Zambia</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <h3>Markets and the Great North Road</h3>
+        <p>Roadside charcoal and tomatoes, long-haul trucks to the copperbelt, and a bus that leaves when it fills.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="family-community">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a community craft cooperative near the South Luangwa park boundary, Za</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <h3>Village Around the Park</h3>
+        <p>Community campsites and craft cooperatives on the Luangwa boundary, funded by the same beds that fill the lodges.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tq-sec">
+  <div class="fj-frame">
+    <div class="tq-sec-head">
+      <div><span class="tq-no">05</span></div>
+      <div><h2>Adventure &amp; outdoors</h2><p>For travellers who would rather walk it than watch it.</p></div>
+    </div>
+    
+      <div class="tq-feature fj-rise" data-category="adventure">
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>rafting the grade five rapids in the Batoka gorge below Victoria Falls</em></span></div></figure>
+        <div class="tq-feature-txt">
+          <span class="fj-stamp">Adventure</span>
+          <h3>Devil&#x27;s Pool and the Gorge</h3>
+          <p>Swim to the lip of Victoria Falls in low water, then raft the grade five rapids in the Batoka gorge below it.</p>
+        </div>
+      </div><div class="tq-grid cols-2">
+      <article class="tq-item fj-rise" data-category="outdoor">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>canoeing past elephants on the Lower Zambezi river, Zambia</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <h3>Canoeing the Lower Zambezi</h3>
+        <p>Three days downstream past hippo pods and elephant crossings, camping on islands, no engine at any point.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="luxury">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a small thatched bush camp overlooking the Luangwa river, Zambia</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <h3>Bush Camps, Six Beds</h3>
+        <p>Seasonal bush camps in the Luangwa that take six guests, close at the rains, and are walked between.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tq-sec">
+  <div class="fj-frame">
+    <div class="tq-sec-head">
+      <div><span class="tq-no">06</span></div>
+      <div><h2>Travel inspiration</h2><p>The frames people come home with.</p></div>
+    </div>
+    <div class="tq-grid cols-2">
+      <article class="tq-item fj-rise" data-category="photography">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>hippos in the Luangwa river at last light, Zambia</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <h3>Luangwa at Last Light</h3>
+        <p>The river bends, the hippo surface and the dust goes gold about forty minutes before the drive has to end.</p>
+      </article>
+      <article class="tq-item fj-rise" data-category="hidden-gems">
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>wildebeest massed on the open grass of Liuwa Plain, Zambia</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <h3>Liuwa Plain</h3>
+        <p>The second largest wildebeest migration in Africa, on a plain almost nobody has heard of, reachable only in the dry.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tq-band" data-category="why-visit">
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Unsplash image resolution requires UNSPLASH_ACCESS_KEY.<br><em>a lone safari vehicle on an empty track in the South Luangwa, Zambia</em></span></div>
+  <div class="tq-band-txt"><div class="fj-frame">
+    <span class="fj-stamp">Why Visit This Country</span>
+    <h3>Wilderness, Still Unmanaged</h3><p>Zambia kept the walking safari, the small camp and the empty park while its neighbours scaled up.</p>
+  </div></div>
+</section>
+
+<section class="tq-cta">
+  <div class="fj-frame">
+    <h2>Wilderness, Still Unmanaged</h2>
+    <p>Zambia kept the walking safari, the small camp and the empty park while its neighbours scaled up.</p>
+    <a class="btn" href="/contact">Plan a circuit</a>
+  </div>
+</section>
 <footer class="fj-foot">
   <div class="fj-frame">
     <div class="fj-foot-grid">
@@ -677,5 +723,30 @@ ul,ol{list-style:none}
     <div class="fj-foot-bar">&copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
   </div>
 </footer>
+<script>
+(function(){
+  var rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var rise=document.querySelectorAll('.fj-rise');
+  if('IntersectionObserver' in window && !rm){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('seen');io.unobserve(en.target)}})},{threshold:.1});
+    rise.forEach(function(el){io.observe(el)});
+  }else{rise.forEach(function(el){el.classList.add('seen')})}
+  document.querySelectorAll('[data-lead-form]').forEach(function(fm){
+    fm.addEventListener('submit',function(e){
+      e.preventDefault();
+      var to=fm.getAttribute('data-lead-mailto')||'';
+      var lines=[];
+      fm.querySelectorAll('input,textarea,select').forEach(function(i){
+        if(i.type==='hidden'||!i.value)return;
+        var lab=fm.querySelector('label[for="'+i.id+'"]');
+        lines.push((lab?lab.textContent.trim():(i.name||i.id))+': '+i.value);
+      });
+      var note=fm.querySelector('[data-lead-success-msg]');
+      if(note){note.textContent='Opening your email app with this enquiry ready to send. If nothing happens, write to '+to+' directly.';note.className=note.className.replace(/\bon\b/,'')+' on';}
+      window.location.href='mailto:'+to+'?subject='+encodeURIComponent('Website enquiry')+'&body='+encodeURIComponent(lines.join('\n'));
+    });
+  });
+})();
+</script>
 </body>
 </html>

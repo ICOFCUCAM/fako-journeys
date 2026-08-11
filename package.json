@@ -1,0 +1,25 @@
+{
+  "name": "fako-journeys",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static site for a Cameroonian tour operator, plus the tourism image system that generates the country pages.",
+  "//": "Deliberately dependency-free and with no build script: the deployed site is static HTML, and adding a build script here would make the host try to run one. These commands are thin wrappers over the Python engine in tools/tourism/, which needs nothing but python3.",
+  "scripts": {
+    "tourism:resolve-images": "python3 tools/tourism/build.py resolve",
+    "tourism:validate": "python3 tools/tourism/build.py validate",
+    "tourism:status": "python3 tools/tourism/build.py status",
+    "tourism:queries": "python3 tools/tourism/build.py queries",
+    "tourism:render": "python3 tools/tourism/build.py render",
+    "tourism:verify": "python3 tools/tourism/build.py verify",
+    "tourism:report": "python3 tools/tourism/build.py report",
+    "tourism:scaffold": "python3 tools/tourism/build.py scaffold",
+    "tourism:all": "python3 tools/tourism/build.py all",
+    "tourism:test": "python3 tools/tourism/build.py test",
+    "test": "python3 tools/tourism/build.py test",
+    "lint": "python3 -m py_compile tools/build_images.py tools/tourism/*.py && echo 'lint: ok'",
+    "typecheck": "python3 -m py_compile tools/build_images.py tools/tourism/*.py && echo 'typecheck: ok (no TypeScript in this project)'"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

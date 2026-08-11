@@ -1,0 +1,48 @@
+name: Tourism system tests
+
+# No key, no network: the suite runs the resolver against a local mock of the
+# Unsplash API, so CI proves the whole path works without any secret.
+
+on:
+  push:
+    paths:
+      - "tools/**"
+      - "tourism/**"
+      - ".github/workflows/tourism-tests.yml"
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Typecheck / lint
+        run: |
+          python3 -m py_compile tools/build_images.py tools/tourism/*.py
+          echo "ok"
+
+      - name: Resolver test suite (against the local mock)
+        run: python3 tools/tourism/build.py test
+
+      - name: Validate every country
+        run: python3 tools/tourism/build.py validate
+
+      - name: Rebuild pages and check the generated HTML
+        run: |
+          python3 tools/tourism/build.py render
+          python3 tools/tourism/build.py verify
+
+      - name: Generated pages must be up to date with the data
+        run: |
+          if ! git diff --quiet -- tourism/; then
+            echo "::error::tourism/*.html is stale — run 'npm run tourism:all' and commit the result"
+            git --no-pager diff --stat -- tourism/
+            exit 1
+          fi
+          echo "generated pages match the data"

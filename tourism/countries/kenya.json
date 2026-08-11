@@ -1,0 +1,200 @@
+{
+  "slug": "kenya",
+  "name": "Kenya",
+  "adjective": "Kenyan",
+  "region": "East Africa",
+  "tagline": "Where the safari was invented",
+  "summary": "The Mara migration, Amboseli elephants under Kilimanjaro, the Rift Valley lakes, the Swahili coast and a capital with a national park on its doorstep.",
+  "published": true,
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "Where the Safari Was Invented",
+      "description": "The Maasai Mara at first light, and everything the word safari has meant for a century.",
+      "subject": "acacia and open grassland in the Maasai Mara at sunrise",
+      "focal": [50, 58]
+    },
+    {
+      "category": "nature",
+      "caption": "The Great Rift Valley",
+      "description": "The escarpment drops away below the Naivasha road, holding a chain of soda lakes and dormant volcanoes.",
+      "subject": "the Great Rift Valley escarpment and floor seen from the Naivasha road",
+      "focal": [50, 50]
+    },
+    {
+      "category": "wildlife",
+      "caption": "Wildlife on the Savannah",
+      "description": "The Big Five, plus the reticulated giraffe and Grevy's zebra that live nowhere south of here.",
+      "subject": "elephants crossing the plain at Amboseli beneath Kilimanjaro",
+      "focal": [48, 56]
+    },
+    {
+      "category": "safari",
+      "caption": "The Great Migration",
+      "description": "Between July and October a million wildebeest cross the Mara river, and the crocodiles are already waiting.",
+      "subject": "wildebeest crossing the Mara river during the great migration",
+      "focal": [50, 54]
+    },
+    {
+      "category": "mountains",
+      "caption": "Mount Kenya, 5,199 m",
+      "description": "Equatorial glaciers, giant lobelia, and a trekking route to Point Lenana that needs no technical climbing.",
+      "subject": "the jagged glaciated peaks of Mount Kenya above the moorland",
+      "focal": [50, 40]
+    },
+    {
+      "category": "waterfalls",
+      "caption": "Thomson's Falls",
+      "description": "The Ewaso Ng'iro drops seventy-four metres into a fern gorge at Nyahururu, on the way north to Samburu.",
+      "subject": "Thomson's Falls dropping into the fern gorge at Nyahururu",
+      "focal": [50, 44]
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "Flamingo Country",
+      "description": "Nakuru, Bogoria and Elementaita hold soda water, hot springs and flamingo in numbers that change by the season.",
+      "subject": "flamingos massed on the shallows of Lake Nakuru",
+      "focal": [50, 56]
+    },
+    {
+      "category": "beaches",
+      "caption": "The Swahili Coast",
+      "description": "Diani, Watamu and Lamu: white sand, warm Indian Ocean, and a coastline that traded with Arabia for a thousand years.",
+      "subject": "white sand and dhows on Diani Beach on the Indian Ocean",
+      "focal": [50, 58]
+    },
+    {
+      "category": "forests",
+      "caption": "Kakamega, the Last of It",
+      "description": "The only Kenyan remnant of the Guineo-Congolian rainforest that once ran clear across the continent.",
+      "subject": "dense canopy and hanging vines inside Kakamega Forest",
+      "focal": [50, 46]
+    },
+    {
+      "category": "adventure",
+      "caption": "Balloon Over the Mara",
+      "description": "Up before dawn, an hour over the plains at treetop height, and breakfast on the grass where you land.",
+      "subject": "a hot-air balloon over the Maasai Mara plains at sunrise",
+      "focal": [50, 46]
+    },
+    {
+      "category": "culture",
+      "caption": "Maasai and Swahili",
+      "description": "Two Kenyas: the cattle-keeping highlands and the coral-stone, Arabic-inflected coast.",
+      "subject": "Maasai elders in red shuka cloth on the open plains",
+      "focal": [50, 44]
+    },
+    {
+      "category": "traditional-people",
+      "caption": "Samburu and Maasai",
+      "description": "Samburu in the northern drylands, Maasai in the south, both still moving cattle between seasonal grazing.",
+      "subject": "a Samburu warrior with beaded ornaments in the northern drylands",
+      "focal": [50, 38]
+    },
+    {
+      "category": "food",
+      "caption": "Nyama Choma and Ugali",
+      "description": "Goat roasted over charcoal, maize meal, sukuma wiki, and coastal biryani that came in by dhow.",
+      "subject": "nyama choma roasting over charcoal at a Nairobi grill",
+      "focal": [50, 52]
+    },
+    {
+      "category": "festivals",
+      "caption": "Lamu Cultural Festival",
+      "description": "Dhow races, donkey races, henna and taarab music in the alleys of a town with almost no cars.",
+      "subject": "dhow racing during the Lamu cultural festival",
+      "focal": [50, 50]
+    },
+    {
+      "category": "crafts",
+      "caption": "Beadwork and Kisii Stone",
+      "description": "Maasai beadwork, Kisii soapstone carving, and kiondo sisal baskets made the way they always were.",
+      "subject": "Maasai women stringing beadwork ornaments",
+      "focal": [50, 50]
+    },
+    {
+      "category": "historic-sites",
+      "caption": "Fort Jesus, Mombasa",
+      "description": "Portuguese, built 1593, taken and retaken nine times — now UNESCO World Heritage above the old harbour.",
+      "subject": "the coral ramparts of Fort Jesus above Mombasa old harbour",
+      "focal": [50, 50]
+    },
+    {
+      "category": "heritage",
+      "caption": "Lamu Old Town",
+      "description": "The oldest continuously inhabited Swahili settlement, carved doors, coral rag walls and no room for a car.",
+      "subject": "carved wooden doors and coral stone alleys in Lamu Old Town",
+      "focal": [50, 48]
+    },
+    {
+      "category": "cities",
+      "caption": "Nairobi, Green City in the Sun",
+      "description": "The only capital on earth with a national park inside the city limits, and lions in sight of the skyline.",
+      "subject": "the Nairobi skyline seen across Nairobi National Park",
+      "focal": [50, 46]
+    },
+    {
+      "category": "architecture",
+      "caption": "Coral Stone and Carved Doors",
+      "description": "Swahili coral-rag houses with inner courtyards, and doors carved in Lamu and shipped up the coast.",
+      "subject": "an ornately carved Swahili door in a coral stone wall in Lamu",
+      "focal": [50, 44]
+    },
+    {
+      "category": "local-life",
+      "caption": "Matatus and Markets",
+      "description": "Painted, over-amplified matatus, Maasai Market on rotation through the week, and tea at every stop.",
+      "subject": "brightly painted matatu minibuses in a Nairobi street",
+      "focal": [50, 52]
+    },
+    {
+      "category": "family-community",
+      "caption": "The Conservancies",
+      "description": "Community conservancies lease grazing land back for wildlife, and the lease pays the schools around the Mara.",
+      "subject": "a community conservancy ranger team on patrol near the Maasai Mara",
+      "focal": [50, 54]
+    },
+    {
+      "category": "outdoor",
+      "caption": "Walking Hell's Gate",
+      "description": "The one Kenyan park you can walk and cycle through, with gorge scrambling and geothermal steam.",
+      "subject": "cyclists on the track between the cliffs of Hell's Gate National Park",
+      "focal": [50, 52]
+    },
+    {
+      "category": "luxury",
+      "caption": "Camps on the Mara",
+      "description": "Small tented camps on private conservancies, night drives and off-road access the main reserve does not allow.",
+      "subject": "a luxury tented safari camp overlooking the Maasai Mara plains",
+      "focal": [50, 52]
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Rhino, Counted Daily",
+      "description": "Ol Pejeta and Lewa run some of Africa's most closely monitored rhino populations, funded by the beds on the property.",
+      "subject": "black rhino grazing on the Ol Pejeta conservancy at dawn",
+      "focal": [48, 56]
+    },
+    {
+      "category": "photography",
+      "caption": "Kilimanjaro from Amboseli",
+      "description": "The mountain is in Tanzania; the view of it is in Kenya, and it is only clear for an hour at each end of the day.",
+      "subject": "elephants beneath Mount Kilimanjaro seen from Amboseli at sunrise",
+      "focal": [50, 60]
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "Chalbi and Marsabit",
+      "description": "The desert north: Chalbi's salt pan, Marsabit's forested crater and the road down to Lake Turkana.",
+      "subject": "the salt pan and dunes of the Chalbi desert in northern Kenya",
+      "focal": [50, 56]
+    },
+    {
+      "category": "why-visit",
+      "caption": "Magical Kenya",
+      "description": "Migration, glacier, reef and desert inside one border, with the infrastructure to see all four in a fortnight.",
+      "subject": "acacia silhouetted against a red sunset on the Kenyan savannah",
+      "focal": [50, 52]
+    }
+  ]
+}
