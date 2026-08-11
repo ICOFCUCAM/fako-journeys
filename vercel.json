@@ -2,8 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-
-  "//": "This is a static site: the HTML in the repo root IS the deployable output. package.json exists only to give the tourism tooling npm-style commands, and Vercel's zero-config detection would otherwise see it and switch to a Node build pipeline, publishing something other than the repo root. These three lines say: no framework, do not install, do not build. Serve the files as they are.",
   "framework": null,
   "installCommand": "",
   "buildCommand": ""

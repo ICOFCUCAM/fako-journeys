@@ -7,8 +7,22 @@ dependencies, no framework — plain HTML and CSS. Deploy the folder as-is.
 
 ## Deploying
 
-Import the repository into Vercel (or any static host) and deploy. There is nothing to
-configure: `vercel.json` sets `cleanUrls`, so `/services` serves `services.html`.
+Import the repository into Vercel (or any static host) and deploy. The repo root
+*is* the deployable output — there is no build.
+
+`vercel.json` sets `cleanUrls`, so `/services` serves `services.html`. It also
+pins `framework: null` with empty `installCommand` and `buildCommand`, because
+`package.json` (which exists only to give the tourism tooling npm-style
+commands) would otherwise trip Vercel's zero-config detection into running a
+Node build and publishing something other than these files.
+
+Note that `vercel.json` is schema-validated on every deploy and rejects any key
+it does not recognise — including a `"//"` comment key, which fails the build
+outright. Explanations go here, not in that file.
+
+`.vercelignore` keeps the engine out of the deployment: `tools/`, the country
+datasets, the cache and this README are build-time inputs, not things a visitor
+should be able to fetch. The generated `tourism/*.html` and `images/` still ship.
 
 ## Before this goes live
 
