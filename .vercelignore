@@ -1,0 +1,7 @@
+tools/
+tourism/countries/
+tourism/cache/
+tourism/REPORT.md
+.github/
+.env.example
+README.md
