@@ -13,7 +13,15 @@ Two things happen here that a naive implementation gets wrong.
    so the browser reserves the box before the bytes arrive. No layout shift.
 """
 
+import os
+
 UNSPLASH_HOST = "https://images.unsplash.com/"
+
+# Test hook. The resolver and the delivery builder both refuse any source that is
+# not the Unsplash CDN; the end-to-end test needs to point that at a local mock.
+# Never set this outside tests — validate.py still checks stored data against the
+# real host, so a dataset resolved against a mock will fail validation.
+ALLOWED_HOST = os.environ.get("UNSPLASH_IMAGE_HOST_OVERRIDE") or UNSPLASH_HOST
 
 
 def dimensions(role, width=None):
@@ -30,7 +38,7 @@ def cdn_url(photo_url, role, focal, width=None):
     """
     if not photo_url:
         return None
-    if not photo_url.startswith(UNSPLASH_HOST):
+    if not photo_url.startswith(ALLOWED_HOST):
         raise ValueError("refusing to build a delivery URL for a non-Unsplash source: %r" % photo_url)
     base = photo_url.split("?", 1)[0]
     w, h = dimensions(role, width)

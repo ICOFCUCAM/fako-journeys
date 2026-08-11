@@ -23,7 +23,7 @@ import urllib.request
 
 from . import queries
 
-API = "https://api.unsplash.com"
+API = os.environ.get("UNSPLASH_API_BASE") or "https://api.unsplash.com"   # base is overridable for tests only
 UA = "fako-journeys-tourism-image-system/1"
 
 
@@ -132,7 +132,7 @@ def resolve_entry(country, category, entry, role, key, seen):
         if not ok:
             continue
         raw = (photo.get("urls") or {}).get("raw")
-        if not raw or not raw.startswith(imaging.UNSPLASH_HOST):
+        if not raw or not raw.startswith(imaging.ALLOWED_HOST):
             continue
         record = {
             "provider": "unsplash",

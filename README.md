@@ -92,6 +92,13 @@ Until a slot is resolved, the page renders the entry's `local` illustration if i
 has one, and an honest "image pending" tile if it does not. Nothing breaks; the
 page is only less specific.
 
+The resolver has an end-to-end test that runs it against a local mock of the
+Unsplash API — search, suitability, de-duplication, URL construction, HTTP
+verification, write-back and round-trip — so the first real run is not also the
+first time anyone finds out whether it works:
+
+    python3 tools/tourism/test_resolve.py
+
 ### Delivery
 
 `categories.json` defines six roles — hero, feature, card, portrait, panoramic,
