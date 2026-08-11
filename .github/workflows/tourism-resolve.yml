@@ -1,0 +1,115 @@
+name: Resolve tourism images
+
+# Run the Unsplash resolver where there is actually internet access, with the key
+# held as a repository secret so it never touches a working copy or a commit.
+#
+# Setup, once:
+#   Settings -> Secrets and variables -> Actions -> New repository secret
+#   Name:  UNSPLASH_ACCESS_KEY
+#   Value: your Unsplash *Access Key* (never the Secret key)
+#
+# Then: Actions -> Resolve tourism images -> Run workflow.
+
+on:
+  workflow_dispatch:
+    inputs:
+      country:
+        description: "Country slug, or blank for every country"
+        required: false
+        default: cameroon
+      category:
+        description: "Category id, or blank for all 27"
+        required: false
+        default: ""
+      force:
+        description: "Re-resolve slots that are already cached"
+        type: boolean
+        required: false
+        default: false
+      commit:
+        description: "Commit the cache and regenerated pages back to this branch"
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tourism-resolve-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check the key is configured
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        run: |
+          if [ -z "$UNSPLASH_ACCESS_KEY" ]; then
+            echo "::error::Unsplash image resolution requires UNSPLASH_ACCESS_KEY."
+            echo "Add it under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          echo "key is present (value never printed)"
+
+      - name: Resolve images from Unsplash
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        run: |
+          ARGS=""
+          [ -n "${{ inputs.country }}" ]  && ARGS="$ARGS --country ${{ inputs.country }}"
+          [ -n "${{ inputs.category }}" ] && ARGS="$ARGS --category ${{ inputs.category }}"
+          [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
+          echo "resolve$ARGS"
+          # A partial run is a success: failed slots keep their placeholder and the
+          # cache still holds everything that did resolve, so a re-run continues.
+          python3 tools/tourism/build.py resolve $ARGS || true
+
+      - name: Rebuild pages and validate
+        run: |
+          python3 tools/tourism/build.py all
+
+      - name: Per-slot status
+        run: |
+          python3 tools/tourism/build.py status
+
+      - name: Confirm no key leaked into any artifact
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        run: |
+          if grep -rlF "$UNSPLASH_ACCESS_KEY" --exclude-dir=.git . ; then
+            echo "::error::the access key appears in a file — refusing to commit"
+            exit 1
+          fi
+          echo "no key material in the working tree"
+
+      - name: Commit the cache and regenerated pages
+        if: ${{ inputs.commit }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tourism/cache/unsplash.json tourism/*.html tourism/REPORT.md
+          if git diff --cached --quiet; then
+            echo "nothing changed — every requested slot was already cached"
+          else
+            RESOLVED=$(python3 -c "import json;print(len(json.load(open('tourism/cache/unsplash.json'))['entries']))")
+            git commit -m "Resolve tourism images from Unsplash ($RESOLVED cached)" \
+                       -m "Ran tools/tourism/build.py resolve on a runner with network access. Every URL in the cache came from a GET /search/photos response and was fetched over HTTP before being stored."
+            git push
+          fi
+
+      - name: Upload the cache as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tourism-cache
+          path: |
+            tourism/cache/unsplash.json
+            tourism/REPORT.md

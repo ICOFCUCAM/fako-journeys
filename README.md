@@ -126,6 +126,19 @@ Until a slot is resolved, the page renders the entry's `local` illustration if i
 has one, and the warning above if it does not. Nothing breaks; the page is only
 less specific.
 
+### Resolving without a local setup
+
+`.github/workflows/tourism-resolve.yml` runs the resolver on a GitHub runner,
+which has the internet access a sandboxed environment may not. Add the key once
+as a repository secret — Settings → Secrets and variables → Actions →
+`UNSPLASH_ACCESS_KEY` — then Actions → *Resolve tourism images* → Run workflow.
+It takes `country`, `category` and `force` inputs, commits the cache and the
+regenerated pages back to the branch, and fails the run if the key value appears
+anywhere in the working tree.
+
+Use the Unsplash **Access Key**. The Secret key is for OAuth token exchange and
+this system never needs it.
+
 ### Tests
 
     npm test
@@ -136,6 +149,10 @@ response, that no code path fabricates an id, that a missing key fails safely,
 that duplicates are detected, that the cache prevents repeat requests, that a
 half-finished run resumes, that all 27 categories resolve, that queries are
 country-specific, and that no key ever appears in a generated artifact.
+
+`.github/workflows/tourism-tests.yml` runs the same suite on every push, plus
+validate, render and verify, and fails if `tourism/*.html` is stale relative to
+the data. No secret required.
 
 ### Delivery
 
