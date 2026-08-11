@@ -54,7 +54,8 @@ component, no code change.
 
     tourism/categories.json          the 27 categories, their order, and delivery presets
     tourism/countries/<slug>.json    editorial content: caption, description, subject, focal
-    tourism/cache/unsplash.json      resolved image metadata — written only by the resolver
+    tourism/cache/images.json        resolved image metadata — written only by the resolver
+    tools/tourism/providers/         one file per image provider
     tourism/<slug>.html              GENERATED — do not edit by hand
     tourism/REPORT.md                GENERATED — completeness report
     tools/tourism/                   the engine
@@ -66,18 +67,20 @@ image URL that nobody fetched.
 
 ### Commands
 
-    npm run tourism:resolve-images     # fill image slots from Unsplash
+    npm run tourism:resolve-images     # fill image slots: Unsplash, then Pexels
     npm run tourism:validate           # completeness + integrity per country
     npm run tourism:status             # Country | Category | Photo ID | CDN URL | Status
     npm run tourism:queries            # the search query for every slot
     npm run tourism:render             # write tourism/<slug>.html
     npm run tourism:verify             # check the rendered HTML
     npm run tourism:scaffold -- --country ghana
+    npm run tourism:providers          # country x provider report
     npm run tourism:all                # validate, render, verify, report
-    npm test                           # the resolver suite, against a local mock
+    npm test                           # the resolver suite, against local mocks
 
 Each is a one-line wrapper over `python3 tools/tourism/build.py <command>`; use
-either. Flags: `--country <slug>`, `--category <id>`, `--force`.
+either. Flags: `--country <slug>`, `--category <id>`,
+`--provider unsplash|pexels`, `--force`.
 
 Stdlib only, no npm dependencies, and deliberately **no `build` script** — the
 deployed site is static files, and a build script here would make the host try to
@@ -85,31 +88,53 @@ run one.
 
 ### Where the images come from
 
-Every image is resolved from **Unsplash**, by the API, and then fetched to prove
-it works before the URL is stored:
+Two providers, in priority order:
 
-    cp .env.example .env && echo "UNSPLASH_ACCESS_KEY=your-key" >> .env
-    export UNSPLASH_ACCESS_KEY=...       # free, https://unsplash.com/developers
+    Unsplash  ->  Pexels  ->  local illustration  ->  unresolved
+
+Both are official APIs, and in both cases the URL is fetched to prove it works
+before it is stored:
+
+    cp .env.example .env      # then fill in either key, or both
     npm run tourism:resolve-images
 
-`resolve` calls `GET https://api.unsplash.com/search/photos` with a query built
-from the country name and the entry's `subject`, rejects photos the intended crop
-would ruin, rejects any photo already used anywhere in the dataset, fetches the
-delivery URL to prove it works, pings Unsplash's download endpoint as their API
-guidelines require, and only then writes the record to the cache:
+    UNSPLASH_ACCESS_KEY=      free, https://unsplash.com/developers
+    PEXELS_API_KEY=           free, https://www.pexels.com/api/
 
-    { photoId, photographer, photographerUrl, unsplashUrl, imageUrl,
-      category, country, query, alt, width, height, focalPoint,
-      resolvedAt, verifiedAt }
+Either key alone is enough. With both, Unsplash is tried first and Pexels fills
+what it cannot — Unsplash wins ties, and Pexels only displaces it when it scores
+*clearly* better, so the fallback cannot quietly become the default.
 
-`imageUrl` comes from `urls.raw` (falling back to `urls.full`) with the query
-string stripped. Nothing is ever assembled from an id.
+For each slot, `resolve` walks the query ladder; at every rung it asks each
+available provider, scores the candidates, rejects anything the intended crop
+would ruin or that is already used anywhere in the dataset, fetches the delivery
+URL, and only then writes the record:
 
-**The key is server-side only.** It is read from the environment by a CLI that
-runs on a developer or CI machine. It is never written to the cache, never
-rendered into HTML, never committed, and never reaches a browser — the site is
-static files, so a visitor's browser talks to images.unsplash.com and nothing
-else. `.env` is git-ignored; `.env.example` declares the variable with no value.
+    { country, category, caption, description, provider, photoId, imageUrl,
+      thumbnailUrl, sourceUrl, photographer, photographerUrl, width, height,
+      aspectRatio, alt, query, focalPoint, createdAt, verifiedAt }
+
+Every value comes from the API response or the country dataset. Nothing is
+assembled from an id, on either provider.
+
+**Relevance is judged, not assumed.** Search rank alone is how a generic savanna
+sunset ends up under "Uganda / Wildlife" — it came back for the query and it was
+big enough. `relevance.py` reads the text each provider writes about a photo
+(Unsplash's `alt_description`, `description`, tags and location; Pexels' `alt`)
+and weighs it against the subject, the category, the resolution and how much of
+the frame the intended crop discards. A photo whose description matches nothing
+but the country name scores below the floor and is rejected: containing the word
+"Uganda" is not a reason to publish a picture under gorilla trekking.
+
+**Adding a third provider** is one file in `tools/tourism/providers/` and one
+entry in the registry. The resolver, renderer, cache, validator and pages need
+no change — none of them knows a provider name.
+
+**Both keys are server-side only.** They are read from the environment by a CLI
+that runs on a developer or CI machine, never written to the cache, never
+rendered into HTML, never committed, and never sent to a browser — the site is
+static files, so a visitor's browser talks to the image CDNs and nothing else.
+`.env` is git-ignored; `.env.example` declares both variables with no values.
 
 The run is **resumable**: anything already cached is skipped and its photo id
 stays reserved, so re-running after a rate limit costs nothing and cannot hand
@@ -117,8 +142,8 @@ the same picture to a second slot. `--force` re-resolves anyway. The cache is
 saved even if the run is interrupted.
 
 **There is no offline path that produces an image URL.** With no key or no route
-to Unsplash, `resolve` reports *"Unsplash image resolution requires
-UNSPLASH_ACCESS_KEY."* and writes nothing; unresolved slots render that same
+to either API, `resolve` reports *"Tourism image resolution requires
+UNSPLASH_ACCESS_KEY or PEXELS_API_KEY."* and writes nothing; unresolved slots render that same
 sentence in place of the picture rather than a broken `<img>`. A photo id nobody
 has fetched is a broken image with extra steps, so the system will not invent one.
 
@@ -143,12 +168,16 @@ this system never needs it.
 
     npm test
 
-53 checks against a local mock of the Unsplash API — no key, no network. They
-prove that responses are parsed correctly, that ids and URLs come from the
-response, that no code path fabricates an id, that a missing key fails safely,
-that duplicates are detected, that the cache prevents repeat requests, that a
-half-finished run resumes, that all 27 categories resolve, that queries are
-country-specific, and that no key ever appears in a generated artifact.
+73 checks against local mocks of **both** provider APIs — no credentials, no
+network. They prove that each provider's responses are parsed correctly, that
+ids and URLs come from the response, that no code path fabricates an id, that
+Pexels takes over when Unsplash is empty or down, that both being unavailable
+fails safely, that relevance outranks search order, that duplicates are caught
+(and that the same id on two providers is *not* a duplicate), that the cache
+prevents repeat requests, that a half-finished run resumes, that all 27
+categories resolve, that queries are country-specific, that the rendered page
+is identical in shape whichever provider won, and that neither key appears in
+any committed artifact.
 
 `.github/workflows/tourism-tests.yml` runs the same suite on every push, plus
 validate, render and verify, and fails if `tourism/*.html` is stale relative to
@@ -158,7 +187,8 @@ the data. No secret required.
 
 `categories.json` defines six roles — hero, feature, card, portrait, panoramic,
 thumb — each with an aspect ratio, a CDN width, a `srcset` ladder and a `sizes`
-hint. A category's role is its *canonical* shape and decides which orientation
+hint. Each provider builds its own delivery URLs, so a component never learns
+where a photograph came from. A category's role is its *canonical* shape and decides which orientation
 the resolver searches for. The shape it is *delivered* at is decided by the
 section that renders it, because the same photograph legitimately appears as a
 21:9 band on one page and a 4:3 tile on another.

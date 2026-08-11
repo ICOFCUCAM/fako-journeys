@@ -200,14 +200,19 @@ def img_tag(entry, role, alt, extra_class=""):
 
 
 def credit(entry):
+    """Both providers require attribution, and neither is named in the markup by
+    hand — the provider supplies its own wording."""
     if not entry.image:
         return ""
-    name = entry.image.get("photographer")
-    link = entry.image.get("unsplashUrl") or entry.image.get("photographerUrl")
-    if not name:
+    d = imaging.delivery(entry, {"aspect": [1, 1], "width": 1, "srcset": [1],
+                                 "sizes": "", "loading": "lazy"})
+    c = d.get("credit") or {}
+    if not c.get("name"):
         return ""
-    who = '<a href="%s" rel="nofollow noopener">%s</a>' % (esc(link), esc(name)) if link else esc(name)
-    return '<p class="tq-credit">Photo %s / Unsplash</p>' % who
+    text, href = c["text"], c.get("href")
+    body = ('<a href="%s" rel="nofollow noopener">%s</a>' % (esc(href), esc(text))
+            if href else esc(text))
+    return '<p class="tq-credit">Photo %s</p>' % body
 
 
 # ---- sections ------------------------------------------------------------------

@@ -6,7 +6,6 @@
       "photoId": "9ZFn__BKP_s",
       "photographer": "Edouard TAMBA",
       "photographerUrl": "https://unsplash.com/@tamba",
-      "unsplashUrl": "https://unsplash.com/photos/green-trees-under-white-clouds-during-daytime-9ZFn__BKP_s",
       "imageUrl": "https://images.unsplash.com/photo-1615463738213-b9381d217b4e",
       "category": "eco-tourism",
       "country": "cameroon",
@@ -18,14 +17,17 @@
         "x": 56,
         "y": 52
       },
-      "resolvedAt": "2026-08-11T16:26:10Z",
-      "verifiedAt": "2026-08-11T16:26:10Z"
+      "verifiedAt": "2026-08-11T16:26:10Z",
+      "provider": "unsplash",
+      "sourceUrl": "https://unsplash.com/photos/green-trees-under-white-clouds-during-daytime-9ZFn__BKP_s",
+      "createdAt": "2026-08-11T16:26:10Z",
+      "aspectRatio": 1.7778,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1615463738213-b9381d217b4e?auto=format&fit=crop&w=400&h=300&q=70"
     },
     "cameroon/festivals": {
       "photoId": "lNrp5eNli1M",
       "photographer": "Vincent Lockhart",
       "photographerUrl": "https://unsplash.com/@vincentlockhart",
-      "unsplashUrl": "https://unsplash.com/photos/elderly-people-in-traditional-african-attire-during-a-ceremony-lNrp5eNli1M",
       "imageUrl": "https://images.unsplash.com/photo-1775138622438-f9568c3e279d",
       "category": "festivals",
       "country": "cameroon",
@@ -37,14 +39,17 @@
         "x": 50,
         "y": 44
       },
-      "resolvedAt": "2026-08-11T16:26:05Z",
-      "verifiedAt": "2026-08-11T16:26:05Z"
+      "verifiedAt": "2026-08-11T16:26:05Z",
+      "provider": "unsplash",
+      "sourceUrl": "https://unsplash.com/photos/elderly-people-in-traditional-african-attire-during-a-ceremony-lNrp5eNli1M",
+      "createdAt": "2026-08-11T16:26:05Z",
+      "aspectRatio": 1.3333,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1775138622438-f9568c3e279d?auto=format&fit=crop&w=400&h=300&q=70"
     },
     "cameroon/hero": {
       "photoId": "MdNOvU9uFuo",
       "photographer": "Edouard TAMBA",
       "photographerUrl": "https://unsplash.com/@tamba",
-      "unsplashUrl": "https://unsplash.com/photos/green-trees-on-brown-mountain-under-blue-sky-during-daytime-MdNOvU9uFuo",
       "imageUrl": "https://images.unsplash.com/photo-1615463668140-d294c94ec8ef",
       "category": "hero",
       "country": "cameroon",
@@ -56,14 +61,17 @@
         "x": 52,
         "y": 58
       },
-      "resolvedAt": "2026-08-11T16:25:55Z",
-      "verifiedAt": "2026-08-11T16:25:55Z"
+      "verifiedAt": "2026-08-11T16:25:55Z",
+      "provider": "unsplash",
+      "sourceUrl": "https://unsplash.com/photos/green-trees-on-brown-mountain-under-blue-sky-during-daytime-MdNOvU9uFuo",
+      "createdAt": "2026-08-11T16:25:55Z",
+      "aspectRatio": 1.7778,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&fit=crop&w=400&h=300&q=70"
     },
     "cameroon/lakes-rivers": {
       "photoId": "tFCNJsRespo",
       "photographer": "Joseph Siewe",
       "photographerUrl": "https://unsplash.com/@dr_siewe",
-      "unsplashUrl": "https://unsplash.com/photos/two-people-in-a-canoe-paddling-down-a-river-tFCNJsRespo",
       "imageUrl": "https://images.unsplash.com/photo-1689760034504-568812d8cb01",
       "category": "lakes-rivers",
       "country": "cameroon",
@@ -75,14 +83,17 @@
         "x": 50,
         "y": 52
       },
-      "resolvedAt": "2026-08-11T16:26:01Z",
-      "verifiedAt": "2026-08-11T16:26:01Z"
+      "verifiedAt": "2026-08-11T16:26:01Z",
+      "provider": "unsplash",
+      "sourceUrl": "https://unsplash.com/photos/two-people-in-a-canoe-paddling-down-a-river-tFCNJsRespo",
+      "createdAt": "2026-08-11T16:26:01Z",
+      "aspectRatio": 1.5,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1689760034504-568812d8cb01?auto=format&fit=crop&w=400&h=300&q=70"
     },
     "cameroon/mountains": {
       "photoId": "wqDNF4KcHuI",
       "photographer": "Christian Aime Nanga",
       "photographerUrl": "https://unsplash.com/@christiannanga",
-      "unsplashUrl": "https://unsplash.com/photos/a-view-of-a-small-town-from-a-hill-wqDNF4KcHuI",
       "imageUrl": "https://images.unsplash.com/photo-1696541665406-a2517f84f934",
       "category": "mountains",
       "country": "cameroon",
@@ -94,16 +105,19 @@
         "x": 50,
         "y": 62
       },
-      "resolvedAt": "2026-08-11T16:34:26Z",
       "verifiedAt": "2026-08-11T16:34:26Z",
       "queryDepth": 0,
-      "queryTier": "subject"
+      "queryTier": "subject",
+      "provider": "unsplash",
+      "sourceUrl": "https://unsplash.com/photos/a-view-of-a-small-town-from-a-hill-wqDNF4KcHuI",
+      "createdAt": "2026-08-11T16:34:26Z",
+      "aspectRatio": 2.1132,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1696541665406-a2517f84f934?auto=format&fit=crop&w=400&h=300&q=70"
     },
     "cameroon/nature": {
       "photoId": "YMk8h7xoja0",
       "photographer": "Ariel Nathan ADA MBITA",
       "photographerUrl": "https://unsplash.com/@adambita237",
-      "unsplashUrl": "https://unsplash.com/photos/a-road-with-trees-and-houses-along-it-YMk8h7xoja0",
       "imageUrl": "https://images.unsplash.com/photo-1659947234286-213fd15f0bcc",
       "category": "nature",
       "country": "cameroon",
@@ -115,16 +129,19 @@
         "x": 50,
         "y": 46
       },
-      "resolvedAt": "2026-08-11T16:34:23Z",
       "verifiedAt": "2026-08-11T16:34:23Z",
       "queryDepth": 3,
-      "queryTier": "category"
+      "queryTier": "category",
+      "provider": "unsplash",
+      "sourceUrl": "https://unsplash.com/photos/a-road-with-trees-and-houses-along-it-YMk8h7xoja0",
+      "createdAt": "2026-08-11T16:34:23Z",
+      "aspectRatio": 1.3333,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1659947234286-213fd15f0bcc?auto=format&fit=crop&w=400&h=300&q=70"
     },
     "cameroon/safari": {
       "photoId": "Y0GY5hKDOJc",
       "photographer": "Angelo Casto",
       "photographerUrl": "https://unsplash.com/@jddartphotographer",
-      "unsplashUrl": "https://unsplash.com/photos/a-car-is-driving-down-a-deserted-road-Y0GY5hKDOJc",
       "imageUrl": "https://images.unsplash.com/photo-1682924754765-75832404fd1d",
       "category": "safari",
       "country": "cameroon",
@@ -136,14 +153,17 @@
         "x": 48,
         "y": 60
       },
-      "resolvedAt": "2026-08-11T16:25:59Z",
-      "verifiedAt": "2026-08-11T16:25:59Z"
+      "verifiedAt": "2026-08-11T16:25:59Z",
+      "provider": "unsplash",
+      "sourceUrl": "https://unsplash.com/photos/a-car-is-driving-down-a-deserted-road-Y0GY5hKDOJc",
+      "createdAt": "2026-08-11T16:25:59Z",
+      "aspectRatio": 1.5001,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&w=400&h=300&q=70"
     },
     "cameroon/wildlife": {
       "photoId": "jp6NY2IPP6s",
       "photographer": "Angelo Casto",
       "photographerUrl": "https://unsplash.com/@jddartphotographer",
-      "unsplashUrl": "https://unsplash.com/photos/an-empty-road-in-the-middle-of-a-jungle-jp6NY2IPP6s",
       "imageUrl": "https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f",
       "category": "wildlife",
       "country": "cameroon",
@@ -155,10 +175,14 @@
         "x": 50,
         "y": 55
       },
-      "resolvedAt": "2026-08-11T16:34:25Z",
       "verifiedAt": "2026-08-11T16:34:25Z",
       "queryDepth": 1,
-      "queryTier": "subject"
+      "queryTier": "subject",
+      "provider": "unsplash",
+      "sourceUrl": "https://unsplash.com/photos/an-empty-road-in-the-middle-of-a-jungle-jp6NY2IPP6s",
+      "createdAt": "2026-08-11T16:34:25Z",
+      "aspectRatio": 1.4999,
+      "thumbnailUrl": "https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&fit=crop&w=400&h=300&q=70"
     }
   }
 }

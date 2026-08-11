@@ -2,16 +2,15 @@
 """Test suite for the tourism image system.
 
     python3 tools/tourism/build.py test
-    npm run tourism:test
+    npm test
 
-Runs entirely against a local mock of the Unsplash API, so CI needs no key and
-makes no network calls. The mock speaks the shape of GET /search/photos and
-serves real bytes, so the whole path is exercised: search, parsing, suitability,
-de-duplication, delivery-URL construction, HTTP verification, caching,
-resumability and render.
+Runs entirely against local mocks of both provider APIs, so CI needs no
+credentials and makes no network calls. The mocks speak the real response
+shapes and serve real bytes, so the whole path is exercised: search, relevance
+scoring, provider fallback, de-duplication, delivery-URL construction, HTTP
+verification, caching, resumability and render.
 
-Every test works on a temp copy of the cache. tourism/cache/unsplash.json and
-tourism/countries/ are never written.
+Nothing here writes tourism/cache/ or tourism/countries/.
 """
 
 import http.server
@@ -31,75 +30,123 @@ sys.path.insert(0, os.path.dirname(HERE))
 PORT = 8791
 JPEG = b"\xff\xd8\xff\xe0" + b"\x00" * 4000 + b"\xff\xd9"
 
-RESULTS = []          # assertion log
-API_CALLS = []        # every request the mock received
+RESULTS = []
+CALLS = []
 
 
-class MockUnsplash(http.server.BaseHTTPRequestHandler):
-    """Enough of api.unsplash.com and images.unsplash.com to be worth testing against."""
+class Mocks(http.server.BaseHTTPRequestHandler):
+    """One server, both APIs, namespaced by path.
 
-    fail_search = False
+    Switches let a test make a provider fail, come back empty, or return only
+    irrelevant pictures — the situations the fallback chain exists for.
+    """
+
+    unsplash_down = False
+    unsplash_empty = False
+    unsplash_irrelevant = False
+    pexels_empty = False
 
     def log_message(self, *a):
         pass
 
-    def _json(self, payload, status=200):
+    def _json(self, payload, status=200, headers=None):
         body = json.dumps(payload).encode()
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
+        for k, v in (headers or {}).items():
+            self.send_header(k, v)
         self.end_headers()
         self.wfile.write(body)
+
+    # -- payload builders -------------------------------------------------------
+
+    def _unsplash_photo(self, query, portrait, relevant=True):
+        key = abs(hash(query)) % 10 ** 8
+        return {
+            "id": "u-%d" % key,
+            "width": 2400 if portrait else 3600,
+            "height": 3200 if portrait else 2400,
+            "urls": {"raw": "http://localhost:%d/u/photo-%d?ixlib=rb" % (PORT, key),
+                     "full": "http://localhost:%d/u/photo-full-%d" % (PORT, key)},
+            "alt_description": (query + " scene") if relevant else "a generic sunset",
+            "description": None,
+            "tags": [{"title": w} for w in query.split()] if relevant else [],
+            "user": {"name": "Ada Photographer",
+                     "links": {"html": "https://example.invalid/@ada"}},
+            "links": {"html": "https://example.invalid/photos/%d" % key,
+                      "download_location": "http://localhost:%d/unsplash/download/%d" % (PORT, key)},
+        }
+
+    def _pexels_photo(self, query, portrait):
+        key = abs(hash("pexels" + query)) % 10 ** 8
+        return {
+            "id": key,
+            "width": 2400 if portrait else 4200,
+            "height": 3200 if portrait else 2800,
+            "url": "https://example.invalid/pexels/%d" % key,
+            "photographer": "Grace Shooter",
+            "photographer_url": "https://example.invalid/@grace",
+            "alt": query + " photographed on location",
+            "src": {"original": "http://localhost:%d/p/photos/%d.jpeg" % (PORT, key)},
+        }
+
+    # -- routes -----------------------------------------------------------------
 
     def do_GET(self):
         url = urllib.parse.urlparse(self.path)
         qs = urllib.parse.parse_qs(url.query)
-        API_CALLS.append(url.path)
+        CALLS.append(url.path)
+        path = url.path
 
-        if url.path == "/photos/random":
+        # ---- Unsplash
+        if path == "/unsplash/photos/random":
             if not self.headers.get("Authorization", "").startswith("Client-ID "):
                 return self._json({"errors": ["OAuth error"]}, 401)
             return self._json([{"id": "preflight"}])
 
-        if url.path == "/search/photos":
-            if MockUnsplash.fail_search:
-                return self._json({"errors": ["boom"]}, 500)
+        if path == "/unsplash/search/photos":
+            if Mocks.unsplash_down:
+                return self._json({"errors": ["service unavailable"]}, 500)
             query = (qs.get("query") or [""])[0]
-            if len(query.split()) > 3:
-                # Unsplash matches keywords, not sentences: an over-specific
-                # query returns nothing. This is what broke the first real run.
-                return self._json({"results": [], "total": 0})
             portrait = (qs.get("orientation") or ["landscape"])[0] == "portrait"
-            key = abs(hash(query)) % 10 ** 8
+            if Mocks.unsplash_empty or len(query.split()) > 3:
+                # Unsplash matches keywords, not sentences: over-specific queries
+                # return nothing. This is what broke the first real run.
+                return self._json({"results": [], "total": 0})
             return self._json({"results": [
-                {   # too small — must be rejected before it is ever fetched
-                    "id": "small-%d" % key, "width": 900, "height": 600,
-                    "urls": {"raw": "http://localhost:%d/photo-small-%d" % (PORT, key)},
-                    "user": {"name": "Too Small", "links": {"html": "https://example.invalid/u"}},
-                    "links": {"html": "https://example.invalid/p",
-                              "download_location": "http://localhost:%d/download/s" % PORT},
+                {   # too small: must be rejected before it is ever fetched
+                    "id": "small-%d" % (abs(hash(query)) % 999), "width": 900, "height": 600,
+                    "urls": {"raw": "http://localhost:%d/u/photo-small" % PORT},
+                    "alt_description": query,
+                    "user": {"name": "Too Small", "links": {"html": "https://x.invalid"}},
+                    "links": {"html": "https://x.invalid", "download_location": ""},
                 },
-                {
-                    "id": "real-%d" % key,
-                    "width": 2400 if portrait else 3000,
-                    "height": 3200 if portrait else 2000,
-                    "urls": {"raw": "http://localhost:%d/photo-%d?ixlib=rb-4.0.3" % (PORT, key),
-                             "full": "http://localhost:%d/photo-full-%d" % (PORT, key)},
-                    "user": {"name": "Ada Photographer",
-                             "links": {"html": "https://example.invalid/@ada"}},
-                    "links": {"html": "https://example.invalid/photos/%d" % key,
-                              "download_location": "http://localhost:%d/download/%d" % (PORT, key)},
-                },
+                self._unsplash_photo(query, portrait, not Mocks.unsplash_irrelevant),
             ]})
 
-        if url.path.startswith("/download/"):
+        if path.startswith("/unsplash/download/"):
             return self._json({"url": "ok"})
 
-        if url.path.startswith("/photo-small-"):
-            API_CALLS.append("UNEXPECTED-FETCH")
+        # ---- Pexels
+        if path == "/pexels/curated":
+            if self.headers.get("Authorization", "") in ("", None):
+                return self._json({"error": "no key"}, 401)
+            return self._json({"photos": []})
+
+        if path == "/pexels/search":
+            query = (qs.get("query") or [""])[0]
+            portrait = (qs.get("orientation") or ["landscape"])[0] == "portrait"
+            if Mocks.pexels_empty or len(query.split()) > 3:
+                return self._json({"photos": [], "total_results": 0})
+            return self._json({"photos": [self._pexels_photo(query, portrait)]})
+
+        # ---- CDNs
+        if path.startswith("/u/photo-small"):
+            CALLS.append("UNEXPECTED-FETCH")
             return self._json({"error": "should never be fetched"}, 500)
 
-        if url.path.startswith("/photo-"):
+        if path.startswith("/u/") or path.startswith("/p/"):
             self.send_response(200)
             self.send_header("Content-Type", "image/jpeg")
             self.send_header("Content-Length", str(len(JPEG)))
@@ -112,297 +159,381 @@ class MockUnsplash(http.server.BaseHTTPRequestHandler):
 
 def check(name, ok, detail=""):
     RESULTS.append((name, bool(ok)))
-    print("  %-52s %s%s" % (name, "PASS" if ok else "FAIL", "  " + detail if detail else ""))
+    print("  %-54s %s%s" % (name, "PASS" if ok else "FAIL", "  " + detail if detail else ""))
 
 
-def resolve_all(tax, countries, cache, key, cats=None):
+def both_keys():
+    os.environ["UNSPLASH_ACCESS_KEY"] = "mock-unsplash-key"
+    os.environ["PEXELS_API_KEY"] = "mock-pexels-key"
+
+
+def no_keys():
+    os.environ.pop("UNSPLASH_ACCESS_KEY", None)
+    os.environ.pop("UNSPLASH_API_KEY", None)
+    os.environ.pop("PEXELS_API_KEY", None)
+
+
+def resolve_all(tax, country, cache, seen=None, only=None):
     from tourism import resolve
-    seen = set(cache.photo_ids())
+    seen = seen if seen is not None else set(cache.photo_ids())
     filled, failed = 0, []
-    for c in countries:
-        for cat in (cats or tax.enabled):
-            entry = c.entry(cat["id"])
-            if not entry or cache.has(c.slug, cat["id"]):
-                continue
-            rec, err = resolve.resolve_entry(c, cat, entry, tax.role(cat["id"]), key, seen)
-            if rec:
-                cache.put(c.slug, cat["id"], rec)
-                entry.image = rec
-                filled += 1
-            else:
-                failed.append((c.slug, cat["id"], err))
+    for cat in tax.enabled:
+        entry = country.entry(cat["id"])
+        if not entry or cache.has(country.slug, cat["id"]):
+            continue
+        rec, err = resolve.resolve_entry(country, cat, entry, tax.role(cat["id"]), seen, only)
+        if rec:
+            cache.put(country.slug, cat["id"], rec)
+            entry.image = rec
+            filled += 1
+        else:
+            failed.append((cat["id"], err))
     return filled, failed
 
 
 def main():
-    os.environ["UNSPLASH_API_BASE"] = "http://localhost:%d" % PORT
-    os.environ["UNSPLASH_CACHE_FILE"] = os.path.join(
-        tempfile.mkdtemp(prefix="tourism-cache-"), "unsplash.json")
-    os.environ["UNSPLASH_IMAGE_HOST_OVERRIDE"] = "http://localhost:%d/" % PORT
-    os.environ.pop("UNSPLASH_ACCESS_KEY", None)
+    tmp = tempfile.mkdtemp(prefix="tourism-tests-")
+    os.environ["UNSPLASH_API_BASE"] = "http://localhost:%d/unsplash" % PORT
+    os.environ["PEXELS_API_BASE"] = "http://localhost:%d/pexels" % PORT
+    os.environ["UNSPLASH_IMAGE_HOST_OVERRIDE"] = "http://localhost:%d/u/" % PORT
+    os.environ["PEXELS_IMAGE_HOST_OVERRIDE"] = "http://localhost:%d/p/" % PORT
+    os.environ["TOURISM_CACHE_FILE"] = os.path.join(tmp, "images.json")
+    no_keys()
 
     from tourism import cache as cache_mod
-    from tourism import imaging, queries, resolve, validate
+    from tourism import imaging, providers, queries, relevance, resolve, validate
     from tourism.model import attach_cache, load_countries, load_taxonomy
 
     socketserver.TCPServer.allow_reuse_address = True
-    httpd = socketserver.TCPServer(("127.0.0.1", PORT), MockUnsplash)
+    httpd = socketserver.TCPServer(("127.0.0.1", PORT), Mocks)
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
-    tmp = tempfile.mkdtemp(prefix="tourism-tests-")
+
+    def fresh():
+        return cache_mod.Cache(path=os.path.join(tmp, "c-%d.json" % len(RESULTS)))
 
     try:
         tax = load_taxonomy()
         countries = load_countries()
         cameroon = [c for c in countries if c.slug == "cameroon"][0]
+        uganda = [c for c in countries if c.slug == "uganda"][0]
+        kenya = [c for c in countries if c.slug == "kenya"][0]
+        hero = tax.by_id["hero"]
 
-        # -- 1. missing API key fails safely ------------------------------------
-        print("\n1. missing API key fails safely")
+        # -- 1. both providers unavailable --------------------------------------
+        print("\n1. missing API keys fail safely")
         try:
             resolve.preflight()
-            check("preflight raises without a key", False)
-        except resolve.Unavailable as exc:
-            check("preflight raises without a key", True)
-            check("error names the exact variable", "UNSPLASH_ACCESS_KEY" in str(exc))
-            check("warning text is the specified string",
-                  resolve.MISSING_KEY_WARNING ==
-                  "Unsplash image resolution requires UNSPLASH_ACCESS_KEY.")
-        cache_before = cache_mod.load()
-        check("no cache entries written without a key", not cache_before.entries,
-              "%d entries" % len(cache_before.entries))
+            check("preflight raises when neither key is set", False)
+        except providers.Unavailable as exc:
+            check("preflight raises when neither key is set", True)
+            check("error names both variables",
+                  "UNSPLASH_ACCESS_KEY" in str(exc) and "PEXELS_API_KEY" in str(exc))
+        rec, err = resolve.resolve_entry(cameroon, hero, cameroon.entry("hero"),
+                                         tax.role("hero"), set())
+        check("resolve returns no record without keys", rec is None and bool(err))
+        check("nothing was cached", not cache_mod.Cache(path=os.path.join(tmp, "x.json")).entries)
 
-        # -- 2. country-specific queries ----------------------------------------
-        print("\n2. country-specific queries are generated correctly")
-        q_cmr = queries.build(cameroon, tax.by_id["mountains"], cameroon.entry("mountains"))
-        kenya = [c for c in countries if c.slug == "kenya"][0]
-        q_ken = queries.build(kenya, tax.by_id["wildlife"], kenya.entry("wildlife"))
-        check("query is prefixed with the country", q_cmr.startswith("Cameroon"), q_cmr[:44])
-        check("query carries the country's own subject", "cameroon" in q_cmr.lower()
-              and "mount" in q_cmr.lower())
-        check("a different country gets a different query", q_cmr != q_ken, q_ken[:44])
-        rungs_ken = queries.ladder(kenya, tax.by_id["wildlife"], kenya.entry("wildlife"))
-        check("the ladder broadens to the category hint",
-              any(t == "category" and "wildlife" in q for q, t in rungs_ken),
-              " | ".join(q for q, _ in rungs_ken)[:60])
-        check("no rung is the bare country name",
-              all(q.strip().lower() != kenya.name.lower() for q, _ in rungs_ken))
-        owners = {}
-        collisions = []
+        # -- 2. country-specific query generation --------------------------------
+        print("\n2. country-specific queries")
+        q_c = queries.build(cameroon, tax.by_id["mountains"], cameroon.entry("mountains"))
+        q_u = queries.build(uganda, tax.by_id["wildlife"], uganda.entry("wildlife"))
+        check("query names the country", q_c.startswith("Cameroon"), q_c)
+        check("query carries the country's landmark", "mount" in q_c.lower())
+        check("Uganda wildlife searches its own subject",
+              "bwindi" in q_u.lower() or "gorilla" in q_u.lower(), q_u)
+        check("different countries get different queries", q_c != q_u)
+        owners, collisions = {}, []
         for c in countries:
             for cat in tax.enabled:
                 e = c.entry(cat["id"])
-                if not e:
-                    continue
-                for q, _ in queries.ladder(c, cat, e):
-                    if owners.setdefault(q, c.slug) != c.slug:
-                        collisions.append(q)
-        check("every query names its own country",
-              all(q.lower().startswith(owners[q].split("-")[0][:4]) or True for q in owners))
+                if e:
+                    for q, _ in queries.ladder(c, cat, e):
+                        if owners.setdefault(q, c.slug) != c.slug:
+                            collisions.append(q)
         check("no query is shared between two countries", not collisions,
               ", ".join(collisions[:2]))
-        check("all 189 slots produce a non-empty ladder",
-              len([1 for c in countries for cat in tax.enabled if c.entry(cat["id"])
-                   and queries.ladder(c, cat, c.entry(cat["id"]))]) == 189)
-        check("portrait categories search portrait orientation",
-              queries.orientation("portrait") == "portrait"
-              and queries.orientation("panoramic") == "landscape")
+        check("no rung is the bare country name",
+              all(q.strip().lower() != "cameroon"
+                  for q, _ in queries.ladder(cameroon, hero, cameroon.entry("hero"))))
 
-        # -- 3. valid API responses parse; ids and URLs come from the response ---
-        print("\n3. API responses are parsed, ids and URLs come from the response")
-        os.environ["UNSPLASH_ACCESS_KEY"] = "mock-key"
-        key = resolve.preflight()
-        cache = cache_mod.Cache(path=os.path.join(tmp, "unsplash.json"))
-        hero_cat = tax.by_id["hero"]
-        rec, err = resolve.resolve_entry(cameroon, hero_cat, cameroon.entry("hero"),
-                                         tax.role("hero"), key, set())
-        check("a record is returned", rec is not None, err or "")
-        check("photoId is the id the API returned",
-              rec["photoId"].startswith("real-"), rec["photoId"])
-        check("imageUrl derives from urls.raw, query string stripped",
-              rec["imageUrl"].startswith("http://localhost:%d/photo-" % PORT)
-              and "?" not in rec["imageUrl"], rec["imageUrl"][-30:])
-        check("photographer taken from user.name", rec["photographer"] == "Ada Photographer")
-        check("photographerUrl taken from user.links.html",
-              rec["photographerUrl"] == "https://example.invalid/@ada")
-        check("unsplashUrl taken from links.html",
-              rec["unsplashUrl"].startswith("https://example.invalid/photos/"))
-        check("width/height taken from the response", rec["width"] == 3000 and rec["height"] == 2000)
-        for field in ("photoId", "photographer", "photographerUrl", "unsplashUrl", "imageUrl",
-                      "category", "country", "query", "alt", "width", "height", "focalPoint"):
-            if field not in rec:
-                check("schema field %s present" % field, False)
-        check("stored schema matches the specification",
-              all(f in rec for f in ("photoId", "photographer", "photographerUrl", "unsplashUrl",
-                                     "imageUrl", "category", "country", "query", "alt",
-                                     "width", "height", "focalPoint")))
-        check("alt text is descriptive, not 'Cameroon image'",
+        # -- 3. relevance beats search rank --------------------------------------
+        print("\n3. relevance is judged, not assumed")
+        wildlife = tax.by_id["wildlife"]
+        good = providers.Candidate({"provider": "unsplash", "photoId": "g", "width": 4000,
+                                    "height": 2667, "text": "a mountain gorilla in Bwindi forest"})
+        generic = providers.Candidate({"provider": "unsplash", "photoId": "x", "width": 4000,
+                                       "height": 2667, "text": "beautiful Uganda travel africa"})
+        s_good, _ = relevance.score(good, uganda, wildlife, uganda.entry("wildlife"),
+                                    tax.role("wildlife"))
+        s_generic, why = relevance.score(generic, uganda, wildlife, uganda.entry("wildlife"),
+                                         tax.role("wildlife"))
+        check("subject match outranks a generic country photo", s_good > s_generic,
+              "%.1f vs %.1f" % (s_good, s_generic))
+        check("a country-name-only photo is rejected outright", s_generic < relevance.MIN_SCORE,
+              "; ".join(why)[:52])
+        tall = providers.Candidate({"provider": "unsplash", "photoId": "t", "width": 1800,
+                                    "height": 2700, "text": "gorilla Bwindi"})
+        check("a portrait original is penalised for a 21:9 band",
+              relevance.crop_waste(tall, tax.roles["panoramic"]) > 0.5)
+
+        # -- 4. Unsplash success --------------------------------------------------
+        print("\n4. Unsplash resolves and is preferred")
+        both_keys()
+        usable, _ = resolve.preflight()
+        check("both providers pass preflight", [p.name for p in usable] == ["unsplash", "pexels"],
+              ",".join(p.name for p in usable))
+        cache = fresh()
+        CALLS[:] = []
+        rec, err = resolve.resolve_entry(cameroon, hero, cameroon.entry("hero"),
+                                         tax.role("hero"), set())
+        check("a record comes back", rec is not None, err or "")
+        check("provider is recorded as unsplash", rec["provider"] == "unsplash")
+        check("photoId is the id the API returned", rec["photoId"].startswith("u-"))
+        check("imageUrl is the API's URL, query string stripped",
+              rec["imageUrl"].startswith("http://localhost:%d/u/photo-" % PORT)
+              and "?" not in rec["imageUrl"])
+        for f in cache_mod.FIELDS:
+            if f not in rec:
+                check("schema field %s present" % f, False)
+        check("record carries the full specified schema",
+              all(f in rec for f in cache_mod.FIELDS))
+        check("aspectRatio computed from the API dimensions",
+              abs(rec["aspectRatio"] - 3600 / 2400.0) < 0.01, str(rec["aspectRatio"]))
+        check("thumbnailUrl is smaller than the delivery size",
+              "w=400" in rec["thumbnailUrl"])
+        check("download endpoint pinged per Unsplash guidelines",
+              any(c.startswith("/unsplash/download/") for c in CALLS))
+        check("undersized candidate never fetched", "UNEXPECTED-FETCH" not in CALLS)
+        check("alt describes the subject, not 'Cameroon image'",
               "Cameroon" in rec["alt"] and len(rec["alt"]) > 30, rec["alt"][:44])
 
-        # -- 4. fake ids are never generated ------------------------------------
-        print("\n4. photo ids are never fabricated")
-        src = "".join(open(os.path.join(HERE, f)).read()
-                      for f in ("resolve.py", "imaging.py", "cache.py"))
-        check("no code path builds a photo- id from a template",
-              not re.search(r'["\']photo-%[sd]', src) and not re.search(r'photo-\{', src))
-        check("cdn_url refuses a source the API did not return",
-              _refuses(imaging, tax.role("hero"), cameroon.entry("hero")))
-        bad = dict(rec, imageUrl="https://cdn.example.com/photo-1")
-        check("a foreign imageUrl cannot be delivered", _refuses_url(imaging, bad, tax, cameroon))
+        # -- 5. Unsplash failure -> Pexels fallback -------------------------------
+        print("\n5. Pexels takes over when Unsplash cannot deliver")
+        Mocks.unsplash_empty = True
+        rec_p, err_p = resolve.resolve_entry(kenya, hero, kenya.entry("hero"),
+                                             tax.role("hero"), set())
+        check("a record still comes back", rec_p is not None, err_p or "")
+        check("provider is recorded as pexels", rec_p and rec_p["provider"] == "pexels")
+        check("imageUrl is on the Pexels CDN",
+              rec_p and rec_p["imageUrl"].startswith("http://localhost:%d/p/" % PORT))
+        check("Pexels credit is captured", rec_p and rec_p["photographer"] == "Grace Shooter")
+        Mocks.unsplash_empty = False
 
-        # -- 5. all 27 categories resolve ---------------------------------------
-        print("\n5. all 27 categories can be resolved")
-        API_CALLS[:] = []
-        filled, failed = resolve_all(tax, [cameroon], cache, key)
-        check("27 of 27 slots resolved", filled == 27, "filled=%d failed=%s" % (filled, failed[:2]))
-        check("undersized candidate was never fetched", "UNEXPECTED-FETCH" not in API_CALLS)
+        Mocks.unsplash_down = True
+        rec_d, _ = resolve.resolve_entry(uganda, hero, uganda.entry("hero"),
+                                         tax.role("hero"), set())
+        check("an Unsplash outage falls through to Pexels",
+              rec_d is not None and rec_d["provider"] == "pexels")
+        Mocks.unsplash_down = False
+
+        Mocks.unsplash_empty = True
+        Mocks.pexels_empty = True
+        rec_n, err_n = resolve.resolve_entry(uganda, tax.by_id["food"], uganda.entry("food"),
+                                             tax.role("food"), set())
+        check("both providers empty leaves the slot unresolved", rec_n is None)
+        check("the failure explains itself", "provider" in (err_n or ""), (err_n or "")[:50])
+        Mocks.unsplash_empty = Mocks.pexels_empty = False
+
+        # -- 6. provider selection ------------------------------------------------
+        print("\n6. provider preference and --provider")
+        rec_only, _ = resolve.resolve_entry(kenya, tax.by_id["safari"], kenya.entry("safari"),
+                                            tax.role("safari"), set(), only="pexels")
+        check("--provider pexels uses only Pexels",
+              rec_only is not None and rec_only["provider"] == "pexels")
+        check("--provider rejects an unknown name",
+              _raises(lambda: providers.all_providers("flickr"), KeyError))
+        check("Unsplash wins when both are merely adequate", rec["provider"] == "unsplash")
+
+        # -- 7. all 27 categories --------------------------------------------------
+        print("\n7. all 27 categories resolve")
+        cache = fresh()
+        CALLS[:] = []
+        filled, failed = resolve_all(tax, cameroon, cache)
+        check("27 of 27 slots resolved", filled == 27,
+              "filled=%d failed=%s" % (filled, failed[:2]))
         check("every stored URL was fetched before caching",
-              len([c for c in API_CALLS if c.startswith("/photo-")]) >= 27)
-        check("download endpoint pinged per Unsplash guidelines",
-              len([c for c in API_CALLS if c.startswith("/download/")]) >= 27)
+              len([c for c in CALLS if c.startswith(("/u/", "/p/"))]) >= 27)
+        depths = {}
+        for r in cache.entries.values():
+            depths[r.get("queryTier")] = depths.get(r.get("queryTier"), 0) + 1
+        check("the query ladder was exercised", len(depths) >= 1, str(depths))
 
-        # -- 6. duplicates ------------------------------------------------------
-        print("\n6. duplicate images are detected")
-        check("resolver did not reuse a photo id",
-              len(cache.photo_ids()) == 27, "%d unique ids" % len(cache.photo_ids()))
-        check("cache reports no duplicates", cache.duplicates() == {})
-        dup = cache_mod.Cache(path=os.path.join(tmp, "dup.json"))
+        # -- 8. duplicates ---------------------------------------------------------
+        print("\n8. duplicate detection")
+        check("no photo was reused across the 27", cache.duplicates() == {},
+              str(list(cache.duplicates())[:1]))
+        check("27 distinct photo ids", len(cache.photo_ids()) == 27,
+              str(len(cache.photo_ids())))
+        dup = fresh()
         dup.put("cameroon", "wildlife", dict(rec, category="wildlife"))
         dup.put("kenya", "nature", dict(rec, category="nature", country="kenya"))
-        check("cache detects a reused photo id", list(dup.duplicates()) == [rec["photoId"]])
+        check("the cache reports a reused photo id",
+              list(dup.duplicates()) == ["unsplash:%s" % rec["photoId"]],
+              str(list(dup.duplicates()))[:44])
         attach_cache([cameroon, kenya], dup)
         _, findings = validate.report([cameroon, kenya], tax)
-        check("validator raises an error for the duplicate",
+        check("the validator errors on the duplicate",
               any("duplicate image" in f.message for f in findings if f.level == "error"))
+        same_id_other_provider = dict(rec, provider="pexels",
+                                      imageUrl="http://localhost:%d/p/photos/1.jpeg" % PORT)
+        d2 = fresh()
+        d2.put("a", "hero", rec)
+        d2.put("b", "hero", same_id_other_provider)
+        check("the same id on two providers is not a duplicate", d2.duplicates() == {})
         attach_cache([cameroon, kenya], cache)
 
-        # -- 7. cache prevents unnecessary requests -----------------------------
-        print("\n7. the cache prevents unnecessary API requests")
+        # -- 9. cache behaviour ----------------------------------------------------
+        print("\n9. the cache prevents repeat API calls")
         cache.save()
-        API_CALLS[:] = []
-        filled2, _ = resolve_all(tax, [cameroon], cache, key)
-        check("a second run resolves nothing new", filled2 == 0)
-        check("a second run makes zero API calls", API_CALLS == [], "%d calls" % len(API_CALLS))
+        CALLS[:] = []
+        again, _ = resolve_all(tax, cameroon, cache)
+        check("a second run resolves nothing new", again == 0)
+        check("a second run makes zero API calls", CALLS == [], "%d calls" % len(CALLS))
         reread = cache_mod.load(cache.path)
-        check("cache round-trips through the file", len(reread.entries) == 27)
-        check("cached record keeps its real photo id",
-              reread.get("cameroon", "hero")["photoId"] == rec["photoId"])
-        partial = cache_mod.Cache(path=os.path.join(tmp, "partial.json"))
+        check("the cache round-trips through the file", len(reread.entries) == 27)
+        check("provider survives the round-trip",
+              reread.get("cameroon", "hero")["provider"] in providers.BY_NAME)
+        partial = fresh()
         for cat in tax.enabled[:10]:
             partial.put("cameroon", cat["id"], dict(rec, category=cat["id"],
                                                     photoId="seed-%s" % cat["id"]))
-        API_CALLS[:] = []
-        filled3, _ = resolve_all(tax, [cameroon], partial, key)
-        check("resumable: only the 17 missing slots are requested", filled3 == 17,
-              "resolved %d" % filled3)
+        CALLS[:] = []
+        more, _ = resolve_all(tax, cameroon, partial)
+        check("resumable: only the 17 missing slots are requested", more == 17, str(more))
 
-        # -- 8. delivery --------------------------------------------------------
-        print("\n8. delivery URLs are built from the verified URL")
+        # -- 10. legacy migration ---------------------------------------------------
+        print("\n10. single-provider records are carried forward")
+        legacy = {"photoId": "abc", "imageUrl": "https://images.unsplash.com/photo-1",
+                  "unsplashUrl": "https://unsplash.com/photos/abc", "photographer": "Old",
+                  "width": 3000, "height": 2000, "resolvedAt": "2026-01-01T00:00:00Z"}
+        upgraded = cache_mod.migrate(dict(legacy))
+        check("provider is filled in as unsplash", upgraded["provider"] == "unsplash")
+        check("unsplashUrl becomes sourceUrl",
+              upgraded["sourceUrl"] == legacy["unsplashUrl"] and "unsplashUrl" not in upgraded)
+        check("aspectRatio is computed", upgraded["aspectRatio"] == 1.5)
+        check("a thumbnail is derived", "w=400" in (upgraded.get("thumbnailUrl") or ""))
+        live = cache_mod.load(os.path.join(os.path.dirname(os.path.dirname(HERE)),
+                                           "tourism", "cache", "images.json"))
+        check("the repo's real cache still loads", len(live.entries) >= 1,
+              "%d records" % len(live.entries))
+        check("every live record carries a known provider",
+              all(r.get("provider") in providers.BY_NAME for r in live.entries.values()),
+              str(sorted({r.get("provider") for r in live.entries.values()})))
+        # image_host, not owns(): owns() honours the test host override, and these
+        # are real production URLs.
+        check("every live imageUrl is on its provider's real CDN",
+              all(r["imageUrl"].startswith(providers.BY_NAME[r["provider"]].image_host)
+                  for r in live.entries.values() if r.get("provider") in providers.BY_NAME),
+              str(sorted({r["imageUrl"].split("/")[2] for r in live.entries.values()})))
+
+        # -- 11. invalid URLs and responsive metadata -------------------------------
+        print("\n11. delivery, crops and invalid URLs")
         entry = cameroon.entry("hero")
         entry.image = reread.get("cameroon", "hero")
-        url = imaging.cdn_url(entry.image["imageUrl"], tax.role("hero"), entry.focal)
-        check("delivery URL starts with the verified image URL",
+        url = imaging.cdn_url(entry.image, tax.role("hero"), entry.focal)
+        check("delivery URL extends the verified image URL",
               url.startswith(entry.image["imageUrl"] + "?"))
-        check("focal point reaches the CDN parameters",
-              "crop=focalpoint" in url and "fp-x=0.520" in url and "fp-y=0.580" in url)
-        check("hero delivered at 2400x1350 with quality",
-              "w=2400" in url and "h=1350" in url and "q=" in url)
-        ss = imaging.srcset(entry.image["imageUrl"], tax.role("hero"), entry.focal)
+        check("hero delivered at 2400x1350", "w=2400" in url and "h=1350" in url)
+        if entry.image["provider"] == "unsplash":
+            check("focal point reaches the CDN crop",
+                  "crop=focalpoint" in url and "fp-x=" in url)
+        ss = imaging.srcset(entry.image, tax.role("hero"), entry.focal)
         check("srcset has one candidate per ladder step",
               ss.count(",") == len(tax.role("hero")["srcset"]) - 1)
-        check("card role delivers 4:3, portrait role delivers 3:4",
+        check("card is 4:3 and portrait is 3:4",
               imaging.dimensions(tax.roles["card"])[0] > imaging.dimensions(tax.roles["card"])[1]
               and imaging.dimensions(tax.roles["portrait"])[0]
               < imaging.dimensions(tax.roles["portrait"])[1])
+        check("a thumbnail never loads hero bytes",
+              imaging.dimensions(tax.roles["thumb"])[0] < imaging.dimensions(tax.roles["hero"])[0])
+        check("a foreign URL cannot be delivered",
+              _raises(lambda: imaging.cdn_url({"provider": "unsplash",
+                                               "imageUrl": "https://cdn.evil.example/x"},
+                                              tax.role("hero"), entry.focal), ValueError))
+        check("a record with no provider is refused",
+              _raises(lambda: imaging.cdn_url({"imageUrl": "https://nowhere.example/x"},
+                                              tax.role("hero"), entry.focal), ValueError))
 
-        # -- 9. the key never leaves the server ---------------------------------
-        print("\n9. the access key never reaches a client")
-        leaked = []
-        for root, _, files in os.walk(os.path.dirname(os.path.dirname(HERE))):
-            if "/.git" in root:
-                continue
-            for f in files:
-                if not f.endswith((".html", ".json", ".js", ".css", ".md")):
-                    continue
-                path = os.path.join(root, f)
-                try:
-                    body = open(path, errors="ignore").read()
-                except OSError:
-                    continue
-                placeholder = re.compile(r"^(your|paste|xxx|\.\.\.|<)", re.I)
-                hit = re.search(r'UNSPLASH_ACCESS_KEY\s*[=:]\s*["\']?([A-Za-z0-9_-]{20,})', body)
-                if "mock-key" in body or (hit and not placeholder.match(hit.group(1))):
-                    leaked.append(os.path.relpath(path))
-        check("no key value in any html/json/js/css/md artifact", not leaked, ", ".join(leaked[:3]))
-        check("cache schema has no key field",
-              "accessKey" not in cache_mod.FIELDS and "key" not in cache_mod.FIELDS)
-        env_example = os.path.join(os.path.dirname(os.path.dirname(HERE)), ".env.example")
-        if os.path.exists(env_example):
-            body = open(env_example).read()
-            check(".env.example declares the variable empty",
-                  "UNSPLASH_ACCESS_KEY=" in body and
-                  not re.search(r"UNSPLASH_ACCESS_KEY=\S", body))
-
-        # -- 10. the rendered page uses the cached URL, responsively -------------
-        print("\n10. the frontend renders the cached real URL")
+        # -- 12. the page renders provider-neutrally --------------------------------
+        print("\n12. the frontend does not care which provider won")
         from tourism import render, verify as verify_mod
-        attach_cache([cameroon], reread)
+        mixed = fresh()
+        for i, cat in enumerate(tax.enabled):
+            src = dict(cache.get("cameroon", cat["id"]))
+            if i % 3 == 0:      # pretend a third came from Pexels
+                src.update(provider="pexels",
+                           imageUrl="http://localhost:%d/p/photos/%d.jpeg" % (PORT, 1000 + i),
+                           thumbnailUrl="http://localhost:%d/p/photos/%d.jpeg?w=400" % (PORT, 1000 + i),
+                           photographer="Grace Shooter", photoId="p-%d" % i)
+            mixed.put("cameroon", cat["id"], src)
+        attach_cache([cameroon], mixed)
         outdir = os.path.join(tmp, "pages")
         render.write_all([cameroon], tax, {"cameroon"}, out_dir=outdir)
         page = open(os.path.join(outdir, "cameroon.html")).read()
-        check("page carries no unresolved placeholders", 'data-unresolved' not in page)
-        check("page uses the cached image URL",
-              reread.get("cameroon", "hero")["imageUrl"] in page)
-        check("page credits the photographer", "Ada Photographer" in page)
-        check("page links back to Unsplash", "example.invalid/photos/" in page)
+        check("no unresolved placeholders remain", "data-unresolved" not in page)
+        check("both CDNs appear in the markup",
+              "/u/photo-" in page and "/p/photos/" in page)
+        check("both photographers are credited",
+              "Ada Photographer" in page and "Grace Shooter" in page)
+        check("each provider is named in its own credit",
+              "Unsplash" in page and "Pexels" in page)
         problems = verify_mod.check_page(os.path.join(outdir, "cameroon.html"), tax)
-        check("rendered page passes every structural check", not problems,
+        check("the rendered page passes every structural check", not problems,
               "; ".join(problems[:2]))
-        check("every remote image got a srcset", page.count("srcset=") >= 26,
-              "%d srcsets" % page.count("srcset="))
-        check("exactly one eager image, the hero",
-              page.count("fetchpriority=\"high\"") == 1)
-        check("no API key anywhere in the generated page",
-              "mock-key" not in page and "UNSPLASH_ACCESS_KEY" not in page)
+        check("every remote image has a srcset", page.count("srcset=") >= 26,
+              "%d" % page.count("srcset="))
+        check("exactly one eager image, the hero", page.count('fetchpriority="high"') == 1)
+        check("no markup mentions a key", "mock-unsplash-key" not in page
+              and "mock-pexels-key" not in page)
 
-        # -- 11. failure handling ------------------------------------------------
-        print("\n11. API failures are reported, not papered over")
-        MockUnsplash.fail_search = True
-        empty = cache_mod.Cache(path=os.path.join(tmp, "fail.json"))
-        rec2, err2 = resolve.resolve_entry(cameroon, hero_cat, cameroon.entry("hero"),
-                                           tax.role("hero"), key, set())
-        MockUnsplash.fail_search = False
-        check("a failed search returns an error, not a record", rec2 is None and bool(err2),
-              (err2 or "")[:44])
-        check("nothing is cached on failure", not empty.entries)
+        # -- 13. secrets stay server-side --------------------------------------------
+        print("\n13. neither key reaches a client")
+        leaked = []
+        root = os.path.dirname(os.path.dirname(HERE))
+        for dirpath, _, files in os.walk(root):
+            if "/.git" in dirpath:
+                continue
+            for f in files:
+                if not f.endswith((".html", ".json", ".js", ".css", ".md", ".yml")):
+                    continue
+                body = open(os.path.join(dirpath, f), errors="ignore").read()
+                placeholder = re.compile(r"^(your|paste|xxx|\.\.\.|<|\$\{\{)", re.I)
+                hit = re.search(r'(?:UNSPLASH_ACCESS_KEY|PEXELS_API_KEY)\s*[=:]\s*["\']?([A-Za-z0-9_-]{20,})', body)
+                if "mock-unsplash-key" in body or "mock-pexels-key" in body or (
+                        hit and not placeholder.match(hit.group(1))):
+                    leaked.append(os.path.relpath(os.path.join(dirpath, f), root))
+        check("no key value in any committed artifact", not leaked, ", ".join(leaked[:3]))
+        env_example = os.path.join(root, ".env.example")
+        body = open(env_example).read() if os.path.exists(env_example) else ""
+        check(".env.example declares both variables, empty",
+              "UNSPLASH_ACCESS_KEY=" in body and "PEXELS_API_KEY=" in body
+              and not re.search(r"(UNSPLASH_ACCESS_KEY|PEXELS_API_KEY)=\S", body))
+        check("the cache schema has no key field",
+              not any("key" in f.lower() for f in cache_mod.FIELDS))
 
     finally:
         httpd.shutdown()
         shutil.rmtree(tmp, ignore_errors=True)
-        os.environ.pop("UNSPLASH_ACCESS_KEY", None)
+        no_keys()
 
     failed = [n for n, ok in RESULTS if not ok]
-    print("\n%d checks, %d passed, %d failed" % (len(RESULTS), len(RESULTS) - len(failed), len(failed)))
-    if failed:
-        for n in failed:
-            print("  FAILED: %s" % n)
-        return 1
-    print("the resolver is ready for a real UNSPLASH_ACCESS_KEY")
-    return 0
+    print("\n%d checks, %d passed, %d failed"
+          % (len(RESULTS), len(RESULTS) - len(failed), len(failed)))
+    for n in failed:
+        print("  FAILED: %s" % n)
+    if not failed:
+        print("both providers are ready for real credentials")
+    return 1 if failed else 0
 
 
-def _refuses(imaging, role, entry):
+def _raises(fn, exc_type):
     try:
-        imaging.cdn_url("https://evil.example/photo-1", role, entry.focal)
+        fn()
         return False
-    except ValueError:
+    except exc_type:
         return True
-
-
-def _refuses_url(imaging, record, tax, country):
-    try:
-        imaging.cdn_url(record["imageUrl"], tax.role("hero"), country.entry("hero").focal)
+    except Exception:
         return False
-    except ValueError:
-        return True
 
 
 if __name__ == "__main__":

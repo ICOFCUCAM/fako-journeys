@@ -23,19 +23,52 @@ import os
 from .model import ROOT
 
 CACHE_DIR = os.path.join(ROOT, "tourism", "cache")
-CACHE_FILE = os.path.join(CACHE_DIR, "unsplash.json")
+CACHE_FILE = os.path.join(CACHE_DIR, "images.json")
+LEGACY_FILE = os.path.join(CACHE_DIR, "unsplash.json")   # single-provider era
 
 
 def cache_file():
     """Overridable so tests and CI never write the repo's cache."""
-    return os.environ.get("UNSPLASH_CACHE_FILE") or CACHE_FILE
+    return (os.environ.get("TOURISM_CACHE_FILE")
+            or os.environ.get("UNSPLASH_CACHE_FILE")
+            or CACHE_FILE)
 
-# Exactly the schema the brief specifies, plus provenance timestamps.
+# The stored schema. Provider-neutral: nothing here names Unsplash or Pexels
+# except the `provider` field itself.
 FIELDS = (
-    "photoId", "photographer", "photographerUrl", "unsplashUrl", "imageUrl",
-    "category", "country", "query", "alt", "width", "height", "focalPoint",
-    "resolvedAt", "verifiedAt",
+    "country", "category", "caption", "description", "provider", "photoId",
+    "imageUrl", "thumbnailUrl", "sourceUrl", "photographer", "photographerUrl",
+    "width", "height", "aspectRatio", "alt", "query", "focalPoint", "createdAt",
+    "verifiedAt", "queryTier", "relevance",
 )
+
+REQUIRED = ("provider", "photoId", "imageUrl", "photographer")
+
+
+def migrate(record):
+    """Upgrade a single-provider record in place.
+
+    The first eight images were resolved before Pexels existed, under a schema
+    with no `provider` and an `unsplashUrl` field. They are real, fetched,
+    verified photographs; re-resolving them would spend quota to get the same
+    pictures back. So they are carried forward rather than discarded.
+    """
+    if record.get("provider"):
+        return record
+    record["provider"] = "unsplash"
+    if "unsplashUrl" in record:
+        record.setdefault("sourceUrl", record.pop("unsplashUrl"))
+    if record.get("resolvedAt") and not record.get("createdAt"):
+        record["createdAt"] = record.pop("resolvedAt")
+    w, h = record.get("width") or 0, record.get("height") or 0
+    if h and not record.get("aspectRatio"):
+        record["aspectRatio"] = round(w / float(h), 4)
+    if not record.get("thumbnailUrl"):
+        from . import providers
+        p = providers.for_record(record)
+        if p:
+            record["thumbnailUrl"] = p.thumbnail_url(record)
+    return record
 
 NOTE = ("Written only by tools/tourism/build.py resolve, only from an Unsplash API "
         "response that was then fetched over HTTP. Never hand-write an imageUrl here.")
@@ -61,23 +94,34 @@ class Cache:
         rec = self.get(country_slug, category_id)
         return bool(rec and rec.get("imageUrl"))
 
+    @staticmethod
+    def photo_key(record):
+        """Provider-scoped: Unsplash ids and Pexels ids share no namespace, so
+        the same string on two providers is two different photographs."""
+        return "%s:%s" % (record.get("provider") or "?", record.get("photoId"))
+
     def photo_ids(self):
-        """Every photo id already spent, so the resolver never reuses one."""
-        return {r.get("photoId") for r in self.entries.values() if r.get("photoId")}
+        """Every photo already spent, so the resolver never reuses one."""
+        return {self.photo_key(r) for r in self.entries.values() if r.get("photoId")}
 
     def duplicates(self):
         """photoId -> [slot, slot, ...] for any id used more than once."""
         by_id = {}
         for slot, rec in sorted(self.entries.items()):
-            pid = rec.get("photoId")
-            if pid:
-                by_id.setdefault(pid, []).append(slot)
+            if rec.get("photoId"):
+                by_id.setdefault(self.photo_key(rec), []).append(slot)
         return {pid: slots for pid, slots in by_id.items() if len(slots) > 1}
 
     # -- writes -----------------------------------------------------------------
 
+    def by_provider(self):
+        counts = {}
+        for r in self.entries.values():
+            counts[r.get("provider") or "unknown"] = counts.get(r.get("provider") or "unknown", 0) + 1
+        return counts
+
     def put(self, country_slug, category_id, record):
-        missing = [f for f in ("photoId", "imageUrl", "photographer") if not record.get(f)]
+        missing = [f for f in REQUIRED if not record.get(f)]
         if missing:
             raise ValueError("refusing to cache an incomplete record, missing: %s"
                              % ", ".join(missing))
@@ -101,7 +145,13 @@ class Cache:
 
 def load(path=None):
     path = path or cache_file()
-    if not os.path.exists(path):
+    source = path
+    if not os.path.exists(source) and path == CACHE_FILE and os.path.exists(LEGACY_FILE):
+        source = LEGACY_FILE          # read the single-provider cache once
+    if not os.path.exists(source):
         return Cache(path=path)
-    with open(path) as f:
-        return Cache(json.load(f), path=path)
+    with open(source) as f:
+        cache = Cache(json.load(f), path=path)
+    for record in cache.entries.values():
+        migrate(record)
+    return cache

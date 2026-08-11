@@ -9,7 +9,7 @@ every image boxed so the page does not jump, and every image carrying alt text.
 import os
 import re
 
-from . import imaging
+from . import providers
 from .model import ROOT
 
 TOURISM = os.path.join(ROOT, "tourism")
@@ -63,12 +63,12 @@ def check_page(path, taxonomy, expect_categories=True):
             problems.append("%s: <img> without aspect-ratio (%s)" % (name, src_url[:60]))
         if "object-position" not in style:
             problems.append("%s: <img> without object-position (%s)" % (name, src_url[:60]))
-        if src_url.startswith(imaging.allowed_host()):
+        if providers.owns_any(src_url):
             if "srcset" not in a:
                 problems.append("%s: remote image without srcset (%s)" % (name, src_url[:60]))
             if "sizes" not in a:
                 problems.append("%s: remote image without sizes (%s)" % (name, src_url[:60]))
-            if "w=" not in src_url or "q=" not in src_url:
+            if "w=" not in src_url or "h=" not in src_url:
                 problems.append("%s: remote image without CDN sizing params" % name)
         elif src_url.startswith("/"):
             local = os.path.join(ROOT, src_url.lstrip("/"))

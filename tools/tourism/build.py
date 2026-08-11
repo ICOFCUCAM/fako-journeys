@@ -4,7 +4,7 @@
     build.py validate            completeness + integrity report for every country
     build.py status              Country | Category | Photo ID | CDN URL | Status
     build.py queries             the search query for every slot
-    build.py resolve             fill image slots from Unsplash (needs a key)
+    build.py resolve             fill image slots from Unsplash, then Pexels
     build.py render              write tourism/<slug>.html
     build.py verify              check the rendered HTML
     build.py test                run the resolver test suite against a local mock
@@ -12,7 +12,7 @@
     build.py report              write tourism/REPORT.md
     build.py all                 validate, render, verify, report
 
-Flags: --country <slug>  --category <id>  --force
+Flags: --country <slug>  --category <id>  --provider unsplash|pexels  --force
 
 Adding a country: drop a JSON file in tourism/countries/ and run `all`. No code
 changes, no new components, no template edits.
@@ -25,7 +25,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from tourism import cache as cache_mod  # noqa: E402
-from tourism import imaging, queries, render, resolve, validate, verify  # noqa: E402
+from tourism import imaging, providers, queries, render, resolve, validate, verify  # noqa: E402
 from tourism.model import ROOT, attach_cache, load_countries, load_taxonomy  # noqa: E402
 
 
@@ -55,23 +55,25 @@ def cmd_status(args):
     cats = [c for c in tax.enabled if not args.category or c["id"] == args.category]
     dupes = cache.duplicates()
     dupe_slots = {s for slots in dupes.values() for s in slots}
-    print("%-14s %-20s %-14s %-52s %s"
-          % ("COUNTRY", "CATEGORY", "PHOTO ID", "CDN URL", "STATUS"))
-    print("-" * 122)
+    print("%-13s %-19s %-9s %-13s %-44s %s"
+          % ("COUNTRY", "CATEGORY", "PROVIDER", "PHOTO ID", "CDN URL", "STATUS"))
+    print("-" * 128)
     counts = {}
     for c in countries:
         for cat in cats:
             entry = c.entry(cat["id"])
             slot = cache_mod.key(c.slug, cat["id"])
             if entry is None:
-                pid, url, status = "-", "-", "MISSING CATEGORY"
+                pid, url, status, prov = "-", "-", "MISSING CATEGORY", "-"
             elif not entry.image:
                 pid, url, status = "-", "-", "UNRESOLVED"
+                prov = "local" if entry.local else "-"
             else:
                 rec = entry.image
                 pid = rec.get("photoId") or "?"
+                prov = rec.get("provider") or "?"
                 try:
-                    url = imaging.cdn_url(rec["imageUrl"], tax.role(cat["id"]), entry.focal)
+                    url = imaging.cdn_url(rec, tax.role(cat["id"]), entry.focal)
                 except ValueError:
                     url, status = rec.get("imageUrl", "?"), "INVALID URL"
                 else:
@@ -87,8 +89,8 @@ def cmd_status(args):
             elif entry and not validate.alt_text(c, entry):
                 status = "NO ALT TEXT"
             counts[status] = counts.get(status, 0) + 1
-            print("%-14s %-20s %-14s %-52s %s"
-                  % (c.slug, cat["id"], pid[:14], (url or "-")[:52], status))
+            print("%-13s %-19s %-9s %-13s %-44s %s"
+                  % (c.slug, cat["id"], prov, pid[:13], (url or "-")[:44], status))
     print()
     print("  " + " · ".join("%s: %d" % (k, v) for k, v in sorted(counts.items())))
     if dupes:
@@ -119,13 +121,16 @@ def cmd_resolve(args):
         return 2
 
     try:
-        key = resolve.preflight()
+        usable, problems = resolve.preflight(args.provider)
     except resolve.Unavailable as exc:
         print("RESOLVE UNAVAILABLE: %s" % exc)
         print("\nNo URLs were written. This system never stores an image URL it has not "
               "fetched, so unresolved slots stay unresolved rather than becoming "
               "plausible-looking broken links.")
         return 2
+    print("providers: %s" % ", ".join(p.name for p in usable))
+    for note in problems:
+        print("  unavailable — %s" % note)
 
     # Resumable: everything already cached is skipped, and its photo id is still
     # reserved so a re-run cannot hand the same picture to a different slot.
@@ -136,16 +141,26 @@ def cmd_resolve(args):
                   if c.entry(cat["id"]) and cache.has(c.slug, cat["id"])) if not args.force else 0
     print("%d slot(s) to resolve, %d already cached and skipped" % (len(todo), skipped))
 
-    filled, failures = 0, []
+    filled, failures, by_provider = 0, [], {}
     try:
         for c, cat in todo:
             entry = c.entry(cat["id"])
-            record, err = resolve.resolve_entry(c, cat, entry, tax.role(cat["id"]), key, seen)
+            try:
+                record, err = resolve.resolve_entry(c, cat, entry, tax.role(cat["id"]),
+                                                    seen, args.provider)
+            except resolve.RateLimited as exc:
+                print("\n  STOPPED: %s" % exc)
+                print("  %d slot(s) still unresolved. Everything resolved so far is "
+                      "cached; run again when the window resets." % (len(todo) - filled))
+                break
             if record:
                 cache.put(c.slug, cat["id"], record)
                 entry.image = record
                 filled += 1
-                print("  ok    %-14s %-20s %s" % (c.slug, cat["id"], record["photoId"]))
+                by_provider[record["provider"]] = by_provider.get(record["provider"], 0) + 1
+                print("  ok    %-14s %-20s %-9s %-12s score %s"
+                      % (c.slug, cat["id"], record["provider"], record["photoId"][:12],
+                         (record.get("relevance") or {}).get("score")))
             else:
                 failures.append((c.slug, cat["id"], err))
                 print("  FAIL  %-14s %-20s %s" % (c.slug, cat["id"], err))
@@ -154,8 +169,10 @@ def cmd_resolve(args):
         # the next run resumes from here instead of starting over.
         cache.save()
 
-    print("\nresolved %d, failed %d, cache: %s"
-          % (filled, len(failures), os.path.relpath(cache.path, ROOT)))
+    print("\nresolved %d (%s), failed %d, cache: %s"
+          % (filled,
+             ", ".join("%s %d" % (k, v) for k, v in sorted(by_provider.items())) or "none",
+             len(failures), os.path.relpath(cache.path, ROOT)))
     if failures:
         print("\nfailed slots (these keep their placeholder, nothing was invented):")
         for slug, cid, err in failures:
@@ -239,6 +256,35 @@ def cmd_report(args):
     return 0
 
 
+def cmd_providers(args):
+    """The country x provider report."""
+    tax, countries, cache = dataset(args.country)
+    rows, _ = validate.report(countries, tax)
+    expected = len(tax.enabled)
+    dupes = cache.duplicates()
+    total = {"resolved": 0, "unresolved": 0}
+    for r in rows:
+        country = [c for c in countries if c.slug == r["slug"]][0]
+        resolved = sum(r["providers"].values())
+        unresolved = expected - resolved
+        local = sum(1 for c in tax.enabled
+                    if country.entry(c["id"]) and not country.entry(c["id"]).image
+                    and country.entry(c["id"]).local)
+        dup_here = sum(1 for pid, slots in dupes.items()
+                       for s in slots if s.startswith(r["slug"] + "/"))
+        total["resolved"] += resolved
+        total["unresolved"] += unresolved
+        print("\n%s" % r["name"].upper())
+        print("  %d/%d resolved" % (resolved, expected))
+        for name in sorted(providers.BY_NAME):
+            print("  %d %s" % (r["providers"].get(name, 0), name.title()))
+        print("  %d unresolved (%d showing a local illustration)" % (unresolved, local))
+        print("  %d duplicates" % dup_here)
+    print("\nTOTAL  %d resolved, %d unresolved across %d countries"
+          % (total["resolved"], total["unresolved"], len(rows)))
+    return 0
+
+
 def cmd_all(args):
     rc = cmd_validate(args)
     print()
@@ -251,6 +297,7 @@ def cmd_all(args):
 
 COMMANDS = {
     "validate": cmd_validate, "status": cmd_status, "queries": cmd_queries,
+    "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report, "all": cmd_all,
 }
@@ -262,6 +309,7 @@ def main():
     p.add_argument("command", choices=sorted(COMMANDS))
     p.add_argument("--country", help="limit to one country slug")
     p.add_argument("--category", help="limit to one category id")
+    p.add_argument("--provider", help="limit to one provider (unsplash, pexels)")
     p.add_argument("--force", action="store_true",
                    help="re-resolve slots that are already cached")
     args = p.parse_args()

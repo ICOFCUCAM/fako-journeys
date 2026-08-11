@@ -10,7 +10,7 @@ Severities:
             slots that have not been resolved from Unsplash yet)
 """
 
-from . import imaging
+from . import imaging, providers
 
 
 class Finding:
@@ -89,21 +89,32 @@ def check_country(country, taxonomy, global_images, global_subjects):
                                     "caption is just the category title; write country-specific copy"))
 
         if entry.image:
-            url = entry.image.get("imageUrl") or ""
-            if not url.startswith(imaging.UNSPLASH_HOST):
+            rec = entry.image
+            url = rec.get("imageUrl") or ""
+            if not rec.get("provider"):
                 findings.append(Finding("error", country.slug, cat["id"],
-                                        "image is not an images.unsplash.com URL"))
-            if not entry.image.get("photographer"):
+                                        "image record has no provider"))
+            elif rec["provider"] not in providers.BY_NAME:
+                findings.append(Finding("error", country.slug, cat["id"],
+                                        "unknown provider %r" % rec["provider"]))
+            elif not providers.BY_NAME[rec["provider"]].owns(url):
+                findings.append(Finding("error", country.slug, cat["id"],
+                                        "imageUrl is not on %s's CDN" % rec["provider"]))
+            for field in ("thumbnailUrl", "sourceUrl", "alt", "aspectRatio", "createdAt"):
+                if not rec.get(field):
+                    findings.append(Finding("warn", country.slug, cat["id"],
+                                            "image record missing %s" % field))
+            if not rec.get("photographer"):
                 findings.append(Finding("error", country.slug, cat["id"],
                                         "image has no photographer credit"))
-            if entry.image.get("queryTier") == "category":
+            if rec.get("queryTier") == "category":
                 findings.append(Finding("warn", country.slug, cat["id"],
                                         "matched on a broadened query — accurate for the "
                                         "category, not for the specific subject"))
-            if not entry.image.get("verifiedAt"):
+            if not rec.get("verifiedAt"):
                 findings.append(Finding("warn", country.slug, cat["id"],
                                         "image has never been HTTP-verified"))
-            key = entry.image.get("photoId") or url
+            key = "%s:%s" % (rec.get("provider"), rec.get("photoId") or url)
             if key in global_images:
                 findings.append(Finding("error", country.slug, cat["id"],
                                         "duplicate image, already used by %s" % global_images[key]))
@@ -144,7 +155,14 @@ def report(countries, taxonomy):
                     if country.entry(c["id"]) and (country.entry(c["id"]).image or {}).get("imageUrl")]
         missing = [c["id"] for c in taxonomy.enabled if c["id"] not in present]
         errors = [x for x in f if x.level == "error"]
+        by_provider = {}
+        for c in taxonomy.enabled:
+            e = country.entry(c["id"])
+            if e and e.image and e.image.get("provider"):
+                pv = e.image["provider"]
+                by_provider[pv] = by_provider.get(pv, 0) + 1
         rows.append({
+            "providers": by_provider,
             "slug": country.slug,
             "name": country.name,
             "categories": "%d/%d" % (len(present), expected),

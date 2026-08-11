@@ -16,8 +16,9 @@
     "tourism:all": "python3 tools/tourism/build.py all",
     "tourism:test": "python3 tools/tourism/build.py test",
     "test": "python3 tools/tourism/build.py test",
-    "lint": "python3 -m py_compile tools/build_images.py tools/tourism/*.py && echo 'lint: ok'",
-    "typecheck": "python3 -m py_compile tools/build_images.py tools/tourism/*.py && echo 'typecheck: ok (no TypeScript in this project)'"
+    "lint": "python3 -m py_compile tools/build_images.py tools/tourism/*.py tools/tourism/providers/*.py && echo 'lint: ok'",
+    "typecheck": "python3 -m py_compile tools/build_images.py tools/tourism/*.py tools/tourism/providers/*.py && echo 'typecheck: ok (no TypeScript in this project)'",
+    "tourism:providers": "python3 tools/tourism/build.py providers"
   },
   "engines": {
     "node": ">=18"

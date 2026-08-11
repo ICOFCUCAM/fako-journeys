@@ -24,10 +24,10 @@ jobs:
 
       - name: Typecheck / lint
         run: |
-          python3 -m py_compile tools/build_images.py tools/tourism/*.py
+          python3 -m py_compile tools/build_images.py tools/tourism/*.py tools/tourism/providers/*.py
           echo "ok"
 
-      - name: Resolver test suite (against the local mock)
+      - name: Resolver test suite (against local mocks of both providers)
         run: python3 tools/tourism/build.py test
 
       - name: Validate every country

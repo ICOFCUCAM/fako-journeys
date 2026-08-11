@@ -1,18 +1,24 @@
 name: Resolve tourism images
 
-# Run the Unsplash resolver where there is actually internet access, with the key
-# held as a repository secret so it never touches a working copy or a commit.
+# Run the resolver where there is actually internet access, with the keys held as
+# repository secrets so neither touches a working copy or a commit.
 #
-# Setup, once:
-#   Settings -> Secrets and variables -> Actions -> New repository secret
-#   Name:  UNSPLASH_ACCESS_KEY
-#   Value: your Unsplash *Access Key* (never the Secret key)
+# Setup, once — Settings -> Secrets and variables -> Actions -> New repository secret:
+#   UNSPLASH_ACCESS_KEY   your Unsplash *Access Key* (never the Secret key)
+#   PEXELS_API_KEY        your Pexels API key       (optional; the fallback)
 #
-# Then: Actions -> Resolve tourism images -> Run workflow.
+# Either alone is enough. With both, Unsplash is tried first and Pexels fills
+# what it cannot. Then: Actions -> Resolve tourism images -> Run workflow.
 
 on:
   workflow_dispatch:
     inputs:
+      provider:
+        description: "Limit to one provider (blank = Unsplash then Pexels)"
+        type: choice
+        required: false
+        default: ""
+        options: ["", "unsplash", "pexels"]
       country:
         description: "Country slug, or blank for every country"
         required: false
@@ -49,24 +55,29 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Check the key is configured
+      - name: Check at least one provider key is configured
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
-          if [ -z "$UNSPLASH_ACCESS_KEY" ]; then
-            echo "::error::Unsplash image resolution requires UNSPLASH_ACCESS_KEY."
-            echo "Add it under Settings -> Secrets and variables -> Actions."
+          if [ -z "$UNSPLASH_ACCESS_KEY" ] && [ -z "$PEXELS_API_KEY" ]; then
+            echo "::error::Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY."
+            echo "Add one under Settings -> Secrets and variables -> Actions."
             exit 1
           fi
-          echo "key is present (value never printed)"
+          [ -n "$UNSPLASH_ACCESS_KEY" ] && echo "unsplash key present (value never printed)"
+          [ -n "$PEXELS_API_KEY" ] && echo "pexels key present (value never printed)"
+          exit 0
 
-      - name: Resolve images from Unsplash
+      - name: Resolve images (Unsplash, then Pexels)
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
           ARGS=""
           [ -n "${{ inputs.country }}" ]  && ARGS="$ARGS --country ${{ inputs.country }}"
           [ -n "${{ inputs.category }}" ] && ARGS="$ARGS --category ${{ inputs.category }}"
+          [ -n "${{ inputs.provider }}" ] && ARGS="$ARGS --provider ${{ inputs.provider }}"
           [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
           echo "resolve$ARGS"
           # A partial run is a success: failed slots keep their placeholder and the
@@ -81,14 +92,21 @@ jobs:
         run: |
           python3 tools/tourism/build.py status
 
+      - name: Country x provider report
+        run: |
+          python3 tools/tourism/build.py providers
+
       - name: Confirm no key leaked into any artifact
         env:
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
-          if grep -rlF "$UNSPLASH_ACCESS_KEY" --exclude-dir=.git . ; then
-            echo "::error::the access key appears in a file — refusing to commit"
-            exit 1
-          fi
+          for KEY in "$UNSPLASH_ACCESS_KEY" "$PEXELS_API_KEY"; do
+            if [ -n "$KEY" ] && grep -rlF "$KEY" --exclude-dir=.git . ; then
+              echo "::error::an API key appears in a file — refusing to commit"
+              exit 1
+            fi
+          done
           echo "no key material in the working tree"
 
       - name: Commit the cache and regenerated pages
@@ -96,13 +114,13 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tourism/cache/unsplash.json tourism/*.html tourism/REPORT.md
+          git add tourism/cache/images.json tourism/*.html tourism/REPORT.md
           if git diff --cached --quiet; then
             echo "nothing changed — every requested slot was already cached"
           else
-            RESOLVED=$(python3 -c "import json;print(len(json.load(open('tourism/cache/unsplash.json'))['entries']))")
-            git commit -m "Resolve tourism images from Unsplash ($RESOLVED cached)" \
-                       -m "Ran tools/tourism/build.py resolve on a runner with network access. Every URL in the cache came from a GET /search/photos response and was fetched over HTTP before being stored."
+            RESOLVED=$(python3 -c "import json;print(len(json.load(open('tourism/cache/images.json'))['entries']))")
+            git commit -m "Resolve tourism images ($RESOLVED cached)" \
+                       -m "Ran tools/tourism/build.py resolve on a runner with network access. Every URL in the cache came from an Unsplash or Pexels search response and was fetched over HTTP before being stored."
             git push
           fi
 
@@ -111,5 +129,5 @@ jobs:
         with:
           name: tourism-cache
           path: |
-            tourism/cache/unsplash.json
+            tourism/cache/images.json
             tourism/REPORT.md
