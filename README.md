@@ -1,8 +1,8 @@
-# WankonAfritour, and Kamerun
+# Afrinkong, and Kamerun
 
 Two sites in one repository, on purpose.
 
-    /            WankonAfritour — the group's gateway to the whole continent
+    /            Afrinkong — the group's gateway to the whole continent
     /cameroon    Kamerun — the Cameroon operator, hand-built, with its own pages
     /kenya /rwanda /tanzania /south-africa /zambia
                  a standalone home page per country, generated from its dataset

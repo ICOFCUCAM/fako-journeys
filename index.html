@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WankonAfritour — Guided Journeys Across Africa | Cameroon, Uganda, Kenya, Tanzania, Rwanda</title>
-<meta name="description" content="WankonAfritour builds guided journeys across Africa — Cameroon's six climates, Uganda's gorillas and the Rwenzori, the Kenyan and Tanzanian safari, Rwanda's thousand hills, South Africa and Zambia. Local operators, licensed guides, one continent.">
+<title>Afrinkong — Journeys Across Africa | Cameroon, Uganda, Kenya, Tanzania, Rwanda, Namibia</title>
+<meta name="description" content="Afrinkong connects travellers with local tourism operators across Africa — Cameroon's six climates, Uganda's gorilla forests, the Serengeti and the Rift, Rwanda's thousand hills, the Namib, South Africa and Zambia. Local operators, real places, journeys made for you.">
 <style>
 :root{
   /* Same tokens as every operator site in the group. The gateway is not a
@@ -96,6 +96,8 @@ ul,ol{list-style:none}
 .wa-hair{width:96px;height:1px;background:color-mix(in srgb,var(--c-bg) 54%,transparent);margin:28px auto 0}
 .wa-open .wa-lede{font-size:19px;color:color-mix(in srgb,var(--c-bg) 90%,var(--c-primary));
   max-width:31em;margin:24px auto 0;text-shadow:0 1px 16px rgba(0,0,0,.5)}
+.wa-open .wa-lede.sub{font-family:var(--fj-mono);font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;margin-top:18px;color:color-mix(in srgb,var(--c-bg) 78%,transparent)}
 .wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;justify-content:center}
 .wa-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);transition:background .2s,color .2s,border-color .2s}
 .wa-act i{font-style:normal;margin-left:9px}
@@ -220,6 +222,109 @@ ul,ol{list-style:none}
 .wa-flag-col a:hover{color:var(--c-accent)}
 @media(max-width:820px){.wa-flag{grid-template-columns:1fr}.wa-flag-col{padding:26px 0 24px;border-bottom:var(--fj-rule-dark)}.wa-flag-col:last-child{border-left:0;padding-left:0}}
 
+/* ---- why us: four claims, no icons ------------------------------------------------
+   The experience row above already carries ten medallions. Repeating the device
+   here would make two unrelated sections look like the same list, so this one is
+   numbered instead. */
+.wa-why{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.wa-why>div{padding:26px 26px 24px 0;border-right:var(--fj-rule)}
+.wa-why>div:last-child{border-right:0;padding-right:0}
+.wa-why i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;color:var(--c-accent)}
+.wa-why b{display:block;font-family:var(--fj-display);font-size:21px;font-weight:700;text-transform:uppercase;line-height:1.06;margin:12px 0 8px}
+.wa-why p{font-size:14.5px;color:var(--c-muted)}
+@media(max-width:900px){.wa-why{grid-template-columns:1fr 1fr}.wa-why>div:nth-child(2n){border-right:0;padding-right:0}}
+@media(max-width:520px){.wa-why{grid-template-columns:1fr}.wa-why>div{border-right:0 !important;padding-right:0 !important;border-bottom:var(--fj-rule)}}
+
+/* ---- the journey: five steps, read as a track ------------------------------------- */
+.wa-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.wa-step{position:relative;padding:30px 22px 24px 0}
+/* The dot on the rule is what makes five boxes read as one sequence. It sits on
+   the border above, so it is drawn outside the padding box on purpose. */
+.wa-step::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;
+  border-radius:50%;background:var(--c-accent)}
+.wa-step i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;color:var(--c-muted)}
+.wa-step b{display:block;font-family:var(--fj-display);font-size:23px;font-weight:700;text-transform:uppercase;margin:10px 0 8px}
+.wa-step p{font-size:14px;color:var(--c-muted)}
+@media(max-width:1000px){.wa-steps{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:640px){.wa-steps{grid-template-columns:1fr}.wa-step{padding-top:26px;border-bottom:var(--fj-rule)}}
+
+/* ---- seasons ---------------------------------------------------------------------- */
+.wa-seasons{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--c-accent)}
+.wa-season{padding:28px 26px 26px 0;border-right:var(--fj-rule-dark)}
+.wa-season:last-child{border-right:0;padding-right:0}
+.wa-season b{display:block;font-family:var(--fj-display);font-size:clamp(20px,2.2vw,28px);font-weight:700;text-transform:uppercase;color:var(--c-bg)}
+.wa-season ul{margin-top:16px}
+.wa-season li{font-family:var(--fj-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fj-onbasalt-dim);padding:6px 0;border-bottom:var(--fj-rule-dark)}
+@media(max-width:840px){.wa-seasons{grid-template-columns:1fr 1fr}.wa-season:nth-child(2n){border-right:0;padding-right:0}}
+@media(max-width:480px){.wa-seasons{grid-template-columns:1fr}.wa-season{border-right:0 !important;padding-right:0 !important}}
+
+/* ---- stories ---------------------------------------------------------------------- */
+.wa-stories{display:grid;grid-template-columns:2fr 1fr 1fr;gap:0;border-top:2px solid var(--c-primary)}
+.wa-story{padding:26px 28px 24px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.wa-story:nth-child(3),.wa-story:nth-child(5){border-right:0;padding-right:0}
+.wa-story.wide{grid-column:span 1;grid-row:span 2}
+.wa-story i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.wa-story h3{font-size:clamp(21px,2.4vw,30px);margin:12px 0 9px}
+.wa-story p{font-size:14.5px;color:var(--c-muted)}
+.wa-story.wide h3{font-size:clamp(26px,3.4vw,44px)}
+@media(max-width:900px){.wa-stories{grid-template-columns:1fr 1fr}.wa-story:nth-child(3),.wa-story:nth-child(5){border-right:var(--fj-rule);padding-right:28px}
+  .wa-story:nth-child(2n){border-right:0;padding-right:0}.wa-story.wide{grid-row:span 1}}
+@media(max-width:560px){.wa-stories{grid-template-columns:1fr}.wa-story{border-right:0 !important;padding-right:0 !important}}
+
+/* ---- the map ----------------------------------------------------------------------
+   Real Natural Earth boundaries, projected at build time by tools/africa_map.py and
+   inlined — a country you can click has to be the shape of that country, and the
+   alternative is a map library and a tile server for one static continent.
+   The list beside it is not a fallback: it is the whole interaction on a phone,
+   where a country the size of Rwanda is a four-pixel tap target. */
+.wa-atlas{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:start;
+  border-top:var(--fj-rule-dark);padding-top:8px}
+.wa-map{position:relative;padding-top:8px}
+.wa-map-svg{width:100%;height:auto;display:block}
+.wa-map-rest path{fill:color-mix(in srgb,var(--c-bg) 16%,transparent);
+  stroke:var(--fj-basalt);stroke-width:1.4;stroke-linejoin:round}
+.wa-map-live path{fill:color-mix(in srgb,var(--c-accent) 78%,var(--fj-basalt));
+  stroke:var(--fj-basalt);stroke-width:1.4;stroke-linejoin:round;transition:fill .2s}
+.wa-map-live:hover path,.wa-map-live:focus path,.wa-map-live.on path{fill:var(--c-bg)}
+.wa-map-live{cursor:pointer}
+.wa-map-live:focus{outline:none}
+.wa-map-live:focus-visible path{stroke:var(--c-bg);stroke-width:3}
+.wa-atlas-side{padding-top:8px}
+.wa-atlas-read{min-height:96px;border-bottom:var(--fj-rule-dark);padding-bottom:20px}
+.wa-atlas-read b{display:block;font-family:var(--fj-display);font-size:clamp(28px,3.6vw,44px);
+  font-weight:700;text-transform:uppercase;color:var(--c-bg);line-height:1.02}
+.wa-atlas-read span{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-accent);margin-top:10px}
+.wa-atlas-list{margin-top:8px}
+.wa-atlas-list a{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:11px 0;border-bottom:var(--fj-rule-dark);color:var(--fj-onbasalt);transition:color .2s,padding-left .2s}
+.wa-atlas-list a:hover,.wa-atlas-list a.on{color:var(--c-bg);padding-left:8px}
+.wa-atlas-list em{font-style:normal;font-family:var(--fj-display);font-size:19px;font-weight:700;text-transform:uppercase}
+.wa-atlas-list span{font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fj-onbasalt-dim);text-align:right}
+@media(max-width:900px){.wa-atlas{grid-template-columns:1fr;gap:30px}
+  .wa-map{max-width:460px;margin:0 auto}.wa-atlas-read{min-height:0}}
+
+/* ---- the two flagship panels ------------------------------------------------------ */
+.wa-panels{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--c-accent)}
+.wa-panel{position:relative;isolation:isolate;min-height:520px;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:44px 40px;overflow:hidden;color:var(--c-bg)}
+.wa-panel img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
+/* Where there is no photograph yet the panel is not left blank and it is not given
+   a stand-in: it falls back to the basalt the section is already on, with an
+   accent wash, so it reads as a designed panel rather than a hole. */
+.wa-panel::after{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(160deg,color-mix(in srgb,var(--c-accent) 30%,transparent) 0,
+    rgba(10,15,12,.30) 42%,rgba(10,15,12,.86) 100%)}
+.wa-panel .wa-stamp{color:color-mix(in srgb,var(--c-accent) 30%,var(--c-bg));text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.wa-panel h3{font-size:clamp(34px,4.6vw,64px);margin:12px 0 14px;color:var(--c-bg);text-shadow:0 2px 24px rgba(0,0,0,.5)}
+.wa-panel p{color:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));font-size:15.5px;max-width:34em;
+  text-shadow:0 1px 14px rgba(0,0,0,.6)}
+.wa-panel .wa-panel-go{display:inline-block;align-self:flex-start;margin-top:24px;font-family:var(--fj-mono);
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-bg);
+  border:1px solid color-mix(in srgb,var(--c-bg) 62%,transparent);padding:12px 20px;transition:background .2s,color .2s}
+.wa-panel .wa-panel-go:hover{background:var(--c-bg);color:var(--c-primary)}
+@media(max-width:820px){.wa-panels{grid-template-columns:1fr}.wa-panel{min-height:400px;padding:34px 26px}}
+
 /* ---- plan ------------------------------------------------------------------------ */
 .wa-plan{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--c-primary)}
 .wa-plan>div{padding:24px 22px 20px 0;border-right:var(--fj-rule)}
@@ -257,11 +362,12 @@ ul,ol{list-style:none}
 <!-- nav -->
 <header class="wa-mast">
   <div class="wa-frame wa-mast-in">
-    <a class="wa-mark" href="/"><b>WankonAfritour</b><span>Journeys across Africa</span></a>
+    <a class="wa-mark" href="/"><b>Afrinkong</b><span>Journeys across Africa</span></a>
     <nav class="wa-routes">
       <a href="#destinations">Destinations</a>
       <a href="#experiences">Experiences</a>
       <a href="#regions">Regions</a>
+      <a href="#map">Map</a>
       <a href="#plan">Plan</a>
     </nav>
     <a class="btn" href="#plan">Begin a journey</a>
@@ -291,13 +397,14 @@ ul,ol{list-style:none}
   </picture>
   <div class="wa-open-veil" aria-hidden="true"></div>
   <div class="wa-frame wa-open-say">
-    <span class="wa-stamp">Fifty-four countries &middot; one continent</span>
+    <span class="wa-stamp">54 countries &middot; one continent</span>
     <h1>Africa<br>is <em>waiting</em>.</h1>
     <div class="wa-hair" aria-hidden="true"></div>
-    <p class="wa-lede">Discover the continent through its places, its people, its cultures &mdash; and journeys run by the people who live there.</p>
+    <p class="wa-lede">Discover Africa through the places, people and cultures that make every journey different.</p>
+    <p class="wa-lede sub">Local operators. Real places. Journeys made for you.</p>
     <div class="wa-acts">
       <a class="wa-act go" href="#destinations">Explore Africa <i>&rarr;</i></a>
-      <a class="wa-act faint" href="#experiences">Choose an experience <i>&rarr;</i></a>
+      <a class="wa-act faint" href="#experiences">Find your experience <i>&rarr;</i></a>
     </div>
   </div>
   <div class="wa-open-tags">
@@ -318,7 +425,7 @@ ul,ol{list-style:none}
 <!-- what we are -->
 <section class="wa-brief">
   <div class="wa-frame">
-    <p class="wa-lede">We build guided journeys through the places, people and cultures of this continent &mdash; the six climates of Cameroon, the gorilla forests of Uganda, the Serengeti and the Rift, a thousand hills in Rwanda. Each country is run by an operator who lives in it.</p>
+    <p class="wa-lede">From Cameroon&rsquo;s volcanic coast and rainforest to Uganda&rsquo;s gorilla forests, the Serengeti, the Rift Valley, Rwanda&rsquo;s thousand hills, the Namib Desert and the islands of the Indian Ocean. Each country is run by an operator who lives in it.</p>
     <div class="wa-key">
       <div class="wa-key-item"><b>8</b><span>Countries live today</span></div>
       <div class="wa-key-item"><b>27</b><span>Experience categories each</span></div>
@@ -328,132 +435,310 @@ ul,ol{list-style:none}
   </div>
 </section>
 
-<!-- regions -->
+<!-- 01 regions -->
 <section class="wa-zone" id="regions">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>01</b><span>Explore Africa</span></div>
       <div>
-        <h2>Five regions, and they are <em>not the same place</em>.</h2>
-        <p class="wa-note">&ldquo;Africa&rdquo; covers a landmass you could fit the United States, China, India and most of Europe inside. Start with the region, not the continent.</p>
+        <h2>Five regions. Thousands of ways to <em>discover Africa</em>.</h2>
+        <p class="wa-note">Africa is not one destination. &ldquo;Africa&rdquo; covers a landmass you could fit the United States, China, India and most of Europe inside. Start with the region, discover the country, then find the experience that belongs to you.</p>
       </div>
     </div>
     <div class="wa-regions">
-      <a class="wa-region" href="#destinations"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-5"/><path d="M12 16 6.5 9.5h3L5 4h14l-4.5 5.5h3z"/></svg></span><h3>Central &amp; West</h3><p>Rainforest, volcanic coast, the Sahel edge, and the kingdoms of the Gulf of Guinea.</p><i>Cameroon &middot; live</i></a>
-      <a class="wa-region" href="#destinations"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18v-5a5 5 0 0 1 5-5h5a5 5 0 0 1 5 5v5"/><path d="M8 18v-3M16 18v-3"/><path d="M12 8v9"/></svg></span><h3>East</h3><p>The Rift, the great migrations, the gorilla forests, Kilimanjaro and the Swahili coast.</p><i>4 countries &middot; live</i></a>
-      <a class="wa-region" href="#destinations"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg></span><h3>Southern</h3><p>The Namib, the Zambezi, the Kalahari, the Cape, and wilderness you can walk rather than drive.</p><i>3 countries &middot; live</i></a>
-      <a class="wa-region soon" href="#plan"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M6 20V9l6-5 6 5v11"/><path d="M10 20v-5a2 2 0 0 1 4 0v5"/></svg></span><h3>North</h3><p>The Atlas, the Sahara, and the cities along the Mediterranean and the Nile.</p><i>In preparation</i></a>
-      <a class="wa-region soon" href="#plan"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21c0-6-1-9-3-11"/><path d="M9 10c-2-3-5-3-6-1 2-1 4 0 5 1z"/><path d="M9 10c1-3 4-4 6-2-2 0-4 1-5 2z"/><path d="M9 10c3-2 6 0 6 3-1-2-3-3-5-3z"/><path d="M4 21h16"/></svg></span><h3>Islands</h3><p>Zanzibar, S&atilde;o Tom&eacute;, the Comoros, Madagascar and the Seychelles.</p><i>In preparation</i></a>
+      <a class="wa-region" href="#cameroon"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-5"/><path d="M12 16 6.5 9.5h3L5 4h14l-4.5 5.5h3z"/></svg></span><h3>Central &amp; West</h3><p>Rainforest, volcanic coast, savanna, ancient kingdoms and the cultures of the Gulf of Guinea.</p><i>Cameroon &middot; Ghana &middot; more coming</i></a>
+      <a class="wa-region" href="#destinations"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18v-5a5 5 0 0 1 5-5h5a5 5 0 0 1 5 5v5"/><path d="M8 18v-3M16 18v-3"/><path d="M12 8v9"/></svg></span><h3>East Africa</h3><p>The Rift, great migrations, gorilla forests, Kilimanjaro, the Nile and the Swahili coast.</p><i>Uganda &middot; Kenya &middot; Tanzania &middot; Rwanda</i></a>
+      <a class="wa-region" href="#destinations"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg></span><h3>Southern Africa</h3><p>The Namib, Zambezi, Kalahari, Cape and some of the continent&rsquo;s greatest wilderness.</p><i>Namibia &middot; Zambia &middot; South Africa</i></a>
+      <a class="wa-region soon" href="#plan"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M6 20V9l6-5 6 5v11"/><path d="M10 20v-5a2 2 0 0 1 4 0v5"/></svg></span><h3>North Africa</h3><p>The Atlas, Sahara, Mediterranean cities, ancient civilisations and the Nile.</p><i>Morocco &middot; more coming</i></a>
+      <a class="wa-region soon" href="#plan"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21c0-6-1-9-3-11"/><path d="M9 10c-2-3-5-3-6-1 2-1 4 0 5 1z"/><path d="M9 10c1-3 4-4 6-2-2 0-4 1-5 2z"/><path d="M9 10c3-2 6 0 6 3-1-2-3-3-5-3z"/><path d="M4 21h16"/></svg></span><h3>Islands</h3><p>Indian Ocean beaches, volcanic islands, tropical forests and cultures shaped by the sea.</p><i>Madagascar &middot; Seychelles &middot; Mauritius &middot; Comoros</i></a>
     </div>
   </div>
 </section>
 
-<!-- destinations -->
+<!-- 02 destinations -->
 <section class="wa-zone dust" id="destinations">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>02</b><span>Destinations</span></div>
       <div>
-        <h2>Eight countries, each run by <em>people who live there</em>.</h2>
-        <p class="wa-note">Three run as operators of our own &mdash; Kamerun in Cameroon, Pearl Trails Uganda, Namib Skyline in Namibia. The rest are covered by our country pages, each working through the same twenty-seven categories, so you can compare two countries on the same terms instead of on the strength of their marketing.</p>
+        <h2>Go where the <em>journey begins</em>.</h2>
+        <p class="wa-note">Every country has a different Africa to show you. Three run as operators of our own &mdash; Kamerun in Cameroon, Pearl Trails Uganda, Namib Skyline in Namibia. The rest are covered by our country pages, each working through the same twenty-seven categories, so you can compare two countries on the same terms instead of on the strength of their marketing.</p>
       </div>
     </div>
     <div class="wa-dests">
-      <div class="wa-dest"><b>Central &amp; West Africa &middot; Kamerun</b><h3>Cameroon</h3><p>Africa in miniature. Black sand, a 4,095 m volcano, Korup rainforest, the highlands, Foumban and the Sahel &mdash; six climates in one country.</p><a href="/cameroon">Kamerun &rarr;</a></div>
-      <div class="wa-dest"><b>East Africa &middot; Pearl Trails Uganda</b><h3>Uganda</h3><p>The Pearl of Africa. Gorilla and chimpanzee trekking in Bwindi and Kibale, savannah in Queen Elizabeth and Murchison, the source of the Nile at Jinja, and the Rwenzori.</p><a href="https://pearl-trails-uganda.vercel.app">Pearl Trails Uganda &rarr;</a></div>
-      <div class="wa-dest"><b>East Africa</b><h3>Kenya</h3><p>Where the safari was invented. The Mara, Amboseli under Kilimanjaro, the Rift lakes and the Lamu coast.</p><a href="/kenya">Explore &rarr;</a></div>
-      <div class="wa-dest"><b>East Africa</b><h3>Tanzania</h3><p>Serengeti, Kilimanjaro, Zanzibar. The migration, the crater, the highest point on the continent and the Swahili islands.</p><a href="/tanzania">Explore &rarr;</a></div>
-      <div class="wa-dest"><b>East Africa</b><h3>Rwanda</h3><p>Land of a thousand hills. Gorilla trekking in the Virungas, Nyungwe canopy, Kivu, and a capital that works.</p><a href="/rwanda">Explore &rarr;</a></div>
-      <div class="wa-dest"><b>Southern Africa</b><h3>South Africa</h3><p>A world in one country. The Cape, the Garden Route, the Drakensberg, Kruger and the winelands.</p><a href="/south-africa">Explore &rarr;</a></div>
-      <div class="wa-dest"><b>Southern Africa &middot; Namib Skyline</b><h3>Namibia</h3><p>Dune country and the oldest desert on earth. Sossusvlei, the Skeleton Coast, Damaraland and Etosha &mdash; self-drive circuits, or guided if you would rather not do the gravel yourself.</p><a href="https://namib-skyline.vercel.app">Namib Skyline &rarr;</a></div>
-      <div class="wa-dest"><b>Southern Africa</b><h3>Zambia</h3><p>The real wilderness. Walking safaris in South Luangwa, the Zambezi, Kafue, and Victoria Falls from the quiet side.</p><a href="/zambia">Explore &rarr;</a></div>
-      <div class="wa-dest"><b>West Africa</b><h3>Ghana</h3><p>The forts of the coast, Ashanti gold and kente, Mole in the north, and a music scene worth planning around.</p><span class="soon">In preparation</span></div>
-      <div class="wa-dest"><b>North Africa</b><h3>Morocco</h3><p>The Atlas, the Sahara, Fez and Marrakesh, and the Atlantic coast down to the Western Sahara.</p><span class="soon">In preparation</span></div>
+      <div class="wa-dest"><b>Central &amp; West Africa &middot; Kamerun</b><h3>Cameroon</h3><p>Africa in miniature. Black-sand beaches, Mount Cameroon, rainforest, highlands, kingdoms and savanna.</p><a href="/cameroon">Explore Cameroon &rarr;</a></div>
+      <div class="wa-dest"><b>East Africa &middot; Pearl Trails Uganda</b><h3>Uganda</h3><p>The Pearl of Africa. Gorillas, chimpanzees, the Nile, savanna, crater lakes and the Rwenzori.</p><a href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a></div>
+      <div class="wa-dest"><b>East Africa</b><h3>Kenya</h3><p>Where the wild runs free. The Mara, Amboseli, Mount Kenya, the Rift Valley and the Indian Ocean coast.</p><a href="/kenya">Explore Kenya &rarr;</a></div>
+      <div class="wa-dest"><b>East Africa</b><h3>Tanzania</h3><p>Wild Africa, island Africa. Serengeti, Kilimanjaro, Ngorongoro and Zanzibar.</p><a href="/tanzania">Explore Tanzania &rarr;</a></div>
+      <div class="wa-dest"><b>East Africa</b><h3>Rwanda</h3><p>The land of a thousand hills. Gorillas, volcanoes, Nyungwe, Lake Kivu and Kigali.</p><a href="/rwanda">Explore Rwanda &rarr;</a></div>
+      <div class="wa-dest"><b>Southern Africa &middot; Namib Skyline</b><h3>Namibia</h3><p>Where the desert meets the wild. Sossusvlei, the Skeleton Coast, Etosha and Damaraland.</p><a href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a></div>
+      <div class="wa-dest"><b>Southern Africa</b><h3>Zambia</h3><p>Into the real wilderness. South Luangwa, Kafue, the Zambezi and Victoria Falls.</p><a href="/zambia">Explore Zambia &rarr;</a></div>
+      <div class="wa-dest"><b>Southern Africa</b><h3>South Africa</h3><p>A world in one country. Cape Town, the Garden Route, Kruger, the Drakensberg and the Winelands.</p><a href="/south-africa">Explore South Africa &rarr;</a></div>
     </div>
   </div>
 </section>
 
-<!-- experiences -->
+<!-- 03 experiences -->
 <section class="wa-zone" id="experiences">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>03</b><span>Experience Africa</span></div>
       <div>
-        <h2>Start from what you want to <em>do</em>, not where.</h2>
-        <p class="wa-note">Most people arrive knowing the feeling they are after long before they know the country. Pick the experience and we will tell you which of the seven does it best, and in which month.</p>
+        <h2>Start with what you <em>want to do</em>.</h2>
+        <p class="wa-note">You don&rsquo;t always know the country first. Sometimes you know the experience. Pick it and we will tell you which country does it best, and in which month.</p>
       </div>
     </div>
     <div class="wa-exps">
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorilla, elephant, the migration</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg></span><div><b>Mountains</b><span>Kilimanjaro, Fako, the Rwenzori</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg></span><div><b>Rainforest</b><span>Korup, Nyungwe, Bwindi</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, the Cape</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg></span><div><b>Culture</b><span>Kingdoms, craft, music, markets</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg></span><div><b>Food</b><span>Street, market and home cooking</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg></span><div><b>Heritage</b><span>Forts, palaces, rock churches</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg></span><div><b>Adventure</b><span>Trekking, rafting, the long road</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V9l6-4v16"/><path d="M10 12h9v9"/><path d="M7 12v.01M7 15v.01M13 15v.01M16 15v.01M13 18v.01M16 18v.01"/></svg></span><div><b>Cities</b><span>Douala, Kampala, Nairobi, Cape Town</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-7"/><path d="M12 14c0-3-2-5-5-5 0 3 2 5 5 5z"/><path d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M6 21h12"/></svg></span><div><b>Eco-tourism</b><span>Conservation you can take part in</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorillas, elephants, lions, giraffes, chimpanzees, the great migration</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg></span><div><b>Mountains</b><span>Kilimanjaro, Mount Cameroon, the Rwenzori, the Atlas</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg></span><div><b>Rainforest</b><span>Bwindi, Korup, Nyungwe, Madagascar&rsquo;s wild forests</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, Seychelles, Mauritius</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg></span><div><b>Culture</b><span>Kingdoms, markets, music, dance, craft, living traditions</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg></span><div><b>Food</b><span>Street food, markets, coastal cuisine, home cooking, coffee</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg></span><div><b>Heritage</b><span>Forts, palaces, ancient cities, rock churches, sacred places</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg></span><div><b>Adventure</b><span>Trekking, rafting, hiking, diving, road journeys</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V9l6-4v16"/><path d="M10 12h9v9"/><path d="M7 12v.01M7 15v.01M13 15v.01M16 15v.01M13 18v.01M16 18v.01"/></svg></span><div><b>Cities</b><span>Kampala, Nairobi, Kigali, Douala, Cape Town, Marrakech</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-7"/><path d="M12 14c0-3-2-5-5-5 0 3 2 5 5 5z"/><path d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M6 21h12"/></svg></span><div><b>Eco-tourism</b><span>Travel that connects you with conservation and communities</span></div></div>
     </div>
+    <div class="wa-acts"><a class="wa-act go" href="/tourism/">Find your experience <i>&rarr;</i></a></div>
   </div>
 </section>
 
-<!-- the flagships -->
-<section class="wa-zone basalt">
+<!-- 04 the two flagships -->
+<section class="wa-zone basalt" id="cameroon">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>04</b><span>Where to start</span></div>
+      <div class="wa-head-no"><b>04</b><span>Two places to start</span></div>
       <div>
         <h2>Two countries that <em>each contain a continent</em>.</h2>
         <p class="wa-note">If you have never been, start with one of these. Both are unusually varied for their size, both are straightforward to travel, and both are ours to run end to end.</p>
       </div>
     </div>
-    <div class="wa-flag">
-      <div class="wa-flag-col">
+    <div class="wa-panels">
+      <div class="wa-panel">
         <span class="wa-stamp">Africa in miniature</span>
         <h3>Cameroon</h3>
-        <p>One country, six climates. From black sand at sea level to 4,095 metres of active volcano, through the Korup rainforest and the highland kingdoms to the savanna at Waza &mdash; a transect of the whole continent in nine hundred kilometres. Run by Kamerun, out of Buea and Douala.</p>
-        <a href="/cameroon">Enter Kamerun &rarr;</a>
+        <p>One country, six climates. From Atlantic black-sand beaches to the 4,095-metre summit of Mount Cameroon, through rainforest, highland kingdoms and northern savanna. Run by Kamerun, out of Buea and Douala.</p>
+        <a class="wa-panel-go" href="/cameroon">Enter Cameroon &rarr;</a>
       </div>
-      <div class="wa-flag-col">
+      <div class="wa-panel">
         <span class="wa-stamp">The Pearl of Africa</span>
         <h3>Uganda</h3>
-        <p>Where wildlife, wilderness and adventure meet. Mountain gorillas in Bwindi, the Rwenzori above five thousand metres, the Nile forced through six metres of rock at Murchison, and the crater lakes of the west. Green in a way the rest of the safari circuit is not. Run by Pearl Trails Uganda, out of Kampala.</p>
-        <a href="https://pearl-trails-uganda.vercel.app">Enter Pearl Trails Uganda &rarr;</a>
+        <p>Where wildlife, wilderness and adventure meet. Mountain gorillas in Bwindi, chimpanzees in Kibale, the Nile forced through six metres of rock at Murchison, Queen Elizabeth National Park and the Rwenzori. Run by Pearl Trails Uganda, out of Kampala.</p>
+        <a class="wa-panel-go" href="https://pearl-trails-uganda.vercel.app">Enter Uganda &rarr;</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- plan -->
-<section class="wa-zone dust" id="plan">
+<!-- 05 why us -->
+<section class="wa-zone">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>05</b><span>Plan your journey</span></div>
+      <div class="wa-head-no"><b>05</b><span>Why Afrinkong</span></div>
       <div>
-        <h2>What a journey with us <em>actually involves</em>.</h2>
-        <p class="wa-note">We are a group of local operators rather than a broker. That means the person who answers your enquiry is in the country you are asking about, and the guide on the day works for the company you booked.</p>
+        <h2>Africa, through <em>people who know it</em>.</h2>
+        <p class="wa-note">Afrinkong is not simply a catalogue of destinations. We connect travellers with local tourism operators, guides and people who live in the countries they represent.</p>
       </div>
     </div>
-    <div class="wa-plan">
-      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><b>Destinations</b><p>Eight countries live, three of them run by an operator of ours.</p></div>
-      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m15 9-2 4-4 2 2-4z"/></svg></span><b>Experiences</b><p>Day experiences through to fourteen-day transects. Fixed departures or private.</p></div>
-      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span><b>Guides</b><p>Licensed, local, and working in the language you booked in.</p></div>
-      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 16V9h11l4 4v3"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/><path d="M9.3 17h5.4M3 16h1.7M18.3 16H21"/></svg></span><b>Transport</b><p>Vehicles that have already done the road, and internal flights where the road is two days.</p></div>
-      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4"/></svg></span><b>Seasons</b><p>Every country has months that work and months that do not. We will tell you which.</p></div>
+    <div class="wa-why">
+      <div><i>01</i><b>Local knowledge</b><p>The person helping plan your journey understands the destination because they live there.</p></div>
+      <div><i>02</i><b>Real experiences</b><p>Go beyond the standard itinerary and discover places, communities and experiences that feel connected to the country.</p></div>
+      <div><i>03</i><b>One African platform</b><p>Explore multiple countries through one growing African tourism ecosystem.</p></div>
+      <div><i>04</i><b>Built around experiences</b><p>Choose wildlife, mountains, culture, food, adventure &mdash; or simply somewhere you have never been.</p></div>
     </div>
   </div>
 </section>
+
+<!-- 06 the journey -->
+<section class="wa-zone dust" id="plan">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>06</b><span>The journey</span></div>
+      <div>
+        <h2>What happens after you <em>choose Africa</em>?</h2>
+        <p class="wa-note">We are a group of local operators rather than a broker. The person who answers your enquiry is in the country you are asking about, and the guide on the day works for the company you booked.</p>
+      </div>
+    </div>
+    <div class="wa-steps">
+      <div class="wa-step"><i>01</i><b>Discover</b><p>Tell us where you want to go &mdash; or simply what you want to experience.</p></div>
+      <div class="wa-step"><i>02</i><b>Explore</b><p>Compare destinations, experiences, seasons and ways to travel.</p></div>
+      <div class="wa-step"><i>03</i><b>Connect</b><p>Meet the local operator responsible for your destination.</p></div>
+      <div class="wa-step"><i>04</i><b>Travel</b><p>Your guide, transport and itinerary are organised around your journey. Licensed, local, and working in the language you booked in.</p></div>
+      <div class="wa-step"><i>05</i><b>Remember</b><p>Return home with more than photographs.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 seasons -->
+<section class="wa-zone basalt" id="seasons">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>07</b><span>Africa by season</span></div>
+      <div>
+        <h2>There is always <em>somewhere to go</em>.</h2>
+        <p class="wa-note">Africa changes dramatically through the year, and the continent is large enough that no month is a bad month everywhere. Every country has months that work and months that do not. We will tell you which.</p>
+      </div>
+    </div>
+    <div class="wa-seasons">
+      <div class="wa-season"><b>January &mdash; March</b><ul><li>Wildlife</li><li>Beaches</li><li>East Africa</li><li>Southern Africa</li></ul></div>
+      <div class="wa-season"><b>April &mdash; June</b><ul><li>Rainforest</li><li>Culture</li><li>Green landscapes</li><li>Islands</li></ul></div>
+      <div class="wa-season"><b>July &mdash; September</b><ul><li>Safari</li><li>Gorilla trekking</li><li>Mountains</li><li>Migration</li></ul></div>
+      <div class="wa-season"><b>October &mdash; December</b><ul><li>Wildlife</li><li>Coast</li><li>Adventure</li><li>Cultural journeys</li></ul></div>
+    </div>
+    <div class="wa-acts"><a class="wa-act faint" href="/contact">Find the right destination for your month <i>&rarr;</i></a></div>
+  </div>
+</section>
+
+<!-- 08 stories -->
+<section class="wa-zone" id="stories">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>08</b><span>Afrinkong stories</span></div>
+      <div>
+        <h2>Africa is <em>more than a destination</em>.</h2>
+        <p class="wa-note">Long-form writing from the countries we work in, by the guides and operators who live there. The first five are being written now; each one will sit on the country page it belongs to.</p>
+      </div>
+    </div>
+    <div class="wa-stories">
+      <div class="wa-story wide"><i>In writing &middot; Uganda</i><h3>Into the forest</h3><p>Following the trail of Uganda&rsquo;s mountain gorillas &mdash; the permit, the walk, the hour you are given, and what the hour is actually like.</p></div>
+      <div class="wa-story"><i>In writing &middot; Cameroon</i><h3>Africa in miniature</h3><p>A journey across the landscapes of Cameroon, from black sand to the Sahel.</p></div>
+      <div class="wa-story"><i>In writing &middot; Tanzania &amp; Kenya</i><h3>Following the migration</h3><p>The great movement across the Serengeti and the Mara, month by month.</p></div>
+      <div class="wa-story"><i>In writing &middot; East Africa</i><h3>Above the clouds</h3><p>Walking the mountains of East Africa, and what altitude asks of you.</p></div>
+      <div class="wa-story"><i>In writing &middot; Across Africa</i><h3>The people who welcome you</h3><p>Stories from the communities behind African tourism.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 the map -->
+<section class="wa-zone basalt" id="map">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>09</b><span>The Afrinkong map</span></div>
+      <div>
+        <h2>Where will Africa <em>take you</em>?</h2>
+        <p class="wa-note">Eight countries are live. Choose one on the map, or from the list, and it will take you to the operator who runs it. As countries come online they light up here &mdash; this is where the platform will eventually be navigated from.</p>
+      </div>
+    </div>
+    <div class="wa-atlas">
+      <div class="wa-map">
+      <svg class="wa-map-svg" viewBox="0 0 1000 1060" role="img" aria-label="Map of Africa. Eight countries are live destinations." xmlns="http://www.w3.org/2000/svg">
+      <g class="wa-map-rest" aria-hidden="true">
+      <path d="M166.4 142L167.2 139.2L167.4 138.2L170.5 121.1L192.8 112.1L205.7 110.8L216.7 107.7L222.8 100.9L238.4 96.3L240.8 85.8L248.2 85L254.7 80.1L271.4 78.8L274.5 73.5L271.8 70.3L270 55.1L270.7 46.5L267.8 37.1L280.8 30.3L294.2 28.7L302.7 23.4L315 19.9L335.8 18.6L355.8 18.5L361.6 20.8L373.6 15.8L386.5 16.3L391.1 19.7L399.5 19.2L396.3 26.2L397 39.5L393 50.9L384.7 58.5L384.7 69L394.3 77.7L394.1 81.1L401.4 87L405 112.5L408.3 125.1L408.6 131.6L405.6 143.1L406.2 149.6L404 157.4L404.6 166.3L399 172.1L406.2 182.7L406.4 188.8L410.8 196.9L417.2 194.4L427.5 201.2L433.1 210.2L385.3 236.6L344 263.9L324.2 269.8L308.9 270.8L309.4 261.6L303.2 259L295.1 254.6L292.4 247.7L250 214.3L209.4 180.3L166.4 142Z"><title>Algeria</title></path>
+      <path d="M440.9 619.1L435.6 622.2L433.3 625.9L432.9 632.2L429.2 633.8L425.3 622.8L431.1 616.6L435.4 614.1L440.9 619.1ZM431.3 638.2L437.2 636.3L441.4 636.6L446.5 634.8L489.2 635L492.7 645.8L496.9 654.5L500.3 659.2L505.8 666.7L515.4 665.6L520.1 663.5L528.1 665.6L530.3 661.9L533.9 653.5L542.8 653L543.6 650.4L551 650.4L549.7 655.6L567.2 655.5L567.5 664.6L570.3 670.2L568.2 678.9L569.2 687.8L574 693.1L573.1 710.3L576.6 709L582.8 709.4L591.7 707.2L598.3 708.1L599.7 712.6L598 719.5L600.4 726.3L598.2 731.7L599.4 736.7L569.7 736.4L568.6 782.2L578 793.9L587 802.9L561.2 808.6L527.2 806.6L517.5 799.7L460.6 800.5L458.5 801.5L449.9 795L440.8 794.7L432.5 797.1L425.8 799.9L424.2 790.9L425.8 778.3L430.4 765.1L431 758.9L435.3 745.9L438.6 740L446.6 730.5L451.1 724.1L452.5 713.4L451.6 705.2L447.3 700.1L443.3 691.3L439.7 682.7L440.5 679.7L444.8 673.9L440.3 659.9L437.2 650.2L429.9 641.1L431.3 638.2Z"><title>Angola</title></path>
+      <path d="M293.2 457.2L281.4 458.7L278.1 448.5L279.9 414.9L277.2 411.8L276.9 404.6L272.3 399.4L268.1 395L270.3 387.3L275.2 385.8L278.4 379.4L285.3 378.2L288.6 373.9L293.6 369.8L298.6 369.8L309 378.5L308.3 383.3L311.1 392L308.1 397.9L309.4 401.8L302.2 410.7L297.6 415.1L294.6 424.3L294.7 433.6L293.2 457.2Z"><title>Benin</title></path>
+      <path d="M671.1 868.8L651.2 879L638.5 889.5L633.5 898.9L629.3 904.2L621.8 905.2L619.2 912L617.7 916.3L608.9 919.6L598 918.8L591.7 914.7L586.1 913L579.4 916.2L576 923L569.5 927.2L562.7 933.4L553.1 934.8L550.2 929.9L551.5 921.3L543.6 907.9L540 905.8L540.2 864.4L553.7 864L554.6 813.2L565 812.8L586.7 807.8L591.9 813.7L600.9 808.2L605.2 808.2L613.2 805L615.7 806.1L620.8 817.5L623.5 820.1L627.6 828.4L642.8 844.2L648.6 845.8L648.4 850.9L652.1 859.9L662.7 862.2L671.1 868.8Z"><title>Botswana</title></path>
+      <path d="M181.2 394L180.9 385.4L185.1 379.3L185.1 374.3L197 362.4L199.8 352.4L203.8 348.9L210.4 351.1L216.4 348.4L218.6 344.6L229.9 338.4L232.8 334L246.2 328.3L254 326.5L257.3 329.4L266.2 329.6L264.7 336.6L266.1 343.4L273.4 353.1L273.4 360.2L289.4 363.9L288.6 373.9L285.3 378.2L278.4 379.4L275.2 385.8L270.3 387.3L258 386.7L251.5 385.3L246.8 387.6L240.7 386.4L216.3 386.3L215.4 394.7L216.8 405.8L207.4 401.8L200.8 402.1L195.7 405.7L189.5 402.4L187.3 397.5L181.2 394Z"><title>Burkina Faso</title></path>
+      <path d="M694 584.6L694.8 590.3L697.9 593.6L698 598.3L694.4 601.4L688.7 609L683.4 614.3L677.5 615L676.7 597.4L673.1 590.8L681.9 591.9L686.3 583.6L694 584.6Z"><title>Burundi</title></path>
+      <path d="M648.8 473.4L644.1 475L634.8 474.7L624 473.3L618.6 474.6L616.5 478.1L611.8 478.5L606 475.5L590 482.8L583.4 481.4L581.4 482.5L577.1 491.3L566.3 488.5L555.8 487.1L546.5 481.7L534.6 476.8L526.8 481.5L521.2 488.8L519.9 499L510.6 498.1L500.8 495.7L492.1 503.4L484.5 516.9L483 512.6L482.4 506L475.8 501.4L470.4 493.8L469.3 488.6L462.4 481L463.6 476.7L462.2 470.6L463.4 459.3L466.9 456.7L474.3 442L486.1 441L488.8 437.3L491.2 437.5L494.8 440.8L513 435.3L519.1 429.7L526.6 424.6L525.1 419.5L529.2 418.2L543.1 419.1L556.5 412.3L566.8 396.5L574 390.6L583 388.1L584.7 394.3L593 403.3L593.2 409.2L590.9 415.3L591.9 419.8L596.9 423.9L607.9 430.2L615.8 436L616 440.7L625.8 448.2L631.9 454.5L635.6 463.2L646.4 468.8L648.8 473.4Z"><title>Central African Rep.</title></path>
+      <path d="M594.7 266.3L596.6 323.4L584.5 322.5L578.2 333.2L574.6 342.1L577.6 345.5L572.9 349.9L574.6 355.9L571 361.9L569.6 367.3L574.6 366.4L577.6 372L577.9 380.4L583.2 384.6L583 388.1L574 390.6L566.8 396.5L556.5 412.3L543.1 419.1L529.2 418.2L525.1 419.5L526.6 424.6L519.1 429.7L513 435.3L494.8 440.8L491.2 437.5L488.8 437.3L486.1 441L474.3 442L476.5 438.1L472.1 428.1L470.1 422.1L463.9 419.6L455.5 411.1L458.7 404.3L465.2 405.8L469.2 404.8L477.2 404.9L469.6 391.7L470.2 382.1L469.4 372.5L463.8 363.2L465.4 356.4L456.3 356L456.4 346.7L450.7 341.3L457.1 322.4L475.2 308.9L476.3 290.2L482.1 261.1L485.2 254.9L479.5 250L479.4 245.4L474.3 241.7L471.4 219.4L485.3 211.7L539.5 239.2L594.7 266.3Z"><title>Chad</title></path>
+      <path d="M519.9 499L519.1 507.7L514.7 515.5L511.8 524.5L510.1 537.4L510.8 545.6L508.4 550.7L508.1 556L506.4 560.6L496.8 567.6L490.2 575.1L483.9 589.1L484.4 601.1L480.7 605.7L472.4 612.8L463.9 621.9L458.4 619.3L457.5 615.2L449.6 615L444.7 620.6L440.9 619.1L435.4 614.1L431.1 616.6L425.3 622.8L413.3 607.5L424.3 599.4L418.8 589.8L423.7 586.2L433.5 584.4L434.7 578L442.4 585L455.2 585.6L459.6 578.8L461.5 569.1L459.9 557.8L453 549.2L459.3 532.4L455.7 529.5L444.9 530.6L440.9 523.1L442 516.8L460.2 517.4L472 521.2L483.4 524.7L484.5 516.9L492.1 503.4L500.8 495.7L510.6 498.1L519.9 499Z"><title>Congo</title></path>
+      <path d="M144.5 395.2L146.4 393.9L150.1 396.3L160.9 396.8L163.7 392.6L166.1 392.9L170.2 391.4L172 397.8L175.4 396L181.2 394L187.3 397.5L189.5 402.4L195.7 405.7L200.8 402.1L207.4 401.8L216.8 405.8L219.5 426.9L213.1 439.2L208.7 455.7L214.5 468.6L213.7 474.4L207.2 474.5L197.4 471.4L188.3 471.3L171.5 473.6L161.6 477.6L147.4 482.8L144.7 482.4L146.2 470.1L147.6 468.3L147.4 462.4L141.7 456L137.3 454.9L133.4 450.7L136.7 444.1L135.7 436.9L136.5 432.6L138.7 432.6L139.9 426.1L139 423.2L140.5 421.2L145.7 419.6L143 407.6L140.2 401.3L141.6 396.3L144.5 395.2Z"><title>Côte d'Ivoire</title></path>
+      <path d="M677.5 615L679.9 628.4L678.4 635.9L681.2 644.4L689.4 652.5L696.8 670.8L691.2 669.4L671.9 671.7L668 673.5L663.7 682.7L666.8 689.1L663.9 706.3L661.8 720.8L665.6 723.4L675.4 729L679.4 726.4L680.1 742L669.3 741.8L663.6 733.9L658.5 727.7L647.6 725.6L644.6 718L635.8 722.6L624.4 720.5L619.7 714L610.7 712.6L603.9 712.9L603.2 708.4L598.3 708.1L591.7 707.2L582.8 709.4L576.6 709L573.1 710.3L574 693.1L569.2 687.8L568.2 678.9L570.3 670.2L567.5 664.6L567.2 655.5L549.7 655.6L551 650.4L543.6 650.4L542.8 653L533.9 653.5L530.3 661.9L528.1 665.6L520.1 663.5L515.4 665.6L505.8 666.7L500.3 659.2L496.9 654.5L492.7 645.8L489.2 635L446.5 634.8L441.4 636.6L437.2 636.3L431.3 638.2L429.2 633.8L432.9 632.2L433.3 625.9L435.6 622.2L440.9 619.1L444.7 620.6L449.6 615L457.5 615.2L458.4 619.3L463.9 621.9L472.4 612.8L480.7 605.7L484.4 601.1L483.9 589.1L490.2 575.1L496.8 567.6L506.4 560.6L508.1 556L508.4 550.7L510.8 545.6L510.1 537.4L511.8 524.5L514.7 515.5L519.1 507.7L519.9 499L521.2 488.8L526.8 481.5L534.6 476.8L546.5 481.7L555.8 487.1L566.3 488.5L577.1 491.3L581.4 482.5L583.4 481.4L590 482.8L606 475.5L611.8 478.5L616.5 478.1L618.6 474.6L624 473.3L634.8 474.7L644.1 475L648.8 473.4L657.7 485.4L664.1 487.1L668 484.6L674.7 485.5L682.7 482.4L686.2 488.6L698.9 498.2L698.3 515.2L704.1 517.2L699.5 522.4L693.9 526.3L688.5 533.9L685.4 540.7L684.7 552.4L681.3 558L681.2 569L677 573.1L676.5 581.7L674.5 582.9L673.1 590.8L676.7 597.4L677.5 615Z"><title>Dem. Rep. Congo</title></path>
+      <path d="M857.7 362.5L863.7 363.5L867.6 359.8L871.2 364.2L871.2 370.4L863.5 374.2L869.8 378L865.2 386.1L861.9 383.6L858.6 384.7L850.8 384.7L850.3 380.2L848.9 376.2L853.2 369.1L857.7 362.5Z"><title>Djibouti</title></path>
+      <path d="M770.8 227.3L717.2 229.1L664.6 230.5L609.8 231.5L608 179L606 128.6L601.6 117.3L604.6 108.5L602.3 102.5L606.6 95.7L623.6 95.1L636.1 98.6L649.1 102.4L655.2 104.4L664.7 99.6L669.6 95.4L680.7 93.9L689.9 95.4L694 102.2L696.5 97.5L707 100.4L717.1 100.8L722.9 97L732.4 117.3L734.1 120.9L731.1 126.8L729.4 137.7L726.7 145.2L723.9 147.8L719.1 143.4L712.6 137.3L701.4 117.3L700.2 118.6L707 133.4L716.4 147.4L728.4 169.2L734 176.8L739 184.7L752.5 200.2L750.1 202.8L751.4 212.1L768.2 224.4L770.8 227.3Z"><title>Egypt</title></path>
+      <path d="M392.4 516.3L415.9 516.7L416 534.2L394.9 534L390 534.8L387.3 532.6L392.4 516.3Z"><title>Eq. Guinea</title></path>
+      <path d="M773.3 337.5L771.4 331.7L776 310.1L776.7 300.4L780.7 295.8L790.7 293.1L797 284.5L806.3 301.1L811.2 314.3L819.3 321.2L839.3 334.4L847.6 342.5L855.8 350.7L860.5 355.6L867.6 359.8L863.7 363.5L857.7 362.5L852.6 357.9L846.2 349.4L839.7 344.9L835.8 340L823.3 334.5L813.7 334.7L810.1 331.7L802.2 335.4L793.3 329L789.7 340.1L773.3 337.5Z"><title>Eritrea</title></path>
+      <path d="M937.7 427.2L900.1 473.1L881.7 474.2L869.4 484.9L860.4 485.3L856.6 490.1L846.9 490.2L841 485.3L828.2 491.7L824.1 498L814.6 496.9L811.4 495.3L808 495.7L803.5 495.6L785.2 483.4L775.3 483.6L770.3 478.8L770.1 470.6L762.6 468.2L753.7 452.4L747.1 449.1L744.5 443.3L737 436.3L728.2 435.4L732.9 427L740.4 426.5L742.4 422L741.8 408.9L745.4 393.5L752 389.3L753.1 383.3L758.7 372L766.8 364.6L771.7 350.1L773.3 337.5L789.7 340.1L793.3 329L802.2 335.4L810.1 331.7L813.7 334.7L823.3 334.5L835.8 340L839.7 344.9L846.2 349.4L852.6 357.9L857.7 362.5L853.2 369.1L848.9 376.2L850.3 380.2L850.8 384.7L858.6 384.7L861.9 383.6L865.2 386.1L862.4 391.4L868.1 399.4L873.6 406.4L879.3 411.5L926 427.7L937.7 427.2Z"><title>Ethiopia</title></path>
+      <path d="M415.9 516.7L422.8 515.8L431.6 517.8L440.2 516L442 516.8L440.9 523.1L444.9 530.6L455.7 529.5L459.3 532.4L453 549.2L459.9 557.8L461.5 569.1L459.6 578.8L455.2 585.6L442.4 585L434.7 578L433.5 584.4L423.7 586.2L418.8 589.8L424.3 599.4L413.3 607.5L398.4 592.8L388.8 580.7L379.9 565.7L380.4 560.8L383.6 556.2L387.1 545.6L390 534.8L394.9 534L416 534.2L415.9 516.7Z"><title>Gabon</title></path>
+      <path d="M30.1 338.9L44.8 339.3L48.3 335.9L52.6 335.9L57.5 339.9L61.7 340.2L66.4 338L68.7 342.4L62.5 345.5L56.6 344.9L51.2 341.4L45.8 344.6L43.3 344.6L39.9 346.5L27.6 345.5L30.1 338.9Z"><title>Gambia</title></path>
+      <path d="M258 386.7L256.7 391.2L262.2 398.9L261.7 409.6L262.6 421.2L265.9 426.6L262.3 439.7L263.2 447.1L266.7 456.4L269.8 461.6L247.2 469.9L239.2 474.8L226.2 478.8L213.7 474.4L214.5 468.6L208.7 455.7L213.1 439.2L219.5 426.9L216.8 405.8L215.4 394.7L216.3 386.3L240.7 386.4L246.8 387.6L251.5 385.3L258 386.7Z"><title>Ghana</title></path>
+      <path d="M69.3 356.3L75.8 356.8L85.3 360.9L88.4 360.8L89.6 359.1L96.9 360.7L98.9 359.9L99.2 365.4L101.4 365.5L105.2 363.7L107.4 364.3L110.9 368.2L116.7 369.7L120.8 366.6L125.4 364.8L128.9 362.9L131.6 363.4L134.4 366.8L135.7 370.9L140.9 377.4L137.8 381.1L136.9 385.9L139.9 384.6L141.6 386.4L140.5 390.8L144.5 395.2L141.6 396.3L140.2 401.3L143 407.6L145.7 419.6L140.5 421.2L139 423.2L139.9 426.1L138.7 432.6L136.5 432.6L132.6 432.1L129.5 438L125.5 437.8L122.9 434.5L124.2 428.6L118.9 419.2L115.2 420.8L112.2 421L108.3 421.7L108.8 416.2L106.8 412.2L107.5 407.9L105 401.5L101.5 396L90.5 395.5L87 398.3L83.2 398.4L80.6 401.6L78.7 405.7L70.9 412L65.5 402.8L60.6 396.7L57.3 394.6L54.1 391.4L53.1 384.7L51.4 381.3L47.6 378.6L54.3 371.6L58.4 372L62.3 369.7L65.3 369.8L67.6 367.9L66.9 362.9L68.6 361.4L69.3 356.3Z"><title>Guinea</title></path>
+      <path d="M28.6 357.2L36 355.1L40.4 355.9L44.3 354.4L69.3 356.3L68.6 361.4L66.9 362.9L67.6 367.9L65.3 369.8L62.3 369.7L58.4 372L54.3 371.6L47.6 378.6L40.9 371.9L35.3 370.6L32.6 366.2L32.9 363.9L29.1 360.5L28.6 357.2Z"><title>Guinea-Bissau</title></path>
+      <path d="M659.1 965.8L663.4 970.1L658.9 976.9L656.4 981.4L648.9 983.4L646.3 987.8L641.6 989.2L632.4 978.3L639.9 969.5L647.4 964.1L653.7 961.4L659.1 965.8Z"><title>Lesotho</title></path>
+      <path d="M136.5 432.6L135.7 436.9L136.7 444.1L133.4 450.7L137.3 454.9L141.7 456L147.4 462.4L147.6 468.3L146.2 470.1L144.7 482.4L141 482.4L126.8 474.9L114.5 463.2L102.9 454.7L94 444.7L97.6 440L98.6 435.7L105.3 427.8L112.2 421L115.2 420.8L118.9 419.2L124.2 428.6L122.9 434.5L125.5 437.8L129.5 438L132.6 432.1L136.5 432.6Z"><title>Liberia</title></path>
+      <path d="M609.8 231.5L610.6 260.1L594.8 260.3L594.7 266.3L539.5 239.2L485.3 211.7L471.4 219.4L461.7 224.6L454.3 216.7L433.1 210.2L427.5 201.2L417.2 194.4L410.8 196.9L406.4 188.8L406.2 182.7L399 172.1L404.6 166.3L404 157.4L406.2 149.6L405.6 143.1L408.6 131.6L408.3 125.1L405 112.5L411.5 109.4L413 103.4L412 97.6L421.2 92.4L425.4 88L431.8 84.1L433.2 73.4L447.7 78.5L453.1 77.4L463.5 79.9L480.1 86.4L485.7 98.9L497.2 101.7L515.2 107.7L528.9 114.7L535.3 111.1L541.4 104.6L538.3 93.8L542.2 87L551.3 80.4L560 78.4L577.2 81.1L581.7 87.3L586.5 87.3L590.6 89.7L603.3 91.1L606.6 95.7L602.3 102.5L604.6 108.5L601.6 117.3L606 128.6L608 179L609.8 231.5Z"><title>Libya</title></path>
+      <path d="M958.8 733.7L962 740.1L964.5 750L965 768L967.8 775.1L965.7 782.2L962.9 786.5L959.2 777.7L956.1 782L957.5 793.1L955.6 799.3L951.5 802.6L949.2 815.1L941.8 832.2L932.5 852.2L920.4 879.7L912.3 899.8L903.8 916.3L892.6 919.3L880.2 924.9L873.2 920.9L863.6 915.3L861 907.5L861.8 894.7L858.6 883L858.6 872.5L862.3 862.2L868.8 859.8L869.4 855L877.2 844.2L879.4 834.9L877 827.9L875.4 818.6L875.6 805.1L881.2 797L883.9 787.8L890.8 787.4L898.7 784.5L904.1 782L910.1 781.9L918.7 773.7L930.9 764.8L935.6 757.5L934.3 751.1L940 753L948.4 742.8L949.5 733.8L954.6 727.2L958.8 733.7Z"><title>Madagascar</title></path>
+      <path d="M725.4 683.9L739.4 686.6L742.1 690.7L746.7 697.5L749.9 717.3L745.6 728.3L748.7 747.2L753.6 747.1L758.4 751.8L763.8 762.4L763.9 781L757.7 784L752.9 794L744.3 784.9L743.8 774.7L747.1 768L746.6 762.2L741.2 758.5L737.2 759.8L729.5 752.7L722.2 748.9L727 735.5L731.7 730.5L729.4 718.4L732.7 706.7L735.2 702.7L731.9 690.4L725.4 683.9Z"><title>Malawi</title></path>
+      <path d="M98.9 359.9L100 355.3L99.4 349.5L94.7 345L92.9 336.3L93.2 327L98 324.5L101.3 315.9L105.6 315.8L114.7 320.4L122.7 317.9L127.8 319.1L130.2 315.9L185.1 318.2L189.1 308.1L186.9 306.1L187.2 242.6L189.4 179.3L209.4 180.3L250 214.3L292.4 247.7L295.1 254.6L303.2 259L309.4 261.6L308.9 270.8L324.2 269.8L322.1 303.2L314 312.7L312.2 321.6L299.7 323.6L280.6 324.3L275.2 329.3L266.2 329.6L257.3 329.4L254 326.5L246.2 328.3L232.8 334L229.9 338.4L218.6 344.6L216.4 348.4L210.4 351.1L203.8 348.9L199.8 352.4L197 362.4L185.1 374.3L185.1 379.3L180.9 385.4L181.2 394L175.4 396L172 397.8L170.2 391.4L166.1 392.9L163.7 392.6L160.9 396.8L150.1 396.3L146.4 393.9L144.5 395.2L140.5 390.8L141.6 386.4L139.9 384.6L136.9 385.9L137.8 381.1L140.9 377.4L135.7 370.9L134.4 366.8L131.6 363.4L128.9 362.9L125.4 364.8L120.8 366.6L116.7 369.7L110.9 368.2L107.4 364.3L105.2 363.7L101.4 365.5L99.2 365.4L98.9 359.9Z"><title>Mali</title></path>
+      <path d="M41.6 227.2L45.3 222.5L96.3 226.6L97.4 205.1L101.9 197.8L114.3 197.4L120.6 159.9L162.6 163.9L166.4 142L209.4 180.3L189.4 179.3L187.2 242.6L186.9 306.1L189.1 308.1L185.1 318.2L130.2 315.9L127.8 319.1L122.7 317.9L114.7 320.4L105.6 315.8L101.3 315.9L98 324.5L93.2 327L85.4 316.3L78.5 304.8L70.1 300.3L64.3 295.5L56.8 295.2L49.9 298L43.4 296.3L38.2 300.8L38.1 292.6L42.9 285.4L46.6 271.4L47.4 256.5L47 249L49.5 241.6L47.3 234.2L41.6 227.2Z"><title>Mauritania</title></path>
+      <path d="M267.8 37.1L270.7 46.5L270 55.1L271.8 70.3L274.5 73.5L271.4 78.8L254.7 80.1L248.2 85L240.8 85.8L238.4 96.3L222.8 100.9L216.7 107.7L205.7 110.8L192.8 112.1L170.5 121.1L167.4 138.2L165.4 138L164.4 145.8L156.4 145.7L151.6 148.7L145.9 148.2L141.6 146L130.6 146.6L124.3 157.6L120.1 158.4L110.6 176.3L89.8 190.7L81.9 210.8L75.4 217L73 222.2L43.5 221L43.3 221L45.2 214.1L50.8 210.5L56.5 203.1L56.6 198L63.1 187.9L72 179.2L76.8 177.2L81.9 168.9L83.7 161.1L90.2 152.4L99.7 147.8L110.8 133.7L111.1 133.5L118.5 128.5L130.6 127.9L142.4 118.9L149.5 115.6L162.4 104.4L163 86.3L170.4 74.4L173.7 67L183.7 58L197.2 52.6L207.4 47.5L218.7 33.6L224.3 25.3L233.1 26.1L239 32.6L250.6 32.6L262.5 36.6L267.8 37.1Z"><title>Morocco</title></path>
+      <path d="M749.9 717.3L760.7 716.2L777.5 720.4L781.3 718.6L791.1 718.3L796.4 714L804.9 714.3L820.5 708.7L832.2 700.3L834.1 706.9L832.8 721.5L833.8 734.4L832.9 757.3L834.9 764.5L830 774.9L823.8 784.9L814.3 793.8L801.2 799.1L785.1 805.8L768.4 821.1L762.9 823.6L752.5 833.7L746.6 836.9L744.7 847.1L750.4 858.1L752.4 866.6L752.3 870.9L754.7 870.2L753.1 884.3L750.4 890.9L753.3 893.4L750.8 899.3L744.7 904.2L733.2 908.7L716.5 916.1L710.2 921.2L710.8 927.2L714.1 928.2L712.4 935.7L702.3 935.3L701.6 929L700.2 922.6L699.4 917.5L703 901.8L700.2 891.6L695 871.4L710.4 855.4L714.7 845.2L716.9 843.9L718.9 835.5L717 831.2L718.2 820.5L721.4 810.5L722.4 792.3L715.4 787.6L708.7 786.5L705.9 782.9L699.5 779.8L687.8 779.9L687.1 774.6L686.2 764.3L729.5 752.7L737.2 759.8L741.2 758.5L746.6 762.2L747.1 768L743.8 774.7L744.3 784.9L752.9 794L757.7 784L763.9 781L763.8 762.4L758.4 751.8L753.6 747.1L748.7 747.2L745.6 728.3L749.9 717.3Z"><title>Mozambique</title></path>
+      <path d="M471.4 219.4L474.3 241.7L479.4 245.4L479.5 250L485.2 254.9L482.1 261.1L476.3 290.2L475.2 308.9L457.1 322.4L450.7 341.3L456.4 346.7L456.3 356L465.4 356.4L463.8 363.2L459.8 364L459.3 368.6L456.6 368.9L447.3 353L444 352.4L432.8 360.4L421.9 356L414.3 355.1L410.1 357.1L401.8 356.6L393.3 362.6L386.1 362.9L369.2 355.1L362.4 358.6L355.2 358.2L350.1 352.6L336.2 346.9L321.1 348.3L317.3 351.4L314.9 359.7L310.6 365.5L309 378.5L298.6 369.8L293.6 369.8L288.6 373.9L289.4 363.9L273.4 360.2L273.4 353.1L266.1 343.4L264.7 336.6L266.2 329.6L275.2 329.3L280.6 324.3L299.7 323.6L312.2 321.6L314 312.7L322.1 303.2L324.2 269.8L344 263.9L385.3 236.6L433.1 210.2L454.3 216.7L461.7 224.6L471.4 219.4Z"><title>Niger</title></path>
+      <path d="M293.2 457.2L294.7 433.6L294.6 424.3L297.6 415.1L302.2 410.7L309.4 401.8L308.1 397.9L311.1 392L308.3 383.3L309 378.5L310.6 365.5L314.9 359.7L317.3 351.4L321.1 348.3L336.2 346.9L350.1 352.6L355.2 358.2L362.4 358.6L369.2 355.1L386.1 362.9L393.3 362.6L401.8 356.6L410.1 357.1L414.3 355.1L421.9 356L432.8 360.4L444 352.4L447.3 353L456.6 368.9L459.3 368.6L464.9 374.4L463.2 377L462.5 381.8L450.3 392.9L446.3 402.2L444.2 409.7L441.1 412.9L438.1 423L430.4 429L428.1 436.3L424.7 442.1L423.3 448.2L413.3 453L405.3 446.9L399.9 447.1L391.2 455.5L387 455.7L380 469.6L376.2 479.9L361.1 485L355.7 484.2L350.1 487.4L338.6 487L331 477.8L326.5 467.1L316.6 457.4L305.8 457.4L293.2 457.2Z"><title>Nigeria</title></path>
+      <path d="M698.9 498.2L686.2 488.6L682.7 482.4L674.7 485.5L668 484.6L664.1 487.1L657.7 485.4L648.8 473.4L646.4 468.8L635.6 463.2L631.9 454.5L625.8 448.2L616 440.7L615.8 436L607.9 430.2L598.1 424.6L602.4 423L607.3 420.2L610.9 407.2L614.7 400.5L624.9 398.4L627.5 402.4L635 410.8L639 412L644.1 409.5L654.4 409.8L656.4 412.8L670.7 412.7L671.1 409.7L678.3 406.8L679.7 402.6L685 399.5L697.2 407.8L704.6 406.2L711.3 395.6L718.8 387.5L717.3 378.7L713.7 374.5L722.2 373.7L723.1 370.4L729.7 371.3L728.4 382L730.5 392.5L738 398.1L739.9 403.1L739.9 410.4L741.9 410.6L742.4 422L740.4 426.5L732.9 427L728.2 435.4L737 436.3L744.5 443.3L747.1 449.1L753.7 452.4L762.6 468.2L753.1 478L744.4 486.9L735.7 493.7L725.6 493.8L714 497.3L704.9 494.1L698.9 498.2Z"><title>S. Sudan</title></path>
+      <path d="M30.1 338.9L25.9 326.8L19.9 321L26.2 318.5L34 308.3L38.2 300.8L43.4 296.3L49.9 298L56.8 295.2L64.3 295.5L70.1 300.3L78.5 304.8L85.4 316.3L93.2 327L92.9 336.3L94.7 345L99.4 349.5L100 355.3L98.9 359.9L96.9 360.7L89.6 359.1L88.4 360.8L85.3 360.9L75.8 356.8L69.3 356.3L44.3 354.4L40.4 355.9L36 355.1L28.6 357.2L27.6 345.5L39.9 346.5L43.3 344.6L45.8 344.6L51.2 341.4L56.6 344.9L62.5 345.5L68.7 342.4L66.4 338L61.7 340.2L57.5 339.9L52.6 335.9L48.3 335.9L44.8 339.3L30.1 338.9Z"><title>Senegal</title></path>
+      <path d="M70.9 412L78.7 405.7L80.6 401.6L83.2 398.4L87 398.3L90.5 395.5L101.5 396L105 401.5L107.5 407.9L106.8 412.2L108.8 416.2L108.3 421.7L112.2 421L105.3 427.8L98.6 435.7L97.6 440L94 444.7L90.3 443.5L80.7 437.1L74 428.8L71.9 423.2L70.9 412Z"><title>Sierra Leone</title></path>
+      <path d="M853.5 573L845.1 560.9L844.5 507L856.6 490.1L860.4 485.3L869.4 484.9L881.7 474.2L900.1 473.1L937.7 427.2L946.7 414.4L952.3 405L951.8 397.2L950.6 382.1L950.2 375.9L950.3 375.7L954.6 375.2L960.8 372.7L967.9 370.9L974 365.5L979.1 365.2L979.8 369.3L979.3 378.1L980.1 386L977.6 391.5L974.9 407.9L969.3 425L961.8 444.4L950.9 466.8L939.5 483.9L923.5 504.6L909.7 517L888.7 532.1L875.6 543.5L860.1 561.6L856.8 569.5L853.5 573Z"><title>Somalia</title></path>
+      <path d="M607.9 430.2L596.9 423.9L591.9 419.8L590.9 415.3L593.2 409.2L593 403.3L584.7 394.3L583 388.1L583.2 384.6L577.9 380.4L577.6 372L574.6 366.4L569.6 367.3L571 361.9L574.6 355.9L572.9 349.9L577.6 345.5L574.6 342.1L578.2 333.2L584.5 322.5L596.6 323.4L594.7 266.3L594.8 260.3L610.6 260.1L609.8 231.5L664.6 230.5L717.2 229.1L770.8 227.3L776.5 241.3L773.8 244L777 258.9L783.5 276L789 279.4L797 284.5L790.7 293.1L780.7 295.8L776.7 300.4L776 310.1L771.4 331.7L773.3 337.5L771.7 350.1L766.8 364.6L758.7 372L753.1 383.3L752 389.3L745.4 393.5L741.8 408.9L742.4 422L741.9 410.6L739.9 410.4L739.9 403.1L738 398.1L730.5 392.5L728.4 382L729.7 371.3L723.1 370.4L722.2 373.7L713.7 374.5L717.3 378.7L718.8 387.5L711.3 395.6L704.6 406.2L697.2 407.8L685 399.5L679.7 402.6L678.3 406.8L671.1 409.7L670.7 412.7L656.4 412.8L654.4 409.8L644.1 409.5L639 412L635 410.8L627.5 402.4L624.9 398.4L614.7 400.5L610.9 407.2L607.3 420.2L602.4 423L598.1 424.6L607.9 430.2Z"><title>Sudan</title></path>
+      <path d="M270.3 387.3L268.1 395L272.3 399.4L276.9 404.6L277.2 411.8L279.9 414.9L278.1 448.5L281.4 458.7L269.8 461.6L266.7 456.4L263.2 447.1L262.3 439.7L265.9 426.6L262.6 421.2L261.7 409.6L262.2 398.9L256.7 391.2L258 386.7L270.3 387.3Z"><title>Togo</title></path>
+      <path d="M405 112.5L401.4 87L394.1 81.1L394.3 77.7L384.7 69L384.7 58.5L393 50.9L397 39.5L396.3 26.2L399.5 19.2L413.1 14L421.4 15.9L420.5 22.9L431.2 18.1L431.8 20.8L425.3 27.5L424.7 33.9L428.7 37.4L426.2 49.4L417.6 56.2L419.4 63.9L425.8 64.3L428.5 71.1L433.2 73.4L431.8 84.1L425.4 88L421.2 92.4L412 97.6L413 103.4L411.5 109.4L405 112.5Z"><title>Tunisia</title></path>
+      <path d="M167.4 138.2L167.2 139.2L166.4 142L162.6 163.9L120.6 159.9L114.3 197.4L101.9 197.8L97.4 205.1L96.3 226.6L45.3 222.5L41.6 227.2L43.3 221L43.5 221L73 222.2L75.4 217L81.9 210.8L89.8 190.7L110.6 176.3L120.1 158.4L124.3 157.6L130.6 146.6L141.6 146L145.9 148.2L151.6 148.7L156.4 145.7L164.4 145.8L165.4 138L167.4 138.2Z"><title>W. Sahara</title></path>
+      <path d="M695 871.4L687.8 869.9L683.1 871.5L676.6 869L671.1 868.8L662.7 862.2L652.1 859.9L648.4 850.9L648.6 845.8L642.8 844.2L627.6 828.4L623.5 820.1L620.8 817.5L615.7 806.1L631.3 807.7L635.8 809.4L640.5 809.1L648.6 799.9L661.2 788.2L666.3 787.1L668.1 782.1L676.4 776.5L687.1 774.6L687.8 779.9L699.5 779.8L705.9 782.9L708.7 786.5L715.4 787.6L722.4 792.3L721.4 810.5L718.2 820.5L717 831.2L718.9 835.5L716.9 843.9L714.7 845.2L710.4 855.4L695 871.4Z"><title>Zimbabwe</title></path>
+      <path d="M702.3 935.3L699.1 941.5L691.2 942.9L683.9 935.1L684.1 930.2L688.1 925L689.7 920.9L693.6 919.9L700.2 922.6L701.6 929L702.3 935.3Z"><title>eSwatini</title></path>
+      </g>
+      <a class="wa-map-live" href="/cameroon" data-slug="cameroon" data-name="Cameroon" data-tag="Africa in miniature"><path d="M463.8 363.2L469.4 372.5L470.2 382.1L469.6 391.7L477.2 404.9L469.2 404.8L465.2 405.8L458.7 404.3L455.5 411.1L463.9 419.6L470.1 422.1L472.1 428.1L476.5 438.1L474.3 442L466.9 456.7L463.4 459.3L462.2 470.6L463.6 476.7L462.4 481L469.3 488.6L470.4 493.8L475.8 501.4L482.4 506L483 512.6L484.5 516.9L483.4 524.7L472 521.2L460.2 517.4L442 516.8L440.2 516L431.6 517.8L422.8 515.8L415.9 516.7L392.4 516.3L394.6 504.8L389 495.1L382.5 492.6L379.6 486.1L375.9 483.9L376.2 479.9L380 469.6L387 455.7L391.2 455.5L399.9 447.1L405.3 446.9L413.3 453L423.3 448.2L424.7 442.1L428.1 436.3L430.4 429L438.1 423L441.1 412.9L444.2 409.7L446.3 402.2L450.3 392.9L462.5 381.8L463.2 377L464.9 374.4L459.3 368.6L459.8 364L463.8 363.2Z"/><title>Cameroon — Africa in miniature</title></a>
+      <a class="wa-map-live" href="/kenya" data-slug="kenya" data-name="Kenya" data-tag="Where the wild runs free"><path d="M819 617.3L798.7 602.7L797.9 594.2L746 564.6L743.6 563L743.4 547.5L747.5 541.5L754.6 531.8L759.7 521L753.1 504.3L751.4 497L744.4 486.9L753.1 478L762.6 468.2L770.1 470.6L770.3 478.8L775.3 483.6L785.2 483.4L803.5 495.6L808 495.7L811.4 495.3L814.6 496.9L824.1 498L828.2 491.7L841 485.3L846.9 490.2L856.6 490.1L844.5 507L845.1 560.9L853.5 573L843.5 579L840 585.2L834.6 586.3L832.4 596.7L827.8 602.7L824.9 612.5L819 617.3Z"/><title>Kenya — Where the wild runs free</title></a>
+      <a class="wa-map-live" href="https://namib-skyline.vercel.app" data-slug="namibia" data-name="Namibia" data-tag="Where the desert meets the wild"><path d="M540 905.8L539.7 957.7L527.9 964.8L520.8 965.9L512.5 963.2L506.5 962.2L504.2 956.3L499 952.4L492.8 959.4L482.7 948.9L477.3 938.6L474 924.9L470.4 914.8L465.3 893L464.6 876.1L462.7 868.3L457.2 862.5L449.7 850.8L442 833.8L438.7 824.8L427 810.9L425.8 799.9L432.5 797.1L440.8 794.7L449.9 795L458.5 801.5L460.6 800.5L517.5 799.7L527.2 806.6L561.2 808.6L587 802.9L598.6 799.7L607.7 800.5L613.1 803.8L613.2 805L605.2 808.2L600.9 808.2L591.9 813.7L586.7 807.8L565 812.8L554.6 813.2L553.7 864L540.2 864.4L540 905.8Z"/><title>Namibia — Where the desert meets the wild</title></a>
+      <a class="wa-map-live" href="/rwanda" data-slug="rwanda" data-name="Rwanda" data-tag="A thousand hills"><path d="M693.3 565.9L699 574.1L698.1 582.7L694 584.6L686.3 583.6L681.9 591.9L673.1 590.8L674.5 582.9L676.5 581.7L677 573.1L681.2 569L684.7 570.5L693.3 565.9Z"/><title>Rwanda — A thousand hills</title></a>
+      <a class="wa-map-live" href="/south-africa" data-slug="south-africa" data-name="South Africa" data-tag="A world in one country"><path d="M492.8 959.4L499 952.4L504.2 956.3L506.5 962.2L512.5 963.2L520.8 965.9L527.9 964.8L539.7 957.7L540 905.8L543.6 907.9L551.5 921.3L550.2 929.9L553.1 934.8L562.7 933.4L569.5 927.2L576 923L579.4 916.2L586.1 913L591.7 914.7L598 918.8L608.9 919.6L617.7 916.3L619.2 912L621.8 905.2L629.3 904.2L633.5 898.9L638.5 889.5L651.2 879L671.1 868.8L676.6 869L683.1 871.5L687.8 869.9L695 871.4L700.2 891.6L703 901.8L699.4 917.5L700.2 922.6L693.6 919.9L689.7 920.9L688.1 925L684.1 930.2L683.9 935.1L691.2 942.9L699.1 941.5L702.3 935.3L712.4 935.7L708.1 945.9L705.6 957.6L701.6 963.8L692.1 970.7L689.3 972.7L683.2 979.7L679 986.8L670.8 996.7L655.2 1010.7L645.6 1018.9L635.5 1025L621.9 1030.2L615.5 1030.8L613.6 1034.6L606 1032.4L599.6 1035L586 1032.2L578.3 1033.8L573.1 1033L559.9 1038.4L549.1 1040.5L541.3 1045.7L535.6 1046L530.3 1041.1L526 1040.8L520.5 1034.7L520 1036.6L518.2 1032.9L518.3 1024.8L514.1 1015.5L518.2 1013L517.8 1002.3L509.2 989.3L502.5 977.5L492.8 959.4ZM659.1 965.8L653.7 961.4L647.4 964.1L639.9 969.5L632.4 978.3L641.6 989.2L646.3 987.8L648.9 983.4L656.4 981.4L658.9 976.9L663.4 970.1L659.1 965.8Z"/><title>South Africa — A world in one country</title></a>
+      <a class="wa-map-live" href="/tanzania" data-slug="tanzania" data-name="Tanzania" data-tag="Wild Africa, island Africa"><path d="M743.6 563L746 564.6L797.9 594.2L798.7 602.7L819 617.3L812.1 635.5L812.7 643.8L821.7 649.2L822 653L817.8 661.9L818.5 666.3L817.3 673.3L821.9 682.6L827.2 697.1L832.2 700.3L820.5 708.7L804.9 714.3L796.4 714L791.1 718.3L781.3 718.6L777.5 720.4L760.7 716.2L749.9 717.3L746.7 697.5L742.1 690.7L739.4 686.6L725.4 683.9L717.4 679.5L708.4 677L702.7 674.5L696.8 670.8L689.4 652.5L681.2 644.4L678.4 635.9L679.9 628.4L677.5 615L683.4 614.3L688.7 609L694.4 601.4L698 598.3L697.9 593.6L694.8 590.3L694 584.6L698.1 582.7L699 574.1L693.3 565.9L698.4 564.2L714.2 564.3L743.6 563Z"/><title>Tanzania — Wild Africa, island Africa</title></a>
+      <a class="wa-map-live" href="https://pearl-trails-uganda.vercel.app" data-slug="uganda" data-name="Uganda" data-tag="The Pearl of Africa"><path d="M743.6 563L714.2 564.3L698.4 564.2L693.3 565.9L684.7 570.5L681.2 569L681.3 558L684.7 552.4L685.4 540.7L688.5 533.9L693.9 526.3L699.5 522.4L704.1 517.2L698.3 515.2L698.9 498.2L704.9 494.1L714 497.3L725.6 493.8L735.7 493.7L744.4 486.9L751.4 497L753.1 504.3L759.7 521L754.6 531.8L747.5 541.5L743.4 547.5L743.6 563Z"/><title>Uganda — The Pearl of Africa</title></a>
+      <a class="wa-map-live" href="/zambia" data-slug="zambia" data-name="Zambia" data-tag="Into the real wilderness"><path d="M696.8 670.8L702.7 674.5L708.4 677L717.4 679.5L725.4 683.9L731.9 690.4L735.2 702.7L732.7 706.7L729.4 718.4L731.7 730.5L727 735.5L722.2 748.9L729.5 752.7L686.2 764.3L687.1 774.6L676.4 776.5L668.1 782.1L666.3 787.1L661.2 788.2L648.6 799.9L640.5 809.1L635.8 809.4L631.3 807.7L615.7 806.1L613.2 805L613.1 803.8L607.7 800.5L598.6 799.7L587 802.9L578 793.9L568.6 782.2L569.7 736.4L599.4 736.7L598.2 731.7L600.4 726.3L598 719.5L599.7 712.6L598.3 708.1L603.2 708.4L603.9 712.9L610.7 712.6L619.7 714L624.4 720.5L635.8 722.6L644.6 718L647.6 725.6L658.5 727.7L663.6 733.9L669.3 741.8L680.1 742L679.4 726.4L675.4 729L665.6 723.4L661.8 720.8L663.9 706.3L666.8 689.1L663.7 682.7L668 673.5L671.9 671.7L691.2 669.4L696.8 670.8Z"/><title>Zambia — Into the real wilderness</title></a>
+      </svg>
+      </div>
+      <div class="wa-atlas-side">
+        <div class="wa-atlas-read" id="wa-map-read" aria-live="polite">
+          <b>Eight countries</b>
+          <span>Choose one to begin</span>
+        </div>
+        <div class="wa-atlas-list">
+          <a href="/cameroon" data-slug="cameroon"><em>Cameroon</em><span>Africa in miniature</span></a>
+          <a href="https://pearl-trails-uganda.vercel.app" data-slug="uganda"><em>Uganda</em><span>The Pearl of Africa</span></a>
+          <a href="/kenya" data-slug="kenya"><em>Kenya</em><span>Where the wild runs free</span></a>
+          <a href="/tanzania" data-slug="tanzania"><em>Tanzania</em><span>Wild Africa, island Africa</span></a>
+          <a href="/rwanda" data-slug="rwanda"><em>Rwanda</em><span>A thousand hills</span></a>
+          <a href="https://namib-skyline.vercel.app" data-slug="namibia"><em>Namibia</em><span>Where the desert meets the wild</span></a>
+          <a href="/zambia" data-slug="zambia"><em>Zambia</em><span>Into the real wilderness</span></a>
+          <a href="/south-africa" data-slug="south-africa"><em>South Africa</em><span>A world in one country</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+/* Map and list are one control: pointing at either lights both and writes the
+   readout. Everything is already a link, so with the script gone the map still
+   navigates and the list still reads — this only adds the coupling. */
+(function(){
+  var atlas = document.currentScript.previousElementSibling;
+  var read = atlas.querySelector('#wa-map-read');
+  var shapes = atlas.querySelectorAll('.wa-map-live');
+  var rows = atlas.querySelectorAll('.wa-atlas-list a');
+  var idle = [read.querySelector('b').textContent, read.querySelector('span').textContent];
+
+  function show(slug){
+    var name = idle[0], tag = idle[1];
+    shapes.forEach(function(s){
+      var on = slug && s.dataset.slug === slug;
+      s.classList.toggle('on', !!on);
+      if (on) { name = s.dataset.name; tag = s.dataset.tag; }
+    });
+    rows.forEach(function(r){ r.classList.toggle('on', !!slug && r.dataset.slug === slug); });
+    read.querySelector('b').textContent = name;
+    read.querySelector('span').textContent = tag;
+  }
+
+  function wire(el, slug){
+    el.addEventListener('mouseenter', function(){ show(slug); });
+    el.addEventListener('focus', function(){ show(slug); });
+    el.addEventListener('mouseleave', function(){ show(null); });
+    el.addEventListener('blur', function(){ show(null); });
+  }
+  shapes.forEach(function(s){ wire(s, s.dataset.slug); });
+  rows.forEach(function(r){ wire(r, r.dataset.slug); });
+})();
+</script>
 
 <!-- closing -->
 <section class="wa-zone">
   <div class="wa-frame wa-end">
     <span class="wa-stamp">Begin</span>
     <h2>Your Africa. <em>Your journey</em>.</h2>
-    <p>Tell us the month, the country or simply the thing you want to see, and the operator who runs it will answer.</p>
+    <p>Tell us the month, the country &mdash; or simply the thing you want to see. We will help you find the destination and the local people who can take you there.</p>
     <div class="wa-acts">
-      <a class="wa-act go" href="/contact">Begin a journey <i>&rarr;</i></a>
-      <a class="wa-act faint" href="#destinations">See the destinations <i>&rarr;</i></a>
+      <a class="wa-act go" href="/contact">Begin your journey <i>&rarr;</i></a>
+      <a class="wa-act faint" href="#destinations">Explore all destinations <i>&rarr;</i></a>
     </div>
   </div>
 </section>
@@ -463,7 +748,7 @@ ul,ol{list-style:none}
   <div class="wa-frame">
     <div class="wa-foot-grid">
       <div>
-        <div class="wa-foot-brand">WankonAfritour<span>Journeys across Africa</span></div>
+        <div class="wa-foot-brand">Afrinkong<span>Journeys across Africa</span></div>
         <p>A group of locally run tour operators working across Central, West, East and Southern Africa. Each country is operated by a licensed company based in it, not by an agency abroad.</p>
       </div>
       <div class="wa-foot-col">
@@ -473,25 +758,34 @@ ul,ol{list-style:none}
         <a href="/kenya">Kenya</a>
         <a href="/tanzania">Tanzania</a>
         <a href="/rwanda">Rwanda</a>
-      </div>
-      <div class="wa-foot-col">
-        <b>More</b>
-        <a href="/south-africa">South Africa</a>
         <a href="https://namib-skyline.vercel.app">Namibia</a>
         <a href="/zambia">Zambia</a>
-        <a href="/tourism/">All destinations</a>
-        <a href="#experiences">Experiences</a>
-        <a href="#plan">Plan a journey</a>
+        <a href="/south-africa">South Africa</a>
       </div>
       <div class="wa-foot-col">
-        <b>Enquire</b>
+        <b>Explore</b>
+        <a href="#experiences">Experiences</a>
+        <a href="/tourism/">Wildlife</a>
+        <a href="/tourism/">Culture</a>
+        <a href="/tourism/">Adventure</a>
+        <a href="/tourism/">Food</a>
+        <a href="/tourism/">Heritage</a>
+        <a href="/tourism/">Eco-tourism</a>
+      </div>
+      <div class="wa-foot-col">
+        <b>Plan</b>
+        <a href="/contact">Start a journey</a>
         <a href="/contact">Contact an operator</a>
-        <span>Douala &middot; Buea &middot; Kampala</span>
-        <span>Bilingual, French and English</span>
+        <a href="#seasons">Travel seasons</a>
+        <a href="#plan">Guides</a>
+        <a href="#plan">Transport</a>
+        <b style="margin-top:26px">Regions</b>
+        <a href="#regions">Central &amp; West &middot; East &middot; Southern</a>
+        <a href="#regions">North &middot; Islands</a>
       </div>
     </div>
     <div class="wa-foot-bar wa-frame" style="padding-left:0;padding-right:0">
-      WankonAfritour &middot; Locally operated across Africa &middot; Contact details and figures on this page are illustrative until verified
+      Afrinkong &middot; Locally operated across Africa &middot; Contact details and figures on this page are illustrative until verified
     </div>
   </div>
 </footer>

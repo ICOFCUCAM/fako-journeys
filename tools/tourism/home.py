@@ -389,14 +389,14 @@ ul{list-style:none}
       </div>
       <div class="foot-col">
         <b>Elsewhere</b>
-        <a href="/">WankonAfritour</a>
+        <a href="/">Afrinkong</a>
         <a href="/cameroon">Cameroon</a>
         <a href="/tourism/">Every destination</a>
         <a href="/contact">Enquire</a>
       </div>
     </div>
     <div class="foot-bar">
-      <a href="/">Part of WankonAfritour</a> &middot; %(name)s &middot; %(resolved)d of %(count)d slots illustrated &middot; Figures and contact details are illustrative until verified
+      <a href="/">Part of Afrinkong</a> &middot; %(name)s &middot; %(resolved)d of %(count)d slots illustrated &middot; Figures and contact details are illustrative until verified
     </div>
   </div>
 </footer>
