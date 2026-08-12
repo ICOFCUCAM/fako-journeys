@@ -701,12 +701,29 @@ def main():
               any(f["name"] == "IMG_9931.png" for f in unmatched))
         check("intake never matches two images to one slot",
               len({m["slot"] for m in matched}) == len(matched))
-        wrong = dict(found[0], width=1000, height=3000)
-        check("a shape the crop would ruin scores zero",
-              intake.score(wrong, [p for p in targets
-                                   if tuple(p["aspect"]) == (16, 9)] [0]
-                           if any(tuple(p["aspect"]) == (16, 9) for p in targets)
-                           else targets[0])[0] == 0.0)
+        waza = [p for p in targets if p["id"] == "waza-elephants"][0]
+        named = dict(found[0], name="waza-elephants.png",
+                     words=intake.stem_words("waza-elephants.png"))
+        tall = dict(named, width=1000, height=3000)
+        wide = dict(named, width=3000, height=1000)
+        check("a filename that is a slot id beats every other signal",
+              intake.score(named, waza)[0] >= intake.EXACT_NAME)
+        check("a bad shape is a penalty, not a veto",
+              0 < intake.score(tall, waza)[0] < intake.score(wide, waza)[0])
+        check("the crop loss is reported so it can be judged",
+              any("discards" in r for r in intake.score(tall, waza)[1]))
+        anon = dict(found[0], name="DSC_0042.png", words=[])
+        check("a picture with nothing to go on stays below the floor whatever its shape",
+              all(intake.score(dict(anon, width=w, height=h), p)[0] < intake.MIN_SCORE
+                  for p in targets for w, h in ((3000, 2000), (2000, 3000), (2000, 2000))))
+        gen_dir = os.path.join(up, intake.GENERATED_SUBDIR)
+        os.makedirs(gen_dir, exist_ok=True)
+        shutil.copy(os.path.join(root, cand["file"]),
+                    os.path.join(gen_dir, "waza-elephants.png"))
+        origins = {f["name"]: f.get("origin") for f in intake.scan_folder(up)}
+        check("an upload from incoming/generated/ is marked AI-generated",
+              origins.get("waza-elephants.png") == "openai"
+              and origins.get("IMG_9931.png") == "upload")
         check("intake proposes only; it never writes a page",
               intake.run(cameroon, tax, directory=up, dry_run=True,
                          log=lambda *a: None)["matched"] >= 1

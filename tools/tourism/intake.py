@@ -13,11 +13,15 @@ often enough to be worse than useless, and confidently wrong at that.
 
 Three signals, cheapest first:
 
-  shape       an upright picture cannot fill a 16:9 band without losing most of
-              itself. This is a hard filter, not a preference, and it costs
-              nothing to compute — the dimensions are in the file header.
-  filename    people name files. "mount-cameroon-dawn-trek.jpg" says more about
-              where it goes than any amount of pixel analysis, and it is free.
+  name        a file named exactly after a slot is that slot's picture. Nothing
+              else comes close as a signal, and it costs nothing.
+  filename    failing that, the words in the name. "mount-cameroon-dawn-trek.jpg"
+              says more about where it goes than any pixel analysis would.
+  shape       how much of the frame the slot's crop would discard. A penalty,
+              never a veto: every slot on this site crops with object-fit:cover,
+              and the drawings these photographs replace were themselves 3:2
+              frames cropped to 4:5 and 1:1. A 47% crop of the right picture
+              still beats a perfect fit of the wrong one.
   description with --describe, the vision model is asked what the picture
               actually shows, and that sentence is scored against every slot's
               instruction the same way a stock photo's caption is.
@@ -43,6 +47,13 @@ from .providers.uploaded import Uploaded
 INCOMING = os.path.join(ROOT, "incoming")
 EXTS = (".jpg", ".jpeg", ".png", ".webp")
 
+# incoming/generated/ is for pictures a model made — ones you generated in
+# ChatGPT or anywhere else and are bringing in by hand. They are matched exactly
+# like the rest, but they carry the generated provider, so their credit line
+# reads "AI-generated" instead of passing as somebody's photograph. Getting that
+# wrong is not a formatting detail: it is a false claim about a real place.
+GENERATED_SUBDIR = "generated"
+
 # Words that appear in nearly every slot instruction and so separate nothing.
 NOISE = {
     "the", "a", "an", "and", "of", "in", "on", "at", "with", "into", "from",
@@ -52,7 +63,7 @@ NOISE = {
 }
 
 MIN_SCORE = 1.0          # below this it is a guess, not a match
-CLEARLY_BETTER = 1.5     # margin the winner needs over the runner-up
+EXACT_NAME = 6.0         # a filename that *is* a slot id — decisive
 
 
 def words(text):
@@ -74,27 +85,31 @@ def stem_words(filename):
 
 
 def scan_folder(directory=None):
+    """Every image in the folder, plus any in its generated/ subfolder."""
     directory = directory or INCOMING
     out = []
-    if not os.path.isdir(directory):
-        return out
-    for name in sorted(os.listdir(directory)):
-        if not name.lower().endswith(EXTS) or name.startswith("."):
+    for root_dir, origin in ((directory, "upload"),
+                             (os.path.join(directory, GENERATED_SUBDIR), "openai")):
+        if not os.path.isdir(root_dir):
             continue
-        path = os.path.join(directory, name)
-        with open(path, "rb") as f:
-            head = f.read(2 * 1024 * 1024)
-        dims = gen.measure(head)
-        out.append({
-            "name": name,
-            "path": path,
-            "rel": os.path.relpath(path, ROOT).replace(os.sep, "/"),
-            "width": dims[0] if dims else None,
-            "height": dims[1] if dims else None,
-            "bytes": os.path.getsize(path),
-            "words": stem_words(name),
-            "caption": None,
-        })
+        for name in sorted(os.listdir(root_dir)):
+            if not name.lower().endswith(EXTS) or name.startswith("."):
+                continue
+            path = os.path.join(root_dir, name)
+            with open(path, "rb") as f:
+                head = f.read(2 * 1024 * 1024)
+            dims = gen.measure(head)
+            out.append({
+                "name": name,
+                "path": path,
+                "origin": origin,
+                "rel": os.path.relpath(path, ROOT).replace(os.sep, "/"),
+                "width": dims[0] if dims else None,
+                "height": dims[1] if dims else None,
+                "bytes": os.path.getsize(path),
+                "words": stem_words(name),
+                "caption": None,
+            })
     return out
 
 
@@ -158,24 +173,35 @@ def describe(image, style, log=print):
 
 
 def aspect_fit(image, aspect):
-    """1.0 for a perfect fit, down to 0 for a picture the crop would ruin.
+    """How well the frame suits the slot's crop: a multiplier, and why.
 
-    Cropping to fill always discards something; this measures how much. A 3:2
-    landscape delivered at 4:5 loses 63% of its width, which is not a crop, it
-    is a different photograph.
+    Deliberately not a veto. Every image slot on this site is `object-fit:
+    cover`, and the illustrations these photographs replace were 3:2 frames
+    cropped to 4:5, 1:1 and 5:4 from the start — so "loses 47%" describes normal
+    operation here, not a disqualification. It ranks a well-shaped candidate
+    above a badly-shaped one and otherwise gets out of the way, because a 47%
+    crop of the right subject beats a perfect fit of the wrong one every time.
     """
     if not image.get("width") or not image.get("height"):
-        return 0.5, "dimensions unknown"
+        return 0.7, "dimensions unknown"
     have = image["width"] / float(image["height"])
     want = aspect[0] / float(aspect[1])
     kept = min(have, want) / max(have, want)
+    # Continuous, not banded. Bands looked tidier and were useless: a frame
+    # losing 58% and one losing 73% landed in the same bucket and scored
+    # identically, so the ranking they were there to provide did not exist.
+    fit = 0.5 + 0.5 * kept
     if kept >= 0.92:
-        return 1.0, "fits %d:%d" % tuple(aspect)
-    if kept >= 0.72:
-        return 0.6, "crops to %d:%d, loses %d%%" % (aspect[0], aspect[1],
-                                                    round((1 - kept) * 100))
-    return 0.0, "wrong shape for %d:%d, would lose %d%%" % (
-        aspect[0], aspect[1], round((1 - kept) * 100))
+        return fit, "fits %d:%d" % tuple(aspect)
+    lost = "%d:%d crop discards %d%%" % (aspect[0], aspect[1], round((1 - kept) * 100))
+    return fit, lost + ("" if kept >= 0.5 else " — check the subject survives it")
+
+
+def names_slot(image, placement):
+    """The filename is the slot id. `waza-elephants.jpg` -> the waza-elephants
+    slot, which is not a guess — it is the same identifier."""
+    stem = os.path.splitext(image["name"])[0].strip().lower()
+    return stem == (placement["id"] or "").lower()
 
 
 def score(image, placement):
@@ -183,11 +209,13 @@ def score(image, placement):
     reasons = []
     fit, why = aspect_fit(image, placement["aspect"])
     reasons.append(why)
-    if fit == 0.0:
-        return 0.0, reasons
 
     target = set(words(placement["instruction"]))
     total = 0.0
+
+    if names_slot(image, placement):
+        total += EXACT_NAME
+        reasons.insert(0, "named for this slot")
 
     hits = [w for w in image["words"] if w in target]
     if hits:
@@ -231,13 +259,19 @@ def assign(images, placements):
         for p in placements:
             s, why = score(image, p)
             if s >= MIN_SCORE:
-                pairs.append((s, why, image, p))
+                pairs.append((s, why, image, p, names_slot(image, p)))
     pairs.sort(key=lambda t: -t[0])
 
     used_images, used_slots, matched = set(), set(), []
-    for s, why, image, p in pairs:
+    for s, why, image, p, exact in pairs:
         slot = pool.placement_slot(p)
-        if image["name"] in used_images or slot in used_slots:
+        if slot in used_slots:
+            continue
+        # One image per slot always. One slot per image *unless* the filename is
+        # the slot id: the same illustration fills the same subject on two pages
+        # at two shapes, and a photograph named after it belongs in both, the
+        # same way the drawing did.
+        if image["name"] in used_images and not exact:
             continue
         used_images.add(image["name"])
         used_slots.add(slot)
@@ -277,16 +311,19 @@ def run(country, taxonomy, directory=None, do_describe=False, dry_run=False,
 
     index = pool.load()
     for m in matched:
-        log("\n  %s" % m["image"]["name"])
+        log("\n  %s%s" % (m["image"]["name"],
+                            "  [AI-generated]" if m["image"].get("origin") == "openai" else ""))
         log("    -> %s  (%s · %d:%d)  score %.2f"
             % (m["placement"]["id"], m["placement"]["page"],
                m["placement"]["aspect"][0], m["placement"]["aspect"][1], m["score"]))
         log("       %s" % "; ".join(m["reasons"]))
         log("       slot wants: %s" % m["placement"]["instruction"])
         if not dry_run:
+            origin = m["image"].get("origin", "upload")
             index.add(m["slot"], {
-                "source": "upload",
-                "id": "upload:%s" % m["image"]["name"],
+                "source": origin,
+                "model": "an image model" if origin == "openai" else None,
+                "id": "%s:%s" % (origin, m["image"]["name"]),
                 "file": m["image"]["rel"],
                 "url": "/" + m["image"]["rel"],
                 "width": m["image"]["width"],

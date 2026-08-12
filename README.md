@@ -135,16 +135,28 @@ which together is a byte-identical round trip.
 Drop files in `incoming/` and run `npm run tourism:intake`. Each one is measured
 and matched against every slot, using three signals in ascending cost:
 
-    shape        an upright picture cannot fill a 16:9 band. A hard filter,
-                 free to compute, and it rejects rather than ranks.
-    filename     "mount-cameroon-trekkers.jpg" says more about where it belongs
-                 than any pixel analysis, and costs nothing.
+    name         a file named exactly after a slot IS that slot's picture.
+                 Not a guess — the same identifier.
+    filename     failing that, the words in the name. "mount-cameroon-trekkers.jpg"
+                 says more about where it belongs than any pixel analysis.
+    shape        how much of the frame the slot's crop discards. A penalty,
+                 never a veto.
     description  with --describe, the vision model is asked what the picture
                  shows, and that sentence is scored against each slot's
                  instruction.
 
+A filename that *is* a slot id — `waza-elephants.jpg` — is decisive: it is not a
+guess, it is the same identifier. Shape is a penalty and never a veto, because
+every slot on this site crops with `object-fit: cover` and the drawings these
+photographs replace were 3:2 frames cropped to 4:5 and 1:1 from the start; a 47%
+crop of the right subject beats a perfect fit of the wrong one.
+
 Without `--describe` it says so, so a confident-looking match is never mistaken
-for one the machine actually looked at. Matches are **proposals**: they go into
+for one the machine actually looked at.
+
+**Pictures a model made** go in `incoming/generated/` instead. They are matched
+identically, but they carry the generated provider, so their credit reads
+"AI-generated" rather than passing as somebody's photograph. Matches are **proposals**: they go into
 the same pool, appear on the same contact sheet, and are placed by the same
 command. An unmatched file is reported by name rather than guessed at.
 
@@ -161,6 +173,11 @@ Neither has a CDN behind it, so `srcset` carries the one real width instead of
 four identical URLs with four different width descriptors — the browser believes
 descriptors, and told a 1024px file is 2400px wide it will pick it for a 2400px
 slot and scale it up.
+
+**Weight.** Placed files are copied as-is; nothing here re-encodes them. The
+current set is about 35 MB across 26 slots, with single frames over 3 MB feeding
+480px boxes. Resize and re-encode before this goes live — the layout is right,
+the payload is not.
 
 `OPENAI_API_KEY` is server-side only, on exactly the same terms as the other
 two: read from the environment by a CLI on a developer or CI machine, never

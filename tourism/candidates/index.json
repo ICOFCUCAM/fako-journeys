@@ -1,0 +1,682 @@
+{
+  "version": 1,
+  "note": "Options for each slot, not decisions. Nothing here is served by the site until build.py pick promotes it into tourism/cache/images.json.",
+  "slots": {
+    "site:about:forest-guide-tree": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:forest-guide-tree.png",
+        "file": "incoming/forest-guide-tree.png",
+        "url": "/incoming/forest-guide-tree.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 2979335,
+        "caption": null,
+        "score": 7.65,
+        "reasons": [
+          "named for this slot",
+          "1:1 crop discards 33%",
+          "filename says forest, guide, tree"
+        ],
+        "where": "about.html · 1:1",
+        "aspect": [
+          1,
+          1
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:about:mount-guide-portrait": [
+      {
+        "source": "openai",
+        "model": "an image model",
+        "id": "openai:mount-guide-portrait.png",
+        "file": "incoming/generated/mount-guide-portrait.png",
+        "url": "/incoming/generated/mount-guide-portrait.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 2306992,
+        "caption": null,
+        "score": 7.4,
+        "reasons": [
+          "named for this slot",
+          "fits 1:1",
+          "filename says guide"
+        ],
+        "where": "about.html · 1:1",
+        "aspect": [
+          1,
+          1
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:about:mount-trail-repair": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:mount-trail-repair.jpg",
+        "file": "incoming/mount-trail-repair.jpg",
+        "url": "/incoming/mount-trail-repair.jpg",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 3522441,
+        "caption": null,
+        "score": 5.55,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says trail"
+        ],
+        "where": "about.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:about:mount-trailhead-dawn": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:mount-trailhead-dawn.jpg",
+        "file": "incoming/mount-trailhead-dawn.jpg",
+        "url": "/incoming/mount-trailhead-dawn.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 640632,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "3:4 crop discards 50%",
+          "filename says trailhead, dawn"
+        ],
+        "where": "about.html · 3:4",
+        "aspect": [
+          3,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:about:north-market-street": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:north-market-street.jpg",
+        "file": "incoming/north-market-street.jpg",
+        "url": "/incoming/north-market-street.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 570696,
+        "caption": null,
+        "score": 5.55,
+        "reasons": [
+          "named for this slot",
+          "1:1 crop discards 33%",
+          "filename says market"
+        ],
+        "where": "about.html · 1:1",
+        "aspect": [
+          1,
+          1
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:contact:douala-office-street": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:douala-office-street.jpg",
+        "file": "incoming/douala-office-street.jpg",
+        "url": "/incoming/douala-office-street.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 766840,
+        "caption": null,
+        "score": 9.18,
+        "reasons": [
+          "named for this slot",
+          "5:4 crop discards 17%",
+          "filename says douala, office, street"
+        ],
+        "where": "contact.html · 5:4",
+        "aspect": [
+          5,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:contact:highlands-october": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:highlands-october.jpg",
+        "file": "incoming/highlands-october.jpg",
+        "url": "/incoming/highlands-october.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 657282,
+        "caption": null,
+        "score": 5.55,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says october"
+        ],
+        "where": "contact.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:contact:mount-dry-season": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:mount-dry-season.jpg",
+        "file": "incoming/mount-dry-season.jpg",
+        "url": "/incoming/mount-dry-season.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 676724,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says dry, season"
+        ],
+        "where": "contact.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:contact:mount-wet-cloud": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:mount-wet-cloud.jpg",
+        "file": "incoming/mount-wet-cloud.jpg",
+        "url": "/incoming/mount-wet-cloud.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 494786,
+        "caption": null,
+        "score": 5.55,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says cloud"
+        ],
+        "where": "contact.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:index:coast-lobe-falls": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:coast-lobe-falls.jpg",
+        "file": "incoming/coast-lobe-falls.jpg",
+        "url": "/incoming/coast-lobe-falls.jpg",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 587593,
+        "caption": null,
+        "score": 6.66,
+        "reasons": [
+          "named for this slot",
+          "5:4 crop discards 17%",
+          "filename says coast"
+        ],
+        "where": "index.html · 5:4",
+        "aspect": [
+          5,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:index:foumban-bronze-caster": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:foumban-bronze-caster.jpg",
+        "file": "incoming/foumban-bronze-caster.jpg",
+        "url": "/incoming/foumban-bronze-caster.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 436266,
+        "caption": null,
+        "score": 7.65,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says foumban, bronze, caster"
+        ],
+        "where": "index.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:index:highlands-october": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:highlands-october.jpg",
+        "file": "incoming/highlands-october.jpg",
+        "url": "/incoming/highlands-october.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 657282,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says highlands, october"
+        ],
+        "where": "index.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:index:mount-ascent-walkers": [
+      {
+        "source": "openai",
+        "model": "an image model",
+        "id": "openai:mount-ascent-walkers.png",
+        "file": "incoming/generated/mount-ascent-walkers.png",
+        "url": "/incoming/generated/mount-ascent-walkers.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 2598699,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "3:4 crop discards 50%",
+          "filename says mount, walkers"
+        ],
+        "where": "index.html · 3:4",
+        "aspect": [
+          3,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:index:mount-dry-season": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:mount-dry-season.jpg",
+        "file": "incoming/mount-dry-season.jpg",
+        "url": "/incoming/mount-dry-season.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 676724,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says dry, season"
+        ],
+        "where": "index.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:index:mount-summit-grass": [
+      {
+        "source": "openai",
+        "model": "an image model",
+        "id": "openai:mount-summit-grass.png",
+        "file": "incoming/generated/mount-summit-grass.png",
+        "url": "/incoming/generated/mount-summit-grass.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 3343719,
+        "caption": null,
+        "score": 9.18,
+        "reasons": [
+          "named for this slot",
+          "5:4 crop discards 17%",
+          "filename says mount, summit, grass"
+        ],
+        "where": "index.html · 5:4",
+        "aspect": [
+          5,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:index:mount-wet-cloud": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:mount-wet-cloud.jpg",
+        "file": "incoming/mount-wet-cloud.jpg",
+        "url": "/incoming/mount-wet-cloud.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 494786,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says wet, cloud"
+        ],
+        "where": "index.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:index:waza-elephants": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:waza-elephants.jpg",
+        "file": "incoming/waza-elephants.jpg",
+        "url": "/incoming/waza-elephants.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 549054,
+        "caption": null,
+        "score": 6.66,
+        "reasons": [
+          "named for this slot",
+          "5:4 crop discards 17%",
+          "filename says elephants"
+        ],
+        "where": "index.html · 5:4",
+        "aspect": [
+          5,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:pricing:park-permit-post": [
+      {
+        "source": "openai",
+        "model": "an image model",
+        "id": "openai:park-permit-post.png",
+        "file": "incoming/generated/park-permit-post.png",
+        "url": "/incoming/generated/park-permit-post.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 3068187,
+        "caption": null,
+        "score": 7.65,
+        "reasons": [
+          "named for this slot",
+          "3:4 crop discards 50%",
+          "filename says park, permit, post"
+        ],
+        "where": "pricing.html · 3:4",
+        "aspect": [
+          3,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:services:benue-river": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:benue-river.jpg",
+        "file": "incoming/benue-river.jpg",
+        "url": "/incoming/benue-river.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 534124,
+        "caption": null,
+        "score": 5.55,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says river"
+        ],
+        "where": "services.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:services:coast-lobe-falls": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:coast-lobe-falls.jpg",
+        "file": "incoming/coast-lobe-falls.jpg",
+        "url": "/incoming/coast-lobe-falls.jpg",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 587593,
+        "caption": null,
+        "score": 7.92,
+        "reasons": [
+          "named for this slot",
+          "5:4 crop discards 17%",
+          "filename says lobe, falls"
+        ],
+        "where": "services.html · 5:4",
+        "aspect": [
+          5,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:services:laterite-road": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:laterite-road.jpg",
+        "file": "incoming/laterite-road.jpg",
+        "url": "/incoming/laterite-road.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 818910,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "3:4 crop discards 50%",
+          "filename says laterite, road"
+        ],
+        "where": "services.html · 3:4",
+        "aspect": [
+          3,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:services:mandara-spires": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:mandara-spires.jpg",
+        "file": "incoming/mandara-spires.jpg",
+        "url": "/incoming/mandara-spires.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 560225,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says mandara, spires"
+        ],
+        "where": "services.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:services:mount-ascent-walkers": [
+      {
+        "source": "openai",
+        "model": "an image model",
+        "id": "openai:mount-ascent-walkers.png",
+        "file": "incoming/generated/mount-ascent-walkers.png",
+        "url": "/incoming/generated/mount-ascent-walkers.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 2598699,
+        "caption": null,
+        "score": 6.66,
+        "reasons": [
+          "named for this slot",
+          "5:4 crop discards 17%",
+          "filename says mount"
+        ],
+        "where": "services.html · 5:4",
+        "aspect": [
+          5,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:services:mount-lava-flow": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:mount-lava-flow.png",
+        "file": "incoming/mount-lava-flow.png",
+        "url": "/incoming/mount-lava-flow.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 3471598,
+        "caption": null,
+        "score": 7.92,
+        "reasons": [
+          "named for this slot",
+          "5:4 crop discards 17%",
+          "filename says lava, flow"
+        ],
+        "where": "services.html · 5:4",
+        "aspect": [
+          5,
+          4
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:services:north-craft-stalls": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:north-craft-stalls.jpg",
+        "file": "incoming/north-craft-stalls.jpg",
+        "url": "/incoming/north-craft-stalls.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 742881,
+        "caption": null,
+        "score": 6.6,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says craft, stalls"
+        ],
+        "where": "services.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ],
+    "site:services:waza-elephants": [
+      {
+        "source": "upload",
+        "model": null,
+        "id": "upload:waza-elephants.jpg",
+        "file": "incoming/waza-elephants.jpg",
+        "url": "/incoming/waza-elephants.jpg",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 549054,
+        "caption": null,
+        "score": 5.55,
+        "reasons": [
+          "named for this slot",
+          "4:5 crop discards 47%",
+          "filename says elephants"
+        ],
+        "where": "services.html · 4:5",
+        "aspect": [
+          4,
+          5
+        ],
+        "matchedOn": "filename",
+        "inUse": true
+      }
+    ]
+  }
+}
