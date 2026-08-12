@@ -111,7 +111,15 @@
     });
   }
 
+  /* A query arriving in the address bar — from the 404's search box, or from a
+     link somebody sent — runs immediately. The form on the 404 posts here rather
+     than pretending to search a page that does not exist. */
   if (box) {
+    var arrived = (location.search.match(/[?&]q=([^&]*)/) || [])[1];
+    if (arrived) {
+      box.value = decodeURIComponent(arrived.replace(/\+/g, ' '));
+      setTimeout(ask, 0);
+    }
     var timer = null;
     box.addEventListener('input', function () {
       clearTimeout(timer);

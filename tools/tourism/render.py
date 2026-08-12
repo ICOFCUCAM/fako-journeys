@@ -105,7 +105,7 @@ def masthead(country, taxonomy):
             '  <div class="fj-frame fj-mast-in">\n'
             '    <a class="fj-mark" href="%s"><i>Afrinkong</i><b>%s</b>'
             '<span>All %d categories</span></a>\n'
-            '    <nav class="fj-routes">\n'
+            '    <nav class="fj-routes" aria-label="Primary">\n'
             '      %s\n'
             '      <a href="/atlas">The Atlas</a>\n'
             '      <a href="/journey">Build a journey</a>\n'
@@ -454,14 +454,19 @@ PAGE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%(title)s</title>
 <meta name="description" content="%(description)s">
+<link rel="canonical" href="https://afrinkong.com%(path)s">
+%(og)s
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 %(links)s
 <style>%(style)s
 %(tourism_css)s</style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to %(country)s</a>
 %(masthead)s
+<main id="main">
 %(body)s
+</main>
 %(footer)s
 <script>%(script)s</script>
 </body>
@@ -502,6 +507,12 @@ def render_country(country, taxonomy, shell):
         "links": shell.links,
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
+        "country": esc(country.name),
+        "path": "/tourism/%s" % esc(country.slug),
+        "og": plate_mod.open_graph(
+            esc("%s — all %d experiences" % (country.name, len(taxonomy.enabled))),
+            esc(country.summary or country.name),
+            "/tourism/%s" % country.slug, kind="article"),
         "masthead": masthead(country, taxonomy),
         "body": "\n".join(parts),
         "footer": footer(country),
@@ -531,7 +542,7 @@ def render_index(countries, taxonomy, shell):
         cards.append("""
       <a href="/tourism/%s" class="fj-rise">
         <figure>%s</figure>
-        <h3>%s</h3>
+        <h2>%s</h2>
         <p>%s</p>
       </a>""" % (esc(c.slug), img_tag(entry, role, alt, country=c, ground=True), esc(c.name), esc(c.tagline)))
     body = """
@@ -556,6 +567,12 @@ def render_index(countries, taxonomy, shell):
         "links": shell.links,
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
+        "country": esc(_ALL.name),
+        "path": "/tourism/",
+        "og": plate_mod.open_graph(
+            "Every country &mdash; Afrinkong",
+            esc("Every published country, written up the same %d ways, so two can be "
+                "compared on the same terms." % len(taxonomy.enabled)), "/tourism/"),
         "masthead": masthead(_ALL, taxonomy),
         "body": body,
         "footer": footer(_ALL),

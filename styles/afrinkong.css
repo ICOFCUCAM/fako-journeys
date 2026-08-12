@@ -20,14 +20,32 @@
      journal that happens to be a website, and pure white reads as software. */
   --c-bg:#F7F2E7;
   --c-primary:#1C2A25;
-  --c-accent:#BE5527;
   --c-ink:#1F211C;
-  --c-muted:#6E7166;
   --c-border:#DDD4C1;
+
+  /* Two inks that were very slightly too light to be read.
+     ---------------------------------------------------------------------
+     The metadata voice and the accent are the two most-repeated colours on
+     the site — every stamp, every nav item, every category label, every
+     caption — and on this paper they measured 4.46:1 and 4.16:1 against a
+     4.5:1 requirement. Marginal, and failing is failing: the type they carry
+     is 9 to 11px, which is exactly the size that has no margin to spare.
+     Both are darkened by a step small enough that nothing about the palette
+     reads differently and large enough to clear the bar on paper (5.8:1 and
+     5.2:1) and on the dust surface underneath it. */
+  --c-accent:#A8481F;
+  --c-muted:#5C5F55;
+
+  /* The same accent cannot work on both grounds: an ink dark enough to read
+     on cream is too dark to read on basalt. So there is a lit variant, and
+     the dark surfaces below re-point --c-accent at it — which means every
+     `color:var(--c-accent)` already written keeps working and gets the right
+     one, rather than a hundred and forty rules each needing a second colour. */
+  --c-accent-lit:#D9773F;
 
   /* Derived surfaces. Mixed rather than hand-picked, so changing --c-bg or
      --c-primary moves the whole system together instead of leaving orphans. */
-  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
+  --fj-dust:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
   --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
   --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
@@ -166,10 +184,18 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
  * The country's outline sits behind, bled off the corner, at the weight of a
  * watermark. It never says "image missing" — it says what the photograph is of,
  * which is true and is the most useful thing it can say. */
+/* The ground is the region's tone taken two thirds of the way to the house ink,
+   not the tone itself. Two of the five region tones — the sand of North Africa
+   and the ochre of Southern Africa — are light enough that cream type on them
+   measured 3.4:1 and 2.5:1, and this component is the empty state on five
+   hundred and sixty-seven image slots, so that was unreadable type across most
+   of the site. Darkening the tone rather than the palette keeps each region's
+   hue doing its job on the map, where it sits on paper and is never typed on.
+   Worst case is now 5.4:1. */
 .af-plate{position:relative;overflow:hidden;display:flex;flex-direction:column;
   justify-content:flex-end;padding:clamp(14px,4%,26px);
-  background:var(--plate-tone,var(--c-primary));color:var(--c-bg);
-  isolation:isolate}
+  background:color-mix(in srgb,var(--plate-tone,var(--c-primary)) 66%,var(--c-primary));
+  color:var(--c-bg);isolation:isolate}
 /* A wash of paper over the tone, so five saturated inks become five grounds a
    headline can sit on. */
 .af-plate::after{content:"";position:absolute;inset:0;z-index:-1;
@@ -177,12 +203,12 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 .af-plate-shape{position:absolute;right:-14%;top:-10%;width:78%;height:auto;z-index:-1;
   opacity:.2;fill:var(--c-bg)}
 .af-plate-eye{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;opacity:.72}
+  text-transform:uppercase}
 .af-plate-say{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
   line-height:1.02;letter-spacing:-.01em;margin-top:8px;
   font-size:clamp(17px,2.6cqw,30px);text-wrap:balance}
 .af-plate-where{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;opacity:.6;margin-top:10px}
+  text-transform:uppercase;margin-top:10px}
 /* The caption is sized against the plate rather than the viewport: the same
    component is a 240px card on one page and a 1152px band on another, and a
    headline that ignores its own box is only ever right in one of them. */
@@ -198,6 +224,20 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 /* ---- surfaces ------------------------------------------------------------ */
 .af-zone{padding:var(--sp-7) 0}
 .af-zone--dust{background:var(--fj-dust)}
+/* Every dark ground re-points the accent at its lit variant, so the rules
+   written against --c-accent do not need to know which surface they landed on.
+   Any new dark panel joins this list and inherits the same correction. */
+/* Dark grounds repoint two tokens, not one. --c-muted is a grey chosen against
+   cream paper; on basalt it measures 2.4:1, so any metadata that wandered onto a
+   dark panel was unreadable. Re-pointing it here means the hundred-odd rules
+   already written against --c-muted keep working and get the right grey for the
+   surface they landed on. Any new dark panel joins this list. */
+.af-zone--basalt,.af-dark,.st--now,.st-nowcard,.sx-nowsec,.sx-now,
+.wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
+.tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark{
+  --c-accent:var(--c-accent-lit);
+  --c-muted:var(--fj-onbasalt-dim);
+}
 .af-zone--basalt{background:var(--fj-basalt);color:var(--fj-onbasalt)}
 .af-zone--basalt h2,.af-zone--basalt h3{color:var(--c-bg)}
 .af-zone--basalt .af-note{color:var(--fj-onbasalt-dim)}
@@ -205,3 +245,57 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 @media(max-width:880px){.af-zone{padding:var(--sp-6) 0}}
 
 @media(max-width:560px){.af-frame{padding:0 20px}}
+
+/* ---- explore: the universal index ---------------------------------------- */
+/* Cmd/Ctrl-K from any page on the site. Lives in the design system rather than
+   in a page's stylesheet because it is on every page, including the 404 — it is
+   the one component whose whole job is that the site has a single way in. */
+
+.ex-key{margin-left:6px;display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--c-muted);background:none;border:1px solid var(--c-border);
+  padding:6px 10px;cursor:pointer;white-space:nowrap;
+  transition:border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.ex-key:hover{border-color:var(--c-accent);color:var(--c-accent)}
+.ex-key kbd{font-family:inherit;font-size:9px;letter-spacing:.08em;
+  border:1px solid var(--c-border);padding:1px 5px;color:var(--c-muted)}
+@media(max-width:700px){.ex-key kbd{display:none}}
+
+html.ex-open{overflow:hidden}
+.ex{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-start;
+  justify-content:center;padding:max(6vh,48px) 20px 20px}
+.ex-veil{position:absolute;inset:0;background:color-mix(in srgb,var(--c-primary) 62%,transparent)}
+.ex-panel{position:relative;width:min(680px,100%);max-height:82svh;display:flex;
+  flex-direction:column;background:var(--c-bg);border:2px solid var(--c-primary);
+  box-shadow:0 30px 80px color-mix(in srgb,var(--c-primary) 34%,transparent)}
+.ex-h{position:absolute;left:-9999px}
+.ex-bar{display:flex;align-items:center;gap:12px;padding:16px 18px;
+  border-bottom:2px solid var(--c-primary)}
+.ex-bar input{flex:1 1 0;min-width:0;font-family:var(--fj-text);font-size:19px;
+  background:transparent;color:var(--c-ink);border:0;padding:4px 0}
+.ex-bar input:focus{outline:none}
+.ex-esc{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--c-muted);background:none;border:1px solid var(--c-border);padding:6px 9px;
+  cursor:pointer}
+.ex-esc:hover{border-color:var(--c-primary);color:var(--c-primary)}
+.ex-status{padding:10px 18px 0;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted);min-height:1.2em}
+.ex-list{overflow-y:auto;padding:8px 0 14px;flex:1 1 auto;overscroll-behavior:contain}
+.ex-group{padding:16px 18px 6px;font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-accent)}
+.ex-row{display:block;padding:11px 18px;border-left:3px solid transparent}
+.ex-row b{display:block;font-family:var(--fj-display);font-size:18px;text-transform:uppercase;
+  line-height:1.1;font-weight:700}
+.ex-row span{display:block;margin-top:3px;font-size:14.5px;color:var(--c-muted)}
+.ex-row:hover,.ex-row.is-on{background:var(--fj-dust);border-left-color:var(--c-accent)}
+.ex-row.is-on b{color:var(--c-accent)}
+.ex-none{padding:18px;font-size:16px;color:var(--c-muted)}
+.ex-foot{padding:12px 18px;border-top:1px solid var(--c-border);font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.14em;line-height:1.8;text-transform:uppercase;
+  color:var(--c-muted)}
+@media(max-width:640px){
+  .ex{padding:0}
+  .ex-panel{width:100%;max-height:100svh;height:100svh;border-width:0}
+  .ex-row{padding:14px 16px}
+}
+@media(pointer:coarse){.ex-key,.ex-esc{min-height:44px}}

@@ -1,0 +1,15 @@
+# Afrinkong — https://afrinkong.com
+#
+# Everything on this site is meant to be read. There is no login, no paywall and
+# no page that exists only to rank, so nothing is disallowed on principle — the
+# two rules below keep crawlers out of payloads that are data rather than pages,
+# because indexing a 160 KB JSON index helps nobody and answers no query.
+#
+# The 644 addresses worth crawling are all in the sitemap.
+
+User-agent: *
+Allow: /
+Disallow: /data/
+Disallow: /incoming/
+
+Sitemap: https://afrinkong.com/sitemap.xml

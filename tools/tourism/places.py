@@ -161,6 +161,7 @@ def page(country, place, pack, order, tax, ctx):
         "tone": esc(tone),
         "url": esc(country.url),
         "events": plate.events_block(),
+        "explore": plate.explore_block(),
     }
 
 
@@ -183,6 +184,7 @@ def index(rows, ctx):
                esc(country.name), esc(country.region), len(pack["places"]), items))
     total = sum(len(p["places"]) for _c, p, _o in rows)
     return INDEX % {"blocks": "\n".join(blocks), "n": total, "countries": len(rows),
+                    "explore": plate.explore_block(),
                     "og": plate.open_graph("Every place — Afrinkong",
                                            "%d places across %d countries, each with its "
                                            "own page." % (total, len(rows)), "/places")}
@@ -323,6 +325,7 @@ TEMPLATE = """<!DOCTYPE html>
 </main>
 
 %(events)s
+%(explore)s
 <script>
 /* One event, on a page with nothing to interact with: that a place was opened,
    and which country it is in. No identifier, nothing about who, and nothing at
@@ -378,6 +381,7 @@ INDEX = """<!DOCTYPE html>
   </section>
 %(blocks)s
 </main>
+%(explore)s
 </body>
 </html>
 """

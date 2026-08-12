@@ -161,7 +161,7 @@ TEMPLATE = """<!DOCTYPE html>
 <header class="mast">
   <div class="af-frame mast-in">
     <a class="mark" href="/"><i>Afrinkong</i><b>Compare</b></a>
-    <nav class="routes">
+    <nav class="routes" aria-label="Primary">
       <a href="/#window">The map</a>
       <a href="/#destinations">Destinations</a>
       <a href="/tourism/">Every country</a>
@@ -285,6 +285,8 @@ TEMPLATE = """<!DOCTYPE html>
   render();
 })();
 </script>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
 </body>
 </html>
 """

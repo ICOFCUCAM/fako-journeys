@@ -52,7 +52,7 @@
 .mt-door-body b{display:block;font-family:var(--fj-display);font-size:22px;font-weight:700;
   text-transform:uppercase;line-height:1.04}
 .mt-door-asks{display:block;margin-top:4px;font-size:14px;line-height:1.45;color:var(--c-muted)}
-.mt-door-n{font-family:var(--fj-mono);font-size:9.5px;color:var(--c-border)}
+.mt-door-n{font-family:var(--fj-mono);font-size:9.5px;color:var(--c-muted)}
 .mt[data-mode="country"] .mt-door-n{visibility:hidden}
 .mt-door[aria-pressed="true"]{background:var(--c-primary)}
 .mt-door[aria-pressed="true"] .mt-door-body b{color:var(--c-bg)}

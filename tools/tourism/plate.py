@@ -172,3 +172,16 @@ def events_block(path=None):
 # design system rather than in a page, because both appear on every surface.
 CLASSES = ("af-window-svg", "af-window-fill", "af-plate", "af-plate-shape",
            "af-plate-eye", "af-plate-say", "af-plate-where")
+
+
+def explore_block():
+    """The universal index, on every page that ships this.
+
+    Two script tags and nothing else: explore.js builds its own dialog the first
+    time somebody presses the key, and fetches the index only then. A visitor who
+    never opens it pays for two deferred requests that are cached across the whole
+    site — which is the point of it living here rather than being a feature of one
+    page.
+    """
+    return ('<script src="/scripts/story-search.js" defer></script>\n'
+            '<script src="/scripts/explore.js" defer></script>')

@@ -237,7 +237,7 @@
 .at-row-line{display:block;margin-top:5px;font-size:15px;line-height:1.5;color:var(--c-muted)}
 .at-row-meta{display:block;margin-top:7px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
-.at-row-go{font-family:var(--fj-mono);color:var(--c-border);padding-top:4px;
+.at-row-go{font-family:var(--fj-mono);color:var(--c-muted);padding-top:4px;
   transition:color var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
 .at-row:hover .at-row-go{color:var(--c-accent);transform:translateX(3px)}
 .at-row[aria-current]{background:var(--fj-dust)}

@@ -158,6 +158,9 @@ TEMPLATE = """<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Image candidates — %(country)s</title>
+<!-- An internal review sheet for placing photographs, not a page for
+     visitors: it is not linked from the site and not in the sitemap. -->
+<meta name="robots" content="noindex">
 <style>
 :root{--bg:#F7F2E7;--ink:#1F211C;--muted:#6E7166;--line:#DDD4C1;--accent:#BE5527;--go:#1C2A25}
 *{margin:0;padding:0;box-sizing:border-box}

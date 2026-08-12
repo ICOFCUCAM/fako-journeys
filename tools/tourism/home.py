@@ -484,7 +484,7 @@ TEMPLATE = """<!DOCTYPE html>
 <header class="mast">
   <div class="af-frame mast-in">
     <a class="mark" href="/%(slug)s"><span class="mark-up">Afrinkong</span><b>%(name)s</b><span>%(tagline)s</span></a>
-    <nav class="routes">
+    <nav class="routes" aria-label="Primary">
       <a href="/atlas#/%(slug)s">The Atlas</a>
       <a href="/journey">Build a journey</a>
       <a href="/meet#/%(slug)s">Meet %(name)s</a>
@@ -617,6 +617,8 @@ TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
 </footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
 </body>
 </html>
 """

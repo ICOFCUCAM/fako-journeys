@@ -4,37 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Afrinkong — Journeys Across Africa | Cameroon, Uganda, Kenya, Tanzania, Rwanda, Namibia</title>
-<meta name="description" content="Afrinkong connects travellers with local tourism operators across Africa — Cameroon's six climates, Uganda's gorilla forests, the Serengeti and the Rift, Rwanda's thousand hills, the Namib, South Africa and Zambia. Local operators, real places, journeys made for you.">
+<meta name="description" content="Afrinkong connects travellers with local tourism operators across Africa — Cameroon's six climates, Uganda's gorilla forests, the Serengeti and the Rift, Rwanda's thousand hills, the Namib, South Africa and Zambia. Local operators, real places, journeys made for you."
+<link rel="canonical" href="https://afrinkong.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="Afrinkong — Journeys Across Africa | Cameroon, Uganda, Kenya, Tanzania, Rwanda, Namibia">
+<meta property="og:description" content="Afrinkong connects travellers with local tourism operators across Africa — Cameroon's six climates, Uganda's gorilla forests, the Serengeti and the Rift, Rwanda's thousand hills, the Namib, South Africa and Zambia. Local operators, real places, journeys made for you.">
+<meta property="og:url" content="https://afrinkong.com/">
+<meta name="twitter:card" content="summary">>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
-:root{
-  /* Same tokens as every operator site in the group. The gateway is not a
-     different brand with a different palette; it is the same house, one level up. */
-  --c-bg:#F7F2E7;
-  --c-primary:#1C2A25;
-  --c-accent:#BE5527;
-  --c-ink:#1F211C;
-  --c-muted:#6E7166;
-  --c-border:#DDD4C1;
-  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
-  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
-  --fj-rule:1px solid var(--c-border);
-  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
-  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
-  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
-  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
-  color-scheme:light;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:var(--fj-text);background:var(--c-bg);color:var(--c-ink);line-height:1.66;font-size:17px;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
-ul,ol{list-style:none}
-::selection{background:var(--c-accent);color:var(--c-bg)}
+/* The tokens and the reset are NOT redefined here.
+   ---------------------------------------------------------------------------
+   They used to be: this file carried its own copy of the palette, the type
+   stacks and the reset, which meant the design system had two definitions and
+   the homepage was the one that quietly went stale — it was still on the old
+   accent and the old metadata grey after both had been corrected for contrast
+   everywhere else. afrinkong.css is loaded above and is now the only place any
+   of it is declared. What follows is layout, which is genuinely this page's. */
 .wa-frame{max-width:1240px;margin:0 auto;padding:0 44px}
 .wa-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
 .wa-note{margin-top:16px;color:var(--c-muted);max-width:44em}
@@ -636,7 +623,7 @@ window.AF = {
 <header class="wa-mast">
   <div class="wa-frame wa-mast-in">
     <a class="wa-mark" href="/"><b>Afrinkong</b><span>Journeys across Africa</span></a>
-    <nav class="wa-routes">
+    <nav class="wa-routes" aria-label="Primary">
       <a href="/atlas">The Atlas</a>
       <a href="/journey">Build a journey</a>
       <a href="/meet">Meet Africa</a>
@@ -1531,5 +1518,7 @@ window.AF = {
   });
 })();
 </script>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
 </body>
 </html>

@@ -17,7 +17,8 @@
   "band": "the match band's own label",
   "arc": "an arc key from arcs.json",
   "format": "a story format from arcs.json",
-  "matched": "how many results a search returned — a count, never the words typed"
+  "matched": "how many results a search returned — a count, never the words typed",
+  "kind": "which sort of thing was opened from the index: country, place, story, name, go, open"
  },
 
  "events": {
@@ -46,6 +47,7 @@
   "chapter_read":          ["country", "arc"],
   "story_opened":          ["country", "format"],
   "story_searched":        ["matched"],
-  "month_seen":            ["month"]
+  "month_seen":            ["month"],
+  "explore_opened":        ["kind"]
  }
 }

@@ -338,6 +338,7 @@ def render(countries, taxonomy):
                       "run: python3 tools/africa_map.py <topojson> --map > tourism/map.json")
     return TEMPLATE % {
         "events": plate.events_block(),
+        "explore": plate.explore_block(),
         "og": plate.open_graph('The Atlas — Afrinkong', 'Africa as the interface. Continent, region, country, place — and who can take you there.', '/atlas'),
         "map": map_svg(geo, sp),
         "spine": json.dumps(sp, separators=(",", ":"), sort_keys=True),
@@ -455,6 +456,7 @@ TEMPLATE = """<!DOCTYPE html>
 
 <script type="application/json" id="at-spine">%(spine)s</script>
 %(events)s
+%(explore)s
 <script src="/scripts/atlas.js" defer></script>
 </body>
 </html>

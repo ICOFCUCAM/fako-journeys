@@ -110,7 +110,7 @@ figure.st-frame,figure.st-plate,figure.st-portrait,figure.st-strip,figure.st-wid
 .st figcaption{margin-top:9px;font-size:14.5px;line-height:1.55;color:var(--c-muted);
   max-width:52ch}
 .st figcaption i{display:block;margin-top:5px;font-style:normal;font-family:var(--fj-mono);
-  font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-border)}
+  font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 
 /* Five hundred and sixty-seven of this site's photographs have not been placed
    yet, which on a page showing one picture is a designed empty state and on a
@@ -118,11 +118,14 @@ figure.st-frame,figure.st-plate,figure.st-portrait,figure.st-strip,figure.st-wid
    ground shifts down the page: the same region tone, mixed a little further
    towards paper or towards ink each section, and inside the essay each frame
    again. It is still obviously one system and it is no longer one colour. */
-.st:nth-of-type(3n+2) .af-plate{background:color-mix(in srgb,var(--plate-tone) 84%,var(--c-bg))}
-.st:nth-of-type(3n+3) .af-plate{background:color-mix(in srgb,var(--plate-tone) 80%,#000)}
-.st-essay>figure:nth-child(2n) .af-plate{background:color-mix(in srgb,var(--plate-tone) 88%,var(--c-bg))}
-.st-essay>figure:nth-child(3n+1) .af-plate{background:color-mix(in srgb,var(--plate-tone) 82%,#000)}
-.st-essay>figure:nth-child(5n+3) .af-plate{background:color-mix(in srgb,var(--plate-tone) 70%,var(--c-bg))}
+/* Every variant goes further toward ink, never toward paper. Lightening a plate
+   varies it at the cost of the cream type sitting on it, and these frames carry
+   their own captions. */
+.st:nth-of-type(3n+2) .af-plate{background:color-mix(in srgb,var(--plate-tone) 54%,var(--c-primary))}
+.st:nth-of-type(3n+3) .af-plate{background:color-mix(in srgb,var(--plate-tone) 74%,#000)}
+.st-essay>figure:nth-child(2n) .af-plate{background:color-mix(in srgb,var(--plate-tone) 58%,var(--c-primary))}
+.st-essay>figure:nth-child(3n+1) .af-plate{background:color-mix(in srgb,var(--plate-tone) 62%,#000)}
+.st-essay>figure:nth-child(5n+3) .af-plate{background:color-mix(in srgb,var(--plate-tone) 48%,var(--c-primary))}
 
 /* -- the photo essay: an asymmetric grid, so no two frames are the same weight */
 .st-essay{margin-top:var(--sp-4);display:grid;grid-template-columns:repeat(6,1fr);
@@ -225,7 +228,7 @@ figure.st-frame,figure.st-plate,figure.st-portrait,figure.st-strip,figure.st-wid
 .st-cross span{display:block;margin-top:8px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted)}
 .st-cross i{display:block;margin-top:4px;font-style:normal;font-family:var(--fj-mono);
-  font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--c-border)}
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--c-muted)}
 .st-cross p{margin-top:10px;font-size:14.5px;color:var(--c-muted)}
 .st-cross.is-border{background:color-mix(in srgb,var(--c-bg) 90%,var(--tone,var(--c-primary)))}
 .st-cross.is-border span{color:var(--tone,var(--c-primary))}

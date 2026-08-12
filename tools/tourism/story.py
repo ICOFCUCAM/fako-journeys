@@ -521,11 +521,21 @@ def portrait(country, pack, arcs, ctx):
     hero = by_cat.get("why-visit") or pack["places"][0]
     window = plate.window_svg(shape, country.name, ident="po-%s" % country.slug)
 
+    # The portrait and /tourism/<slug> both describe the same country, and both
+    # were using its summary — two indexable pages with one description, each
+    # arguing the other's case. The catalogue keeps the summary; a portrait is
+    # described by what it actually is, which is a read of a particular shape.
+    named = [a["title"].lower() for a in arcs
+             if a["key"] in {s["arc"] for s in stories}][:3]
+    blurb = ("%s in %d chapters%s. Every paragraph is %s's own writing, not "
+             "an article about Africa."
+             % (country.name, len(sections),
+                (" — " + ", ".join(named)) if named else "", country.name))
+
     return stories, TEMPLATE % {
         "title": esc("%s: a portrait — Afrinkong" % country.name),
-        "description": esc(country.summary),
-        "og": plate.open_graph(esc("%s: a portrait" % country.name),
-                               esc(country.summary),
+        "description": esc(blurb),
+        "og": plate.open_graph(esc("%s: a portrait" % country.name), esc(blurb),
                                "/portrait/%s" % country.slug, kind="article"),
         "jsonld": json_ld(country, key, len(sections)),
         "country": esc(country.name),
@@ -551,6 +561,7 @@ def portrait(country, pack, arcs, ctx):
         "url": esc(country.url),
         "hero": esc(hero["text"]),
         "events": plate.events_block(),
+        "explore": plate.explore_block(),
     }
 
 
@@ -636,6 +647,8 @@ def index_page(stories, ctx, countries):
         "n": len(stories), "countries": len(countries),
         "now": now_cards, "rails": "\n".join(rails), "portraits": portraits,
         "events": plate.events_block(),
+        "explore": plate.explore_block(),
+        "explore": plate.explore_block(),
     }
 
 
@@ -768,6 +781,7 @@ TEMPLATE = """<!DOCTYPE html>
 </main>
 
 %(events)s
+%(explore)s
 <script src="/scripts/portrait.js" defer></script>
 <footer class="pl-foot">
   <div class="pl-foot-in">
@@ -855,6 +869,7 @@ INDEX = """<!DOCTYPE html>
 
 <script type="application/json" id="sx-boot">{"data":"/data/stories.json","graph":"/data/graph.json","when":%(when)s}</script>
 %(events)s
+%(explore)s
 <script src="/scripts/story-search.js" defer></script>
 <script src="/scripts/stories.js" defer></script>
 <footer class="pl-foot">

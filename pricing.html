@@ -4,7 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rates & Fees — Circuit Prices Per Person, Park Permits and Deposit Terms | Kamerun</title>
-<meta name="description" content="Published circuit rates per person in CFA francs and euro, sliding with group size, plus the MINFOF park permits and Mount CEO guide and porter fees itemised, a full inclusions and exclusions list, and clear deposit and cancellation terms.">
+<meta name="description" content="Published circuit rates per person in CFA francs and euro, sliding with group size, plus the MINFOF park permits and Mount CEO guide and porter fees itemised, a full inclusions and exclusions list, and clear deposit and cancellation terms."
+<link rel="canonical" href="https://afrinkong.com/pricing">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="Rates & Fees — Circuit Prices Per Person, Park Permits and Deposit Terms | Kamerun">
+<meta property="og:description" content="Published circuit rates per person in CFA francs and euro, sliding with group size, plus the MINFOF park permits and Mount CEO guide and porter fees itemised, a full inclusions and exclusions list, and clear deposit and cancellation terms.">
+<meta property="og:url" content="https://afrinkong.com/pricing">
+<meta name="twitter:card" content="summary">>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
@@ -110,11 +117,11 @@ ul,ol{list-style:none}
 .fj-transect-step.lv5{min-height:150px}
 .fj-transect-step.lv6{min-height:132px}
 .fj-transect-alt{font-family:var(--fj-display);font-size:23px;font-weight:700;line-height:1}
-.fj-transect-step.lv3 .fj-transect-alt{color:var(--c-bg)}
+.fj-transect-step.lv6 .fj-transect-alt{color:var(--c-bg)}
 .fj-transect-step b{display:block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:10px;font-weight:400;color:var(--c-accent)}
-.fj-transect-step.lv3 b{color:var(--fj-ember)}
+.fj-transect-step.lv6 b{color:var(--c-accent)}
 .fj-transect-step p{font-size:13.5px;line-height:1.45;color:var(--c-muted);margin-top:6px}
-.fj-transect-step.lv3 p{color:var(--fj-onbasalt-dim)}
+.fj-transect-step.lv6 p{color:var(--fj-onbasalt-dim)}
 .fj-transect-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:14px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 @media(max-width:900px){.fj-transect{grid-template-columns:repeat(3,1fr)}.fj-transect-step{min-height:0 !important;padding:14px 12px}}
 @media(max-width:520px){.fj-transect{grid-template-columns:1fr 1fr}}
@@ -128,7 +135,12 @@ ul,ol{list-style:none}
    degrade to `absolute` and the effect would vanish with no error at all.
    background-attachment:fixed is not a substitute — iOS Safari ignores it.
    No script drives this. Verified by `npm run test:fixedwindow`. */
-.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
+.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center;background:var(--c-primary)}
+/* The ground is the house ink, not nothing. This panel sets cream type over a
+   fixed photograph, and the photograph for it has not been placed — which left
+   a full-height section of cream on cream, measured at 1.03:1 and invisible.
+   With a ground the panel reads either way, and the photograph covers it when
+   one arrives. */
 .fj-vista-pic{position:fixed;inset:0;z-index:0}
 .fj-vista-pic img{width:100%;height:100%;object-fit:cover}
 /* Veil 1 — a directional wash off the western flank: deep across the reading column
@@ -352,11 +364,12 @@ ul,ol{list-style:none}
 </style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to the page</a>
 <!-- nav -->
 <header class="fj-mast">
   <div class="fj-frame fj-mast-in">
     <a class="fj-mark" href="/cameroon"><b>Kamerun</b><span>Discover Cameroon.</span></a>
-    <nav class="fj-routes">
+    <nav class="fj-routes" aria-label="Primary">
       <a href="/services">Circuits</a>
       <a href="/pricing">Rates &amp; Fees</a>
       <a href="/about">The Operator</a>
@@ -366,6 +379,7 @@ ul,ol{list-style:none}
     <a class="btn" href="#quote">Plan a circuit</a>
   </div>
 </header>
+<main id="main">
 <!-- opening -->
 <section class="fj-open">
   <div class="fj-frame">
@@ -629,6 +643,7 @@ ul,ol{list-style:none}
 })();
 </script>
 <!-- footer -->
+</main>
 <footer class="fj-foot">
   <div class="fj-frame">
     <div class="fj-foot-grid">
@@ -662,5 +677,7 @@ ul,ol{list-style:none}
     <div class="fj-foot-bar"><a href="/" style="border-bottom:1px solid var(--c-accent)">Part of Afrinkong</a> &middot; &copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
   </div>
 </footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
 </body>
 </html>
