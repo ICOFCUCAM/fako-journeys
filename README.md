@@ -174,10 +174,13 @@ four identical URLs with four different width descriptors — the browser believ
 descriptors, and told a 1024px file is 2400px wide it will pick it for a 2400px
 slot and scale it up.
 
-**Weight.** Placed files are copied as-is; nothing here re-encodes them. The
-current set is about 35 MB across 26 slots, with single frames over 3 MB feeding
-480px boxes. Resize and re-encode before this goes live — the layout is right,
-the payload is not.
+**Weight — the one thing that must be fixed before launch.** Placed files are
+copied as-is; nothing here re-encodes them. The home page alone now pulls
+**23 MB across 16 images**, and single frames over 3 MB feed 190px transect
+columns. No image library is available in the environment this was built in, so
+it could not be done here. Resize and re-encode (roughly: 2× the CSS box width,
+WebP or JPEG at q80) before this goes live. The layout is right; the payload is
+not.
 
 `OPENAI_API_KEY` is server-side only, on exactly the same terms as the other
 two: read from the environment by a CLI on a developer or CI machine, never

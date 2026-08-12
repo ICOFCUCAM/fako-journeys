@@ -77,17 +77,25 @@ ul,ol{list-style:none}
 
 /* ---- page opener -------------------------------------------------------------- */
 .fj-open{padding:78px 0 66px;border-bottom:var(--fj-rule)}
-.fj-open-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:64px;align-items:end}
+.fj-open-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:end}
 .fj-open h1{font-size:clamp(38px,4.8vw,68px);margin:20px 0 0;max-width:16ch}
 .fj-open h1 em{font-style:normal;color:var(--c-accent)}
 .fj-open .fj-lede{margin-top:24px}
 .fj-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
 .fj-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 20px;border:1px solid var(--c-primary);transition:background .2s,color .2s,border-color .2s}
 .fj-act:hover{background:var(--c-primary);color:var(--c-bg)}
+/* Two identical outlined buttons meant neither was the primary action. One
+   filled, one outlined: the eye now has somewhere to go first. */
+.fj-act.go{background:var(--c-primary);color:var(--c-bg);border-color:var(--c-primary)}
+.fj-act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
+.fj-act i{font-style:normal;margin-left:9px}
 .fj-act.faint{border-color:var(--c-border);color:var(--c-muted)}
 .fj-act.faint:hover{border-color:var(--c-primary);background:transparent;color:var(--c-primary)}
 .fj-open-plate{position:relative}
-.fj-open-plate img{width:100%;aspect-ratio:3/4;object-fit:cover}
+/* 4:5, not 3:4. In a .88fr column at 3:4 the picture read as a narrow vertical
+   slot rather than a photograph — the frame was fighting the landscape inside
+   it. Wider column, shallower ratio: same layout, the picture can breathe. */
+.fj-open-plate img{width:100%;aspect-ratio:4/5;object-fit:cover}
 .fj-open-tag{position:absolute;left:0;bottom:0;right:24%;background:var(--c-primary);color:var(--fj-onbasalt);padding:13px 16px}
 .fj-open-tag b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
 .fj-open-tag span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onbasalt-dim);margin-top:5px}
@@ -117,13 +125,26 @@ ul,ol{list-style:none}
 
 /* ---- transect (the coast-to-Sahel gradient bar) -------------------------------- */
 .fj-transect{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;align-items:end;border-bottom:2px solid var(--c-primary)}
-.fj-transect-step{background:var(--fj-dust);padding:16px 14px 14px;display:flex;flex-direction:column;justify-content:flex-end}
-.fj-transect-step.lv1{min-height:120px}
-.fj-transect-step.lv2{min-height:168px}
-.fj-transect-step.lv3{min-height:300px;background:var(--c-primary);color:var(--fj-onbasalt)}
-.fj-transect-step.lv4{min-height:216px}
-.fj-transect-step.lv5{min-height:150px}
-.fj-transect-step.lv6{min-height:132px}
+.fj-transect-step{background:var(--fj-dust);display:flex;flex-direction:column;justify-content:flex-end}
+/* The bar is made of photographs. The column heights rank by altitude — Kribi
+   at sea level shortest, the 4,095 m cone tallest — which is the idea on this
+   page worth keeping, so the picture inherits the height instead of the chart
+   being replaced by a row of equal tiles. Indicative, not a linear scale: 0 m
+   still needs a column you can see. Six climates, each showing what actually
+   stands at that height. */
+.fj-transect-pic{display:block;width:100%;overflow:hidden;background:var(--c-primary)}
+.fj-transect-pic img{width:100%;height:100%;object-fit:cover}
+/* Fixed, so the tops of the pictures still read as a gradient: without it one
+   extra line of copy lifts that column's photograph and the altitude the height
+   is meant to encode stops being true. */
+.fj-transect-body{padding:15px 14px 14px;min-height:158px}
+.fj-transect-step.lv1 .fj-transect-pic{height:96px}
+.fj-transect-step.lv2 .fj-transect-pic{height:140px}
+.fj-transect-step.lv3 .fj-transect-pic{height:272px}
+.fj-transect-step.lv4 .fj-transect-pic{height:188px}
+.fj-transect-step.lv5 .fj-transect-pic{height:122px}
+.fj-transect-step.lv6 .fj-transect-pic{height:106px}
+.fj-transect-step.lv3{background:var(--c-primary);color:var(--fj-onbasalt)}
 .fj-transect-alt{font-family:var(--fj-display);font-size:23px;font-weight:700;line-height:1}
 .fj-transect-step.lv3 .fj-transect-alt{color:var(--c-bg)}
 .fj-transect-step b{display:block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:10px;font-weight:400;color:var(--c-accent)}
@@ -131,7 +152,11 @@ ul,ol{list-style:none}
 .fj-transect-step p{font-size:13.5px;line-height:1.45;color:var(--c-muted);margin-top:6px}
 .fj-transect-step.lv3 p{color:var(--fj-onbasalt-dim)}
 .fj-transect-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:14px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
-@media(max-width:900px){.fj-transect{grid-template-columns:repeat(3,1fr)}.fj-transect-step{min-height:0 !important;padding:14px 12px}}
+@media(max-width:900px){
+  .fj-transect{grid-template-columns:repeat(3,1fr)}
+  .fj-transect-body{padding:13px 12px;min-height:0}
+  .fj-transect-step .fj-transect-pic{height:118px !important}
+}
 @media(max-width:520px){.fj-transect{grid-template-columns:1fr 1fr}}
 
 /* ==== FIXED-WINDOW BAND 1 — THE ASCENT ==========================================
@@ -208,6 +233,28 @@ ul,ol{list-style:none}
   .fj-seam-hr{margin:20px auto}
 }
 @media(max-width:560px){.fj-seam-inner{padding:22px 20px 26px}}
+
+/* ---- the fourteen-day route ----------------------------------------------------
+   A route, not a feature list: six stages left to right with one rule running
+   through them, so it reads as a single journey rather than six separate
+   offers. The rule is the road; the dot is where you are on it. */
+.fj-route{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:2px solid var(--c-primary);margin-top:6px}
+.fj-leg{position:relative;padding:26px 22px 8px 0}
+.fj-leg::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;background:var(--c-bg);border:2px solid var(--c-accent);border-radius:50%}
+.fj-leg.here::before{background:var(--c-accent)}
+.fj-leg-day{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.fj-leg h3{font-size:19px;margin:9px 0 7px;color:var(--c-primary)}
+.fj-leg p{font-size:13.5px;line-height:1.5;color:var(--c-muted)}
+.fj-leg-alt{display:block;margin-top:9px;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.fj-route-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:34px;padding-top:16px;border-top:var(--fj-rule);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.fj-route-foot a{border-bottom:2px solid var(--c-accent);padding-bottom:3px;transition:color .2s}
+.fj-route-foot a:hover{color:var(--c-accent)}
+@media(max-width:1000px){.fj-route{grid-template-columns:repeat(3,1fr)}.fj-leg{padding-right:18px}}
+@media(max-width:620px){
+  .fj-route{grid-template-columns:1fr;border-top:0}
+  .fj-leg{padding:16px 0 16px 26px;border-left:2px solid var(--c-border)}
+  .fj-leg::before{top:20px;left:-7px}
+}
 
 /* ---- circuit slips ------------------------------------------------------------- */
 .fj-slips{display:grid;gap:0;border-top:2px solid var(--c-primary)}
@@ -359,7 +406,7 @@ ul,ol{list-style:none}
 <!-- nav -->
 <header class="fj-mast">
   <div class="fj-frame fj-mast-in">
-    <a class="fj-mark" href="/"><b>Fako Journeys</b><span>Cameroun &middot; Circuits guid&eacute;s / Guided circuits</span></a>
+    <a class="fj-mark" href="/"><b>Fako Journeys</b><span>Cameroun &middot; Circuits guid&eacute;s &middot; Guided travel</span></a>
     <nav class="fj-routes">
       <a href="/services">Circuits</a>
       <a href="/pricing">Rates &amp; Fees</a>
@@ -379,8 +426,8 @@ ul,ol{list-style:none}
         <h1>One country, <em>six climates</em>, fourteen days on the road.</h1>
         <p class="fj-lede">From black sand at sea level to 4,095 metres of volcano, from the Korup rainforest to the Sahel edge at Waza. We build guided circuits across all of it &mdash; small groups, licensed guides, 4x4s that have already done the road once this month.</p>
         <div class="fj-acts">
-          <a class="fj-act" href="#quote">Plan your dates</a>
-          <a class="fj-act faint" href="/services">See the circuits</a>
+          <a class="fj-act go" href="#quote">Plan a circuit <i>&rarr;</i></a>
+          <a class="fj-act faint" href="#journey">See the 14-day route <i>&rarr;</i></a>
         </div>
       </div>
       <div class="fj-open-plate fj-rise">
@@ -409,34 +456,52 @@ ul,ol{list-style:none}
     </div>
     <div class="fj-transect fj-rise">
       <div class="fj-transect-step lv1">
+        <span class="fj-transect-pic"><img src="/images/uploads/site-index-coast-black-sand-dusk.jpg" alt="Volcanic black sand and surf on the Cameroon coast at dusk" loading="lazy" decoding="async" data-locked="true"></span>
+        <div class="fj-transect-body">
         <span class="fj-transect-alt">0 m</span>
         <b>Kribi &amp; Limbe</b>
         <p>Volcanic black sand, the Lob&eacute; falls dropping into the Atlantic, pirogues out at first light.</p>
+        </div>
       </div>
       <div class="fj-transect-step lv2">
+        <span class="fj-transect-pic"><img src="/images/uploads/site-about-forest-guide-tree.png" alt="A guide beside a buttressed forest giant inside the Korup rainforest" loading="lazy" decoding="async" data-locked="true"></span>
+        <div class="fj-transect-body">
         <span class="fj-transect-alt">150 m</span>
         <b>Korup forest</b>
         <p>One of the oldest rainforests in Africa. Canopy bridge over the Mana, drill monkeys, 400 tree species.</p>
+        </div>
       </div>
       <div class="fj-transect-step lv3">
+        <span class="fj-transect-pic"><img src="/images/generated/site-index-mount-summit-grass.png" alt="Walkers crossing the grass slopes below the summit huts on Mount Cameroon" loading="lazy" decoding="async" data-locked="true"></span>
+        <div class="fj-transect-body">
         <span class="fj-transect-alt">4,095 m</span>
         <b>Mount Cameroon</b>
         <p>An active volcano straight out of the sea. Rainforest, then grass, then lava field, then nothing but cinder.</p>
+        </div>
       </div>
       <div class="fj-transect-step lv4">
+        <span class="fj-transect-pic"><img src="/images/uploads/site-index-highlands-october.jpg" alt="Clearing skies over the Bamenda highlands" loading="lazy" decoding="async" data-locked="true"></span>
+        <div class="fj-transect-body">
         <span class="fj-transect-alt">1,800 m</span>
         <b>Bamenda highlands</b>
         <p>The Ring Road, crater lakes, tea at Ndawara and palaces that have stood since before the Germans arrived.</p>
+        </div>
       </div>
       <div class="fj-transect-step lv5">
+        <span class="fj-transect-pic"><img src="/images/uploads/site-services-benue-river.jpg" alt="Gallery forest along the Bénoué river in the northern savanna" loading="lazy" decoding="async" data-locked="true"></span>
+        <div class="fj-transect-body">
         <span class="fj-transect-alt">250 m</span>
         <b>B&eacute;nou&eacute; savanna</b>
         <p>Gallery forest along the river, hippo pools, roan antelope, and the long grass burning off in December.</p>
+        </div>
       </div>
       <div class="fj-transect-step lv6">
+        <span class="fj-transect-pic"><img src="/images/uploads/site-index-waza-elephants.jpg" alt="Elephants at a dry-season waterhole in flat acacia savanna at Waza" loading="lazy" decoding="async" data-locked="true"></span>
+        <div class="fj-transect-body">
         <span class="fj-transect-alt">320 m</span>
         <b>Waza &amp; the Sahel</b>
         <p>Flat acacia country in the Far North. Elephant and giraffe drawn onto the waterholes from March.</p>
+        </div>
       </div>
     </div>
     <div class="fj-transect-foot fj-rise">
@@ -467,11 +532,67 @@ ul,ol{list-style:none}
   </div>
 </section>
 
+<!-- the route -->
+<section class="fj-zone" id="journey">
+  <div class="fj-frame">
+    <div class="fj-head fj-rise">
+      <div class="fj-head-no"><b>02</b><span>The long circuit</span></div>
+      <div>
+        <h2>Fourteen days, in the <em>order you would drive them</em>.</h2>
+        <p class="fj-note">The whole transect, south to north. Every shorter circuit is cut out of this one &mdash; the mountain on its own is three days, the coast four, the north six.</p>
+      </div>
+    </div>
+    <div class="fj-route fj-rise">
+      <div class="fj-leg here">
+        <span class="fj-leg-day">Day 01</span>
+        <h3>Douala</h3>
+        <p>Land, meet the guide and the driver, and sleep in Bonapriso. Nobody starts a circuit tired.</p>
+        <span class="fj-leg-alt">13 m &middot; road</span>
+      </div>
+      <div class="fj-leg">
+        <span class="fj-leg-day">Day 02 &ndash; 03</span>
+        <h3>Limbe &amp; Kribi</h3>
+        <p>Black volcanic sand, and the Lob&eacute; going over rock straight into the Atlantic.</p>
+        <span class="fj-leg-alt">0 m &middot; 2 nights</span>
+      </div>
+      <div class="fj-leg">
+        <span class="fj-leg-day">Day 04 &ndash; 06</span>
+        <h3>Mount Cameroon</h3>
+        <p>Buea to the summit cone and back down. Three days on the hill, porters carrying, grade 3.</p>
+        <span class="fj-leg-alt">4,095 m &middot; on foot</span>
+      </div>
+      <div class="fj-leg">
+        <span class="fj-leg-day">Day 07 &ndash; 09</span>
+        <h3>Korup</h3>
+        <p>The canopy bridge over the Mana, drill monkeys, and four hundred tree species in one park.</p>
+        <span class="fj-leg-alt">150 m &middot; 3 nights</span>
+      </div>
+      <div class="fj-leg">
+        <span class="fj-leg-day">Day 10 &ndash; 11</span>
+        <h3>Bamenda &amp; Foumban</h3>
+        <p>The Ring Road, the crater lakes, the palace museum and a craft street that is still working.</p>
+        <span class="fj-leg-alt">1,800 m &middot; road</span>
+      </div>
+      <div class="fj-leg">
+        <span class="fj-leg-day">Day 12 &ndash; 14</span>
+        <h3>Waza &amp; the Sahel</h3>
+        <p>Two days north, or ninety minutes by air, then the waterholes at first light.</p>
+        <span class="fj-leg-alt">320 m &middot; 3 nights</span>
+      </div>
+    </div>
+    <div class="fj-route-foot fj-rise">
+      <span>Douala 4&deg;03'N &rarr; Waza 11&deg;23'N</span>
+      <span>Runs November to February, and June to August</span>
+      <span><a href="#quote">Ask for the day-by-day &rarr;</a></span>
+    </div>
+  </div>
+</section>
+
 <!-- circuits -->
 <section class="fj-zone">
   <div class="fj-frame">
     <div class="fj-head fj-rise">
-      <div class="fj-head-no"><b>02</b><span>Three of eleven</span></div>
+      <div class="fj-head-no"><b>03</b><span>Three of eleven</span></div>
       <div>
         <h2>The circuits people book <em>first</em>.</h2>
         <p class="fj-note">Each one runs as a fixed departure with a set date, or privately on any date you choose from two travellers upward. Grades are ours and they are honest: grade 1 is a day out, grade 4 is a genuine expedition.</p>
@@ -577,7 +698,7 @@ ul,ol{list-style:none}
 <section class="fj-zone basalt">
   <div class="fj-frame">
     <div class="fj-head fj-rise">
-      <div class="fj-head-no"><b>03</b><span>When to come</span></div>
+      <div class="fj-head-no"><b>04</b><span>When to come</span></div>
       <div>
         <h2>Two rainy seasons, and they are <em>not the same rain</em>.</h2>
         <p class="fj-note">The south-west coast is among the wettest places on earth &mdash; Debundscha takes about ten metres of rain a year. The Far North is Sahel and takes barely one. Which half of the country you want decides your month, so book the country to the calendar rather than the other way round.</p>
@@ -622,7 +743,7 @@ ul,ol{list-style:none}
 <section class="fj-zone close">
   <div class="fj-frame">
     <div class="fj-head fj-rise">
-      <div class="fj-head-no"><b>04</b><span>Afterwards</span></div>
+      <div class="fj-head-no"><b>05</b><span>Afterwards</span></div>
       <div>
         <h2>What travellers write when they get home.</h2>
         <p class="fj-note">Unedited, with permission, from the feedback form we send a fortnight after every departure.</p>
