@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Afrinkong — Journeys Across Africa | Cameroon, Uganda, Kenya, Tanzania, Rwanda, Namibia</title>
 <meta name="description" content="Afrinkong connects travellers with local tourism operators across Africa — Cameroon's six climates, Uganda's gorilla forests, the Serengeti and the Rift, Rwanda's thousand hills, the Namib, South Africa and Zambia. Local operators, real places, journeys made for you.">
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 :root{
   /* Same tokens as every operator site in the group. The gateway is not a
@@ -165,18 +166,19 @@ ul,ol{list-style:none}
 .wa-ops .soon b,.wa-ops .soon span{color:var(--c-muted)}
 
 /* ---- where do you want to begin ---------------------------------------------------- */
-.wa-wants{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.wa-wants{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:2px solid var(--c-primary);margin-bottom:6px}
 .wa-want{background:none;border:0;border-right:var(--fj-rule);border-bottom:var(--fj-rule);cursor:pointer;
-  text-align:left;padding:24px 26px 22px 0;transition:background .2s}
-.wa-want:nth-child(3n){border-right:0;padding-right:0}
+  text-align:left;padding:18px 18px 16px 0;transition:background var(--t-fast) var(--ease)}
+.wa-want:nth-child(6n){border-right:0;padding-right:0}
 .wa-want:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
-.wa-want i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
-.wa-want b{display:block;font-family:var(--fj-display);font-size:clamp(22px,2.6vw,32px);font-weight:700;text-transform:uppercase;margin-top:10px}
+.wa-want i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-accent)}
+.wa-want b{display:block;font-family:var(--fj-display);font-size:clamp(17px,1.6vw,22px);font-weight:700;text-transform:uppercase;margin-top:8px;line-height:1.05}
 .wa-want[aria-pressed="true"]{background:var(--c-primary)}
 .wa-want[aria-pressed="true"] b{color:var(--c-bg)}
-.wa-want-say{margin-top:22px;font-size:15px;color:var(--c-muted)}
+.wa-want-say{margin:16px 0 26px;font-size:15px;color:var(--c-muted)}
 .wa-dest[hidden]{display:none}
-@media(max-width:760px){.wa-wants{grid-template-columns:1fr 1fr}.wa-want:nth-child(3n){border-right:var(--fj-rule);padding-right:26px}.wa-want:nth-child(2n){border-right:0;padding-right:0}}
+@media(max-width:1000px){.wa-wants{grid-template-columns:1fr 1fr 1fr}.wa-want:nth-child(6n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(3n){border-right:0;padding-right:0}}
+@media(max-width:620px){.wa-wants{grid-template-columns:1fr 1fr}.wa-want:nth-child(3n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(2n){border-right:0;padding-right:0}}
 @media(max-width:460px){.wa-wants{grid-template-columns:1fr}.wa-want{border-right:0 !important;padding-right:0 !important}}
 @media(max-width:1080px){.wa-win{grid-template-columns:1fr}.wa-win-caps{min-height:200px}.wa-win-frame{height:min(40vh,340px)}}
 @media(max-width:900px){.wa-ops{grid-template-columns:1fr 1fr}.wa-ops>div:nth-child(2n){border-right:0;padding-right:0}
@@ -229,10 +231,18 @@ ul,ol{list-style:none}
 
 /* ---- destinations --------------------------------------------------------------- */
 .wa-dests{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
+/* The grid is grouped by region rather than being one run of twenty-two cards.
+   Grouping is what lets it hold fifty-four without becoming a wall. */
+.wa-dest-reg{grid-column:1/-1;font-family:var(--fj-mono);font-size:10px;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);
+  padding:22px 0 10px;border-bottom:var(--fj-rule)}
+.wa-dest-reg:first-child{padding-top:14px}
+.wa-dest-reg[hidden]{display:none}
 .wa-dest{padding:24px 26px 22px 0;border-bottom:var(--fj-rule);border-right:var(--fj-rule)}
 
 .wa-dest:nth-child(3n){border-right:0;padding-right:0}
-.wa-dest b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.wa-dest b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-accent);min-height:17px}
 .wa-dest h3{font-size:25px;margin:9px 0 6px}
 .wa-dest p{font-size:14.5px;color:var(--c-muted)}
 .wa-dest a{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px;transition:color .2s}
@@ -393,6 +403,8 @@ ul,ol{list-style:none}
 </style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to content</a>
+
 <!-- nav -->
 <header class="wa-mast">
   <div class="wa-frame wa-mast-in">
@@ -401,7 +413,7 @@ ul,ol{list-style:none}
       <a href="#destinations">Destinations</a>
       <a href="#experiences">Experiences</a>
       <a href="#regions">Regions</a>
-      <a href="#map">Map</a>
+      <a href="#window">Map</a>
       <a href="#plan">Plan</a>
     </nav>
     <a class="btn" href="#plan">Begin a journey</a>
@@ -419,8 +431,8 @@ ul,ol{list-style:none}
         <p class="wa-find">Find your Africa.</p>
         <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
         <div class="wa-acts">
-          <a class="wa-act go" href="#destinations">Explore Africa <i>&rarr;</i></a>
-          <a class="wa-act faint" href="#begin">Find your experience <i>&rarr;</i></a>
+          <a class="wa-act go" href="#regions">Explore Africa <i>&rarr;</i></a>
+          <a class="wa-act faint" href="#destinations">Find your experience <i>&rarr;</i></a>
         </div>
       </div>
       <div class="wa-win">
@@ -733,72 +745,15 @@ ul,ol{list-style:none}
   </div>
 </section>
 
-<!-- where do you want to begin -->
-<section class="wa-zone" id="begin">
-  <div class="wa-frame">
-    <div class="wa-head">
-      <div class="wa-head-no"><b>00</b><span>Where to begin</span></div>
-      <div>
-        <h2>What brings you <em>to Africa</em>?</h2>
-        <p class="wa-note">Most people arrive knowing the feeling they are after long before they know the country. Start there, and the eight destinations narrow to the ones that do it best.</p>
-      </div>
-    </div>
-    <div class="wa-wants" role="group" aria-label="Filter destinations by what you want">
-      <button class="wa-want" type="button" data-want="wildlife"><i>I want to see</i><b>Wildlife</b></button>
-      <button class="wa-want" type="button" data-want="mountains"><i>I want to climb</i><b>Mountains</b></button>
-      <button class="wa-want" type="button" data-want="coast"><i>I want to escape</i><b>Coast &amp; islands</b></button>
-      <button class="wa-want" type="button" data-want="culture"><i>I want to meet</i><b>People &amp; culture</b></button>
-      <button class="wa-want" type="button" data-want="food"><i>I want to taste</i><b>African food</b></button>
-      <button class="wa-want" type="button" data-want="heritage"><i>I want to discover</i><b>Heritage</b></button>
-    </div>
-    <p class="wa-want-say" id="wa-want-say">Choose one and the destinations below narrow to it. Choose it again to see all eight.</p>
-  </div>
-</section>
 
-<script>
-/* The "what brings you here" buttons filter the destination grid two sections
-   down. It is a filter, not a link: pressing the same button again clears it,
-   and with the script gone every destination is simply visible. */
-(function(){
-  var bar = document.currentScript.previousElementSibling.querySelector('.wa-wants');
-  if (!bar) return;
-  var say = document.getElementById('wa-want-say');
-  var idle = say.textContent;
-  var buttons = [].slice.call(bar.querySelectorAll('.wa-want'));
-  var LINE = {
-    wildlife:  'If wildlife is what brought you here, start with these.',
-    mountains: 'If you came to climb, these are the ones with the altitude.',
-    coast:     'If you came for the water, these reach the ocean.',
-    culture:   'If you came to meet people, start with these.',
-    food:      'If you came to eat, start here.',
-    heritage:  'If you came for what was here before you, start with these.'
-  };
-  var on = null;
 
-  function apply(want){
-    on = want;
-    buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
-    var shown = 0;
-    [].slice.call(document.querySelectorAll('.wa-dest[data-tags]')).forEach(function(c){
-      var keep = !want || c.dataset.tags.split(' ').indexOf(want) >= 0;
-      c.hidden = !keep;
-      if (keep) shown++;
-    });
-    say.textContent = want ? LINE[want] + ' ' + shown + ' of 8.' : idle;
-  }
+<main id="main">
 
-  buttons.forEach(function(b){
-    b.setAttribute('aria-pressed', 'false');
-    b.addEventListener('click', function(){ apply(on === b.dataset.want ? null : b.dataset.want); });
-  });
-})();
-</script>
-
-<!-- 01 regions -->
+<!-- 01 the regions -->
 <section class="wa-zone" id="regions">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>01</b><span>Explore Africa</span></div>
+      <div class="wa-head-no"><b>01</b><span>The regions</span></div>
       <div>
         <h2>Five regions. Thousands of ways to <em>discover Africa</em>.</h2>
         <p class="wa-note">Africa is not one destination. &ldquo;Africa&rdquo; covers a landmass you could fit the United States, China, India and most of Europe inside. Start with the region, discover the country, then find the experience that belongs to you.</p>
@@ -818,35 +773,49 @@ ul,ol{list-style:none}
 <section class="wa-zone dust" id="destinations">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>02</b><span>Destinations</span></div>
+      <div class="wa-head-no"><b>02</b><span>The countries</span></div>
       <div>
         <h2>Twenty-two countries, <em>all of them live</em>.</h2>
         <p class="wa-note">Every country has a different Africa to show you, and every one of them has a page. Three run as operators of our own &mdash; Kamerun in Cameroon, Pearl Trails Uganda, Namib Skyline in Namibia. The rest are covered by our country pages, each working through the same twenty-seven categories, so you can compare two countries on the same terms instead of on the strength of their marketing.</p>
       </div>
     </div>
+    <div class="wa-wants" role="group" aria-label="Filter destinations by what you want">
+      <button class="wa-want" type="button" data-want="wildlife"><i>I want to see</i><b>Wildlife</b></button>
+      <button class="wa-want" type="button" data-want="mountains"><i>I want to climb</i><b>Mountains</b></button>
+      <button class="wa-want" type="button" data-want="coast"><i>I want to escape</i><b>Coast &amp; islands</b></button>
+      <button class="wa-want" type="button" data-want="culture"><i>I want to meet</i><b>People &amp; culture</b></button>
+      <button class="wa-want" type="button" data-want="food"><i>I want to taste</i><b>African food</b></button>
+      <button class="wa-want" type="button" data-want="heritage"><i>I want to discover</i><b>Heritage</b></button>
+    </div>
+    <p class="wa-want-say" id="wa-want-say">Choose one and the list narrows to it. Choose it again to see all twenty-two.</p>
     <div class="wa-dests">
-      <div class="wa-dest" data-tags="mountains coast culture heritage" data-tier="ours"><b>Central &amp; West Africa &middot; Kamerun</b><h3>Cameroon</h3><p>Africa in miniature. Black-sand beaches, Mount Cameroon, rainforest, highlands, kingdoms and savanna.</p><a href="/cameroon">Explore Cameroon &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife culture" data-tier="ours"><b>East Africa &middot; Pearl Trails Uganda</b><h3>Uganda</h3><p>The Pearl of Africa. Gorillas, chimpanzees, the Nile, savanna, crater lakes and the Rwenzori.</p><a href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife heritage" data-tier="ours"><b>Southern Africa &middot; Namib Skyline</b><h3>Namibia</h3><p>Where the desert meets the wild. Sossusvlei, the Skeleton Coast, Etosha and Damaraland.</p><a href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife coast culture" data-tier="live"><b>East Africa</b><h3>Kenya</h3><p>Where the wild runs free. The Mara, Amboseli, Mount Kenya, the Rift Valley and the Indian Ocean coast.</p><a href="/kenya">Explore Kenya &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife mountains coast" data-tier="live"><b>East Africa</b><h3>Tanzania</h3><p>Wild Africa, island Africa. Serengeti, Kilimanjaro, Ngorongoro and Zanzibar.</p><a href="/tanzania">Explore Tanzania &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife culture" data-tier="live"><b>East Africa</b><h3>Rwanda</h3><p>The land of a thousand hills. Gorillas, volcanoes, Nyungwe, Lake Kivu and Kigali.</p><a href="/rwanda">Explore Rwanda &rarr;</a></div>
-      <div class="wa-dest" data-tags="mountains culture heritage food" data-tier="live"><b>East Africa</b><h3>Ethiopia</h3><p>The roof of Africa. Lalibela's rock churches, the Simien escarpment, Bale and the Danakil.</p><a href="/ethiopia">Explore Ethiopia &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife culture" data-tier="live"><b>Southern Africa</b><h3>Botswana</h3><p>A delta that never reaches the sea. The Okavango, Chobe's elephant and the Makgadikgadi pans.</p><a href="/botswana">Explore Botswana &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife heritage" data-tier="live"><b>Southern Africa</b><h3>Zambia</h3><p>Into the real wilderness. South Luangwa, Kafue, the Zambezi and Victoria Falls.</p><a href="/zambia">Explore Zambia &rarr;</a></div>
-      <div class="wa-dest" data-tags="food heritage coast wildlife" data-tier="live"><b>Southern Africa</b><h3>South Africa</h3><p>A world in one country. Cape Town, the Garden Route, Kruger, the Drakensberg and the Winelands.</p><a href="/south-africa">Explore South Africa &rarr;</a></div>
-      <div class="wa-dest" data-tags="mountains culture food heritage" data-tier="live"><b>North Africa</b><h3>Morocco</h3><p>Atlas, Sahara and the medinas. Toubkal, Fez, Marrakesh, Essaouira and the dunes at Merzouga.</p><a href="/morocco">Explore Morocco &rarr;</a></div>
-      <div class="wa-dest" data-tags="heritage culture coast" data-tier="live"><b>North Africa</b><h3>Egypt</h3><p>The Nile, and five thousand years. Giza, the Valley of the Kings, Abu Simbel and the Red Sea reefs.</p><a href="/egypt">Explore Egypt &rarr;</a></div>
-      <div class="wa-dest" data-tags="culture heritage coast food" data-tier="live"><b>West Africa</b><h3>Ghana</h3><p>The forts, the forest and the highlife. Cape Coast, Kakum's canopy, Ashanti Kumasi and Mole.</p><a href="/ghana">Explore Ghana &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife coast culture" data-tier="live"><b>Islands</b><h3>Madagascar</h3><p>An island that evolved alone. Lemurs, baobabs, the tsingy and the spiny forest of the south.</p><a href="/madagascar">Explore Madagascar &rarr;</a></div>
-      <div class="wa-dest" data-tags="culture food" data-tier="live"><b>West Africa</b><h3>Nigeria</h3><p>Two hundred million people, Nollywood, Afrobeats, and the Yoruba and Benin kingdoms behind them.</p><a href="/nigeria">Explore Nigeria &rarr;</a></div>
-      <div class="wa-dest" data-tags="culture food coast" data-tier="live"><b>West Africa</b><h3>Senegal</h3><p>Where the Sahel meets the Atlantic. Dakar, Gorée, the Sine-Saloum delta and Djoudj's birds.</p><a href="/senegal">Explore Senegal &rarr;</a></div>
-      <div class="wa-dest" data-tags="wildlife heritage" data-tier="live"><b>Southern Africa</b><h3>Zimbabwe</h3><p>Great Zimbabwe's stone city, Hwange's elephant, Mana Pools on foot and the Victoria Falls.</p><a href="/zimbabwe">Explore Zimbabwe &rarr;</a></div>
-      <div class="wa-dest" data-tags="coast wildlife" data-tier="live"><b>Southern Africa</b><h3>Mozambique</h3><p>Two thousand kilometres of coast, the Bazaruto and Quirimbas archipelagos, and Gorongosa.</p><a href="/mozambique">Explore Mozambique &rarr;</a></div>
-      <div class="wa-dest" data-tags="culture coast" data-tier="live"><b>West Africa</b><h3>Côte d'Ivoire</h3><p>Lagoons, rainforest at Taï, the basilica at Yamoussoukro and the Atlantic beaches west of Abidjan.</p><a href="/cote-divoire">Explore Côte d'Ivoire &rarr;</a></div>
-      <div class="wa-dest" data-tags="heritage culture coast" data-tier="live"><b>North Africa</b><h3>Tunisia</h3><p>Carthage, the Sahel towns, Kairouan's mosque and the Sahara south around Douz and Tozeur.</p><a href="/tunisia">Explore Tunisia &rarr;</a></div>
-      <div class="wa-dest" data-tags="coast" data-tier="live"><b>Islands</b><h3>Seychelles</h3><p>Granite islands in the Indian Ocean, Vallée de Mai's coco de mer, and Aldabra's tortoises.</p><a href="/seychelles">Explore Seychelles &rarr;</a></div>
-      <div class="wa-dest" data-tags="coast food" data-tier="live"><b>Islands</b><h3>Mauritius</h3><p>Reef and lagoon, a volcanic interior, Le Morne, and a cuisine of four continents at once.</p><a href="/mauritius">Explore Mauritius &rarr;</a></div>
+      <h3 class="wa-dest-reg" data-region="central">Central &amp; West Africa</h3>
+      <div class="wa-dest" data-region="central" data-tags="mountains coast culture heritage" data-tier="ours"><b>Kamerun</b><h3>Cameroon</h3><p>Africa in miniature. Black-sand beaches, Mount Cameroon, rainforest, highlands, kingdoms and savanna.</p><a href="/cameroon">Explore Cameroon &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="culture heritage coast food" data-tier="live"><b class="wa-dest-b--none"></b><h3>Ghana</h3><p>The forts, the forest and the highlife. Cape Coast, Kakum's canopy, Ashanti Kumasi and Mole.</p><a href="/ghana">Explore Ghana &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="culture food" data-tier="live"><b class="wa-dest-b--none"></b><h3>Nigeria</h3><p>Two hundred million people, Nollywood, Afrobeats, and the Yoruba and Benin kingdoms behind them.</p><a href="/nigeria">Explore Nigeria &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="culture food coast" data-tier="live"><b class="wa-dest-b--none"></b><h3>Senegal</h3><p>Where the Sahel meets the Atlantic. Dakar, Gorée, the Sine-Saloum delta and Djoudj's birds.</p><a href="/senegal">Explore Senegal &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="culture coast" data-tier="live"><b class="wa-dest-b--none"></b><h3>Côte d'Ivoire</h3><p>Lagoons, rainforest at Taï, the basilica at Yamoussoukro and the Atlantic beaches west of Abidjan.</p><a href="/cote-divoire">Explore Côte d'Ivoire &rarr;</a></div>
+      <h3 class="wa-dest-reg" data-region="east">East Africa</h3>
+      <div class="wa-dest" data-region="east" data-tags="wildlife culture" data-tier="ours"><b>Pearl Trails Uganda</b><h3>Uganda</h3><p>The Pearl of Africa. Gorillas, chimpanzees, the Nile, savanna, crater lakes and the Rwenzori.</p><a href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="wildlife coast culture" data-tier="live"><b class="wa-dest-b--none"></b><h3>Kenya</h3><p>Where the wild runs free. The Mara, Amboseli, Mount Kenya, the Rift Valley and the Indian Ocean coast.</p><a href="/kenya">Explore Kenya &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="wildlife mountains coast" data-tier="live"><b class="wa-dest-b--none"></b><h3>Tanzania</h3><p>Wild Africa, island Africa. Serengeti, Kilimanjaro, Ngorongoro and Zanzibar.</p><a href="/tanzania">Explore Tanzania &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="wildlife culture" data-tier="live"><b class="wa-dest-b--none"></b><h3>Rwanda</h3><p>The land of a thousand hills. Gorillas, volcanoes, Nyungwe, Lake Kivu and Kigali.</p><a href="/rwanda">Explore Rwanda &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="mountains culture heritage food" data-tier="live"><b class="wa-dest-b--none"></b><h3>Ethiopia</h3><p>The roof of Africa. Lalibela's rock churches, the Simien escarpment, Bale and the Danakil.</p><a href="/ethiopia">Explore Ethiopia &rarr;</a></div>
+      <h3 class="wa-dest-reg" data-region="southern">Southern Africa</h3>
+      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage" data-tier="ours"><b>Namib Skyline</b><h3>Namibia</h3><p>Where the desert meets the wild. Sossusvlei, the Skeleton Coast, Etosha and Damaraland.</p><a href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="wildlife culture" data-tier="live"><b class="wa-dest-b--none"></b><h3>Botswana</h3><p>A delta that never reaches the sea. The Okavango, Chobe's elephant and the Makgadikgadi pans.</p><a href="/botswana">Explore Botswana &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage" data-tier="live"><b class="wa-dest-b--none"></b><h3>Zambia</h3><p>Into the real wilderness. South Luangwa, Kafue, the Zambezi and Victoria Falls.</p><a href="/zambia">Explore Zambia &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage" data-tier="live"><b class="wa-dest-b--none"></b><h3>Zimbabwe</h3><p>Great Zimbabwe's stone city, Hwange's elephant, Mana Pools on foot and the Victoria Falls.</p><a href="/zimbabwe">Explore Zimbabwe &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="food heritage coast wildlife" data-tier="live"><b class="wa-dest-b--none"></b><h3>South Africa</h3><p>A world in one country. Cape Town, the Garden Route, Kruger, the Drakensberg and the Winelands.</p><a href="/south-africa">Explore South Africa &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="coast wildlife" data-tier="live"><b class="wa-dest-b--none"></b><h3>Mozambique</h3><p>Two thousand kilometres of coast, the Bazaruto and Quirimbas archipelagos, and Gorongosa.</p><a href="/mozambique">Explore Mozambique &rarr;</a></div>
+      <h3 class="wa-dest-reg" data-region="north">North Africa</h3>
+      <div class="wa-dest" data-region="north" data-tags="mountains culture food heritage" data-tier="live"><b class="wa-dest-b--none"></b><h3>Morocco</h3><p>Atlas, Sahara and the medinas. Toubkal, Fez, Marrakesh, Essaouira and the dunes at Merzouga.</p><a href="/morocco">Explore Morocco &rarr;</a></div>
+      <div class="wa-dest" data-region="north" data-tags="heritage culture coast" data-tier="live"><b class="wa-dest-b--none"></b><h3>Egypt</h3><p>The Nile, and five thousand years. Giza, the Valley of the Kings, Abu Simbel and the Red Sea reefs.</p><a href="/egypt">Explore Egypt &rarr;</a></div>
+      <div class="wa-dest" data-region="north" data-tags="heritage culture coast" data-tier="live"><b class="wa-dest-b--none"></b><h3>Tunisia</h3><p>Carthage, the Sahel towns, Kairouan's mosque and the Sahara south around Douz and Tozeur.</p><a href="/tunisia">Explore Tunisia &rarr;</a></div>
+      <h3 class="wa-dest-reg" data-region="islands">Islands</h3>
+      <div class="wa-dest" data-region="islands" data-tags="wildlife coast culture" data-tier="live"><b class="wa-dest-b--none"></b><h3>Madagascar</h3><p>An island that evolved alone. Lemurs, baobabs, the tsingy and the spiny forest of the south.</p><a href="/madagascar">Explore Madagascar &rarr;</a></div>
+      <div class="wa-dest" data-region="islands" data-tags="coast" data-tier="live"><b class="wa-dest-b--none"></b><h3>Seychelles</h3><p>Granite islands in the Indian Ocean, Vallée de Mai's coco de mer, and Aldabra's tortoises.</p><a href="/seychelles">Explore Seychelles &rarr;</a></div>
+      <div class="wa-dest" data-region="islands" data-tags="coast food" data-tier="live"><b class="wa-dest-b--none"></b><h3>Mauritius</h3><p>Reef and lagoon, a volcanic interior, Le Morne, and a cuisine of four continents at once.</p><a href="/mauritius">Explore Mauritius &rarr;</a></div>
     </div>
   </div>
 </section>
@@ -855,7 +824,7 @@ ul,ol{list-style:none}
 <section class="wa-zone" id="experiences">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>03</b><span>Experience Africa</span></div>
+      <div class="wa-head-no"><b>03</b><span>What you can do</span></div>
       <div>
         <h2>Start with what you <em>want to do</em>.</h2>
         <p class="wa-note">You don&rsquo;t always know the country first. Sometimes you know the experience. Pick it and we will tell you which country does it best, and in which month.</p>
@@ -910,7 +879,7 @@ ul,ol{list-style:none}
 <section class="wa-zone">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>05</b><span>Why Afrinkong</span></div>
+      <div class="wa-head-no"><b>05</b><span>The people behind it</span></div>
       <div>
         <h2>Africa, through <em>people who know it</em>.</h2>
         <p class="wa-note">Afrinkong is not simply a catalogue of destinations. We connect travellers with local tourism operators, guides and people who live in the countries they represent.</p>
@@ -949,7 +918,7 @@ ul,ol{list-style:none}
 <section class="wa-zone basalt" id="seasons">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>07</b><span>Africa by season</span></div>
+      <div class="wa-head-no"><b>07</b><span>The year</span></div>
       <div>
         <h2>There is always <em>somewhere to go</em>.</h2>
         <p class="wa-note">Africa changes dramatically through the year, and the continent is large enough that no month is a bad month everywhere. Every country has months that work and months that do not. We will tell you which.</p>
@@ -969,7 +938,7 @@ ul,ol{list-style:none}
 <section class="wa-zone" id="stories">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>08</b><span>Afrinkong stories</span></div>
+      <div class="wa-head-no"><b>08</b><span>Stories</span></div>
       <div>
         <h2>Africa is <em>more than a destination</em>.</h2>
         <p class="wa-note">Long-form writing from the countries we work in, by the guides and operators who live there. The first five are being written now; each one will sit on the country page it belongs to.</p>
@@ -985,27 +954,52 @@ ul,ol{list-style:none}
   </div>
 </section>
 
-<!-- 09 the directory -->
-<section class="wa-zone basalt" id="map">
-  <div class="wa-frame">
-    <div class="wa-head">
-      <div class="wa-head-no"><b>09</b><span>Every destination</span></div>
-      <div>
-        <h2>Twenty-two countries, <em>five regions</em>.</h2>
-        <p class="wa-note">The whole roster, by region. Three are run by a company of our own; the rest work through the same twenty-seven categories, so two countries can be compared on the same terms. <a class="wa-dir-up" href="#window">Or find them on the map &uarr;</a></p>
-      </div>
-    </div>
-    <div class="wa-dir">
-      <div class="wa-dir-col"><h4 class="wa-dir-reg">Central &amp; West</h4><a href="/cameroon" data-tier="ours"><em>Cameroon</em><span>Africa in miniature</span></a><a href="/ghana" data-tier="live"><em>Ghana</em><span>The forts, the forest and the highlife</span></a><a href="/nigeria" data-tier="live"><em>Nigeria</em><span>The loudest country on the continent</span></a><a href="/senegal" data-tier="live"><em>Senegal</em><span>Where the Sahel meets the Atlantic</span></a><a href="/cote-divoire" data-tier="live"><em>Côte d'Ivoire</em><span>Lagoons, forest and the Atlantic</span></a></div>
-      <div class="wa-dir-col"><h4 class="wa-dir-reg">East</h4><a href="https://pearl-trails-uganda.vercel.app" data-tier="ours"><em>Uganda</em><span>The Pearl of Africa</span></a><a href="/kenya" data-tier="live"><em>Kenya</em><span>Where the wild runs free</span></a><a href="/tanzania" data-tier="live"><em>Tanzania</em><span>Wild Africa, island Africa</span></a><a href="/rwanda" data-tier="live"><em>Rwanda</em><span>A thousand hills</span></a><a href="/ethiopia" data-tier="live"><em>Ethiopia</em><span>The roof of Africa</span></a></div>
-      <div class="wa-dir-col"><h4 class="wa-dir-reg">Southern</h4><a href="https://namib-skyline.vercel.app" data-tier="ours"><em>Namibia</em><span>Where the desert meets the wild</span></a><a href="/botswana" data-tier="live"><em>Botswana</em><span>A delta that never reaches the sea</span></a><a href="/zambia" data-tier="live"><em>Zambia</em><span>Into the real wilderness</span></a><a href="/zimbabwe" data-tier="live"><em>Zimbabwe</em><span>Great Zimbabwe and the Zambezi</span></a><a href="/south-africa" data-tier="live"><em>South Africa</em><span>A world in one country</span></a><a href="/mozambique" data-tier="live"><em>Mozambique</em><span>Two thousand kilometres of coast</span></a></div>
-      <div class="wa-dir-col"><h4 class="wa-dir-reg">North</h4><a href="/morocco" data-tier="live"><em>Morocco</em><span>Atlas, Sahara and the medinas</span></a><a href="/egypt" data-tier="live"><em>Egypt</em><span>The Nile, and five thousand years</span></a><a href="/tunisia" data-tier="live"><em>Tunisia</em><span>Carthage, the Sahel and the desert south</span></a></div>
-      <div class="wa-dir-col"><h4 class="wa-dir-reg">Islands</h4><a href="/madagascar" data-tier="live"><em>Madagascar</em><span>An island that evolved alone</span></a><a href="/seychelles" data-tier="live"><em>Seychelles</em><span>Granite islands in the Indian Ocean</span></a><a href="/mauritius" data-tier="live"><em>Mauritius</em><span>Reef, sugar and the volcanic interior</span></a></div>
-    </div>
-  </div>
-</section>
+<script>
+/* The "what brings you here" buttons filter the grid directly beneath them. It is a filter, not a link: pressing the same button again clears it,
+   and with the script gone every destination is simply visible. */
+(function(){
+  var bar = document.querySelector('.wa-wants');
+  if (!bar) return;
+  var say = document.getElementById('wa-want-say');
+  var idle = say.textContent;
+  var buttons = [].slice.call(bar.querySelectorAll('.wa-want'));
+  var LINE = {
+    wildlife:  'If wildlife is what brought you here, start with these.',
+    mountains: 'If you came to climb, these are the ones with the altitude.',
+    coast:     'If you came for the water, these reach the ocean.',
+    culture:   'If you came to meet people, start with these.',
+    food:      'If you came to eat, start here.',
+    heritage:  'If you came for what was here before you, start with these.'
+  };
+  var on = null;
 
-<!-- closing -->
+  function apply(want){
+    on = want;
+    buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
+    var shown = 0;
+    var live = {};
+    [].slice.call(document.querySelectorAll('.wa-dest[data-tags]')).forEach(function(c){
+      var keep = !want || c.dataset.tags.split(' ').indexOf(want) >= 0;
+      c.hidden = !keep;
+      if (keep) { shown++; live[c.dataset.region] = true; }
+    });
+    // A region heading with nothing under it is worse than no heading.
+    [].slice.call(document.querySelectorAll('.wa-dest-reg')).forEach(function(h){
+      h.hidden = !live[h.dataset.region];
+    });
+    say.textContent = want ? LINE[want] + ' ' + shown + ' of 22.' : idle;
+  }
+
+  buttons.forEach(function(b){
+    b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function(){ apply(on === b.dataset.want ? null : b.dataset.want); });
+  });
+})();
+</script>
+
+</main>
+
+<!-- begin -->
 <section class="wa-zone">
   <div class="wa-frame wa-end">
     <span class="wa-stamp">Begin</span>
@@ -1051,7 +1045,7 @@ ul,ol{list-style:none}
       <div class="wa-foot-col">
         <b>Explore</b>
         <a href="#experiences">Experiences</a>
-        <a href="#map">Every destination</a>
+        <a href="#destinations">Every destination</a>
         <a href="#begin">Where to begin</a>
         <a href="#seasons">Travel seasons</a>
         <a href="/tourism/">All twenty-seven categories</a>
