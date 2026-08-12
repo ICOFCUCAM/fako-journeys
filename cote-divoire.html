@@ -5,83 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Côte d&#x27;Ivoire — Lagoons, forest and the Atlantic | Guided Journeys and Experiences</title>
 <meta name="description" content="Côte d&#x27;Ivoire: Abidjan&#x27;s lagoon skyline, the rainforest at Taï, the basilica at Yamoussoukro, and Atlantic beaches west towards Grand-Béréby — the economic engine of francophone West Africa. Twenty-seven kinds of experience, from wildlife and mountains to culture, food and heritage, with local guides.">
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
-:root{
-  --c-bg:#F7F2E7;--c-primary:#1C2A25;--c-accent:#BE5527;--c-ink:#1F211C;
-  --c-muted:#6E7166;--c-border:#DDD4C1;
-  --dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
-  --onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
-  --rule:1px solid var(--c-border);
-  --rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
-  --display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,sans-serif;
-  --text:Charter,"Iowan Old Style","Source Serif Pro",Palatino,Georgia,serif;
-  --mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,monospace;
-  color-scheme:light;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:var(--text);background:var(--c-bg);color:var(--c-ink);line-height:1.66;font-size:17px;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.02;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
-ul{list-style:none}
-::selection{background:var(--c-accent);color:var(--c-bg)}
-.frame{max-width:1240px;margin:0 auto;padding:0 44px}
-.stamp{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
-.note{margin-top:16px;color:var(--c-muted);max-width:44em}
-
+/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
+   What follows is this page shape only. */
 .mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
 .mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
 .mark{margin-right:auto;display:flex;flex-direction:column;gap:3px}
-.mark b{font-family:var(--display);font-size:26px;font-weight:700;text-transform:uppercase;line-height:1;white-space:nowrap}
-.mark span{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+.mark-up{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--c-accent)}
+.mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;line-height:1;white-space:nowrap}
+.mark span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
 .routes{display:flex;gap:26px}
-.routes a{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.routes a{font-family:var(--fj-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
-.btn{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
+.btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
 .btn:hover{background:var(--c-accent)}
 @media(max-width:1010px){.routes{display:none}}
 @media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}.btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
 
-.open{padding:78px 0 62px;border-bottom:var(--rule)}
-.open-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:end}
-.open-grid.no-pic{grid-template-columns:1fr;max-width:34em}
-.open h1{font-size:clamp(34px,4.4vw,64px);margin:20px 0 0}
-.open h1 em{font-style:normal;color:var(--c-accent)}
-.lede{font-size:19px;color:var(--c-muted);margin-top:22px;max-width:40em}
+.open{padding:calc(var(--sp-6) + 8px) 0 var(--sp-6);border-bottom:var(--fj-rule)}
+.open-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
+.open-grid.no-shape{grid-template-columns:1fr;max-width:36em}
+.open h1{font-size:clamp(46px,7vw,104px);margin:14px 0 0;letter-spacing:-.02em}
+/* The tagline is the country's argument and gets its own line at display size,
+   rather than being appended to the name in accent — which made the name the
+   smaller half of its own headline. */
+.open-tag{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(20px,2.6vw,34px);line-height:1.05;color:var(--c-accent);margin-top:10px}
+.lede{font-size:19px;color:var(--c-muted);margin-top:22px;max-width:38em}
 .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.act{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 20px;border:1px solid var(--c-primary);transition:background .2s,color .2s}
-.act i{font-style:normal;margin-left:9px}
-.act.go{background:var(--c-primary);color:var(--c-bg)}
-.act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
-.act.faint{border-color:var(--c-border);color:var(--c-muted)}
-.act.faint:hover{border-color:var(--c-primary);color:var(--c-primary)}
-.open-plate .ct-shot img{width:100%;aspect-ratio:4/5;object-fit:cover}
-.key{display:grid;grid-template-columns:repeat(3,1fr);margin-top:52px;border-top:2px solid var(--c-primary)}
-.key div{padding:18px 22px 0 0}
-.key b{display:block;font-family:var(--display);font-size:29px;font-weight:700;color:var(--c-primary)}
-.key span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted);margin-top:7px}
-@media(max-width:940px){.open{padding:52px 0 44px}.open-grid{grid-template-columns:1fr;gap:34px;align-items:start}.open-plate .ct-shot img{aspect-ratio:4/3}}
-@media(max-width:520px){.key{grid-template-columns:1fr}.key div{padding:14px 0 12px;border-bottom:var(--rule)}}
 
-.zone{padding:84px 0}
-.zone.dust{background:var(--dust)}
-.zone.basalt{background:var(--basalt);color:var(--onbasalt)}
-.zone.basalt h2,.zone.basalt h3{color:var(--c-bg)}
-.zone.basalt .note,.zone.basalt p{color:var(--onbasalt-dim)}
-.head{display:grid;grid-template-columns:150px 1fr;gap:40px;align-items:start;margin-bottom:44px}
-.head-no{border-top:2px solid var(--c-accent);padding-top:12px}
-.head-no b{display:block;font-family:var(--display);font-size:38px;font-weight:700;line-height:1;color:var(--c-accent)}
-.head-no span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);margin-top:8px}
-.zone.basalt .head-no span{color:var(--onbasalt-dim)}
-.head h2{font-size:clamp(29px,3.8vw,50px);max-width:24ch}
-.head h2 em{font-style:normal;color:var(--c-accent)}
-@media(max-width:880px){.zone{padding:60px 0}.head{grid-template-columns:1fr;gap:18px;margin-bottom:32px}}
+/* The window. Height-led, so every country is drawn at the same visual weight
+   whatever its proportions — Chad and Rwanda should feel like the same kind of
+   object on the page. */
+.ct-window{height:min(58vh,520px)}
+.ct-window svg{height:100%}
+
+/* The region strip: the page's one link outward, and what makes a country page
+   part of an atlas rather than a leaflet. */
+.ct-near{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:26px 0}
+.ct-near h2{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-near-row{display:flex;flex-wrap:wrap;gap:0 34px}
+.ct-near-row a{padding:8px 0;transition:color var(--t-fast) var(--ease)}
+.ct-near-row a:hover{color:var(--c-accent)}
+.ct-near-row em{font-style:normal;font-family:var(--fj-display);font-size:19px;font-weight:700;text-transform:uppercase}
+.ct-near-row span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);margin-left:10px}
+@media(max-width:900px){.open-grid{grid-template-columns:1fr;gap:34px}
+  .ct-window{height:min(46vh,360px);max-width:420px}
+  .ct-near-row{gap:0 22px}}
 
 .highs{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 32px}
-.ct-high b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.ct-high b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
 .ct-high h3{font-size:22px;margin:8px 0 8px}
 .ct-high p{font-size:15px;color:var(--c-muted)}
 .ct-high .ct-shot{display:block;margin-bottom:16px}
@@ -90,18 +66,18 @@ ul{list-style:none}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
 .groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--rule);border-bottom:var(--rule)}
-.ct-group>b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--rule)}
+.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
+.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
-.ct-group li b{display:block;font-family:var(--display);font-size:16px;font-weight:700;text-transform:uppercase}
+.ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
 .ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
-.ct-reason b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:10px}
+.ct-reason b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:10px}
 .ct-reason h3{font-size:24px;margin-bottom:10px}
 .ct-reason p{font-size:15px}
 @media(max-width:760px){.reasons{grid-template-columns:1fr}}
@@ -112,63 +88,68 @@ ul{list-style:none}
 .end p{margin:16px auto 0;max-width:46ch;color:var(--c-muted)}
 .end .acts{justify-content:center}
 
-.foot{background:var(--basalt);color:var(--onbasalt);padding:56px 0 0}
+.foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:56px 0 0}
 .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
-.foot-brand{font-family:var(--display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
-.foot-brand span{display:block;font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
-.foot-grid p{margin-top:14px;font-size:14.5px;max-width:32em;color:var(--onbasalt-dim)}
-.foot-col b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px;font-weight:400}
-.foot-col a,.foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--onbasalt-dim)}
+.foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
+.foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
+.foot-grid p{margin-top:14px;font-size:14.5px;max-width:32em;color:var(--fj-onbasalt-dim)}
+.foot-col b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px;font-weight:400}
+.foot-col a,.foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--fj-onbasalt-dim)}
 .foot-col a:hover{color:var(--c-bg)}
-.foot-bar{margin-top:40px;padding:20px 0;border-top:var(--rule-dark);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--onbasalt-dim)}
+.foot-bar{margin-top:40px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
 .foot-bar a{border-bottom:1px solid var(--c-accent)}
 @media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
 </style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to content</a>
 <header class="mast">
-  <div class="frame mast-in">
-    <a class="mark" href="/cote-divoire"><b>Côte d&#x27;Ivoire</b><span>Lagoons, forest and the Atlantic</span></a>
+  <div class="af-frame mast-in">
+    <a class="mark" href="/cote-divoire"><span class="mark-up">Afrinkong</span><b>Côte d&#x27;Ivoire</b><span>Lagoons, forest and the Atlantic</span></a>
     <nav class="routes">
       <a href="#highlights">Highlights</a>
       <a href="#experiences">Experiences</a>
       <a href="#why">Why go</a>
       <a href="/tourism/cote-divoire">All 27</a>
     </nav>
-    <a class="btn" href="/contact">Plan a journey</a>
+    <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>
   </div>
 </header>
 
+<main id="main">
 <section class="open">
-  <div class="frame">
-    <div class="open-grid no-pic">
+  <div class="af-frame">
+    <div class="open-grid has-shape">
       <div>
-        <span class="stamp">West Africa</span>
-        <h1>Côte d&#x27;Ivoire. <em>Lagoons, forest and the Atlantic</em>.</h1>
+        <span class="af-stamp">West Africa &middot; Afrinkong</span>
+        <h1>Côte d&#x27;Ivoire</h1>
+        <p class="open-tag">Lagoons, forest and the Atlantic.</p>
         <p class="lede">Abidjan&#x27;s lagoon skyline, the rainforest at Taï, the basilica at Yamoussoukro, and Atlantic beaches west towards Grand-Béréby — the economic engine of francophone West Africa.</p>
         <div class="acts">
-          <a class="act go" href="/contact">Plan a journey <i>&rarr;</i></a>
-          <a class="act faint" href="#experiences">What you can do here <i>&rarr;</i></a>
+          <a class="af-btn af-btn--solid" href="/contact">Plan a journey <i>&rarr;</i></a>
+          <a class="af-btn af-btn--quiet" href="#experiences">What you can do here <i>&rarr;</i></a>
         </div>
       </div>
-      <div class="open-plate"></div>
-    </div>
-    <div class="key">
-      <div><b>27</b><span>Kinds of experience</span></div>
-      <div><b>West Africa</b><span>Where it sits</span></div>
-      <div><b>Local</b><span>Guides, vehicles and permits</span></div>
+      <div class="af-window ct-window">
+        <svg viewBox="0 0 922.3 1000.0" role="img" aria-label="The outline of Côte d&#x27;Ivoire">
+          <defs><clipPath id="shape-cote-divoire"><path d="M817.7 891.4L813.7 897.6L793.8 893.1L798.2 888L817.7 891.4ZM122.7 79.5L138.3 76.5L149.5 68.9L160.2 52.5L173.8 39.6L198.4 38.5L209.6 54.3L213.9 54.7L216.2 67.7L254 77.7L266.2 87.5L274 82.5L271 70.6L278.3 56.6L316.2 56.8L320.4 50.1L319.6 20.8L325.2 8.7L337.8 20L358.3 25.1L361.1 23L359.4 7.4L384 0L387.5 20.1L385.5 26.3L391.4 51.1L383.1 72.7L400.1 82.9L412.3 84.4L432.6 67.3L434.7 59.9L442.5 54.7L465.3 48.4L485.7 48.2L510.1 68.7L528.3 68.4L540.9 72.9L551.6 81.4L565.4 112.4L568.1 130.8L590.3 145.7L603.5 159.2L617.6 166.4L632.1 165.2L638.7 172.5L649.7 177.7L660.4 178.3L670.9 163.3L743.7 138.2L774.9 138L818 145.8L827.8 143.9L837.1 151.5L846 167L861 177.4L884.8 219.1L892.3 219.3L903.5 210.9L901 238.9L905.2 242L893.1 268.9L892.1 278.9L900.5 282.4L906.5 293.1L912.4 317.8L922.3 410.7L917.1 416.3L906.2 419.9L905.5 435.6L878.3 452.9L860.5 491.4L849.8 527.1L843.9 566.2L835.7 581.8L814.8 606.9L804.2 627.6L805.2 645.9L801.7 652.4L806.5 699.9L834 800.2L839.1 811.2L863.8 818.5L869 844.7L867.5 856.7L863.6 861L861.9 883.5L858.5 888.4L846.5 888.7L838.8 893.4L828 891.3L827 888L805.5 879.4L808.9 856.9L801.9 855.7L795.9 858.5L784.2 885.8L778.6 890.4L700 874.6L683.5 862.8L663.1 859.9L598 863.2L589.1 869.8L663.4 867.3L671.5 868.3L675.1 872.7L544.9 884.2L534.6 882.6L526.8 873.7L488 871.8L479.8 874.6L475.2 880.8L514.2 880L520.5 885.1L445.2 890L392.5 901.2L296.3 938.3L251.1 951.5L218.7 970.9L192.6 979.6L163 996.5L145.1 1000L141 994.4L140.5 925.4L145.1 884.6L153.8 880.4L156.7 875.5L158.3 860.2L167.4 846.4L168.3 822.2L173 810.8L166.7 764.8L164.6 762.5L157.6 764.3L139.7 753.4L125.8 751.4L116.5 742.1L116.4 732.2L111.8 726L104.2 700.8L90.6 692.2L58 690.7L45.8 685.7L37.5 680.5L22.2 662.5L8.8 661.3L0 654.7L31.4 624.2L42.3 609.1L47.9 581L49.6 566.1L32.2 495.7L25.1 488.7L34 482L63 490.1L81.7 458.5L81 441.4L100.4 408.7L99.9 398.3L95.3 394L81.5 391.9L65.1 379.8L69.5 348.1L74 343.8L98.1 342.7L131 348.1L143 363L149.4 363.2L151.9 357.8L151.6 333.6L148 320.9L139.1 308.3L115.1 297.1L118.5 266.7L124.2 260.8L143.5 251.3L135 240L123.7 233.6L129 197.8L109.1 200.1L100.9 194.6L94.1 184L96.3 108.5L99.4 100.9L122.7 79.5Z"/></clipPath></defs>
+          <path class="af-window-fill" d="M817.7 891.4L813.7 897.6L793.8 893.1L798.2 888L817.7 891.4ZM122.7 79.5L138.3 76.5L149.5 68.9L160.2 52.5L173.8 39.6L198.4 38.5L209.6 54.3L213.9 54.7L216.2 67.7L254 77.7L266.2 87.5L274 82.5L271 70.6L278.3 56.6L316.2 56.8L320.4 50.1L319.6 20.8L325.2 8.7L337.8 20L358.3 25.1L361.1 23L359.4 7.4L384 0L387.5 20.1L385.5 26.3L391.4 51.1L383.1 72.7L400.1 82.9L412.3 84.4L432.6 67.3L434.7 59.9L442.5 54.7L465.3 48.4L485.7 48.2L510.1 68.7L528.3 68.4L540.9 72.9L551.6 81.4L565.4 112.4L568.1 130.8L590.3 145.7L603.5 159.2L617.6 166.4L632.1 165.2L638.7 172.5L649.7 177.7L660.4 178.3L670.9 163.3L743.7 138.2L774.9 138L818 145.8L827.8 143.9L837.1 151.5L846 167L861 177.4L884.8 219.1L892.3 219.3L903.5 210.9L901 238.9L905.2 242L893.1 268.9L892.1 278.9L900.5 282.4L906.5 293.1L912.4 317.8L922.3 410.7L917.1 416.3L906.2 419.9L905.5 435.6L878.3 452.9L860.5 491.4L849.8 527.1L843.9 566.2L835.7 581.8L814.8 606.9L804.2 627.6L805.2 645.9L801.7 652.4L806.5 699.9L834 800.2L839.1 811.2L863.8 818.5L869 844.7L867.5 856.7L863.6 861L861.9 883.5L858.5 888.4L846.5 888.7L838.8 893.4L828 891.3L827 888L805.5 879.4L808.9 856.9L801.9 855.7L795.9 858.5L784.2 885.8L778.6 890.4L700 874.6L683.5 862.8L663.1 859.9L598 863.2L589.1 869.8L663.4 867.3L671.5 868.3L675.1 872.7L544.9 884.2L534.6 882.6L526.8 873.7L488 871.8L479.8 874.6L475.2 880.8L514.2 880L520.5 885.1L445.2 890L392.5 901.2L296.3 938.3L251.1 951.5L218.7 970.9L192.6 979.6L163 996.5L145.1 1000L141 994.4L140.5 925.4L145.1 884.6L153.8 880.4L156.7 875.5L158.3 860.2L167.4 846.4L168.3 822.2L173 810.8L166.7 764.8L164.6 762.5L157.6 764.3L139.7 753.4L125.8 751.4L116.5 742.1L116.4 732.2L111.8 726L104.2 700.8L90.6 692.2L58 690.7L45.8 685.7L37.5 680.5L22.2 662.5L8.8 661.3L0 654.7L31.4 624.2L42.3 609.1L47.9 581L49.6 566.1L32.2 495.7L25.1 488.7L34 482L63 490.1L81.7 458.5L81 441.4L100.4 408.7L99.9 398.3L95.3 394L81.5 391.9L65.1 379.8L69.5 348.1L74 343.8L98.1 342.7L131 348.1L143 363L149.4 363.2L151.9 357.8L151.6 333.6L148 320.9L139.1 308.3L115.1 297.1L118.5 266.7L124.2 260.8L143.5 251.3L135 240L123.7 233.6L129 197.8L109.1 200.1L100.9 194.6L94.1 184L96.3 108.5L99.4 100.9L122.7 79.5Z"/>
+        </svg>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="zone" id="highlights">
-  <div class="frame">
-    <div class="head">
-      <div class="head-no"><b>01</b><span>Highlights</span></div>
+<section class="ct-near"><div class="af-frame"><h2>Also in West Africa</h2><div class="ct-near-row"><a href="/ghana"><em>Ghana</em><span>The forts, the forest and the highlife</span></a><a href="/nigeria"><em>Nigeria</em><span>The loudest country on the continent</span></a><a href="/senegal"><em>Senegal</em><span>Where the Sahel meets the Atlantic</span></a></div></div></section>
+
+<section class="af-zone" id="highlights">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>01</b><span>Highlights</span></div>
       <div>
         <h2>What Côte d&#x27;Ivoire is <em>known for</em>.</h2>
-        <p class="note">Six of the twenty-seven, and the ones most people come for. The rest are below &mdash; and none of them is filler.</p>
+        <p class="af-note">Six of the twenty-seven, and the ones most people come for. The rest are below &mdash; and none of them is filler.</p>
       </div>
     </div>
     <div class="highs">
@@ -206,13 +187,13 @@ ul{list-style:none}
   </div>
 </section>
 
-<section class="zone dust" id="experiences">
-  <div class="frame">
-    <div class="head">
-      <div class="head-no"><b>02</b><span>Experiences</span></div>
+<section class="af-zone af-zone--dust" id="experiences">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
         <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
       </div>
     </div>
     <div class="groups">
@@ -265,10 +246,10 @@ ul{list-style:none}
   </div>
 </section>
 
-<section class="zone basalt" id="why">
-  <div class="frame">
-    <div class="head">
-      <div class="head-no"><b>03</b><span>Why go</span></div>
+<section class="af-zone af-zone--basalt" id="why">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>03</b><span>Why go</span></div>
       <div>
         <h2>The case for <em>Côte d&#x27;Ivoire</em>.</h2>
       </div>
@@ -282,8 +263,8 @@ ul{list-style:none}
   </div>
 </section>
 
-<section class="zone">
-  <div class="frame end">
+<section class="af-zone">
+  <div class="af-frame end">
     <span class="stamp">Begin</span>
     <h2>Your Côte d&#x27;Ivoire <em>starts here</em>.</h2>
     <p>Tell us the month, or simply the thing you want to see, and a guide who works there will answer.</p>
@@ -294,8 +275,10 @@ ul{list-style:none}
   </div>
 </section>
 
+</main>
+
 <footer class="foot">
-  <div class="frame">
+  <div class="af-frame">
     <div class="foot-grid">
       <div>
         <div class="foot-brand">Côte d&#x27;Ivoire<span>Lagoons, forest and the Atlantic</span></div>

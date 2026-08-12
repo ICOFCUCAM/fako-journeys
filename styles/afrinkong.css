@@ -1,0 +1,152 @@
+/* Afrinkong — the design system.
+ * ---------------------------------------------------------------------------
+ * Every page on this site used to carry its own copy of the tokens, the reset
+ * and the type scale, inline, which meant the palette existed in twenty-five
+ * places and drifted in each of them. This file is the single definition. Pages
+ * still carry their own layout rules inline — that part is genuinely per-page,
+ * and inlining it is why the site paints in one request — but nothing below is
+ * ever redefined by a page.
+ *
+ * Naming: `af-` is the system. Page-local classes keep their own prefixes
+ * (`wa-` gateway, `fj-` Kamerun, `ct-` country) so it is always obvious from a
+ * class name whether a rule is shared or local.
+ *
+ * The system has to hold for fifty-four countries and twenty-seven categories
+ * per country, so nothing here encodes a country, a region or a count.
+ */
+
+:root{
+  /* Paper and ink. The site is set on warm paper, not white: it is a printed
+     journal that happens to be a website, and pure white reads as software. */
+  --c-bg:#F7F2E7;
+  --c-primary:#1C2A25;
+  --c-accent:#BE5527;
+  --c-ink:#1F211C;
+  --c-muted:#6E7166;
+  --c-border:#DDD4C1;
+
+  /* Derived surfaces. Mixed rather than hand-picked, so changing --c-bg or
+     --c-primary moves the whole system together instead of leaving orphans. */
+  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
+  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
+  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
+  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
+  --fj-rule:1px solid var(--c-border);
+  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
+
+  /* Three voices and no more: a condensed grotesque for anything that shouts,
+     a serif for anything that has to be read, a mono for anything that labels.
+     All three are system stacks — a webfont is a render-blocking request and
+     this site's argument is that it arrives instantly. */
+  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
+  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
+  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+
+  /* Spacing is a scale, not a set of numbers typed at the moment of need. */
+  --sp-1:6px; --sp-2:12px; --sp-3:20px; --sp-4:32px;
+  --sp-5:48px; --sp-6:72px; --sp-7:104px;
+
+  /* One motion vocabulary. Everything that moves uses these, so the whole site
+     accelerates the same way. */
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --t-fast:.2s; --t-mid:.45s; --t-slow:.75s;
+
+  --frame:1240px;      /* the measure everything is set inside */
+  --mast:78px;         /* the fixed masthead, so heroes can clear it */
+  color-scheme:light;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--mast) + 16px)}
+body{font-family:var(--fj-text);background:var(--c-bg);color:var(--c-ink);
+  line-height:1.66;font-size:17px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+::selection{background:var(--c-accent);color:var(--c-bg)}
+
+/* Display type is always uppercase condensed and always tight. `text-wrap:
+   balance` is what stops a three-word headline breaking one-two, which at this
+   size is the difference between a masthead and an accident. */
+h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
+  letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+
+/* ---- accessibility ------------------------------------------------------- */
+/* A visible focus ring on keyboard focus only. The site is dense with links;
+   without this, tabbing through it is invisible. */
+:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
+
+.af-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--c-primary);
+  color:var(--c-bg);padding:12px 18px;font-family:var(--fj-mono);font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase}
+.af-skip:focus{left:0}
+
+/* Motion is decoration here, never information: every transition can be removed
+   without losing meaning, so reduced-motion removes all of it. */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important}
+}
+
+/* ---- primitives ---------------------------------------------------------- */
+.af-frame{max-width:var(--frame);margin:0 auto;padding:0 44px}
+
+/* The eyebrow. Mono, tracked wide, accent — it labels a thing without competing
+   with the thing. */
+.af-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--c-accent)}
+
+/* Two buttons and no third. Solid is the one thing to do next; quiet is the
+   alternative. A page with three equal buttons has no hierarchy. */
+.af-btn{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);
+  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease)}
+.af-btn i{font-style:normal;margin-left:9px}
+.af-btn--solid{background:var(--c-primary);color:var(--c-bg)}
+.af-btn--solid:hover{background:var(--c-accent);border-color:var(--c-accent)}
+.af-btn--quiet{border-color:var(--c-border);color:var(--c-muted)}
+.af-btn--quiet:hover{border-color:var(--c-primary);color:var(--c-primary)}
+
+/* The underlined onward link, used wherever a block leads somewhere. */
+.af-go{display:inline-block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px;
+  transition:color var(--t-fast) var(--ease)}
+.af-go:hover{color:var(--c-accent)}
+
+/* Numbered section head. The number is the navigation; the sentence is the
+   argument. Used on every long page so a visitor always knows where they are. */
+.af-head{display:grid;grid-template-columns:150px 1fr;gap:40px;align-items:start;
+  margin-bottom:var(--sp-5)}
+.af-head-no{border-top:2px solid var(--c-accent);padding-top:12px}
+.af-head-no b{display:block;font-family:var(--fj-display);font-size:38px;font-weight:700;
+  line-height:1;color:var(--c-accent)}
+.af-head-no span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-muted);margin-top:8px}
+.af-head h2{font-size:clamp(30px,4vw,54px);max-width:24ch}
+.af-head h2 em{font-style:normal;color:var(--c-accent)}
+.af-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+@media(max-width:880px){.af-head{grid-template-columns:1fr;gap:18px;margin-bottom:var(--sp-4)}}
+
+/* ---- the country window -------------------------------------------------- */
+/* The signature. A photograph masked into the country's own borders, or the
+   outline filled in accent where there is no photograph yet. It is defined
+   here, once, because it has to look identical on the gateway and on all
+   fifty-four country pages — that is the whole point of it being a signature.
+   It degrades to the filled outline rather than to a grey box, so a country
+   with no photography is still finished. */
+.af-window{position:relative}
+.af-window svg{width:100%;height:100%;overflow:visible;display:block}
+.af-window .af-window-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
+.af-window--onbasalt .af-window-fill{fill:var(--c-accent)}
+
+/* ---- surfaces ------------------------------------------------------------ */
+.af-zone{padding:var(--sp-7) 0}
+.af-zone--dust{background:var(--fj-dust)}
+.af-zone--basalt{background:var(--fj-basalt);color:var(--fj-onbasalt)}
+.af-zone--basalt h2,.af-zone--basalt h3{color:var(--c-bg)}
+.af-zone--basalt .af-note{color:var(--fj-onbasalt-dim)}
+.af-zone--basalt .af-head-no span{color:var(--fj-onbasalt-dim)}
+@media(max-width:880px){.af-zone{padding:var(--sp-6) 0}}
+
+@media(max-width:560px){.af-frame{padding:0 20px}}

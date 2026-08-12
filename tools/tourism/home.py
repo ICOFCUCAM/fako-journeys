@@ -25,10 +25,77 @@ twenty-seven grey boxes on it would be worse than one with none.
 """
 
 import html as html_mod
+import json
 import os
 
 from . import imaging
 from .model import ROOT
+
+SHAPES_PATH = os.path.join(ROOT, "tourism", "shapes.json")
+
+
+def shapes():
+    """slug -> {w, h, d}: every country's own outline, projected at build time.
+
+    Vendored rather than computed here. The geometry comes from Natural Earth by
+    way of `tools/africa_map.py --solo`, which needs a 2 MB boundary file this
+    generator has no business depending on. Twenty-nine kilobytes of finished
+    path data is the right thing to keep in the repository; the tool that made
+    it is one command away when a country is added.
+    """
+    try:
+        with open(SHAPES_PATH) as fh:
+            return json.load(fh)
+    except (IOError, ValueError):
+        return {}
+
+
+def window(country, entry_for):
+    """The country's outline, with its hero photograph masked into it.
+
+    This is the site's signature and it belongs on every country page, not only
+    on the gateway: the same country reads as the same object wherever you meet
+    it. Where the resolver has found a photograph it fills the shape; where it
+    has not, the shape is filled in accent — which is a finished state, not a
+    placeholder, so a country with no photography still has a hero.
+    """
+    shape = shapes().get(country.slug)
+    if not shape:
+        return ""
+    art = ""
+    hero = entry_for("hero")
+    rec = getattr(hero, "image", None) if hero else None
+    if rec and rec.get("imageUrl"):
+        try:
+            src = imaging.cdn_url(rec, {"width": 1200, "aspect": [4, 5]}, hero.focal)
+            art = ('<image clip-path="url(#shape-%s)" href="%s" x="0" y="0" width="%s" '
+                   'height="%s" preserveAspectRatio="xMidYMid slice"/>'
+                   % (esc(country.slug), esc(src), shape["w"], shape["h"]))
+        except (ValueError, KeyError):
+            art = ""
+    label = ("%s, with a photograph of the country inside its own borders" % country.name
+             if art else "The outline of %s" % country.name)
+    return ('<div class="af-window ct-window">\n'
+            '        <svg viewBox="0 0 %s %s" role="img" aria-label="%s">\n'
+            '          <defs><clipPath id="shape-%s"><path d="%s"/></clipPath></defs>\n'
+            '          <path class="af-window-fill" d="%s"/>%s\n'
+            '        </svg>\n      </div>'
+            % (shape["w"], shape["h"], esc(label), esc(country.slug),
+               shape["d"], shape["d"], art))
+
+
+def neighbours(country, countries, limit=5):
+    """The other countries in this region, so a country page is part of an atlas.
+
+    A visitor who lands on /senegal from a search result and finds nothing but
+    Senegal has met a leaflet. The region strip is what makes twenty-two
+    separate pages behave like one continent, and it scales: it reads the
+    dataset, so a fifty-fourth country appears in its neighbours' strips the day
+    its file is added.
+    """
+    same = [c for c in countries
+            if c.slug != country.slug and c.published and c.region == country.region]
+    return same[:limit]
 
 # The six that carry a country's landscape argument, in the order a visitor
 # meets them. Kept short on purpose: this is the highlight reel, and the full
@@ -70,13 +137,16 @@ def picture(entry, role):
                imaging.object_position(entry.focal)))
 
 
-def build(country, taxonomy):
+def build(country, taxonomy, countries=()):
     """-> the full HTML for one country's home page."""
     def entry(cat_id):
         return country.entry(cat_id)
 
-    hero = entry("hero")
-    hero_pic = picture(hero, taxonomy.role("hero")) if hero else ""
+    hero_window = window(country, entry)
+    near = neighbours(country, countries)
+    near_html = "".join(
+        '<a href="/%s"><em>%s</em><span>%s</span></a>' % (esc(c.slug), esc(c.name), esc(c.tagline))
+        for c in near)
 
     highlights = []
     for cid in HIGHLIGHTS:
@@ -125,8 +195,12 @@ def build(country, taxonomy):
         "description": esc("%s: %s Twenty-seven kinds of experience, from wildlife and mountains "
                            "to culture, food and heritage, with local guides."
                            % (country.name, country.summary)),
-        "hero_pic": hero_pic or "",
-        "hero_class": " has-pic" if hero_pic else " no-pic",
+        "hero_window": hero_window,
+        "hero_class": " has-shape" if hero_window else " no-shape",
+        "near": near_html,
+        "near_block": ('<section class="ct-near"><div class="af-frame"><h2>Also in %s</h2>'
+                       '<div class="ct-near-row">%s</div></div></section>'
+                       % (esc(country.region), near_html)) if near_html else "",
         "highlights": "\n".join(highlights),
         "reasons": "\n".join(reasons),
         "groups": "\n".join(groups),
@@ -147,7 +221,7 @@ def write_all(countries, taxonomy, skip=("cameroon", "uganda"), out_dir=None, lo
             continue
         path = os.path.join(out_dir, "%s.html" % c.slug)
         with open(path, "w") as f:
-            f.write(build(c, taxonomy))
+            f.write(build(c, taxonomy, countries))
         written.append(path)
         log("  wrote %s" % os.path.relpath(path, ROOT))
     return written
@@ -160,83 +234,59 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%(title)s</title>
 <meta name="description" content="%(description)s">
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
-:root{
-  --c-bg:#F7F2E7;--c-primary:#1C2A25;--c-accent:#BE5527;--c-ink:#1F211C;
-  --c-muted:#6E7166;--c-border:#DDD4C1;
-  --dust:color-mix(in srgb,var(--c-bg) 88%%,var(--c-primary));
-  --basalt:color-mix(in srgb,var(--c-primary) 95%%,#000);
-  --onbasalt:color-mix(in srgb,var(--c-bg) 88%%,var(--c-primary));
-  --onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%%,var(--c-primary));
-  --rule:1px solid var(--c-border);
-  --rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%%,transparent);
-  --display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,sans-serif;
-  --text:Charter,"Iowan Old Style","Source Serif Pro",Palatino,Georgia,serif;
-  --mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,monospace;
-  color-scheme:light;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:var(--text);background:var(--c-bg);color:var(--c-ink);line-height:1.66;font-size:17px;-webkit-font-smoothing:antialiased}
-img{max-width:100%%;display:block}
-a{color:inherit;text-decoration:none}
-h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.02;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
-ul{list-style:none}
-::selection{background:var(--c-accent);color:var(--c-bg)}
-.frame{max-width:1240px;margin:0 auto;padding:0 44px}
-.stamp{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
-.note{margin-top:16px;color:var(--c-muted);max-width:44em}
-
+/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
+   What follows is this page shape only. */
 .mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
 .mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
 .mark{margin-right:auto;display:flex;flex-direction:column;gap:3px}
-.mark b{font-family:var(--display);font-size:26px;font-weight:700;text-transform:uppercase;line-height:1;white-space:nowrap}
-.mark span{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+.mark-up{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--c-accent)}
+.mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;line-height:1;white-space:nowrap}
+.mark span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
 .routes{display:flex;gap:26px}
-.routes a{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.routes a{font-family:var(--fj-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
-.btn{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
+.btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
 .btn:hover{background:var(--c-accent)}
 @media(max-width:1010px){.routes{display:none}}
 @media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}.btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
 
-.open{padding:78px 0 62px;border-bottom:var(--rule)}
-.open-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:end}
-.open-grid.no-pic{grid-template-columns:1fr;max-width:34em}
-.open h1{font-size:clamp(34px,4.4vw,64px);margin:20px 0 0}
-.open h1 em{font-style:normal;color:var(--c-accent)}
-.lede{font-size:19px;color:var(--c-muted);margin-top:22px;max-width:40em}
+.open{padding:calc(var(--sp-6) + 8px) 0 var(--sp-6);border-bottom:var(--fj-rule)}
+.open-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
+.open-grid.no-shape{grid-template-columns:1fr;max-width:36em}
+.open h1{font-size:clamp(46px,7vw,104px);margin:14px 0 0;letter-spacing:-.02em}
+/* The tagline is the country's argument and gets its own line at display size,
+   rather than being appended to the name in accent — which made the name the
+   smaller half of its own headline. */
+.open-tag{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(20px,2.6vw,34px);line-height:1.05;color:var(--c-accent);margin-top:10px}
+.lede{font-size:19px;color:var(--c-muted);margin-top:22px;max-width:38em}
 .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.act{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 20px;border:1px solid var(--c-primary);transition:background .2s,color .2s}
-.act i{font-style:normal;margin-left:9px}
-.act.go{background:var(--c-primary);color:var(--c-bg)}
-.act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
-.act.faint{border-color:var(--c-border);color:var(--c-muted)}
-.act.faint:hover{border-color:var(--c-primary);color:var(--c-primary)}
-.open-plate .ct-shot img{width:100%%;aspect-ratio:4/5;object-fit:cover}
-.key{display:grid;grid-template-columns:repeat(3,1fr);margin-top:52px;border-top:2px solid var(--c-primary)}
-.key div{padding:18px 22px 0 0}
-.key b{display:block;font-family:var(--display);font-size:29px;font-weight:700;color:var(--c-primary)}
-.key span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted);margin-top:7px}
-@media(max-width:940px){.open{padding:52px 0 44px}.open-grid{grid-template-columns:1fr;gap:34px;align-items:start}.open-plate .ct-shot img{aspect-ratio:4/3}}
-@media(max-width:520px){.key{grid-template-columns:1fr}.key div{padding:14px 0 12px;border-bottom:var(--rule)}}
 
-.zone{padding:84px 0}
-.zone.dust{background:var(--dust)}
-.zone.basalt{background:var(--basalt);color:var(--onbasalt)}
-.zone.basalt h2,.zone.basalt h3{color:var(--c-bg)}
-.zone.basalt .note,.zone.basalt p{color:var(--onbasalt-dim)}
-.head{display:grid;grid-template-columns:150px 1fr;gap:40px;align-items:start;margin-bottom:44px}
-.head-no{border-top:2px solid var(--c-accent);padding-top:12px}
-.head-no b{display:block;font-family:var(--display);font-size:38px;font-weight:700;line-height:1;color:var(--c-accent)}
-.head-no span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);margin-top:8px}
-.zone.basalt .head-no span{color:var(--onbasalt-dim)}
-.head h2{font-size:clamp(29px,3.8vw,50px);max-width:24ch}
-.head h2 em{font-style:normal;color:var(--c-accent)}
-@media(max-width:880px){.zone{padding:60px 0}.head{grid-template-columns:1fr;gap:18px;margin-bottom:32px}}
+/* The window. Height-led, so every country is drawn at the same visual weight
+   whatever its proportions — Chad and Rwanda should feel like the same kind of
+   object on the page. */
+.ct-window{height:min(58vh,520px)}
+.ct-window svg{height:100%%}
+
+/* The region strip: the page's one link outward, and what makes a country page
+   part of an atlas rather than a leaflet. */
+.ct-near{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:26px 0}
+.ct-near h2{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-near-row{display:flex;flex-wrap:wrap;gap:0 34px}
+.ct-near-row a{padding:8px 0;transition:color var(--t-fast) var(--ease)}
+.ct-near-row a:hover{color:var(--c-accent)}
+.ct-near-row em{font-style:normal;font-family:var(--fj-display);font-size:19px;font-weight:700;text-transform:uppercase}
+.ct-near-row span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);margin-left:10px}
+@media(max-width:900px){.open-grid{grid-template-columns:1fr;gap:34px}
+  .ct-window{height:min(46vh,360px);max-width:420px}
+  .ct-near-row{gap:0 22px}}
 
 .highs{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 32px}
-.ct-high b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.ct-high b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
 .ct-high h3{font-size:22px;margin:8px 0 8px}
 .ct-high p{font-size:15px;color:var(--c-muted)}
 .ct-high .ct-shot{display:block;margin-bottom:16px}
@@ -245,18 +295,18 @@ ul{list-style:none}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
 .groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--rule);border-bottom:var(--rule)}
-.ct-group>b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--rule)}
+.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
+.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
-.ct-group li b{display:block;font-family:var(--display);font-size:16px;font-weight:700;text-transform:uppercase}
+.ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
 .ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
-.ct-reason b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:10px}
+.ct-reason b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:10px}
 .ct-reason h3{font-size:24px;margin-bottom:10px}
 .ct-reason p{font-size:15px}
 @media(max-width:760px){.reasons{grid-template-columns:1fr}}
@@ -267,63 +317,63 @@ ul{list-style:none}
 .end p{margin:16px auto 0;max-width:46ch;color:var(--c-muted)}
 .end .acts{justify-content:center}
 
-.foot{background:var(--basalt);color:var(--onbasalt);padding:56px 0 0}
+.foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:56px 0 0}
 .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
-.foot-brand{font-family:var(--display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
-.foot-brand span{display:block;font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
-.foot-grid p{margin-top:14px;font-size:14.5px;max-width:32em;color:var(--onbasalt-dim)}
-.foot-col b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px;font-weight:400}
-.foot-col a,.foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--onbasalt-dim)}
+.foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
+.foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
+.foot-grid p{margin-top:14px;font-size:14.5px;max-width:32em;color:var(--fj-onbasalt-dim)}
+.foot-col b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px;font-weight:400}
+.foot-col a,.foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--fj-onbasalt-dim)}
 .foot-col a:hover{color:var(--c-bg)}
-.foot-bar{margin-top:40px;padding:20px 0;border-top:var(--rule-dark);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--onbasalt-dim)}
+.foot-bar{margin-top:40px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
 .foot-bar a{border-bottom:1px solid var(--c-accent)}
 @media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
 </style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to content</a>
 <header class="mast">
-  <div class="frame mast-in">
-    <a class="mark" href="/%(slug)s"><b>%(name)s</b><span>%(tagline)s</span></a>
+  <div class="af-frame mast-in">
+    <a class="mark" href="/%(slug)s"><span class="mark-up">Afrinkong</span><b>%(name)s</b><span>%(tagline)s</span></a>
     <nav class="routes">
       <a href="#highlights">Highlights</a>
       <a href="#experiences">Experiences</a>
       <a href="#why">Why go</a>
       <a href="/tourism/%(slug)s">All %(count)d</a>
     </nav>
-    <a class="btn" href="/contact">Plan a journey</a>
+    <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>
   </div>
 </header>
 
+<main id="main">
 <section class="open">
-  <div class="frame">
+  <div class="af-frame">
     <div class="open-grid%(hero_class)s">
       <div>
-        <span class="stamp">%(region)s</span>
-        <h1>%(name)s. <em>%(tagline)s</em>.</h1>
+        <span class="af-stamp">%(region)s &middot; Afrinkong</span>
+        <h1>%(name)s</h1>
+        <p class="open-tag">%(tagline)s.</p>
         <p class="lede">%(summary)s</p>
         <div class="acts">
-          <a class="act go" href="/contact">Plan a journey <i>&rarr;</i></a>
-          <a class="act faint" href="#experiences">What you can do here <i>&rarr;</i></a>
+          <a class="af-btn af-btn--solid" href="/contact">Plan a journey <i>&rarr;</i></a>
+          <a class="af-btn af-btn--quiet" href="#experiences">What you can do here <i>&rarr;</i></a>
         </div>
       </div>
-      <div class="open-plate">%(hero_pic)s</div>
-    </div>
-    <div class="key">
-      <div><b>%(count)d</b><span>Kinds of experience</span></div>
-      <div><b>%(region)s</b><span>Where it sits</span></div>
-      <div><b>Local</b><span>Guides, vehicles and permits</span></div>
+      %(hero_window)s
     </div>
   </div>
 </section>
 
-<section class="zone" id="highlights">
-  <div class="frame">
-    <div class="head">
-      <div class="head-no"><b>01</b><span>Highlights</span></div>
+%(near_block)s
+
+<section class="af-zone" id="highlights">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>01</b><span>Highlights</span></div>
       <div>
         <h2>What %(name)s is <em>known for</em>.</h2>
-        <p class="note">Six of the twenty-seven, and the ones most people come for. The rest are below &mdash; and none of them is filler.</p>
+        <p class="af-note">Six of the twenty-seven, and the ones most people come for. The rest are below &mdash; and none of them is filler.</p>
       </div>
     </div>
     <div class="highs">
@@ -332,13 +382,13 @@ ul{list-style:none}
   </div>
 </section>
 
-<section class="zone dust" id="experiences">
-  <div class="frame">
-    <div class="head">
-      <div class="head-no"><b>02</b><span>Experiences</span></div>
+<section class="af-zone af-zone--dust" id="experiences">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
         <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
       </div>
     </div>
     <div class="groups">
@@ -347,10 +397,10 @@ ul{list-style:none}
   </div>
 </section>
 
-<section class="zone basalt" id="why">
-  <div class="frame">
-    <div class="head">
-      <div class="head-no"><b>03</b><span>Why go</span></div>
+<section class="af-zone af-zone--basalt" id="why">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>03</b><span>Why go</span></div>
       <div>
         <h2>The case for <em>%(name)s</em>.</h2>
       </div>
@@ -361,8 +411,8 @@ ul{list-style:none}
   </div>
 </section>
 
-<section class="zone">
-  <div class="frame end">
+<section class="af-zone">
+  <div class="af-frame end">
     <span class="stamp">Begin</span>
     <h2>Your %(name)s <em>starts here</em>.</h2>
     <p>Tell us the month, or simply the thing you want to see, and a guide who works there will answer.</p>
@@ -373,8 +423,10 @@ ul{list-style:none}
   </div>
 </section>
 
+</main>
+
 <footer class="foot">
-  <div class="frame">
+  <div class="af-frame">
     <div class="foot-grid">
       <div>
         <div class="foot-brand">%(name)s<span>%(tagline)s</span></div>
