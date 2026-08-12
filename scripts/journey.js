@@ -30,6 +30,7 @@
   var picks = [];              /* the three the engine returned */
   var chosen = null;           /* the one being composed */
   var places = {};             /* slug -> the atlas payload, fetched once */
+  var LINKS = null;            /* data/links.json, fetched when a journey opens */
   var stages = [];             /* place ids, in order */
   var step = 1;
 
@@ -253,7 +254,22 @@
       .catch(function () { places[slug] = {slug: slug, places: []}; return places[slug]; });
   }
 
+  function needLinks() {
+    if (LINKS) return Promise.resolve(LINKS);
+    return fetch('/data/links.json').then(function (r) { return r.json(); })
+      .then(function (j) { LINKS = j; return j; })
+      .catch(function () { LINKS = {links: {}, nodes: {}}; return LINKS; });
+  }
+
   function openComposer(slug, keep) {
+    needLinks().then(function () { if (!compose.hidden) paintComposer(); });
+    /* Anything already in the journey from another country needs its places too,
+       or a shared link would open a journey with holes in it. */
+    var others = stages.map(function (raw) { return E.stageOf(raw, slug).country; })
+      .filter(function (c, i, a) { return c !== slug && a.indexOf(c) === i; });
+    others.forEach(function (c) {
+      fetchPlaces(c).then(function () { if (!compose.hidden) paintComposer(); });
+    });
     fetchPlaces(slug).then(function (pack) {
       chosen = chosen && chosen.slug === slug ? chosen
         : (E.rank(D, brief).filter(function (p) { return p.slug === slug; })[0]
@@ -270,11 +286,30 @@
     });
   }
 
+  /* A stage knows which country it is in, because a journey can cross a border.
+     Anything from a country whose places have not arrived yet is simply not
+     drawn until they have — a half-loaded journey is a shorter journey, not a
+     broken one. */
   function stageObjects() {
-    var pack = places[chosen.slug] || {places: []};
-    return stages.map(function (id) {
-      return pack.places.filter(function (p) { return p.id === id; })[0];
+    return stages.map(function (raw) {
+      var st = E.stageOf(raw, chosen.slug);
+      var pack = places[st.country];
+      if (!pack) return null;
+      var found = pack.places.filter(function (p) { return p.id === st.id; })[0];
+      return found ? Object.assign({}, found, {country: st.country,
+        countryName: (D.countries[st.country] || {}).name || st.country}) : null;
     }).filter(Boolean);
+  }
+
+  /* Every country a stage belongs to, in the order they are first visited. */
+  function countriesInPlay() {
+    var out = [];
+    stages.forEach(function (raw) {
+      var c = E.stageOf(raw, chosen.slug).country;
+      if (out.indexOf(c) < 0) out.push(c);
+    });
+    if (!out.length) out.push(chosen.slug);
+    return out;
   }
 
   function paintComposer() {
@@ -301,6 +336,7 @@
        under the timeline says exactly that rather than implying a schedule. */
     var arrival = c.operator && c.operator.base ? c.operator.base : null;
     var rows = E.timeline(st, pace.days, arrival);
+    var last = null;
     document.getElementById('jn-line').innerHTML = rows.map(function (r) {
       var span = r.from === r.to ? 'Day ' + pad(r.from)
         : 'Days ' + pad(r.from) + '–' + pad(r.to);
@@ -308,10 +344,18 @@
         return '<li class="jn-leg jn-leg--edge"><span class="jn-leg-day">' + span + '</span>'
           + '<span class="jn-leg-body"><b>' + esc(r.label) + '</b></span></li>';
       }
-      return '<li class="jn-leg"><span class="jn-leg-day">' + span + '</span>'
+      /* A border is the one thing in a timeline worth interrupting it for. */
+      var crossed = last && last !== r.stage.country;
+      last = r.stage.country;
+      return (crossed
+        ? '<li class="jn-cross"><span>' + esc(D.countries[r.stage.country].name)
+          + '</span></li>' : '')
+        + '<li class="jn-leg"><span class="jn-leg-day">' + span + '</span>'
         + '<span class="jn-leg-body"><b>' + esc(r.stage.title) + '</b>'
         + '<span class="jn-leg-line">' + esc(r.stage.text) + '</span>'
-        + '<span class="jn-leg-meta">' + esc(r.stage.group) + '</span></span>'
+        + '<span class="jn-leg-meta">' + esc(r.stage.group)
+        + (r.stage.country !== chosen.slug
+           ? ' &middot; ' + esc(r.stage.countryName) : '') + '</span></span>'
         + '<button class="jn-leg-x" type="button" data-drop="' + esc(r.stage.id)
         + '" aria-label="Remove ' + esc(r.stage.title) + ' from the journey">&times;</button>'
         + '</li>';
@@ -335,7 +379,7 @@
         }).join('')
       : '<p class="jn-note">Add a stage and this fills in.</p>';
 
-    document.getElementById('jn-who').innerHTML = whoBlock(c);
+    document.getElementById('jn-who').innerHTML = onwardBlock() + whoBlock(c);
 
     var pick = document.getElementById('jn-picks');
     var pack = places[chosen.slug] || {places: []};
@@ -370,6 +414,36 @@
   }
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  /* Where this journey could carry on to. Only across a real land border, and
+     only into a country that answers the same brief — the two conditions that
+     make a second country a continuation rather than a second holiday. */
+  function onwardBlock() {
+    var here = countriesInPlay();
+    var rows = [];
+    here.forEach(function (from) {
+      E.onward(D, LINKS, from, brief).forEach(function (r) {
+        if (here.indexOf(r.to) >= 0) return;
+        if (rows.some(function (x) { return x.to === r.to; })) return;
+        rows.push(Object.assign({}, r, {from: from}));
+      });
+    });
+    if (!rows.length) return '';
+    return '<div class="jn-onward"><span class="af-stamp">Carry on over the border</span>'
+      + '<ul>' + rows.slice(0, 3).map(function (r) {
+          var c = D.countries[r.to];
+          return '<li><button type="button" data-cross="' + esc(r.to) + '">'
+            + '<b>' + esc(c.name) + '</b>'
+            + '<span class="jn-onward-km">' + (r.km != null ? r.km + ' km' : '') + '</span>'
+            + '<span class="jn-onward-why">' + esc(c.tagline) + ' &mdash; '
+            + esc(r.why.filter(function (w) { return w.kind !== 'season'; })
+                   .map(function (w) { return w.say; }).join(', ')) + '</span>'
+            + '</button></li>';
+        }).join('') + '</ul>'
+      + '<p class="jn-onward-note">Straight-line distances between country centres. '
+      + 'The road, the border post and how long either takes are things your '
+      + 'operator knows and we do not.</p></div>';
+  }
 
   /* Local means a company with an address, a year and a sentence about what it
      actually runs. Where we have that, print it; where we do not, say what is
@@ -421,8 +495,19 @@
   }
 
   compose.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-toggle],[data-drop],[data-save],[data-share]') : null;
+    var t = e.target.closest
+      ? e.target.closest('[data-toggle],[data-drop],[data-save],[data-share],[data-cross]')
+      : null;
     if (!t) return;
+    if (t.hasAttribute('data-cross')) {
+      var to = t.dataset.cross;
+      fetchPlaces(to).then(function (pack) {
+        var add = E.suggestStages(pack.places, brief, {stages: 2});
+        add.forEach(function (id) { stages.push(E.stageId(to, id, chosen.slug)); });
+        paintComposer(); writeHash();
+      });
+      return;
+    }
     if (t.hasAttribute('data-toggle')) {
       var id = t.dataset.toggle;
       var at = stages.indexOf(id);

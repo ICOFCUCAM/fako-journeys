@@ -796,6 +796,90 @@ def main():
               any(r["view"] != next(x["view"] for x in sp["regions"] if x["key"] == r["key"])
                   for r in small["regions"]))
 
+        # -- the spatial model ------------------------------------------------------
+        # The claim is that every connection this site draws is a fact somebody
+        # could check on a map or in a country file. So each one is checked
+        # against the thing it claims to come from.
+        print("\nthe spatial model")
+        from tourism import atlas as atlas_mod, links as links_mod
+        geo = links_mod.geometry()
+        lenses_all = atlas_mod.load_lenses()
+        net = links_mod.payload(countries, lenses_all)
+        published = set(c.slug for c in countries if c.published)
+
+        check("every published country is on the network",
+              set(net["nodes"]) == published)
+        check("every node sits at its own country's centre",
+              all(n["at"] and n["lonlat"] for n in net["nodes"].values()))
+        check("borders are symmetric",
+              all(a in geo["borders"].get(b, []) for a, bs in geo["borders"].items()
+                  for b in bs))
+        check("no country borders itself",
+              not any(a in bs for a, bs in geo["borders"].items()))
+        # Spot-checks against an actual map. If the geometry reader breaks, these
+        # break, and they are things anybody can verify.
+        check("Uganda borders Kenya, Rwanda and Tanzania and nothing else here",
+              set(geo["borders"]["uganda"]) == {"kenya", "rwanda", "tanzania"},
+              ", ".join(geo["borders"]["uganda"]))
+        check("South Africa borders its four neighbours in the set",
+              set(geo["borders"]["south-africa"])
+              == {"botswana", "mozambique", "namibia", "zimbabwe"},
+              ", ".join(geo["borders"]["south-africa"]))
+        check("an island borders nobody",
+              not geo["borders"]["seychelles"] and not geo["borders"]["mauritius"])
+        check("Egypt borders nothing else in this set",
+              not geo["borders"]["egypt"])
+        check("distance is symmetric and non-zero",
+              all(geo["km"][a][b] == geo["km"][b][a] and geo["km"][a][b] > 0
+                  for a in ("uganda", "morocco") for b in ("kenya", "ghana")))
+        check("Kampala to Kigali is about four hundred and fifty kilometres",
+              440 <= geo["km"]["uganda"]["rwanda"] <= 470,
+              "%d km" % geo["km"]["uganda"]["rwanda"])
+
+        bad = []
+        for a, rows in net["links"].items():
+            for r in rows:
+                for w in r["why"]:
+                    if w["kind"] == "border" and r["to"] not in geo["borders"].get(a, []):
+                        bad.append("%s-%s border" % (a, r["to"]))
+                    if w["kind"] == "lens":
+                        shared = set(by_slug_test(countries, a).calls) \
+                            & set(by_slug_test(countries, r["to"]).calls)
+                        if not shared:
+                            bad.append("%s-%s lens" % (a, r["to"]))
+                    if w["kind"] == "season":
+                        shared = set(by_slug_test(countries, a).months) \
+                            & set(by_slug_test(countries, r["to"]).months)
+                        if len(shared) != len(w["months"]):
+                            bad.append("%s-%s season" % (a, r["to"]))
+        check("every connection is backed by the fact it names", not bad,
+              ", ".join(bad[:3]))
+        check("no connection is offered without evidence",
+              all(r["why"] for rows in net["links"].values() for r in rows))
+        check("nothing is connected to itself",
+              not any(r["to"] == a for a, rows in net["links"].items() for r in rows))
+        check("a land border always outranks a shared season",
+              all(next((i for i, r in enumerate(rows)
+                        if any(w["kind"] == "border" for w in r["why"])), 0)
+                  < next((len(rows) for r in rows), 1)
+                  for rows in net["links"].values() if rows))
+        far = [(a, r["to"], r["km"]) for a, rows in net["links"].items() for r in rows
+               if r["km"] and r["km"] > links_mod.FAR_KM
+               and not any(w["kind"] == "border" for w in r["why"])]
+        check("nothing across the Sahara is called nearby", not far,
+              ", ".join("%s-%s %dkm" % f for f in far[:2]))
+        check("no connection claims a travel time",
+              not any("hour" in json.dumps(r) or "drive" in json.dumps(r)
+                      for rows in net["links"].values() for r in rows))
+
+        # A journey can cross a border, and only across one.
+        engine = os.path.join(ROOT_DIR, "scripts", "journey-engine.js")
+        src = open(engine).read()
+        check("the journey engine can carry a stage in another country",
+              "stageOf" in src and "onward" in src)
+        check("crossing requires a shared land border",
+              "w.kind === 'border'" in src)
+
         # -- the visual engine ------------------------------------------------------
         # Most of what this system does is already covered above: delivery URLs,
         # focal crops, srcsets, providers, attribution. What is new here is the
@@ -1086,6 +1170,10 @@ def main():
     if not failed:
         print("both providers are ready for real credentials")
     return 1 if failed else 0
+
+
+def by_slug_test(countries, slug):
+    return [c for c in countries if c.slug == slug][0]
 
 
 def esc_test(text):

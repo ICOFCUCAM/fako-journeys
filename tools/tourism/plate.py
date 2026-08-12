@@ -120,6 +120,29 @@ def plate(country, entry, aspect, label, shape=None, regions=None, ident=None,
            esc(caption), esc(country.name)))
 
 
+def open_graph(title, description, path, kind="website"):
+    """The card a shared link becomes. Absolute URLs, because a relative one in
+    an Open Graph tag is a broken image on every platform that reads it.
+
+    No image is named. Five hundred and sixty-seven of the five hundred and
+    ninety-four photographs on this site do not exist yet, and pointing every
+    social card at the one that does would be a card about Cameroon on a link
+    about Ghana. When the resolver has run, one line here gives every page its
+    own.
+    """
+    base = "https://afrinkong.com"
+    url = base + (path if path.startswith("/") else "/" + path)
+    return ("\n".join([
+        '<meta property="og:type" content="%s">' % kind,
+        '<meta property="og:site_name" content="Afrinkong">',
+        '<meta property="og:title" content="%s">' % title,
+        '<meta property="og:description" content="%s">' % description,
+        '<meta property="og:url" content="%s">' % url,
+        '<meta name="twitter:card" content="summary">',
+        '<link rel="canonical" href="%s">' % url,
+    ]))
+
+
 # ---- the stylesheet's contract ---------------------------------------------------
 
 # What the plate and the window need from afrinkong.css, listed here so that a

@@ -330,6 +330,38 @@
     }).sort(function (a, b) { return b.share - a.share || (a.label < b.label ? -1 : 1); });
   }
 
+  /* ---- crossing a border -------------------------------------------------- */
+
+  /* A stage can belong to a country other than the one the journey started in.
+     It is written `slug~category` when it does and bare when it does not, so a
+     single-country journey's link is exactly what it was before this existed.
+     Africa is fifty-four countries and a great many journeys are two of them;
+     an engine that cannot say so is describing a different continent. */
+  function stageOf(id, home) {
+    var cut = String(id || '').indexOf('~');
+    return cut < 0 ? {country: home, id: id}
+                   : {country: id.slice(0, cut), id: id.slice(cut + 1)};
+  }
+
+  function stageId(country, id, home) {
+    return country === home ? id : country + '~' + id;
+  }
+
+  /* Which countries a journey could honestly continue into: it has to share a
+     land border with where you are — the one fact here that changes what a
+     journey can physically be — and it has to answer the same brief. Nothing
+     is offered on the strength of being in Africa too. */
+  function onward(data, links, home, brief) {
+    if (!links || !links.links) return [];
+    var wants = (brief.wants || []).filter(function (k) { return !!data.lenses[k]; });
+    return (links.links[home] || []).filter(function (r) {
+      if (!r.why.some(function (w) { return w.kind === 'border'; })) return false;
+      if (!data.countries[r.to]) return false;
+      if (!wants.length) return true;
+      return wants.some(function (k) { return data.countries[r.to].calls.indexOf(k) >= 0; });
+    });
+  }
+
   /* ---- the link ---------------------------------------------------------- */
 
   /* A journey is its own address. Everything needed to rebuild it goes in the
@@ -377,6 +409,7 @@
     rank: rank, recommend: recommend, pacingFor: pacingFor,
     suggestStages: suggestStages, timeline: timeline,
     keyword: keyword, name: name, composition: composition,
+    stageOf: stageOf, stageId: stageId, onward: onward,
     encode: encode, decode: decode
   };
 });

@@ -36,6 +36,7 @@ import html as html_mod
 import json
 import os
 
+from . import plate
 from .model import (ROOT, load_operators, load_people, load_regions,
                     load_strands, load_voices)
 
@@ -214,6 +215,7 @@ def render(countries, taxonomy):
         raise IOError("no published countries — nothing to meet")
     people = people_payload()
     return TEMPLATE % {
+        "og": plate.open_graph('Meet Africa — Afrinkong', 'Seven questions, asked of twenty-two countries. The same question changes its answer at every border.', '/meet'),
         "doors": door_list(data),
         "strip": country_strip(data),
         "opening": opening(data),
@@ -261,6 +263,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meet Africa &mdash; Afrinkong</title>
 <meta name="description" content="Seven questions, asked of twenty-two countries. Who lives here, what is cooked, what is made by hand, what is kept — and the same question changes its answer at every border.">
+%(og)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/meet.css">
 </head>

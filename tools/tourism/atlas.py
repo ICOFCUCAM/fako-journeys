@@ -36,6 +36,7 @@ import html as html_mod
 import json
 import os
 
+from . import plate
 from .model import (ROOT, load_countries, load_operators, load_picks,
                     load_regions, load_views)
 
@@ -251,6 +252,11 @@ def map_svg(data, spine_data):
     # Labels are geography, so they live in map coordinates and travel with the
     # zoom. Their size is not: the script rescales this group as the viewBox
     # narrows, or a country name becomes a headline the moment you fly to it.
+    # The constellation: the same continent read as a network. Nodes sit at each
+    # country's own centre in these coordinates, and every line drawn is a fact —
+    # a shared land border, or the thing both countries say they lead on. Empty
+    # markup until the mode is opened, because filling it costs a request.
+    out.append('  <g class="at-web" id="at-web" aria-hidden="true"></g>')
     out.append('  <g class="at-labels" id="at-labels" aria-hidden="true" font-size="13">')
     for row in data.get("live") or []:
         if not row.get("at"):
@@ -324,6 +330,7 @@ def render(countries, taxonomy):
         raise IOError("tourism/map.json is missing or empty — "
                       "run: python3 tools/africa_map.py <topojson> --map > tourism/map.json")
     return TEMPLATE % {
+        "og": plate.open_graph('The Atlas — Afrinkong', 'Africa as the interface. Continent, region, country, place — and who can take you there.', '/atlas'),
         "map": map_svg(geo, sp),
         "spine": json.dumps(sp, separators=(",", ":"), sort_keys=True),
         "regions": pane_africa(sp),
@@ -368,6 +375,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Atlas &mdash; Afrinkong</title>
 <meta name="description" content="Africa as the interface. Move from the continent to a region, a country, a place and the people who can take you there.">
+%(og)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/atlas.css">
 </head>
@@ -392,6 +400,10 @@ TEMPLATE = """<!DOCTYPE html>
         <button class="at-crumb-seg" type="button" data-go="africa" aria-current="page">Africa</button>
       </nav>
 %(map)s
+      <div class="at-mode" role="group" aria-label="How the map is drawn">
+        <button class="at-modeb" type="button" data-mode="map" aria-pressed="true">Map</button>
+        <button class="at-modeb" type="button" data-mode="links" aria-pressed="false">Links</button>
+      </div>
     </div>
     <div class="at-tools">
       <div class="at-lens" role="group" aria-label="What do you want">

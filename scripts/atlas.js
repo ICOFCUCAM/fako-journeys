@@ -60,10 +60,12 @@
   var lensByKey = {};
   SP.lenses.forEach(function (l) { lensByKey[l.key] = l; });
 
+  var web = document.getElementById('at-web');
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  var LINKS = null;             /* data/links.json, fetched when links mode opens */
   var LABEL = 13;                      /* label size at the full continental view */
   var state = {level: 'africa', region: null, country: null, place: null,
-               want: null, when: null};
+               want: null, when: null, web: false};
   var loaded = {};                     /* slug -> places payload, fetched once */
   var seen = {};                       /* what "take me somewhere" has already used */
   var view = SP.view.slice();
@@ -220,7 +222,122 @@
     }
 
     paintWindow();
+    paintWeb();
     requestAnimationFrame(declutter);
+  }
+
+  /* ---- the constellation -------------------------------------------------- */
+
+  /* The same twenty-two countries, read as a network instead of as land. Every
+     node sits at its own country's centre in these coordinates, so switching
+     modes changes the drawing and not the subject — Uganda is in the same place
+     either way, and nothing has to be relearned.
+     Only two kinds of line are ever drawn, and both are facts: a shared land
+     border, read out of Natural Earth, and the thing two countries both say
+     they lead on. There is no line for "these are both in Africa". */
+  function paintWeb() {
+    root.toggleAttribute('data-web', state.web);
+    if (!state.web || !LINKS) { web.innerHTML = ''; return; }
+    var scope = inScope();
+    var lit = {};
+    scope.forEach(function (s) { lit[s] = true; });
+    var focus = state.country;
+    var bits = [];
+
+    var drawn = {};
+    function edge(a, b, kind, on) {
+      var pa = (LINKS.nodes[a] || {}).at, pb = (LINKS.nodes[b] || {}).at;
+      if (!pa || !pb) return;
+      var key = [a, b].sort().join('|') + kind;
+      if (drawn[key]) return;
+      drawn[key] = true;
+      bits.push('<line x1="' + pa[0] + '" y1="' + pa[1] + '" x2="' + pb[0]
+        + '" y2="' + pb[1] + '" data-kind="' + kind + '"' + (on ? ' data-lit' : '') + '/>');
+    }
+
+    Object.keys(LINKS.borders).forEach(function (a) {
+      LINKS.borders[a].forEach(function (b) {
+        /* With a lens on, a border between two countries that are not the
+           answer is a line about something else. */
+        if (state.want && !(lit[a] && lit[b])) return;
+        edge(a, b, 'border', !!(focus && (a === focus || b === focus)));
+      });
+    });
+
+    /* A lens turns the network into an answer — but not into a mesh. Joining
+       every pair that leads on wildlife draws fifty-five lines for eleven
+       countries, which is a hairball and says nothing: of course they are all
+       connected, that is what the filter did. So each country is joined to the
+       nearest other country in the answer, and to nobody else. Eleven lines,
+       and they trace the shape of the answer across the continent instead of
+       burying it. */
+    if (state.want) {
+      var pool = Object.keys(lit);
+      pool.forEach(function (a) {
+        var best = null, bestKm = Infinity;
+        pool.forEach(function (b) {
+          if (a === b) return;
+          var km = ((LINKS.km || {})[a] || {})[b];
+          if (km == null) {
+            var pa = (LINKS.nodes[a] || {}).at, pb = (LINKS.nodes[b] || {}).at;
+            km = (pa && pb) ? Math.hypot(pa[0] - pb[0], pa[1] - pb[1]) * 8 : null;
+          }
+          if (km != null && km < bestKm) { bestKm = km; best = b; }
+        });
+        if (best) edge(a, best, 'lens', false);
+      });
+    }
+    if (focus) {
+      (LINKS.links[focus] || []).slice(0, 5).forEach(function (r) {
+        edge(focus, r.to, r.why.some(function (w) { return w.kind === 'border'; })
+          ? 'border' : 'lens', true);
+      });
+    }
+
+    Object.keys(LINKS.nodes).forEach(function (s) {
+      var n = LINKS.nodes[s];
+      if (!n.at) return;
+      var tier = byslug[s] ? byslug[s].dataset.tier : 'live';
+      bits.push('<circle cx="' + n.at[0] + '" cy="' + n.at[1] + '" r="'
+        + (focus === s ? 9 : 6) + '" data-tier="' + esc(tier) + '"'
+        + (focus === s || (!focus && lit[s]) ? ' data-lit' : '')
+        + (lit[s] ? '' : ' data-dim') + '/>');
+    });
+    web.innerHTML = bits.join('');
+  }
+
+  function needLinks() {
+    if (LINKS) return Promise.resolve(LINKS);
+    return fetch('/data/links.json').then(function (r) { return r.json(); })
+      .then(function (j) { LINKS = j; return j; })
+      .catch(function () { LINKS = {nodes: {}, links: {}, borders: {}}; return LINKS; });
+  }
+
+  /* What is next to this country, and why. Never "you may also like": every row
+     carries the evidence it was offered on, and a row with no evidence is not
+     offered at all. */
+  function nextBlock(slug) {
+    var rows = (LINKS && LINKS.links[slug]) || [];
+    if (!rows.length) return '';
+    var borders = rows.filter(function (r) {
+      return r.why.some(function (w) { return w.kind === 'border'; }); });
+    return '<div class="at-next"><p class="at-next-head">Continue to</p><ul>'
+      + rows.slice(0, 4).map(function (r) {
+          return '<li><button type="button" data-go="country" data-key="' + esc(r.to) + '">'
+            + '<b>' + esc(r.name) + '</b>'
+            + '<span class="at-next-km">' + (r.km != null ? r.km + ' km' : '') + '</span>'
+            + '<span class="at-next-why">' + r.why.map(function (w) {
+                return w.kind === 'border'
+                  ? '<em>' + esc(w.say) + '</em>' : esc(w.say);
+              }).join(' &middot; ') + '</span></button></li>';
+        }).join('') + '</ul>'
+      + '<p class="at-next-note">'
+      + (borders.length
+         ? borders.length + (borders.length === 1 ? ' of these shares' : ' of these share')
+           + ' a land border with it. '
+         : 'None of these shares a land border with it. ')
+      + 'Distances are straight lines between country centres, not driving times '
+      + '&mdash; how long the road takes is not something we know.</p></div>';
   }
 
   /* Hovering a region on the continental list lights its countries. The list
@@ -445,7 +562,8 @@
       + '<i>&rarr;</i></a>'
       + '<a class="af-btn af-btn--quiet" href="/journey#/j/' + esc(slug) + '/">'
       + 'Build a journey here</a>'
-      + '</div>';
+      + '</div>'
+      + nextBlock(slug);
     showPane('country');
   }
 
@@ -613,6 +731,9 @@
     render();
     if ((level === 'country' || level === 'place') && state.country) {
       var slug = state.country;
+      needLinks().then(function () {
+        if (state.country === slug && state.level === 'country') { paneCountry(); paintWeb(); }
+      });
       fetchPlaces(slug).then(function () {
         if (state.country !== slug) return;
         if (state.level === 'country') paneCountry();
@@ -659,6 +780,11 @@
     state.level = level; state.region = region; state.country = country; state.place = place;
     render();
     if (country) {
+      needLinks().then(function () {
+        if (state.country === country && state.level === 'country') {
+          paneCountry(); paintWeb();
+        }
+      });
       fetchPlaces(country).then(function () {
         if (state.country !== country) return;
         if (state.level === 'country') paneCountry();
@@ -693,6 +819,15 @@
     if (jump) {
       state.want = jump.dataset.lensGo;
       go('africa', null);
+      return;
+    }
+    var mode = e.target.closest ? e.target.closest('[data-mode]') : null;
+    if (mode) {
+      state.web = mode.dataset.mode === 'links';
+      [].forEach.call(document.querySelectorAll('[data-mode]'), function (b) {
+        b.setAttribute('aria-pressed', String((b.dataset.mode === 'links') === state.web));
+      });
+      needLinks().then(function () { paintWeb(); });
       return;
     }
     var mon = e.target.closest ? e.target.closest('[data-month]') : null;

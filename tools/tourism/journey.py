@@ -28,6 +28,7 @@ import html as html_mod
 import json
 import os
 
+from . import plate
 from .model import ROOT, load_operators, load_regions, load_strands
 
 PAGE = os.path.join(ROOT, "journey.html")
@@ -205,6 +206,7 @@ def render(countries, taxonomy):
     if not data["countries"]:
         raise IOError("no published countries — nothing to plan")
     return TEMPLATE % {
+        "og": plate.open_graph('Build a journey — Afrinkong', 'Four questions, then one country, a journey shaped inside it, and the company that would run it.', '/journey'),
         "data": json.dumps(data, separators=(",", ":"), sort_keys=True),
         "wants": want_cards(data),
         "months": month_cells(),
@@ -235,6 +237,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Build a journey &mdash; Afrinkong</title>
 <meta name="description" content="Tell us what kind of Africa you are looking for. Four questions, then one country, a journey shaped inside it, and the company that would run it.">
+%(og)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/journey.css">
 </head>

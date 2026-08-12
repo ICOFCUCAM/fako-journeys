@@ -92,6 +92,62 @@
 /* Dropped by the decluttering pass: there was no room for it at this zoom. */
 .at-label[data-hide]{opacity:0}
 
+/* ---- the constellation --------------------------------------------------- */
+
+/* The same continent, read as a network. The countries stay where they are —
+   every node sits at its own country's centre — so switching modes is a change
+   of drawing rather than a change of subject, and nothing has to be relearned.
+   Lines are hairlines and nodes are small: a graph that shouts is a graph
+   nobody reads. */
+.at-web{pointer-events:none}
+.at-web line{stroke:var(--c-primary);stroke-opacity:.16;stroke-width:1;
+  vector-effect:non-scaling-stroke;transition:stroke-opacity var(--t-mid) var(--ease)}
+/* A shared land border is the only line here that changes what a journey can
+   physically be, so it is the only one drawn solid. */
+.at-web line[data-kind="border"]{stroke-opacity:.42;stroke-width:1.6}
+.at-web line[data-kind="lens"]{stroke:var(--c-accent);stroke-opacity:.4;
+  stroke-dasharray:3 4}
+.at-web line[data-lit]{stroke:var(--c-accent);stroke-opacity:.9;stroke-width:2}
+.at-web circle{fill:var(--c-bg);stroke:var(--c-primary);stroke-width:1.4;
+  vector-effect:non-scaling-stroke}
+.at-web circle[data-tier="ours"]{fill:var(--c-accent);stroke:var(--c-accent)}
+.at-web circle[data-lit]{fill:var(--c-primary);stroke:var(--c-primary)}
+.at-web circle[data-dim]{opacity:.28}
+/* In links mode the land itself steps back to a whisper: the network is the
+   drawing, and a filled continent underneath it is two drawings at once. */
+.at[data-web] .at-c path,.at[data-web] .at-c circle{fill:rgba(31,33,28,.07)}
+.at[data-web] .at-rest path{fill:rgba(31,33,28,.035)}
+.at[data-web] .at-win{opacity:0}
+
+.at-mode{position:absolute;top:18px;right:22px;z-index:5;display:flex;
+  border:1px solid var(--c-border);background:rgba(247,242,231,.9)}
+.at-modeb{background:none;border:0;cursor:pointer;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);padding:9px 13px;
+  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.at-modeb[aria-pressed="true"]{background:var(--c-primary);color:var(--c-bg)}
+.at-modeb:hover[aria-pressed="false"]{color:var(--c-primary)}
+
+/* ---- what is next to this ------------------------------------------------ */
+
+/* The answer to the question the site could not answer: what is next to it.
+   Every row carries the evidence for itself, because "you may also like" with
+   no reason behind it is the thing this is meant to replace. */
+.at-next{margin-top:var(--sp-5);border-top:2px solid var(--c-accent);padding-top:14px}
+.at-next-head{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.at-next ul{margin-top:10px}
+.at-next li{border-bottom:var(--fj-rule)}
+.at-next button{display:grid;grid-template-columns:1fr auto;gap:6px 14px;width:100%;
+  text-align:left;background:none;border:0;cursor:pointer;padding:13px 4px;color:inherit;
+  font:inherit;transition:background var(--t-fast) var(--ease)}
+.at-next button:hover{background:var(--fj-dust)}
+.at-next b{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;line-height:1.05}
+.at-next-km{font-family:var(--fj-mono);font-size:9px;letter-spacing:.12em;color:var(--c-muted);
+  white-space:nowrap;padding-top:4px}
+.at-next-why{grid-column:1/-1;font-size:14.5px;line-height:1.5;color:var(--c-muted)}
+.at-next-why em{font-style:normal;color:var(--c-accent)}
+.at-next-note{margin-top:12px;font-size:13px;line-height:1.6;color:var(--c-muted)}
+
 /* ---- breadcrumb ---------------------------------------------------------- */
 
 .at-crumb{position:absolute;top:20px;left:26px;z-index:5;display:flex;align-items:center;
@@ -261,6 +317,8 @@
   .at-mark b{font-size:19px}
   .at-crumb{top:10px;left:12px}
   .at-crumb-seg{padding:9px 7px}
+  .at-mode{top:8px;right:10px}
+  .at-modeb{padding:11px 11px}
   .at-tools{grid-template-columns:1fr;grid-template-areas:"want" "when" "go";
     gap:6px;padding:10px 12px 11px}
   .at-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}

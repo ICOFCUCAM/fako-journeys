@@ -387,6 +387,116 @@ def as_map(topo):
     return out
 
 
+# ---- what borders what ------------------------------------------------------------
+
+# Natural Earth's polygons share their boundaries: where two countries meet,
+# both carry the same vertices. So adjacency is not something to be looked up in
+# a table somebody typed — it is in the geometry, and this reads it out.
+#
+# The tolerance is in degrees. Neighbouring outlines are usually vertex-for-vertex
+# identical along the border; a fifth of a degree (~22 km at the equator) is
+# loose enough for the few places where they are only nearly identical, and tight
+# enough that Kenya does not come out bordering Zambia.
+BORDER_TOL = 0.2
+EARTH_KM = 6371.0
+
+
+def lonlat_rings(topo, arcs, geom):
+    """One country's rings in degrees, before any projection."""
+    out = []
+    for poly in polygons(geom):
+        for part in poly:
+            pts = list(ring(arcs, part))
+            if len(pts) > 3:
+                out.append(pts)
+    return out
+
+
+def great_circle(a, b):
+    """Kilometres between two lon/lat points, along the surface.
+
+    A straight-line distance is a fact about the map. It is deliberately not
+    presented anywhere as a travel time: how long the road takes is a thing this
+    project does not know, and a number that looks like an answer is worse than
+    no number.
+    """
+    lo1, la1 = math.radians(a[0]), math.radians(a[1])
+    lo2, la2 = math.radians(b[0]), math.radians(b[1])
+    d = math.sin((la2 - la1) / 2) ** 2 + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2
+    return 2 * EARTH_KM * math.asin(min(1.0, math.sqrt(d)))
+
+
+def centroid_lonlat(rings):
+    """The middle of the largest ring, in degrees. Inside the country for every
+    shape on this roster, which is what matters for hanging a node on."""
+    best = max(rings, key=lambda r: abs(sum(
+        r[i][0] * r[(i + 1) % len(r)][1] - r[(i + 1) % len(r)][0] * r[i][1]
+        for i in range(len(r)))))
+    return (round(sum(p[0] for p in best) / len(best), 3),
+            round(sum(p[1] for p in best) / len(best), 3))
+
+
+def links(topo):
+    """Who borders whom, and how far apart the middles are.
+
+    Two facts, both read off Natural Earth rather than asserted: a shared land
+    border, and the great-circle distance between country centres. Everything
+    else the site calls a connection — a shared experience, an overlapping
+    season, the same operator — comes from the dataset and is joined to this in
+    tools/tourism/links.py. Keeping the geometry here and the editorial there is
+    the whole point: one of them can be checked against a map.
+    """
+    arcs = decode(topo)
+    by_slug, centres = {}, {}
+    for geom in topo["objects"]["countries"]["geometries"]:
+        if not str(geom.get("id", "")).isdigit():
+            continue
+        code = int(geom["id"])
+        if code not in ROSTER:
+            continue
+        rings = lonlat_rings(topo, arcs, geom)
+        if not rings:
+            continue
+        slug = ROSTER[code][0]
+        by_slug[slug] = rings
+        centres[slug] = centroid_lonlat(rings)
+    # Island states have no outline in the roster geometry at this scale; they
+    # get their marker's own position and border nobody, which is true.
+    for code, (lon, lat) in ISLAND_MARKS.items():
+        if code in ROSTER and ROSTER[code][0] not in centres:
+            centres[ROSTER[code][0]] = (lon, lat)
+
+    # A grid over the vertices, so this is a sweep rather than every country
+    # against every other country's every point.
+    cell = BORDER_TOL
+    grid = {}
+    for slug, rings in by_slug.items():
+        for r in rings:
+            for lon, lat in r:
+                grid.setdefault((int(lon / cell), int(lat / cell)), set()).add(slug)
+
+    borders = {slug: set() for slug in centres}
+    for (gx, gy), here in grid.items():
+        near = set()
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                near |= grid.get((gx + dx, gy + dy), set())
+        for a in here:
+            for b in near:
+                if a != b:
+                    borders[a].add(b)
+                    borders[b].add(a)
+
+    out = {"centres": {}, "borders": {}, "km": {}}
+    for slug in sorted(centres):
+        out["centres"][slug] = list(centres[slug])
+        out["borders"][slug] = sorted(borders.get(slug, ()))
+    for a in sorted(centres):
+        out["km"][a] = {b: int(round(great_circle(centres[a], centres[b])))
+                        for b in sorted(centres) if b != a}
+    return out
+
+
 SOLO_BOX = 1000.0       # the long side of a single-country silhouette
 
 
@@ -578,6 +688,13 @@ if __name__ == "__main__":
         data = views(topo)
         text = json.dumps(data, indent=1, sort_keys=True)
         sys.stderr.write("%d country views, %.1f KB\n" % (len(data["countries"]), len(text) / 1024.0))
+        print(text)
+    elif len(sys.argv) == 3 and sys.argv[2] == "--links":
+        data = links(topo)
+        text = json.dumps(data, indent=1, sort_keys=True)
+        pairs = sum(len(v) for v in data["borders"].values()) // 2
+        sys.stderr.write("%d countries, %d shared land borders, %.1f KB\n"
+                         % (len(data["centres"]), pairs, len(text) / 1024.0))
         print(text)
     elif len(sys.argv) == 3 and sys.argv[2] == "--map":
         data = as_map(topo)

@@ -259,6 +259,31 @@
   transition:width var(--t-mid) var(--ease)}
 .jn-bar-n{font-family:var(--fj-mono);font-size:9.5px;color:var(--c-muted);text-align:right}
 
+/* Where the journey could carry on to. Set above the operator because it is
+   the last decision before the journey is handed over. */
+.jn-onward{margin-top:var(--sp-5);border-top:2px solid var(--c-primary);padding-top:14px}
+.jn-onward ul{margin-top:8px}
+.jn-onward li{border-bottom:var(--fj-rule)}
+.jn-onward button{display:grid;grid-template-columns:1fr auto;gap:5px 14px;width:100%;
+  text-align:left;background:none;border:0;cursor:pointer;padding:13px 4px;color:inherit;
+  font:inherit;transition:background var(--t-fast) var(--ease)}
+.jn-onward button:hover{background:var(--fj-dust)}
+.jn-onward b{font-family:var(--fj-display);font-size:20px;text-transform:uppercase;
+  line-height:1.05}
+.jn-onward b::after{content:" \2192";color:var(--c-accent)}
+.jn-onward-km{font-family:var(--fj-mono);font-size:9px;letter-spacing:.12em;
+  color:var(--c-muted);white-space:nowrap;padding-top:4px}
+.jn-onward-why{grid-column:1/-1;font-size:14.5px;line-height:1.5;color:var(--c-muted)}
+.jn-onward-note{margin-top:12px;font-size:13px;line-height:1.6;color:var(--c-muted)}
+
+/* The border, in the middle of the timeline. */
+.jn-cross{position:relative;padding:16px 0 16px 104px;border-bottom:var(--fj-rule)}
+.jn-cross::before{content:"";position:absolute;left:4px;top:0;bottom:0;width:1px;
+  border-left:1px dashed var(--c-accent)}
+.jn-cross span{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-accent)}
+.jn-cross span::before{content:"crossing into ";color:var(--c-muted)}
+
 .jn-who{margin-top:var(--sp-5)}
 .jn-who-in{border-top:2px solid var(--c-primary);padding-top:16px}
 .jn-who-in[data-ours]{border-top-color:var(--c-accent)}
@@ -333,6 +358,7 @@
   /* Twelve months across a phone is a four-pixel target. Three rows of four. */
   .jn-months{grid-template-columns:repeat(4,1fr)}
   .jn-leg{grid-template-columns:82px 1fr 24px;gap:10px}
+  .jn-cross{padding-left:82px}
   .jn-bar{grid-template-columns:88px 1fr 36px;gap:10px}
   /* The next step follows you down the page: on a phone the buttons are the
      bottom of a long list otherwise, and the answer is above the fold. */

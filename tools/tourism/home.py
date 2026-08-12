@@ -29,7 +29,7 @@ import json
 import os
 
 from . import imaging, plate
-from .model import ROOT
+from .model import ROOT, region_of
 
 SHAPES_PATH = os.path.join(ROOT, "tourism", "shapes.json")
 
@@ -79,6 +79,32 @@ def window(country, entry_for):
                                     "own borders" % country.name) if src else None,
                                ident="shape-%s" % country.slug,
                                classes="af-window-svg"))
+
+
+def next_to(country):
+    """The countries next to this one, and why they count as next to it.
+
+    Straight from the same links payload the atlas and the journey engine use,
+    so a country page, a map and a journey all agree about what borders what.
+    Prints nothing where nothing connects rather than reaching for filler.
+    """
+    try:
+        with open(os.path.join(ROOT, "data", "links.json")) as fh:
+            rows = (json.load(fh).get("links") or {}).get(country.slug) or []
+    except (IOError, ValueError):
+        return ""
+    if not rows:
+        return ""
+    out = []
+    for r in rows[:4]:
+        border = any(w["kind"] == "border" for w in r["why"])
+        out.append('<a href="/atlas#/%s"%s>%s<i>%s</i></a>'
+                   % (esc(r["to"]), ' data-border="true"' if border else "",
+                      esc(r["name"]),
+                      esc("%d km" % r["km"] if r.get("km") is not None else "")))
+    return ('<div class="foot-next"><span>Next to it</span>%s'
+            '<p>Straight-line distances between country centres. Solid names share '
+            'a land border with %s.</p></div>' % ("".join(out), esc(country.name)))
 
 
 MONTHS = ("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")
@@ -246,6 +272,11 @@ def build(country, taxonomy, countries=()):
         "tagline": esc(country.tagline),
         "summary": esc(country.summary),
         "title": esc("%s — %s | Guided Journeys and Experiences" % (country.name, country.tagline)),
+        "regionKey": esc(region_of(country)[0]),
+        "og": plate.open_graph(
+            esc("%s — %s | Afrinkong" % (country.name, country.tagline)),
+            esc(country.summary), "/%s" % country.slug),
+        "nextTo": next_to(country),
         "description": esc("%s: %s Twenty-seven kinds of experience, from wildlife and mountains "
                            "to culture, food and heritage, with local guides."
                            % (country.name, country.summary)),
@@ -293,6 +324,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%(title)s</title>
 <meta name="description" content="%(description)s">
+%(og)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
@@ -419,6 +451,28 @@ TEMPLATE = """<!DOCTYPE html>
 .foot-col b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px;font-weight:400}
 .foot-col a,.foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--fj-onbasalt-dim)}
 .foot-col a:hover{color:var(--c-bg)}
+/* Where you are, at the foot of the page: the ladder you came down and the
+   countries beside this one. It replaces nothing — the site map is still below
+   — but it is the last chance to say that this country has neighbours. */
+.foot-where{padding-bottom:26px;margin-bottom:26px;border-bottom:var(--fj-rule-dark)}
+.foot-where ol{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.foot-where li+li::before{content:"/";margin-right:10px;color:var(--fj-onbasalt-dim);
+  opacity:.5}
+.foot-where a{color:var(--fj-onbasalt-dim)}
+.foot-where a:hover{color:var(--c-bg)}
+.foot-where [aria-current]{color:var(--c-accent)}
+.foot-next{margin-top:18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
+.foot-next>span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);width:100%%}
+.foot-next a{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
+  color:var(--fj-onbasalt-dim);border-bottom:1px solid transparent}
+.foot-next a[data-border]{color:var(--c-bg)}
+.foot-next a:hover{border-color:var(--c-accent)}
+.foot-next i{font-style:normal;font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  margin-left:7px;color:var(--fj-onbasalt-dim)}
+.foot-next p{width:100%%;margin-top:6px;font-size:12.5px;line-height:1.6;
+  color:var(--fj-onbasalt-dim)}
 .foot-bar{margin-top:40px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
 .foot-bar a{border-bottom:1px solid var(--c-accent)}
 @media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
@@ -527,6 +581,17 @@ TEMPLATE = """<!DOCTYPE html>
 
 <footer class="foot">
   <div class="af-frame">
+    <!-- Where you are, and what is next to it. A footer on this site is not a
+         site map; it is the last place the visitor can be told that the country
+         they are reading about has neighbours. -->
+    <nav class="foot-where" aria-label="Where you are">
+      <ol>
+        <li><a href="/atlas">Africa</a></li>
+        <li><a href="/atlas#/%(regionKey)s">%(region)s</a></li>
+        <li><span aria-current="page">%(name)s</span></li>
+      </ol>
+      %(nextTo)s
+    </nav>
     <div class="foot-grid">
       <div>
         <div class="foot-brand">%(name)s<span>%(tagline)s</span></div>
