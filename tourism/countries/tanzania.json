@@ -13,6 +13,17 @@
  ],
  "window": "/images/uploads/window-tanzania-940w.jpg",
  "window_alt": "A footpath through flat-topped acacia below a snow-capped volcano",
+ "months": [
+  1,
+  2,
+  3,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "when": "Calving on the southern Serengeti in February; the crossings run June to October.",
  "entries": [
   {
    "category": "hero",

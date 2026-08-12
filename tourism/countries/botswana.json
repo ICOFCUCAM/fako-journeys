@@ -10,6 +10,15 @@
   "wildlife",
   "culture"
  ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "when": "The Okavango flood peaks between June and August, months after the rain that made it.",
  "entries": [
   {
    "category": "hero",

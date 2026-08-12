@@ -12,6 +12,15 @@
   "heritage",
   "food"
  ],
+ "months": [
+  10,
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "After the rains the highlands are green and clear, October through March.",
  "entries": [
   {
    "category": "hero",

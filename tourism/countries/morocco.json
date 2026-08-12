@@ -12,6 +12,15 @@
   "food",
   "heritage"
  ],
+ "months": [
+  3,
+  4,
+  5,
+  9,
+  10,
+  11
+ ],
+ "when": "Spring and autumn: the Atlas is walkable and the south is not yet an oven.",
  "entries": [
   {
    "category": "hero",

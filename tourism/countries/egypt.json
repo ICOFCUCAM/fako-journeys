@@ -11,6 +11,16 @@
   "culture",
   "coast"
  ],
+ "months": [
+  10,
+  11,
+  12,
+  1,
+  2,
+  3,
+  4
+ ],
+ "when": "The cool half of the year. Upper Egypt in August is not a holiday.",
  "entries": [
   {
    "category": "hero",

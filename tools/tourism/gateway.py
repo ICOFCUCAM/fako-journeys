@@ -48,7 +48,10 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "destinations", "footer")
+MARKERS = ("window", "captions", "ticks", "months", "destinations", "footer")
+
+MONTHS = ("January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December")
 
 
 def esc(v):
@@ -119,6 +122,24 @@ def block_ticks(countries):
                    % (esc(c.slug), esc(c.name)) for c in countries)
 
 
+def block_months(countries):
+    """Twelve buttons, each knowing how many destinations are good in it.
+
+    "When can I go" is the second question a traveller asks, and across a
+    continent it has a real answer: the dry season in Zambia is the cyclone
+    season in Mauritius. Answering it with a paragraph is what every tourism
+    site does; answering it with a control is the point of holding the same
+    twenty-seven categories and the same calendar for every country.
+    """
+    out = []
+    for i, name in enumerate(MONTHS, start=1):
+        n = sum(1 for c in countries if i in c.months)
+        out.append('<button class="wa-month" type="button" data-month="%d" '
+                   'aria-pressed="false"><b>%s</b><span>%d</span></button>'
+                   % (i, esc(name[:3]), n))
+    return "      " + "".join(out)
+
+
 def block_destinations(countries):
     """The grid, grouped by region, each card carrying what it leads on."""
     by_region = {}
@@ -135,10 +156,13 @@ def block_destinations(countries):
         rows.append('      <h3 class="wa-dest-reg" data-region="%s">%s</h3>' % (key, title))
         for c in sorted(group, key=lambda x: (0 if x.operator else 1, x.name)):
             rows.append(
-                '      <div class="wa-dest" data-region="%s" data-tags="%s"><b>%s</b><h3>%s</h3>'
-                '<p>%s</p><a href="%s">Explore %s &rarr;</a></div>'
-                % (key, esc(" ".join(c.calls)), esc(c.operator), esc(c.name),
-                   esc(c.summary), esc(c.url), esc(c.name)))
+                '      <div class="wa-dest" data-region="%s" data-tags="%s" data-months="%s">'
+                '<b>%s</b><h3>%s</h3><p>%s</p>'
+                '<p class="wa-dest-when">%s</p>'
+                '<a href="%s">Explore %s &rarr;</a></div>'
+                % (key, esc(" ".join(c.calls)), esc(",".join(str(m) for m in c.months)),
+                   esc(c.operator), esc(c.name), esc(c.summary), esc(c.when),
+                   esc(c.url), esc(c.name)))
     return "\n".join(rows)
 
 
@@ -161,6 +185,7 @@ def render(countries):
         "window": block_window(with_shape, shape_by_slug),
         "captions": block_captions(with_shape),
         "ticks": block_ticks(with_shape),
+        "months": block_months(seq),
         "destinations": block_destinations(seq),
         "footer": block_footer(seq),
     }

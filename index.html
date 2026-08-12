@@ -188,6 +188,29 @@ ul,ol{list-style:none}
 .wa-want b{display:block;font-family:var(--fj-display);font-size:clamp(17px,1.6vw,22px);font-weight:700;text-transform:uppercase;margin-top:8px;line-height:1.05}
 .wa-want[aria-pressed="true"]{background:var(--c-primary)}
 .wa-want[aria-pressed="true"] b{color:var(--c-bg)}
+/* The second dimension. "What do I want" and "when can I go" are the two
+   questions a traveller actually has, and across a continent the second one has
+   a real answer — the dry season in Zambia is the cyclone season in Mauritius.
+   The count under each month is how many destinations are good in it, so the
+   shape of the African year is legible before anything is pressed. */
+.wa-months{display:grid;grid-template-columns:repeat(12,1fr);gap:0;
+  border-bottom:var(--fj-rule);margin-bottom:16px}
+.wa-month{background:none;border:0;border-right:var(--fj-rule);cursor:pointer;
+  padding:12px 4px 11px;text-align:center;transition:background var(--t-fast) var(--ease)}
+.wa-month:last-child{border-right:0}
+.wa-month:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
+.wa-month b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--c-primary)}
+.wa-month span{display:block;font-family:var(--fj-display);font-size:17px;font-weight:700;
+  color:var(--c-muted);margin-top:3px}
+.wa-month[aria-pressed="true"]{background:var(--c-primary)}
+.wa-month[aria-pressed="true"] b{color:var(--c-bg)}
+.wa-month[aria-pressed="true"] span{color:var(--c-accent)}
+.wa-dest-when{font-size:13.5px;color:var(--c-accent);margin-top:8px;display:none}
+.wa-dest[data-when] .wa-dest-when{display:block}
+@media(max-width:760px){.wa-months{grid-template-columns:repeat(6,1fr)}
+  .wa-month:nth-child(6n){border-right:0}
+  .wa-month:nth-child(-n+6){border-bottom:var(--fj-rule)}}
 .wa-want-say{margin:16px 0 26px;font-size:15px;color:var(--c-muted)}
 .wa-dest[hidden]{display:none}
 @media(max-width:1000px){.wa-wants{grid-template-columns:1fr 1fr 1fr}.wa-want:nth-child(6n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(3n){border-right:0;padding-right:0}}
@@ -836,36 +859,40 @@ ul,ol{list-style:none}
       <button class="wa-want" type="button" data-want="food"><i>I want to taste</i><b>African food</b></button>
       <button class="wa-want" type="button" data-want="heritage"><i>I want to discover</i><b>Heritage</b></button>
     </div>
-    <p class="wa-want-say" id="wa-want-say">Choose one and the list narrows to it. Choose it again to see all twenty-two.</p>
+    <div class="wa-months" role="group" aria-label="Filter destinations by month">
+      <!-- gen:months -->
+      <button class="wa-month" type="button" data-month="1" aria-pressed="false"><b>Jan</b><span>12</span></button><button class="wa-month" type="button" data-month="2" aria-pressed="false"><b>Feb</b><span>12</span></button><button class="wa-month" type="button" data-month="3" aria-pressed="false"><b>Mar</b><span>11</span></button><button class="wa-month" type="button" data-month="4" aria-pressed="false"><b>Apr</b><span>8</span></button><button class="wa-month" type="button" data-month="5" aria-pressed="false"><b>May</b><span>11</span></button><button class="wa-month" type="button" data-month="6" aria-pressed="false"><b>Jun</b><span>13</span></button><button class="wa-month" type="button" data-month="7" aria-pressed="false"><b>Jul</b><span>12</span></button><button class="wa-month" type="button" data-month="8" aria-pressed="false"><b>Aug</b><span>12</span></button><button class="wa-month" type="button" data-month="9" aria-pressed="false"><b>Sep</b><span>14</span></button><button class="wa-month" type="button" data-month="10" aria-pressed="false"><b>Oct</b><span>15</span></button><button class="wa-month" type="button" data-month="11" aria-pressed="false"><b>Nov</b><span>12</span></button><button class="wa-month" type="button" data-month="12" aria-pressed="false"><b>Dec</b><span>11</span></button>      <!-- /gen:months -->
+    </div>
+    <p class="wa-want-say" id="wa-want-say">Choose what you want, or the month you can travel, or both. Choose again to clear.</p>
     <div class="wa-dests">
       <!-- gen:destinations -->
       <h3 class="wa-dest-reg" data-region="central">Central &amp; West Africa</h3>
-      <div class="wa-dest" data-region="central" data-tags="mountains coast culture heritage"><b>Kamerun</b><h3>Cameroon</h3><p>Six ecological zones in nine hundred kilometres: an active 4,095 m volcano, Atlantic black sand, Korup rainforest, the Grassfields kingdoms and the Sahel edge at Waza.</p><a href="/cameroon">Explore Cameroon &rarr;</a></div>
-      <div class="wa-dest" data-region="central" data-tags="culture coast"><b></b><h3>Côte d&#x27;Ivoire</h3><p>Abidjan&#x27;s lagoon skyline, the rainforest at Taï, the basilica at Yamoussoukro, and Atlantic beaches west towards Grand-Béréby — the economic engine of francophone West Africa.</p><a href="/cote-divoire">Explore Côte d&#x27;Ivoire &rarr;</a></div>
-      <div class="wa-dest" data-region="central" data-tags="culture heritage coast food"><b></b><h3>Ghana</h3><p>The most straightforward country in West Africa to travel, with the Atlantic slave forts of the coast, the Ashanti kingdom at Kumasi, Mole&#x27;s elephants in the north, and a music scene worth planning around.</p><a href="/ghana">Explore Ghana &rarr;</a></div>
-      <div class="wa-dest" data-region="central" data-tags="culture food"><b></b><h3>Nigeria</h3><p>One in five Africans is Nigerian. Afrobeats, Nollywood, the Benin bronzes, Yankari&#x27;s elephants and the Obudu plateau — a country that exports its culture faster than anywhere else on earth.</p><a href="/nigeria">Explore Nigeria &rarr;</a></div>
-      <div class="wa-dest" data-region="central" data-tags="culture food coast"><b></b><h3>Senegal</h3><p>The westernmost point of Africa, with Dakar on its peninsula, Gorée offshore, the Sine-Saloum delta, the Djoudj bird sanctuary and a music tradition that shaped a good deal of what came after.</p><a href="/senegal">Explore Senegal &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="mountains coast culture heritage" data-months="11,12,1,2,3"><b>Kamerun</b><h3>Cameroon</h3><p>Six ecological zones in nine hundred kilometres: an active 4,095 m volcano, Atlantic black sand, Korup rainforest, the Grassfields kingdoms and the Sahel edge at Waza.</p><p class="wa-dest-when">Dry from November to February in the south; the north stays dry into April.</p><a href="/cameroon">Explore Cameroon &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="culture coast" data-months="11,12,1,2,3"><b></b><h3>Côte d&#x27;Ivoire</h3><p>Abidjan&#x27;s lagoon skyline, the rainforest at Taï, the basilica at Yamoussoukro, and Atlantic beaches west towards Grand-Béréby — the economic engine of francophone West Africa.</p><p class="wa-dest-when">The main dry season, between two sets of rains.</p><a href="/cote-divoire">Explore Côte d&#x27;Ivoire &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="culture heritage coast food" data-months="11,12,1,2,3"><b></b><h3>Ghana</h3><p>The most straightforward country in West Africa to travel, with the Atlantic slave forts of the coast, the Ashanti kingdom at Kumasi, Mole&#x27;s elephants in the north, and a music scene worth planning around.</p><p class="wa-dest-when">The dry season, and the harmattan haze that comes with it in January.</p><a href="/ghana">Explore Ghana &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="culture food" data-months="11,12,1,2,3"><b></b><h3>Nigeria</h3><p>One in five Africans is Nigerian. Afrobeats, Nollywood, the Benin bronzes, Yankari&#x27;s elephants and the Obudu plateau — a country that exports its culture faster than anywhere else on earth.</p><p class="wa-dest-when">Dry season across the country, and the festival calendar sits inside it.</p><a href="/nigeria">Explore Nigeria &rarr;</a></div>
+      <div class="wa-dest" data-region="central" data-tags="culture food coast" data-months="11,12,1,2,3,4,5"><b></b><h3>Senegal</h3><p>The westernmost point of Africa, with Dakar on its peninsula, Gorée offshore, the Sine-Saloum delta, the Djoudj bird sanctuary and a music tradition that shaped a good deal of what came after.</p><p class="wa-dest-when">Dry, and cool enough on the coast until the heat arrives in June.</p><a href="/senegal">Explore Senegal &rarr;</a></div>
       <h3 class="wa-dest-reg" data-region="east">East Africa</h3>
-      <div class="wa-dest" data-region="east" data-tags="wildlife culture"><b>Pearl Trails Uganda</b><h3>Uganda</h3><p>Half the world&#x27;s mountain gorillas, the source of the Nile, the Rwenzori snowline on the equator and savanna parks within a day&#x27;s drive of each other.</p><a href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a></div>
-      <div class="wa-dest" data-region="east" data-tags="mountains culture heritage food"><b></b><h3>Ethiopia</h3><p>The only African country never colonised, with its own alphabet, calendar and church — rock-hewn churches at Lalibela, the Simien escarpment above four thousand metres, and the Danakil below sea level.</p><a href="/ethiopia">Explore Ethiopia &rarr;</a></div>
-      <div class="wa-dest" data-region="east" data-tags="wildlife coast culture"><b></b><h3>Kenya</h3><p>The Mara migration, Amboseli elephants under Kilimanjaro, the Rift Valley lakes, the Swahili coast and a capital with a national park on its doorstep.</p><a href="/kenya">Explore Kenya &rarr;</a></div>
-      <div class="wa-dest" data-region="east" data-tags="wildlife culture"><b></b><h3>Rwanda</h3><p>Mountain gorillas on the Virunga volcanoes, a canopy walk over Nyungwe, Lake Kivu, and a capital that is among the cleanest and safest in Africa.</p><a href="/rwanda">Explore Rwanda &rarr;</a></div>
-      <div class="wa-dest" data-region="east" data-tags="wildlife mountains coast"><b></b><h3>Tanzania</h3><p>The Serengeti and the Ngorongoro crater, the highest mountain in Africa, and a spice island with a thousand-year-old stone town on it.</p><a href="/tanzania">Explore Tanzania &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="wildlife culture" data-months="12,1,2,6,7,8,9"><b>Pearl Trails Uganda</b><h3>Uganda</h3><p>Half the world&#x27;s mountain gorillas, the source of the Nile, the Rwenzori snowline on the equator and savanna parks within a day&#x27;s drive of each other.</p><p class="wa-dest-when">Two dry seasons. Gorilla trekking is easiest June to September.</p><a href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="mountains culture heritage food" data-months="10,11,12,1,2,3"><b></b><h3>Ethiopia</h3><p>The only African country never colonised, with its own alphabet, calendar and church — rock-hewn churches at Lalibela, the Simien escarpment above four thousand metres, and the Danakil below sea level.</p><p class="wa-dest-when">After the rains the highlands are green and clear, October through March.</p><a href="/ethiopia">Explore Ethiopia &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="wildlife coast culture" data-months="1,2,3,6,7,8,9,10"><b></b><h3>Kenya</h3><p>The Mara migration, Amboseli elephants under Kilimanjaro, the Rift Valley lakes, the Swahili coast and a capital with a national park on its doorstep.</p><p class="wa-dest-when">The migration crosses the Mara July to October; January to March is calving.</p><a href="/kenya">Explore Kenya &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="wildlife culture" data-months="6,7,8,9,12,1,2"><b></b><h3>Rwanda</h3><p>Mountain gorillas on the Virunga volcanoes, a canopy walk over Nyungwe, Lake Kivu, and a capital that is among the cleanest and safest in Africa.</p><p class="wa-dest-when">The long dry season, June to September, is the one for trekking.</p><a href="/rwanda">Explore Rwanda &rarr;</a></div>
+      <div class="wa-dest" data-region="east" data-tags="wildlife mountains coast" data-months="1,2,3,6,7,8,9,10"><b></b><h3>Tanzania</h3><p>The Serengeti and the Ngorongoro crater, the highest mountain in Africa, and a spice island with a thousand-year-old stone town on it.</p><p class="wa-dest-when">Calving on the southern Serengeti in February; the crossings run June to October.</p><a href="/tanzania">Explore Tanzania &rarr;</a></div>
       <h3 class="wa-dest-reg" data-region="southern">Southern Africa</h3>
-      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage"><b>Namib Skyline</b><h3>Namibia</h3><p>The oldest desert on earth running into the Atlantic — Sossusvlei&#x27;s dunes, the Skeleton Coast, Etosha&#x27;s waterholes and Damaraland&#x27;s desert elephant, across a country with almost nobody in it.</p><a href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a></div>
-      <div class="wa-dest" data-region="southern" data-tags="wildlife culture"><b></b><h3>Botswana</h3><p>The Okavango empties into the Kalahari and evaporates, and the whole country is organised around that fact — low-volume, high-value safari, mokoro channels, and the salt pans of Makgadikgadi.</p><a href="/botswana">Explore Botswana &rarr;</a></div>
-      <div class="wa-dest" data-region="southern" data-tags="coast wildlife"><b></b><h3>Mozambique</h3><p>The Indian Ocean coast of southern Africa — the Bazaruto and Quirimbas archipelagos, Ilha de Moçambique, Gorongosa&#x27;s restored wildlife, and a Portuguese-Swahili culture that exists nowhere else.</p><a href="/mozambique">Explore Mozambique &rarr;</a></div>
-      <div class="wa-dest" data-region="southern" data-tags="food heritage coast wildlife"><b></b><h3>South Africa</h3><p>Table Mountain over Cape Town, Big Five in the Kruger lowveld, the Drakensberg escarpment, two oceans meeting, and eleven official languages.</p><a href="/south-africa">Explore South Africa &rarr;</a></div>
-      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage"><b></b><h3>Zambia</h3><p>Victoria Falls from the side that gets wet, the walking safari where it was invented, the Lower Zambezi by canoe, and parks with almost no traffic in them.</p><a href="/zambia">Explore Zambia &rarr;</a></div>
-      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage"><b></b><h3>Zimbabwe</h3><p>Victoria Falls on one border, Great Zimbabwe&#x27;s stone city in the interior, Hwange&#x27;s elephant herds and Mana Pools — the park where the walking safari was refined into an art.</p><a href="/zimbabwe">Explore Zimbabwe &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage" data-months="5,6,7,8,9,10"><b>Namib Skyline</b><h3>Namibia</h3><p>The oldest desert on earth running into the Atlantic — Sossusvlei&#x27;s dunes, the Skeleton Coast, Etosha&#x27;s waterholes and Damaraland&#x27;s desert elephant, across a country with almost nobody in it.</p><p class="wa-dest-when">The dry winter concentrates game at the waterholes and keeps the roads open.</p><a href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="wildlife culture" data-months="5,6,7,8,9,10"><b></b><h3>Botswana</h3><p>The Okavango empties into the Kalahari and evaporates, and the whole country is organised around that fact — low-volume, high-value safari, mokoro channels, and the salt pans of Makgadikgadi.</p><p class="wa-dest-when">The Okavango flood peaks between June and August, months after the rain that made it.</p><a href="/botswana">Explore Botswana &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="coast wildlife" data-months="4,5,6,7,8,9,10"><b></b><h3>Mozambique</h3><p>The Indian Ocean coast of southern Africa — the Bazaruto and Quirimbas archipelagos, Ilha de Moçambique, Gorongosa&#x27;s restored wildlife, and a Portuguese-Swahili culture that exists nowhere else.</p><p class="wa-dest-when">Dry, clear and calm on the coast from April to October.</p><a href="/mozambique">Explore Mozambique &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="food heritage coast wildlife" data-months="1,2,3,4,5,6,7,8,9,10,11,12"><b></b><h3>South Africa</h3><p>Table Mountain over Cape Town, Big Five in the Kruger lowveld, the Drakensberg escarpment, two oceans meeting, and eleven official languages.</p><p class="wa-dest-when">Year-round, but the Cape is a summer place and Kruger a winter one.</p><a href="/south-africa">Explore South Africa &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage" data-months="6,7,8,9,10"><b></b><h3>Zambia</h3><p>Victoria Falls from the side that gets wet, the walking safari where it was invented, the Lower Zambezi by canoe, and parks with almost no traffic in them.</p><p class="wa-dest-when">Walking safaris run in the dry season; many camps close for the rains.</p><a href="/zambia">Explore Zambia &rarr;</a></div>
+      <div class="wa-dest" data-region="southern" data-tags="wildlife heritage" data-months="5,6,7,8,9,10"><b></b><h3>Zimbabwe</h3><p>Victoria Falls on one border, Great Zimbabwe&#x27;s stone city in the interior, Hwange&#x27;s elephant herds and Mana Pools — the park where the walking safari was refined into an art.</p><p class="wa-dest-when">The falls are fullest in April; the game viewing is best from August.</p><a href="/zimbabwe">Explore Zimbabwe &rarr;</a></div>
       <h3 class="wa-dest-reg" data-region="north">North Africa</h3>
-      <div class="wa-dest" data-region="north" data-tags="heritage culture coast"><b></b><h3>Egypt</h3><p>The oldest continuous tourism in the world, and still the reason most people first think of Africa — the Giza plateau, the Valley of the Kings, Abu Simbel, and the Red Sea reefs on the other coast.</p><a href="/egypt">Explore Egypt &rarr;</a></div>
-      <div class="wa-dest" data-region="north" data-tags="mountains culture food heritage"><b></b><h3>Morocco</h3><p>Four thousand metres of High Atlas within three hours of the Atlantic, four imperial cities, and the edge of the Sahara at Merzouga — a country you can cross from surf to dunes in two days.</p><a href="/morocco">Explore Morocco &rarr;</a></div>
-      <div class="wa-dest" data-region="north" data-tags="heritage culture coast"><b></b><h3>Tunisia</h3><p>Carthage on the bay of Tunis, Roman Dougga and El Jem, the Sahara at Douz and Tozeur, and a Mediterranean coast that has been in the tourism business for sixty years.</p><a href="/tunisia">Explore Tunisia &rarr;</a></div>
+      <div class="wa-dest" data-region="north" data-tags="heritage culture coast" data-months="10,11,12,1,2,3,4"><b></b><h3>Egypt</h3><p>The oldest continuous tourism in the world, and still the reason most people first think of Africa — the Giza plateau, the Valley of the Kings, Abu Simbel, and the Red Sea reefs on the other coast.</p><p class="wa-dest-when">The cool half of the year. Upper Egypt in August is not a holiday.</p><a href="/egypt">Explore Egypt &rarr;</a></div>
+      <div class="wa-dest" data-region="north" data-tags="mountains culture food heritage" data-months="3,4,5,9,10,11"><b></b><h3>Morocco</h3><p>Four thousand metres of High Atlas within three hours of the Atlantic, four imperial cities, and the edge of the Sahara at Merzouga — a country you can cross from surf to dunes in two days.</p><p class="wa-dest-when">Spring and autumn: the Atlas is walkable and the south is not yet an oven.</p><a href="/morocco">Explore Morocco &rarr;</a></div>
+      <div class="wa-dest" data-region="north" data-tags="heritage culture coast" data-months="4,5,6,9,10"><b></b><h3>Tunisia</h3><p>Carthage on the bay of Tunis, Roman Dougga and El Jem, the Sahara at Douz and Tozeur, and a Mediterranean coast that has been in the tourism business for sixty years.</p><p class="wa-dest-when">Spring and early autumn, either side of a Mediterranean summer.</p><a href="/tunisia">Explore Tunisia &rarr;</a></div>
       <h3 class="wa-dest-reg" data-region="islands">Islands</h3>
-      <div class="wa-dest" data-region="islands" data-tags="wildlife coast culture"><b></b><h3>Madagascar</h3><p>Separated from Africa 160 million years ago, with ninety per cent of its wildlife found nowhere else — lemurs, baobabs, the spiny forest of the south, and rainforest along the eastern escarpment.</p><a href="/madagascar">Explore Madagascar &rarr;</a></div>
-      <div class="wa-dest" data-region="islands" data-tags="coast food"><b></b><h3>Mauritius</h3><p>A volcanic island inside an almost unbroken reef, with a mountainous interior, Black River Gorges, and a culture assembled from India, Africa, France and China in the space of two centuries.</p><a href="/mauritius">Explore Mauritius &rarr;</a></div>
-      <div class="wa-dest" data-region="islands" data-tags="coast"><b></b><h3>Seychelles</h3><p>The only granite islands in the middle of an ocean anywhere on earth — Mahé, Praslin and La Digue, the coco de mer in the Vallée de Mai, and Aldabra&#x27;s giant tortoises a thousand kilometres out.</p><a href="/seychelles">Explore Seychelles &rarr;</a></div>
+      <div class="wa-dest" data-region="islands" data-tags="wildlife coast culture" data-months="4,5,6,7,8,9,10,11"><b></b><h3>Madagascar</h3><p>Separated from Africa 160 million years ago, with ninety per cent of its wildlife found nowhere else — lemurs, baobabs, the spiny forest of the south, and rainforest along the eastern escarpment.</p><p class="wa-dest-when">After the cyclone season, April to November, with whales in July and August.</p><a href="/madagascar">Explore Madagascar &rarr;</a></div>
+      <div class="wa-dest" data-region="islands" data-tags="coast food" data-months="5,6,7,8,9,10,11,12"><b></b><h3>Mauritius</h3><p>A volcanic island inside an almost unbroken reef, with a mountainous interior, Black River Gorges, and a culture assembled from India, Africa, France and China in the space of two centuries.</p><p class="wa-dest-when">The dry winter, and the cyclone season is January to March.</p><a href="/mauritius">Explore Mauritius &rarr;</a></div>
+      <div class="wa-dest" data-region="islands" data-tags="coast" data-months="4,5,10,11"><b></b><h3>Seychelles</h3><p>The only granite islands in the middle of an ocean anywhere on earth — Mahé, Praslin and La Digue, the coco de mer in the Vallée de Mai, and Aldabra&#x27;s giant tortoises a thousand kilometres out.</p><p class="wa-dest-when">Warm all year; April, May, October and November are the calm months between trade winds.</p><a href="/seychelles">Explore Seychelles &rarr;</a></div>
       <!-- /gen:destinations -->
     </div>
   </div>
@@ -1006,44 +1033,60 @@ ul,ol{list-style:none}
 </section>
 
 <script>
-/* The "what brings you here" buttons filter the grid directly beneath them. It is a filter, not a link: pressing the same button again clears it,
-   and with the script gone every destination is simply visible. */
+/* Two filters over one grid: what you want, and when you can go. They combine,
+   because a traveller has both constraints at once and a site that only lets you
+   express one of them is asking the wrong question. Pressing the same control
+   again clears that dimension. With the script gone every destination is simply
+   visible, which is the correct no-JS state for a directory. */
 (function(){
   var bar = document.querySelector('.wa-wants');
-  if (!bar) return;
+  var months = document.querySelector('.wa-months');
+  if (!bar || !months) return;
   var say = document.getElementById('wa-want-say');
   var idle = say.textContent;
-  var buttons = [].slice.call(bar.querySelectorAll('.wa-want'));
+  var wants = [].slice.call(bar.querySelectorAll('.wa-want'));
+  var mbtns = [].slice.call(months.querySelectorAll('.wa-month'));
   var LINE = {
-    wildlife:  'If wildlife is what brought you here, start with these.',
-    mountains: 'If you came to climb, these are the ones with the altitude.',
-    coast:     'If you came for the water, these reach the ocean.',
-    culture:   'If you came to meet people, start with these.',
-    food:      'If you came to eat, start here.',
-    heritage:  'If you came for what was here before you, start with these.'
+    wildlife:  'If wildlife is what brought you here',
+    mountains: 'If you came to climb',
+    coast:     'If you came for the water',
+    culture:   'If you came to meet people',
+    food:      'If you came to eat',
+    heritage:  'If you came for what was here before you'
   };
-  var on = null;
+  var MONTH = ['January','February','March','April','May','June',
+               'July','August','September','October','November','December'];
+  var want = null, month = null;
 
-  function apply(want){
-    on = want;
-    buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
-    var shown = 0;
-    var live = {};
+  function apply(){
+    wants.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
+    mbtns.forEach(function(b){ b.setAttribute('aria-pressed', String(+b.dataset.month === month)); });
+    var shown = 0, live = {};
     [].slice.call(document.querySelectorAll('.wa-dest[data-tags]')).forEach(function(c){
-      var keep = !want || c.dataset.tags.split(' ').indexOf(want) >= 0;
-      c.hidden = !keep;
-      if (keep) { shown++; live[c.dataset.region] = true; }
+      var byWant = !want || c.dataset.tags.split(' ').indexOf(want) >= 0;
+      var byMonth = !month || c.dataset.months.split(',').indexOf(String(month)) >= 0;
+      c.hidden = !(byWant && byMonth);
+      // The season note is only true in answer to a month, so it only shows then.
+      if (month) c.setAttribute('data-when', ''); else c.removeAttribute('data-when');
+      if (!c.hidden) { shown++; live[c.dataset.region] = true; }
     });
     // A region heading with nothing under it is worse than no heading.
     [].slice.call(document.querySelectorAll('.wa-dest-reg')).forEach(function(h){
       h.hidden = !live[h.dataset.region];
     });
-    say.textContent = want ? LINE[want] + ' ' + shown + ' of 22.' : idle;
+    if (!want && !month) { say.textContent = idle; return; }
+    var parts = [];
+    if (want) parts.push(LINE[want]);
+    if (month) parts.push((want ? 'and you can travel in ' : 'If you can travel in ') + MONTH[month - 1]);
+    say.textContent = parts.join(', ') + ' — ' + shown + ' of 22.';
   }
 
-  buttons.forEach(function(b){
+  wants.forEach(function(b){
     b.setAttribute('aria-pressed', 'false');
-    b.addEventListener('click', function(){ apply(on === b.dataset.want ? null : b.dataset.want); });
+    b.addEventListener('click', function(){ want = (want === b.dataset.want) ? null : b.dataset.want; apply(); });
+  });
+  mbtns.forEach(function(b){
+    b.addEventListener('click', function(){ var m = +b.dataset.month; month = (month === m) ? null : m; apply(); });
   });
 })();
 </script>

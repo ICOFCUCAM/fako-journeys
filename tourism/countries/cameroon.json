@@ -15,6 +15,14 @@
  "operator": "Kamerun",
  "window": "/images/uploads/window-cameroon-1024w.jpg",
  "window_alt": "Black volcanic sand and palms below a volcano at dusk",
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "Dry from November to February in the south; the north stays dry into April.",
  "entries": [
   {
    "category": "hero",

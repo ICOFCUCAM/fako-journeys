@@ -10,6 +10,16 @@
   "wildlife",
   "culture"
  ],
+ "months": [
+  6,
+  7,
+  8,
+  9,
+  12,
+  1,
+  2
+ ],
+ "when": "The long dry season, June to September, is the one for trekking.",
  "entries": [
   {
    "category": "hero",

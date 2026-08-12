@@ -11,6 +11,16 @@
   "food",
   "coast"
  ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "when": "Dry, and cool enough on the coast until the heat arrives in June.",
  "entries": [
   {
    "category": "hero",

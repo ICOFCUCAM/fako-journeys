@@ -9,6 +9,13 @@
  "calls": [
   "coast"
  ],
+ "months": [
+  4,
+  5,
+  10,
+  11
+ ],
+ "when": "Warm all year; April, May, October and November are the calm months between trade winds.",
  "entries": [
   {
    "category": "hero",

@@ -10,6 +10,14 @@
   "culture",
   "food"
  ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "Dry season across the country, and the festival calendar sits inside it.",
  "entries": [
   {
    "category": "hero",

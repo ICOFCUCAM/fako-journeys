@@ -104,6 +104,11 @@ class Country:
         self.operator = raw.get("operator") or ""
         self.window = raw.get("window") or ""
         self.window_alt = raw.get("window_alt") or ""
+        # Which months are actually good here, and the sentence that says why.
+        # "When can I go" is the second question every traveller asks and the
+        # first one most tourism sites answer with a paragraph nobody reads.
+        self.months = [int(m) for m in (raw.get("months") or [])]
+        self.when = raw.get("when") or ""
         self.entries = [Entry(e) for e in raw.get("entries", [])]
         self.by_category = {}
         for e in self.entries:

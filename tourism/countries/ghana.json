@@ -12,6 +12,14 @@
   "coast",
   "food"
  ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "The dry season, and the harmattan haze that comes with it in January.",
  "entries": [
   {
    "category": "hero",

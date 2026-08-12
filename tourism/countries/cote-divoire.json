@@ -10,6 +10,14 @@
   "culture",
   "coast"
  ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "The main dry season, between two sets of rains.",
  "entries": [
   {
    "category": "hero",

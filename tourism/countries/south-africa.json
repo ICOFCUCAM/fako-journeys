@@ -12,6 +12,21 @@
   "coast",
   "wildlife"
  ],
+ "months": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12
+ ],
+ "when": "Year-round, but the Cape is a summer place and Kruger a winter one.",
  "entries": [
   {
    "category": "hero",

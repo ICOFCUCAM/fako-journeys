@@ -13,6 +13,17 @@
  ],
  "window": "/images/uploads/window-kenya-1200w.jpg",
  "window_alt": "A zebra on a red earth track with a snow-capped peak far behind",
+ "months": [
+  1,
+  2,
+  3,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "when": "The migration crosses the Mara July to October; January to March is calving.",
  "entries": [
   {
    "category": "hero",

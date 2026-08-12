@@ -14,6 +14,16 @@
  "operator": "Pearl Trails Uganda",
  "window": "/images/uploads/window-uganda-1200w.jpg",
  "window_alt": "Ridge after ridge of montane rainforest under low cloud",
+ "months": [
+  12,
+  1,
+  2,
+  6,
+  7,
+  8,
+  9
+ ],
+ "when": "Two dry seasons. Gorilla trekking is easiest June to September.",
  "entries": [
   {
    "category": "hero",
