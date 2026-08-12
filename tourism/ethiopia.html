@@ -6,6 +6,7 @@
 <title>Ethiopia Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="The only African country never colonised, with its own alphabet, calendar and church — rock-hewn churches at Lalibela, the Simien escarpment above four thousand metres, and the Danakil below sea level.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Simien mountains escarpment dropping away into cloud, Ethiopia</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the Simien mountains escarpment dropping away into cloud, Ethiopia"><span>the Simien mountains escarpment dropping away into cloud, Ethiopia</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">ETHIOPIA <i>&middot; Tourism</i></span>
     <h1>The Roof of Africa</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Ethiopian Rift valley lakes seen from the escarpment</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Ethiopian Rift valley lakes seen from the escarpment"><span>the Ethiopian Rift valley lakes seen from the escarpment</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Escarpment and Rift</h3>
         <p>The Rift Valley cuts the whole country in half, with highlands either side of it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>trekkers on the ridge trail in the Simien mountains, Ethiopia</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="trekkers on the ridge trail in the Simien mountains, Ethiopia"><span>trekkers on the ridge trail in the Simien mountains, Ethiopia</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The Simiens</h3>
         <p>Ras Dashen is 4,550 metres; the trek to it runs along the escarpment for days.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Blue Nile falls in full flow at Tis Issat, Ethiopia</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Blue Nile falls in full flow at Tis Issat, Ethiopia"><span>the Blue Nile falls in full flow at Tis Issat, Ethiopia</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>The Blue Nile Falls</h3>
         <p>Tis Issat — the water that smokes — where the Blue Nile leaves Lake Tana.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>an island monastery on Lake Tana seen from the water, Ethiopia</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="an island monastery on Lake Tana seen from the water, Ethiopia"><span>an island monastery on Lake Tana seen from the water, Ethiopia</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>Lake Tana</h3>
         <p>The source of the Blue Nile, with monasteries on its islands still in use.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a crater lake at Bishoftu in the early morning, Ethiopia</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a crater lake at Bishoftu in the early morning, Ethiopia"><span>a crater lake at Bishoftu in the early morning, Ethiopia</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>No Coast, and No Loss</h3>
         <p>Landlocked since 1993 — the water here is the Rift lakes and the crater lakes of Bishoftu.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a round church surrounded by its own remnant forest, Ethiopia</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a round church surrounded by its own remnant forest, Ethiopia"><span>a round church surrounded by its own remnant forest, Ethiopia</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Harenna and the Church Forests</h3>
         <p>Harenna&#x27;s cloud forest in Bale, and the church forests that are the last woodland of the north.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a troop of gelada baboons grazing on the Simien escarpment, Ethiopia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a troop of gelada baboons grazing on the Simien escarpment, Ethiopia"><span>a troop of gelada baboons grazing on the Simien escarpment, Ethiopia</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Gelada and Walia Ibex</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>an Ethiopian wolf on the Sanetti plateau in Bale</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="an Ethiopian wolf on the Sanetti plateau in Bale"><span>an Ethiopian wolf on the Sanetti plateau in Bale</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Bale and the Ethiopian Wolf</h3>
         <p>The Bale mountains hold the last five hundred Ethiopian wolves, on the Sanetti plateau.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a park scout looking out over the Bale plateau, Ethiopia</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a park scout looking out over the Bale plateau, Ethiopia"><span>a park scout looking out over the Bale plateau, Ethiopia</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Community Conservation</h3>
         <p>Guides and scouts drawn from the villages inside the parks, which is why the wolves are still there.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>priests in white robes outside a rock-hewn church, Ethiopia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="priests in white robes outside a rock-hewn church, Ethiopia"><span>priests in white robes outside a rock-hewn church, Ethiopia</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Its Own Everything</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a village of the lower Omo valley at the end of the day, Ethiopia</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a village of the lower Omo valley at the end of the day, Ethiopia"><span>a village of the lower Omo valley at the end of the day, Ethiopia</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Omo Valley</h3>
         <p>The lower Omo holds sixteen peoples in one valley, and the visits should be arranged carefully.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>injera with several wats served on a shared platter, Ethiopia</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="injera with several wats served on a shared platter, Ethiopia"><span>injera with several wats served on a shared platter, Ethiopia</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Injera and Doro Wat</h3>
         <p>Sourdough injera under everything, and fasting food that has made vegans of visitors.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Timkat procession with white-robed crowds at Gondar, Ethiopia</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Timkat procession with white-robed crowds at Gondar, Ethiopia"><span>the Timkat procession with white-robed crowds at Gondar, Ethiopia</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Timkat and Meskel</h3>
         <p>Timkat in January at Gondar, and Meskel bonfires across the country in September.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a silversmith working an Ethiopian cross</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a silversmith working an Ethiopian cross"><span>a silversmith working an Ethiopian cross</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Weaving and Silver</h3>
         <p>Handwoven shemma cotton, and Coptic crosses in silver, each region with its own shape.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the rock-hewn church of Bete Giyorgis at Lalibela, Ethiopia</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the rock-hewn church of Bete Giyorgis at Lalibela, Ethiopia"><span>the rock-hewn church of Bete Giyorgis at Lalibela, Ethiopia</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Lalibela</h3>
         <p>Eleven churches cut down into solid rock in the twelfth century, still in use every day.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the stone castles of Fasil Ghebbi at Gondar, Ethiopia</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the stone castles of Fasil Ghebbi at Gondar, Ethiopia"><span>the stone castles of Fasil Ghebbi at Gondar, Ethiopia</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Aksum and Gondar</h3>
         <p>The Aksumite stelae, and the seventeenth-century castles of Gondar built by Fasilides.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Merkato district of Addis Ababa from above, Ethiopia</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Merkato district of Addis Ababa from above, Ethiopia"><span>the Merkato district of Addis Ababa from above, Ethiopia</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Addis Ababa</h3>
         <p>Founded 1886, at 2,355 metres, and the diplomatic capital of the continent.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Tigray rock church high in a cliff face, Ethiopia</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Tigray rock church high in a cliff face, Ethiopia"><span>a Tigray rock church high in a cliff face, Ethiopia</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Round Houses and Rock Churches</h3>
         <p>The tukul, and the rock architecture of Tigray cut into cliff faces you have to climb.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a coffee ceremony with roasting pan and jebena, Ethiopia</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a coffee ceremony with roasting pan and jebena, Ethiopia"><span>a coffee ceremony with roasting pan and jebena, Ethiopia</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>Coffee, Properly</h3>
         <p>Coffee was found here, and it is still roasted, ground and poured in front of you.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a family walking a highland track in northern Ethiopia</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a family walking a highland track in northern Ethiopia"><span>a family walking a highland track in northern Ethiopia</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Highland Travel</h3>
         <p>Cool highland air, short flights between the historic sites, and no malaria at altitude.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the sulphur springs of the Danakil depression, Ethiopia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the sulphur springs of the Danakil depression, Ethiopia"><span>the sulphur springs of the Danakil depression, Ethiopia</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Trekking Country</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a climber on the approach to a Tigray cliff church, Ethiopia</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a climber on the approach to a Tigray cliff church, Ethiopia"><span>a climber on the approach to a Tigray cliff church, Ethiopia</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Trek and Climb</h3>
         <p>The Simien traverse, Bale&#x27;s plateau, and the Tigray churches that need a rope.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a lodge terrace on the edge of the Simien escarpment, Ethiopia</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a lodge terrace on the edge of the Simien escarpment, Ethiopia"><span>a lodge terrace on the edge of the Simien escarpment, Ethiopia</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Lodges on the Escarpment</h3>
         <p>Limalimo and Bale Mountain Lodge — small, sited well, and built by people who stayed.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>cloud below the escarpment edge in the Simien mountains, Ethiopia</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="cloud below the escarpment edge in the Simien mountains, Ethiopia"><span>cloud below the escarpment edge in the Simien mountains, Ethiopia</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Faces and Escarpments</h3>
         <p>The light at four thousand metres, and portraiture that has to be asked for properly.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the climb to a rock church in the Gheralta mountains, Ethiopia</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the climb to a rock church in the Gheralta mountains, Ethiopia"><span>the climb to a rock church in the Gheralta mountains, Ethiopia</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Tigray</h3>
         <p>Rock churches in cliff faces reached by hand and foot, with almost nobody else there.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a priest holding a processional cross at a rock church, Ethiopia</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a priest holding a processional cross at a rock church, Ethiopia"><span>a priest holding a processional cross at a rock church, Ethiopia</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Nothing Else Like It</h3><p>No colonial period, its own script, its own calendar, and its own year that starts in September.</p>

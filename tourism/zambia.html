@@ -6,6 +6,7 @@
 <title>Zambia Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="Victoria Falls from the side that gets wet, the walking safari where it was invented, the Lower Zambezi by canoe, and parks with almost no traffic in them.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Victoria Falls in full flood with spray rising from the gorge, Zambia</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="Victoria Falls in full flood with spray rising from the gorge, Zambia"><span>Victoria Falls in full flood with spray rising from the gorge, Zambia</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">ZAMBIA <i>&middot; Tourism</i></span>
     <h1>The Smoke That Thunders</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Zambezi river and escarpment in the Lower Zambezi valley, Zambia</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Zambezi river and escarpment in the Lower Zambezi valley, Zambia"><span>the Zambezi river and escarpment in the Lower Zambezi valley, Zambia</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>The Zambezi Valley</h3>
         <p>Escarpment, floodplain and winterthorn forest, with the river braiding through the middle of all of it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>rolling montane grassland on the Nyika plateau, Zambia</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="rolling montane grassland on the Nyika plateau, Zambia"><span>rolling montane grassland on the Nyika plateau, Zambia</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The Nyika Plateau</h3>
         <p>Two thousand metres of rolling montane grassland on the Malawi border, with roan antelope and no heat.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the single 235 metre drop of Kalambo Falls, Zambia</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the single 235 metre drop of Kalambo Falls, Zambia"><span>the single 235 metre drop of Kalambo Falls, Zambia</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Victoria and Kalambo</h3>
         <p>Victoria Falls needs no introduction; Kalambo, on the Tanzanian border, drops 235 metres in a single uninterrupted fall.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>sunset over the Zambezi river with hippo in the shallows, Zambia</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="sunset over the Zambezi river with hippo in the shallows, Zambia"><span>sunset over the Zambezi river with hippo in the shallows, Zambia</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>Zambezi, Kafue, Tanganyika</h3>
         <p>Three great river systems and the southern tip of Lake Tanganyika, the second deepest lake on earth.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the clear freshwater shore of Lake Tanganyika at Nsumbu, Zambia</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the clear freshwater shore of Lake Tanganyika at Nsumbu, Zambia"><span>the clear freshwater shore of Lake Tanganyika at Nsumbu, Zambia</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>Lake Tanganyika Shore</h3>
         <p>Clear freshwater, sand and forested hills at Nsumbu, about as far from anywhere as Zambia gets.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>elephants under winterthorn trees in the Lower Zambezi, Zambia</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="elephants under winterthorn trees in the Lower Zambezi, Zambia"><span>elephants under winterthorn trees in the Lower Zambezi, Zambia</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Miombo and Winterthorn</h3>
         <p>Miombo woodland turning red at the start of the rains, and the winterthorn groves the elephants feed under.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a leopard in a sausage tree in the South Luangwa valley, Zambia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a leopard in a sausage tree in the South Luangwa valley, Zambia"><span>a leopard in a sausage tree in the South Luangwa valley, Zambia</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Leopard Country</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a walking safari group and guide in the South Luangwa bush, Zambia</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a walking safari group and guide in the South Luangwa bush, Zambia"><span>a walking safari group and guide in the South Luangwa bush, Zambia</span></div><span class="tq-tag">Safari</span></figure>
         <h3>The Walking Safari</h3>
         <p>Invented in the Luangwa in the 1950s: no vehicle, an armed scout, and everything at eye level.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>wild dogs on the Busanga plains in Kafue National Park, Zambia</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="wild dogs on the Busanga plains in Kafue National Park, Zambia"><span>wild dogs on the Busanga plains in Kafue National Park, Zambia</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Kafue and the Carnivores</h3>
         <p>Kafue is the size of Wales; the conservation programmes there fund anti-poaching across the whole Greater Kafue system.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Lozi paddlers and drummers on the Zambezi floodplain, Zambia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="Lozi paddlers and drummers on the Zambezi floodplain, Zambia"><span>Lozi paddlers and drummers on the Zambezi floodplain, Zambia</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Lozi, Bemba, Tonga</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Lozi fisherman poling a dugout on the Barotse floodplain, Zambia</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Lozi fisherman poling a dugout on the Barotse floodplain, Zambia"><span>a Lozi fisherman poling a dugout on the Barotse floodplain, Zambia</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>The Barotse Floodplain</h3>
         <p>The Lozi live with the flood — moving cattle, homes and the king himself when the Zambezi rises.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>nshima with relish served at a Zambian table</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="nshima with relish served at a Zambian table"><span>nshima with relish served at a Zambian table</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Nshima and Kapenta</h3>
         <p>Maize nshima with relish, dried kapenta from the lakes, and fresh bream out of the Zambezi.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Nalikwanda royal barge during the Kuomboka ceremony, Zambia</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Nalikwanda royal barge during the Kuomboka ceremony, Zambia"><span>the Nalikwanda royal barge during the Kuomboka ceremony, Zambia</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Kuomboka</h3>
         <p>When the floodplain fills, the Litunga is paddled to high ground on the Nalikwanda barge, drummed the whole way.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>coiled baskets woven in Zambia&#x27;s Western Province</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="coiled baskets woven in Zambia&#x27;s Western Province"><span>coiled baskets woven in Zambia&#x27;s Western Province</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Basketry and Copper</h3>
         <p>Tight coiled baskets from the Western Province, and copper worked on the belt that built the economy.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the colonial-era museum building in Livingstone, Zambia</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the colonial-era museum building in Livingstone, Zambia"><span>the colonial-era museum building in Livingstone, Zambia</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Livingstone</h3>
         <p>The old colonial capital above the falls, its museum, and the tree where the man himself is said to have camped.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the knife-edge bridge and gorge at Mosi-oa-Tunya, Victoria Falls, Zamb</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the knife-edge bridge and gorge at Mosi-oa-Tunya, Victoria Falls, Zambia"><span>the knife-edge bridge and gorge at Mosi-oa-Tunya, Victoria Falls, Zambia</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Mosi-oa-Tunya, UNESCO</h3>
         <p>World Heritage since 1989, shared with Zimbabwe, and named by the Kololo long before anyone renamed it.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a busy market street in Lusaka, Zambia</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a busy market street in Lusaka, Zambia"><span>a busy market street in Lusaka, Zambia</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Lusaka</h3>
         <p>The centre of everything: Kabwata market, the Great East Road, and the flights that get you to the parks.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a colonial veranda building on Mosi-oa-Tunya Road in Livingstone, Zamb</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a colonial veranda building on Mosi-oa-Tunya Road in Livingstone, Zambia"><span>a colonial veranda building on Mosi-oa-Tunya Road in Livingstone, Zambia</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Livingstone&#x27;s Verandas</h3>
         <p>Corrugated iron and deep colonial verandas along Mosi-oa-Tunya Road, built for heat and never modernised.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a roadside produce market on the Great North Road in Zambia</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a roadside produce market on the Great North Road in Zambia"><span>a roadside produce market on the Great North Road in Zambia</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>Markets and the Great North Road</h3>
         <p>Roadside charcoal and tomatoes, long-haul trucks to the copperbelt, and a bus that leaves when it fills.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a community craft cooperative near the South Luangwa park boundary, Za</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a community craft cooperative near the South Luangwa park boundary, Zambia"><span>a community craft cooperative near the South Luangwa park boundary, Zambia</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Village Around the Park</h3>
         <p>Community campsites and craft cooperatives on the Luangwa boundary, funded by the same beds that fill the lodges.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>rafting the grade five rapids in the Batoka gorge below Victoria Falls</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="rafting the grade five rapids in the Batoka gorge below Victoria Falls, Zambia"><span>rafting the grade five rapids in the Batoka gorge below Victoria Falls, Zambia</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Devil&#x27;s Pool and the Gorge</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>canoeing past elephants on the Lower Zambezi river, Zambia</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="canoeing past elephants on the Lower Zambezi river, Zambia"><span>canoeing past elephants on the Lower Zambezi river, Zambia</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Canoeing the Lower Zambezi</h3>
         <p>Three days downstream past hippo pods and elephant crossings, camping on islands, no engine at any point.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a small thatched bush camp overlooking the Luangwa river, Zambia</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a small thatched bush camp overlooking the Luangwa river, Zambia"><span>a small thatched bush camp overlooking the Luangwa river, Zambia</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Bush Camps, Six Beds</h3>
         <p>Seasonal bush camps in the Luangwa that take six guests, close at the rains, and are walked between.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>hippos in the Luangwa river at last light, Zambia</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="hippos in the Luangwa river at last light, Zambia"><span>hippos in the Luangwa river at last light, Zambia</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Luangwa at Last Light</h3>
         <p>The river bends, the hippo surface and the dust goes gold about forty minutes before the drive has to end.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>wildebeest massed on the open grass of Liuwa Plain, Zambia</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="wildebeest massed on the open grass of Liuwa Plain, Zambia"><span>wildebeest massed on the open grass of Liuwa Plain, Zambia</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Liuwa Plain</h3>
         <p>The second largest wildebeest migration in Africa, on a plain almost nobody has heard of, reachable only in the dry.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a lone safari vehicle on an empty track in the South Luangwa, Zambia</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a lone safari vehicle on an empty track in the South Luangwa, Zambia"><span>a lone safari vehicle on an empty track in the South Luangwa, Zambia</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Wilderness, Still Unmanaged</h3><p>Zambia kept the walking safari, the small camp and the empty park while its neighbours scaled up.</p>

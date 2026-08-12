@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Delta, Pan and Desert</b><span>the Makgadikgadi salt pans stretching to the horizon</span></li>
-        <li><b>Tsodilo</b><span>the Tsodilo hills rising from flat Kalahari scrub</span></li>
-        <li><b>No Falls, and the Zambezi Next Door</b><span>the Chobe river spreading wide at sunset</span></li>
-        <li><b>The Okavango and the Chobe</b><span>a mokoro being poled through a papyrus channel</span></li>
-        <li><b>Landlocked</b><span>a floodplain island in the Okavango at sunrise</span></li>
-        <li><b>Riverine and Mopane</b><span>riverine forest along the Chobe river bank</span></li>
+        <li><b>Delta, Pan and Desert</b><span>Water in the north, salt pans in the middle, and Kalahari sand for the rest of it.</span></li>
+        <li><b>Tsodilo</b><span>No real mountains — Tsodilo&#x27;s four hills hold four thousand rock paintings instead.</span></li>
+        <li><b>No Falls, and the Zambezi Next Door</b><span>The water here spreads rather than drops; Victoria Falls is ninety minutes from Kasane.</span></li>
+        <li><b>The Okavango and the Chobe</b><span>A mokoro poled through papyrus channels is the correct speed for this country.</span></li>
+        <li><b>Landlocked</b><span>The nearest sea is a thousand kilometres away, and nobody here seems to mind.</span></li>
+        <li><b>Riverine and Mopane</b><span>Riverine forest along the Chobe, and mopane woodland across the north.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>The Largest Elephant Population</b><span>elephants coming down to the Chobe river in late light</span></li>
-        <li><b>Low Volume, High Value</b><span>a game vehicle alone on a track in the Okavango</span></li>
-        <li><b>Community Trusts</b><span>a community conservation sign at a delta concession</span></li>
-        <li><b>Mokoro and Walking</b><span>walkers following a guide across an Okavango island</span></li>
+        <li><b>The Largest Elephant Population</b><span>Chobe holds more elephant than anywhere on earth, and they come to the river at four.</span></li>
+        <li><b>Low Volume, High Value</b><span>Fewer beds, larger concessions, and game drives that do not meet another vehicle.</span></li>
+        <li><b>Community Trusts</b><span>Concessions leased through community trusts, so the villages hold the lease and the income.</span></li>
+        <li><b>Mokoro and Walking</b><span>Poling, walking and riding — this is the country where you get out of the vehicle.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Batswana and San</b><span>a San tracker reading spoor in the Kalahari sand</span></li>
-        <li><b>The Kalahari San</b><span>San guides walking a Kalahari pan in the morning</span></li>
-        <li><b>Maitisong and Dithubaruba</b><span>dancers performing at a cultural festival in Botswana</span></li>
-        <li><b>Basketry</b><span>woven palm baskets from the Okavango panhandle</span></li>
-        <li><b>Seswaa and Bogobe</b><span>seswaa and bogobe served at a Botswana lodge</span></li>
-        <li><b>Not the Cheapest, but Quiet</b><span>a family on a mokoro in the Okavango channels</span></li>
-        <li><b>Cattle Posts</b><span>a cattle post at the edge of the Kalahari</span></li>
+        <li><b>Batswana and San</b><span>Setswana across the country, and San communities in the Kalahari with the oldest culture on earth.</span></li>
+        <li><b>The Kalahari San</b><span>Tracking with San guides, who will find in an hour what nobody else sees at all.</span></li>
+        <li><b>Maitisong and Dithubaruba</b><span>The Maitisong festival in Gaborone, and the Kweneng cultural festival at Dithubaruba.</span></li>
+        <li><b>Basketry</b><span>Palm baskets woven in the delta panhandle, dyed with bark, and collected worldwide.</span></li>
+        <li><b>Seswaa and Bogobe</b><span>Slow-pounded beef and sorghum porridge, and braai wherever there is a fire.</span></li>
+        <li><b>Not the Cheapest, but Quiet</b><span>Not a budget destination — but the children will not be sharing a sighting with ten vehicles.</span></li>
+        <li><b>Cattle Posts</b><span>Away from the parks the country is cattle, and the cattle post is the centre of it.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Maun and Kasane</b><span>light aircraft on the apron at Maun airport</span></li>
-        <li><b>Tent, Deck and Sand</b><span>a tented camp on a deck above the Okavango floodplain</span></li>
-        <li><b>Tsodilo Hills</b><span>rock paintings on the Tsodilo hills</span></li>
-        <li><b>Diamonds and Democracy</b><span>the National Museum building in Gaborone</span></li>
+        <li><b>Maun and Kasane</b><span>Not really cities — two safari towns with airstrips, which is what the country needs.</span></li>
+        <li><b>Tent, Deck and Sand</b><span>Camps built on decks above the flood, taken down when the concession lease ends.</span></li>
+        <li><b>Tsodilo Hills</b><span>Four thousand paintings on four hills the San call the resting place of the gods.</span></li>
+        <li><b>Diamonds and Democracy</b><span>Independent since 1966, and the one African country that used its diamonds well.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Mokoro, Walking, Horseback</b><span>riders crossing a floodplain on a horseback safari</span></li>
-        <li><b>The Concession Camps</b><span>a small luxury tented camp lit at dusk in the delta</span></li>
-        <li><b>Water and Light</b><span>aerial view of flooded Okavango channels at golden hour</span></li>
-        <li><b>The Makgadikgadi</b><span>quad bikes on the Makgadikgadi salt pan at dusk</span></li>
+        <li><b>Mokoro, Walking, Horseback</b><span>Poled canoes, walking safaris on the islands, and some of the best riding safaris anywhere.</span></li>
+        <li><b>The Concession Camps</b><span>Private concessions the size of small countries, with six tents on them.</span></li>
+        <li><b>Water and Light</b><span>Aerial work over the delta, and reflections that only exist for the weeks of the flood.</span></li>
+        <li><b>The Makgadikgadi</b><span>Drive onto the pan at night and there is no horizon and no sound at all.</span></li>
         </ul>
       </div>
     </div>

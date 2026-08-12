@@ -6,6 +6,7 @@
 <title>Uganda Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="Half the world&#x27;s mountain gorillas, the source of the Nile, the Rwenzori snowline on the equator and savanna parks within a day&#x27;s drive of each other.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>mist over the forested hills of Bwindi Impenetrable National Park at s</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="mist over the forested hills of Bwindi Impenetrable National Park at sunrise, Uganda"><span>mist over the forested hills of Bwindi Impenetrable National Park at sunrise, Uganda</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">UGANDA <i>&middot; Tourism</i></span>
     <h1>The Pearl of Africa</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the crater lakes and green hills around Fort Portal, Uganda</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the crater lakes and green hills around Fort Portal, Uganda"><span>the crater lakes and green hills around Fort Portal, Uganda</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Green, End to End</h3>
         <p>Crater lakes around Fort Portal, papyrus swamp on the Nile, and the Rwenzori snowline sitting on the equator.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the glaciated peaks of the Rwenzori Mountains above the moorland, Ugan</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the glaciated peaks of the Rwenzori Mountains above the moorland, Uganda"><span>the glaciated peaks of the Rwenzori Mountains above the moorland, Uganda</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The Mountains of the Moon</h3>
         <p>The Rwenzori range holds glaciers three degrees from the equator, and Margherita Peak at 5,109 m.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Nile forcing through the narrow gap at Murchison Falls, Uganda</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Nile forcing through the narrow gap at Murchison Falls, Uganda"><span>the Nile forcing through the narrow gap at Murchison Falls, Uganda</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Murchison, Through the Gap</h3>
         <p>The entire Victoria Nile forced through a seven-metre gap and dropped forty-three metres into the gorge below.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the islands and terraced shores of Lake Bunyonyi, Uganda</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the islands and terraced shores of Lake Bunyonyi, Uganda"><span>the islands and terraced shores of Lake Bunyonyi, Uganda</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>Where the Nile Begins</h3>
         <p>The Nile leaves Lake Victoria at Jinja; Lake Bunyonyi holds twenty-nine islands and no bilharzia.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a sandy freshwater shore and fishing boats on the Ssese Islands, Ugand</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a sandy freshwater shore and fishing boats on the Ssese Islands, Uganda"><span>a sandy freshwater shore and fishing boats on the Ssese Islands, Uganda</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>The Ssese Islands</h3>
         <p>Freshwater beaches and fishing villages on Lake Victoria, an hour and a half by ferry from Entebbe.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dense canopy and buttressed trees in Kibale Forest, Uganda</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="dense canopy and buttressed trees in Kibale Forest, Uganda"><span>dense canopy and buttressed trees in Kibale Forest, Uganda</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Kibale and Bwindi</h3>
         <p>Thirteen primate species in Kibale, and in Bwindi a forest so old and so thick it was never logged.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a mountain gorilla in the Bwindi Impenetrable Forest, Uganda</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a mountain gorilla in the Bwindi Impenetrable Forest, Uganda"><span>a mountain gorilla in the Bwindi Impenetrable Forest, Uganda</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Wildlife Encounters</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>elephants on the Kazinga Channel in Queen Elizabeth National Park, Uga</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="elephants on the Kazinga Channel in Queen Elizabeth National Park, Uganda"><span>elephants on the Kazinga Channel in Queen Elizabeth National Park, Uganda</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Queen Elizabeth and Kidepo</h3>
         <p>Kob on the Kasenyi plains, elephant on the Kazinga Channel, and Kidepo Valley with almost nobody in it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>rangers and trackers setting out on a gorilla trek in Bwindi, Uganda</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="rangers and trackers setting out on a gorilla trek in Bwindi, Uganda"><span>rangers and trackers setting out on a gorilla trek in Bwindi, Uganda</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>The Gorilla Permit</h3>
         <p>Permit revenue funds the park and pays a share to the parishes around it — which is why the gorilla numbers are rising.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Buganda kingdom drummer in ceremonial bark cloth</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a Buganda kingdom drummer in ceremonial bark cloth"><span>a Buganda kingdom drummer in ceremonial bark cloth</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>The Kingdom of Buganda</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Karamojong herder with cattle on the plains of Karamoja, Uganda</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Karamojong herder with cattle on the plains of Karamoja, Uganda"><span>a Karamojong herder with cattle on the plains of Karamoja, Uganda</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Batwa and Karamojong</h3>
         <p>The Batwa, forest people of the southwest, and the Karamojong cattle-keepers of the northeast plains.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a street vendor cooking rolex chapati and eggs in Kampala, Uganda</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a street vendor cooking rolex chapati and eggs in Kampala, Uganda"><span>a street vendor cooking rolex chapati and eggs in Kampala, Uganda</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Rolex, Matoke, Luwombo</h3>
         <p>Steamed green banana with groundnut sauce, chicken cooked in banana leaf, and an egg rolled in a chapati on every corner.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>drummers and dancers at the Imbalu ceremony in eastern Uganda</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="drummers and dancers at the Imbalu ceremony in eastern Uganda"><span>drummers and dancers at the Imbalu ceremony in eastern Uganda</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Imbalu and Nyege Nyege</h3>
         <p>The Bagisu Imbalu season in the east, and four days of music on the banks of the Nile at Jinja.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a craftsman beating bark cloth from a mutuba fig tree, Uganda</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a craftsman beating bark cloth from a mutuba fig tree, Uganda"><span>a craftsman beating bark cloth from a mutuba fig tree, Uganda</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Bark Cloth and Basketry</h3>
         <p>Bark cloth from the mutuba fig, made in Buganda for six hundred years and now UNESCO-listed.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the great thatched dome of the Kasubi Tombs in Kampala, Uganda</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the great thatched dome of the Kasubi Tombs in Kampala, Uganda"><span>the great thatched dome of the Kasubi Tombs in Kampala, Uganda</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>The Kasubi Tombs</h3>
         <p>The burial ground of four Buganda kings, thatched, enormous and rebuilt by the clans who have always maintained it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>royal regalia and drums inside a Buganda kingdom palace</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="royal regalia and drums inside a Buganda kingdom palace"><span>royal regalia and drums inside a Buganda kingdom palace</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Kingdoms Still Standing</h3>
         <p>Royal drums, regalia and clan structures that survived the protectorate, the 1966 crisis and the 1970s.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the hills and rooftops of Kampala seen from the Gaddafi Mosque minaret</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the hills and rooftops of Kampala seen from the Gaddafi Mosque minaret, Uganda"><span>the hills and rooftops of Kampala seen from the Gaddafi Mosque minaret, Uganda</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Kampala on Seven Hills</h3>
         <p>A capital built across hills and traffic, with the Gaddafi Mosque minaret giving the best view of all of it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the minaret of the Uganda National Mosque above Kampala</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the minaret of the Uganda National Mosque above Kampala"><span>the minaret of the Uganda National Mosque above Kampala</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Minaret, Dome and Thatch</h3>
         <p>The Uganda National Mosque, the Namirembe and Rubaga cathedrals facing each other across two hills.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>boda boda motorcycle taxis waiting at a busy Kampala street stage, Uga</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="boda boda motorcycle taxis waiting at a busy Kampala street stage, Uganda"><span>boda boda motorcycle taxis waiting at a busy Kampala street stage, Uganda</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>Boda Bodas and Owino</h3>
         <p>The boda boda is the transport system; Owino market is where the whole city goes to buy everything.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a community village walk beside the forest edge at Buhoma, Uganda</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a community village walk beside the forest edge at Buhoma, Uganda"><span>a community village walk beside the forest edge at Buhoma, Uganda</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Villages at the Forest Edge</h3>
         <p>Community walks in Buhoma and Nkuringo, run by the villages that share the forest with the gorillas.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>white-water rafting on the Nile rapids at Jinja, Uganda</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="white-water rafting on the Nile rapids at Jinja, Uganda"><span>white-water rafting on the Nile rapids at Jinja, Uganda</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Grade Five on the Nile</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Sipi Falls dropping off the Mount Elgon escarpment, Uganda</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Sipi Falls dropping off the Mount Elgon escarpment, Uganda"><span>the Sipi Falls dropping off the Mount Elgon escarpment, Uganda</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Sipi, Elgon, Bisoke</h3>
         <p>Three waterfalls and a coffee walk at Sipi, then the long crater rim of Mount Elgon above it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a lodge terrace overlooking the Bwindi forest ridge at dawn, Uganda</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a lodge terrace overlooking the Bwindi forest ridge at dawn, Uganda"><span>a lodge terrace overlooking the Bwindi forest ridge at dawn, Uganda</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Lodges at the Forest Edge</h3>
         <p>Small lodges on the Bwindi ridge and the Kazinga Channel, close enough to walk to the trailhead after breakfast.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>morning mist on the Ndali-Kasenda crater lakes near Fort Portal, Ugand</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="morning mist on the Ndali-Kasenda crater lakes near Fort Portal, Uganda"><span>morning mist on the Ndali-Kasenda crater lakes near Fort Portal, Uganda</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Crater Lakes at First Light</h3>
         <p>The Ndali-Kasenda crater field before the haze lifts, and the Ishasha fig trees in the late afternoon.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Narus valley and mountains of Kidepo Valley National Park, Uganda</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Narus valley and mountains of Kidepo Valley National Park, Uganda"><span>the Narus valley and mountains of Kidepo Valley National Park, Uganda</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Kidepo Valley</h3>
         <p>The furthest park from Kampala and the emptiest: Narus valley, the Morungole range, and cheetah nobody photographs.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a silverback mountain gorilla resting in the Bwindi undergrowth, Ugand</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a silverback mountain gorilla resting in the Bwindi undergrowth, Uganda"><span>a silverback mountain gorilla resting in the Bwindi undergrowth, Uganda</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Half the World&#x27;s Gorillas</h3><p>Nowhere else puts gorillas, chimpanzees, the Big Five, a snowline and the Nile within one week of driving.</p>

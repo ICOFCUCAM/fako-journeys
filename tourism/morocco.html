@@ -6,6 +6,7 @@
 <title>Morocco Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="Four thousand metres of High Atlas within three hours of the Atlantic, four imperial cities, and the edge of the Sahara at Merzouga — a country you can cross from surf to dunes in two days.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the High Atlas mountains rising behind a Moroccan kasbah, Morocco</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the High Atlas mountains rising behind a Moroccan kasbah, Morocco"><span>the High Atlas mountains rising behind a Moroccan kasbah, Morocco</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">MOROCCO <i>&middot; Tourism</i></span>
     <h1>Where the Atlas Meets the Sahara</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Todra gorge with red rock walls and a river below, Morocco</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Todra gorge with red rock walls and a river below, Morocco"><span>the Todra gorge with red rock walls and a river below, Morocco</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>The Draa and the Dades</h3>
         <p>Palm oases strung along the Draa, and gorges cut red through the Dades and the Todra.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Mount Toubkal under snow above the village of Imlil, Morocco</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Mount Toubkal under snow above the village of Imlil, Morocco"><span>Mount Toubkal under snow above the village of Imlil, Morocco</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The High Atlas</h3>
         <p>Toubkal is 4,167 metres and the highest point in North Africa, walkable in two days from Imlil.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Ouzoud falls dropping in stages through olive trees, Morocco</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Ouzoud falls dropping in stages through olive trees, Morocco"><span>the Ouzoud falls dropping in stages through olive trees, Morocco</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Ouzoud</h3>
         <p>A hundred metres of water in three stages, with macaques in the olive trees beside it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>palm groves along the Draa valley in southern Morocco</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="palm groves along the Draa valley in southern Morocco"><span>palm groves along the Draa valley in southern Morocco</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Draa River</h3>
         <p>The longest river in Morocco, mostly dry, and green the whole way where it is not.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the walled seafront of Essaouira with fishing boats, Morocco</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the walled seafront of Essaouira with fishing boats, Morocco"><span>the walled seafront of Essaouira with fishing boats, Morocco</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>The Atlantic Coast</h3>
         <p>Essaouira&#x27;s wind, Taghazout&#x27;s point breaks, and the long empty beaches between them.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>ancient Atlas cedar trees in the Middle Atlas forest, Morocco</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="ancient Atlas cedar trees in the Middle Atlas forest, Morocco"><span>ancient Atlas cedar trees in the Middle Atlas forest, Morocco</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>The Cedar Forest</h3>
         <p>The Middle Atlas cedar, some of it a thousand years old, above Ifrane and Azrou.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Barbary macaques in the cedar forest of the Middle Atlas, Morocco</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="Barbary macaques in the cedar forest of the Middle Atlas, Morocco"><span>Barbary macaques in the cedar forest of the Middle Atlas, Morocco</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Barbary Macaques and the Argan Forest</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a desert track through stony hammada in southern Morocco</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a desert track through stony hammada in southern Morocco"><span>a desert track through stony hammada in southern Morocco</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Desert Country</h3>
         <p>Not the safari of the east — the wildlife here is desert-adapted, and you look for it at first light.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a palm oasis irrigated by traditional channels, Morocco</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a palm oasis irrigated by traditional channels, Morocco"><span>a palm oasis irrigated by traditional channels, Morocco</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Oasis Agriculture</h3>
         <p>The khettara irrigation channels still working, and the argan cooperatives run by women.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>an Amazigh village of earth houses built into a hillside, Morocco</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="an Amazigh village of earth houses built into a hillside, Morocco"><span>an Amazigh village of earth houses built into a hillside, Morocco</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Amazigh and Arab</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a shepherd with his flock on a High Atlas terrace, Morocco</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a shepherd with his flock on a High Atlas terrace, Morocco"><span>a shepherd with his flock on a High Atlas terrace, Morocco</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>The People of the Atlas</h3>
         <p>Village life at two thousand metres, where the year is still organised around the snow.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a tagine cooking over charcoal at a roadside stall, Morocco</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a tagine cooking over charcoal at a roadside stall, Morocco"><span>a tagine cooking over charcoal at a roadside stall, Morocco</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Tagine, Bread and Mint</h3>
         <p>Slow-cooked tagine, bread baked in the neighbourhood oven, and tea poured from height.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>musicians playing at the Gnaoua festival in Essaouira, Morocco</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="musicians playing at the Gnaoua festival in Essaouira, Morocco"><span>musicians playing at the Gnaoua festival in Essaouira, Morocco</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Moussem and Gnaoua</h3>
         <p>The Gnaoua festival in Essaouira in June, and the moussems that mark the harvest.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a craftsman cutting zellige tile by hand in Fez, Morocco</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a craftsman cutting zellige tile by hand in Fez, Morocco"><span>a craftsman cutting zellige tile by hand in Fez, Morocco</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Zellige, Leather and Wool</h3>
         <p>Tile cut by hand in Fez, tanned leather, and carpets woven to patterns held in memory.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the earth kasbah of Ait Benhaddou above the river, Morocco</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the earth kasbah of Ait Benhaddou above the river, Morocco"><span>the earth kasbah of Ait Benhaddou above the river, Morocco</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Volubilis and the Kasbahs</h3>
         <p>A Roman city on the plain at Volubilis, and Ait Benhaddou standing above the Ounila.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the tanneries and rooftops of the Fez medina, Morocco</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the tanneries and rooftops of the Fez medina, Morocco"><span>the tanneries and rooftops of the Fez medina, Morocco</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>The Imperial Cities</h3>
         <p>Fez, Marrakesh, Meknes and Rabat — four capitals, each of a different dynasty.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Jemaa el-Fnaa square in Marrakesh filling at dusk, Morocco</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Jemaa el-Fnaa square in Marrakesh filling at dusk, Morocco"><span>Jemaa el-Fnaa square in Marrakesh filling at dusk, Morocco</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Marrakesh and Casablanca</h3>
         <p>Jemaa el-Fnaa at dusk, and the Atlantic modernism of Casablanca an hour up the road.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the tiled courtyard of a traditional Moroccan riad, Morocco</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the tiled courtyard of a traditional Moroccan riad, Morocco"><span>the tiled courtyard of a traditional Moroccan riad, Morocco</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Riad and Medina</h3>
         <p>Rooms built inward around a courtyard, because the street was never meant to see in.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a produce market in a Moroccan medina early in the morning, Morocco</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a produce market in a Moroccan medina early in the morning, Morocco"><span>a produce market in a Moroccan medina early in the morning, Morocco</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>The Souk in the Morning</h3>
         <p>Before the tour groups, the medina is simply where people buy their vegetables.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a family walking a quiet lane in a Moroccan hill village, Morocco</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a family walking a quiet lane in a Moroccan hill village, Morocco"><span>a family walking a quiet lane in a Moroccan hill village, Morocco</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Easy Travelling</h3>
         <p>Short drives, good roads, and a train line down the coast that children enjoy.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a trekking trail high on a ridge in the High Atlas, Morocco</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a trekking trail high on a ridge in the High Atlas, Morocco"><span>a trekking trail high on a ridge in the High Atlas, Morocco</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Dunes, Gorges and Surf</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>surfers walking the beach at Taghazout at sunset, Morocco</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="surfers walking the beach at Taghazout at sunset, Morocco"><span>surfers walking the beach at Taghazout at sunset, Morocco</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Trek, Surf, Ride</h3>
         <p>Multi-day Atlas treks, Atlantic surf schools, and horses on the Essaouira sand.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a desert camp of tents on the dunes at Erg Chigaga, Morocco</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a desert camp of tents on the dunes at Erg Chigaga, Morocco"><span>a desert camp of tents on the dunes at Erg Chigaga, Morocco</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Desert Camps and Riads</h3>
         <p>Erg Chigaga camps well beyond the day-trip dunes, and riads restored room by room.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>late light on the earth walls of a southern Moroccan kasbah, Morocco</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="late light on the earth walls of a southern Moroccan kasbah, Morocco"><span>late light on the earth walls of a southern Moroccan kasbah, Morocco</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Light on Earth Walls</h3>
         <p>Pisé takes late light the way nothing else does, which is why every photographer comes here.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the blue-painted lanes of Chefchaouen in the Rif, Morocco</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the blue-painted lanes of Chefchaouen in the Rif, Morocco"><span>the blue-painted lanes of Chefchaouen in the Rif, Morocco</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Chefchaouen and the Rif</h3>
         <p>The blue town in the Rif, and a mountain range most itineraries drive straight past.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a road climbing a High Atlas pass with the Sahara beyond, Morocco</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a road climbing a High Atlas pass with the Sahara beyond, Morocco"><span>a road climbing a High Atlas pass with the Sahara beyond, Morocco</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Two Days, Four Climates</h3><p>Surf in the morning, cedar forest by lunch, and the Sahara the following evening.</p>

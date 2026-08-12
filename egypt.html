@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>The Nile and the Desert</b><span>the green Nile valley meeting desert on both banks</span></li>
-        <li><b>Sinai</b><span>the granite peaks of the Sinai above Saint Catherine&#x27;s</span></li>
-        <li><b>The First Cataract</b><span>the Nile running over granite at the Aswan cataract</span></li>
-        <li><b>The Nile Itself</b><span>a felucca under sail on the Nile at Aswan</span></li>
-        <li><b>The Red Sea</b><span>coral reef and clear water on the Red Sea coast</span></li>
-        <li><b>The Fayoum</b><span>palm groves in the Fayoum oasis</span></li>
+        <li><b>The Nile and the Desert</b><span>A green ribbon a few kilometres wide, and sand for a thousand kilometres either side of it.</span></li>
+        <li><b>Sinai</b><span>Mount Sinai and Saint Catherine&#x27;s, and granite peaks over two thousand metres above the Red Sea.</span></li>
+        <li><b>The First Cataract</b><span>The Nile&#x27;s cataracts at Aswan — rapids rather than falls, and the reason the boats stopped here.</span></li>
+        <li><b>The Nile Itself</b><span>Feluccas under sail at Aswan, and a river that has been the country&#x27;s main road for millennia.</span></li>
+        <li><b>The Red Sea</b><span>Some of the clearest reef diving on earth, an hour&#x27;s flight from the pyramids.</span></li>
+        <li><b>The Fayoum</b><span>Not forest — the Fayoum&#x27;s palm and olive, and the acacia of Wadi el-Rayan.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Birds of the Delta</b><span>flamingos and waders on a Nile delta wetland</span></li>
-        <li><b>The Western Desert</b><span>the White Desert chalk formations at dusk</span></li>
-        <li><b>Reef and Oasis</b><span>a marine reserve buoy over Red Sea reef</span></li>
-        <li><b>Dive, Sail, Ride</b><span>divers entering the water on the Red Sea coast</span></li>
+        <li><b>Birds of the Delta</b><span>Two million migrating birds use the Delta and the Red Sea coast as a flyway each year.</span></li>
+        <li><b>The Western Desert</b><span>Not big game — desert fox, gazelle and the silence of the Great Sand Sea.</span></li>
+        <li><b>Reef and Oasis</b><span>Reef protection on the Red Sea, and oasis agriculture that has managed water for millennia.</span></li>
+        <li><b>Dive, Sail, Ride</b><span>Reef diving at Marsa Alam, feluccas at Aswan, and camels in the Western Desert.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Coptic, Islamic, Pharaonic</b><span>the minarets and rooftops of Islamic Cairo</span></li>
-        <li><b>Nubians and Bedouin</b><span>a brightly painted Nubian village on the Nile at Aswan</span></li>
-        <li><b>Moulids and Ramadan</b><span>lanterns strung across a Cairo street for Ramadan</span></li>
-        <li><b>Papyrus, Glass and Cotton</b><span>a glassblower working in a Cairo workshop</span></li>
-        <li><b>Ful, Koshary and Bread</b><span>koshary being served at a Cairo street kitchen</span></li>
-        <li><b>Straightforward with Children</b><span>a family boarding a Nile cruise boat at Luxor</span></li>
-        <li><b>The Corniche at Dusk</b><span>families walking the Nile corniche in Cairo at dusk</span></li>
+        <li><b>Coptic, Islamic, Pharaonic</b><span>Three layers still in daily use, sometimes in the same street in old Cairo.</span></li>
+        <li><b>Nubians and Bedouin</b><span>Nubian villages above Aswan and Bedouin communities in the Sinai and the Western Desert.</span></li>
+        <li><b>Moulids and Ramadan</b><span>The moulid processions, and Cairo at iftar when the whole city eats at once.</span></li>
+        <li><b>Papyrus, Glass and Cotton</b><span>Hand-blown glass in Cairo, Egyptian cotton, and papyrus made the way it always was.</span></li>
+        <li><b>Ful, Koshary and Bread</b><span>Breakfast is ful and bread; lunch is koshary; both are older than most cuisines.</span></li>
+        <li><b>Straightforward with Children</b><span>Short internal flights, boats instead of buses, and a story at every stop.</span></li>
+        <li><b>The Corniche at Dusk</b><span>Families out along the river, tea on the pavement, and the traffic finally slowing.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Cairo and Alexandria</b><span>the Alexandria corniche curving along the Mediterranean</span></li>
-        <li><b>Mamluk Cairo</b><span>the carved stone facade of a Mamluk mosque in Cairo</span></li>
-        <li><b>The Valley of the Kings</b><span>painted tomb walls in the Valley of the Kings</span></li>
-        <li><b>Karnak, Luxor, Abu Simbel</b><span>the hypostyle hall columns at Karnak</span></li>
+        <li><b>Cairo and Alexandria</b><span>Twenty million people on the Nile, and a Mediterranean city that remembers being Greek.</span></li>
+        <li><b>Mamluk Cairo</b><span>The mosques, sabils and madrasas of the medieval city, largely still standing.</span></li>
+        <li><b>The Valley of the Kings</b><span>Sixty-odd tombs cut into a single dry valley, most of them painted floor to ceiling.</span></li>
+        <li><b>Karnak, Luxor, Abu Simbel</b><span>Karnak took two thousand years to build; Abu Simbel was moved sixty metres to save it.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Desert Crossings</b><span>a vehicle crossing dunes in the Great Sand Sea</span></li>
-        <li><b>Dahabiyas and Desert Camps</b><span>a dahabiya sailing boat moored on the Nile at sunset</span></li>
-        <li><b>The Light at Six</b><span>dawn light on the temple columns at Luxor</span></li>
-        <li><b>Siwa</b><span>salt pools and palms at the Siwa oasis</span></li>
+        <li><b>Desert Crossings</b><span>Diving the Red Sea, walking the Sinai with Bedouin guides, and crossing the sand sea by vehicle.</span></li>
+        <li><b>Dahabiyas and Desert Camps</b><span>Small sailing dahabiyas instead of the big cruisers, and camps in the White Desert.</span></li>
+        <li><b>The Light at Six</b><span>Desert light at either end of the day is the whole reason to be up early here.</span></li>
+        <li><b>Siwa</b><span>Eight hundred kilometres west, a Berber-speaking oasis with its own language and salt lakes.</span></li>
         </ul>
       </div>
     </div>

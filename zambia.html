@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>The Zambezi Valley</b><span>the Zambezi river and escarpment in the Lower Zambezi valley</span></li>
-        <li><b>The Nyika Plateau</b><span>rolling montane grassland on the Nyika plateau</span></li>
-        <li><b>Victoria and Kalambo</b><span>the single 235 metre drop of Kalambo Falls</span></li>
-        <li><b>Zambezi, Kafue, Tanganyika</b><span>sunset over the Zambezi river with hippo in the shallows</span></li>
-        <li><b>Lake Tanganyika Shore</b><span>the clear freshwater shore of Lake Tanganyika at Nsumbu</span></li>
-        <li><b>Miombo and Winterthorn</b><span>elephants under winterthorn trees in the Lower Zambezi</span></li>
+        <li><b>The Zambezi Valley</b><span>Escarpment, floodplain and winterthorn forest, with the river braiding through the middle of all of it.</span></li>
+        <li><b>The Nyika Plateau</b><span>Two thousand metres of rolling montane grassland on the Malawi border, with roan antelope and no heat.</span></li>
+        <li><b>Victoria and Kalambo</b><span>Victoria Falls needs no introduction; Kalambo, on the Tanzanian border, drops 235 metres in a single uninterrupted fall.</span></li>
+        <li><b>Zambezi, Kafue, Tanganyika</b><span>Three great river systems and the southern tip of Lake Tanganyika, the second deepest lake on earth.</span></li>
+        <li><b>Lake Tanganyika Shore</b><span>Clear freshwater, sand and forested hills at Nsumbu, about as far from anywhere as Zambia gets.</span></li>
+        <li><b>Miombo and Winterthorn</b><span>Miombo woodland turning red at the start of the rains, and the winterthorn groves the elephants feed under.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Leopard Country</b><span>a leopard in a sausage tree in the South Luangwa valley</span></li>
-        <li><b>The Walking Safari</b><span>a walking safari group and guide in the South Luangwa bush</span></li>
-        <li><b>Kafue and the Carnivores</b><span>wild dogs on the Busanga plains in Kafue National Park</span></li>
-        <li><b>Canoeing the Lower Zambezi</b><span>canoeing past elephants on the Lower Zambezi river</span></li>
+        <li><b>Leopard Country</b><span>The South Luangwa has one of the densest leopard populations in Africa, and the best chance of seeing one hunting.</span></li>
+        <li><b>The Walking Safari</b><span>Invented in the Luangwa in the 1950s: no vehicle, an armed scout, and everything at eye level.</span></li>
+        <li><b>Kafue and the Carnivores</b><span>Kafue is the size of Wales; the conservation programmes there fund anti-poaching across the whole Greater Kafue system.</span></li>
+        <li><b>Canoeing the Lower Zambezi</b><span>Three days downstream past hippo pods and elephant crossings, camping on islands, no engine at any point.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Lozi, Bemba, Tonga</b><span>Lozi paddlers and drummers on the Zambezi floodplain</span></li>
-        <li><b>The Barotse Floodplain</b><span>a Lozi fisherman poling a dugout on the Barotse floodplain</span></li>
-        <li><b>Kuomboka</b><span>the Nalikwanda royal barge during the Kuomboka ceremony</span></li>
-        <li><b>Basketry and Copper</b><span>coiled baskets woven in Zambia&#x27;s Western Province</span></li>
-        <li><b>Nshima and Kapenta</b><span>nshima with relish served at a Zambian table</span></li>
-        <li><b>Village Around the Park</b><span>a community craft cooperative near the South Luangwa park boundary</span></li>
-        <li><b>Markets and the Great North Road</b><span>a roadside produce market on the Great North Road in Zambia</span></li>
+        <li><b>Lozi, Bemba, Tonga</b><span>Seventy-three ethnic groups, seven official languages, and a royal barge ceremony older than the country.</span></li>
+        <li><b>The Barotse Floodplain</b><span>The Lozi live with the flood — moving cattle, homes and the king himself when the Zambezi rises.</span></li>
+        <li><b>Kuomboka</b><span>When the floodplain fills, the Litunga is paddled to high ground on the Nalikwanda barge, drummed the whole way.</span></li>
+        <li><b>Basketry and Copper</b><span>Tight coiled baskets from the Western Province, and copper worked on the belt that built the economy.</span></li>
+        <li><b>Nshima and Kapenta</b><span>Maize nshima with relish, dried kapenta from the lakes, and fresh bream out of the Zambezi.</span></li>
+        <li><b>Village Around the Park</b><span>Community campsites and craft cooperatives on the Luangwa boundary, funded by the same beds that fill the lodges.</span></li>
+        <li><b>Markets and the Great North Road</b><span>Roadside charcoal and tomatoes, long-haul trucks to the copperbelt, and a bus that leaves when it fills.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Lusaka</b><span>a busy market street in Lusaka</span></li>
-        <li><b>Livingstone&#x27;s Verandas</b><span>a colonial veranda building on Mosi-oa-Tunya Road in Livingstone</span></li>
-        <li><b>Livingstone</b><span>the colonial-era museum building in Livingstone, Zambia</span></li>
-        <li><b>Mosi-oa-Tunya, UNESCO</b><span>the knife-edge bridge and gorge at Mosi-oa-Tunya, Victoria Falls</span></li>
+        <li><b>Lusaka</b><span>The centre of everything: Kabwata market, the Great East Road, and the flights that get you to the parks.</span></li>
+        <li><b>Livingstone&#x27;s Verandas</b><span>Corrugated iron and deep colonial verandas along Mosi-oa-Tunya Road, built for heat and never modernised.</span></li>
+        <li><b>Livingstone</b><span>The old colonial capital above the falls, its museum, and the tree where the man himself is said to have camped.</span></li>
+        <li><b>Mosi-oa-Tunya, UNESCO</b><span>World Heritage since 1989, shared with Zimbabwe, and named by the Kololo long before anyone renamed it.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Devil&#x27;s Pool and the Gorge</b><span>rafting the grade five rapids in the Batoka gorge below Victoria Falls</span></li>
-        <li><b>Bush Camps, Six Beds</b><span>a small thatched bush camp overlooking the Luangwa river</span></li>
-        <li><b>Luangwa at Last Light</b><span>hippos in the Luangwa river at last light</span></li>
-        <li><b>Liuwa Plain</b><span>wildebeest massed on the open grass of Liuwa Plain</span></li>
+        <li><b>Devil&#x27;s Pool and the Gorge</b><span>Swim to the lip of Victoria Falls in low water, then raft the grade five rapids in the Batoka gorge below it.</span></li>
+        <li><b>Bush Camps, Six Beds</b><span>Seasonal bush camps in the Luangwa that take six guests, close at the rains, and are walked between.</span></li>
+        <li><b>Luangwa at Last Light</b><span>The river bends, the hippo surface and the dust goes gold about forty minutes before the drive has to end.</span></li>
+        <li><b>Liuwa Plain</b><span>The second largest wildebeest migration in Africa, on a plain almost nobody has heard of, reachable only in the dry.</span></li>
         </ul>
       </div>
     </div>

@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>The Great Rift Valley</b><span>the Great Rift Valley escarpment and floor seen from the Naivasha road</span></li>
-        <li><b>Mount Kenya, 5,199 m</b><span>the jagged glaciated peaks of Mount Kenya above the moorland</span></li>
-        <li><b>Thomson&#x27;s Falls</b><span>Thomson&#x27;s Falls dropping into the fern gorge at Nyahururu</span></li>
-        <li><b>Flamingo Country</b><span>flamingos massed on the shallows of Lake Nakuru</span></li>
-        <li><b>The Swahili Coast</b><span>white sand and dhows on Diani Beach on the Indian Ocean</span></li>
-        <li><b>Kakamega, the Last of It</b><span>dense canopy and hanging vines inside Kakamega Forest</span></li>
+        <li><b>The Great Rift Valley</b><span>The escarpment drops away below the Naivasha road, holding a chain of soda lakes and dormant volcanoes.</span></li>
+        <li><b>Mount Kenya, 5,199 m</b><span>Equatorial glaciers, giant lobelia, and a trekking route to Point Lenana that needs no technical climbing.</span></li>
+        <li><b>Thomson&#x27;s Falls</b><span>The Ewaso Ng&#x27;iro drops seventy-four metres into a fern gorge at Nyahururu, on the way north to Samburu.</span></li>
+        <li><b>Flamingo Country</b><span>Nakuru, Bogoria and Elementaita hold soda water, hot springs and flamingo in numbers that change by the season.</span></li>
+        <li><b>The Swahili Coast</b><span>Diani, Watamu and Lamu: white sand, warm Indian Ocean, and a coastline that traded with Arabia for a thousand years.</span></li>
+        <li><b>Kakamega, the Last of It</b><span>The only Kenyan remnant of the Guineo-Congolian rainforest that once ran clear across the continent.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Wildlife on the Savannah</b><span>elephants crossing the plain at Amboseli beneath Kilimanjaro</span></li>
-        <li><b>The Great Migration</b><span>wildebeest crossing the Mara river during the great migration</span></li>
-        <li><b>Rhino, Counted Daily</b><span>black rhino grazing on the Ol Pejeta conservancy at dawn</span></li>
-        <li><b>Walking Hell&#x27;s Gate</b><span>cyclists on the track between the cliffs of Hell&#x27;s Gate National Park</span></li>
+        <li><b>Wildlife on the Savannah</b><span>The Big Five, plus the reticulated giraffe and Grevy&#x27;s zebra that live nowhere south of here.</span></li>
+        <li><b>The Great Migration</b><span>Between July and October a million wildebeest cross the Mara river, and the crocodiles are already waiting.</span></li>
+        <li><b>Rhino, Counted Daily</b><span>Ol Pejeta and Lewa run some of Africa&#x27;s most closely monitored rhino populations, funded by the beds on the property.</span></li>
+        <li><b>Walking Hell&#x27;s Gate</b><span>The one Kenyan park you can walk and cycle through, with gorge scrambling and geothermal steam.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Maasai and Swahili</b><span>Maasai elders in red shuka cloth on the open plains</span></li>
-        <li><b>Samburu and Maasai</b><span>a Samburu warrior with beaded ornaments in the northern drylands</span></li>
-        <li><b>Lamu Cultural Festival</b><span>dhow racing during the Lamu cultural festival</span></li>
-        <li><b>Beadwork and Kisii Stone</b><span>Maasai women stringing beadwork ornaments</span></li>
-        <li><b>Nyama Choma and Ugali</b><span>nyama choma roasting over charcoal at a Nairobi grill</span></li>
-        <li><b>The Conservancies</b><span>a community conservancy ranger team on patrol near the Maasai Mara</span></li>
-        <li><b>Matatus and Markets</b><span>brightly painted matatu minibuses in a Nairobi street</span></li>
+        <li><b>Maasai and Swahili</b><span>Two Kenyas: the cattle-keeping highlands and the coral-stone, Arabic-inflected coast.</span></li>
+        <li><b>Samburu and Maasai</b><span>Samburu in the northern drylands, Maasai in the south, both still moving cattle between seasonal grazing.</span></li>
+        <li><b>Lamu Cultural Festival</b><span>Dhow races, donkey races, henna and taarab music in the alleys of a town with almost no cars.</span></li>
+        <li><b>Beadwork and Kisii Stone</b><span>Maasai beadwork, Kisii soapstone carving, and kiondo sisal baskets made the way they always were.</span></li>
+        <li><b>Nyama Choma and Ugali</b><span>Goat roasted over charcoal, maize meal, sukuma wiki, and coastal biryani that came in by dhow.</span></li>
+        <li><b>The Conservancies</b><span>Community conservancies lease grazing land back for wildlife, and the lease pays the schools around the Mara.</span></li>
+        <li><b>Matatus and Markets</b><span>Painted, over-amplified matatus, Maasai Market on rotation through the week, and tea at every stop.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Nairobi, Green City in the Sun</b><span>the Nairobi skyline seen across Nairobi National Park</span></li>
-        <li><b>Coral Stone and Carved Doors</b><span>an ornately carved Swahili door in a coral stone wall in Lamu</span></li>
-        <li><b>Fort Jesus, Mombasa</b><span>the coral ramparts of Fort Jesus above Mombasa old harbour</span></li>
-        <li><b>Lamu Old Town</b><span>carved wooden doors and coral stone alleys in Lamu Old Town</span></li>
+        <li><b>Nairobi, Green City in the Sun</b><span>The only capital on earth with a national park inside the city limits, and lions in sight of the skyline.</span></li>
+        <li><b>Coral Stone and Carved Doors</b><span>Swahili coral-rag houses with inner courtyards, and doors carved in Lamu and shipped up the coast.</span></li>
+        <li><b>Fort Jesus, Mombasa</b><span>Portuguese, built 1593, taken and retaken nine times — now UNESCO World Heritage above the old harbour.</span></li>
+        <li><b>Lamu Old Town</b><span>The oldest continuously inhabited Swahili settlement, carved doors, coral rag walls and no room for a car.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Balloon Over the Mara</b><span>a hot-air balloon over the Maasai Mara plains at sunrise</span></li>
-        <li><b>Camps on the Mara</b><span>a luxury tented safari camp overlooking the Maasai Mara plains</span></li>
-        <li><b>Kilimanjaro from Amboseli</b><span>elephants beneath Mount Kilimanjaro seen from Amboseli at sunrise</span></li>
-        <li><b>Chalbi and Marsabit</b><span>the salt pan and dunes of the Chalbi desert in northern Kenya</span></li>
+        <li><b>Balloon Over the Mara</b><span>Up before dawn, an hour over the plains at treetop height, and breakfast on the grass where you land.</span></li>
+        <li><b>Camps on the Mara</b><span>Small tented camps on private conservancies, night drives and off-road access the main reserve does not allow.</span></li>
+        <li><b>Kilimanjaro from Amboseli</b><span>The mountain is in Tanzania; the view of it is in Kenya, and it is only clear for an hour at each end of the day.</span></li>
+        <li><b>Chalbi and Marsabit</b><span>The desert north: Chalbi&#x27;s salt pan, Marsabit&#x27;s forested crater and the road down to Lake Turkana.</span></li>
         </ul>
       </div>
     </div>

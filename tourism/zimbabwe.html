@@ -6,6 +6,7 @@
 <title>Zimbabwe Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="Victoria Falls on one border, Great Zimbabwe&#x27;s stone city in the interior, Hwange&#x27;s elephant herds and Mana Pools — the park where the walking safari was refined into an art.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the stone walls of Great Zimbabwe</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the stone walls of Great Zimbabwe"><span>the stone walls of Great Zimbabwe</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">ZIMBABWE <i>&middot; Tourism</i></span>
     <h1>Great Zimbabwe and the Zambezi</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>balancing granite boulders on the Zimbabwean highveld</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="balancing granite boulders on the Zimbabwean highveld"><span>balancing granite boulders on the Zimbabwean highveld</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Highveld and Escarpment</h3>
         <p>Granite kopjes across the highveld, and the Zambezi escarpment dropping into the valley.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the green Eastern Highlands at Nyanga, Zimbabwe</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the green Eastern Highlands at Nyanga, Zimbabwe"><span>the green Eastern Highlands at Nyanga, Zimbabwe</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The Eastern Highlands</h3>
         <p>Nyanga, Vumba and Chimanimani along the Mozambique border, up to 2,592 metres.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Victoria Falls in full flood with spray rising, Zimbabwe</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Victoria Falls in full flood with spray rising, Zimbabwe"><span>Victoria Falls in full flood with spray rising, Zimbabwe</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Victoria Falls</h3>
         <p>Mosi-oa-Tunya — a mile and a half wide, and a hundred metres down, in full flood.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dead trees standing in Lake Kariba at sunset, Zimbabwe</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="dead trees standing in Lake Kariba at sunset, Zimbabwe"><span>dead trees standing in Lake Kariba at sunset, Zimbabwe</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Zambezi and Kariba</h3>
         <p>The Zambezi above the falls, and Kariba&#x27;s drowned forest downstream of them.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Zambezi river wide and slow above the falls, Zimbabwe</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Zambezi river wide and slow above the falls, Zimbabwe"><span>the Zambezi river wide and slow above the falls, Zimbabwe</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>Landlocked</h3>
         <p>No coast — the water here is the Zambezi, Kariba, and the pools of the Mana floodplain.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>msasa trees in red new leaf in September, Zimbabwe</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="msasa trees in red new leaf in September, Zimbabwe"><span>msasa trees in red new leaf in September, Zimbabwe</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Msasa and Miombo</h3>
         <p>Miombo woodland across the country, and msasa that comes into red leaf in September.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>elephants crowding a pumped waterhole in Hwange, Zimbabwe</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="elephants crowding a pumped waterhole in Hwange, Zimbabwe"><span>elephants crowding a pumped waterhole in Hwange, Zimbabwe</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Hwange&#x27;s Elephant</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>an elephant reaching into an albida tree at Mana Pools, Zimbabwe</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="an elephant reaching into an albida tree at Mana Pools, Zimbabwe"><span>an elephant reaching into an albida tree at Mana Pools, Zimbabwe</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Mana Pools on Foot</h3>
         <p>The park where you may walk unguided, and where the elephant stand on their hind legs.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a community conservation meeting beside a wildlife area, Zimbabwe</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a community conservation meeting beside a wildlife area, Zimbabwe"><span>a community conservation meeting beside a wildlife area, Zimbabwe</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>CAMPFIRE</h3>
         <p>The community wildlife programme that much of the region&#x27;s conservation policy was built on.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Shona stone sculptor at work, Zimbabwe</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a Shona stone sculptor at work, Zimbabwe"><span>a Shona stone sculptor at work, Zimbabwe</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Shona and Ndebele</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>finished stone sculptures in a Zimbabwean workshop</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="finished stone sculptures in a Zimbabwean workshop"><span>finished stone sculptures in a Zimbabwean workshop</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>The Stone Sculptors</h3>
         <p>Zimbabwean stone sculpture is the country&#x27;s clearest contemporary export.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>sadza and relish served at a Zimbabwean table</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="sadza and relish served at a Zimbabwean table"><span>sadza and relish served at a Zimbabwean table</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Sadza and Braai</h3>
         <p>Sadza with relish, and meat over coals wherever there is a fire and company.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a performance at an arts festival in Harare, Zimbabwe</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a performance at an arts festival in Harare, Zimbabwe"><span>a performance at an arts festival in Harare, Zimbabwe</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>HIFA and the Harvest</h3>
         <p>The Harare arts festival, and the harvest ceremonies that still open the season.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>woven Binga baskets from the Zambezi valley, Zimbabwe</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="woven Binga baskets from the Zambezi valley, Zimbabwe"><span>woven Binga baskets from the Zambezi valley, Zimbabwe</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Stone, Basket and Wire</h3>
         <p>Serpentine carving, Binga basketry, and wire sculpture sold on every roadside.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the conical tower inside the Great Enclosure, Zimbabwe</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the conical tower inside the Great Enclosure, Zimbabwe"><span>the conical tower inside the Great Enclosure, Zimbabwe</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Great Zimbabwe</h3>
         <p>Eight hundred years old, mortarless, and the largest stone structure south of the Sahara.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>balancing rocks and rock art in the Matobo hills, Zimbabwe</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="balancing rocks and rock art in the Matobo hills, Zimbabwe"><span>balancing rocks and rock art in the Matobo hills, Zimbabwe</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Khami and Matobo</h3>
         <p>Khami&#x27;s terraces, and the Matobo hills where Mzilikazi and Rhodes are both buried.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the wide colonial streets of Bulawayo, Zimbabwe</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the wide colonial streets of Bulawayo, Zimbabwe"><span>the wide colonial streets of Bulawayo, Zimbabwe</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Harare and Bulawayo</h3>
         <p>Harare on the highveld, and Bulawayo&#x27;s wide colonial grid built for turning an ox wagon.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>coursed dry stone walling at Great Zimbabwe</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="coursed dry stone walling at Great Zimbabwe"><span>coursed dry stone walling at Great Zimbabwe</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Dry Stone</h3>
         <p>Great Zimbabwe&#x27;s coursed granite is the architecture, and nothing since has matched it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a busy produce market in a Zimbabwean town</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a busy produce market in a Zimbabwean town"><span>a busy produce market in a Zimbabwean town</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>Kombis and Musika</h3>
         <p>The country runs on kombis and market days, both of which are worth an afternoon.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a family watching elephants from a Hwange hide, Zimbabwe</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a family watching elephants from a Hwange hide, Zimbabwe"><span>a family watching elephants from a Hwange hide, Zimbabwe</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Falls and Elephant</h3>
         <p>Victoria Falls, a steam train, and elephant at a waterhole — a good week for children.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>canoes on the Zambezi below Mana Pools, Zimbabwe</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="canoes on the Zambezi below Mana Pools, Zimbabwe"><span>canoes on the Zambezi below Mana Pools, Zimbabwe</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Walking, Canoeing, Rafting</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>rafts in the Batoka gorge below Victoria Falls, Zimbabwe</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="rafts in the Batoka gorge below Victoria Falls, Zimbabwe"><span>rafts in the Batoka gorge below Victoria Falls, Zimbabwe</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Raft, Canoe, Walk</h3>
         <p>Grade five rafting below the falls, multi-day canoe trails, and walking safaris in Mana.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a tented camp on the Zambezi floodplain at dusk, Zimbabwe</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a tented camp on the Zambezi floodplain at dusk, Zimbabwe"><span>a tented camp on the Zambezi floodplain at dusk, Zimbabwe</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>The Old Safari Standard</h3>
         <p>Small owner-run camps in Mana and Hwange, run by guides with the country&#x27;s toughest licence.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dust and low sun through winterthorn trees at Mana Pools, Zimbabwe</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="dust and low sun through winterthorn trees at Mana Pools, Zimbabwe"><span>dust and low sun through winterthorn trees at Mana Pools, Zimbabwe</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Albida Light</h3>
         <p>The winterthorn cathedrals of Mana Pools, in dust and low sun, are photographed everywhere.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Chimanimani mountains on the Mozambique border, Zimbabwe</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Chimanimani mountains on the Mozambique border, Zimbabwe"><span>the Chimanimani mountains on the Mozambique border, Zimbabwe</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Chimanimani</h3>
         <p>A mountain range on the Mozambique border that you walk into and camp in.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a professional guide leading walkers through Mana Pools, Zimbabwe</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a professional guide leading walkers through Mana Pools, Zimbabwe"><span>a professional guide leading walkers through Mana Pools, Zimbabwe</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Guides, and Great Ruins</h3><p>The hardest guiding exam in Africa, and a stone city most visitors have never heard of.</p>

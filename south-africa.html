@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Fynbos and the Garden Route</b><span>fynbos and coastline along the Garden Route</span></li>
-        <li><b>The Drakensberg</b><span>the Amphitheatre wall of the Drakensberg escarpment</span></li>
-        <li><b>Tugela, Off the Amphitheatre</b><span>the Tugela Falls dropping off the Drakensberg Amphitheatre</span></li>
-        <li><b>Blyde River Canyon</b><span>the Three Rondavels above the Blyde River Canyon</span></li>
-        <li><b>Two Oceans</b><span>Camps Bay beach beneath the Twelve Apostles in Cape Town</span></li>
-        <li><b>Tsitsikamma</b><span>the Storms River mouth suspension bridge in Tsitsikamma</span></li>
+        <li><b>Fynbos and the Garden Route</b><span>The Cape Floral Kingdom is the smallest and richest of the six on earth, and most of it grows nowhere else.</span></li>
+        <li><b>The Drakensberg</b><span>The Amphitheatre wall runs five kilometres and drops a kilometre, with San rock art in the caves beneath it.</span></li>
+        <li><b>Tugela, Off the Amphitheatre</b><span>Nearly a thousand metres in five leaps off the Drakensberg escarpment — among the highest falls on earth.</span></li>
+        <li><b>Blyde River Canyon</b><span>The third largest canyon in the world and the greenest, with the Three Rondavels standing in the middle of it.</span></li>
+        <li><b>Two Oceans</b><span>Cold Atlantic on one side of the Cape peninsula, warm Indian on the other, forty minutes apart.</span></li>
+        <li><b>Tsitsikamma</b><span>Old yellowwood forest running down to a rocky coast, with the Storms River mouth cut through the middle.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>The Big Five, Close</b><span>a leopard on a termite mound in the Sabi Sands reserve</span></li>
-        <li><b>Sabi Sands, Off-Road</b><span>a safari vehicle beside lions in the Sabi Sands at dusk</span></li>
-        <li><b>Marine and Rhino Work</b><span>African penguins on the boulders at Simon&#x27;s Town</span></li>
-        <li><b>Lion&#x27;s Head at Dawn</b><span>walkers on the spiral path up Lion&#x27;s Head above Cape Town</span></li>
+        <li><b>The Big Five, Close</b><span>Kruger and the private Sabi Sands reserves beside it, where the leopards have been watched for generations.</span></li>
+        <li><b>Sabi Sands, Off-Road</b><span>Private traverse means the vehicle can leave the road, which is why the sightings are what they are.</span></li>
+        <li><b>Marine and Rhino Work</b><span>Whale watching at Hermanus, penguins at Boulders, and rhino monitoring in the reserves that fund it.</span></li>
+        <li><b>Lion&#x27;s Head at Dawn</b><span>Ninety minutes up a spiral path with chains near the top, for the whole peninsula at sunrise.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Eleven Languages</b><span>Zulu dancers in traditional dress in KwaZulu-Natal</span></li>
-        <li><b>Zulu, Xhosa, Ndebele</b><span>an Ndebele woman in beaded dress before a painted house wall</span></li>
-        <li><b>Carnival and AfrikaBurn</b><span>performers in costume at the Cape Town Carnival</span></li>
-        <li><b>Ndebele Beadwork</b><span>Ndebele beadwork and geometric wall painting</span></li>
-        <li><b>Braai, Bunny Chow, Curry</b><span>meat over the coals at a South African braai</span></li>
-        <li><b>Township Tourism, Done Right</b><span>a resident guide leading a walking tour in Soweto</span></li>
-        <li><b>Soweto, Sunday</b><span>a shisa nyama street grill in Soweto on a Sunday</span></li>
+        <li><b>Eleven Languages</b><span>Zulu, Xhosa, Afrikaans and eight more, plus the Cape Malay cooking that came with the slave trade.</span></li>
+        <li><b>Zulu, Xhosa, Ndebele</b><span>Ndebele wall painting, Zulu beadwork with its own grammar, and Xhosa initiation still practised in the Eastern Cape.</span></li>
+        <li><b>Carnival and AfrikaBurn</b><span>The Cape Town Carnival in March, the Kaapse Klopse minstrels in January, and AfrikaBurn out in the Karoo.</span></li>
+        <li><b>Ndebele Beadwork</b><span>Beadwork, wire sculpture and telephone-wire baskets, sold everywhere and made properly in very few places.</span></li>
+        <li><b>Braai, Bunny Chow, Curry</b><span>Fire is a national institution; Durban curry and Cape Malay bobotie came from two very different arrivals.</span></li>
+        <li><b>Township Tourism, Done Right</b><span>Guided by residents, spending in the neighbourhood, and honest about what apartheid planning actually built.</span></li>
+        <li><b>Soweto, Sunday</b><span>Vilakazi Street, the shisa nyama grills, and a township of a million people that runs at its own pace.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Cape Town and Johannesburg</b><span>the Johannesburg skyline seen across the city at dusk</span></li>
-        <li><b>Bo-Kaap and Cape Dutch</b><span>the painted houses of the Bo-Kaap below Signal Hill</span></li>
-        <li><b>Robben Island</b><span>the prison buildings on Robben Island with Table Mountain behind</span></li>
-        <li><b>The Cradle of Humankind</b><span>the limestone caves of the Cradle of Humankind at Sterkfontein</span></li>
+        <li><b>Cape Town and Johannesburg</b><span>One built around a mountain and a harbour, the other on a gold reef, and nothing about them is alike.</span></li>
+        <li><b>Bo-Kaap and Cape Dutch</b><span>Painted Bo-Kaap terraces on the slope of Signal Hill, and gabled Cape Dutch homesteads out in the winelands.</span></li>
+        <li><b>Robben Island</b><span>Twelve kilometres off Cape Town, a political prison for three decades, now guided by the men who were held there.</span></li>
+        <li><b>The Cradle of Humankind</b><span>The Sterkfontein caves have produced more early hominin fossils than any other site on the planet.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Bloukrans and the Cage</b><span>the Bloukrans bridge bungee jump on the Garden Route</span></li>
-        <li><b>The Winelands</b><span>a Cape Dutch wine estate among vineyards in Franschhoek</span></li>
-        <li><b>Chapman&#x27;s Peak Drive</b><span>Chapman&#x27;s Peak Drive cut into the cliffs above the Atlantic</span></li>
-        <li><b>The Wild Coast and Karoo</b><span>the Hole in the Wall rock arch on the Wild Coast</span></li>
+        <li><b>Bloukrans and the Cage</b><span>The highest commercial bridge bungee in the world, and great white cage diving out of Gansbaai.</span></li>
+        <li><b>The Winelands</b><span>Franschhoek and Stellenbosch: Cape Dutch estates, serious kitchens, and a wine tram that means nobody drives.</span></li>
+        <li><b>Chapman&#x27;s Peak Drive</b><span>Nine kilometres cut into the cliff between Hout Bay and Noordhoek, and every turnout is a photograph.</span></li>
+        <li><b>The Wild Coast and Karoo</b><span>Hole in the Wall and the Transkei green hills, and the Karoo&#x27;s enormous silence in the other direction.</span></li>
         </ul>
       </div>
     </div>

@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Terraces to the Horizon</b><span>contour-terraced farmland covering the Rwandan hillsides</span></li>
-        <li><b>The Virunga Volcanoes</b><span>the Virunga volcano chain rising above the farmland</span></li>
-        <li><b>Isumo, Under Nyungwe</b><span>the Isumo waterfall in the Nyungwe forest</span></li>
-        <li><b>Lake Kivu</b><span>fishing boats on Lake Kivu at dawn</span></li>
-        <li><b>Rubavu Lakeshore</b><span>the lakeshore beach and palms at Rubavu on Lake Kivu</span></li>
-        <li><b>The Nyungwe Canopy Walk</b><span>the canopy walkway suspended above Nyungwe rainforest</span></li>
+        <li><b>Terraces to the Horizon</b><span>Almost every hillside in Rwanda is farmed in contour terraces — the landscape is entirely made by hand.</span></li>
+        <li><b>The Virunga Volcanoes</b><span>Five cones along the border — Karisimbi, Bisoke, Muhabura — with a crater lake at the top of Bisoke.</span></li>
+        <li><b>Isumo, Under Nyungwe</b><span>A steep tea-and-forest walk down to the Isumo falls on the western edge of the Nyungwe canopy.</span></li>
+        <li><b>Lake Kivu</b><span>One of Africa&#x27;s great lakes, with no bilharzia, no crocodiles, and the Congo Nile Trail along its shore.</span></li>
+        <li><b>Rubavu Lakeshore</b><span>Sand, palms and calm freshwater at Gisenyi, an hour from the gorilla trailheads.</span></li>
+        <li><b>The Nyungwe Canopy Walk</b><span>A suspension walkway sixty metres above one of Africa&#x27;s oldest montane rainforests, with thirteen primate species below it.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Face to Face with Gorillas</b><span>a mountain gorilla family on the slopes of Volcanoes National Park</span></li>
-        <li><b>Akagera, Big Five Again</b><span>elephants and lakes in Akagera National Park</span></li>
-        <li><b>Ten Percent, Back to the Hills</b><span>park rangers and trackers on patrol in Volcanoes National Park</span></li>
-        <li><b>Bisoke Crater Lake</b><span>the crater lake at the summit of Mount Bisoke</span></li>
+        <li><b>Face to Face with Gorillas</b><span>Ten habituated families on the Virunga slopes, one hour with them, eight people at a time.</span></li>
+        <li><b>Akagera, Big Five Again</b><span>Lion returned in 2015, rhino in 2017; the eastern savanna park now has all five, twenty years after losing them.</span></li>
+        <li><b>Ten Percent, Back to the Hills</b><span>A share of every permit goes to the communities bordering the parks, and gorilla numbers have climbed since it started.</span></li>
+        <li><b>Bisoke Crater Lake</b><span>Three hours up through nettles and bamboo to a crater lake at 3,711 m, and three hours back down through mud.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Intore, the Dance of Heroes</b><span>Intore dancers in grass headdresses performing in Rwanda</span></li>
-        <li><b>Living Memory</b><span>a traditional potter at work in a Rwandan cultural village</span></li>
-        <li><b>Kwita Izina</b><span>the Kwita Izina gorilla naming ceremony at Kinigi</span></li>
-        <li><b>Imigongo and Agaseke</b><span>geometric imigongo art panels made in eastern Rwanda</span></li>
-        <li><b>Brochettes and Isombe</b><span>grilled brochettes and plantain at a Kigali restaurant</span></li>
-        <li><b>Umuganda</b><span>residents working together during Umuganda community day in Rwanda</span></li>
-        <li><b>Kimironko Market</b><span>fabric and produce stalls inside Kimironko market in Kigali</span></li>
+        <li><b>Intore, the Dance of Heroes</b><span>The Intore warriors&#x27; dance, the inanga zither, and drumming that was once the property of the king alone.</span></li>
+        <li><b>Living Memory</b><span>Cultural villages near Musanze where former poachers now guide, and the beekeepers and potters of the Virunga foothills.</span></li>
+        <li><b>Kwita Izina</b><span>The annual gorilla naming ceremony at Kinigi, where every infant born that year is named in front of the whole district.</span></li>
+        <li><b>Imigongo and Agaseke</b><span>Geometric imigongo panels in black, white and ochre, and the woven agaseke peace basket that is on the coat of arms.</span></li>
+        <li><b>Brochettes and Isombe</b><span>Grilled goat brochettes, cassava leaf isombe, tilapia from Kivu, and some of the best coffee grown anywhere.</span></li>
+        <li><b>Umuganda</b><span>The last Saturday of every month, the country stops and works on something communal. Visitors are welcome to join.</span></li>
+        <li><b>Kimironko Market</b><span>Fabric, fruit and everything else under one roof, and the tailors who will make it up by tomorrow.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Kigali, Across the Ridges</b><span>the ridges and rooftops of Kigali at dusk</span></li>
-        <li><b>The Convention Centre Dome</b><span>the illuminated dome of the Kigali Convention Centre at night</span></li>
-        <li><b>Nyanza, the King&#x27;s Palace</b><span>the thatched royal palace and Inyambo cattle at Nyanza</span></li>
-        <li><b>Memory and Reconstruction</b><span>the gardens of the Kigali Genocide Memorial</span></li>
+        <li><b>Kigali, Across the Ridges</b><span>Built along ridge lines, swept every morning, and with a monthly Umuganda when the whole city cleans it together.</span></li>
+        <li><b>The Convention Centre Dome</b><span>The Kigali Convention Centre dome, lit at night in the national colours, above a city of red-roofed ridges.</span></li>
+        <li><b>Nyanza, the King&#x27;s Palace</b><span>The reconstructed royal residence at Nyanza, thatched and enormous, with the long-horned Inyambo cattle still kept.</span></li>
+        <li><b>Memory and Reconstruction</b><span>The Kigali Genocide Memorial is where any honest visit to Rwanda starts, and it explains everything that came after.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>The Congo Nile Trail</b><span>a cyclist on the Congo Nile Trail above Lake Kivu</span></li>
-        <li><b>Lodges Below the Volcanoes</b><span>a luxury lodge terrace facing the Virunga volcanoes</span></li>
-        <li><b>Mist on the Volcanoes</b><span>mist clearing from the Virunga volcanoes at dawn</span></li>
-        <li><b>Gishwati-Mukura</b><span>the recovering montane forest of Gishwati-Mukura National Park</span></li>
+        <li><b>The Congo Nile Trail</b><span>227 kilometres along Lake Kivu on foot or by bike, through coffee terraces and fishing villages.</span></li>
+        <li><b>Lodges Below the Volcanoes</b><span>A handful of very good lodges within sight of the park boundary, built so the trek starts after breakfast.</span></li>
+        <li><b>Mist on the Volcanoes</b><span>The Virunga chain clears for about an hour after dawn, and the terraces below hold the light for longer.</span></li>
+        <li><b>Gishwati-Mukura</b><span>Rwanda&#x27;s newest national park, a recovering forest between Nyungwe and the volcanoes that almost nobody visits.</span></li>
         </ul>
       </div>
     </div>

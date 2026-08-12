@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Delta and Dune</b><span>mangrove channels in the Sine-Saloum delta</span></li>
-        <li><b>Fouta Djallon Foothills</b><span>rolling hills in the south-east of Senegal</span></li>
-        <li><b>Dindefelo</b><span>the Dindefelo waterfall dropping into forest</span></li>
-        <li><b>The Senegal and the Saloum</b><span>a pirogue on the Saloum delta at sunset</span></li>
-        <li><b>The Petite Côte</b><span>the long Atlantic beach at Cap Skirring</span></li>
-        <li><b>Casamance</b><span>rice paddies and palms in Casamance</span></li>
+        <li><b>Delta and Dune</b><span>The Sine-Saloum mangrove delta, the Casamance forest, and Sahel sand in the north.</span></li>
+        <li><b>Fouta Djallon Foothills</b><span>No high peaks — the ground rises to the Fouta Djallon foothills in the far south-east.</span></li>
+        <li><b>Dindefelo</b><span>A hundred metres of water off the Fouta escarpment, near the Guinea border.</span></li>
+        <li><b>The Senegal and the Saloum</b><span>The Senegal river along the Mauritanian border, and the Saloum spreading into the sea.</span></li>
+        <li><b>The Petite Côte</b><span>Saly, Somone and Cap Skirring — Atlantic sand from the peninsula down to Casamance.</span></li>
+        <li><b>Casamance</b><span>Palm and rice country south of the Gambia, greener than the rest and quite different.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Djoudj</b><span>pelicans massed on the water at Djoudj</span></li>
-        <li><b>Niokolo-Koba</b><span>a game track through Niokolo-Koba woodland</span></li>
-        <li><b>Community Campements</b><span>a village-run campement in Casamance</span></li>
-        <li><b>Surf and Sail</b><span>kitesurfers off the Petite Côte</span></li>
+        <li><b>Djoudj</b><span>Three million migrating birds winter in the Djoudj — one of the great bird sites on earth.</span></li>
+        <li><b>Niokolo-Koba</b><span>Lion, hippo and Derby eland in the south-east, in a park that is slowly recovering.</span></li>
+        <li><b>Community Campements</b><span>The Casamance campements villageois — village-owned, village-run, and thirty years old.</span></li>
+        <li><b>Surf and Sail</b><span>Dakar&#x27;s breaks, kite-surfing on the Petite Côte, and pirogue trips through the mangrove.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Teranga</b><span>a family gathering for tea in a Senegalese courtyard</span></li>
-        <li><b>Wolof, Serer and Diola</b><span>a Serer village in the Sine-Saloum</span></li>
-        <li><b>Dak&#x27;Art and the Magal</b><span>crowds gathering at the great mosque of Touba</span></li>
-        <li><b>Glass Painting and Weaving</b><span>a sous-verre glass painting being finished</span></li>
-        <li><b>Thieboudienne</b><span>thieboudienne served on a shared platter</span></li>
-        <li><b>Short Flights, Long Beaches</b><span>children on the beach at Saly on the Petite Côte</span></li>
-        <li><b>Ataya and the Market</b><span>tea being poured from height at a Dakar stall</span></li>
+        <li><b>Teranga</b><span>The word means hospitality, and it is the thing the country most wants you to notice.</span></li>
+        <li><b>Wolof, Serer and Diola</b><span>Wolof across the country, Serer in the delta, and the Diola of Casamance.</span></li>
+        <li><b>Dak&#x27;Art and the Magal</b><span>The Dakar art biennale, and the Grand Magal of Touba, which moves millions of people.</span></li>
+        <li><b>Glass Painting and Weaving</b><span>Sous-verre glass painting, and the strip-woven cloth of the Manjak weavers.</span></li>
+        <li><b>Thieboudienne</b><span>Rice and fish, cooked in one pot, and the national dish by common consent.</span></li>
+        <li><b>Short Flights, Long Beaches</b><span>Six hours from Europe, and beaches with a shallow warm Atlantic in front of them.</span></li>
+        <li><b>Ataya and the Market</b><span>Three glasses of tea, poured from height, and each one stronger than the last.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Dakar</b><span>the Dakar coastline seen from the Corniche</span></li>
-        <li><b>Colonial and Sudano-Sahelian</b><span>a Sudano-Sahelian mosque in the Senegalese interior</span></li>
-        <li><b>Gorée</b><span>the pink house of slaves on Gorée island</span></li>
-        <li><b>Saint-Louis</b><span>the colonial waterfront of Saint-Louis at dusk</span></li>
+        <li><b>Dakar</b><span>The most westerly city in Africa, on a peninsula, with the ocean on three sides.</span></li>
+        <li><b>Colonial and Sudano-Sahelian</b><span>The balconies of Saint-Louis, and the mud-and-timber mosques of the interior.</span></li>
+        <li><b>Gorée</b><span>The island off Dakar, and the house of slaves that stands on it.</span></li>
+        <li><b>Saint-Louis</b><span>The old colonial capital on its island in the river mouth, with the Faidherbe bridge.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Surf, Sail, Paddle</b><span>surfers at Ngor island off Dakar</span></li>
-        <li><b>Delta Lodges</b><span>a lodge deck over the water in the Saloum delta</span></li>
-        <li><b>Light on Water</b><span>pink water and salt at the Lac Rose near Dakar</span></li>
-        <li><b>Bassari Country</b><span>a Bedik village on a hillside in south-east Senegal</span></li>
+        <li><b>Surf, Sail, Paddle</b><span>Dakar&#x27;s surf breaks, pirogues in the delta, and the Paris-Dakar&#x27;s original finish line.</span></li>
+        <li><b>Delta Lodges</b><span>Small lodges on the Saloum islands, reached only by boat, with birds outside.</span></li>
+        <li><b>Light on Water</b><span>Delta light at either end of the day, and pink water at the Lac Rose.</span></li>
+        <li><b>Bassari Country</b><span>The Bassari and Bedik villages of the south-east, up in the hills, and rarely visited.</span></li>
         </ul>
       </div>
     </div>

@@ -6,6 +6,7 @@
 <title>Côte d&#x27;Ivoire Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="Abidjan&#x27;s lagoon skyline, the rainforest at Taï, the basilica at Yamoussoukro, and Atlantic beaches west towards Grand-Béréby — the economic engine of francophone West Africa.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Abidjan skyline across the Ébrié lagoon, Côte d&#x27;Ivoire</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the Abidjan skyline across the Ébrié lagoon, Côte d&#x27;Ivoire"><span>the Abidjan skyline across the Ébrié lagoon, Côte d&#x27;Ivoire</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">CÔTE D&#x27;IVOIRE <i>&middot; Tourism</i></span>
     <h1>Lagoons, Forest and the Atlantic</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Ébrié lagoon fringed with palms, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Ébrié lagoon fringed with palms, Côte d&#x27;Ivoire"><span>the Ébrié lagoon fringed with palms, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Forest to Savanna</h3>
         <p>Rainforest in the south-west, a lagoon coast, and savanna running north to Mali.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the grassy summit ridge of Mount Nimba, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the grassy summit ridge of Mount Nimba, Côte d&#x27;Ivoire"><span>the grassy summit ridge of Mount Nimba, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>Mount Nimba</h3>
         <p>The Nimba range on the Guinea and Liberia border, at 1,752 metres, with its own species.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a waterfall in the hills around Man, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a waterfall in the hills around Man, Côte d&#x27;Ivoire"><span>a waterfall in the hills around Man, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Man and the Waterfalls</h3>
         <p>The falls around Man in the western hills, and the liana bridges strung above them.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>pirogues on the Ébrié lagoon at dusk, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="pirogues on the Ébrié lagoon at dusk, Côte d&#x27;Ivoire"><span>pirogues on the Ébrié lagoon at dusk, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Ébrié and the Bandama</h3>
         <p>The lagoon system behind the coast, and the Bandama running the length of the country.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>palms and surf on the beach at Assinie, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="palms and surf on the beach at Assinie, Côte d&#x27;Ivoire"><span>palms and surf on the beach at Assinie, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>Assinie and Grand-Béréby</h3>
         <p>Assinie&#x27;s sandbar east of Abidjan, and the quieter Atlantic beaches to the west.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>primary rainforest interior at Taï, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="primary rainforest interior at Taï, Côte d&#x27;Ivoire"><span>primary rainforest interior at Taï, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Taï Rainforest</h3>
         <p>One of the last blocks of primary rainforest in West Africa, and chimpanzees that use tools.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dense rainforest canopy at Taï national park, Côte d&#x27;Ivoire</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="dense rainforest canopy at Taï national park, Côte d&#x27;Ivoire"><span>dense rainforest canopy at Taï national park, Côte d&#x27;Ivoire</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Taï and Comoé</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>open savanna and gallery forest at Comoé, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="open savanna and gallery forest at Comoé, Côte d&#x27;Ivoire"><span>open savanna and gallery forest at Comoé, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Comoé</h3>
         <p>One of the largest protected areas in West Africa, with elephant, buffalo and hippo.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a researcher on a forest trail at Taï, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a researcher on a forest trail at Taï, Côte d&#x27;Ivoire"><span>a researcher on a forest trail at Taï, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Taï and the Chimpanzees</h3>
         <p>Forty years of chimpanzee research at Taï, run with the villages around the park.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Baoulé mask dance in central Côte d&#x27;Ivoire</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a Baoulé mask dance in central Côte d&#x27;Ivoire"><span>a Baoulé mask dance in central Côte d&#x27;Ivoire</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Sixty Peoples</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Senufo carved figures on a workshop bench, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Senufo carved figures on a workshop bench, Côte d&#x27;Ivoire"><span>Senufo carved figures on a workshop bench, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Baoulé, Senufo and Dan</h3>
         <p>Baoulé weaving, Senufo sculpture, and Dan masks from the western hills.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>attiéké and grilled fish served at a maquis, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="attiéké and grilled fish served at a maquis, Côte d&#x27;Ivoire"><span>attiéké and grilled fish served at a maquis, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Attiéké and Kedjenou</h3>
         <p>Attiéké with grilled fish, and kedjenou slow-cooked in a sealed pot.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>masked dancers at the Abissa festival in Grand-Bassam, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="masked dancers at the Abissa festival in Grand-Bassam, Côte d&#x27;Ivoire"><span>masked dancers at the Abissa festival in Grand-Bassam, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Abissa and the Masks</h3>
         <p>Abissa at Grand-Bassam in November, and the mask festivals of the western hills.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Korhogo cloth painted with mud pigment, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Korhogo cloth painted with mud pigment, Côte d&#x27;Ivoire"><span>Korhogo cloth painted with mud pigment, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Weaving and Carving</h3>
         <p>Baoulé strip cloth, Korhogo painted cloth, and Dan masks carved for use rather than sale.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the colonial quarter of Grand-Bassam, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the colonial quarter of Grand-Bassam, Côte d&#x27;Ivoire"><span>the colonial quarter of Grand-Bassam, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Grand-Bassam</h3>
         <p>The first colonial capital, on a sandbar between lagoon and ocean, and now a world site.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the basilica of Our Lady of Peace at Yamoussoukro, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the basilica of Our Lady of Peace at Yamoussoukro, Côte d&#x27;Ivoire"><span>the basilica of Our Lady of Peace at Yamoussoukro, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Yamoussoukro</h3>
         <p>A basilica larger than Saint Peter&#x27;s, built in the founder&#x27;s home village.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the towers of the Plateau district in Abidjan, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the towers of the Plateau district in Abidjan, Côte d&#x27;Ivoire"><span>the towers of the Plateau district in Abidjan, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Abidjan</h3>
         <p>The Plateau&#x27;s towers, the Ébrié lagoon, and a nightlife the region measures itself against.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a colonial trading house on the Grand-Bassam waterfront, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a colonial trading house on the Grand-Bassam waterfront, Côte d&#x27;Ivoire"><span>a colonial trading house on the Grand-Bassam waterfront, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Lagoon Colonial</h3>
         <p>The wooden trading houses of Grand-Bassam, and Abidjan&#x27;s tropical modernism.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a busy open-air maquis at night in Abidjan, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a busy open-air maquis at night in Abidjan, Côte d&#x27;Ivoire"><span>a busy open-air maquis at night in Abidjan, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>Maquis at Night</h3>
         <p>The open-air maquis — grill, music and a plastic chair — is the country&#x27;s real institution.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>children swimming on the lagoon side at Assinie, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="children swimming on the lagoon side at Assinie, Côte d&#x27;Ivoire"><span>children swimming on the lagoon side at Assinie, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Beach and Lagoon</h3>
         <p>Assinie&#x27;s sandbar has ocean on one side and calm lagoon on the other, which suits children.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>surfers in the water off Assinie, Côte d&#x27;Ivoire</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="surfers in the water off Assinie, Côte d&#x27;Ivoire"><span>surfers in the water off Assinie, Côte d&#x27;Ivoire</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Surf, Hike, Paddle</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a liana bridge strung across a river near Man, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a liana bridge strung across a river near Man, Côte d&#x27;Ivoire"><span>a liana bridge strung across a river near Man, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Surf and Hike</h3>
         <p>Assinie&#x27;s breaks, and the liana bridges and falls in the hills around Man.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a lagoon-side villa terrace at Assinie, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a lagoon-side villa terrace at Assinie, Côte d&#x27;Ivoire"><span>a lagoon-side villa terrace at Assinie, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Assinie and Abidjan</h3>
         <p>Lagoon villas at Assinie, and Abidjan hotels that serve the whole region&#x27;s business.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>pirogues silhouetted on the lagoon at sunset, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="pirogues silhouetted on the lagoon at sunset, Côte d&#x27;Ivoire"><span>pirogues silhouetted on the lagoon at sunset, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Lagoon Light</h3>
         <p>Pirogues on flat water at either end of the day, and a skyline behind them.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the hills and forest around the town of Man, Côte d&#x27;Ivoire</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the hills and forest around the town of Man, Côte d&#x27;Ivoire"><span>the hills and forest around the town of Man, Côte d&#x27;Ivoire</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Man</h3>
         <p>The western hills, with waterfalls, mask villages and a mountain nobody climbs.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a coastal highway running west out of Abidjan, Côte d&#x27;Ivoire</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a coastal highway running west out of Abidjan, Côte d&#x27;Ivoire"><span>a coastal highway running west out of Abidjan, Côte d&#x27;Ivoire</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>The Engine of the Region</h3><p>The largest economy in francophone West Africa, and the easiest of them to travel.</p>

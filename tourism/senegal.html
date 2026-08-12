@@ -6,6 +6,7 @@
 <title>Senegal Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="The westernmost point of Africa, with Dakar on its peninsula, Gorée offshore, the Sine-Saloum delta, the Djoudj bird sanctuary and a music tradition that shaped a good deal of what came after.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Atlantic breaking below the cliffs at Dakar, Senegal</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the Atlantic breaking below the cliffs at Dakar, Senegal"><span>the Atlantic breaking below the cliffs at Dakar, Senegal</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">SENEGAL <i>&middot; Tourism</i></span>
     <h1>Where the Sahel Meets the Atlantic</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>mangrove channels in the Sine-Saloum delta, Senegal</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="mangrove channels in the Sine-Saloum delta, Senegal"><span>mangrove channels in the Sine-Saloum delta, Senegal</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Delta and Dune</h3>
         <p>The Sine-Saloum mangrove delta, the Casamance forest, and Sahel sand in the north.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>rolling hills in the south-east of Senegal</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="rolling hills in the south-east of Senegal"><span>rolling hills in the south-east of Senegal</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>Fouta Djallon Foothills</h3>
         <p>No high peaks — the ground rises to the Fouta Djallon foothills in the far south-east.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Dindefelo waterfall dropping into forest, Senegal</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Dindefelo waterfall dropping into forest, Senegal"><span>the Dindefelo waterfall dropping into forest, Senegal</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Dindefelo</h3>
         <p>A hundred metres of water off the Fouta escarpment, near the Guinea border.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a pirogue on the Saloum delta at sunset, Senegal</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a pirogue on the Saloum delta at sunset, Senegal"><span>a pirogue on the Saloum delta at sunset, Senegal</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Senegal and the Saloum</h3>
         <p>The Senegal river along the Mauritanian border, and the Saloum spreading into the sea.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the long Atlantic beach at Cap Skirring, Senegal</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the long Atlantic beach at Cap Skirring, Senegal"><span>the long Atlantic beach at Cap Skirring, Senegal</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>The Petite Côte</h3>
         <p>Saly, Somone and Cap Skirring — Atlantic sand from the peninsula down to Casamance.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>rice paddies and palms in Casamance, Senegal</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="rice paddies and palms in Casamance, Senegal"><span>rice paddies and palms in Casamance, Senegal</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Casamance</h3>
         <p>Palm and rice country south of the Gambia, greener than the rest and quite different.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>pelicans massed on the water at Djoudj, Senegal</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="pelicans massed on the water at Djoudj, Senegal"><span>pelicans massed on the water at Djoudj, Senegal</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Djoudj</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a game track through Niokolo-Koba woodland, Senegal</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a game track through Niokolo-Koba woodland, Senegal"><span>a game track through Niokolo-Koba woodland, Senegal</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Niokolo-Koba</h3>
         <p>Lion, hippo and Derby eland in the south-east, in a park that is slowly recovering.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a village-run campement in Casamance, Senegal</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a village-run campement in Casamance, Senegal"><span>a village-run campement in Casamance, Senegal</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Community Campements</h3>
         <p>The Casamance campements villageois — village-owned, village-run, and thirty years old.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a family gathering for tea in a Senegalese courtyard</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a family gathering for tea in a Senegalese courtyard"><span>a family gathering for tea in a Senegalese courtyard</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Teranga</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Serer village in the Sine-Saloum, Senegal</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Serer village in the Sine-Saloum, Senegal"><span>a Serer village in the Sine-Saloum, Senegal</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Wolof, Serer and Diola</h3>
         <p>Wolof across the country, Serer in the delta, and the Diola of Casamance.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>thieboudienne served on a shared platter, Senegal</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="thieboudienne served on a shared platter, Senegal"><span>thieboudienne served on a shared platter, Senegal</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Thieboudienne</h3>
         <p>Rice and fish, cooked in one pot, and the national dish by common consent.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>crowds gathering at the great mosque of Touba, Senegal</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="crowds gathering at the great mosque of Touba, Senegal"><span>crowds gathering at the great mosque of Touba, Senegal</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Dak&#x27;Art and the Magal</h3>
         <p>The Dakar art biennale, and the Grand Magal of Touba, which moves millions of people.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a sous-verre glass painting being finished, Senegal</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a sous-verre glass painting being finished, Senegal"><span>a sous-verre glass painting being finished, Senegal</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Glass Painting and Weaving</h3>
         <p>Sous-verre glass painting, and the strip-woven cloth of the Manjak weavers.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the pink house of slaves on Gorée island, Senegal</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the pink house of slaves on Gorée island, Senegal"><span>the pink house of slaves on Gorée island, Senegal</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Gorée</h3>
         <p>The island off Dakar, and the house of slaves that stands on it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the colonial waterfront of Saint-Louis at dusk, Senegal</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the colonial waterfront of Saint-Louis at dusk, Senegal"><span>the colonial waterfront of Saint-Louis at dusk, Senegal</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Saint-Louis</h3>
         <p>The old colonial capital on its island in the river mouth, with the Faidherbe bridge.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Dakar coastline seen from the Corniche, Senegal</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Dakar coastline seen from the Corniche, Senegal"><span>the Dakar coastline seen from the Corniche, Senegal</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Dakar</h3>
         <p>The most westerly city in Africa, on a peninsula, with the ocean on three sides.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Sudano-Sahelian mosque in the Senegalese interior</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Sudano-Sahelian mosque in the Senegalese interior"><span>a Sudano-Sahelian mosque in the Senegalese interior</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Colonial and Sudano-Sahelian</h3>
         <p>The balconies of Saint-Louis, and the mud-and-timber mosques of the interior.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>tea being poured from height at a Dakar stall, Senegal</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="tea being poured from height at a Dakar stall, Senegal"><span>tea being poured from height at a Dakar stall, Senegal</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>Ataya and the Market</h3>
         <p>Three glasses of tea, poured from height, and each one stronger than the last.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>children on the beach at Saly on the Petite Côte, Senegal</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="children on the beach at Saly on the Petite Côte, Senegal"><span>children on the beach at Saly on the Petite Côte, Senegal</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Short Flights, Long Beaches</h3>
         <p>Six hours from Europe, and beaches with a shallow warm Atlantic in front of them.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>surfers at Ngor island off Dakar, Senegal</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="surfers at Ngor island off Dakar, Senegal"><span>surfers at Ngor island off Dakar, Senegal</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Surf, Sail, Paddle</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>kitesurfers off the Petite Côte, Senegal</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="kitesurfers off the Petite Côte, Senegal"><span>kitesurfers off the Petite Côte, Senegal</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Surf and Sail</h3>
         <p>Dakar&#x27;s breaks, kite-surfing on the Petite Côte, and pirogue trips through the mangrove.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a lodge deck over the water in the Saloum delta, Senegal</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a lodge deck over the water in the Saloum delta, Senegal"><span>a lodge deck over the water in the Saloum delta, Senegal</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Delta Lodges</h3>
         <p>Small lodges on the Saloum islands, reached only by boat, with birds outside.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>pink water and salt at the Lac Rose near Dakar, Senegal</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="pink water and salt at the Lac Rose near Dakar, Senegal"><span>pink water and salt at the Lac Rose near Dakar, Senegal</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Light on Water</h3>
         <p>Delta light at either end of the day, and pink water at the Lac Rose.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Bedik village on a hillside in south-east Senegal</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Bedik village on a hillside in south-east Senegal"><span>a Bedik village on a hillside in south-east Senegal</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Bassari Country</h3>
         <p>The Bassari and Bedik villages of the south-east, up in the hills, and rarely visited.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Atlantic coast road north of Dakar, Senegal</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="the Atlantic coast road north of Dakar, Senegal"><span>the Atlantic coast road north of Dakar, Senegal</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>The Easy Door to West Africa</h3><p>Stable, straightforward, six hours from Europe, and the friendliest reputation on the coast.</p>

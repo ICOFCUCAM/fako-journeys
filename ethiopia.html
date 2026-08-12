@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Escarpment and Rift</b><span>the Ethiopian Rift valley lakes seen from the escarpment</span></li>
-        <li><b>The Simiens</b><span>trekkers on the ridge trail in the Simien mountains</span></li>
-        <li><b>The Blue Nile Falls</b><span>the Blue Nile falls in full flow at Tis Issat</span></li>
-        <li><b>Lake Tana</b><span>an island monastery on Lake Tana seen from the water</span></li>
-        <li><b>No Coast, and No Loss</b><span>a crater lake at Bishoftu in the early morning</span></li>
-        <li><b>Harenna and the Church Forests</b><span>a round church surrounded by its own remnant forest</span></li>
+        <li><b>Escarpment and Rift</b><span>The Rift Valley cuts the whole country in half, with highlands either side of it.</span></li>
+        <li><b>The Simiens</b><span>Ras Dashen is 4,550 metres; the trek to it runs along the escarpment for days.</span></li>
+        <li><b>The Blue Nile Falls</b><span>Tis Issat — the water that smokes — where the Blue Nile leaves Lake Tana.</span></li>
+        <li><b>Lake Tana</b><span>The source of the Blue Nile, with monasteries on its islands still in use.</span></li>
+        <li><b>No Coast, and No Loss</b><span>Landlocked since 1993 — the water here is the Rift lakes and the crater lakes of Bishoftu.</span></li>
+        <li><b>Harenna and the Church Forests</b><span>Harenna&#x27;s cloud forest in Bale, and the church forests that are the last woodland of the north.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Gelada and Walia Ibex</b><span>a troop of gelada baboons grazing on the Simien escarpment</span></li>
-        <li><b>Bale and the Ethiopian Wolf</b><span>an Ethiopian wolf on the Sanetti plateau in Bale</span></li>
-        <li><b>Community Conservation</b><span>a park scout looking out over the Bale plateau</span></li>
-        <li><b>Trek and Climb</b><span>a climber on the approach to a Tigray cliff church</span></li>
+        <li><b>Gelada and Walia Ibex</b><span>The gelada lives nowhere else on earth, and grazes the Simien escarpment in troops of hundreds.</span></li>
+        <li><b>Bale and the Ethiopian Wolf</b><span>The Bale mountains hold the last five hundred Ethiopian wolves, on the Sanetti plateau.</span></li>
+        <li><b>Community Conservation</b><span>Guides and scouts drawn from the villages inside the parks, which is why the wolves are still there.</span></li>
+        <li><b>Trek and Climb</b><span>The Simien traverse, Bale&#x27;s plateau, and the Tigray churches that need a rope.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Its Own Everything</b><span>priests in white robes outside a rock-hewn church</span></li>
-        <li><b>Omo Valley</b><span>a village of the lower Omo valley at the end of the day</span></li>
-        <li><b>Timkat and Meskel</b><span>the Timkat procession with white-robed crowds at Gondar</span></li>
-        <li><b>Weaving and Silver</b><span>a silversmith working an Ethiopian cross</span></li>
-        <li><b>Injera and Doro Wat</b><span>injera with several wats served on a shared platter</span></li>
-        <li><b>Highland Travel</b><span>a family walking a highland track in northern Ethiopia</span></li>
-        <li><b>Coffee, Properly</b><span>a coffee ceremony with roasting pan and jebena</span></li>
+        <li><b>Its Own Everything</b><span>Its own alphabet, its own calendar with thirteen months, and its own church since the fourth century.</span></li>
+        <li><b>Omo Valley</b><span>The lower Omo holds sixteen peoples in one valley, and the visits should be arranged carefully.</span></li>
+        <li><b>Timkat and Meskel</b><span>Timkat in January at Gondar, and Meskel bonfires across the country in September.</span></li>
+        <li><b>Weaving and Silver</b><span>Handwoven shemma cotton, and Coptic crosses in silver, each region with its own shape.</span></li>
+        <li><b>Injera and Doro Wat</b><span>Sourdough injera under everything, and fasting food that has made vegans of visitors.</span></li>
+        <li><b>Highland Travel</b><span>Cool highland air, short flights between the historic sites, and no malaria at altitude.</span></li>
+        <li><b>Coffee, Properly</b><span>Coffee was found here, and it is still roasted, ground and poured in front of you.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Addis Ababa</b><span>the Merkato district of Addis Ababa from above</span></li>
-        <li><b>Round Houses and Rock Churches</b><span>a Tigray rock church high in a cliff face</span></li>
-        <li><b>Lalibela</b><span>the rock-hewn church of Bete Giyorgis at Lalibela</span></li>
-        <li><b>Aksum and Gondar</b><span>the stone castles of Fasil Ghebbi at Gondar</span></li>
+        <li><b>Addis Ababa</b><span>Founded 1886, at 2,355 metres, and the diplomatic capital of the continent.</span></li>
+        <li><b>Round Houses and Rock Churches</b><span>The tukul, and the rock architecture of Tigray cut into cliff faces you have to climb.</span></li>
+        <li><b>Lalibela</b><span>Eleven churches cut down into solid rock in the twelfth century, still in use every day.</span></li>
+        <li><b>Aksum and Gondar</b><span>The Aksumite stelae, and the seventeenth-century castles of Gondar built by Fasilides.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Trekking Country</b><span>the sulphur springs of the Danakil depression</span></li>
-        <li><b>Lodges on the Escarpment</b><span>a lodge terrace on the edge of the Simien escarpment</span></li>
-        <li><b>Faces and Escarpments</b><span>cloud below the escarpment edge in the Simien mountains</span></li>
-        <li><b>Tigray</b><span>the climb to a rock church in the Gheralta mountains</span></li>
+        <li><b>Trekking Country</b><span>Multi-day treks in the Simiens and Bale, and the Danakil at a hundred metres below sea level.</span></li>
+        <li><b>Lodges on the Escarpment</b><span>Limalimo and Bale Mountain Lodge — small, sited well, and built by people who stayed.</span></li>
+        <li><b>Faces and Escarpments</b><span>The light at four thousand metres, and portraiture that has to be asked for properly.</span></li>
+        <li><b>Tigray</b><span>Rock churches in cliff faces reached by hand and foot, with almost nobody else there.</span></li>
         </ul>
       </div>
     </div>

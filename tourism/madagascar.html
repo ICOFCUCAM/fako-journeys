@@ -6,6 +6,7 @@
 <title>Madagascar Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="Separated from Africa 160 million years ago, with ninety per cent of its wildlife found nowhere else — lemurs, baobabs, the spiny forest of the south, and rainforest along the eastern escarpment.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the avenue of baobabs at Morondava at sunset, Madagascar</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the avenue of baobabs at Morondava at sunset, Madagascar"><span>the avenue of baobabs at Morondava at sunset, Madagascar</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">MADAGASCAR <i>&middot; Tourism</i></span>
     <h1>An Island That Evolved Alone</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the tsingy limestone pinnacles of Bemaraha, Madagascar</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the tsingy limestone pinnacles of Bemaraha, Madagascar"><span>the tsingy limestone pinnacles of Bemaraha, Madagascar</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Six Ecosystems on One Island</h3>
         <p>Rainforest east, highlands centre, spiny forest south, dry deciduous west, and reef all round.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>terraced rice paddies in the Madagascar highlands</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="terraced rice paddies in the Madagascar highlands"><span>terraced rice paddies in the Madagascar highlands</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The Highlands and Maromokotro</h3>
         <p>The central highlands run to two thousand metres; Maromokotro reaches 2,876 in the Tsaratanana.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a waterfall in rainforest on the eastern escarpment, Madagascar</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a waterfall in rainforest on the eastern escarpment, Madagascar"><span>a waterfall in rainforest on the eastern escarpment, Madagascar</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>The Eastern Escarpment</h3>
         <p>Short, steep rivers off the escarpment, and waterfalls through the rainforest at Andasibe.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a pirogue on the Tsiribihina river at dawn, Madagascar</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a pirogue on the Tsiribihina river at dawn, Madagascar"><span>a pirogue on the Tsiribihina river at dawn, Madagascar</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Tsiribihina</h3>
         <p>Three days downriver by pirogue through country with no road in it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a white sand beach and turquoise water at Nosy Be, Madagascar</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a white sand beach and turquoise water at Nosy Be, Madagascar"><span>a white sand beach and turquoise water at Nosy Be, Madagascar</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>Nosy Be and the East Coast</h3>
         <p>Reef, whale sharks and humpbacks off Nosy Be, and long empty sand on the east coast.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the spiny forest of octopus trees in southern Madagascar</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the spiny forest of octopus trees in southern Madagascar"><span>the spiny forest of octopus trees in southern Madagascar</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Rainforest and Spiny Forest</h3>
         <p>Andasibe and Ranomafana in the east, and the spiny forest of the south which is like nowhere.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>an indri lemur in the rainforest canopy at Andasibe, Madagascar</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="an indri lemur in the rainforest canopy at Andasibe, Madagascar"><span>an indri lemur in the rainforest canopy at Andasibe, Madagascar</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>A Hundred Kinds of Lemur</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a chameleon on a branch in Ranomafana rainforest, Madagascar</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a chameleon on a branch in Ranomafana rainforest, Madagascar"><span>a chameleon on a branch in Ranomafana rainforest, Madagascar</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Not a Safari Island</h3>
         <p>No lions and no elephant — the wildlife here is small, nocturnal, and worth the torchlight.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a reforestation nursery beside a Madagascar rainforest park</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a reforestation nursery beside a Madagascar rainforest park"><span>a reforestation nursery beside a Madagascar rainforest park</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>The Reason to Come Carefully</h3>
         <p>Deforestation is the country&#x27;s crisis, and the parks that work are the ones the villages run.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a highland Malagasy village of red brick houses, Madagascar</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a highland Malagasy village of red brick houses, Madagascar"><span>a highland Malagasy village of red brick houses, Madagascar</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Malagasy, and Eighteen Peoples</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a family tomb standing in highland Madagascar farmland</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a family tomb standing in highland Madagascar farmland"><span>a family tomb standing in highland Madagascar farmland</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Famadihana and the Ancestors</h3>
         <p>The ancestors are present here in a way that shapes the calendar and the architecture.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>romazava and rice served at a Malagasy table, Madagascar</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="romazava and rice served at a Malagasy table, Madagascar"><span>romazava and rice served at a Malagasy table, Madagascar</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Romazava and Rice</h3>
         <p>Rice three times a day, and romazava — beef and greens — with it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a hira gasy troupe performing in the highlands, Madagascar</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a hira gasy troupe performing in the highlands, Madagascar"><span>a hira gasy troupe performing in the highlands, Madagascar</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Hira Gasy and Donia</h3>
         <p>Hira gasy troupes in the highlands, and the Donia festival on Nosy Be in June.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a woman weaving a silk lamba on a wooden loom, Madagascar</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a woman weaving a silk lamba on a wooden loom, Madagascar"><span>a woman weaving a silk lamba on a wooden loom, Madagascar</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Silk, Raffia and Zafimaniry</h3>
         <p>Wild silk lambas, raffia work, and the Zafimaniry woodcarving of the south-east.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the wooden royal compound at Ambohimanga, Madagascar</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the wooden royal compound at Ambohimanga, Madagascar"><span>the wooden royal compound at Ambohimanga, Madagascar</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>The Rova and the Royal Hills</h3>
         <p>Ambohimanga, the royal hill of the Merina kings above Antananarivo.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the pirate cemetery on Île Sainte-Marie, Madagascar</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the pirate cemetery on Île Sainte-Marie, Madagascar"><span>the pirate cemetery on Île Sainte-Marie, Madagascar</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Pirates and Kingdoms</h3>
         <p>Île Sainte-Marie&#x27;s pirate cemetery, and the Merina kingdom that unified the island.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the stepped hillside houses of Antananarivo, Madagascar</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the stepped hillside houses of Antananarivo, Madagascar"><span>the stepped hillside houses of Antananarivo, Madagascar</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Antananarivo</h3>
         <p>A capital built up twelve hills, with stairs instead of streets in half of it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>red brick highland houses with wooden balconies, Madagascar</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="red brick highland houses with wooden balconies, Madagascar"><span>red brick highland houses with wooden balconies, Madagascar</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Highland Brick</h3>
         <p>Two-storey red brick with a wooden balcony, and nothing else in Africa looks like it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a zebu cattle market in the Madagascar highlands</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a zebu cattle market in the Madagascar highlands"><span>a zebu cattle market in the Madagascar highlands</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>The Zebu Market</h3>
         <p>Zebu cattle are wealth here, and the markets that trade them are the real calendar.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>children on a village path in rural Madagascar</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="children on a village path in rural Madagascar"><span>children on a village path in rural Madagascar</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Slow, and Worth It</h3>
         <p>Roads are slow and distances are long — but the children will hold a chameleon.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a walker crossing the tsingy on a rope bridge, Madagascar</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a walker crossing the tsingy on a rope bridge, Madagascar"><span>a walker crossing the tsingy on a rope bridge, Madagascar</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>The RN7 and the Tsingy</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>kayaks on the water off a Madagascar reef island</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="kayaks on the water off a Madagascar reef island"><span>kayaks on the water off a Madagascar reef island</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Trek, Paddle, Dive</h3>
         <p>Rainforest trekking, the Tsiribihina by pirogue, and reef diving off Nosy Be.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a small lodge among trees at a Madagascar park gate</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a small lodge among trees at a Madagascar park gate"><span>a small lodge among trees at a Madagascar park gate</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Small Lodges</h3>
         <p>Owner-run lodges at the park gates, and beach places on Nosy Be with a dozen rooms.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>baobabs silhouetted against the sky at Morondava, Madagascar</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="baobabs silhouetted against the sky at Morondava, Madagascar"><span>baobabs silhouetted against the sky at Morondava, Madagascar</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Baobabs at Six</h3>
         <p>The avenue at Morondava for twenty minutes at either end of the day, and nothing else like it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the rainforest of Masoala coming down to the sea, Madagascar</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the rainforest of Masoala coming down to the sea, Madagascar"><span>the rainforest of Masoala coming down to the sea, Madagascar</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Masoala</h3>
         <p>The largest protected rainforest in the country, reached by boat, with whales in the bay.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a ring-tailed lemur troop in southern Madagascar</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a ring-tailed lemur troop in southern Madagascar"><span>a ring-tailed lemur troop in southern Madagascar</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Nowhere Else</h3><p>Lemurs, baobabs, tsingy, spiny forest — none of it exists anywhere else on earth.</p>

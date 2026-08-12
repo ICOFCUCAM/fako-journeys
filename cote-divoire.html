@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Forest to Savanna</b><span>the Ébrié lagoon fringed with palms</span></li>
-        <li><b>Mount Nimba</b><span>the grassy summit ridge of Mount Nimba</span></li>
-        <li><b>Man and the Waterfalls</b><span>a waterfall in the hills around Man</span></li>
-        <li><b>The Ébrié and the Bandama</b><span>pirogues on the Ébrié lagoon at dusk</span></li>
-        <li><b>Assinie and Grand-Béréby</b><span>palms and surf on the beach at Assinie</span></li>
-        <li><b>Taï Rainforest</b><span>primary rainforest interior at Taï</span></li>
+        <li><b>Forest to Savanna</b><span>Rainforest in the south-west, a lagoon coast, and savanna running north to Mali.</span></li>
+        <li><b>Mount Nimba</b><span>The Nimba range on the Guinea and Liberia border, at 1,752 metres, with its own species.</span></li>
+        <li><b>Man and the Waterfalls</b><span>The falls around Man in the western hills, and the liana bridges strung above them.</span></li>
+        <li><b>The Ébrié and the Bandama</b><span>The lagoon system behind the coast, and the Bandama running the length of the country.</span></li>
+        <li><b>Assinie and Grand-Béréby</b><span>Assinie&#x27;s sandbar east of Abidjan, and the quieter Atlantic beaches to the west.</span></li>
+        <li><b>Taï Rainforest</b><span>One of the last blocks of primary rainforest in West Africa, and chimpanzees that use tools.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Taï and Comoé</b><span>dense rainforest canopy at Taï national park</span></li>
-        <li><b>Comoé</b><span>open savanna and gallery forest at Comoé</span></li>
-        <li><b>Taï and the Chimpanzees</b><span>a researcher on a forest trail at Taï</span></li>
-        <li><b>Surf and Hike</b><span>a liana bridge strung across a river near Man</span></li>
+        <li><b>Taï and Comoé</b><span>Pygmy hippo and chimpanzees at Taï, and Comoé&#x27;s savanna in the north-east.</span></li>
+        <li><b>Comoé</b><span>One of the largest protected areas in West Africa, with elephant, buffalo and hippo.</span></li>
+        <li><b>Taï and the Chimpanzees</b><span>Forty years of chimpanzee research at Taï, run with the villages around the park.</span></li>
+        <li><b>Surf and Hike</b><span>Assinie&#x27;s breaks, and the liana bridges and falls in the hills around Man.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Sixty Peoples</b><span>a Baoulé mask dance in central Côte d&#x27;Ivoire</span></li>
-        <li><b>Baoulé, Senufo and Dan</b><span>Senufo carved figures on a workshop bench</span></li>
-        <li><b>Abissa and the Masks</b><span>masked dancers at the Abissa festival in Grand-Bassam</span></li>
-        <li><b>Weaving and Carving</b><span>Korhogo cloth painted with mud pigment</span></li>
-        <li><b>Attiéké and Kedjenou</b><span>attiéké and grilled fish served at a maquis</span></li>
-        <li><b>Beach and Lagoon</b><span>children swimming on the lagoon side at Assinie</span></li>
-        <li><b>Maquis at Night</b><span>a busy open-air maquis at night in Abidjan</span></li>
+        <li><b>Sixty Peoples</b><span>Akan, Krou, Mandé and Gur — around sixty peoples inside one border.</span></li>
+        <li><b>Baoulé, Senufo and Dan</b><span>Baoulé weaving, Senufo sculpture, and Dan masks from the western hills.</span></li>
+        <li><b>Abissa and the Masks</b><span>Abissa at Grand-Bassam in November, and the mask festivals of the western hills.</span></li>
+        <li><b>Weaving and Carving</b><span>Baoulé strip cloth, Korhogo painted cloth, and Dan masks carved for use rather than sale.</span></li>
+        <li><b>Attiéké and Kedjenou</b><span>Attiéké with grilled fish, and kedjenou slow-cooked in a sealed pot.</span></li>
+        <li><b>Beach and Lagoon</b><span>Assinie&#x27;s sandbar has ocean on one side and calm lagoon on the other, which suits children.</span></li>
+        <li><b>Maquis at Night</b><span>The open-air maquis — grill, music and a plastic chair — is the country&#x27;s real institution.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Abidjan</b><span>the towers of the Plateau district in Abidjan</span></li>
-        <li><b>Lagoon Colonial</b><span>a colonial trading house on the Grand-Bassam waterfront</span></li>
-        <li><b>Grand-Bassam</b><span>the colonial quarter of Grand-Bassam</span></li>
-        <li><b>Yamoussoukro</b><span>the basilica of Our Lady of Peace at Yamoussoukro</span></li>
+        <li><b>Abidjan</b><span>The Plateau&#x27;s towers, the Ébrié lagoon, and a nightlife the region measures itself against.</span></li>
+        <li><b>Lagoon Colonial</b><span>The wooden trading houses of Grand-Bassam, and Abidjan&#x27;s tropical modernism.</span></li>
+        <li><b>Grand-Bassam</b><span>The first colonial capital, on a sandbar between lagoon and ocean, and now a world site.</span></li>
+        <li><b>Yamoussoukro</b><span>A basilica larger than Saint Peter&#x27;s, built in the founder&#x27;s home village.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Surf, Hike, Paddle</b><span>surfers in the water off Assinie</span></li>
-        <li><b>Assinie and Abidjan</b><span>a lagoon-side villa terrace at Assinie</span></li>
-        <li><b>Lagoon Light</b><span>pirogues silhouetted on the lagoon at sunset</span></li>
-        <li><b>Man</b><span>the hills and forest around the town of Man</span></li>
+        <li><b>Surf, Hike, Paddle</b><span>Surf at Assinie, hiking the western hills, and pirogues through the lagoon.</span></li>
+        <li><b>Assinie and Abidjan</b><span>Lagoon villas at Assinie, and Abidjan hotels that serve the whole region&#x27;s business.</span></li>
+        <li><b>Lagoon Light</b><span>Pirogues on flat water at either end of the day, and a skyline behind them.</span></li>
+        <li><b>Man</b><span>The western hills, with waterfalls, mask villages and a mountain nobody climbs.</span></li>
         </ul>
       </div>
     </div>

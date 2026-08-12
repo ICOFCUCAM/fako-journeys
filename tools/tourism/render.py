@@ -14,7 +14,6 @@ import os
 import re
 
 from . import imaging, validate
-from .resolve import MISSING_KEY_WARNING
 
 
 def alt_for(country, entry):
@@ -76,11 +75,16 @@ class Shell:
     def __init__(self, index_path=None):
         with open(index_path or os.path.join(ROOT, "cameroon.html")) as f:
             src = f.read()
+        # The design system is a linked stylesheet now, not an inline block. The
+        # shell used to lift only the <style>, so when cameroon.html stopped
+        # declaring its own tokens these pages lost the entire palette and
+        # rendered on white with no rules and no accent. Carry the links too.
+        self.links = "\n".join(re.findall(r'<link rel="stylesheet"[^>]*>', src))
         self.style = _between(src, r"<style>", r"</style>")
         self.masthead = _between(src, r'<header class="fj-mast">', r"</header>")
         self.footer = _between(src, r'<footer class="fj-foot">', r"</footer>")
         self.script = _between(src, r"<script>", r"</script>")
-        if not (self.style and self.masthead and self.footer):
+        if not (self.style and self.masthead and self.footer and self.links):
             raise RuntimeError("could not read the shell out of cameroon.html")
         # the masthead CTA jumps to an on-page form that country pages do not have
         self.masthead = self.masthead.replace('href="#quote"', 'href="/contact"')
@@ -167,6 +171,20 @@ TOURISM_CSS = """
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 """
 
@@ -179,11 +197,15 @@ def img_tag(entry, role, alt, extra_class=""):
     box = 'width="%d" height="%d" style="aspect-ratio:%s;object-position:%s"' % (
         d["width"], d["height"], d["aspect"], d["objectPosition"])
     if not d["src"]:
-        # No resolved photo and no local stand-in. Show an honest placeholder that
-        # names the missing prerequisite, rather than a broken <img> or a guess.
-        return ('<div class="tq-empty %s" style="aspect-ratio:%s" data-unresolved="true">'
-                '<span>%s<br><em>%s</em></span></div>'
-                % (extra_class, d["aspect"], esc(MISSING_KEY_WARNING), esc(alt[:70])))
+        # No resolved photograph and no local stand-in. This used to print the
+        # build's own diagnostic — "requires UNSPLASH_ACCESS_KEY" — into a page
+        # the gateway links to as "all twenty-seven categories". A visitor is not
+        # the audience for a missing environment variable. They get a designed
+        # empty frame that says what the picture would be; the diagnostic keeps
+        # its proper home in `build.py status` and tourism/REPORT.md.
+        return ('<div class="tq-empty %s" style="aspect-ratio:%s" data-unresolved="true" '
+                'role="img" aria-label="%s"><span>%s</span></div>'
+                % (extra_class, d["aspect"], esc(alt), esc(alt[:90])))
     attrs = ['src="%s"' % esc(d["src"]), 'alt="%s"' % esc(alt), box]
     if d["srcset"]:
         attrs.append('srcset="%s"' % esc(d["srcset"]))
@@ -333,6 +355,7 @@ PAGE = """<!DOCTYPE html>
 <title>%(title)s</title>
 <meta name="description" content="%(description)s">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+%(links)s
 <style>%(style)s
 %(tourism_css)s</style>
 </head>
@@ -375,6 +398,7 @@ def render_country(country, taxonomy, shell):
     return PAGE % {
         "title": esc("%s Tourism — 27 Experiences | Kamerun" % country.name),
         "description": esc(country.summary or (hero.description if hero else country.name)),
+        "links": shell.links,
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
         "masthead": shell.masthead,
@@ -416,6 +440,7 @@ def render_index(countries, taxonomy, shell):
     return PAGE % {
         "title": "Tourism by Country | Kamerun",
         "description": "Country tourism guides, each covering the same 27 travel experiences.",
+        "links": shell.links,
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
         "masthead": shell.masthead,

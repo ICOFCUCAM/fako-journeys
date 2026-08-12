@@ -6,6 +6,7 @@
 <title>Tunisia Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="Carthage on the bay of Tunis, Roman Dougga and El Jem, the Sahara at Douz and Tozeur, and a Mediterranean coast that has been in the tourism business for sixty years.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the ruins of Carthage above the bay of Tunis, Tunisia</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the ruins of Carthage above the bay of Tunis, Tunisia"><span>the ruins of Carthage above the bay of Tunis, Tunisia</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">TUNISIA <i>&middot; Tourism</i></span>
     <h1>Carthage, the Sahel and the Desert</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the salt crust of the Chott el Djerid, Tunisia</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the salt crust of the Chott el Djerid, Tunisia"><span>the salt crust of the Chott el Djerid, Tunisia</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Coast to Chott</h3>
         <p>The Cap Bon coast, the olive Sahel, and the salt flats of the Chott el Djerid.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the ridge of the Tunisian Dorsale in winter light</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the ridge of the Tunisian Dorsale in winter light"><span>the ridge of the Tunisian Dorsale in winter light</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The Dorsale</h3>
         <p>The Atlas tail crosses the north — Jebel Chambi is 1,544 metres and the highest point.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the palm oasis and waterfall at Chebika, Tunisia</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the palm oasis and waterfall at Chebika, Tunisia"><span>the palm oasis and waterfall at Chebika, Tunisia</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>The Oasis Cascades</h3>
         <p>Chebika, Tamerza and Mides — the mountain oases of the west, with water in a dry country.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Medjerda river crossing the northern plain, Tunisia</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Medjerda river crossing the northern plain, Tunisia"><span>the Medjerda river crossing the northern plain, Tunisia</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Medjerda</h3>
         <p>The only permanent river, running out of Algeria and across the northern plain.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the whitewashed seafront at Sidi Bou Said, Tunisia</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the whitewashed seafront at Sidi Bou Said, Tunisia"><span>the whitewashed seafront at Sidi Bou Said, Tunisia</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>The Mediterranean</h3>
         <p>Hammamet, Djerba and Cap Bon — twelve hundred kilometres of it, and warm from May.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>cork oak forest in the Kroumirie hills, Tunisia</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="cork oak forest in the Kroumirie hills, Tunisia"><span>cork oak forest in the Kroumirie hills, Tunisia</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Cork Oak in the North</h3>
         <p>The Kroumirie forest of cork oak in the north-west, which surprises everyone.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>flamingos on the lake at Ichkeul, Tunisia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="flamingos on the lake at Ichkeul, Tunisia"><span>flamingos on the lake at Ichkeul, Tunisia</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Ichkeul and the Desert</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>waders feeding on a Tunisian coastal wetland</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="waders feeding on a Tunisian coastal wetland"><span>waders feeding on a Tunisian coastal wetland</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Not a Safari Country</h3>
         <p>The wildlife here is birds and desert species, and Ichkeul is the reason to bring binoculars.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>traditional irrigation channels in the Tozeur oasis, Tunisia</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="traditional irrigation channels in the Tozeur oasis, Tunisia"><span>traditional irrigation channels in the Tozeur oasis, Tunisia</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Oasis Water</h3>
         <p>The oasis irrigation of Tozeur and Nefta, managing water in the driest place in the country.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Roman mosaic floor in a Tunisian museum</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a Roman mosaic floor in a Tunisian museum"><span>a Roman mosaic floor in a Tunisian museum</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Punic, Roman, Arab, Berber</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>an underground Berber courtyard house at Matmata, Tunisia</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="an underground Berber courtyard house at Matmata, Tunisia"><span>an underground Berber courtyard house at Matmata, Tunisia</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>The Berber South</h3>
         <p>The ksour of Tataouine, and the underground houses of Matmata.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a brik being fried at a Tunisian market stall</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a brik being fried at a Tunisian market stall"><span>a brik being fried at a Tunisian market stall</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Couscous, Brik and Harissa</h3>
         <p>Friday couscous, brik straight out of the pan, and harissa on everything.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>riders at the Sahara festival at Douz, Tunisia</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="riders at the Sahara festival at Douz, Tunisia"><span>riders at the Sahara festival at Douz, Tunisia</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Carthage and the Sahara Festival</h3>
         <p>The Carthage film and music festival in summer, and the Douz Sahara festival in December.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>hand-painted Nabeul ceramics on a market stall, Tunisia</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="hand-painted Nabeul ceramics on a market stall, Tunisia"><span>hand-painted Nabeul ceramics on a market stall, Tunisia</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Mosaic, Ceramic and Silver</h3>
         <p>Roman mosaic technique still taught, Nabeul ceramic, and Berber silver from the south.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Roman amphitheatre at El Jem, Tunisia</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Roman amphitheatre at El Jem, Tunisia"><span>the Roman amphitheatre at El Jem, Tunisia</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Carthage, Dougga, El Jem</h3>
         <p>El Jem&#x27;s amphitheatre seats thirty-five thousand and is standing almost complete.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the great mosque of Kairouan from its courtyard, Tunisia</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the great mosque of Kairouan from its courtyard, Tunisia"><span>the great mosque of Kairouan from its courtyard, Tunisia</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>The Medinas</h3>
         <p>Tunis, Sousse and Kairouan — Kairouan&#x27;s mosque is among the oldest in the Maghreb.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the medina rooftops of Tunis at dusk, Tunisia</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the medina rooftops of Tunis at dusk, Tunisia"><span>the medina rooftops of Tunis at dusk, Tunisia</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Tunis and Sfax</h3>
         <p>Tunis at the head of its lake, and Sfax&#x27;s walled medina working as a medina still.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the blue doors and white walls of Sidi Bou Said, Tunisia</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the blue doors and white walls of Sidi Bou Said, Tunisia"><span>the blue doors and white walls of Sidi Bou Said, Tunisia</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Whitewash and Blue</h3>
         <p>Sidi Bou Said&#x27;s blue and white, and the vaulted ksour of the desert south.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>mint tea with pine nuts at a Tunisian café</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="mint tea with pine nuts at a Tunisian café"><span>mint tea with pine nuts at a Tunisian café</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>The Souk and the Café</h3>
         <p>Mint tea with pine nuts, and a souk that still mostly sells to the people who live there.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a shallow beach with families on the Tunisian coast</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a shallow beach with families on the Tunisian coast"><span>a shallow beach with families on the Tunisian coast</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Two Hours from Europe</h3>
         <p>Short flights, shallow warm sea, and resorts that have been doing families for decades.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>camels crossing dunes on the Grand Erg oriental, Tunisia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="camels crossing dunes on the Grand Erg oriental, Tunisia"><span>camels crossing dunes on the Grand Erg oriental, Tunisia</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Desert, Diving, Dunes</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a trekking party on the edge of the Grand Erg, Tunisia</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a trekking party on the edge of the Grand Erg, Tunisia"><span>a trekking party on the edge of the Grand Erg, Tunisia</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Desert and Dive</h3>
         <p>Dune trekking from Douz, quad routes on the chott, and diving at Tabarka.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the courtyard of a restored dar in the Tunis medina, Tunisia</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the courtyard of a restored dar in the Tunis medina, Tunisia"><span>the courtyard of a restored dar in the Tunis medina, Tunisia</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Riad, Dar and Dune Camp</h3>
         <p>Restored dar houses in the medinas, and desert camps beyond the last palm.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>white and blue architecture in strong Mediterranean light, Tunisia</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="white and blue architecture in strong Mediterranean light, Tunisia"><span>white and blue architecture in strong Mediterranean light, Tunisia</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Light on White</h3>
         <p>Whitewash, blue, and desert light — the reason the film crews keep coming back.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the stacked vaulted ksar at Ksar Ouled Soltane, Tunisia</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the stacked vaulted ksar at Ksar Ouled Soltane, Tunisia"><span>the stacked vaulted ksar at Ksar Ouled Soltane, Tunisia</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Ksar Ouled Soltane</h3>
         <p>Vaulted grain stores stacked four storeys high, and almost nobody there.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a desert road running south towards the Sahara, Tunisia</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a desert road running south towards the Sahara, Tunisia"><span>a desert road running south towards the Sahara, Tunisia</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Rome, and the Sahara, in One Week</h3><p>An amphitheatre on Monday and a dune camp on Thursday, in a country the size of England.</p>

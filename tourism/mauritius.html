@@ -6,6 +6,7 @@
 <title>Mauritius Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="A volcanic island inside an almost unbroken reef, with a mountainous interior, Black River Gorges, and a culture assembled from India, Africa, France and China in the space of two centuries.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the mountain of Le Morne rising above the lagoon, Mauritius</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the mountain of Le Morne rising above the lagoon, Mauritius"><span>the mountain of Le Morne rising above the lagoon, Mauritius</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">MAURITIUS <i>&middot; Tourism</i></span>
     <h1>Reef, Sugar and the Volcanic Interior</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Black River gorges in morning cloud, Mauritius</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Black River gorges in morning cloud, Mauritius"><span>the Black River gorges in morning cloud, Mauritius</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Lagoon and Gorge</h3>
         <p>Lagoon all the way round, sugar cane across the plain, and gorges cut into the plateau.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the summit ridge of Le Morne Brabant above the sea, Mauritius</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the summit ridge of Le Morne Brabant above the sea, Mauritius"><span>the summit ridge of Le Morne Brabant above the sea, Mauritius</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>Le Morne and Pieter Both</h3>
         <p>Le Morne Brabant stands 556 metres out of the lagoon, and is walked in a morning.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Chamarel waterfall dropping into forest, Mauritius</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Chamarel waterfall dropping into forest, Mauritius"><span>the Chamarel waterfall dropping into forest, Mauritius</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Chamarel</h3>
         <p>A hundred metres in a single drop, near the seven-coloured earths.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the temple and statues at Grand Bassin crater lake, Mauritius</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the temple and statues at Grand Bassin crater lake, Mauritius"><span>the temple and statues at Grand Bassin crater lake, Mauritius</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>Grand Bassin</h3>
         <p>A crater lake and Hindu pilgrimage site, with half a million people walking to it at Maha Shivaratri.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>turquoise lagoon and reef break off a Mauritian beach, Mauritius</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="turquoise lagoon and reef break off a Mauritian beach, Mauritius"><span>turquoise lagoon and reef break off a Mauritian beach, Mauritius</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>The Lagoon</h3>
         <p>Inside the reef the water is flat and warm the whole way round the island.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>native forest in the Black River Gorges, Mauritius</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="native forest in the Black River Gorges, Mauritius"><span>native forest in the Black River Gorges, Mauritius</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Black River Gorges</h3>
         <p>The last of the native forest, on the plateau, with trails and endemic birds in it.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Mauritius kestrel perched in native forest</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a Mauritius kestrel perched in native forest"><span>a Mauritius kestrel perched in native forest</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>What the Dodo Left</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>fruit bats leaving a roost at dusk, Mauritius</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="fruit bats leaving a roost at dusk, Mauritius"><span>fruit bats leaving a roost at dusk, Mauritius</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Reef, Not Savanna</h3>
         <p>No big game — the wildlife here is the reef, the endemic birds, and the flying foxes at dusk.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a pink pigeon in Mauritian native forest, Mauritius</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a pink pigeon in Mauritian native forest, Mauritius"><span>a pink pigeon in Mauritian native forest, Mauritius</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Bringing Back the Birds</h3>
         <p>The kestrel, the pink pigeon and the echo parakeet were each brought back from near zero.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Hindu temple and a church on the same Mauritian street, Mauritius</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a Hindu temple and a church on the same Mauritian street, Mauritius"><span>a Hindu temple and a church on the same Mauritian street, Mauritius</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Four Continents</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a village street in the Mauritian sugar country, Mauritius</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a village street in the Mauritian sugar country, Mauritius"><span>a village street in the Mauritian sugar country, Mauritius</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Creole and Bhojpuri</h3>
         <p>Creole spoken by everyone, Bhojpuri in the villages, and French and English in print.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dholl puri being made at a street cart, Mauritius</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="dholl puri being made at a street cart, Mauritius"><span>dholl puri being made at a street cart, Mauritius</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Dholl Puri and Rougaille</h3>
         <p>Dholl puri off a street cart, rougaille at home, and a fish vindaye that is entirely local.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>pilgrims walking to Grand Bassin at Maha Shivaratri, Mauritius</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="pilgrims walking to Grand Bassin at Maha Shivaratri, Mauritius"><span>pilgrims walking to Grand Bassin at Maha Shivaratri, Mauritius</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Maha Shivaratri and Cavadee</h3>
         <p>Half a million walking to Grand Bassin in February, and Thaipoosam Cavadee in January.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a model ship being built in a Mauritian workshop, Mauritius</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a model ship being built in a Mauritian workshop, Mauritius"><span>a model ship being built in a Mauritian workshop, Mauritius</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Model Ships and Textiles</h3>
         <p>Model shipbuilding, and a textile industry that grew out of the sugar estates.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the stone steps of the Aapravasi Ghat, Mauritius</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the stone steps of the Aapravasi Ghat, Mauritius"><span>the stone steps of the Aapravasi Ghat, Mauritius</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Aapravasi Ghat</h3>
         <p>The immigration depot where half a million indentured labourers first landed.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Le Morne Brabant seen from the lagoon, Mauritius</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Le Morne Brabant seen from the lagoon, Mauritius"><span>Le Morne Brabant seen from the lagoon, Mauritius</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Le Morne</h3>
         <p>The mountain where escaped slaves lived at the top, and a world heritage site for that reason.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Port Louis waterfront and market, Mauritius</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Port Louis waterfront and market, Mauritius"><span>the Port Louis waterfront and market, Mauritius</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Port Louis</h3>
         <p>A working port and capital, with a market, a waterfront and the Champ de Mars.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a colonial plantation house with a wide veranda, Mauritius</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a colonial plantation house with a wide veranda, Mauritius"><span>a colonial plantation house with a wide veranda, Mauritius</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Colonial and Estate</h3>
         <p>The plantation houses of the interior, and the colonial buildings of Port Louis.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the vegetable stalls of Port Louis central market, Mauritius</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the vegetable stalls of Port Louis central market, Mauritius"><span>the vegetable stalls of Port Louis central market, Mauritius</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>The Central Market</h3>
         <p>Port Louis market in the morning, for vegetables, tea and alouda.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>children playing in a calm Mauritian lagoon, Mauritius</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="children playing in a calm Mauritian lagoon, Mauritius"><span>children playing in a calm Mauritian lagoon, Mauritius</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Made for Families</h3>
         <p>Flat warm lagoon, no dangerous surf inside the reef, and short drives from anywhere.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>kitesurfers on the lagoon below Le Morne, Mauritius</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="kitesurfers on the lagoon below Le Morne, Mauritius"><span>kitesurfers on the lagoon below Le Morne, Mauritius</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Kite, Dive, Hike</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>hikers on the trail up Le Morne, Mauritius</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="hikers on the trail up Le Morne, Mauritius"><span>hikers on the trail up Le Morne, Mauritius</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Kite, Hike, Dive</h3>
         <p>Le Morne&#x27;s kite lagoon, the Black River trails, and dive sites outside the reef.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a resort beach and lagoon in the late afternoon, Mauritius</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a resort beach and lagoon in the late afternoon, Mauritius"><span>a resort beach and lagoon in the late afternoon, Mauritius</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>The Resort Standard</h3>
         <p>The island effectively invented the Indian Ocean resort, and it still does it best.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>aerial view of a Mauritian lagoon and reef, Mauritius</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="aerial view of a Mauritian lagoon and reef, Mauritius"><span>aerial view of a Mauritian lagoon and reef, Mauritius</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Lagoon Colour</h3>
         <p>The lagoon changes colour every hundred metres, and the aerial work here is the proof.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the hills and lagoon of Rodrigues island, Mauritius</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the hills and lagoon of Rodrigues island, Mauritius"><span>the hills and lagoon of Rodrigues island, Mauritius</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Rodrigues</h3>
         <p>Six hundred kilometres east, a tenth the size, and the island Mauritius used to be.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a busy multicultural street scene in Port Louis, Mauritius</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a busy multicultural street scene in Port Louis, Mauritius"><span>a busy multicultural street scene in Port Louis, Mauritius</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Four Cultures, One Lagoon</h3><p>A Hindu festival, a Creole kitchen, a French road name and a Chinese shop, in one street.</p>

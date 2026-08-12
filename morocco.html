@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>The Draa and the Dades</b><span>the Todra gorge with red rock walls and a river below</span></li>
-        <li><b>The High Atlas</b><span>Mount Toubkal under snow above the village of Imlil</span></li>
-        <li><b>Ouzoud</b><span>the Ouzoud falls dropping in stages through olive trees</span></li>
-        <li><b>The Draa River</b><span>palm groves along the Draa valley in southern Morocco</span></li>
-        <li><b>The Atlantic Coast</b><span>the walled seafront of Essaouira with fishing boats</span></li>
-        <li><b>The Cedar Forest</b><span>ancient Atlas cedar trees in the Middle Atlas forest</span></li>
+        <li><b>The Draa and the Dades</b><span>Palm oases strung along the Draa, and gorges cut red through the Dades and the Todra.</span></li>
+        <li><b>The High Atlas</b><span>Toubkal is 4,167 metres and the highest point in North Africa, walkable in two days from Imlil.</span></li>
+        <li><b>Ouzoud</b><span>A hundred metres of water in three stages, with macaques in the olive trees beside it.</span></li>
+        <li><b>The Draa River</b><span>The longest river in Morocco, mostly dry, and green the whole way where it is not.</span></li>
+        <li><b>The Atlantic Coast</b><span>Essaouira&#x27;s wind, Taghazout&#x27;s point breaks, and the long empty beaches between them.</span></li>
+        <li><b>The Cedar Forest</b><span>The Middle Atlas cedar, some of it a thousand years old, above Ifrane and Azrou.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Barbary Macaques and the Argan Forest</b><span>Barbary macaques in the cedar forest of the Middle Atlas</span></li>
-        <li><b>Desert Country</b><span>a desert track through stony hammada in southern Morocco</span></li>
-        <li><b>Oasis Agriculture</b><span>a palm oasis irrigated by traditional channels</span></li>
-        <li><b>Trek, Surf, Ride</b><span>surfers walking the beach at Taghazout at sunset</span></li>
+        <li><b>Barbary Macaques and the Argan Forest</b><span>Macaques in the cedar forest above Azrou, and goats standing in the argan trees near Essaouira.</span></li>
+        <li><b>Desert Country</b><span>Not the safari of the east — the wildlife here is desert-adapted, and you look for it at first light.</span></li>
+        <li><b>Oasis Agriculture</b><span>The khettara irrigation channels still working, and the argan cooperatives run by women.</span></li>
+        <li><b>Trek, Surf, Ride</b><span>Multi-day Atlas treks, Atlantic surf schools, and horses on the Essaouira sand.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Amazigh and Arab</b><span>an Amazigh village of earth houses built into a hillside</span></li>
-        <li><b>The People of the Atlas</b><span>a shepherd with his flock on a High Atlas terrace</span></li>
-        <li><b>Moussem and Gnaoua</b><span>musicians playing at the Gnaoua festival in Essaouira</span></li>
-        <li><b>Zellige, Leather and Wool</b><span>a craftsman cutting zellige tile by hand in Fez</span></li>
-        <li><b>Tagine, Bread and Mint</b><span>a tagine cooking over charcoal at a roadside stall</span></li>
-        <li><b>Easy Travelling</b><span>a family walking a quiet lane in a Moroccan hill village</span></li>
-        <li><b>The Souk in the Morning</b><span>a produce market in a Moroccan medina early in the morning</span></li>
+        <li><b>Amazigh and Arab</b><span>Three Amazigh languages, Arabic, French and Spanish, and a culture that predates all of them.</span></li>
+        <li><b>The People of the Atlas</b><span>Village life at two thousand metres, where the year is still organised around the snow.</span></li>
+        <li><b>Moussem and Gnaoua</b><span>The Gnaoua festival in Essaouira in June, and the moussems that mark the harvest.</span></li>
+        <li><b>Zellige, Leather and Wool</b><span>Tile cut by hand in Fez, tanned leather, and carpets woven to patterns held in memory.</span></li>
+        <li><b>Tagine, Bread and Mint</b><span>Slow-cooked tagine, bread baked in the neighbourhood oven, and tea poured from height.</span></li>
+        <li><b>Easy Travelling</b><span>Short drives, good roads, and a train line down the coast that children enjoy.</span></li>
+        <li><b>The Souk in the Morning</b><span>Before the tour groups, the medina is simply where people buy their vegetables.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Marrakesh and Casablanca</b><span>Jemaa el-Fnaa square in Marrakesh filling at dusk</span></li>
-        <li><b>Riad and Medina</b><span>the tiled courtyard of a traditional Moroccan riad</span></li>
-        <li><b>Volubilis and the Kasbahs</b><span>the earth kasbah of Ait Benhaddou above the river</span></li>
-        <li><b>The Imperial Cities</b><span>the tanneries and rooftops of the Fez medina</span></li>
+        <li><b>Marrakesh and Casablanca</b><span>Jemaa el-Fnaa at dusk, and the Atlantic modernism of Casablanca an hour up the road.</span></li>
+        <li><b>Riad and Medina</b><span>Rooms built inward around a courtyard, because the street was never meant to see in.</span></li>
+        <li><b>Volubilis and the Kasbahs</b><span>A Roman city on the plain at Volubilis, and Ait Benhaddou standing above the Ounila.</span></li>
+        <li><b>The Imperial Cities</b><span>Fez, Marrakesh, Meknes and Rabat — four capitals, each of a different dynasty.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Dunes, Gorges and Surf</b><span>a trekking trail high on a ridge in the High Atlas</span></li>
-        <li><b>Desert Camps and Riads</b><span>a desert camp of tents on the dunes at Erg Chigaga</span></li>
-        <li><b>Light on Earth Walls</b><span>late light on the earth walls of a southern Moroccan kasbah</span></li>
-        <li><b>Chefchaouen and the Rif</b><span>the blue-painted lanes of Chefchaouen in the Rif</span></li>
+        <li><b>Dunes, Gorges and Surf</b><span>Trekking in the Atlas, surfing the Atlantic points, and a night out on the erg at Chegaga.</span></li>
+        <li><b>Desert Camps and Riads</b><span>Erg Chigaga camps well beyond the day-trip dunes, and riads restored room by room.</span></li>
+        <li><b>Light on Earth Walls</b><span>Pisé takes late light the way nothing else does, which is why every photographer comes here.</span></li>
+        <li><b>Chefchaouen and the Rif</b><span>The blue town in the Rif, and a mountain range most itineraries drive straight past.</span></li>
         </ul>
       </div>
     </div>

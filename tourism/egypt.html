@@ -6,6 +6,7 @@
 <title>Egypt Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="The oldest continuous tourism in the world, and still the reason most people first think of Africa — the Giza plateau, the Valley of the Kings, Abu Simbel, and the Red Sea reefs on the other coast.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Giza pyramids at first light across the desert, Egypt</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the Giza pyramids at first light across the desert, Egypt"><span>the Giza pyramids at first light across the desert, Egypt</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">EGYPT <i>&middot; Tourism</i></span>
     <h1>Five Thousand Years</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the green Nile valley meeting desert on both banks, Egypt</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the green Nile valley meeting desert on both banks, Egypt"><span>the green Nile valley meeting desert on both banks, Egypt</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>The Nile and the Desert</h3>
         <p>A green ribbon a few kilometres wide, and sand for a thousand kilometres either side of it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the granite peaks of the Sinai above Saint Catherine&#x27;s, Egypt</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the granite peaks of the Sinai above Saint Catherine&#x27;s, Egypt"><span>the granite peaks of the Sinai above Saint Catherine&#x27;s, Egypt</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>Sinai</h3>
         <p>Mount Sinai and Saint Catherine&#x27;s, and granite peaks over two thousand metres above the Red Sea.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Nile running over granite at the Aswan cataract, Egypt</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Nile running over granite at the Aswan cataract, Egypt"><span>the Nile running over granite at the Aswan cataract, Egypt</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>The First Cataract</h3>
         <p>The Nile&#x27;s cataracts at Aswan — rapids rather than falls, and the reason the boats stopped here.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a felucca under sail on the Nile at Aswan, Egypt</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a felucca under sail on the Nile at Aswan, Egypt"><span>a felucca under sail on the Nile at Aswan, Egypt</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Nile Itself</h3>
         <p>Feluccas under sail at Aswan, and a river that has been the country&#x27;s main road for millennia.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>coral reef and clear water on the Red Sea coast, Egypt</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="coral reef and clear water on the Red Sea coast, Egypt"><span>coral reef and clear water on the Red Sea coast, Egypt</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>The Red Sea</h3>
         <p>Some of the clearest reef diving on earth, an hour&#x27;s flight from the pyramids.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>palm groves in the Fayoum oasis, Egypt</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="palm groves in the Fayoum oasis, Egypt"><span>palm groves in the Fayoum oasis, Egypt</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>The Fayoum</h3>
         <p>Not forest — the Fayoum&#x27;s palm and olive, and the acacia of Wadi el-Rayan.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>flamingos and waders on a Nile delta wetland, Egypt</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="flamingos and waders on a Nile delta wetland, Egypt"><span>flamingos and waders on a Nile delta wetland, Egypt</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Birds of the Delta</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the White Desert chalk formations at dusk, Egypt</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the White Desert chalk formations at dusk, Egypt"><span>the White Desert chalk formations at dusk, Egypt</span></div><span class="tq-tag">Safari</span></figure>
         <h3>The Western Desert</h3>
         <p>Not big game — desert fox, gazelle and the silence of the Great Sand Sea.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a marine reserve buoy over Red Sea reef, Egypt</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a marine reserve buoy over Red Sea reef, Egypt"><span>a marine reserve buoy over Red Sea reef, Egypt</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Reef and Oasis</h3>
         <p>Reef protection on the Red Sea, and oasis agriculture that has managed water for millennia.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the minarets and rooftops of Islamic Cairo, Egypt</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the minarets and rooftops of Islamic Cairo, Egypt"><span>the minarets and rooftops of Islamic Cairo, Egypt</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Coptic, Islamic, Pharaonic</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a brightly painted Nubian village on the Nile at Aswan, Egypt</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a brightly painted Nubian village on the Nile at Aswan, Egypt"><span>a brightly painted Nubian village on the Nile at Aswan, Egypt</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Nubians and Bedouin</h3>
         <p>Nubian villages above Aswan and Bedouin communities in the Sinai and the Western Desert.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>koshary being served at a Cairo street kitchen, Egypt</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="koshary being served at a Cairo street kitchen, Egypt"><span>koshary being served at a Cairo street kitchen, Egypt</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Ful, Koshary and Bread</h3>
         <p>Breakfast is ful and bread; lunch is koshary; both are older than most cuisines.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>lanterns strung across a Cairo street for Ramadan, Egypt</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="lanterns strung across a Cairo street for Ramadan, Egypt"><span>lanterns strung across a Cairo street for Ramadan, Egypt</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Moulids and Ramadan</h3>
         <p>The moulid processions, and Cairo at iftar when the whole city eats at once.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a glassblower working in a Cairo workshop, Egypt</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a glassblower working in a Cairo workshop, Egypt"><span>a glassblower working in a Cairo workshop, Egypt</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Papyrus, Glass and Cotton</h3>
         <p>Hand-blown glass in Cairo, Egyptian cotton, and papyrus made the way it always was.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>painted tomb walls in the Valley of the Kings, Egypt</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="painted tomb walls in the Valley of the Kings, Egypt"><span>painted tomb walls in the Valley of the Kings, Egypt</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>The Valley of the Kings</h3>
         <p>Sixty-odd tombs cut into a single dry valley, most of them painted floor to ceiling.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the hypostyle hall columns at Karnak, Egypt</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the hypostyle hall columns at Karnak, Egypt"><span>the hypostyle hall columns at Karnak, Egypt</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>Karnak, Luxor, Abu Simbel</h3>
         <p>Karnak took two thousand years to build; Abu Simbel was moved sixty metres to save it.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Alexandria corniche curving along the Mediterranean, Egypt</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Alexandria corniche curving along the Mediterranean, Egypt"><span>the Alexandria corniche curving along the Mediterranean, Egypt</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Cairo and Alexandria</h3>
         <p>Twenty million people on the Nile, and a Mediterranean city that remembers being Greek.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the carved stone facade of a Mamluk mosque in Cairo, Egypt</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the carved stone facade of a Mamluk mosque in Cairo, Egypt"><span>the carved stone facade of a Mamluk mosque in Cairo, Egypt</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Mamluk Cairo</h3>
         <p>The mosques, sabils and madrasas of the medieval city, largely still standing.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>families walking the Nile corniche in Cairo at dusk, Egypt</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="families walking the Nile corniche in Cairo at dusk, Egypt"><span>families walking the Nile corniche in Cairo at dusk, Egypt</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>The Corniche at Dusk</h3>
         <p>Families out along the river, tea on the pavement, and the traffic finally slowing.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a family boarding a Nile cruise boat at Luxor, Egypt</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a family boarding a Nile cruise boat at Luxor, Egypt"><span>a family boarding a Nile cruise boat at Luxor, Egypt</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Straightforward with Children</h3>
         <p>Short internal flights, boats instead of buses, and a story at every stop.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a vehicle crossing dunes in the Great Sand Sea, Egypt</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a vehicle crossing dunes in the Great Sand Sea, Egypt"><span>a vehicle crossing dunes in the Great Sand Sea, Egypt</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Desert Crossings</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>divers entering the water on the Red Sea coast, Egypt</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="divers entering the water on the Red Sea coast, Egypt"><span>divers entering the water on the Red Sea coast, Egypt</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Dive, Sail, Ride</h3>
         <p>Reef diving at Marsa Alam, feluccas at Aswan, and camels in the Western Desert.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a dahabiya sailing boat moored on the Nile at sunset, Egypt</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a dahabiya sailing boat moored on the Nile at sunset, Egypt"><span>a dahabiya sailing boat moored on the Nile at sunset, Egypt</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Dahabiyas and Desert Camps</h3>
         <p>Small sailing dahabiyas instead of the big cruisers, and camps in the White Desert.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dawn light on the temple columns at Luxor, Egypt</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="dawn light on the temple columns at Luxor, Egypt"><span>dawn light on the temple columns at Luxor, Egypt</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>The Light at Six</h3>
         <p>Desert light at either end of the day is the whole reason to be up early here.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>salt pools and palms at the Siwa oasis, Egypt</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="salt pools and palms at the Siwa oasis, Egypt"><span>salt pools and palms at the Siwa oasis, Egypt</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Siwa</h3>
         <p>Eight hundred kilometres west, a Berber-speaking oasis with its own language and salt lakes.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Sphinx and the Great Pyramid at sunrise, Egypt</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="the Sphinx and the Great Pyramid at sunrise, Egypt"><span>the Sphinx and the Great Pyramid at sunrise, Egypt</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>The Oldest Journey</h3><p>People have been travelling to see this country for two and a half thousand years.</p>

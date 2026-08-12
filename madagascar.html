@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Six Ecosystems on One Island</b><span>the tsingy limestone pinnacles of Bemaraha</span></li>
-        <li><b>The Highlands and Maromokotro</b><span>terraced rice paddies in the Madagascar highlands</span></li>
-        <li><b>The Eastern Escarpment</b><span>a waterfall in rainforest on the eastern escarpment</span></li>
-        <li><b>The Tsiribihina</b><span>a pirogue on the Tsiribihina river at dawn</span></li>
-        <li><b>Nosy Be and the East Coast</b><span>a white sand beach and turquoise water at Nosy Be</span></li>
-        <li><b>Rainforest and Spiny Forest</b><span>the spiny forest of octopus trees in southern Madagascar</span></li>
+        <li><b>Six Ecosystems on One Island</b><span>Rainforest east, highlands centre, spiny forest south, dry deciduous west, and reef all round.</span></li>
+        <li><b>The Highlands and Maromokotro</b><span>The central highlands run to two thousand metres; Maromokotro reaches 2,876 in the Tsaratanana.</span></li>
+        <li><b>The Eastern Escarpment</b><span>Short, steep rivers off the escarpment, and waterfalls through the rainforest at Andasibe.</span></li>
+        <li><b>The Tsiribihina</b><span>Three days downriver by pirogue through country with no road in it.</span></li>
+        <li><b>Nosy Be and the East Coast</b><span>Reef, whale sharks and humpbacks off Nosy Be, and long empty sand on the east coast.</span></li>
+        <li><b>Rainforest and Spiny Forest</b><span>Andasibe and Ranomafana in the east, and the spiny forest of the south which is like nowhere.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>A Hundred Kinds of Lemur</b><span>an indri lemur in the rainforest canopy at Andasibe</span></li>
-        <li><b>Not a Safari Island</b><span>a chameleon on a branch in Ranomafana rainforest</span></li>
-        <li><b>The Reason to Come Carefully</b><span>a reforestation nursery beside a Madagascar rainforest park</span></li>
-        <li><b>Trek, Paddle, Dive</b><span>kayaks on the water off a Madagascar reef island</span></li>
+        <li><b>A Hundred Kinds of Lemur</b><span>A hundred and seven species and subspecies of lemur, every one of them endemic.</span></li>
+        <li><b>Not a Safari Island</b><span>No lions and no elephant — the wildlife here is small, nocturnal, and worth the torchlight.</span></li>
+        <li><b>The Reason to Come Carefully</b><span>Deforestation is the country&#x27;s crisis, and the parks that work are the ones the villages run.</span></li>
+        <li><b>Trek, Paddle, Dive</b><span>Rainforest trekking, the Tsiribihina by pirogue, and reef diving off Nosy Be.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Malagasy, and Eighteen Peoples</b><span>a highland Malagasy village of red brick houses</span></li>
-        <li><b>Famadihana and the Ancestors</b><span>a family tomb standing in highland Madagascar farmland</span></li>
-        <li><b>Hira Gasy and Donia</b><span>a hira gasy troupe performing in the highlands</span></li>
-        <li><b>Silk, Raffia and Zafimaniry</b><span>a woman weaving a silk lamba on a wooden loom</span></li>
-        <li><b>Romazava and Rice</b><span>romazava and rice served at a Malagasy table</span></li>
-        <li><b>Slow, and Worth It</b><span>children on a village path in rural Madagascar</span></li>
-        <li><b>The Zebu Market</b><span>a zebu cattle market in the Madagascar highlands</span></li>
+        <li><b>Malagasy, and Eighteen Peoples</b><span>One language across the island, of Austronesian origin, and eighteen distinct peoples speaking it.</span></li>
+        <li><b>Famadihana and the Ancestors</b><span>The ancestors are present here in a way that shapes the calendar and the architecture.</span></li>
+        <li><b>Hira Gasy and Donia</b><span>Hira gasy troupes in the highlands, and the Donia festival on Nosy Be in June.</span></li>
+        <li><b>Silk, Raffia and Zafimaniry</b><span>Wild silk lambas, raffia work, and the Zafimaniry woodcarving of the south-east.</span></li>
+        <li><b>Romazava and Rice</b><span>Rice three times a day, and romazava — beef and greens — with it.</span></li>
+        <li><b>Slow, and Worth It</b><span>Roads are slow and distances are long — but the children will hold a chameleon.</span></li>
+        <li><b>The Zebu Market</b><span>Zebu cattle are wealth here, and the markets that trade them are the real calendar.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Antananarivo</b><span>the stepped hillside houses of Antananarivo</span></li>
-        <li><b>Highland Brick</b><span>red brick highland houses with wooden balconies</span></li>
-        <li><b>The Rova and the Royal Hills</b><span>the wooden royal compound at Ambohimanga</span></li>
-        <li><b>Pirates and Kingdoms</b><span>the pirate cemetery on Île Sainte-Marie</span></li>
+        <li><b>Antananarivo</b><span>A capital built up twelve hills, with stairs instead of streets in half of it.</span></li>
+        <li><b>Highland Brick</b><span>Two-storey red brick with a wooden balcony, and nothing else in Africa looks like it.</span></li>
+        <li><b>The Rova and the Royal Hills</b><span>Ambohimanga, the royal hill of the Merina kings above Antananarivo.</span></li>
+        <li><b>Pirates and Kingdoms</b><span>Île Sainte-Marie&#x27;s pirate cemetery, and the Merina kingdom that unified the island.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>The RN7 and the Tsingy</b><span>a walker crossing the tsingy on a rope bridge</span></li>
-        <li><b>Small Lodges</b><span>a small lodge among trees at a Madagascar park gate</span></li>
-        <li><b>Baobabs at Six</b><span>baobabs silhouetted against the sky at Morondava</span></li>
-        <li><b>Masoala</b><span>the rainforest of Masoala coming down to the sea</span></li>
+        <li><b>The RN7 and the Tsingy</b><span>The road south through the highlands, and the limestone tsingy you cross on via ferrata.</span></li>
+        <li><b>Small Lodges</b><span>Owner-run lodges at the park gates, and beach places on Nosy Be with a dozen rooms.</span></li>
+        <li><b>Baobabs at Six</b><span>The avenue at Morondava for twenty minutes at either end of the day, and nothing else like it.</span></li>
+        <li><b>Masoala</b><span>The largest protected rainforest in the country, reached by boat, with whales in the bay.</span></li>
         </ul>
       </div>
     </div>

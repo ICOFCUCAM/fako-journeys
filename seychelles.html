@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Forty-Three Granite Islands</b><span>the granite peaks of Mahé above the sea</span></li>
-        <li><b>Morne Seychellois</b><span>the forested ridge of Morne Seychellois</span></li>
-        <li><b>Sauzier and the Streams</b><span>a stream falling over granite through forest on Mahé</span></li>
-        <li><b>No Rivers, All Sea</b><span>the shallow lagoon inside a Seychelles reef</span></li>
-        <li><b>Anse Source d&#x27;Argent</b><span>granite boulders and shallow water at Anse Source d&#x27;Argent</span></li>
-        <li><b>The Vallée de Mai</b><span>coco de mer palms in the Vallée de Mai</span></li>
+        <li><b>Forty-Three Granite Islands</b><span>Granite in the inner islands, coral atolls in the outer, and a thousand kilometres between.</span></li>
+        <li><b>Morne Seychellois</b><span>Nine hundred metres of forested granite above Victoria, with trails through the mist forest.</span></li>
+        <li><b>Sauzier and the Streams</b><span>Short granite streams off the ridges, and the Sauzier falls in the west of Mahé.</span></li>
+        <li><b>No Rivers, All Sea</b><span>The water here is the Indian Ocean, and the lagoons inside the reef.</span></li>
+        <li><b>Anse Source d&#x27;Argent</b><span>The most photographed beach in the world, and the granite is the reason why.</span></li>
+        <li><b>The Vallée de Mai</b><span>Coco de mer palms in a valley on Praslin, and the largest seed of any plant on earth.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Endemic Everywhere</b><span>a giant tortoise walking a beach on Curieuse</span></li>
-        <li><b>Not a Safari, a Reef</b><span>a green turtle over reef in clear water</span></li>
-        <li><b>Half the Country Is Protected</b><span>a marine park marker buoy over Seychelles reef</span></li>
-        <li><b>Dive, Kayak, Cycle</b><span>bicycles on a sandy track on La Digue</span></li>
+        <li><b>Endemic Everywhere</b><span>The black parrot, the magpie robin, and giant tortoises that live free on Curieuse.</span></li>
+        <li><b>Not a Safari, a Reef</b><span>The game here is under the water — reef fish, turtle, and whale shark off Mahé in season.</span></li>
+        <li><b>Half the Country Is Protected</b><span>Forty-two per cent of the land is national park, and the marine parks now match it.</span></li>
+        <li><b>Dive, Kayak, Cycle</b><span>Granite dive sites, kayaks in the lagoons, and La Digue where the bicycle is the transport.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Creole</b><span>a Creole house with a wide veranda on Mahé</span></li>
-        <li><b>Island Life</b><span>fishermen bringing in a catch at a Mahé jetty</span></li>
-        <li><b>Festival Kreol</b><span>dancers at the Festival Kreol on Mahé</span></li>
-        <li><b>Boatbuilding and Weaving</b><span>a wooden pirogue being built on a beach</span></li>
-        <li><b>Fish, Coconut and Chilli</b><span>grilled fish with coconut curry and rice</span></li>
-        <li><b>Shallow, Warm, Safe</b><span>children in a shallow turquoise lagoon</span></li>
-        <li><b>The Fish Market</b><span>the fish market in Victoria early in the morning</span></li>
+        <li><b>Creole</b><span>African, French, Indian and Chinese, in one Creole language and one kitchen.</span></li>
+        <li><b>Island Life</b><span>A hundred thousand people across a hundred and fifteen islands, most on three of them.</span></li>
+        <li><b>Festival Kreol</b><span>Festival Kreol in October, and the sega and moutya danced through it.</span></li>
+        <li><b>Boatbuilding and Weaving</b><span>Pirogue building on La Digue, and coconut palm weaving still done by hand.</span></li>
+        <li><b>Fish, Coconut and Chilli</b><span>Grilled fish, coconut curry, breadfruit, and a chilli sauce that is not a suggestion.</span></li>
+        <li><b>Shallow, Warm, Safe</b><span>Lagoons inside the reef, no dangerous surf on most beaches, and short boat rides.</span></li>
+        <li><b>The Fish Market</b><span>Victoria&#x27;s market at eight in the morning is the most useful hour on the island.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Victoria</b><span>the market and clock tower in Victoria, Mahé</span></li>
-        <li><b>Creole Houses</b><span>a traditional Creole house with louvred shutters</span></li>
-        <li><b>The Plantations</b><span>the copra mill and plantation house at L&#x27;Union Estate</span></li>
-        <li><b>Aldabra</b><span>the raised coral rim of the Aldabra atoll</span></li>
+        <li><b>Victoria</b><span>One of the smallest capitals in the world, with a clock tower and a market.</span></li>
+        <li><b>Creole Houses</b><span>Steep roofs, wide verandas and louvres — built for heat before anyone had a choice.</span></li>
+        <li><b>The Plantations</b><span>L&#x27;Union Estate on La Digue, with its vanilla, copra mill and colonial house.</span></li>
+        <li><b>Aldabra</b><span>A thousand kilometres out, with a hundred thousand giant tortoises and almost no people.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Dive, Sail, Walk</b><span>a yacht anchored between granite islands</span></li>
-        <li><b>The Private Islands</b><span>a villa above a beach on a private Seychelles island</span></li>
-        <li><b>Granite and Turquoise</b><span>granite boulders and turquoise water at sunset</span></li>
-        <li><b>La Digue by Bicycle</b><span>a sandy lane and bicycles under palms on La Digue</span></li>
+        <li><b>Dive, Sail, Walk</b><span>Diving the granite drop-offs, sailing the inner islands, and walking Mahé&#x27;s ridge trails.</span></li>
+        <li><b>The Private Islands</b><span>North Island, Frégate and Denis — private islands with a dozen villas on each.</span></li>
+        <li><b>Granite and Turquoise</b><span>Grey granite, white sand and three shades of blue — the reason every camera comes here.</span></li>
+        <li><b>La Digue by Bicycle</b><span>No real roads and few cars — an island best measured in bicycle hours.</span></li>
         </ul>
       </div>
     </div>

@@ -6,6 +6,7 @@
 <title>Tourism by Country | Kamerun</title>
 <meta name="description" content="Country tourism guides, each covering the same 27 travel experiences.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -539,7 +554,7 @@ ul,ol{list-style:none}
   <div class="fj-frame">
     <div class="tq-countries">
       <a href="/tourism/botswana" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the channels and islands of the Okavango delta from the air, Botswana</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the channels and islands of the Okavango delta from the air, Botswana"><span>the channels and islands of the Okavango delta from the air, Botswana</span></div></figure>
         <h3>Botswana</h3>
         <p>A delta that never reaches the sea</p>
       </a>
@@ -549,102 +564,102 @@ ul,ol{list-style:none}
         <p>Africa in miniature</p>
       </a>
       <a href="/tourism/cote-divoire" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Abidjan skyline across the Ébrié lagoon, Côte d&#x27;Ivoire</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Abidjan skyline across the Ébrié lagoon, Côte d&#x27;Ivoire"><span>the Abidjan skyline across the Ébrié lagoon, Côte d&#x27;Ivoire</span></div></figure>
         <h3>Côte d&#x27;Ivoire</h3>
         <p>Lagoons, forest and the Atlantic</p>
       </a>
       <a href="/tourism/egypt" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Giza pyramids at first light across the desert, Egypt</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Giza pyramids at first light across the desert, Egypt"><span>the Giza pyramids at first light across the desert, Egypt</span></div></figure>
         <h3>Egypt</h3>
         <p>The Nile, and five thousand years</p>
       </a>
       <a href="/tourism/ethiopia" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Simien mountains escarpment dropping away into cloud, Ethiopia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Simien mountains escarpment dropping away into cloud, Ethiopia"><span>the Simien mountains escarpment dropping away into cloud, Ethiopia</span></div></figure>
         <h3>Ethiopia</h3>
         <p>The roof of Africa</p>
       </a>
       <a href="/tourism/ghana" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the white walls of Cape Coast castle above the Atlantic, Ghana</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the white walls of Cape Coast castle above the Atlantic, Ghana"><span>the white walls of Cape Coast castle above the Atlantic, Ghana</span></div></figure>
         <h3>Ghana</h3>
         <p>The forts, the forest and the highlife</p>
       </a>
       <a href="/tourism/kenya" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>acacia and open grassland in the Maasai Mara at sunrise, Kenya</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="acacia and open grassland in the Maasai Mara at sunrise, Kenya"><span>acacia and open grassland in the Maasai Mara at sunrise, Kenya</span></div></figure>
         <h3>Kenya</h3>
         <p>Where the safari was invented</p>
       </a>
       <a href="/tourism/madagascar" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the avenue of baobabs at Morondava at sunset, Madagascar</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the avenue of baobabs at Morondava at sunset, Madagascar"><span>the avenue of baobabs at Morondava at sunset, Madagascar</span></div></figure>
         <h3>Madagascar</h3>
         <p>An island that evolved alone</p>
       </a>
       <a href="/tourism/mauritius" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the mountain of Le Morne rising above the lagoon, Mauritius</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the mountain of Le Morne rising above the lagoon, Mauritius"><span>the mountain of Le Morne rising above the lagoon, Mauritius</span></div></figure>
         <h3>Mauritius</h3>
         <p>Reef, sugar and the volcanic interior</p>
       </a>
       <a href="/tourism/morocco" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the High Atlas mountains rising behind a Moroccan kasbah, Morocco</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the High Atlas mountains rising behind a Moroccan kasbah, Morocco"><span>the High Atlas mountains rising behind a Moroccan kasbah, Morocco</span></div></figure>
         <h3>Morocco</h3>
         <p>Atlas, Sahara and the medinas</p>
       </a>
       <a href="/tourism/mozambique" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a dhow sailing off a Mozambican island at sunrise, Mozambique</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a dhow sailing off a Mozambican island at sunrise, Mozambique"><span>a dhow sailing off a Mozambican island at sunrise, Mozambique</span></div></figure>
         <h3>Mozambique</h3>
         <p>Two thousand kilometres of coast</p>
       </a>
       <a href="/tourism/namibia" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>red dunes at Sossusvlei with long morning shadows, Namibia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="red dunes at Sossusvlei with long morning shadows, Namibia"><span>red dunes at Sossusvlei with long morning shadows, Namibia</span></div></figure>
         <h3>Namibia</h3>
         <p>Where the desert meets the wild</p>
       </a>
       <a href="/tourism/nigeria" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Lagos skyline across the lagoon at dusk, Nigeria</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Lagos skyline across the lagoon at dusk, Nigeria"><span>the Lagos skyline across the lagoon at dusk, Nigeria</span></div></figure>
         <h3>Nigeria</h3>
         <p>The loudest country on the continent</p>
       </a>
       <a href="/tourism/rwanda" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>terraced green hills at sunrise in the Rwandan highlands</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="terraced green hills at sunrise in the Rwandan highlands"><span>terraced green hills at sunrise in the Rwandan highlands</span></div></figure>
         <h3>Rwanda</h3>
         <p>Land of a thousand hills</p>
       </a>
       <a href="/tourism/senegal" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Atlantic breaking below the cliffs at Dakar, Senegal</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Atlantic breaking below the cliffs at Dakar, Senegal"><span>the Atlantic breaking below the cliffs at Dakar, Senegal</span></div></figure>
         <h3>Senegal</h3>
         <p>Where the Sahel meets the Atlantic</p>
       </a>
       <a href="/tourism/seychelles" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>granite boulders on a white beach at La Digue, Seychelles</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="granite boulders on a white beach at La Digue, Seychelles"><span>granite boulders on a white beach at La Digue, Seychelles</span></div></figure>
         <h3>Seychelles</h3>
         <p>Granite islands in the Indian Ocean</p>
       </a>
       <a href="/tourism/south-africa" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Table Mountain above Cape Town and the harbour at sunrise, South Afric</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Table Mountain above Cape Town and the harbour at sunrise, South Africa"><span>Table Mountain above Cape Town and the harbour at sunrise, South Africa</span></div></figure>
         <h3>South Africa</h3>
         <p>A world in one country</p>
       </a>
       <a href="/tourism/tanzania" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the endless short-grass plains of the Serengeti at sunrise, Tanzania</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the endless short-grass plains of the Serengeti at sunrise, Tanzania"><span>the endless short-grass plains of the Serengeti at sunrise, Tanzania</span></div></figure>
         <h3>Tanzania</h3>
         <p>Serengeti, Kilimanjaro, Zanzibar</p>
       </a>
       <a href="/tourism/tunisia" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the ruins of Carthage above the bay of Tunis, Tunisia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the ruins of Carthage above the bay of Tunis, Tunisia"><span>the ruins of Carthage above the bay of Tunis, Tunisia</span></div></figure>
         <h3>Tunisia</h3>
         <p>Carthage, the Sahel and the desert south</p>
       </a>
       <a href="/tourism/uganda" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>mist over the forested hills of Bwindi Impenetrable National Park at s</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="mist over the forested hills of Bwindi Impenetrable National Park at sunrise, Uganda"><span>mist over the forested hills of Bwindi Impenetrable National Park at sunrise, Uganda</span></div></figure>
         <h3>Uganda</h3>
         <p>The Pearl of Africa</p>
       </a>
       <a href="/tourism/zambia" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Victoria Falls in full flood with spray rising from the gorge, Zambia</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Victoria Falls in full flood with spray rising from the gorge, Zambia"><span>Victoria Falls in full flood with spray rising from the gorge, Zambia</span></div></figure>
         <h3>Zambia</h3>
         <p>The real wilderness</p>
       </a>
       <a href="/tourism/zimbabwe" class="fj-rise">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the stone walls of Great Zimbabwe</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the stone walls of Great Zimbabwe"><span>the stone walls of Great Zimbabwe</span></div></figure>
         <h3>Zimbabwe</h3>
         <p>Great Zimbabwe and the Zambezi</p>
       </a>

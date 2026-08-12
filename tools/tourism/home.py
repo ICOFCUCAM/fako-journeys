@@ -219,13 +219,21 @@ def build(country, taxonomy, countries=()):
                           esc(e.caption), esc(e.description)))
 
     groups = []
+    listed = 0
     for title, ids in GROUPS:
         rows = []
         for cid in ids:
             e = entry(cid)
             if not e or not e.caption:
                 continue
-            rows.append('        <li><b>%s</b><span>%s</span></li>' % (esc(e.caption), esc(e.subject or "")))
+            # `subject` is the search phrase written for the image resolver — it
+            # was being printed to visitors as if it were copy, so every country
+            # page read "the Great Rift Valley escarpment seen from the Naivasha
+            # road" under its own caption. `description` is the sentence written
+            # for a reader.
+            rows.append('        <li><b>%s</b><span>%s</span></li>'
+                        % (esc(e.caption), esc(e.description or "")))
+            listed += 1
         if rows:
             groups.append('      <div class="ct-group"><b>%s</b>\n        <ul>\n%s\n        </ul>\n      </div>'
                           % (esc(title), "\n".join(rows)))
@@ -256,6 +264,7 @@ def build(country, taxonomy, countries=()):
         "reasons": "\n".join(reasons),
         "groups": "\n".join(groups),
         "count": len(taxonomy.enabled),
+        "listed": listed,
         "resolved": resolved,
     }
 
@@ -378,15 +387,18 @@ TEMPLATE = """<!DOCTYPE html>
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -472,8 +484,8 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>%(listed)d ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">

@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Mangrove to Sahel</b><span>mangrove creeks in the Niger delta</span></li>
-        <li><b>The Obudu Plateau</b><span>the green Obudu plateau under low cloud</span></li>
-        <li><b>Erin-Ijesha and Gurara</b><span>the stepped Erin-Ijesha waterfall in forest</span></li>
-        <li><b>The Niger and the Benue</b><span>the confluence of the Niger and Benue rivers at Lokoja</span></li>
-        <li><b>Lagos and the Atlantic</b><span>boats and beach umbrellas at Tarkwa Bay, Lagos</span></li>
-        <li><b>Cross River</b><span>dense rainforest canopy in Cross River state</span></li>
+        <li><b>Mangrove to Sahel</b><span>Niger delta mangrove in the south, rainforest, savanna, and the Sahel at the Niger border.</span></li>
+        <li><b>The Obudu Plateau</b><span>Sixteen hundred metres of grassland on the Cameroon border, with cattle ranches and cloud.</span></li>
+        <li><b>Erin-Ijesha and Gurara</b><span>Erin-Ijesha&#x27;s seven stages in Osun, and the Gurara falls on the road to Abuja.</span></li>
+        <li><b>The Niger and the Benue</b><span>Two great rivers meeting at Lokoja, and the delta they build a thousand kilometres downstream.</span></li>
+        <li><b>Lagos and the Atlantic</b><span>Tarkwa Bay, Elegushi and the long Atlantic beaches east towards Lekki.</span></li>
+        <li><b>Cross River</b><span>The Cross River forest holds the last of Nigeria&#x27;s gorillas and some of West Africa&#x27;s tallest trees.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Yankari and Gashaka</b><span>elephants at the Wikki warm spring in Yankari</span></li>
-        <li><b>Yankari</b><span>a game track through Yankari savanna at first light</span></li>
-        <li><b>Community Forest</b><span>drills at the Afi Mountain sanctuary in Cross River</span></li>
-        <li><b>Hike, Paddle, Ride</b><span>hikers on a trail across the Obudu plateau</span></li>
+        <li><b>Yankari and Gashaka</b><span>Yankari&#x27;s elephant herds, and Gashaka-Gumti&#x27;s forest chimpanzees on the Cameroon border.</span></li>
+        <li><b>Yankari</b><span>The country&#x27;s best game reserve, with a warm spring you can swim in at the centre of it.</span></li>
+        <li><b>Community Forest</b><span>Afi Mountain&#x27;s drill ranch and the Cross River community forests, both village-run.</span></li>
+        <li><b>Hike, Paddle, Ride</b><span>The Jos plateau, the Obudu ranch trails, and creek boats through the delta.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Five Hundred Languages</b><span>a Yoruba drumming group performing at a festival</span></li>
-        <li><b>Yoruba, Igbo, Hausa, Fulani</b><span>a Fulani herder with cattle in northern Nigeria</span></li>
-        <li><b>Osun-Osogbo and Calabar</b><span>dancers in costume at the Calabar carnival</span></li>
-        <li><b>Bronze, Adire and Aso Oke</b><span>a bronze caster at work in Igun street, Benin City</span></li>
-        <li><b>Jollof, Suya and Egusi</b><span>suya being grilled at a roadside stand at night</span></li>
-        <li><b>Loud, and Welcoming</b><span>children playing football on a Lagos beach</span></li>
-        <li><b>Danfo and Buka</b><span>a yellow danfo bus in Lagos traffic</span></li>
+        <li><b>Five Hundred Languages</b><span>Yoruba, Igbo, Hausa and around five hundred more, in one country.</span></li>
+        <li><b>Yoruba, Igbo, Hausa, Fulani</b><span>Four large cultures and hundreds of smaller ones, each with its own courts and calendars.</span></li>
+        <li><b>Osun-Osogbo and Calabar</b><span>The Osun-Osogbo grove festival in August, and the Calabar carnival through December.</span></li>
+        <li><b>Bronze, Adire and Aso Oke</b><span>Benin bronze casting still practised in Igun street, and adire resist-dyed cloth in Abeokuta.</span></li>
+        <li><b>Jollof, Suya and Egusi</b><span>Suya off the grill at night, egusi with pounded yam, and the jollof question again.</span></li>
+        <li><b>Loud, and Welcoming</b><span>Not a quiet holiday — but there is nowhere friendlier once you are through the door.</span></li>
+        <li><b>Danfo and Buka</b><span>The yellow buses, the roadside buka, and a city that does not stop at any hour.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Lagos, Abuja, Kano</b><span>the old city and dye pits of Kano</span></li>
-        <li><b>Mud Mosques and Modernism</b><span>the Hausa mud architecture of a northern emir&#x27;s palace</span></li>
-        <li><b>Benin City and Sungbo&#x27;s Eredo</b><span>the earth walls and moat of the Benin kingdom</span></li>
-        <li><b>The Bronzes</b><span>a display of Benin bronze plaques</span></li>
+        <li><b>Lagos, Abuja, Kano</b><span>Lagos on the lagoon, purpose-built Abuja in the middle, and Kano&#x27;s thousand-year-old walls.</span></li>
+        <li><b>Mud Mosques and Modernism</b><span>Hausa mud architecture in the north, and the 1970s modernism of Lagos and Abuja.</span></li>
+        <li><b>Benin City and Sungbo&#x27;s Eredo</b><span>The walls of Benin, and Sungbo&#x27;s Eredo — a hundred and sixty kilometres of earthworks.</span></li>
+        <li><b>The Bronzes</b><span>The Benin bronzes are the reason half the museums of Europe have a Nigeria problem.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Plateau and Delta</b><span>the rock formations of the Jos plateau</span></li>
-        <li><b>Lagos Island Hotels</b><span>a hotel terrace overlooking Lagos lagoon at night</span></li>
-        <li><b>Colour and Crowd</b><span>a crowded cloth market in southern Nigeria</span></li>
-        <li><b>Idanre</b><span>the granite Idanre hills rising above forest</span></li>
+        <li><b>Plateau and Delta</b><span>Hiking the Jos plateau, the Obudu cable car, and creek trips through the delta.</span></li>
+        <li><b>Lagos Island Hotels</b><span>Victoria Island and Ikoyi at one end, and Obudu&#x27;s mountain resort at the other.</span></li>
+        <li><b>Colour and Crowd</b><span>Markets, festivals and cloth — the hardest thing here is choosing what to leave out.</span></li>
+        <li><b>Idanre</b><span>The Idanre hills, with an old town six hundred steps up and nobody else climbing them.</span></li>
         </ul>
       </div>
     </div>

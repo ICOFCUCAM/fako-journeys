@@ -6,6 +6,7 @@
 <title>Mozambique Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="The Indian Ocean coast of southern Africa — the Bazaruto and Quirimbas archipelagos, Ilha de Moçambique, Gorongosa&#x27;s restored wildlife, and a Portuguese-Swahili culture that exists nowhere else.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a dhow sailing off a Mozambican island at sunrise, Mozambique</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a dhow sailing off a Mozambican island at sunrise, Mozambique"><span>a dhow sailing off a Mozambican island at sunrise, Mozambique</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">MOZAMBIQUE <i>&middot; Tourism</i></span>
     <h1>Two Thousand Kilometres of Coast</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Gorongosa floodplain in the green season, Mozambique</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Gorongosa floodplain in the green season, Mozambique"><span>the Gorongosa floodplain in the green season, Mozambique</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Reef and Miombo</h3>
         <p>Coral reef the whole coast, miombo woodland inland, and the Rift&#x27;s southern end at Gorongosa.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the granite dome of Mount Namuli rising from farmland, Mozambique</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the granite dome of Mount Namuli rising from farmland, Mozambique"><span>the granite dome of Mount Namuli rising from farmland, Mozambique</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>Mount Namuli and Gorongosa</h3>
         <p>Namuli at 2,419 metres, and Gorongosa&#x27;s own mountain with rainforest on top of it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a waterfall off the escarpment in northern Mozambique</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a waterfall off the escarpment in northern Mozambique"><span>a waterfall off the escarpment in northern Mozambique</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Murchison of the South</h3>
         <p>Waterfalls off the Zambezi escarpment, and the Lugenda&#x27;s rapids in the far north.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Zambezi river wide in the Mozambican lowlands, Mozambique</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Zambezi river wide in the Mozambican lowlands, Mozambique"><span>the Zambezi river wide in the Mozambican lowlands, Mozambique</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Zambezi and Cahora Bassa</h3>
         <p>The Zambezi&#x27;s last five hundred kilometres, and the Cahora Bassa lake above them.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the sand dunes and turquoise water of Bazaruto, Mozambique</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the sand dunes and turquoise water of Bazaruto, Mozambique"><span>the sand dunes and turquoise water of Bazaruto, Mozambique</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>Bazaruto and the Quirimbas</h3>
         <p>Dune islands in the south, coral islands in the north, and dhows between them.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>mangrove forest along a northern Mozambique estuary</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="mangrove forest along a northern Mozambique estuary"><span>mangrove forest along a northern Mozambique estuary</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Coastal Forest</h3>
         <p>The coastal dry forest of the north, and the mangrove that lines most of the delta.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>waterbuck on the Gorongosa floodplain, Mozambique</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="waterbuck on the Gorongosa floodplain, Mozambique"><span>waterbuck on the Gorongosa floodplain, Mozambique</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Gorongosa</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a game track through Niassa reserve woodland, Mozambique</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a game track through Niassa reserve woodland, Mozambique"><span>a game track through Niassa reserve woodland, Mozambique</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Niassa and Gorongosa</h3>
         <p>Niassa is one of the largest reserves in Africa, and among the least visited anywhere.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a park scientist at work in Gorongosa, Mozambique</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a park scientist at work in Gorongosa, Mozambique"><span>a park scientist at work in Gorongosa, Mozambique</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Gorongosa&#x27;s Restoration</h3>
         <p>Local employment, local science, and a park brought back from nothing — worth understanding.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the coral-stone lanes of Ilha de Moçambique, Mozambique</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the coral-stone lanes of Ilha de Moçambique, Mozambique"><span>the coral-stone lanes of Ilha de Moçambique, Mozambique</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Portuguese and Swahili</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Makonde carver at work in northern Mozambique</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Makonde carver at work in northern Mozambique"><span>a Makonde carver at work in northern Mozambique</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Makonde and Makua</h3>
         <p>Makonde carving in the north, and the Makua women&#x27;s mussiro face paint.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>grilled prawns with peri-peri at a beach kitchen, Mozambique</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="grilled prawns with peri-peri at a beach kitchen, Mozambique"><span>grilled prawns with peri-peri at a beach kitchen, Mozambique</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Peri-Peri and Matapa</h3>
         <p>Prawns with peri-peri, and matapa — cassava leaf and coconut — with rice.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Chopi timbila orchestra performing, Mozambique</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Chopi timbila orchestra performing, Mozambique"><span>a Chopi timbila orchestra performing, Mozambique</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Marrabenta and Timbila</h3>
         <p>Marrabenta on the coast, and the Chopi timbila orchestras of Inhambane.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>Makonde blackwood carvings on a workshop bench, Mozambique</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="Makonde blackwood carvings on a workshop bench, Mozambique"><span>Makonde blackwood carvings on a workshop bench, Mozambique</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Carving and Basketry</h3>
         <p>Makonde blackwood carving, and the palm basketry of the northern islands.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the fortress of São Sebastião on Ilha de Moçambique, Mozambique</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the fortress of São Sebastião on Ilha de Moçambique, Mozambique"><span>the fortress of São Sebastião on Ilha de Moçambique, Mozambique</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Ilha de Moçambique</h3>
         <p>The old capital, on a coral island a kilometre long, with a fort at one end.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the crumbling colonial buildings of Ibo island, Mozambique</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the crumbling colonial buildings of Ibo island, Mozambique"><span>the crumbling colonial buildings of Ibo island, Mozambique</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>The Swahili Coast</h3>
         <p>Ibo, Angoche and Sofala — Indian Ocean trading towns older than the Portuguese.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Maputo waterfront and the Indian Ocean, Mozambique</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Maputo waterfront and the Indian Ocean, Mozambique"><span>the Maputo waterfront and the Indian Ocean, Mozambique</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Maputo</h3>
         <p>Wide avenues, a Mediterranean seafront, and the market Eiffel&#x27;s company built.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a colonial-era building in Maputo with modernist lines, Mozambique</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a colonial-era building in Maputo with modernist lines, Mozambique"><span>a colonial-era building in Maputo with modernist lines, Mozambique</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Coral Stone and Colonial</h3>
         <p>Coral rag on the islands, and Portuguese modernism through Maputo and Beira.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>fish being sold on the sand beside a dhow, Mozambique</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="fish being sold on the sand beside a dhow, Mozambique"><span>fish being sold on the sand beside a dhow, Mozambique</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>The Beach Market</h3>
         <p>Fish landed and sold on the sand, and the dhow that brought it still on the beach.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>children swimming in shallow water inside a reef, Mozambique</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="children swimming in shallow water inside a reef, Mozambique"><span>children swimming in shallow water inside a reef, Mozambique</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Warm Water All Year</h3>
         <p>Shallow, warm and calm inside the reef — as easy a sea as the continent offers.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a diver with a manta ray off Tofo, Mozambique</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a diver with a manta ray off Tofo, Mozambique"><span>a diver with a manta ray off Tofo, Mozambique</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Dive, Sail, Kayak</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a dhow under sail between coral islands, Mozambique</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a dhow under sail between coral islands, Mozambique"><span>a dhow under sail between coral islands, Mozambique</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Dive and Sail</h3>
         <p>Whale shark season at Tofo, dhow safaris in the Quirimbas, and reef diving throughout.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>an island lodge among palms above a white beach, Mozambique</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="an island lodge among palms above a white beach, Mozambique"><span>an island lodge among palms above a white beach, Mozambique</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Island Lodges</h3>
         <p>A handful of very good island lodges in Bazaruto and the Quirimbas, and little else on them.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dhows silhouetted against a Mozambican sunrise, Mozambique</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="dhows silhouetted against a Mozambican sunrise, Mozambique"><span>dhows silhouetted against a Mozambican sunrise, Mozambique</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Dhow Light</h3>
         <p>Lateen sails at either end of the day, and water that photographs as three colours at once.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a silversmith working inside the fort on Ibo island, Mozambique</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a silversmith working inside the fort on Ibo island, Mozambique"><span>a silversmith working inside the fort on Ibo island, Mozambique</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Ibo Island</h3>
         <p>Silversmiths, a fort, mangrove channels, and about as far from a resort as it gets.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>an empty Indian Ocean beach with palms behind it, Mozambique</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="an empty Indian Ocean beach with palms behind it, Mozambique"><span>an empty Indian Ocean beach with palms behind it, Mozambique</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>The Coast Nobody Has Ruined Yet</h3><p>Two thousand kilometres of Indian Ocean, and most of it still without a road to it.</p>

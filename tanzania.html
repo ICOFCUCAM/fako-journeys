@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>The Ngorongoro Crater</b><span>the floor of the Ngorongoro Crater seen from the rim</span></li>
-        <li><b>Kilimanjaro, 5,895 m</b><span>the snow-capped summit of Kilimanjaro above the cloud line</span></li>
-        <li><b>Materuni, Under Kilimanjaro</b><span>the Materuni waterfall in the forest below Kilimanjaro</span></li>
-        <li><b>Manyara and the Rufiji</b><span>the Rufiji river braiding through Nyerere National Park</span></li>
-        <li><b>Zanzibar, Nungwi to Paje</b><span>white sand and traditional dhows on the beach at Nungwi, Zanzibar</span></li>
-        <li><b>Udzungwa and Jozani</b><span>a Zanzibar red colobus monkey in Jozani Forest</span></li>
+        <li><b>The Ngorongoro Crater</b><span>A collapsed caldera twenty kilometres across with its own permanent population of thirty thousand animals.</span></li>
+        <li><b>Kilimanjaro, 5,895 m</b><span>The highest free-standing mountain on earth: rainforest, moorland, alpine desert and glacier in five days of walking.</span></li>
+        <li><b>Materuni, Under Kilimanjaro</b><span>Eighty metres of cold water through Chagga coffee farms on the lower slopes, an easy walk from Moshi.</span></li>
+        <li><b>Manyara and the Rufiji</b><span>Flamingo and tree-climbing lions at Manyara; the Rufiji braiding through Nyerere, the largest park in Africa.</span></li>
+        <li><b>Zanzibar, Nungwi to Paje</b><span>White sand, warm shallow water and dhows still built by hand on the beach at Nungwi.</span></li>
+        <li><b>Udzungwa and Jozani</b><span>The Udzungwa scarp holds species found nowhere else; Jozani holds the red colobus, also found nowhere else.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>The Big Five, and Then Some</b><span>a lion pride resting on a kopje in the Serengeti</span></li>
-        <li><b>Following the Migration</b><span>wildebeest herds streaming across the Serengeti plains</span></li>
-        <li><b>Ngorongoro, Shared Ground</b><span>Maasai herders and cattle on the Ngorongoro conservation area highlands</span></li>
-        <li><b>Snorkelling Mnemba</b><span>snorkelling over coral reef at Mnemba atoll, Zanzibar</span></li>
+        <li><b>The Big Five, and Then Some</b><span>Lion, leopard, elephant, buffalo and rhino, plus the largest elephant herds left in East Africa.</span></li>
+        <li><b>Following the Migration</b><span>Calving on the southern plains in February, the Grumeti in June, the Mara river in August — the circuit never stops.</span></li>
+        <li><b>Ngorongoro, Shared Ground</b><span>The conservation area is the rare model where Maasai pastoralists and wildlife legally use the same land.</span></li>
+        <li><b>Snorkelling Mnemba</b><span>The atoll off the northeast tip of Zanzibar, plus kite surfing at Paje and diving at Pemba.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Maasai, Chagga, Swahili</b><span>Maasai men in ceremonial dress on the northern Tanzanian plains</span></li>
-        <li><b>The Hadzabe of Lake Eyasi</b><span>a Hadzabe hunter with a bow near Lake Eyasi</span></li>
-        <li><b>Sauti za Busara</b><span>musicians performing at the Sauti za Busara festival in Stone Town</span></li>
-        <li><b>Tingatinga and Makonde</b><span>a Makonde carver working ebony wood</span></li>
-        <li><b>Spice, Ugali, Urojo</b><span>grilled seafood stalls at Forodhani Gardens in Stone Town</span></li>
-        <li><b>Boma and Coffee Farm</b><span>a Chagga family roasting coffee on a farm below Kilimanjaro</span></li>
-        <li><b>Dala Dalas and Dhows</b><span>the early morning fish market at Kivukoni in Dar es Salaam</span></li>
+        <li><b>Maasai, Chagga, Swahili</b><span>Cattle-keepers on the northern plains, coffee farmers on the mountain, and a coast that has always faced east.</span></li>
+        <li><b>The Hadzabe of Lake Eyasi</b><span>One of the last hunter-gatherer peoples in Africa, speaking a click language unrelated to anything nearby.</span></li>
+        <li><b>Sauti za Busara</b><span>Four days of live African music inside the old Arab fort in Stone Town, every February.</span></li>
+        <li><b>Tingatinga and Makonde</b><span>Enamel-bright Tingatinga painting from Dar es Salaam, and Makonde ebony carving from the southern plateau.</span></li>
+        <li><b>Spice, Ugali, Urojo</b><span>Cloves and cardamom from the Zanzibar plantations, grilled seafood at Forodhani, and ugali everywhere else.</span></li>
+        <li><b>Boma and Coffee Farm</b><span>Maasai boma visits on the crater rim road, and Chagga coffee walks on the lower slopes of Kilimanjaro.</span></li>
+        <li><b>Dala Dalas and Dhows</b><span>Minibuses inland, dhows on the water, and a fish auction at Kivukoni that starts before it is light.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Dar es Salaam</b><span>the harbour and skyline of Dar es Salaam from the water</span></li>
-        <li><b>The Doors of Stone Town</b><span>a brass-studded carved door in a Stone Town alley, Zanzibar</span></li>
-        <li><b>Stone Town and Kilwa</b><span>the ruins of the great mosque at Kilwa Kisiwani</span></li>
-        <li><b>Olduvai and the Coast</b><span>the layered walls of Olduvai Gorge in the Ngorongoro conservation area</span></li>
+        <li><b>Dar es Salaam</b><span>Harbour of peace: the ferry terminal, the fish market at Kivukoni, and the dhows still working the channel.</span></li>
+        <li><b>The Doors of Stone Town</b><span>Brass-studded Indian doors and carved Omani frames, on coral-rag houses in alleys too narrow to drive.</span></li>
+        <li><b>Stone Town and Kilwa</b><span>Stone Town is UNESCO-listed; Kilwa Kisiwani was the richest port on the Swahili coast six centuries ago.</span></li>
+        <li><b>Olduvai and the Coast</b><span>Olduvai Gorge holds the earliest human record; the coast holds a thousand years of Indian Ocean trade.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Uhuru Peak by Machame</b><span>trekkers on the Machame route high on Kilimanjaro</span></li>
-        <li><b>Camps and Spice Islands</b><span>a luxury tented camp on the Serengeti plains at dusk</span></li>
-        <li><b>Acacia, Kopje, Sunset</b><span>an acacia silhouetted against the Serengeti sunset</span></li>
-        <li><b>Ruaha and Katavi</b><span>elephants beneath baobabs in Ruaha National Park</span></li>
+        <li><b>Uhuru Peak by Machame</b><span>Six days up the Machame route, one very long night to the summit, and a sunrise you have to earn.</span></li>
+        <li><b>Camps and Spice Islands</b><span>Mobile camps that follow the migration, and beach houses on the Zanzibar east coast with nothing either side.</span></li>
+        <li><b>Acacia, Kopje, Sunset</b><span>The Serengeti kopjes at the end of the day, and the migration column stretching past the edge of the frame.</span></li>
+        <li><b>Ruaha and Katavi</b><span>The south and west: huge elephant populations, hippo crowded into shrinking pools, and no other vehicles.</span></li>
         </ul>
       </div>
     </div>

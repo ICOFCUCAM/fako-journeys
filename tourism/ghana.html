@@ -6,6 +6,7 @@
 <title>Ghana Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="The most straightforward country in West Africa to travel, with the Atlantic slave forts of the coast, the Ashanti kingdom at Kumasi, Mole&#x27;s elephants in the north, and a music scene worth planning around.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the white walls of Cape Coast castle above the Atlantic, Ghana</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the white walls of Cape Coast castle above the Atlantic, Ghana"><span>the white walls of Cape Coast castle above the Atlantic, Ghana</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">GHANA <i>&middot; Tourism</i></span>
     <h1>The Forts, the Forest and the Highlife</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>rainforest canopy in Kakum national park, Ghana</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="rainforest canopy in Kakum national park, Ghana"><span>rainforest canopy in Kakum national park, Ghana</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Coast to Savanna</h3>
         <p>Rainforest and lagoon in the south, transitional woodland through the middle, savanna at Mole.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the green hills of the Volta region from Afadjato, Ghana</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the green hills of the Volta region from Afadjato, Ghana"><span>the green hills of the Volta region from Afadjato, Ghana</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The Akwapim and Afadja</h3>
         <p>Afadjato is 885 metres and the highest point, walkable in a morning from Liati Wote.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Wli waterfall dropping through forest in the Volta region, Ghana</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Wli waterfall dropping through forest in the Volta region, Ghana"><span>the Wli waterfall dropping through forest in the Volta region, Ghana</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Wli</h3>
         <p>The highest falls in West Africa, dropping out of forest on the Togo border, with bats overhead.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>fishing boats on Lake Volta at first light, Ghana</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="fishing boats on Lake Volta at first light, Ghana"><span>fishing boats on Lake Volta at first light, Ghana</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>Lake Volta</h3>
         <p>The largest reservoir on earth by surface area, with ferries that take a full day to cross it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>palms above the beach at Busua on the Ghanaian coast</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="palms above the beach at Busua on the Ghanaian coast"><span>palms above the beach at Busua on the Ghanaian coast</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>Busua and Cape Three Points</h3>
         <p>Surf at Busua, and the point where the country runs out into the Gulf of Guinea.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the canopy walkway suspended above Kakum rainforest, Ghana</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the canopy walkway suspended above Kakum rainforest, Ghana"><span>the canopy walkway suspended above Kakum rainforest, Ghana</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Kakum</h3>
         <p>Rainforest with a canopy walkway thirty metres up, strung between seven emergent trees.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>elephants at the waterhole below Mole motel, Ghana</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="elephants at the waterhole below Mole motel, Ghana"><span>elephants at the waterhole below Mole motel, Ghana</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Mole and Ankasa</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a ranger leading walkers through savanna at Mole, Ghana</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a ranger leading walkers through savanna at Mole, Ghana"><span>a ranger leading walkers through savanna at Mole, Ghana</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Walking Safari at Mole</h3>
         <p>One of the few parks in West Africa where the game drive is done on foot, with an armed ranger.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>hippos in the Black Volta at the Wechiau sanctuary, Ghana</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="hippos in the Black Volta at the Wechiau sanctuary, Ghana"><span>hippos in the Black Volta at the Wechiau sanctuary, Ghana</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Community Forest</h3>
         <p>The Wechiau hippo sanctuary and the Boabeng-Fiema monkey sanctuary, both village-run.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Manhyia palace grounds at Kumasi, Ghana</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the Manhyia palace grounds at Kumasi, Ghana"><span>the Manhyia palace grounds at Kumasi, Ghana</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Ashanti</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a weaver working a kente loom in Bonwire, Ghana</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a weaver working a kente loom in Bonwire, Ghana"><span>a weaver working a kente loom in Bonwire, Ghana</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>The Ewe and the Dagomba</h3>
         <p>Kente weaving in Volta and Ashanti, and the Dagbon drumming traditions of the north.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>grilled tilapia and banku served at a roadside chop bar, Ghana</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="grilled tilapia and banku served at a roadside chop bar, Ghana"><span>grilled tilapia and banku served at a roadside chop bar, Ghana</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Jollof, Banku and Grilled Tilapia</h3>
         <p>The jollof argument is unwinnable; the tilapia off the grill with banku settles it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a street art festival crowd in Jamestown, Accra, Ghana</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a street art festival crowd in Jamestown, Accra, Ghana"><span>a street art festival crowd in Jamestown, Accra, Ghana</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Homowo and Chale Wote</h3>
         <p>Homowo in Accra in August, and the Chale Wote street art festival in Jamestown.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>adinkra symbols being stamped onto cloth by hand, Ghana</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="adinkra symbols being stamped onto cloth by hand, Ghana"><span>adinkra symbols being stamped onto cloth by hand, Ghana</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Kente and Adinkra</h3>
         <p>Kente woven in strips at Bonwire, and adinkra symbols stamped by hand at Ntonso.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the door of no return at Elmina castle, Ghana</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the door of no return at Elmina castle, Ghana"><span>the door of no return at Elmina castle, Ghana</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>The Slave Forts</h3>
         <p>Cape Coast and Elmina — the doors of no return, kept as they were and not softened.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a memorial gathering at Cape Coast castle, Ghana</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a memorial gathering at Cape Coast castle, Ghana"><span>a memorial gathering at Cape Coast castle, Ghana</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>The Year of Return</h3>
         <p>Ghana asked the diaspora to come back, and a great many people did.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the vast Kejetia market spread out at Kumasi, Ghana</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the vast Kejetia market spread out at Kumasi, Ghana"><span>the vast Kejetia market spread out at Kumasi, Ghana</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Accra and Kumasi</h3>
         <p>Accra on the Atlantic, and Kumasi&#x27;s Kejetia — one of the largest markets in West Africa.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a painted Fante posuban shrine in a coastal town, Ghana</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a painted Fante posuban shrine in a coastal town, Ghana"><span>a painted Fante posuban shrine in a coastal town, Ghana</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Posuban and Colonial Coast</h3>
         <p>The Fante posuban shrines, and the trading architecture strung along the coast road.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a busy trotro station in Accra, Ghana</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a busy trotro station in Accra, Ghana"><span>a busy trotro station in Accra, Ghana</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>Chop Bars and Trotros</h3>
         <p>The country runs on shared minibuses and roadside kitchens, and both are worth using.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>children playing on a beach on the Ghanaian coast</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="children playing on a beach on the Ghanaian coast"><span>children playing on a beach on the Ghanaian coast</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Easy First Africa</h3>
         <p>English-speaking, short distances, and about as gentle an introduction as the continent offers.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a hiking trail through the hills of the Volta region, Ghana</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a hiking trail through the hills of the Volta region, Ghana"><span>a hiking trail through the hills of the Volta region, Ghana</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Canopy, Surf and Lake</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a surfer walking out at Busua beach, Ghana</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a surfer walking out at Busua beach, Ghana"><span>a surfer walking out at Busua beach, Ghana</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Surf, Hike, Paddle</h3>
         <p>Busua&#x27;s breaks, the Volta hills, and canoes on the lake at Dodi.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a lodge terrace overlooking the waterhole at Mole, Ghana</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a lodge terrace overlooking the waterhole at Mole, Ghana"><span>a lodge terrace overlooking the waterhole at Mole, Ghana</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Lodges on the Water</h3>
         <p>Small lodges above the beach at Busua and Axim, and the Mole escarpment rooms over the waterhole.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>stacked bolts of printed cloth in a Ghanaian market</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="stacked bolts of printed cloth in a Ghanaian market"><span>stacked bolts of printed cloth in a Ghanaian market</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Colour Everywhere</h3>
         <p>Kente, market cloth and painted trotros — nothing here is any colour by accident.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the stilt village of Nzulezo over the water, Ghana</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the stilt village of Nzulezo over the water, Ghana"><span>the stilt village of Nzulezo over the water, Ghana</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Nzulezo</h3>
         <p>A village built entirely on stilts over Lake Tandane, reached only by canoe.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a coastal road running along the Gulf of Guinea, Ghana</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a coastal road running along the Gulf of Guinea, Ghana"><span>a coastal road running along the Gulf of Guinea, Ghana</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>The Gentle Introduction</h3><p>English, good roads, a short flight from Europe, and everything within a day&#x27;s drive.</p>

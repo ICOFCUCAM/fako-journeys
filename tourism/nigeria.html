@@ -6,6 +6,7 @@
 <title>Nigeria Tourism — 27 Experiences | Kamerun</title>
 <meta name="description" content="One in five Africans is Nigerian. Afrobeats, Nollywood, the Benin bronzes, Yankari&#x27;s elephants and the Obudu plateau — a country that exports its culture faster than anywhere else on earth.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
    /styles/afrinkong.css. What is left here is the Kamerun operator's own
@@ -509,6 +510,20 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
@@ -528,7 +543,7 @@ ul,ol{list-style:none}
 </header>
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Lagos skyline across the lagoon at dusk, Nigeria</em></span></div><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the Lagos skyline across the lagoon at dusk, Nigeria"><span>the Lagos skyline across the lagoon at dusk, Nigeria</span></div><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">NIGERIA <i>&middot; Tourism</i></span>
     <h1>The Loudest Country on the Continent</h1>
@@ -545,32 +560,32 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="nature">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>mangrove creeks in the Niger delta, Nigeria</em></span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="mangrove creeks in the Niger delta, Nigeria"><span>mangrove creeks in the Niger delta, Nigeria</span></div><span class="tq-tag">Nature &amp; Landscapes</span></figure>
         <h3>Mangrove to Sahel</h3>
         <p>Niger delta mangrove in the south, rainforest, savanna, and the Sahel at the Niger border.</p>
       </article>
       <article class="tq-item fj-rise" data-category="mountains">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the green Obudu plateau under low cloud, Nigeria</em></span></div><span class="tq-tag">Mountains</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the green Obudu plateau under low cloud, Nigeria"><span>the green Obudu plateau under low cloud, Nigeria</span></div><span class="tq-tag">Mountains</span></figure>
         <h3>The Obudu Plateau</h3>
         <p>Sixteen hundred metres of grassland on the Cameroon border, with cattle ranches and cloud.</p>
       </article>
       <article class="tq-item fj-rise" data-category="waterfalls">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the stepped Erin-Ijesha waterfall in forest, Nigeria</em></span></div><span class="tq-tag">Waterfalls</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the stepped Erin-Ijesha waterfall in forest, Nigeria"><span>the stepped Erin-Ijesha waterfall in forest, Nigeria</span></div><span class="tq-tag">Waterfalls</span></figure>
         <h3>Erin-Ijesha and Gurara</h3>
         <p>Erin-Ijesha&#x27;s seven stages in Osun, and the Gurara falls on the road to Abuja.</p>
       </article>
       <article class="tq-item fj-rise" data-category="lakes-rivers">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the confluence of the Niger and Benue rivers at Lokoja, Nigeria</em></span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the confluence of the Niger and Benue rivers at Lokoja, Nigeria"><span>the confluence of the Niger and Benue rivers at Lokoja, Nigeria</span></div><span class="tq-tag">Lakes &amp; Rivers</span></figure>
         <h3>The Niger and the Benue</h3>
         <p>Two great rivers meeting at Lokoja, and the delta they build a thousand kilometres downstream.</p>
       </article>
       <article class="tq-item fj-rise" data-category="beaches">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>boats and beach umbrellas at Tarkwa Bay, Lagos, Nigeria</em></span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="boats and beach umbrellas at Tarkwa Bay, Lagos, Nigeria"><span>boats and beach umbrellas at Tarkwa Bay, Lagos, Nigeria</span></div><span class="tq-tag">Beaches &amp; Coast</span></figure>
         <h3>Lagos and the Atlantic</h3>
         <p>Tarkwa Bay, Elegushi and the long Atlantic beaches east towards Lekki.</p>
       </article>
       <article class="tq-item fj-rise" data-category="forests">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dense rainforest canopy in Cross River state, Nigeria</em></span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="dense rainforest canopy in Cross River state, Nigeria"><span>dense rainforest canopy in Cross River state, Nigeria</span></div><span class="tq-tag">Forests &amp; Rainforest</span></figure>
         <h3>Cross River</h3>
         <p>The Cross River forest holds the last of Nigeria&#x27;s gorillas and some of West Africa&#x27;s tallest trees.</p>
       </article>
@@ -586,7 +601,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>elephants at the Wikki warm spring in Yankari, Nigeria</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="elephants at the Wikki warm spring in Yankari, Nigeria"><span>elephants at the Wikki warm spring in Yankari, Nigeria</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Yankari and Gashaka</h3>
@@ -594,12 +609,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="safari">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a game track through Yankari savanna at first light, Nigeria</em></span></div><span class="tq-tag">Safari</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a game track through Yankari savanna at first light, Nigeria"><span>a game track through Yankari savanna at first light, Nigeria</span></div><span class="tq-tag">Safari</span></figure>
         <h3>Yankari</h3>
         <p>The country&#x27;s best game reserve, with a warm spring you can swim in at the centre of it.</p>
       </article>
       <article class="tq-item fj-rise" data-category="eco-tourism">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>drills at the Afi Mountain sanctuary in Cross River, Nigeria</em></span></div><span class="tq-tag">Eco Tourism</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="drills at the Afi Mountain sanctuary in Cross River, Nigeria"><span>drills at the Afi Mountain sanctuary in Cross River, Nigeria</span></div><span class="tq-tag">Eco Tourism</span></figure>
         <h3>Community Forest</h3>
         <p>Afi Mountain&#x27;s drill ranch and the Cross River community forests, both village-run.</p>
       </article>
@@ -615,7 +630,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Yoruba drumming group performing at a festival, Nigeria</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="a Yoruba drumming group performing at a festival, Nigeria"><span>a Yoruba drumming group performing at a festival, Nigeria</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>Five Hundred Languages</h3>
@@ -623,32 +638,32 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="traditional-people">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a Fulani herder with cattle in northern Nigeria</em></span></div><span class="tq-tag">Traditional People</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a Fulani herder with cattle in northern Nigeria"><span>a Fulani herder with cattle in northern Nigeria</span></div><span class="tq-tag">Traditional People</span></figure>
         <h3>Yoruba, Igbo, Hausa, Fulani</h3>
         <p>Four large cultures and hundreds of smaller ones, each with its own courts and calendars.</p>
       </article>
       <article class="tq-item fj-rise" data-category="food">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>suya being grilled at a roadside stand at night, Nigeria</em></span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="suya being grilled at a roadside stand at night, Nigeria"><span>suya being grilled at a roadside stand at night, Nigeria</span></div><span class="tq-tag">Food &amp; Cuisine</span></figure>
         <h3>Jollof, Suya and Egusi</h3>
         <p>Suya off the grill at night, egusi with pounded yam, and the jollof question again.</p>
       </article>
       <article class="tq-item fj-rise" data-category="festivals">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>dancers in costume at the Calabar carnival, Nigeria</em></span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="dancers in costume at the Calabar carnival, Nigeria"><span>dancers in costume at the Calabar carnival, Nigeria</span></div><span class="tq-tag">Festivals &amp; Celebrations</span></figure>
         <h3>Osun-Osogbo and Calabar</h3>
         <p>The Osun-Osogbo grove festival in August, and the Calabar carnival through December.</p>
       </article>
       <article class="tq-item fj-rise" data-category="crafts">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a bronze caster at work in Igun street, Benin City, Nigeria</em></span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a bronze caster at work in Igun street, Benin City, Nigeria"><span>a bronze caster at work in Igun street, Benin City, Nigeria</span></div><span class="tq-tag">Traditional Arts &amp; Crafts</span></figure>
         <h3>Bronze, Adire and Aso Oke</h3>
         <p>Benin bronze casting still practised in Igun street, and adire resist-dyed cloth in Abeokuta.</p>
       </article>
       <article class="tq-item fj-rise" data-category="historic-sites">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the earth walls and moat of the Benin kingdom, Nigeria</em></span></div><span class="tq-tag">Historic Sites</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the earth walls and moat of the Benin kingdom, Nigeria"><span>the earth walls and moat of the Benin kingdom, Nigeria</span></div><span class="tq-tag">Historic Sites</span></figure>
         <h3>Benin City and Sungbo&#x27;s Eredo</h3>
         <p>The walls of Benin, and Sungbo&#x27;s Eredo — a hundred and sixty kilometres of earthworks.</p>
       </article>
       <article class="tq-item fj-rise" data-category="heritage">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a display of Benin bronze plaques, Nigeria</em></span></div><span class="tq-tag">Heritage</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a display of Benin bronze plaques, Nigeria"><span>a display of Benin bronze plaques, Nigeria</span></div><span class="tq-tag">Heritage</span></figure>
         <h3>The Bronzes</h3>
         <p>The Benin bronzes are the reason half the museums of Europe have a Nigeria problem.</p>
       </article>
@@ -664,22 +679,22 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-3">
       <article class="tq-item fj-rise" data-category="cities">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the old city and dye pits of Kano, Nigeria</em></span></div><span class="tq-tag">Cities</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the old city and dye pits of Kano, Nigeria"><span>the old city and dye pits of Kano, Nigeria</span></div><span class="tq-tag">Cities</span></figure>
         <h3>Lagos, Abuja, Kano</h3>
         <p>Lagos on the lagoon, purpose-built Abuja in the middle, and Kano&#x27;s thousand-year-old walls.</p>
       </article>
       <article class="tq-item fj-rise" data-category="architecture">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the Hausa mud architecture of a northern emir&#x27;s palace, Nigeria</em></span></div><span class="tq-tag">Architecture</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the Hausa mud architecture of a northern emir&#x27;s palace, Nigeria"><span>the Hausa mud architecture of a northern emir&#x27;s palace, Nigeria</span></div><span class="tq-tag">Architecture</span></figure>
         <h3>Mud Mosques and Modernism</h3>
         <p>Hausa mud architecture in the north, and the 1970s modernism of Lagos and Abuja.</p>
       </article>
       <article class="tq-item fj-rise" data-category="local-life">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a yellow danfo bus in Lagos traffic, Nigeria</em></span></div><span class="tq-tag">Local Life</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a yellow danfo bus in Lagos traffic, Nigeria"><span>a yellow danfo bus in Lagos traffic, Nigeria</span></div><span class="tq-tag">Local Life</span></figure>
         <h3>Danfo and Buka</h3>
         <p>The yellow buses, the roadside buka, and a city that does not stop at any hour.</p>
       </article>
       <article class="tq-item fj-rise" data-category="family-community">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>children playing football on a Lagos beach, Nigeria</em></span></div><span class="tq-tag">Family &amp; Community</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="children playing football on a Lagos beach, Nigeria"><span>children playing football on a Lagos beach, Nigeria</span></div><span class="tq-tag">Family &amp; Community</span></figure>
         <h3>Loud, and Welcoming</h3>
         <p>Not a quiet holiday — but there is nowhere friendlier once you are through the door.</p>
       </article>
@@ -695,7 +710,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the rock formations of the Jos plateau, Nigeria</em></span></div></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:16 / 9" data-unresolved="true" role="img" aria-label="the rock formations of the Jos plateau, Nigeria"><span>the rock formations of the Jos plateau, Nigeria</span></div></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Plateau and Delta</h3>
@@ -703,12 +718,12 @@ ul,ol{list-style:none}
         </div>
       </div><div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="outdoor">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>hikers on a trail across the Obudu plateau, Nigeria</em></span></div><span class="tq-tag">Outdoor Experiences</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="hikers on a trail across the Obudu plateau, Nigeria"><span>hikers on a trail across the Obudu plateau, Nigeria</span></div><span class="tq-tag">Outdoor Experiences</span></figure>
         <h3>Hike, Paddle, Ride</h3>
         <p>The Jos plateau, the Obudu ranch trails, and creek boats through the delta.</p>
       </article>
       <article class="tq-item fj-rise" data-category="luxury">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a hotel terrace overlooking Lagos lagoon at night, Nigeria</em></span></div><span class="tq-tag">Luxury Travel</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a hotel terrace overlooking Lagos lagoon at night, Nigeria"><span>a hotel terrace overlooking Lagos lagoon at night, Nigeria</span></div><span class="tq-tag">Luxury Travel</span></figure>
         <h3>Lagos Island Hotels</h3>
         <p>Victoria Island and Ikoyi at one end, and Obudu&#x27;s mountain resort at the other.</p>
       </article>
@@ -724,12 +739,12 @@ ul,ol{list-style:none}
     </div>
     <div class="tq-grid cols-2">
       <article class="tq-item fj-rise" data-category="photography">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a crowded cloth market in southern Nigeria</em></span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="a crowded cloth market in southern Nigeria"><span>a crowded cloth market in southern Nigeria</span></div><span class="tq-tag">Photography / Scenic Views</span></figure>
         <h3>Colour and Crowd</h3>
         <p>Markets, festivals and cloth — the hardest thing here is choosing what to leave out.</p>
       </article>
       <article class="tq-item fj-rise" data-category="hidden-gems">
-        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>the granite Idanre hills rising above forest, Nigeria</em></span></div><span class="tq-tag">Hidden Gems</span></figure>
+        <figure><div class="tq-empty " style="aspect-ratio:4 / 3" data-unresolved="true" role="img" aria-label="the granite Idanre hills rising above forest, Nigeria"><span>the granite Idanre hills rising above forest, Nigeria</span></div><span class="tq-tag">Hidden Gems</span></figure>
         <h3>Idanre</h3>
         <p>The Idanre hills, with an old town six hundred steps up and nobody else climbing them.</p>
       </article>
@@ -738,7 +753,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true"><span>Tourism image resolution requires UNSPLASH_ACCESS_KEY or PEXELS_API_KEY.<br><em>a live Afrobeats performance in Lagos, Nigeria</em></span></div>
+  <div class="tq-empty " style="aspect-ratio:21 / 9" data-unresolved="true" role="img" aria-label="a live Afrobeats performance in Lagos, Nigeria"><span>a live Afrobeats performance in Lagos, Nigeria</span></div>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>The Culture Everyone Else Is Watching</h3><p>Afrobeats and Nollywood came from here, and it is worth seeing where.</p>

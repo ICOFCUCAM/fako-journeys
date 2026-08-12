@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Highveld and Escarpment</b><span>balancing granite boulders on the Zimbabwean highveld</span></li>
-        <li><b>The Eastern Highlands</b><span>the green Eastern Highlands at Nyanga</span></li>
-        <li><b>Victoria Falls</b><span>Victoria Falls in full flood with spray rising</span></li>
-        <li><b>The Zambezi and Kariba</b><span>dead trees standing in Lake Kariba at sunset</span></li>
-        <li><b>Landlocked</b><span>the Zambezi river wide and slow above the falls</span></li>
-        <li><b>Msasa and Miombo</b><span>msasa trees in red new leaf in September</span></li>
+        <li><b>Highveld and Escarpment</b><span>Granite kopjes across the highveld, and the Zambezi escarpment dropping into the valley.</span></li>
+        <li><b>The Eastern Highlands</b><span>Nyanga, Vumba and Chimanimani along the Mozambique border, up to 2,592 metres.</span></li>
+        <li><b>Victoria Falls</b><span>Mosi-oa-Tunya — a mile and a half wide, and a hundred metres down, in full flood.</span></li>
+        <li><b>The Zambezi and Kariba</b><span>The Zambezi above the falls, and Kariba&#x27;s drowned forest downstream of them.</span></li>
+        <li><b>Landlocked</b><span>No coast — the water here is the Zambezi, Kariba, and the pools of the Mana floodplain.</span></li>
+        <li><b>Msasa and Miombo</b><span>Miombo woodland across the country, and msasa that comes into red leaf in September.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Hwange&#x27;s Elephant</b><span>elephants crowding a pumped waterhole in Hwange</span></li>
-        <li><b>Mana Pools on Foot</b><span>an elephant reaching into an albida tree at Mana Pools</span></li>
-        <li><b>CAMPFIRE</b><span>a community conservation meeting beside a wildlife area</span></li>
-        <li><b>Raft, Canoe, Walk</b><span>rafts in the Batoka gorge below Victoria Falls</span></li>
+        <li><b>Hwange&#x27;s Elephant</b><span>Forty thousand elephant in Hwange, drinking at pumped pans through the dry season.</span></li>
+        <li><b>Mana Pools on Foot</b><span>The park where you may walk unguided, and where the elephant stand on their hind legs.</span></li>
+        <li><b>CAMPFIRE</b><span>The community wildlife programme that much of the region&#x27;s conservation policy was built on.</span></li>
+        <li><b>Raft, Canoe, Walk</b><span>Grade five rafting below the falls, multi-day canoe trails, and walking safaris in Mana.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Shona and Ndebele</b><span>a Shona stone sculptor at work</span></li>
-        <li><b>The Stone Sculptors</b><span>finished stone sculptures in a Zimbabwean workshop</span></li>
-        <li><b>HIFA and the Harvest</b><span>a performance at an arts festival in Harare</span></li>
-        <li><b>Stone, Basket and Wire</b><span>woven Binga baskets from the Zambezi valley</span></li>
-        <li><b>Sadza and Braai</b><span>sadza and relish served at a Zimbabwean table</span></li>
-        <li><b>Falls and Elephant</b><span>a family watching elephants from a Hwange hide</span></li>
-        <li><b>Kombis and Musika</b><span>a busy produce market in a Zimbabwean town</span></li>
+        <li><b>Shona and Ndebele</b><span>Shona across the centre and east, Ndebele in the west, and stone sculpture from both.</span></li>
+        <li><b>The Stone Sculptors</b><span>Zimbabwean stone sculpture is the country&#x27;s clearest contemporary export.</span></li>
+        <li><b>HIFA and the Harvest</b><span>The Harare arts festival, and the harvest ceremonies that still open the season.</span></li>
+        <li><b>Stone, Basket and Wire</b><span>Serpentine carving, Binga basketry, and wire sculpture sold on every roadside.</span></li>
+        <li><b>Sadza and Braai</b><span>Sadza with relish, and meat over coals wherever there is a fire and company.</span></li>
+        <li><b>Falls and Elephant</b><span>Victoria Falls, a steam train, and elephant at a waterhole — a good week for children.</span></li>
+        <li><b>Kombis and Musika</b><span>The country runs on kombis and market days, both of which are worth an afternoon.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Harare and Bulawayo</b><span>the wide colonial streets of Bulawayo</span></li>
-        <li><b>Dry Stone</b><span>coursed dry stone walling at Great Zimbabwe</span></li>
-        <li><b>Great Zimbabwe</b><span>the conical tower inside the Great Enclosure</span></li>
-        <li><b>Khami and Matobo</b><span>balancing rocks and rock art in the Matobo hills</span></li>
+        <li><b>Harare and Bulawayo</b><span>Harare on the highveld, and Bulawayo&#x27;s wide colonial grid built for turning an ox wagon.</span></li>
+        <li><b>Dry Stone</b><span>Great Zimbabwe&#x27;s coursed granite is the architecture, and nothing since has matched it.</span></li>
+        <li><b>Great Zimbabwe</b><span>Eight hundred years old, mortarless, and the largest stone structure south of the Sahara.</span></li>
+        <li><b>Khami and Matobo</b><span>Khami&#x27;s terraces, and the Matobo hills where Mzilikazi and Rhodes are both buried.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Walking, Canoeing, Rafting</b><span>canoes on the Zambezi below Mana Pools</span></li>
-        <li><b>The Old Safari Standard</b><span>a tented camp on the Zambezi floodplain at dusk</span></li>
-        <li><b>Albida Light</b><span>dust and low sun through winterthorn trees at Mana Pools</span></li>
-        <li><b>Chimanimani</b><span>the Chimanimani mountains on the Mozambique border</span></li>
+        <li><b>Walking, Canoeing, Rafting</b><span>Canoe the Zambezi past hippo, raft the gorge below the falls, and walk Mana with a guide.</span></li>
+        <li><b>The Old Safari Standard</b><span>Small owner-run camps in Mana and Hwange, run by guides with the country&#x27;s toughest licence.</span></li>
+        <li><b>Albida Light</b><span>The winterthorn cathedrals of Mana Pools, in dust and low sun, are photographed everywhere.</span></li>
+        <li><b>Chimanimani</b><span>A mountain range on the Mozambique border that you walk into and camp in.</span></li>
         </ul>
       </div>
     </div>

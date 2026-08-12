@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Reef and Miombo</b><span>the Gorongosa floodplain in the green season</span></li>
-        <li><b>Mount Namuli and Gorongosa</b><span>the granite dome of Mount Namuli rising from farmland</span></li>
-        <li><b>Murchison of the South</b><span>a waterfall off the escarpment in northern Mozambique</span></li>
-        <li><b>The Zambezi and Cahora Bassa</b><span>the Zambezi river wide in the Mozambican lowlands</span></li>
-        <li><b>Bazaruto and the Quirimbas</b><span>the sand dunes and turquoise water of Bazaruto</span></li>
-        <li><b>Coastal Forest</b><span>mangrove forest along a northern Mozambique estuary</span></li>
+        <li><b>Reef and Miombo</b><span>Coral reef the whole coast, miombo woodland inland, and the Rift&#x27;s southern end at Gorongosa.</span></li>
+        <li><b>Mount Namuli and Gorongosa</b><span>Namuli at 2,419 metres, and Gorongosa&#x27;s own mountain with rainforest on top of it.</span></li>
+        <li><b>Murchison of the South</b><span>Waterfalls off the Zambezi escarpment, and the Lugenda&#x27;s rapids in the far north.</span></li>
+        <li><b>The Zambezi and Cahora Bassa</b><span>The Zambezi&#x27;s last five hundred kilometres, and the Cahora Bassa lake above them.</span></li>
+        <li><b>Bazaruto and the Quirimbas</b><span>Dune islands in the south, coral islands in the north, and dhows between them.</span></li>
+        <li><b>Coastal Forest</b><span>The coastal dry forest of the north, and the mangrove that lines most of the delta.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Gorongosa</b><span>waterbuck on the Gorongosa floodplain</span></li>
-        <li><b>Niassa and Gorongosa</b><span>a game track through Niassa reserve woodland</span></li>
-        <li><b>Gorongosa&#x27;s Restoration</b><span>a park scientist at work in Gorongosa</span></li>
-        <li><b>Dive and Sail</b><span>a dhow under sail between coral islands</span></li>
+        <li><b>Gorongosa</b><span>A park that lost almost everything in the war and has spent twenty years getting it back.</span></li>
+        <li><b>Niassa and Gorongosa</b><span>Niassa is one of the largest reserves in Africa, and among the least visited anywhere.</span></li>
+        <li><b>Gorongosa&#x27;s Restoration</b><span>Local employment, local science, and a park brought back from nothing — worth understanding.</span></li>
+        <li><b>Dive and Sail</b><span>Whale shark season at Tofo, dhow safaris in the Quirimbas, and reef diving throughout.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Portuguese and Swahili</b><span>the coral-stone lanes of Ilha de Moçambique</span></li>
-        <li><b>Makonde and Makua</b><span>a Makonde carver at work in northern Mozambique</span></li>
-        <li><b>Marrabenta and Timbila</b><span>a Chopi timbila orchestra performing</span></li>
-        <li><b>Carving and Basketry</b><span>Makonde blackwood carvings on a workshop bench</span></li>
-        <li><b>Peri-Peri and Matapa</b><span>grilled prawns with peri-peri at a beach kitchen</span></li>
-        <li><b>Warm Water All Year</b><span>children swimming in shallow water inside a reef</span></li>
-        <li><b>The Beach Market</b><span>fish being sold on the sand beside a dhow</span></li>
+        <li><b>Portuguese and Swahili</b><span>Five hundred years of Portuguese on a Swahili coast, and a culture made from both.</span></li>
+        <li><b>Makonde and Makua</b><span>Makonde carving in the north, and the Makua women&#x27;s mussiro face paint.</span></li>
+        <li><b>Marrabenta and Timbila</b><span>Marrabenta on the coast, and the Chopi timbila orchestras of Inhambane.</span></li>
+        <li><b>Carving and Basketry</b><span>Makonde blackwood carving, and the palm basketry of the northern islands.</span></li>
+        <li><b>Peri-Peri and Matapa</b><span>Prawns with peri-peri, and matapa — cassava leaf and coconut — with rice.</span></li>
+        <li><b>Warm Water All Year</b><span>Shallow, warm and calm inside the reef — as easy a sea as the continent offers.</span></li>
+        <li><b>The Beach Market</b><span>Fish landed and sold on the sand, and the dhow that brought it still on the beach.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Maputo</b><span>the Maputo waterfront and the Indian Ocean</span></li>
-        <li><b>Coral Stone and Colonial</b><span>a colonial-era building in Maputo with modernist lines</span></li>
-        <li><b>Ilha de Moçambique</b><span>the fortress of São Sebastião on Ilha de Moçambique</span></li>
-        <li><b>The Swahili Coast</b><span>the crumbling colonial buildings of Ibo island</span></li>
+        <li><b>Maputo</b><span>Wide avenues, a Mediterranean seafront, and the market Eiffel&#x27;s company built.</span></li>
+        <li><b>Coral Stone and Colonial</b><span>Coral rag on the islands, and Portuguese modernism through Maputo and Beira.</span></li>
+        <li><b>Ilha de Moçambique</b><span>The old capital, on a coral island a kilometre long, with a fort at one end.</span></li>
+        <li><b>The Swahili Coast</b><span>Ibo, Angoche and Sofala — Indian Ocean trading towns older than the Portuguese.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Dive, Sail, Kayak</b><span>a diver with a manta ray off Tofo</span></li>
-        <li><b>Island Lodges</b><span>an island lodge among palms above a white beach</span></li>
-        <li><b>Dhow Light</b><span>dhows silhouetted against a Mozambican sunrise</span></li>
-        <li><b>Ibo Island</b><span>a silversmith working inside the fort on Ibo island</span></li>
+        <li><b>Dive, Sail, Kayak</b><span>Manta and whale shark at Tofo, dhow safaris in the Quirimbas, and kayaks in the mangrove.</span></li>
+        <li><b>Island Lodges</b><span>A handful of very good island lodges in Bazaruto and the Quirimbas, and little else on them.</span></li>
+        <li><b>Dhow Light</b><span>Lateen sails at either end of the day, and water that photographs as three colours at once.</span></li>
+        <li><b>Ibo Island</b><span>Silversmiths, a fort, mangrove channels, and about as far from a resort as it gets.</span></li>
         </ul>
       </div>
     </div>

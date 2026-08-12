@@ -96,15 +96,18 @@
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
-.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.ct-group{padding:24px 26px 20px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
 .ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
-.ct-group li{padding:9px 0;border-bottom:var(--fj-rule)}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
 .ct-group li:last-child{border-bottom:0}
 .ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
-.ct-group li span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:2px}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
 @media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
 
 .reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
 .ct-reason{padding:28px 34px 24px 0}
@@ -224,54 +227,54 @@
     <div class="af-head">
       <div class="af-head-no"><b>02</b><span>Experiences</span></div>
       <div>
-        <h2>Twenty-seven ways to <em>spend the time</em>.</h2>
-        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another.</p>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
       </div>
     </div>
     <div class="groups">
       <div class="ct-group"><b>Landscapes</b>
         <ul>
-        <li><b>Coast to Savanna</b><span>rainforest canopy in Kakum national park</span></li>
-        <li><b>The Akwapim and Afadja</b><span>the green hills of the Volta region from Afadjato</span></li>
-        <li><b>Wli</b><span>the Wli waterfall dropping through forest in the Volta region</span></li>
-        <li><b>Lake Volta</b><span>fishing boats on Lake Volta at first light</span></li>
-        <li><b>Busua and Cape Three Points</b><span>palms above the beach at Busua on the Ghanaian coast</span></li>
-        <li><b>Kakum</b><span>the canopy walkway suspended above Kakum rainforest</span></li>
+        <li><b>Coast to Savanna</b><span>Rainforest and lagoon in the south, transitional woodland through the middle, savanna at Mole.</span></li>
+        <li><b>The Akwapim and Afadja</b><span>Afadjato is 885 metres and the highest point, walkable in a morning from Liati Wote.</span></li>
+        <li><b>Wli</b><span>The highest falls in West Africa, dropping out of forest on the Togo border, with bats overhead.</span></li>
+        <li><b>Lake Volta</b><span>The largest reservoir on earth by surface area, with ferries that take a full day to cross it.</span></li>
+        <li><b>Busua and Cape Three Points</b><span>Surf at Busua, and the point where the country runs out into the Gulf of Guinea.</span></li>
+        <li><b>Kakum</b><span>Rainforest with a canopy walkway thirty metres up, strung between seven emergent trees.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Wildlife</b>
         <ul>
-        <li><b>Mole and Ankasa</b><span>elephants at the waterhole below Mole motel</span></li>
-        <li><b>Walking Safari at Mole</b><span>a ranger leading walkers through savanna at Mole</span></li>
-        <li><b>Community Forest</b><span>hippos in the Black Volta at the Wechiau sanctuary</span></li>
-        <li><b>Surf, Hike, Paddle</b><span>a surfer walking out at Busua beach</span></li>
+        <li><b>Mole and Ankasa</b><span>Elephants that walk into the camp waterhole at Mole, and forest elephants at Ankasa.</span></li>
+        <li><b>Walking Safari at Mole</b><span>One of the few parks in West Africa where the game drive is done on foot, with an armed ranger.</span></li>
+        <li><b>Community Forest</b><span>The Wechiau hippo sanctuary and the Boabeng-Fiema monkey sanctuary, both village-run.</span></li>
+        <li><b>Surf, Hike, Paddle</b><span>Busua&#x27;s breaks, the Volta hills, and canoes on the lake at Dodi.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>People and culture</b>
         <ul>
-        <li><b>Ashanti</b><span>the Manhyia palace grounds at Kumasi</span></li>
-        <li><b>The Ewe and the Dagomba</b><span>a weaver working a kente loom in Bonwire</span></li>
-        <li><b>Homowo and Chale Wote</b><span>a street art festival crowd in Jamestown, Accra</span></li>
-        <li><b>Kente and Adinkra</b><span>adinkra symbols being stamped onto cloth by hand</span></li>
-        <li><b>Jollof, Banku and Grilled Tilapia</b><span>grilled tilapia and banku served at a roadside chop bar</span></li>
-        <li><b>Easy First Africa</b><span>children playing on a beach on the Ghanaian coast</span></li>
-        <li><b>Chop Bars and Trotros</b><span>a busy trotro station in Accra</span></li>
+        <li><b>Ashanti</b><span>A kingdom that fought the British to a standstill, and still keeps its own court at Kumasi.</span></li>
+        <li><b>The Ewe and the Dagomba</b><span>Kente weaving in Volta and Ashanti, and the Dagbon drumming traditions of the north.</span></li>
+        <li><b>Homowo and Chale Wote</b><span>Homowo in Accra in August, and the Chale Wote street art festival in Jamestown.</span></li>
+        <li><b>Kente and Adinkra</b><span>Kente woven in strips at Bonwire, and adinkra symbols stamped by hand at Ntonso.</span></li>
+        <li><b>Jollof, Banku and Grilled Tilapia</b><span>The jollof argument is unwinnable; the tilapia off the grill with banku settles it.</span></li>
+        <li><b>Easy First Africa</b><span>English-speaking, short distances, and about as gentle an introduction as the continent offers.</span></li>
+        <li><b>Chop Bars and Trotros</b><span>The country runs on shared minibuses and roadside kitchens, and both are worth using.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Places</b>
         <ul>
-        <li><b>Accra and Kumasi</b><span>the vast Kejetia market spread out at Kumasi</span></li>
-        <li><b>Posuban and Colonial Coast</b><span>a painted Fante posuban shrine in a coastal town</span></li>
-        <li><b>The Slave Forts</b><span>the door of no return at Elmina castle</span></li>
-        <li><b>The Year of Return</b><span>a memorial gathering at Cape Coast castle</span></li>
+        <li><b>Accra and Kumasi</b><span>Accra on the Atlantic, and Kumasi&#x27;s Kejetia — one of the largest markets in West Africa.</span></li>
+        <li><b>Posuban and Colonial Coast</b><span>The Fante posuban shrines, and the trading architecture strung along the coast road.</span></li>
+        <li><b>The Slave Forts</b><span>Cape Coast and Elmina — the doors of no return, kept as they were and not softened.</span></li>
+        <li><b>The Year of Return</b><span>Ghana asked the diaspora to come back, and a great many people did.</span></li>
         </ul>
       </div>
       <div class="ct-group"><b>Ways to travel</b>
         <ul>
-        <li><b>Canopy, Surf and Lake</b><span>a hiking trail through the hills of the Volta region</span></li>
-        <li><b>Lodges on the Water</b><span>a lodge terrace overlooking the waterhole at Mole</span></li>
-        <li><b>Colour Everywhere</b><span>stacked bolts of printed cloth in a Ghanaian market</span></li>
-        <li><b>Nzulezo</b><span>the stilt village of Nzulezo over the water</span></li>
+        <li><b>Canopy, Surf and Lake</b><span>The Kakum walkway, Busua&#x27;s beach breaks, and hiking the Volta hills to the Togo border.</span></li>
+        <li><b>Lodges on the Water</b><span>Small lodges above the beach at Busua and Axim, and the Mole escarpment rooms over the waterhole.</span></li>
+        <li><b>Colour Everywhere</b><span>Kente, market cloth and painted trotros — nothing here is any colour by accident.</span></li>
+        <li><b>Nzulezo</b><span>A village built entirely on stilts over Lake Tandane, reached only by canoe.</span></li>
         </ul>
       </div>
     </div>
