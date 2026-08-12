@@ -6,6 +6,10 @@
  "tagline": "Lagoons, forest and the Atlantic",
  "summary": "Abidjan's lagoon skyline, the rainforest at Taï, the basilica at Yamoussoukro, and Atlantic beaches west towards Grand-Béréby — the economic engine of francophone West Africa.",
  "published": true,
+ "calls": [
+  "culture",
+  "coast"
+ ],
  "entries": [
   {
    "category": "hero",

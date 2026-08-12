@@ -6,6 +6,11 @@
  "tagline": "Carthage, the Sahel and the desert south",
  "summary": "Carthage on the bay of Tunis, Roman Dougga and El Jem, the Sahara at Douz and Tozeur, and a Mediterranean coast that has been in the tourism business for sixty years.",
  "published": true,
+ "calls": [
+  "heritage",
+  "culture",
+  "coast"
+ ],
  "entries": [
   {
    "category": "hero",

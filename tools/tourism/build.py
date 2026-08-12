@@ -18,6 +18,7 @@
     build.py optimise            resize and re-encode the placed images
     build.py homes               a standalone home page per country
     build.py scaffold            create a new country with 27 empty slots
+    build.py gateway             rewrite the gateway's country lists from the dataset
     build.py report              write tourism/REPORT.md
     build.py all                 validate, render, verify, report
 
@@ -261,6 +262,13 @@ def cmd_scaffold(args):
     return 0
 
 
+def cmd_gateway(args):
+    from tourism import gateway
+    _tax, countries, _cache = dataset()
+    gateway.run(countries)
+    return 0
+
+
 def cmd_report(args):
     tax, countries, cache = dataset()
     rows, findings = validate.report(countries, tax)
@@ -487,6 +495,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
+    "gateway": cmd_gateway,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,

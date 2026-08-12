@@ -6,6 +6,10 @@
  "tagline": "The loudest country on the continent",
  "summary": "One in five Africans is Nigerian. Afrobeats, Nollywood, the Benin bronzes, Yankari's elephants and the Obudu plateau — a country that exports its culture faster than anywhere else on earth.",
  "published": true,
+ "calls": [
+  "culture",
+  "food"
+ ],
  "entries": [
   {
    "category": "hero",

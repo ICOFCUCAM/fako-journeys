@@ -6,6 +6,12 @@
  "tagline": "The forts, the forest and the highlife",
  "summary": "The most straightforward country in West Africa to travel, with the Atlantic slave forts of the coast, the Ashanti kingdom at Kumasi, Mole's elephants in the north, and a music scene worth planning around.",
  "published": true,
+ "calls": [
+  "culture",
+  "heritage",
+  "coast",
+  "food"
+ ],
  "entries": [
   {
    "category": "hero",

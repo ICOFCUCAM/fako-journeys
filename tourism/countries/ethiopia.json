@@ -6,6 +6,12 @@
  "tagline": "The roof of Africa",
  "summary": "The only African country never colonised, with its own alphabet, calendar and church — rock-hewn churches at Lalibela, the Simien escarpment above four thousand metres, and the Danakil below sea level.",
  "published": true,
+ "calls": [
+  "mountains",
+  "culture",
+  "heritage",
+  "food"
+ ],
  "entries": [
   {
    "category": "hero",

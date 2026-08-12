@@ -6,6 +6,11 @@
  "tagline": "An island that evolved alone",
  "summary": "Separated from Africa 160 million years ago, with ninety per cent of its wildlife found nowhere else — lemurs, baobabs, the spiny forest of the south, and rainforest along the eastern escarpment.",
  "published": true,
+ "calls": [
+  "wildlife",
+  "coast",
+  "culture"
+ ],
  "entries": [
   {
    "category": "hero",

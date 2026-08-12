@@ -209,11 +209,13 @@ def build(country, taxonomy, countries=()):
     }
 
 
-# Cameroon and Uganda are skipped: both already have a better home page than
-# this generator can make. Cameroon's is hand-built at cameroon.html, and
-# Uganda has a whole operator site of its own at Pearl Trails Uganda. A
-# generated page would be a second, poorer front door to each.
-def write_all(countries, taxonomy, skip=("cameroon", "uganda"), out_dir=None, log=print):
+# Three are skipped: each already has a better home page than this generator can
+# make. Cameroon's is hand-built at cameroon.html; Uganda and Namibia have whole
+# operator sites of their own at Pearl Trails Uganda and Namib Skyline. A
+# generated page would be a second, poorer front door to each. They keep their
+# datasets, because the gateway, the map and their neighbours' region strips all
+# read a country from the same place whether or not it has a page here.
+def write_all(countries, taxonomy, skip=("cameroon", "uganda", "namibia"), out_dir=None, log=print):
     out_dir = out_dir or ROOT
     written = []
     for c in countries:

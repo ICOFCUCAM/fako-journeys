@@ -6,6 +6,11 @@
  "tagline": "Where the Sahel meets the Atlantic",
  "summary": "The westernmost point of Africa, with Dakar on its peninsula, Gorée offshore, the Sine-Saloum delta, the Djoudj bird sanctuary and a music tradition that shaped a good deal of what came after.",
  "published": true,
+ "calls": [
+  "culture",
+  "food",
+  "coast"
+ ],
  "entries": [
   {
    "category": "hero",

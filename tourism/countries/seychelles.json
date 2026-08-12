@@ -6,6 +6,9 @@
  "tagline": "Granite islands in the Indian Ocean",
  "summary": "The only granite islands in the middle of an ocean anywhere on earth — Mahé, Praslin and La Digue, the coco de mer in the Vallée de Mai, and Aldabra's giant tortoises a thousand kilometres out.",
  "published": true,
+ "calls": [
+  "coast"
+ ],
  "entries": [
   {
    "category": "hero",

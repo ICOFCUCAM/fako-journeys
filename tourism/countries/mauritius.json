@@ -6,6 +6,10 @@
  "tagline": "Reef, sugar and the volcanic interior",
  "summary": "A volcanic island inside an almost unbroken reef, with a mountainous interior, Black River Gorges, and a culture assembled from India, Africa, France and China in the space of two centuries.",
  "published": true,
+ "calls": [
+  "coast",
+  "food"
+ ],
  "entries": [
   {
    "category": "hero",

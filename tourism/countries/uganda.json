@@ -7,6 +7,13 @@
  "summary": "Half the world's mountain gorillas, the source of the Nile, the Rwenzori snowline on the equator and savanna parks within a day's drive of each other.",
  "published": true,
  "url": "https://pearl-trails-uganda.vercel.app",
+ "calls": [
+  "wildlife",
+  "culture"
+ ],
+ "operator": "Pearl Trails Uganda",
+ "window": "/images/uploads/window-uganda-1200w.jpg",
+ "window_alt": "Ridge after ridge of montane rainforest under low cloud",
  "entries": [
   {
    "category": "hero",

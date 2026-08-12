@@ -6,6 +6,10 @@
  "tagline": "Great Zimbabwe and the Zambezi",
  "summary": "Victoria Falls on one border, Great Zimbabwe's stone city in the interior, Hwange's elephant herds and Mana Pools — the park where the walking safari was refined into an art.",
  "published": true,
+ "calls": [
+  "wildlife",
+  "heritage"
+ ],
  "entries": [
   {
    "category": "hero",

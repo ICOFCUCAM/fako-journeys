@@ -97,6 +97,13 @@ class Country:
         # is why the region strips and the gateway can link every country without
         # anybody keeping a second list of exceptions in code.
         self.url = raw.get("url") or ("/%s" % self.slug)
+        # What this country leads on, which of our companies runs it, and the
+        # picture that belongs in its window. Editorial facts, so they live with
+        # the rest of the country's editorial rather than in a table in code.
+        self.calls = list(raw.get("calls") or [])
+        self.operator = raw.get("operator") or ""
+        self.window = raw.get("window") or ""
+        self.window_alt = raw.get("window_alt") or ""
         self.entries = [Entry(e) for e in raw.get("entries", [])]
         self.by_category = {}
         for e in self.entries:

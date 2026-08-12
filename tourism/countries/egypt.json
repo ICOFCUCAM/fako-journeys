@@ -6,6 +6,11 @@
  "tagline": "The Nile, and five thousand years",
  "summary": "The oldest continuous tourism in the world, and still the reason most people first think of Africa — the Giza plateau, the Valley of the Kings, Abu Simbel, and the Red Sea reefs on the other coast.",
  "published": true,
+ "calls": [
+  "heritage",
+  "culture",
+  "coast"
+ ],
  "entries": [
   {
    "category": "hero",

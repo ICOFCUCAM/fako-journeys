@@ -6,6 +6,10 @@
  "tagline": "A delta that never reaches the sea",
  "summary": "The Okavango empties into the Kalahari and evaporates, and the whole country is organised around that fact — low-volume, high-value safari, mokoro channels, and the salt pans of Makgadikgadi.",
  "published": true,
+ "calls": [
+  "wildlife",
+  "culture"
+ ],
  "entries": [
   {
    "category": "hero",
