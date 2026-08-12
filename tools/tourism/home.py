@@ -435,6 +435,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a class="mark" href="/%(slug)s"><span class="mark-up">Afrinkong</span><b>%(name)s</b><span>%(tagline)s</span></a>
     <nav class="routes">
       <a href="/atlas#/%(slug)s">The Atlas</a>
+      <a href="/journey">Build a journey</a>
       <a href="#highlights">Highlights</a>
       <a href="#why">Why go</a>
       <a href="/tourism/%(slug)s">All %(count)d</a>

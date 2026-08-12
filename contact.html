@@ -614,6 +614,21 @@ ul,ol{list-style:none}
     var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('seen');io.unobserve(en.target)}})},{threshold:.1});
     rise.forEach(function(el){io.observe(el)});
   }else{rise.forEach(function(el){el.classList.add('seen')})}
+  /* A journey built on /journey arrives here as ?journey=, already written out
+     as the traveller shaped it. It is dropped into the message rather than into
+     a hidden field so they can see it, cut it and argue with it before it is
+     sent — an enquiry nobody can read before sending is a form, not a letter. */
+  (function(){
+    var q=new URLSearchParams(location.search).get('journey');
+    if(!q)return;
+    var box=document.getElementById('cms');
+    if(!box)return;
+    box.value=q+(box.value?'\n\n'+box.value:'');
+    box.setAttribute('rows','12');
+    var lab=document.querySelector('label[for="cms"]');
+    if(lab)lab.textContent='Your journey, as you built it \u2014 edit anything';
+    box.closest('.fj-cell').scrollIntoView({block:'center'});
+  })();
   document.querySelectorAll('[data-lead-form]').forEach(function(fm){
     fm.addEventListener('submit',function(e){
       e.preventDefault();

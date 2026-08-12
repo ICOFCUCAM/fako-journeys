@@ -1,0 +1,45 @@
+{
+ "$comment": "The journey engine's vocabulary and its weights, kept out of code so the reasoning can be read by somebody who does not read JavaScript. Two rules govern everything in this file. First: a signal is only scored if the dataset actually holds it. A country's `calls`, its `months`, its operator, its region and how many of its twenty-six write-ups fall under a chosen lens are all real; how a traveller likes to travel and who they are travelling with are not recorded anywhere, so they are collected, carried to the operator, and never scored. Second: a `days` band is a planning convention, not a claim about the country — it decides how many stages a journey is shaped into, and the page says so.",
+
+ "weights": {
+  "$comment": "Out of 100. Change a number here and the ranking changes; nothing in the engine hard-codes a preference.",
+  "lens": 42,
+  "depth": 16,
+  "season": 24,
+  "operator": 10,
+  "region": 8,
+  "depthTarget": 8
+ },
+
+ "pacing": [
+  {"key": "weekend", "label": "A long weekend", "short": "3–4 days", "days": 4, "stages": 1,
+   "line": "One place, properly, instead of three badly."},
+  {"key": "week", "label": "Four to seven days", "short": "4–7 days", "days": 7, "stages": 2,
+   "line": "Two places close enough that the road between them is not the trip."},
+  {"key": "fortnight", "label": "Eight to fourteen days", "short": "8–14 days", "days": 12, "stages": 3,
+   "line": "A country properly, or two that share a border."},
+  {"key": "long", "label": "Two weeks and more", "short": "15+ days", "days": 18, "stages": 5,
+   "line": "Long enough to stop counting, and to go where the road is slow."},
+  {"key": "open", "label": "I'm flexible", "short": "flexible", "days": 12, "stages": 3,
+   "line": "We will shape it round what you actually want to see."}
+ ],
+
+ "party": [
+  {"key": "solo", "label": "On my own"},
+  {"key": "couple", "label": "Two of us"},
+  {"key": "family", "label": "With family"},
+  {"key": "friends", "label": "With friends"},
+  {"key": "group", "label": "A larger group"}
+ ],
+
+ "style": [
+  {"key": "slow", "label": "Slowly"},
+  {"key": "walking", "label": "On foot where possible"},
+  {"key": "small", "label": "In a small group"},
+  {"key": "quiet", "label": "Away from other travellers"},
+  {"key": "comfort", "label": "Comfortably"},
+  {"key": "unsure", "label": "I don't know yet"}
+ ],
+
+ "carried": "Neither how you like to travel nor who you are travelling with is recorded against any country in this dataset, so neither one moves a country up or down the list. Both are carried into the enquiry, where a person who lives there reads them."
+}

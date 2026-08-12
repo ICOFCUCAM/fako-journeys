@@ -1,0 +1,347 @@
+/* The journey engine — /journey.
+ * ---------------------------------------------------------------------------
+ * Prefixed `jn-`. Tokens, reset, type scale and buttons come from
+ * afrinkong.css and are never redefined here.
+ *
+ * The page has three moods and they are meant to feel different: the questions
+ * are a wide quiet page with one thing on it, the reveal is a held breath, and
+ * the composer is a working surface. What holds them together is that all three
+ * are set on the same paper, in the same three voices, with nothing on screen
+ * that is not either a question, an answer, or the reason for it.
+ */
+
+/* ---- chrome -------------------------------------------------------------- */
+
+.jn-mast{position:sticky;top:0;z-index:40;height:var(--mast);display:flex;align-items:center;
+  gap:var(--sp-4);padding:0 28px;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+.jn-mark{display:flex;flex-direction:column;line-height:1}
+.jn-mark i{font-family:var(--fj-mono);font-style:normal;font-size:9.5px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--c-muted)}
+.jn-mark b{font-family:var(--fj-display);font-size:22px;letter-spacing:-.01em;
+  text-transform:uppercase;margin-top:5px;white-space:nowrap}
+.jn-routes{display:flex;gap:26px;margin-left:auto;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.jn-routes a:hover{color:var(--c-accent)}
+
+.jn{max-width:1100px;margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
+
+/* ---- the questions ------------------------------------------------------- */
+
+/* One question on the screen at a time. Four dots and nothing else: a progress
+   bar with a percentage on it turns four sentences into a form. */
+.jn-progress{display:flex;gap:6px;margin-bottom:var(--sp-5)}
+.jn-progress span{width:34px;height:3px;background:var(--c-border);
+  transition:background var(--t-mid) var(--ease)}
+.jn-progress span[data-on]{background:var(--c-accent)}
+
+.jn-h1{font-size:clamp(40px,6vw,86px);line-height:.92;margin:12px 0 0;max-width:16ch}
+.jn-h1:focus{outline:none}
+.jn-h2{font-family:var(--fj-display);font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-muted);border-top:2px solid var(--c-primary);padding-top:12px;
+  margin-top:var(--sp-5)}
+.jn-h2:first-child{margin-top:var(--sp-4)}
+.jn-lede{margin-top:20px;font-size:17.5px;color:var(--c-muted);max-width:56ch}
+.jn-note{margin-top:10px;font-size:14.5px;color:var(--c-muted)}
+
+/* A choice is an editorial card, not a checkbox with a word beside it: the
+   thing being chosen is what it means, and what it means takes a sentence. */
+.jn-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:var(--sp-2);margin-top:var(--sp-4)}
+.jn-cards--rows{grid-template-columns:1fr}
+.jn-card{display:block;cursor:pointer}
+.jn-card input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.jn-card-in{display:block;border:1px solid var(--c-border);padding:20px 20px 18px;height:100%;
+  transition:border-color var(--t-fast) var(--ease),background var(--t-fast) var(--ease)}
+.jn-card-in b{display:block;font-family:var(--fj-display);font-size:26px;font-weight:700;
+  text-transform:uppercase;line-height:1.02;letter-spacing:-.01em}
+.jn-card-line{display:block;margin-top:8px;font-size:15.5px;line-height:1.5;color:var(--c-muted)}
+.jn-card-n{display:block;margin-top:12px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.jn-card:hover .jn-card-in{border-color:var(--c-primary)}
+.jn-card input:checked + .jn-card-in{border-color:var(--c-primary);background:var(--c-primary);
+  color:var(--c-bg);border-width:1px}
+.jn-card input:checked + .jn-card-in .jn-card-line,
+.jn-card input:checked + .jn-card-in .jn-card-n{color:var(--fj-onbasalt-dim)}
+.jn-card input:focus-visible + .jn-card-in{outline:2px solid var(--c-accent);outline-offset:3px}
+.jn-card--row .jn-card-in{display:grid;grid-template-columns:1fr auto;
+  grid-template-areas:"name short" "line short";column-gap:20px;align-items:baseline}
+.jn-card--row .jn-card-in b{grid-area:name}
+.jn-card--row .jn-card-line{grid-area:line;margin-top:6px}
+.jn-card--row .jn-card-n{grid-area:short;margin-top:0;white-space:nowrap}
+
+.jn-months{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:var(--sp-4)}
+.jn-mon{cursor:pointer}
+.jn-mon input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.jn-mon span{display:block;text-align:center;border:1px solid var(--c-border);padding:16px 0;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.1em;
+  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease)}
+.jn-mon:hover span{border-color:var(--c-primary)}
+.jn-mon input:checked + span{background:var(--c-primary);color:var(--c-bg);
+  border-color:var(--c-primary)}
+.jn-mon input:focus-visible + span{outline:2px solid var(--c-accent);outline-offset:3px}
+
+.jn-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--sp-4)}
+.jn-chips--style{margin-top:var(--sp-2)}
+.jn-chip{cursor:pointer;display:inline-block}
+.jn-chip input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.jn-chip span{display:inline-block;border:1px solid var(--c-border);padding:12px 16px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease)}
+.jn-chip:hover span{border-color:var(--c-primary)}
+.jn-chip input:checked + span{background:var(--c-primary);color:var(--c-bg);
+  border-color:var(--c-primary)}
+.jn-chip input:focus-visible + span{outline:2px solid var(--c-accent);outline-offset:3px}
+.jn-chip--wide{display:block;margin-top:6px}
+.jn-chip--wide span{width:100%;text-align:center}
+
+.jn-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--sp-5)}
+.jn-acts--end{margin-top:var(--sp-5)}
+
+/* Something already begun, offered before the first question rather than
+   hidden behind an account that does not exist. */
+.jn-saved{border:1px solid var(--c-border);padding:18px 20px;margin-bottom:var(--sp-5)}
+.jn-saved ul{margin-top:10px;display:grid;gap:2px}
+.jn-saved a{display:flex;justify-content:space-between;gap:16px;align-items:baseline;
+  padding:9px 0;border-bottom:var(--fj-rule)}
+.jn-saved li:last-child a{border-bottom:0}
+.jn-saved b{font-family:var(--fj-display);font-size:17px;text-transform:uppercase}
+.jn-saved span{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+.jn-saved a:hover b{color:var(--c-accent)}
+
+/* ---- the reveal ---------------------------------------------------------- */
+
+/* The held breath. Everything arrives at once but not at the same speed: the
+   country first, then its name, then the reason. Three steps is enough to read
+   as a reveal; more would be a performance. */
+/* The reveal takes the whole screen it interrupts. Anything left showing under
+   it is something the eye can go to instead of the answer. */
+.jn-reveal{min-height:calc(100vh - var(--mast) - var(--sp-6) - var(--sp-7));
+  display:flex;align-items:center}
+.jn-reveal-in{display:grid;width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:var(--sp-4) var(--sp-6);align-items:center}
+.jn-reveal-stamp{grid-column:1/-1;color:var(--c-accent)}
+.jn-shape{grid-row:span 4;align-self:stretch;display:flex;align-items:center;
+  min-height:340px}
+.jn-shape svg{width:100%;height:auto;max-height:64vh;display:block;overflow:visible}
+.jn-shape-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
+.jn-reveal-name{align-self:end;margin:0;font-size:clamp(46px,7vw,104px)}
+.jn-reveal-tag{font-family:var(--fj-text);font-size:clamp(19px,2.2vw,27px);color:var(--c-accent);
+  line-height:1.25;margin:0}
+
+.jn-why{border-top:2px solid var(--c-primary);padding-top:14px}
+.jn-why-head{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.jn-why-list{margin-top:12px;display:grid;gap:9px}
+.jn-why-list li{position:relative;padding-left:26px;font-size:16px;line-height:1.5}
+.jn-why-list li::before{content:"\2713";position:absolute;left:0;top:0;color:var(--c-accent);
+  font-family:var(--fj-mono);font-size:13px}
+.jn-why-list li[data-key="warn"]::before{content:"!";color:var(--c-muted)}
+/* What it is not. Set in the same list rather than in a footnote, because a
+   caveat you have to go looking for is a caveat nobody reads. */
+.jn-why-list li[data-key="gap"]{color:var(--c-muted)}
+.jn-why-list li[data-key="gap"]::before{content:"\2013";color:var(--c-muted)}
+.jn-why-list li[data-key="open"]::before{content:"\2022"}
+.jn-why-list li button{background:none;border:0;cursor:pointer;font:inherit;text-align:left;
+  color:inherit;text-decoration:underline;text-underline-offset:3px}
+.jn-why-list li button:hover{color:var(--c-accent)}
+.jn-why-carried{margin-top:14px;font-size:14px;color:var(--c-muted);font-style:italic}
+
+.jn-alts{grid-column:1/-1;display:none;gap:0;margin-top:var(--sp-2);
+  border-top:2px solid var(--c-primary)}
+.jn-alts[data-open]{display:grid}
+.jn-alt{display:grid;grid-template-columns:40px 1fr 20px;gap:14px;align-items:start;
+  width:100%;text-align:left;background:none;border:0;border-bottom:var(--fj-rule);
+  cursor:pointer;padding:18px 4px;color:inherit;font:inherit;
+  transition:background var(--t-fast) var(--ease)}
+.jn-alt:hover{background:var(--fj-dust)}
+.jn-alt-no{font-family:var(--fj-mono);font-size:10px;letter-spacing:.12em;color:var(--c-muted);
+  padding-top:5px}
+.jn-alt-body b{display:block;font-family:var(--fj-display);font-size:24px;font-weight:700;
+  text-transform:uppercase;line-height:1.04}
+.jn-alt-line{display:block;margin-top:5px;font-size:15.5px;color:var(--c-accent)}
+.jn-alt-why{display:block;margin-top:7px;font-size:14.5px;color:var(--c-muted)}
+.jn-alt-go{font-family:var(--fj-mono);color:var(--c-border);padding-top:4px;
+  transition:color var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+.jn-alt:hover .jn-alt-go{color:var(--c-accent);transform:translateX(3px)}
+
+.jn-restart{grid-column:2;justify-self:start;background:none;border:0;cursor:pointer;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-muted);padding:10px 0;margin-top:0}
+.jn-restart:hover{color:var(--c-accent)}
+
+/* The arrival. One frame of offset, released on the next — the country lifts
+   in, its name follows, the reason last. */
+.jn-reveal .jn-shape,.jn-reveal .jn-reveal-name,
+.jn-reveal .jn-reveal-tag,.jn-reveal .jn-why{
+  transition:opacity var(--t-slow) var(--ease),transform var(--t-slow) var(--ease)}
+.jn-reveal[data-arriving] .jn-shape{opacity:0;transform:scale(.965)}
+.jn-reveal[data-arriving] .jn-reveal-name{opacity:0;transform:translateY(16px)}
+.jn-reveal[data-arriving] .jn-reveal-tag{opacity:0;transform:translateY(16px)}
+.jn-reveal[data-arriving] .jn-why{opacity:0}
+.jn-reveal .jn-reveal-name{transition-delay:.12s}
+.jn-reveal .jn-reveal-tag{transition-delay:.2s}
+.jn-reveal .jn-why{transition-delay:.3s}
+
+/* ---- the composer -------------------------------------------------------- */
+
+/* The reason follows the journey. A recommendation that explains itself once
+   and then goes quiet is a recommendation you have to take on trust. */
+.jn-carry{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px}
+.jn-carry span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);border:1px solid var(--c-border);
+  padding:6px 9px}
+.jn-carry span::before{content:"\2713";color:var(--c-accent);margin-right:7px}
+.jn-carry span[data-key="warn"]::before,
+.jn-carry span[data-key="gap"]::before{content:"\2013";color:var(--c-muted)}
+
+.jn-compose-head{border-bottom:2px solid var(--c-primary);padding-bottom:var(--sp-4)}
+.jn-compose-head .jn-h1{font-size:clamp(34px,5vw,68px);max-width:20ch}
+.jn-compose-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+  gap:var(--sp-6)}
+.jn-line-col{min-width:0}
+/* Twenty-six places is a page in its own right, and next to a five-stage
+   timeline it turned the composer into a scroll. It is a working surface, so it
+   keeps its own scroll and follows you down as you edit the journey beside it. */
+.jn-pick-col{min-width:0;position:sticky;top:calc(var(--mast) + 20px);
+  max-height:calc(100vh - var(--mast) - 40px);display:flex;flex-direction:column}
+.jn-picks{overflow-y:auto;min-height:0;flex:1 1 auto;
+  -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent);
+  mask-image:linear-gradient(to bottom,#000 calc(100% - 26px),transparent)}
+
+/* The journey down the page, with the thread drawn between the stages. A
+   spreadsheet of days would say the same thing and mean less. */
+.jn-line{margin-top:var(--sp-2);position:relative}
+/* The thread runs down the left margin and the day sits clear of it. Drawn
+   through the middle of the first column it printed the dot on top of the date,
+   which is the sort of thing that only shows up on the screen. */
+.jn-leg{position:relative;display:grid;grid-template-columns:104px 1fr 26px;gap:16px;
+  align-items:start;padding:18px 0;border-bottom:var(--fj-rule)}
+.jn-leg::before{content:"";position:absolute;left:4px;top:0;bottom:0;width:1px;
+  background:var(--c-border)}
+.jn-leg:first-child::before{top:26px}
+.jn-leg:last-child::before{bottom:calc(100% - 26px)}
+.jn-leg::after{content:"";position:absolute;left:0;top:22px;width:9px;height:9px;
+  border-radius:50%;background:var(--c-accent)}
+.jn-leg--edge::after{background:var(--c-bg);border:1px solid var(--c-border)}
+.jn-leg-day{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);padding:4px 0 0 24px}
+.jn-leg-body b{display:block;font-family:var(--fj-display);font-size:23px;font-weight:700;
+  text-transform:uppercase;line-height:1.04}
+.jn-leg--edge .jn-leg-body b{font-size:16px;color:var(--c-muted)}
+.jn-leg-line{display:block;margin-top:6px;font-size:15.5px;line-height:1.5;color:var(--c-muted)}
+.jn-leg-meta{display:block;margin-top:7px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.jn-leg-x{background:none;border:0;cursor:pointer;font-size:20px;line-height:1;
+  color:var(--c-border);padding:2px 4px;transition:color var(--t-fast) var(--ease)}
+.jn-leg-x:hover{color:var(--c-accent)}
+.jn-caveat{margin-top:16px;font-size:14px;line-height:1.6;color:var(--c-muted);
+  border-left:2px solid var(--c-border);padding-left:14px;max-width:52ch}
+
+/* What it is made of. Counted from the stages actually chosen, so the bars are
+   a tally and not a guess — and set as rules rather than as a dashboard. */
+.jn-dna{margin-top:var(--sp-3);display:grid;gap:8px}
+.jn-bar{display:grid;grid-template-columns:120px 1fr 42px;gap:14px;align-items:center}
+.jn-bar-k{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted)}
+.jn-bar-t{display:block;height:6px;background:var(--c-border)}
+.jn-bar-t i{display:block;height:100%;background:var(--c-accent);
+  transition:width var(--t-mid) var(--ease)}
+.jn-bar-n{font-family:var(--fj-mono);font-size:9.5px;color:var(--c-muted);text-align:right}
+
+.jn-who{margin-top:var(--sp-5)}
+.jn-who-in{border-top:2px solid var(--c-primary);padding-top:16px}
+.jn-who-in[data-ours]{border-top-color:var(--c-accent)}
+.jn-who-in b{display:block;font-family:var(--fj-display);font-size:26px;text-transform:uppercase;
+  margin-top:8px;line-height:1.04}
+.jn-who-base{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.jn-who-in p{margin-top:10px;font-size:15.5px;color:var(--c-muted);max-width:48ch}
+.jn-who-in .af-go{margin-top:12px}
+
+.jn-said{margin-top:14px;font-size:14.5px;color:var(--c-muted);opacity:0;
+  transition:opacity var(--t-mid) var(--ease);min-height:1.6em}
+.jn-said[data-on]{opacity:1}
+
+.jn-picks{margin-top:var(--sp-2);border-top:2px solid var(--c-primary)}
+.jn-picks li{border-bottom:var(--fj-rule)}
+.jn-pick{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;width:100%;
+  text-align:left;background:none;border:0;cursor:pointer;padding:14px 4px;color:inherit;
+  font:inherit;transition:background var(--t-fast) var(--ease)}
+.jn-pick:hover{background:var(--fj-dust)}
+.jn-pick-mark{font-family:var(--fj-mono);font-size:15px;color:var(--c-accent);
+  line-height:1.3;text-align:center}
+.jn-pick-body b{display:block;font-family:var(--fj-display);font-size:17px;font-weight:700;
+  text-transform:uppercase;line-height:1.1}
+.jn-pick-line{display:block;margin-top:4px;font-size:14px;line-height:1.5;color:var(--c-muted)}
+.jn-pick-meta{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+/* Already in the journey: the row keeps its place in the list rather than
+   disappearing out of it, so the list never reorders under the cursor. */
+.jn-pick[aria-pressed="true"]{background:var(--fj-dust)}
+.jn-pick[aria-pressed="true"] .jn-pick-body b{color:var(--c-muted)}
+/* Written up under something you asked for. */
+.jn-pick[data-lead] .jn-pick-body b::after{content:"";display:inline-block;width:5px;height:5px;
+  background:var(--c-accent);border-radius:50%;margin-left:8px;vertical-align:middle}
+
+.jn-nojs{border:1px solid var(--c-border);padding:20px;margin-top:var(--sp-4);
+  font-size:16px;color:var(--c-muted);max-width:60ch}
+.jn-nojs a{text-decoration:underline;text-underline-offset:3px}
+
+/* ---- tablet -------------------------------------------------------------- */
+
+@media(max-width:1000px){
+  .jn{padding:var(--sp-5) 28px var(--sp-6)}
+  .jn-reveal-in{grid-template-columns:1fr;gap:var(--sp-3)}
+  .jn-shape{grid-row:auto;min-height:0;max-width:340px}
+  .jn-shape svg{max-height:38vh}
+  .jn-compose-grid{grid-template-columns:1fr;gap:var(--sp-5)}
+  .jn-pick-col{position:static;max-height:none;display:block}
+  .jn-picks{overflow:visible;-webkit-mask-image:none;mask-image:none}
+}
+
+/* ---- phone --------------------------------------------------------------- */
+
+@media(max-width:720px){
+  .jn-mast{padding:0 14px;gap:14px}
+  .jn-routes{display:none}
+  .jn-mark b{font-size:17px}
+  .jn-mast .af-btn{padding:11px 12px;font-size:9.5px;white-space:nowrap}
+  /* The picker keeps its own scroll on a phone too. Left to run, twenty-six
+     places turn the composer into five screens and bury the journey it is
+     supposed to be editing. */
+  .jn-picks{max-height:58vh;overflow-y:auto;border-bottom:1px solid var(--c-border);
+    -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 22px),transparent);
+    mask-image:linear-gradient(to bottom,#000 calc(100% - 22px),transparent)}
+  .jn{padding:var(--sp-4) 18px var(--sp-6)}
+  .jn-h1{font-size:clamp(32px,9.5vw,50px);max-width:none}
+  .jn-cards{grid-template-columns:1fr}
+  .jn-card-in{padding:16px}
+  .jn-card-in b{font-size:22px}
+  .jn-card--row .jn-card-in{grid-template-columns:1fr;grid-template-areas:"name" "short" "line"}
+  .jn-card--row .jn-card-n{margin-top:6px}
+  /* Twelve months across a phone is a four-pixel target. Three rows of four. */
+  .jn-months{grid-template-columns:repeat(4,1fr)}
+  .jn-leg{grid-template-columns:82px 1fr 24px;gap:10px}
+  .jn-bar{grid-template-columns:88px 1fr 36px;gap:10px}
+  /* The next step follows you down the page: on a phone the buttons are the
+     bottom of a long list otherwise, and the answer is above the fold. */
+  .jn-acts{position:sticky;bottom:0;background:var(--c-bg);padding:14px 0;
+    border-top:1px solid var(--c-border);margin-top:var(--sp-4);z-index:5}
+  .jn-acts .af-btn{flex:1 1 auto;text-align:center}
+  .jn-acts--end{position:static;border-top:0}
+}
+
+@media(pointer:coarse){
+  .jn-chip span,.jn-mon span{min-height:44px;display:flex;align-items:center;
+    justify-content:center}
+  .jn-pick{padding:16px 4px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .jn-reveal[data-arriving] .jn-shape,.jn-reveal[data-arriving] .jn-reveal-name,
+  .jn-reveal[data-arriving] .jn-reveal-tag,.jn-reveal[data-arriving] .jn-why{
+    opacity:1;transform:none}
+}

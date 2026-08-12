@@ -61,6 +61,11 @@ html{scroll-behavior:smooth;scroll-padding-top:calc(var(--mast) + 16px)}
 body{font-family:var(--fj-text);background:var(--c-bg);color:var(--c-ink);
   line-height:1.66;font-size:17px;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
+/* The reset the browser gives `hidden` is a `display:none` at the weakest
+   possible specificity, so any component rule that sets `display` silently
+   defeats it — a hidden section that is still a flex container is still on the
+   page, taking its full height, with everything after it pushed past the fold. */
+[hidden]{display:none !important}
 a{color:inherit;text-decoration:none}
 ul,ol{list-style:none}
 ::selection{background:var(--c-accent);color:var(--c-bg)}

@@ -108,6 +108,7 @@ def masthead(country, taxonomy):
             '    <nav class="fj-routes">\n'
             '      %s\n'
             '      <a href="/atlas">The Atlas</a>\n'
+            '      <a href="/journey">Build a journey</a>\n'
             '      <a href="/#destinations">Destinations</a>\n'
             '      <a href="/#begin">Experiences</a>\n'
             '      <a href="/tourism/">Every country</a>\n'

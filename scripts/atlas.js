@@ -443,7 +443,8 @@
       + '<div class="at-acts">'
       + '<a class="af-btn af-btn--solid" href="' + esc(c.url) + '">Enter ' + esc(c.name)
       + '<i>&rarr;</i></a>'
-      + '<a class="af-btn af-btn--quiet" href="/contact">Ask about ' + esc(c.name) + '</a>'
+      + '<a class="af-btn af-btn--quiet" href="/journey#/j/' + esc(slug) + '/">'
+      + 'Build a journey here</a>'
       + '</div>';
     showPane('country');
   }

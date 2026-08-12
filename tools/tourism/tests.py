@@ -21,6 +21,7 @@ import zlib
 import os
 import re
 import shutil
+import subprocess
 import socketserver
 import sys
 import tempfile
@@ -28,6 +29,7 @@ import threading
 import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.dirname(HERE))
 
 PORT = 8791
@@ -792,6 +794,31 @@ def main():
         check("region views are recomputed, not cached from the full set",
               any(r["view"] != next(x["view"] for x in sp["regions"] if x["key"] == r["key"])
                   for r in small["regions"]))
+
+        # -- the journey engine ----------------------------------------------------
+        # The engine is JavaScript because it answers between one click and the
+        # next, so it is tested by running it rather than by re-implementing it
+        # here. The checks live next to the code they test and report back one
+        # line each; if node is not installed they are reported as skipped and
+        # counted as neither passed nor failed, because a check that did not run
+        # is not a check that passed.
+        print("\njourney engine")
+        node = shutil.which("node")
+        script = os.path.join(ROOT_DIR, "tools", "journey-checks.js")
+        if not node:
+            print("  SKIPPED: node is not installed; the engine checks did not run")
+        elif not os.path.exists(os.path.join(ROOT_DIR, "journey.html")):
+            print("  SKIPPED: journey.html is not built; run build.py journey")
+        else:
+            proc = subprocess.run([node, script], capture_output=True, text=True,
+                                  cwd=ROOT_DIR)
+            lines = [l for l in proc.stdout.splitlines() if "\t" in l]
+            if not lines:
+                check("the journey engine checks ran", False,
+                      (proc.stderr or "no output").strip().splitlines()[-1][:90])
+            for line in lines:
+                verdict, name, detail = (line.split("\t") + ["", ""])[:3]
+                check(name, verdict == "PASS", detail)
 
     finally:
         httpd.shutdown()
