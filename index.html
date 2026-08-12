@@ -71,7 +71,20 @@ ul,ol{list-style:none}
 .wa-open-stage{display:flex;flex-direction:column;justify-content:center;
   min-height:calc(100vh - 78px);padding:96px 0 0}
 .wa-open-stage>.wa-frame{width:100%}
-.wa-open-grid{display:grid;grid-template-columns:1fr 1.14fr;gap:44px;align-items:center;flex:1 1 auto}
+/* Three children, two columns: the headline and the tail of the copy stack in
+   column one and the window spans both rows of column two. The window sits
+   between them in the DOM rather than after both, which is what lets the phone
+   put the map directly under the headline in source order — no visual reorder,
+   so tab order and reading order stay the same thing. */
+.wa-open-grid{display:grid;grid-template-columns:1fr 1.14fr;gap:18px 44px;
+  align-content:center;flex:1 1 auto}
+.wa-open-say{grid-column:1;grid-row:1;align-self:end}
+.wa-open-tail{grid-column:1;grid-row:2;align-self:start}
+.wa-win{grid-column:2;grid-row:1/3;align-self:center}
+/* The rail runs under both columns. It sits between the window and the tail
+   of the copy in the DOM so that on a phone, where placement is off, the
+   controls land directly under the map they drive. */
+.wa-win-rail{grid-column:1/-1;grid-row:3;margin-top:var(--sp-4);min-width:0}
 .wa-open-say .wa-stamp{color:var(--c-accent)}
 .wa-open h1{font-size:clamp(38px,5.2vw,76px);margin:16px 0 0}
 .wa-open h1 em{font-style:normal}
@@ -125,10 +138,10 @@ ul,ol{list-style:none}
 .wa-win-state .wa-map-live{cursor:pointer}
 
 /* ---- the rail: every destination, and eight experiences -------------------------- */
-.wa-win-rail{flex:0 0 auto;padding:0 0 26px}
+.wa-win-rail{padding:0 0 26px}
 /* Fourteen destinations do not fit across 1152px, so the rail scrolls
    rather than wrapping into a second row that shifts the whole stage. */
-.wa-ticks{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
+.wa-ticks{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0;
   gap:0;border-top:2px solid var(--c-primary);
   /* fade the right edge, so a rail that runs past the frame looks like it does */
   -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 46px),transparent);
@@ -140,7 +153,7 @@ ul,ol{list-style:none}
 .wa-tick:last-child{border-right:0}
 .wa-tick:hover{color:var(--c-primary)}
 .wa-tick[aria-current]{color:var(--c-bg);background:var(--c-primary)}
-.wa-tags-in{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;margin-top:14px;
+.wa-tags-in{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;min-width:0;margin-top:14px;
   border-top:var(--fj-rule);border-bottom:var(--fj-rule)}
 .wa-tags-in::-webkit-scrollbar{display:none}
 .wa-tag{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:9px;background:none;
@@ -185,10 +198,36 @@ ul,ol{list-style:none}
   .wa-ops>div{padding-bottom:16px;border-bottom:var(--fj-rule)}}
 @media(max-width:1000px){.wa-win{grid-template-columns:1fr}.wa-win-caps{min-height:200px}
   .wa-win-frame{height:min(46vh,400px)}}
-@media(max-width:860px){.wa-open-stage{min-height:0;padding:104px 0 0}
-  .wa-open-grid{grid-template-columns:1fr;gap:34px}
-  .wa-win-frame{height:min(50vh,360px)}
+/* A phone is not the desktop layout stacked. Stacked, the hero ran to 1,323px on
+   an 844px screen: the map — the entire idea — opened below the fold and its
+   controls were two screens down. So on a phone the headline is short, the map
+   comes straight after it, its controls come next, and the paragraph and the
+   buttons go below all three. The signature is the first thing on the screen,
+   which is the one thing that has to be true on the device most people use. */
+@media(max-width:860px){
+  .wa-open-stage{min-height:0;padding:96px 0 0}
+  .wa-open-grid{grid-template-columns:1fr;gap:20px}
+  .wa-open-say,.wa-open-tail,.wa-win,.wa-win-rail{grid-column:1;grid-row:auto}
+  .wa-open .wa-stamp{font-size:9.5px;letter-spacing:.2em}
+  .wa-hair{margin-top:18px}
+  .wa-find{margin-top:14px}
+  .wa-open .wa-lede{margin-top:0;font-size:17px}
+  .wa-acts{margin-top:20px}
+  .wa-acts .wa-act{flex:1 1 auto;text-align:center}
+  .wa-win{display:block}
+  .wa-win-frame{height:min(42vh,320px)}
+  .wa-win-caps{min-height:186px;margin-top:18px}
+  /* The key is absolutely placed under the caption on desktop; unpinned on a
+     phone it has to be given its own row, or the caption lands on top of it. */
+  .wa-win-key{position:static;margin:0 0 14px}
+  .wa-win-cap{top:30px}
+  .wa-win-rail{margin-top:14px;padding-bottom:14px}
   .wa-brief{padding:48px 0 44px}}
+
+/* Anything driven by a thumb gets a 44px target. The ticks were 33px. */
+@media(pointer:coarse){
+  .wa-tick{min-height:44px;padding-top:14px;padding-bottom:14px}
+  .wa-want{padding-top:20px;padding-bottom:18px}}
 @media(max-width:520px){.wa-ops{grid-template-columns:1fr}.wa-ops>div{border-right:0 !important;padding-right:0 !important}}
 
 /* ---- zones and heads ------------------------------------------------------------ */
@@ -429,11 +468,6 @@ ul,ol{list-style:none}
         <h1>Africa isn&rsquo;t<br>one place.</h1>
         <div class="wa-hair" aria-hidden="true"></div>
         <p class="wa-find">Find your Africa.</p>
-        <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
-        <div class="wa-acts">
-          <a class="wa-act go" href="#regions">Explore Africa <i>&rarr;</i></a>
-          <a class="wa-act faint" href="#destinations">Find your experience <i>&rarr;</i></a>
-        </div>
       </div>
       <div class="wa-win">
         <div class="wa-win-frame">
@@ -662,8 +696,7 @@ ul,ol{list-style:none}
           <!-- /gen:captions -->
         </div>
       </div>
-    </div>
-    <div class="wa-frame wa-win-rail">
+      <div class="wa-win-rail">
       <p class="wa-win-line" id="wa-win-line" aria-live="polite"></p>
       <div class="wa-ticks" role="group" aria-label="Choose a destination"><button class="wa-tick" type="button" data-slug="africa" aria-current="true">Africa</button>
         <!-- gen:ticks -->
@@ -671,6 +704,14 @@ ul,ol{list-style:none}
         <!-- /gen:ticks -->
       </div>
       <div class="wa-tags-in" role="group" aria-label="Choose an experience"><button class="wa-tag" type="button" data-exp="wildlife" data-slug="kenya" data-line="The Mara, Amboseli under Kilimanjaro, and the month the migration crosses."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</button><button class="wa-tag" type="button" data-exp="mountains" data-slug="cameroon" data-line="Fako at 4,095 metres, still active, three days up through four climates."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg>Mountains</button><button class="wa-tag" type="button" data-exp="rainforest" data-slug="uganda" data-line="Bwindi and Kibale, where the gorillas and the chimpanzees still are."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg>Rainforest</button><button class="wa-tag" type="button" data-exp="coast" data-slug="tanzania" data-line="Zanzibar, and a Swahili coast trading long before Europe arrived."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</button><button class="wa-tag" type="button" data-exp="culture" data-slug="rwanda" data-line="A thousand hills, and the people farming every one of them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</button><button class="wa-tag" type="button" data-exp="food" data-slug="south-africa" data-line="The Cape table, the winelands behind it, and the fire under both."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</button><button class="wa-tag" type="button" data-exp="heritage" data-slug="zambia" data-line="Mosi-oa-Tunya, the smoke that thunders &mdash; named long before Livingstone saw it."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>Heritage</button><button class="wa-tag" type="button" data-exp="adventure" data-slug="namibia" data-line="Sossusvlei, the Skeleton Coast, and gravel roads with nobody else on them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</button></div>
+      </div>
+      <div class="wa-open-tail">
+        <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
+        <div class="wa-acts">
+          <a class="wa-act go" href="#regions">Explore Africa <i>&rarr;</i></a>
+          <a class="wa-act faint" href="#destinations">Find your experience <i>&rarr;</i></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>

@@ -7,34 +7,18 @@
 <meta name="description" content="Four thousand metres of High Atlas within three hours of the Atlantic, four imperial cities, and the edge of the Sahara at Merzouga — a country you can cross from surf to dunes in two days.">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <style>
+/* Tokens, reset, type scale, focus and motion behaviour are in
+   /styles/afrinkong.css. What is left here is the Kamerun operator's own
+   extension of the palette — the tokens the group system has no use for — and
+   this page's layout. */
 :root{
-  /* master tokens (rebrandable) — laterite-relief: raffia paper, basalt ink, laterite road */
-  --c-bg:#F7F2E7;
-  --c-primary:#1C2A25;
-  --c-accent:#BE5527;
-  --c-ink:#1F211C;
-  --c-muted:#6E7166;
-  --c-border:#DDD4C1;
-  /* derived surfaces */
   --fj-raffia:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
-  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-canopy:color-mix(in srgb,var(--c-primary) 82%,var(--c-accent));
   --fj-ember:color-mix(in srgb,var(--c-accent) 14%,var(--c-bg));
-  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
-  --fj-rule:1px solid var(--c-border);
-  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
-  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
-  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
-  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
-  /* photograph-relative values: these sit ON imagery, so they are tuned to the photograph
-     rather than to the brand palette and stay legible whatever picture is dropped in */
   --fj-shade:#141310;
   --fj-onphoto:#FAF5EA;
   --fj-onphoto-soft:#F2EBDB;
   --fj-onphoto-dim:#EBE2CE;
-  color-scheme:light;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
