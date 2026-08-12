@@ -65,12 +65,11 @@ ul,ol{list-style:none}
 .wa-act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
 .wa-act.faint{border-color:var(--c-border);color:var(--c-muted)}
 .wa-act.faint:hover{border-color:var(--c-primary);color:var(--c-primary)}
-/* Cropped hard right on purpose. The picture is a poster with "AFRICA / One
-   Continent. Endless Wonders." set into its bottom-left corner, and a 4:5 crop
-   of a 3:2 frame keeps only about half the width — centred, that half slices
-   the wording mid-letter. Starting the strip past the type shows the montage
-   and none of the lettering. */
-.wa-open-plate img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:76% 42%}
+/* A 4:5 window on a 3:2 frame keeps a little over half the width, and the whole
+   height, so only the horizontal position matters here. Centred, the strip runs
+   from the coast to the giraffe and holds the figure, the falls and the peak —
+   the four things the montage is actually about. */
+.wa-open-plate img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 50%}
 .wa-key{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border-top:2px solid var(--c-primary)}
 .wa-key-item{padding:18px 22px 0 0}
 .wa-key-item b{display:block;font-family:var(--fj-display);font-size:31px;font-weight:700;color:var(--c-primary)}
@@ -211,7 +210,7 @@ ul,ol{list-style:none}
         </div>
       </div>
       <div class="wa-open-plate">
-        <img src="/images/band-africa-1536w.jpg" alt="African landscapes, wildlife, cities and coastline gathered in one view" decoding="async" data-locked="true">
+        <img src="/images/generated/gateway-hero-africa-1536w.jpg" srcset="/images/generated/gateway-hero-africa-1536w.jpg 1536w" sizes="(min-width: 940px) 40vw, 92vw" alt="A woman in printed cloth looking out over an African view — coast and sunset on one side, forest, a waterfall, a volcanic peak, a city and grazing wildlife on the other" decoding="async" data-provider="openai" data-generated="true" data-locked="true">
       </div>
     </div>
     <div class="wa-key">
