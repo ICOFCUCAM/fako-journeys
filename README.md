@@ -1,6 +1,9 @@
-# Fako Journeys
+# Kamerun
 
-Mount Cameroon treks, the Kribi coast, Waza in the Sahel and the Bamenda highlands — a Cameroonian tour operator's website.
+Mount Cameroon, the black-sand coast, Korup, the Bamenda highlands, Foumban and
+Waza — a Cameroonian tour operator's website. The repository is still named
+`fako-journeys`; the brand is Kamerun, and "Fako" survives only as the name of
+the mountain the first circuit climbs.
 
 A five-page static site: home, services, pricing, about, contact. No build step, no
 dependencies, no framework — plain HTML and CSS. Deploy the folder as-is.
@@ -29,10 +32,10 @@ should be able to fetch. The generated `tourism/*.html` and `images/` still ship
 Two things are placeholders, and both are deliberate:
 
 **1. The contact details.** Phone numbers, addresses, opening hours, licence numbers and
-the bonjour@fakojourneys.cm address are illustrative. Search the HTML and replace them.
+the bonjour@kamerun.cm address are illustrative. Search the HTML and replace them.
 
 **2. The enquiry form.** A static site cannot receive a form submission, so the form
-composes a pre-filled email to bonjour@fakojourneys.cm and opens the visitor's mail app. It does not
+composes a pre-filled email to bonjour@kamerun.cm and opens the visitor's mail app. It does not
 post anywhere and it never claims a message was delivered when it wasn't. To take real
 submissions, point the form at a service (Formspree, Basin, a Vercel function) and
 replace the submit handler at the bottom of each page.
@@ -83,7 +86,7 @@ photograph existed — so it describes intent, not a search result. The engine
 compiles it into an instruction, generates a picture from it, and puts the
 result beside the stock photograph so you can choose.
 
-    npm run tourism:placements      # the 34 slots, and what belongs in each
+    npm run tourism:placements      # every image slot, and what belongs in each
     npm run tourism:prompts         # the instruction each one compiles to
     npm run tourism:generate -- --dry-run    # what it would send, and the cost
     npm run tourism:generate        # make the candidates

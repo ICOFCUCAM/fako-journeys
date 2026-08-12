@@ -373,7 +373,7 @@ def render_country(country, taxonomy, shell):
 
     hero = country.entry("hero")
     return PAGE % {
-        "title": esc("%s Tourism — 27 Experiences | Fako Journeys" % country.name),
+        "title": esc("%s Tourism — 27 Experiences | Kamerun" % country.name),
         "description": esc(country.summary or (hero.description if hero else country.name)),
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
@@ -414,7 +414,7 @@ def render_index(countries, taxonomy, shell):
   </div>
 </section>""" % "".join(cards)
     return PAGE % {
-        "title": "Tourism by Country | Fako Journeys",
+        "title": "Tourism by Country | Kamerun",
         "description": "Country tourism guides, each covering the same 27 travel experiences.",
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
