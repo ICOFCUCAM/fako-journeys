@@ -3,8 +3,23 @@
 Two sites in one repository, on purpose.
 
     /            WankonAfritour — the group's gateway to the whole continent
-    /cameroon    Kamerun — the Cameroon operator, and everything under it
-    /tourism/*   generated country pages, 27 categories each, seven countries
+    /cameroon    Kamerun — the Cameroon operator, hand-built, with its own pages
+    /kenya /rwanda /tanzania /south-africa /zambia
+                 a standalone home page per country, generated from its dataset
+    /tourism/*   the full 27-category index for each of the seven countries
+
+Uganda and Namibia are operator sites of their own (Pearl Trails Uganda,
+Namib Skyline) in separate repositories, so the gateway links out to them
+rather than generating a second, poorer front door.
+
+`npm run tourism:homes` writes the country home pages. They are generated
+because the material already exists — every country carries 27 categories with
+a caption, a description and a subject written for that country — and five
+hand-written pages would be five copies of one structure drifting apart. Each
+is written to stand on its own: somebody landing on /kenya from a search result
+gets a complete site for Kenya without ever needing the gateway. Where a
+country has resolved photographs they are used; where it has none the page is
+typographic rather than a grid of grey boxes.
 
 The gateway sells Africa and hands the visitor to a country. The country site
 sells the country and hands them to a circuit. That is why `index.html` is

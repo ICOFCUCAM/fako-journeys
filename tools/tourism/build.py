@@ -16,6 +16,7 @@
     build.py compare             contact sheet: every candidate for every slot
     build.py place               put chosen candidates into their slots
     build.py optimise            resize and re-encode the placed images
+    build.py homes               a standalone home page per country
     build.py scaffold            create a new country with 27 empty slots
     build.py report              write tourism/REPORT.md
     build.py all                 validate, render, verify, report
@@ -421,6 +422,15 @@ def cmd_compare(args):
     return 0
 
 
+def cmd_homes(args):
+    """Write a standalone home page for every country but Cameroon."""
+    from tourism import home
+    tax, countries, _cache = dataset(args.country)
+    written = home.write_all(countries, tax)
+    print("\n%d country home page(s)" % len(written))
+    return 0
+
+
 def cmd_optimise(args):
     """Resize and re-encode the placed images so the site is deliverable."""
     from tourism import optimise
@@ -480,7 +490,7 @@ COMMANDS = {
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,
-    "optimise": cmd_optimise,
+    "optimise": cmd_optimise, "homes": cmd_homes,
 }
 
 
