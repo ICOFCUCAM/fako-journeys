@@ -38,21 +38,9 @@ ul,ol{list-style:none}
 .wa-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
 .wa-note{margin-top:16px;color:var(--c-muted);max-width:44em}
 
-/* ---- masthead ------------------------------------------------------------------ */
-/* Fixed, not sticky, so the hero picture starts at the very top of the page and
-   runs underneath it. Solid is the default state on purpose: `over` — the
-   transparent one — is added by script, so with JavaScript off the bar stays
-   readable instead of leaving cream type on a photograph. */
-.wa-mast{position:fixed;top:0;left:0;right:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary);transition:background .3s,border-color .3s,color .3s}
-.wa-mast.over{background:transparent;border-bottom-color:transparent;color:var(--c-bg)}
-.wa-mast.over .wa-mark span,.wa-mast.over .wa-routes a{color:color-mix(in srgb,var(--c-bg) 82%,transparent)}
-.wa-mast.over .wa-mark b{text-shadow:0 1px 18px rgba(0,0,0,.45)}
-.wa-mast.over .wa-routes a:hover{color:var(--c-bg)}
-.wa-mast.over .btn{background:color-mix(in srgb,var(--c-bg) 16%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-bg) 62%,transparent)}
-.wa-mast.over .btn:hover{background:var(--c-accent);box-shadow:none}
-/* Keep the frame's side padding: setting `padding:14px 0` here dropped it, and
-   between 1010px and 1240px — where the frame is no longer margin-centred — the
-   mark and the button sat flat against the edge of the window. */
+/* ---- masthead ------------------------------------------------------------------
+   Fixed, so the pinned hero stage can own the full viewport height beneath it. */
+.wa-mast{position:fixed;top:0;left:0;right:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
 .wa-mast-in{display:flex;align-items:center;gap:34px;padding:14px 44px}
 .wa-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
 .wa-mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:1;white-space:nowrap}
@@ -68,88 +56,121 @@ ul,ol{list-style:none}
 @media(max-width:560px){.wa-frame{padding:0 20px}.wa-mast-in{gap:16px;padding:14px 20px}.wa-mark b{font-size:20px}
   .btn{padding:9px 12px;font-size:9px;letter-spacing:.1em;white-space:nowrap}}
 
-/* ---- hero ---------------------------------------------------------------------- */
-/* The picture is the hero, not an illustration beside it: full bleed, type set
-   into it, and the eight ways in along the bottom edge. Two frames, because one
-   crop cannot serve both shapes — the wide montage on a landscape screen, and a
-   portrait frame on a phone, where a 16:9 picture would be a letterbox. */
-.wa-open{position:relative;isolation:isolate;overflow:hidden;min-height:min(90vh,880px);
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-  padding:calc(74px + 9vh) 0 0;color:var(--c-bg)}
-.wa-open-bed img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;
-  object-fit:cover;object-position:50% 44%}
-/* Dark at the top for the masthead and at the foot for the headline and the tag
-   strip, close to clear across the middle so the montage is actually visible.
-   Every scrim step is a cost paid against the picture, so none is wider than the
-   type sitting on it. */
-.wa-open-veil{position:absolute;inset:0;z-index:-1;background:
-  linear-gradient(to bottom,rgba(11,16,13,.60) 0,rgba(11,16,13,.30) 13%,
-    rgba(11,16,13,.16) 30%,rgba(11,16,13,.34) 58%,rgba(11,16,13,.78) 84%,rgba(11,16,13,.88) 100%)}
-.wa-open-say{max-width:none}
-/* Terracotta on a sunrise sky is terracotta on terracotta. Over a picture the
-   eyebrow has to go almost to cream and carry its own shadow. */
-.wa-open-say .wa-stamp{color:color-mix(in srgb,var(--c-accent) 26%,var(--c-bg));
-  text-shadow:0 1px 12px rgba(0,0,0,.7)}
-.wa-open h1{font-size:clamp(42px,7.6vw,108px);margin:18px 0 0;
-  text-shadow:0 2px 30px rgba(0,0,0,.46)}
+/* ---- hero: the Africa window -----------------------------------------------------
+   The window is the outline of the country you are looking at. That is the whole
+   idea: a photograph masked into Cameroon's own shape says "this is one Africa
+   among several" in a way no rectangle does, and it is the one element here that
+   would still be recognisable with the logotype removed.
+
+   It also degrades honestly. A destination with no photograph yet shows its
+   silhouette filled in accent — which reads as the design rather than as a hole,
+   so the hero is finished at three destinations or at eight.
+
+   The stage is pinned while the rail scrolls past it, and each eighth of the
+   rail is one destination. --wa-state is the whole scroll budget in one place. */
+:root{--wa-state:26vh}
+.wa-open{position:relative}
+.wa-open-rail{height:calc(100vh + 8 * var(--wa-state))}
+.wa-open-stage>.wa-frame{width:100%}
+.wa-open-stage{position:sticky;top:0;height:100vh;min-height:640px;display:flex;
+  flex-direction:column;justify-content:center;padding-top:88px;overflow:hidden}
+.wa-open-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center;flex:1 1 auto}
+.wa-open-say .wa-stamp{color:var(--c-accent)}
+.wa-open h1{font-size:clamp(38px,5.4vw,80px);margin:16px 0 0}
 .wa-open h1 em{font-style:normal}
-.wa-hair{width:96px;height:1px;background:color-mix(in srgb,var(--c-bg) 54%,transparent);margin:28px auto 0}
-.wa-open .wa-lede{font-size:19px;color:color-mix(in srgb,var(--c-bg) 90%,var(--c-primary));
-  max-width:31em;margin:24px auto 0;text-shadow:0 1px 16px rgba(0,0,0,.5)}
-.wa-open .wa-lede.sub{font-family:var(--fj-mono);font-size:11px;letter-spacing:.2em;
-  text-transform:uppercase;margin-top:18px;color:color-mix(in srgb,var(--c-bg) 78%,transparent)}
-.wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;justify-content:center}
+.wa-hair{width:88px;height:1px;background:var(--c-border);margin:24px 0 0}
+.wa-find{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(24px,3.2vw,44px);line-height:1.04;color:var(--c-accent);margin-top:20px}
+.wa-open .wa-lede{font-size:18px;color:var(--c-muted);max-width:36em;margin-top:20px}
+.wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
 .wa-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);transition:background .2s,color .2s,border-color .2s}
 .wa-act i{font-style:normal;margin-left:9px}
-.wa-act.go{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-bg)}
-.wa-act.go:hover{background:var(--c-bg);border-color:var(--c-bg);color:var(--c-primary)}
-.wa-act.faint{border-color:color-mix(in srgb,var(--c-bg) 52%,transparent);color:var(--c-bg)}
-.wa-act.faint:hover{border-color:var(--c-bg);background:color-mix(in srgb,var(--c-bg) 14%,transparent)}
+.wa-act.go{background:var(--c-primary);color:var(--c-bg)}
+.wa-act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
+.wa-act.faint{border-color:var(--c-border);color:var(--c-muted)}
+.wa-act.faint:hover{border-color:var(--c-primary);color:var(--c-primary)}
 
-/* ---- hero tag strip -------------------------------------------------------------- */
-/* A contained bar, not a full-bleed one: the items live inside the 1240 frame,
-   so a full-width background leaves two dark wings with nothing in them. */
-.wa-open-tags{width:100%;margin-top:auto;padding:0 44px 34px}
-.wa-tags-in{max-width:1240px;margin:0 auto;padding:0;background:rgba(11,16,13,.40);
-  border:1px solid color-mix(in srgb,var(--c-bg) 24%,transparent);
-  display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}
+.wa-win{display:grid;grid-template-columns:1fr 210px;gap:26px;align-items:center}
+.wa-win-frame{position:relative;height:min(58vh,520px)}
+.wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(.965);transition:opacity .7s ease,transform .9s ease;pointer-events:none}
+.wa-win-state[data-on]{opacity:1;transform:none}
+.wa-win-shape{height:100%;width:auto;max-width:100%;overflow:visible}
+.wa-win-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
+.wa-win-shape image{filter:saturate(1.03)}
+.wa-win-caps{position:relative;min-height:230px}
+.wa-win-cap{position:absolute;inset:0;opacity:0;transition:opacity .5s ease;pointer-events:none}
+.wa-win-cap[data-on]{opacity:1;pointer-events:auto}
+.wa-win-region{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.wa-win-cap b{display:block;font-family:var(--fj-display);font-size:clamp(26px,2.9vw,38px);font-weight:700;text-transform:uppercase;line-height:1.02;margin-top:8px}
+.wa-win-tag{display:block;font-size:15px;color:var(--c-muted);margin-top:7px}
+.wa-win-op{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent);margin-top:14px}
+.wa-win-go{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px}
+.wa-win-line{min-height:22px;margin-bottom:10px;font-size:14.5px;color:var(--c-accent);
+  font-family:var(--fj-text);max-width:60em}
+
+/* ---- the rail: eight destinations, eight experiences ----------------------------- */
+.wa-win-rail{flex:0 0 auto;padding-bottom:22px}
+.wa-ticks{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--c-primary)}
+.wa-tick{flex:1 1 0;background:none;border:0;border-right:var(--fj-rule);cursor:pointer;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--c-muted);padding:11px 8px;text-align:left;transition:color .2s,background .2s;white-space:nowrap}
+.wa-tick:last-child{border-right:0}
+.wa-tick:hover{color:var(--c-primary)}
+.wa-tick[aria-current]{color:var(--c-bg);background:var(--c-primary)}
+.wa-tags-in{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;margin-top:14px;
+  border-top:var(--fj-rule);border-bottom:var(--fj-rule)}
 .wa-tags-in::-webkit-scrollbar{display:none}
-.wa-tag{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:10px;
-  padding:16px 18px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
-  text-transform:uppercase;white-space:nowrap;color:color-mix(in srgb,var(--c-bg) 88%,transparent);
-  border-left:1px solid color-mix(in srgb,var(--c-bg) 16%,transparent);transition:background .2s,color .2s}
+.wa-tag{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:9px;background:none;
+  border:0;border-left:var(--fj-rule);cursor:pointer;padding:14px 16px;font-family:var(--fj-mono);
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);
+  transition:background .2s,color .2s}
 .wa-tag:first-child{border-left:0}
-.wa-tag:hover{background:color-mix(in srgb,var(--c-bg) 12%,transparent);color:var(--c-bg)}
-.wa-tag svg{width:22px;height:22px;flex:0 0 auto;stroke:color-mix(in srgb,var(--c-accent) 58%,var(--c-bg));
-  stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.wa-open-foot{background:var(--fj-basalt);color:color-mix(in srgb,var(--c-accent) 66%,var(--c-bg));
-  text-align:center;font-family:var(--fj-mono);font-size:10px;letter-spacing:.28em;
-  text-transform:uppercase;padding:12px 20px}
+.wa-tag:hover{color:var(--c-primary)}
+.wa-tag[data-on]{background:var(--c-accent);color:var(--c-bg)}
+.wa-tag svg{width:20px;height:20px;flex:0 0 auto;stroke:currentColor;stroke-width:1.5;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
 
-/* ---- what we are, under the hero ------------------------------------------------- */
-.wa-brief{padding:62px 0 58px;border-bottom:var(--fj-rule)}
-.wa-brief .wa-lede{font-size:19px;color:var(--c-muted);max-width:44em}
-.wa-key{display:grid;grid-template-columns:repeat(4,1fr);margin-top:44px;border-top:2px solid var(--c-primary)}
-.wa-key-item{padding:18px 22px 0 0}
-.wa-key-item b{display:block;font-family:var(--fj-display);font-size:31px;font-weight:700;color:var(--c-primary)}
-.wa-key-item span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted);margin-top:7px}
-@media(max-width:940px){.wa-open{min-height:min(86vh,760px);padding:calc(70px + 6vh) 0 0}
-  .wa-brief{padding:46px 0 44px}.wa-key{grid-template-columns:1fr 1fr}}
-/* On a phone the type goes to the foot of the picture instead of the middle of
-   it. Centred, it lands squarely on the figure — she stands in the middle third
-   of the portrait frame — and a headline over a face reads as a mistake. */
-@media(max-width:700px){.wa-open{min-height:82vh;text-align:left;align-items:stretch;
-    justify-content:flex-end;padding:0}
-  .wa-open-bed img{object-position:22% 50%}
-  .wa-open-veil{background:linear-gradient(to bottom,rgba(11,16,13,.56) 0,rgba(11,16,13,.16) 16%,
-    rgba(11,16,13,.20) 34%,rgba(11,16,13,.72) 62%,rgba(11,16,13,.90) 100%)}
-  .wa-open-say{margin-top:auto;padding-bottom:30px}
-  .wa-open h1{font-size:clamp(38px,11vw,58px)}
-  .wa-hair{margin-left:0}.wa-open .wa-lede{margin-left:0;font-size:17px}
-  .wa-acts{justify-content:flex-start;gap:10px}
-  .wa-open-tags{margin-top:0;padding:0 20px 22px}
-  .wa-tag{flex:0 0 auto;padding:14px 16px}}
-@media(max-width:520px){.wa-key{grid-template-columns:1fr}.wa-key-item{padding:14px 0 12px;border-bottom:var(--fj-rule)}}
+/* ---- what Afrinkong is ------------------------------------------------------------ */
+.wa-brief{padding:70px 0 62px;border-top:var(--fj-rule);border-bottom:var(--fj-rule)}
+.wa-claim{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(24px,3.4vw,46px);line-height:1.08;letter-spacing:-.01em}
+.wa-claim em{font-style:normal;color:var(--c-accent)}
+.wa-ops{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;border-top:2px solid var(--c-primary)}
+.wa-ops>div{padding:18px 22px 0 0;border-right:var(--fj-rule)}
+.wa-ops>div:last-child{border-right:0;padding-right:0}
+.wa-ops b{display:block;font-family:var(--fj-display);font-size:22px;font-weight:700;text-transform:uppercase}
+.wa-ops span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent);margin-top:8px}
+.wa-ops .soon b,.wa-ops .soon span{color:var(--c-muted)}
+
+/* ---- where do you want to begin ---------------------------------------------------- */
+.wa-wants{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.wa-want{background:none;border:0;border-right:var(--fj-rule);border-bottom:var(--fj-rule);cursor:pointer;
+  text-align:left;padding:24px 26px 22px 0;transition:background .2s}
+.wa-want:nth-child(3n){border-right:0;padding-right:0}
+.wa-want:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
+.wa-want i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.wa-want b{display:block;font-family:var(--fj-display);font-size:clamp(22px,2.6vw,32px);font-weight:700;text-transform:uppercase;margin-top:10px}
+.wa-want[aria-pressed="true"]{background:var(--c-primary)}
+.wa-want[aria-pressed="true"] b{color:var(--c-bg)}
+.wa-want-say{margin-top:22px;font-size:15px;color:var(--c-muted)}
+.wa-dest[hidden]{display:none}
+@media(max-width:760px){.wa-wants{grid-template-columns:1fr 1fr}.wa-want:nth-child(3n){border-right:var(--fj-rule);padding-right:26px}.wa-want:nth-child(2n){border-right:0;padding-right:0}}
+@media(max-width:460px){.wa-wants{grid-template-columns:1fr}.wa-want{border-right:0 !important;padding-right:0 !important}}
+@media(max-width:1080px){.wa-win{grid-template-columns:1fr}.wa-win-caps{min-height:200px}.wa-win-frame{height:min(40vh,340px)}}
+@media(max-width:900px){.wa-ops{grid-template-columns:1fr 1fr}.wa-ops>div:nth-child(2n){border-right:0;padding-right:0}
+  .wa-ops>div{padding-bottom:16px;border-bottom:var(--fj-rule)}}
+/* Below this the stage is not pinned: it is one screen with the buttons doing
+   the work, because 300vh of pinned scroll on a phone reads as a broken page. */
+@media(max-width:860px){.wa-open-rail{height:auto}
+  .wa-open-stage{position:static;height:auto;min-height:0;padding:96px 0 0}
+  .wa-open-grid{grid-template-columns:1fr;gap:34px}
+  .wa-win-frame{height:min(46vh,330px)}
+  .wa-win-caps{min-height:210px}
+  .wa-ticks{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+  .wa-tick{flex:0 0 auto}
+  .wa-brief{padding:48px 0 44px}}
+@media(max-width:520px){.wa-ops{grid-template-columns:1fr}.wa-ops>div{border-right:0 !important;padding-right:0 !important}}
 
 /* ---- zones and heads ------------------------------------------------------------ */
 .wa-zone{padding:88px 0}
@@ -373,67 +394,246 @@ ul,ol{list-style:none}
     <a class="btn" href="#plan">Begin a journey</a>
   </div>
 </header>
+
+<!-- hero: the Africa window -->
+<section class="wa-open" id="window">
+  <div class="wa-open-rail">
+    <div class="wa-open-stage">
+      <div class="wa-frame wa-open-grid">
+        <div class="wa-open-say">
+          <span class="wa-stamp">54 countries &middot; one continent &middot; countless ways to begin</span>
+          <h1>Africa isn&rsquo;t<br>one place.</h1>
+          <div class="wa-hair" aria-hidden="true"></div>
+          <p class="wa-find">Find your Africa.</p>
+          <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
+          <div class="wa-acts">
+            <a class="wa-act go" href="#destinations">Explore Africa <i>&rarr;</i></a>
+            <a class="wa-act faint" href="#begin">Find your experience <i>&rarr;</i></a>
+          </div>
+        </div>
+        <div class="wa-win">
+          <div class="wa-win-frame">
+      <figure class="wa-win-state" data-slug="cameroon" data-on="true">
+        <svg class="wa-win-shape" viewBox="0 0 672.4 1000.0" role="img" aria-label="Black volcanic sand and palms below a volcano at dusk">
+          <defs><clipPath id="wc-cameroon"><path d="M544.4 0L578.9 57.5L583.9 117L580.1 176.6L627.4 258.3L577.9 257.2L553 263.4L512.5 254.1L492.9 296.3L544.8 349.1L583.3 364.4L595.5 401.7L622.9 463.7L609 488L563.4 578.9L541.7 595L534.5 664.7L543.3 702.6L535.7 729.4L578 776.5L585.3 808.8L618.4 855.3L659.3 884.3L663.1 925.3L672.4 951.5L665.9 1000L594.8 978.5L522.2 954.6L409.1 950.7L397.9 945.8L344.9 957.2L290.4 944.9L247.8 950.5L102.1 947.7L115.5 876.7L81.2 816.8L40.5 801.2L23 760.6L0 747.4L1.6 722.6L25.3 659L68.9 572.4L94.9 571.7L148.6 519.6L182.3 518.3L231.8 555.8L293.4 525.9L302.3 488.5L322.9 452.4L337.3 407.1L385.2 370.4L403.9 307.6L423.1 287.7L436.2 241.1L460.5 184L535.9 115.2L540.7 85.5L550.8 69.3L516.4 33.5L519.7 5L544.4 0Z"/></clipPath></defs>
+          <path class="wa-win-fill" d="M544.4 0L578.9 57.5L583.9 117L580.1 176.6L627.4 258.3L577.9 257.2L553 263.4L512.5 254.1L492.9 296.3L544.8 349.1L583.3 364.4L595.5 401.7L622.9 463.7L609 488L563.4 578.9L541.7 595L534.5 664.7L543.3 702.6L535.7 729.4L578 776.5L585.3 808.8L618.4 855.3L659.3 884.3L663.1 925.3L672.4 951.5L665.9 1000L594.8 978.5L522.2 954.6L409.1 950.7L397.9 945.8L344.9 957.2L290.4 944.9L247.8 950.5L102.1 947.7L115.5 876.7L81.2 816.8L40.5 801.2L23 760.6L0 747.4L1.6 722.6L25.3 659L68.9 572.4L94.9 571.7L148.6 519.6L182.3 518.3L231.8 555.8L293.4 525.9L302.3 488.5L322.9 452.4L337.3 407.1L385.2 370.4L403.9 307.6L423.1 287.7L436.2 241.1L460.5 184L535.9 115.2L540.7 85.5L550.8 69.3L516.4 33.5L519.7 5L544.4 0Z"/><image clip-path="url(#wc-cameroon)" href="/images/uploads/window-cameroon-1024w.jpg" x="0" y="0" width="672.4" height="1000.0" preserveAspectRatio="xMidYMid slice"/>
+        </svg>
+      </figure>
+      <figure class="wa-win-state" data-slug="uganda">
+        <svg class="wa-win-shape" viewBox="0 0 939.1 1000.0" role="img" aria-label="Ridge after ridge of montane rainforest under low cloud">
+          <defs><clipPath id="wc-uganda"><path d="M746.1 910.6L394.9 925.8L206 924.7L145 945.9L41.7 1000L0 982.5L1.3 850.9L41.7 784.3L50.8 644.1L87.2 563L152.6 471.7L218.8 424.9L273.6 362.4L204.5 339.3L212.5 135.1L283.2 86.9L392.8 124.9L531.1 82.7L651.7 81.8L756.2 0L839.7 120.8L860.7 208.4L939.1 408.7L877.6 537.1L793.4 653.7L744.1 724.9L746.1 910.6Z"/></clipPath></defs>
+          <path class="wa-win-fill" d="M746.1 910.6L394.9 925.8L206 924.7L145 945.9L41.7 1000L0 982.5L1.3 850.9L41.7 784.3L50.8 644.1L87.2 563L152.6 471.7L218.8 424.9L273.6 362.4L204.5 339.3L212.5 135.1L283.2 86.9L392.8 124.9L531.1 82.7L651.7 81.8L756.2 0L839.7 120.8L860.7 208.4L939.1 408.7L877.6 537.1L793.4 653.7L744.1 724.9L746.1 910.6Z"/><image clip-path="url(#wc-uganda)" href="/images/uploads/window-uganda-1200w.jpg" x="0" y="0" width="939.1" height="1000.0" preserveAspectRatio="xMidYMid slice"/>
+        </svg>
+      </figure>
+      <figure class="wa-win-state" data-slug="kenya">
+        <svg class="wa-win-shape" viewBox="0 0 759.2 1000.0" role="img" aria-label="A zebra on a red earth track with a snow-capped peak far behind">
+          <defs><clipPath id="wc-kenya"><path d="M507.3 1000L371.2 901.9L365.3 844.7L17.5 646.2L1.1 635.5L0 531.4L27.7 491.5L74.9 426.1L109.3 354.1L65.4 241.8L53.6 192.7L6.8 125L65 65.7L128.6 0L179 15.7L180.2 71L213.7 102.8L280.3 101.9L403.4 183.9L433.4 184.4L455.8 181.4L477.4 192.5L541.2 199.4L568.6 157.6L654.9 114.8L694.1 147.6L759.2 146.5L678.2 260.3L682.1 621.4L738.6 702.8L671.3 742.9L647.6 784.3L611.8 791.9L597.2 861.6L566.1 901.5L546.4 967.3L507.3 1000Z"/></clipPath></defs>
+          <path class="wa-win-fill" d="M507.3 1000L371.2 901.9L365.3 844.7L17.5 646.2L1.1 635.5L0 531.4L27.7 491.5L74.9 426.1L109.3 354.1L65.4 241.8L53.6 192.7L6.8 125L65 65.7L128.6 0L179 15.7L180.2 71L213.7 102.8L280.3 101.9L403.4 183.9L433.4 184.4L455.8 181.4L477.4 192.5L541.2 199.4L568.6 157.6L654.9 114.8L694.1 147.6L759.2 146.5L678.2 260.3L682.1 621.4L738.6 702.8L671.3 742.9L647.6 784.3L611.8 791.9L597.2 861.6L566.1 901.5L546.4 967.3L507.3 1000Z"/><image clip-path="url(#wc-kenya)" href="/images/uploads/window-kenya-1200w.jpg" x="0" y="0" width="759.2" height="1000.0" preserveAspectRatio="xMidYMid slice"/>
+        </svg>
+      </figure>
+      <figure class="wa-win-state" data-slug="tanzania">
+        <svg class="wa-win-shape" viewBox="0 0 982.6 1000.0" role="img" aria-label="A footpath through flat-topped acacia below a snow-capped volcano">
+          <defs><clipPath id="wc-tanzania"><path d="M419.9 0L435.4 10.1L764.8 198.1L770.4 252.3L899.3 345.2L855.2 460.4L859.1 513.3L916.1 547.5L918 571.7L891.5 628L895.8 656.5L888.4 701L917.7 759.5L951 851.7L982.6 872.3L908.8 925.7L809.3 961.1L755.4 959.1L722.1 986.6L659.6 988.6L635.5 1000L528.5 973.2L460.4 980.2L439.9 854.3L410.3 811.1L393.2 785.3L304.5 767.8L253.9 739.9L196.4 724.1L160.4 708.6L122.8 685L75.7 568.6L23.5 517L6.1 463.3L15.6 415.3L0 330.3L38 325.9L71.6 292.3L107.6 244L130.5 224.5L129.8 194.5L110.1 173.5L105 137L131.5 125.3L136.9 70.8L100.7 18.7L133.1 7.4L233.4 8.1L419.9 0Z"/></clipPath></defs>
+          <path class="wa-win-fill" d="M419.9 0L435.4 10.1L764.8 198.1L770.4 252.3L899.3 345.2L855.2 460.4L859.1 513.3L916.1 547.5L918 571.7L891.5 628L895.8 656.5L888.4 701L917.7 759.5L951 851.7L982.6 872.3L908.8 925.7L809.3 961.1L755.4 959.1L722.1 986.6L659.6 988.6L635.5 1000L528.5 973.2L460.4 980.2L439.9 854.3L410.3 811.1L393.2 785.3L304.5 767.8L253.9 739.9L196.4 724.1L160.4 708.6L122.8 685L75.7 568.6L23.5 517L6.1 463.3L15.6 415.3L0 330.3L38 325.9L71.6 292.3L107.6 244L130.5 224.5L129.8 194.5L110.1 173.5L105 137L131.5 125.3L136.9 70.8L100.7 18.7L133.1 7.4L233.4 8.1L419.9 0Z"/><image clip-path="url(#wc-tanzania)" href="/images/uploads/window-tanzania-940w.jpg" x="0" y="0" width="982.6" height="1000.0" preserveAspectRatio="xMidYMid slice"/>
+        </svg>
+      </figure>
+      <figure class="wa-win-state" data-slug="rwanda">
+        <svg class="wa-win-shape" viewBox="0 0 996.3 1000.0" role="img" aria-label="The outline of Rwanda">
+          <defs><clipPath id="wc-rwanda"><path d="M777 0L996.3 315.1L963.1 645.4L803 716.2L509.3 681L337.8 1000L0 957.2L53.4 651.1L129.5 607.3L150.5 274.6L310.9 117.6L444.8 174L777 0Z"/></clipPath></defs>
+          <path class="wa-win-fill" d="M777 0L996.3 315.1L963.1 645.4L803 716.2L509.3 681L337.8 1000L0 957.2L53.4 651.1L129.5 607.3L150.5 274.6L310.9 117.6L444.8 174L777 0Z"/>
+        </svg>
+      </figure>
+      <figure class="wa-win-state" data-slug="namibia">
+        <svg class="wa-win-shape" viewBox="0 0 1000.0 913.6" role="img" aria-label="The outline of Namibia">
+          <defs><clipPath id="wc-namibia"><path d="M609.3 592.8L607.8 870L544.8 908.1L507.1 913.6L462.7 899.5L431 894.1L418.7 862.3L390.7 841.9L357.5 879L303.7 822.8L274.8 768.2L257.1 695.2L238.2 640.8L211 524.8L207 434.3L196.8 393.1L167.5 362.1L127.7 299.5L86.3 208.5L69 160.8L6.3 86.6L0 28.1L35.7 13.2L80.2 0L128.9 2L174.4 36.3L185.6 30.9L489.4 26.9L541.3 63.5L722.6 74.4L860.4 43.7L922.2 26.6L970.6 31.3L999.6 48.6L1000 55L957.6 71.9L934.7 72.1L886.5 101.7L858.6 70.2L743.1 96.6L687.4 98.9L682.9 369.8L610.4 372.2L609.3 592.8Z"/></clipPath></defs>
+          <path class="wa-win-fill" d="M609.3 592.8L607.8 870L544.8 908.1L507.1 913.6L462.7 899.5L431 894.1L418.7 862.3L390.7 841.9L357.5 879L303.7 822.8L274.8 768.2L257.1 695.2L238.2 640.8L211 524.8L207 434.3L196.8 393.1L167.5 362.1L127.7 299.5L86.3 208.5L69 160.8L6.3 86.6L0 28.1L35.7 13.2L80.2 0L128.9 2L174.4 36.3L185.6 30.9L489.4 26.9L541.3 63.5L722.6 74.4L860.4 43.7L922.2 26.6L970.6 31.3L999.6 48.6L1000 55L957.6 71.9L934.7 72.1L886.5 101.7L858.6 70.2L743.1 96.6L687.4 98.9L682.9 369.8L610.4 372.2L609.3 592.8Z"/>
+        </svg>
+      </figure>
+      <figure class="wa-win-state" data-slug="zambia">
+        <svg class="wa-win-shape" viewBox="0 0 1000.0 840.6" role="img" aria-label="Dust and low sun through acacia, a game vehicle on the track">
+          <defs><clipPath id="wc-zambia"><path d="M769.4 8.9L804.9 31.2L838.9 45.9L893.3 60.8L941.1 87.1L980.4 126.3L1000 200.4L984.8 224L965.1 294.5L978.7 366.9L950.9 396.9L921.7 477.5L965.6 500.4L705.6 569.7L711.2 631.5L646.9 642.8L597.3 676.8L586.2 706.7L555.6 713.1L480.2 783.5L431.7 838.9L403.3 840.6L376.4 830.5L282.6 820.4L267.6 814L267.1 806.8L234.6 787.3L180.1 782.1L110.6 801.3L56.4 747.5L0 677L6.5 402.6L184.9 404L177.9 374.3L191 341.8L176.4 301.2L186.8 259.3L178.2 232.3L207.9 234.6L212.2 261.6L252.7 259.5L307 267.7L335.1 307.1L403.3 319.4L456.3 292.2L474.5 337.8L539.8 350.1L570.5 387.2L604.2 435.1L669.2 436.2L664.9 342.6L641.1 358.2L582.3 324.1L559.6 308.6L572.1 221.5L589.4 118.7L570.9 80.3L596.4 24.8L619.9 14.4L735.8 0L769.4 8.9Z"/></clipPath></defs>
+          <path class="wa-win-fill" d="M769.4 8.9L804.9 31.2L838.9 45.9L893.3 60.8L941.1 87.1L980.4 126.3L1000 200.4L984.8 224L965.1 294.5L978.7 366.9L950.9 396.9L921.7 477.5L965.6 500.4L705.6 569.7L711.2 631.5L646.9 642.8L597.3 676.8L586.2 706.7L555.6 713.1L480.2 783.5L431.7 838.9L403.3 840.6L376.4 830.5L282.6 820.4L267.6 814L267.1 806.8L234.6 787.3L180.1 782.1L110.6 801.3L56.4 747.5L0 677L6.5 402.6L184.9 404L177.9 374.3L191 341.8L176.4 301.2L186.8 259.3L178.2 232.3L207.9 234.6L212.2 261.6L252.7 259.5L307 267.7L335.1 307.1L403.3 319.4L456.3 292.2L474.5 337.8L539.8 350.1L570.5 387.2L604.2 435.1L669.2 436.2L664.9 342.6L641.1 358.2L582.3 324.1L559.6 308.6L572.1 221.5L589.4 118.7L570.9 80.3L596.4 24.8L619.9 14.4L735.8 0L769.4 8.9Z"/><image clip-path="url(#wc-zambia)" href="/images/uploads/window-zambia-1200w.jpg" x="0" y="0" width="1000.0" height="840.6" preserveAspectRatio="xMidYMid slice"/>
+        </svg>
+      </figure>
+      <figure class="wa-win-state" data-slug="south-africa">
+        <svg class="wa-win-shape" viewBox="0 0 1000.0 807.0" role="img" aria-label="The outline of South Africa">
+          <defs><clipPath id="wc-south-africa"><path d="M0 412.6L28.3 380.9L52.2 398.3L62.7 425.5L89.8 430.1L127.7 442.1L159.8 437.4L213.6 404.9L214.9 168.4L231.5 178L267.5 239.1L261.4 278.2L274.7 300.7L318.4 294.3L349.5 265.8L378.9 246.8L394.6 216.1L424.8 201.4L450.5 209.3L479.3 227.6L529 231.2L568.9 216.5L575.8 196.6L587.7 165.8L621.6 161.1L641.1 137L663.6 94.3L721.5 46.6L811.9 0L837.2 1.1L866.7 12.5L888.2 5L920.9 12L944.6 103.9L957.3 150.1L941.2 222L944.5 245.3L914.7 232.9L896.8 237.1L889.7 255.8L871.4 279.6L870.2 301.9L903.7 337.4L939.6 331.3L954.1 302.9L1000 304.5L980.8 351L969.2 404.2L951.1 432.8L907.5 464.2L895.2 473.2L867.3 505.1L848.1 537.4L810.9 582.3L739.6 646.3L695.8 683.5L650 711.5L588.2 734.9L558.7 737.7L550.3 755.1L515.8 745.2L486.6 756.9L424.7 744L389.5 751.3L365.8 747.8L305.9 772.2L256.5 782L221 805.6L194.8 807L170.8 784.7L151.4 783.5L126.4 755.5L123.8 764.2L116 747.3L116.2 710.4L97.1 668.2L115.7 656.6L113.9 608.2L74.8 549L44.4 495.2L44.2 495.1L0 412.6ZM757.5 441.8L732.8 421.6L704 434.1L670 458.7L635.9 498.5L677.5 548.1L699 542.1L711.2 522.1L744.9 512.7L756.4 492.1L776.8 461.4L757.5 441.8Z"/></clipPath></defs>
+          <path class="wa-win-fill" d="M0 412.6L28.3 380.9L52.2 398.3L62.7 425.5L89.8 430.1L127.7 442.1L159.8 437.4L213.6 404.9L214.9 168.4L231.5 178L267.5 239.1L261.4 278.2L274.7 300.7L318.4 294.3L349.5 265.8L378.9 246.8L394.6 216.1L424.8 201.4L450.5 209.3L479.3 227.6L529 231.2L568.9 216.5L575.8 196.6L587.7 165.8L621.6 161.1L641.1 137L663.6 94.3L721.5 46.6L811.9 0L837.2 1.1L866.7 12.5L888.2 5L920.9 12L944.6 103.9L957.3 150.1L941.2 222L944.5 245.3L914.7 232.9L896.8 237.1L889.7 255.8L871.4 279.6L870.2 301.9L903.7 337.4L939.6 331.3L954.1 302.9L1000 304.5L980.8 351L969.2 404.2L951.1 432.8L907.5 464.2L895.2 473.2L867.3 505.1L848.1 537.4L810.9 582.3L739.6 646.3L695.8 683.5L650 711.5L588.2 734.9L558.7 737.7L550.3 755.1L515.8 745.2L486.6 756.9L424.7 744L389.5 751.3L365.8 747.8L305.9 772.2L256.5 782L221 805.6L194.8 807L170.8 784.7L151.4 783.5L126.4 755.5L123.8 764.2L116 747.3L116.2 710.4L97.1 668.2L115.7 656.6L113.9 608.2L74.8 549L44.4 495.2L44.2 495.1L0 412.6ZM757.5 441.8L732.8 421.6L704 434.1L670 458.7L635.9 498.5L677.5 548.1L699 542.1L711.2 522.1L744.9 512.7L756.4 492.1L776.8 461.4L757.5 441.8Z"/>
+        </svg>
+      </figure>
+          </div>
+          <div class="wa-win-caps" aria-live="polite">
+<div class="wa-win-cap" data-slug="cameroon" data-on="true"><span class="wa-win-region">Central &amp; West Africa</span><b>Cameroon</b><span class="wa-win-tag">Africa in miniature</span><span class="wa-win-op">Operated locally by Kamerun</span><a class="wa-win-go" href="/cameroon">Enter Cameroon &rarr;</a></div>
+            <div class="wa-win-cap" data-slug="uganda"><span class="wa-win-region">East Africa</span><b>Uganda</b><span class="wa-win-tag">The Pearl of Africa</span><span class="wa-win-op">Operated locally by Pearl Trails Uganda</span><a class="wa-win-go" href="https://pearl-trails-uganda.vercel.app">Enter Uganda &rarr;</a></div>
+            <div class="wa-win-cap" data-slug="kenya"><span class="wa-win-region">East Africa</span><b>Kenya</b><span class="wa-win-tag">Where the wild runs free</span><span class="wa-win-op">Operated locally by a licensed Kenyan operator</span><a class="wa-win-go" href="/kenya">Enter Kenya &rarr;</a></div>
+            <div class="wa-win-cap" data-slug="tanzania"><span class="wa-win-region">East Africa</span><b>Tanzania</b><span class="wa-win-tag">Wild Africa, island Africa</span><span class="wa-win-op">Operated locally by a licensed Tanzanian operator</span><a class="wa-win-go" href="/tanzania">Enter Tanzania &rarr;</a></div>
+            <div class="wa-win-cap" data-slug="rwanda"><span class="wa-win-region">East Africa</span><b>Rwanda</b><span class="wa-win-tag">A thousand hills</span><span class="wa-win-op">Operated locally by a licensed Rwandan operator</span><a class="wa-win-go" href="/rwanda">Enter Rwanda &rarr;</a></div>
+            <div class="wa-win-cap" data-slug="namibia"><span class="wa-win-region">Southern Africa</span><b>Namibia</b><span class="wa-win-tag">Where the desert meets the wild</span><span class="wa-win-op">Operated locally by Namib Skyline</span><a class="wa-win-go" href="https://namib-skyline.vercel.app">Enter Namibia &rarr;</a></div>
+            <div class="wa-win-cap" data-slug="zambia"><span class="wa-win-region">Southern Africa</span><b>Zambia</b><span class="wa-win-tag">Into the real wilderness</span><span class="wa-win-op">Operated locally by a licensed Zambian operator</span><a class="wa-win-go" href="/zambia">Enter Zambia &rarr;</a></div>
+            <div class="wa-win-cap" data-slug="south-africa"><span class="wa-win-region">Southern Africa</span><b>South Africa</b><span class="wa-win-tag">A world in one country</span><span class="wa-win-op">Operated locally by a licensed South African operator</span><a class="wa-win-go" href="/south-africa">Enter South Africa &rarr;</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="wa-frame wa-win-rail">
+        <p class="wa-win-line" id="wa-win-line" aria-live="polite"></p>
+        <div class="wa-ticks" role="group" aria-label="Choose a destination"><button class="wa-tick" type="button" data-slug="cameroon" aria-current="true">Cameroon</button><button class="wa-tick" type="button" data-slug="uganda">Uganda</button><button class="wa-tick" type="button" data-slug="kenya">Kenya</button><button class="wa-tick" type="button" data-slug="tanzania">Tanzania</button><button class="wa-tick" type="button" data-slug="rwanda">Rwanda</button><button class="wa-tick" type="button" data-slug="namibia">Namibia</button><button class="wa-tick" type="button" data-slug="zambia">Zambia</button><button class="wa-tick" type="button" data-slug="south-africa">South Africa</button></div>
+        <div class="wa-tags-in" role="group" aria-label="Choose an experience"><button class="wa-tag" type="button" data-exp="wildlife" data-slug="kenya" data-line="The Mara, Amboseli under Kilimanjaro, and the month the migration crosses."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</button><button class="wa-tag" type="button" data-exp="mountains" data-slug="cameroon" data-line="Fako at 4,095 metres, still active, three days up through four climates."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg>Mountains</button><button class="wa-tag" type="button" data-exp="rainforest" data-slug="uganda" data-line="Bwindi and Kibale, where the gorillas and the chimpanzees still are."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg>Rainforest</button><button class="wa-tag" type="button" data-exp="coast" data-slug="tanzania" data-line="Zanzibar, and a Swahili coast trading long before Europe arrived."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</button><button class="wa-tag" type="button" data-exp="culture" data-slug="rwanda" data-line="A thousand hills, and the people farming every one of them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</button><button class="wa-tag" type="button" data-exp="food" data-slug="south-africa" data-line="The Cape table, the winelands behind it, and the fire under both."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</button><button class="wa-tag" type="button" data-exp="heritage" data-slug="zambia" data-line="Mosi-oa-Tunya, the smoke that thunders &mdash; named long before Livingstone saw it."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>Heritage</button><button class="wa-tag" type="button" data-exp="adventure" data-slug="namibia" data-line="Sossusvlei, the Skeleton Coast, and gravel roads with nobody else on them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</button></div>
+      </div>
+    </div>
+  </div>
+</section>
 <script>
-/* The bar is transparent while it is over the hero picture and solid once it is
-   over the page. It runs here rather than at the end of the body so the state is
-   set before the hero paints — deferring it makes the bar flash cream on load.
-   Solid is the markup default, so no-JS keeps a readable masthead. */
+/* The window is one control with three ways in: the scroll position while the
+   hero is pinned, the eight country ticks, and the eight experience buttons.
+   All three write the same state, so they can never disagree.
+
+   Pinning is a desktop affordance. Below the breakpoint the stage is a normal
+   block and only the buttons change the state — 300vh of pinned scroll on a
+   phone is a page that appears not to start. */
 (function(){
-  var mast = document.currentScript.previousElementSibling, over = null;
-  function set(){
-    var want = window.scrollY < 90;
-    if (want !== over) { over = want; mast.classList.toggle('over', want); }
+  var sec = document.currentScript.previousElementSibling;
+  var rail = sec.querySelector('.wa-open-rail');
+  var states = [].slice.call(sec.querySelectorAll('.wa-win-state'));
+  var caps = [].slice.call(sec.querySelectorAll('.wa-win-cap'));
+  var ticks = [].slice.call(sec.querySelectorAll('.wa-tick'));
+  var tags = [].slice.call(sec.querySelectorAll('.wa-tag'));
+  var line = sec.querySelector('#wa-win-line');
+  var order = states.map(function(s){ return s.dataset.slug; });
+  var pinned = matchMedia('(min-width: 861px)');
+  var at = 0, held = null, heldAt = -1, lock = 0;
+
+  function paint(i){
+    at = i;
+    states.forEach(function(s, n){ s.toggleAttribute('data-on', n === i); });
+    caps.forEach(function(c, n){ c.toggleAttribute('data-on', n === i); });
+    ticks.forEach(function(t, n){ if (n === i) t.setAttribute('aria-current','true'); else t.removeAttribute('aria-current'); });
+    tags.forEach(function(t){ t.toggleAttribute('data-on', t.dataset.slug === order[i] && held === t.dataset.exp); });
+    line.innerHTML = held ? (tags.filter(function(t){ return t.dataset.exp === held; })[0].dataset.line) : '';
   }
-  set();
-  addEventListener('scroll', set, {passive:true});
+
+  function fromScroll(){
+    /* A selection scrolls the page to its slice, and that smooth scroll passes
+       through every index in between. Without this the intermediate frames
+       clear the very selection that started the scroll. */
+    if (!pinned.matches || performance.now() < lock) return;
+    var box = rail.getBoundingClientRect();
+    var travel = rail.offsetHeight - window.innerHeight;
+    if (travel <= 0) return;
+    var p = Math.min(0.9999, Math.max(0, -box.top / travel));
+    var i = Math.floor(p * states.length);
+    if (i === at) return;
+    if (i !== heldAt) { held = null; heldAt = -1; }
+    paint(i);
+  }
+
+  /* Selecting scrolls to that state's slice, so the pinned scroll and the
+     buttons stay in step instead of fighting each other on the next wheel tick. */
+  function go(slug, exp){
+    var i = order.indexOf(slug);
+    if (i < 0) return;
+    held = exp || null;
+    heldAt = held ? i : -1;
+    if (!pinned.matches) {
+      /* Unpinned, the buttons sit below the window, so pressing one can leave the
+         picture you just chose off the top of the screen. */
+      sec.querySelector('.wa-win-frame').scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+    if (pinned.matches) {
+      lock = performance.now() + 900;
+      var travel = rail.offsetHeight - window.innerHeight;
+      var y = rail.offsetTop + travel * ((i + 0.5) / states.length);
+      window.scrollTo({top: y, behavior: 'smooth'});
+    }
+    paint(i);
+  }
+
+  ticks.forEach(function(t){ t.addEventListener('click', function(){ go(t.dataset.slug, null); }); });
+  tags.forEach(function(t){ t.addEventListener('click', function(){ go(t.dataset.slug, t.dataset.exp); }); });
+
+  var queued = false;
+  addEventListener('scroll', function(){
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function(){ queued = false; fromScroll(); });
+  }, {passive:true});
+  pinned.addEventListener('change', fromScroll);
+  fromScroll();
 })();
 </script>
 
-<!-- hero -->
-<section class="wa-open">
-  <picture class="wa-open-bed">
-    <source media="(max-width:700px)" srcset="/images/generated/gateway-hero-tall-819w.jpg 819w" sizes="100vw">
-    <img src="/images/generated/gateway-hero-wide-1717w.jpg" srcset="/images/generated/gateway-hero-wide-1100w.jpg 1100w, /images/generated/gateway-hero-wide-1717w.jpg 1717w" sizes="100vw" alt="A woman in printed cloth on a ridge looking out over Africa — a snow-topped volcano at sunrise, acacia savanna with elephant and giraffe, a waterfall in forest, coastline, and a village where people are dancing" fetchpriority="high" decoding="async" data-provider="openai" data-generated="true" data-locked="true">
-  </picture>
-  <div class="wa-open-veil" aria-hidden="true"></div>
-  <div class="wa-frame wa-open-say">
-    <span class="wa-stamp">54 countries &middot; one continent</span>
-    <h1>Africa<br>is <em>waiting</em>.</h1>
-    <div class="wa-hair" aria-hidden="true"></div>
-    <p class="wa-lede">Discover Africa through the places, people and cultures that make every journey different.</p>
-    <p class="wa-lede sub">Local operators. Real places. Journeys made for you.</p>
-    <div class="wa-acts">
-      <a class="wa-act go" href="#destinations">Explore Africa <i>&rarr;</i></a>
-      <a class="wa-act faint" href="#experiences">Find your experience <i>&rarr;</i></a>
-    </div>
-  </div>
-  <div class="wa-open-tags">
-    <div class="wa-frame wa-tags-in">
-      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</a>
-      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</a>
-      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</a>
-      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</a>
-      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg>Mountains</a>
-      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>Heritage</a>
-      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</a>
-      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg>Rainforest</a>
-    </div>
-  </div>
-</section>
-<div class="wa-open-foot">One continent. Endless experiences.</div>
-
-<!-- what we are -->
+<!-- what Afrinkong is -->
 <section class="wa-brief">
   <div class="wa-frame">
-    <p class="wa-lede">From Cameroon&rsquo;s volcanic coast and rainforest to Uganda&rsquo;s gorilla forests, the Serengeti, the Rift Valley, Rwanda&rsquo;s thousand hills, the Namib Desert and the islands of the Indian Ocean. Each country is run by an operator who lives in it.</p>
-    <div class="wa-key">
-      <div class="wa-key-item"><b>8</b><span>Countries live today</span></div>
-      <div class="wa-key-item"><b>27</b><span>Experience categories each</span></div>
-      <div class="wa-key-item"><b>5</b><span>Regions of the continent</span></div>
-      <div class="wa-key-item"><b>3</b><span>Operators of our own</span></div>
+    <p class="wa-claim">Fifty-four countries. Five regions.<br>Twenty-seven ways to experience each destination.<br><em>Local people behind every journey.</em></p>
+    <div class="wa-ops">
+      <div><b>Cameroon</b><span>Operated locally by Kamerun</span></div>
+      <div><b>Uganda</b><span>Operated locally by Pearl Trails Uganda</span></div>
+      <div><b>Namibia</b><span>Operated locally by Namib Skyline</span></div>
+      <div class="soon"><b>And the rest</b><span>A licensed operator in each country, as each one comes online</span></div>
     </div>
   </div>
 </section>
+
+<!-- where do you want to begin -->
+<section class="wa-zone" id="begin">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>00</b><span>Where to begin</span></div>
+      <div>
+        <h2>What brings you <em>to Africa</em>?</h2>
+        <p class="wa-note">Most people arrive knowing the feeling they are after long before they know the country. Start there, and the eight destinations narrow to the ones that do it best.</p>
+      </div>
+    </div>
+    <div class="wa-wants" role="group" aria-label="Filter destinations by what you want">
+      <button class="wa-want" type="button" data-want="wildlife"><i>I want to see</i><b>Wildlife</b></button>
+      <button class="wa-want" type="button" data-want="mountains"><i>I want to climb</i><b>Mountains</b></button>
+      <button class="wa-want" type="button" data-want="coast"><i>I want to escape</i><b>Coast &amp; islands</b></button>
+      <button class="wa-want" type="button" data-want="culture"><i>I want to meet</i><b>People &amp; culture</b></button>
+      <button class="wa-want" type="button" data-want="food"><i>I want to taste</i><b>African food</b></button>
+      <button class="wa-want" type="button" data-want="heritage"><i>I want to discover</i><b>Heritage</b></button>
+    </div>
+    <p class="wa-want-say" id="wa-want-say">Choose one and the destinations below narrow to it. Choose it again to see all eight.</p>
+  </div>
+</section>
+
+<script>
+/* The "what brings you here" buttons filter the destination grid two sections
+   down. It is a filter, not a link: pressing the same button again clears it,
+   and with the script gone every destination is simply visible. */
+(function(){
+  var bar = document.currentScript.previousElementSibling.querySelector('.wa-wants');
+  if (!bar) return;
+  var say = document.getElementById('wa-want-say');
+  var idle = say.textContent;
+  var buttons = [].slice.call(bar.querySelectorAll('.wa-want'));
+  var LINE = {
+    wildlife:  'If wildlife is what brought you here, start with these.',
+    mountains: 'If you came to climb, these are the ones with the altitude.',
+    coast:     'If you came for the water, these reach the ocean.',
+    culture:   'If you came to meet people, start with these.',
+    food:      'If you came to eat, start here.',
+    heritage:  'If you came for what was here before you, start with these.'
+  };
+  var on = null;
+
+  function apply(want){
+    on = want;
+    buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
+    var shown = 0;
+    [].slice.call(document.querySelectorAll('.wa-dest[data-tags]')).forEach(function(c){
+      var keep = !want || c.dataset.tags.split(' ').indexOf(want) >= 0;
+      c.hidden = !keep;
+      if (keep) shown++;
+    });
+    say.textContent = want ? LINE[want] + ' ' + shown + ' of 8.' : idle;
+  }
+
+  buttons.forEach(function(b){
+    b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function(){ apply(on === b.dataset.want ? null : b.dataset.want); });
+  });
+})();
+</script>
 
 <!-- 01 regions -->
 <section class="wa-zone" id="regions">
@@ -466,14 +666,14 @@ ul,ol{list-style:none}
       </div>
     </div>
     <div class="wa-dests">
-      <div class="wa-dest"><b>Central &amp; West Africa &middot; Kamerun</b><h3>Cameroon</h3><p>Africa in miniature. Black-sand beaches, Mount Cameroon, rainforest, highlands, kingdoms and savanna.</p><a href="/cameroon">Explore Cameroon &rarr;</a></div>
-      <div class="wa-dest"><b>East Africa &middot; Pearl Trails Uganda</b><h3>Uganda</h3><p>The Pearl of Africa. Gorillas, chimpanzees, the Nile, savanna, crater lakes and the Rwenzori.</p><a href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a></div>
-      <div class="wa-dest"><b>East Africa</b><h3>Kenya</h3><p>Where the wild runs free. The Mara, Amboseli, Mount Kenya, the Rift Valley and the Indian Ocean coast.</p><a href="/kenya">Explore Kenya &rarr;</a></div>
-      <div class="wa-dest"><b>East Africa</b><h3>Tanzania</h3><p>Wild Africa, island Africa. Serengeti, Kilimanjaro, Ngorongoro and Zanzibar.</p><a href="/tanzania">Explore Tanzania &rarr;</a></div>
-      <div class="wa-dest"><b>East Africa</b><h3>Rwanda</h3><p>The land of a thousand hills. Gorillas, volcanoes, Nyungwe, Lake Kivu and Kigali.</p><a href="/rwanda">Explore Rwanda &rarr;</a></div>
-      <div class="wa-dest"><b>Southern Africa &middot; Namib Skyline</b><h3>Namibia</h3><p>Where the desert meets the wild. Sossusvlei, the Skeleton Coast, Etosha and Damaraland.</p><a href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a></div>
-      <div class="wa-dest"><b>Southern Africa</b><h3>Zambia</h3><p>Into the real wilderness. South Luangwa, Kafue, the Zambezi and Victoria Falls.</p><a href="/zambia">Explore Zambia &rarr;</a></div>
-      <div class="wa-dest"><b>Southern Africa</b><h3>South Africa</h3><p>A world in one country. Cape Town, the Garden Route, Kruger, the Drakensberg and the Winelands.</p><a href="/south-africa">Explore South Africa &rarr;</a></div>
+      <div class="wa-dest" data-tags="mountains coast culture heritage"><b>Central &amp; West Africa &middot; Kamerun</b><h3>Cameroon</h3><p>Africa in miniature. Black-sand beaches, Mount Cameroon, rainforest, highlands, kingdoms and savanna.</p><a href="/cameroon">Explore Cameroon &rarr;</a></div>
+      <div class="wa-dest" data-tags="wildlife culture"><b>East Africa &middot; Pearl Trails Uganda</b><h3>Uganda</h3><p>The Pearl of Africa. Gorillas, chimpanzees, the Nile, savanna, crater lakes and the Rwenzori.</p><a href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a></div>
+      <div class="wa-dest" data-tags="wildlife coast culture"><b>East Africa</b><h3>Kenya</h3><p>Where the wild runs free. The Mara, Amboseli, Mount Kenya, the Rift Valley and the Indian Ocean coast.</p><a href="/kenya">Explore Kenya &rarr;</a></div>
+      <div class="wa-dest" data-tags="wildlife mountains coast"><b>East Africa</b><h3>Tanzania</h3><p>Wild Africa, island Africa. Serengeti, Kilimanjaro, Ngorongoro and Zanzibar.</p><a href="/tanzania">Explore Tanzania &rarr;</a></div>
+      <div class="wa-dest" data-tags="wildlife culture"><b>East Africa</b><h3>Rwanda</h3><p>The land of a thousand hills. Gorillas, volcanoes, Nyungwe, Lake Kivu and Kigali.</p><a href="/rwanda">Explore Rwanda &rarr;</a></div>
+      <div class="wa-dest" data-tags="wildlife heritage"><b>Southern Africa &middot; Namib Skyline</b><h3>Namibia</h3><p>Where the desert meets the wild. Sossusvlei, the Skeleton Coast, Etosha and Damaraland.</p><a href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a></div>
+      <div class="wa-dest" data-tags="wildlife heritage"><b>Southern Africa</b><h3>Zambia</h3><p>Into the real wilderness. South Luangwa, Kafue, the Zambezi and Victoria Falls.</p><a href="/zambia">Explore Zambia &rarr;</a></div>
+      <div class="wa-dest" data-tags="food heritage coast wildlife"><b>Southern Africa</b><h3>South Africa</h3><p>A world in one country. Cape Town, the Garden Route, Kruger, the Drakensberg and the Winelands.</p><a href="/south-africa">Explore South Africa &rarr;</a></div>
     </div>
   </div>
 </section>
@@ -516,12 +716,14 @@ ul,ol{list-style:none}
     </div>
     <div class="wa-panels">
       <div class="wa-panel">
+        <img src="/images/uploads/panel-cameroon-1600w.jpg" alt="An aerial view of dark volcanic sand where the Atlantic meets unbroken rainforest" loading="lazy" decoding="async" data-provider="upload" data-locked="true">
         <span class="wa-stamp">Africa in miniature</span>
         <h3>Cameroon</h3>
         <p>One country, six climates. From Atlantic black-sand beaches to the 4,095-metre summit of Mount Cameroon, through rainforest, highland kingdoms and northern savanna. Run by Kamerun, out of Buea and Douala.</p>
         <a class="wa-panel-go" href="/cameroon">Enter Cameroon &rarr;</a>
       </div>
       <div class="wa-panel">
+        <img src="/images/uploads/window-uganda-1200w.jpg" alt="Ridge after ridge of montane rainforest under low cloud" loading="lazy" decoding="async" data-provider="upload" data-locked="true">
         <span class="wa-stamp">The Pearl of Africa</span>
         <h3>Uganda</h3>
         <p>Where wildlife, wilderness and adventure meet. Mountain gorillas in Bwindi, chimpanzees in Kibale, the Nile forced through six metres of rock at Murchison, Queen Elizabeth National Park and the Rwenzori. Run by Pearl Trails Uganda, out of Kampala.</p>

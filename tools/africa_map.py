@@ -180,12 +180,61 @@ def render(shapes):
     return "\n".join(lines)
 
 
+SOLO_BOX = 1000.0       # the long side of a single-country silhouette
+
+
+def solo(topo):
+    """Each live country on its own, normalised — the hero window's shape.
+
+    The window in the hero is the outline of the country you are looking at, so
+    every silhouette has to arrive centred in a box of its own rather than in
+    its place on the continent. Proportions stay true; only the framing changes.
+    """
+    arcs = decode(topo)
+    out = {}
+    for geom in topo["objects"]["countries"]["geometries"]:
+        if not str(geom.get("id", "")).isdigit() or int(geom["id"]) not in LIVE:
+            continue
+        rings = []
+        for poly in polygons(geom):
+            for part in poly:
+                pts = [project(lon, lat) for lon, lat in ring(arcs, part)]
+                if len(pts) > 3:
+                    rings.append(pts)
+        flat = [p for r in rings for p in r]
+        x0, x1 = min(p[0] for p in flat), max(p[0] for p in flat)
+        y0, y1 = min(p[1] for p in flat), max(p[1] for p in flat)
+        k = SOLO_BOX / max(x1 - x0, y1 - y0)
+        w, h = (x1 - x0) * k, (y1 - y0) * k
+        parts = []
+        for r in rings:
+            pts = [(round((p[0] - x0) * k, PRECISION), round((p[1] - y0) * k, PRECISION)) for p in r]
+            if area(pts) < MIN_RING_AREA:
+                continue
+            trimmed = [pts[0]]
+            for pt in pts[1:]:
+                if pt != trimmed[-1]:
+                    trimmed.append(pt)
+            if len(trimmed) > 3:
+                parts.append("M" + "L".join("%g %g" % p for p in trimmed) + "Z")
+        slug = LIVE[int(geom["id"])][0]
+        out[slug] = {"w": round(w, 1), "h": round(h, 1), "d": "".join(parts)}
+    return out
+
+
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) not in (2, 3):
         sys.exit(__doc__.strip().splitlines()[2].strip())
     with open(sys.argv[1]) as fh:
-        shapes = build(json.load(fh))
-    svg = render(shapes)
-    sys.stderr.write("%d countries, %d live, %.1f KB of path data\n"
-                     % (len(shapes), sum(1 for c, _, _ in shapes if c in LIVE), len(svg) / 1024.0))
-    print(svg)
+        topo = json.load(fh)
+    if len(sys.argv) == 3 and sys.argv[2] == "--solo":
+        shapes = solo(topo)
+        text = json.dumps(shapes, indent=1, sort_keys=True)
+        sys.stderr.write("%d silhouettes, %.1f KB\n" % (len(shapes), len(text) / 1024.0))
+        print(text)
+    else:
+        shapes = build(topo)
+        svg = render(shapes)
+        sys.stderr.write("%d countries, %d live, %.1f KB of path data\n"
+                         % (len(shapes), sum(1 for c, _, _ in shapes if c in LIVE), len(svg) / 1024.0))
+        print(svg)
