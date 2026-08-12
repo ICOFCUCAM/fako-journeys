@@ -147,6 +147,23 @@ def load_regions(path=None):
     return collections.OrderedDict((k, Region(k, v)) for k, v in raw.items())
 
 
+def load_picks(path=None):
+    """What we would actually say if somebody told us what they wanted.
+
+    A tourism site answers "I want wildlife" with six cards. This answers with a
+    country and a reason, in the voice of somebody who has been — including the
+    thing not to do first. It is editorial, so it is written down rather than
+    computed; the rest of the platform is comparison and this is opinion, and
+    the difference is the point.
+    """
+    path = path or os.path.join(ROOT, "tourism", "picks.json")
+    try:
+        with open(path) as fh:
+            return json.load(fh)
+    except (IOError, ValueError):
+        return {}
+
+
 def load_views(path=None):
     """Country boxes in the continental map's coordinates, from africa_map.py."""
     path = path or os.path.join(ROOT, "tourism", "views.json")

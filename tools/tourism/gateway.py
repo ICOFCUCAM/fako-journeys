@@ -26,7 +26,7 @@ import html as html_mod
 import os
 import re
 
-from .model import ROOT, load_regions, load_views
+from .model import ROOT, load_picks, load_regions, load_views
 
 PAGE = os.path.join(ROOT, "index.html")
 SHAPES = os.path.join(ROOT, "tourism", "shapes.json")
@@ -49,7 +49,7 @@ REGION_GROUPS = (
 )
 
 MARKERS = ("window", "captions", "ticks", "regions", "months", "destinations",
-           "operators", "footer")
+           "operators", "picks", "footer")
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
 VIEW_PAD = 0.34
@@ -221,6 +221,36 @@ def block_months(countries):
     return "      " + "".join(out)
 
 
+def block_picks(countries):
+    """The answer to "what do you want", written rather than listed.
+
+    Eight wants, each with one country named and a reason to name it. The
+    counter-suggestion — "then don't start with Kilimanjaro" — is what makes it
+    a recommendation instead of a filter, and it is the closest thing this site
+    has to a voice.
+    """
+    picks = load_picks()
+    by_slug = dict((c.slug, c) for c in countries)
+    out = []
+    for want, p in picks.items():
+        c = by_slug.get(p.get("country"))
+        if not c:
+            continue
+        out.append(
+            '      <article class="wa-pick" data-pick="%s" hidden>\n'
+            '        <p class="wa-pick-hook">%s</p>\n'
+            '        <div class="wa-pick-body">\n'
+            '          <span class="wa-pick-where">%s</span>\n'
+            '          <b>%s</b>\n'
+            '          <p>%s</p>\n'
+            '          <p class="wa-pick-why">%s</p>\n'
+            '          <a class="wa-pick-go" href="%s">Explore %s &rarr;</a>\n'
+            '        </div>\n      </article>'
+            % (esc(want), esc(p.get("hook")), esc(c.region), esc(c.name),
+               esc(c.summary), esc(p.get("why")), esc(c.url), esc(c.name)))
+    return "\n".join(out)
+
+
 def block_destinations(countries):
     """The grid, grouped by region, each card carrying what it leads on."""
     by_region = {}
@@ -271,6 +301,7 @@ def render(countries):
         "months": block_months(seq),
         "destinations": block_destinations(seq),
         "operators": block_operators(seq),
+        "picks": block_picks(seq),
         "footer": block_footer(seq),
     }
 
