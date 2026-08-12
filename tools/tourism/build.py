@@ -481,9 +481,19 @@ def cmd_place(args):
 
 
 def cmd_all(args):
+    """Everything that turns the dataset into pages, in dependency order.
+
+    `homes` and `gateway` are part of this and not an afterthought: a resolve
+    run that fills the cache and leaves the country pages and the gateway
+    showing what was there before is a run that did nothing a visitor can see.
+    """
     rc = cmd_validate(args)
     print()
     cmd_render(args)
+    print()
+    cmd_homes(args)
+    print()
+    cmd_gateway(args)
     print()
     rc = cmd_verify(args) or rc
     cmd_report(args)
