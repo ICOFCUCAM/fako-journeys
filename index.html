@@ -39,8 +39,21 @@ ul,ol{list-style:none}
 .wa-note{margin-top:16px;color:var(--c-muted);max-width:44em}
 
 /* ---- masthead ------------------------------------------------------------------ */
-.wa-mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
-.wa-mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
+/* Fixed, not sticky, so the hero picture starts at the very top of the page and
+   runs underneath it. Solid is the default state on purpose: `over` — the
+   transparent one — is added by script, so with JavaScript off the bar stays
+   readable instead of leaving cream type on a photograph. */
+.wa-mast{position:fixed;top:0;left:0;right:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary);transition:background .3s,border-color .3s,color .3s}
+.wa-mast.over{background:transparent;border-bottom-color:transparent;color:var(--c-bg)}
+.wa-mast.over .wa-mark span,.wa-mast.over .wa-routes a{color:color-mix(in srgb,var(--c-bg) 82%,transparent)}
+.wa-mast.over .wa-mark b{text-shadow:0 1px 18px rgba(0,0,0,.45)}
+.wa-mast.over .wa-routes a:hover{color:var(--c-bg)}
+.wa-mast.over .btn{background:color-mix(in srgb,var(--c-bg) 16%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-bg) 62%,transparent)}
+.wa-mast.over .btn:hover{background:var(--c-accent);box-shadow:none}
+/* Keep the frame's side padding: setting `padding:14px 0` here dropped it, and
+   between 1010px and 1240px — where the frame is no longer margin-centred — the
+   mark and the button sat flat against the edge of the window. */
+.wa-mast-in{display:flex;align-items:center;gap:34px;padding:14px 44px}
 .wa-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
 .wa-mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:1;white-space:nowrap}
 .wa-mark span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
@@ -50,31 +63,90 @@ ul,ol{list-style:none}
 .btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
 .btn:hover{background:var(--c-accent)}
 @media(max-width:1010px){.wa-routes{display:none}}
-@media(max-width:560px){.wa-frame{padding:0 20px}.wa-mark b{font-size:20px}.btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
+/* "Begin a journey" wrapped to two lines against the mark at phone widths, which
+   was survivable on a cream bar and is not once the bar sits on a photograph. */
+@media(max-width:560px){.wa-frame{padding:0 20px}.wa-mast-in{gap:16px;padding:14px 20px}.wa-mark b{font-size:20px}
+  .btn{padding:9px 12px;font-size:9px;letter-spacing:.1em;white-space:nowrap}}
 
 /* ---- hero ---------------------------------------------------------------------- */
-.wa-open{padding:78px 0 66px;border-bottom:var(--fj-rule)}
-.wa-open-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:end}
-.wa-open h1{font-size:clamp(34px,4vw,62px);margin:20px 0 0}
-.wa-open h1 em{font-style:normal;color:var(--c-accent)}
-.wa-lede{font-size:19px;color:var(--c-muted);max-width:40em;margin-top:24px}
-.wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
-.wa-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 20px;border:1px solid var(--c-primary);transition:background .2s,color .2s,border-color .2s}
+/* The picture is the hero, not an illustration beside it: full bleed, type set
+   into it, and the eight ways in along the bottom edge. Two frames, because one
+   crop cannot serve both shapes — the wide montage on a landscape screen, and a
+   portrait frame on a phone, where a 16:9 picture would be a letterbox. */
+.wa-open{position:relative;isolation:isolate;overflow:hidden;min-height:min(90vh,880px);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:calc(74px + 9vh) 0 0;color:var(--c-bg)}
+.wa-open-bed img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;
+  object-fit:cover;object-position:50% 44%}
+/* Dark at the top for the masthead and at the foot for the headline and the tag
+   strip, close to clear across the middle so the montage is actually visible.
+   Every scrim step is a cost paid against the picture, so none is wider than the
+   type sitting on it. */
+.wa-open-veil{position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(to bottom,rgba(11,16,13,.60) 0,rgba(11,16,13,.30) 13%,
+    rgba(11,16,13,.16) 30%,rgba(11,16,13,.34) 58%,rgba(11,16,13,.78) 84%,rgba(11,16,13,.88) 100%)}
+.wa-open-say{max-width:none}
+/* Terracotta on a sunrise sky is terracotta on terracotta. Over a picture the
+   eyebrow has to go almost to cream and carry its own shadow. */
+.wa-open-say .wa-stamp{color:color-mix(in srgb,var(--c-accent) 26%,var(--c-bg));
+  text-shadow:0 1px 12px rgba(0,0,0,.7)}
+.wa-open h1{font-size:clamp(42px,7.6vw,108px);margin:18px 0 0;
+  text-shadow:0 2px 30px rgba(0,0,0,.46)}
+.wa-open h1 em{font-style:normal}
+.wa-hair{width:96px;height:1px;background:color-mix(in srgb,var(--c-bg) 54%,transparent);margin:28px auto 0}
+.wa-open .wa-lede{font-size:19px;color:color-mix(in srgb,var(--c-bg) 90%,var(--c-primary));
+  max-width:31em;margin:24px auto 0;text-shadow:0 1px 16px rgba(0,0,0,.5)}
+.wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;justify-content:center}
+.wa-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);transition:background .2s,color .2s,border-color .2s}
 .wa-act i{font-style:normal;margin-left:9px}
-.wa-act.go{background:var(--c-primary);color:var(--c-bg)}
-.wa-act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
-.wa-act.faint{border-color:var(--c-border);color:var(--c-muted)}
-.wa-act.faint:hover{border-color:var(--c-primary);color:var(--c-primary)}
-/* A 4:5 window on a 3:2 frame keeps a little over half the width, and the whole
-   height, so only the horizontal position matters here. Centred, the strip runs
-   from the coast to the giraffe and holds the figure, the falls and the peak —
-   the four things the montage is actually about. */
-.wa-open-plate img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 50%}
-.wa-key{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border-top:2px solid var(--c-primary)}
+.wa-act.go{background:var(--c-accent);border-color:var(--c-accent);color:var(--c-bg)}
+.wa-act.go:hover{background:var(--c-bg);border-color:var(--c-bg);color:var(--c-primary)}
+.wa-act.faint{border-color:color-mix(in srgb,var(--c-bg) 52%,transparent);color:var(--c-bg)}
+.wa-act.faint:hover{border-color:var(--c-bg);background:color-mix(in srgb,var(--c-bg) 14%,transparent)}
+
+/* ---- hero tag strip -------------------------------------------------------------- */
+/* A contained bar, not a full-bleed one: the items live inside the 1240 frame,
+   so a full-width background leaves two dark wings with nothing in them. */
+.wa-open-tags{width:100%;margin-top:auto;padding:0 44px 34px}
+.wa-tags-in{max-width:1240px;margin:0 auto;padding:0;background:rgba(11,16,13,.40);
+  border:1px solid color-mix(in srgb,var(--c-bg) 24%,transparent);
+  display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}
+.wa-tags-in::-webkit-scrollbar{display:none}
+.wa-tag{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 18px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;white-space:nowrap;color:color-mix(in srgb,var(--c-bg) 88%,transparent);
+  border-left:1px solid color-mix(in srgb,var(--c-bg) 16%,transparent);transition:background .2s,color .2s}
+.wa-tag:first-child{border-left:0}
+.wa-tag:hover{background:color-mix(in srgb,var(--c-bg) 12%,transparent);color:var(--c-bg)}
+.wa-tag svg{width:22px;height:22px;flex:0 0 auto;stroke:color-mix(in srgb,var(--c-accent) 58%,var(--c-bg));
+  stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.wa-open-foot{background:var(--fj-basalt);color:color-mix(in srgb,var(--c-accent) 66%,var(--c-bg));
+  text-align:center;font-family:var(--fj-mono);font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;padding:12px 20px}
+
+/* ---- what we are, under the hero ------------------------------------------------- */
+.wa-brief{padding:62px 0 58px;border-bottom:var(--fj-rule)}
+.wa-brief .wa-lede{font-size:19px;color:var(--c-muted);max-width:44em}
+.wa-key{display:grid;grid-template-columns:repeat(4,1fr);margin-top:44px;border-top:2px solid var(--c-primary)}
 .wa-key-item{padding:18px 22px 0 0}
 .wa-key-item b{display:block;font-family:var(--fj-display);font-size:31px;font-weight:700;color:var(--c-primary)}
 .wa-key-item span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted);margin-top:7px}
-@media(max-width:940px){.wa-open{padding:52px 0 48px}.wa-open-grid{grid-template-columns:1fr;gap:38px;align-items:start}.wa-open-plate img{aspect-ratio:4/3}.wa-key{grid-template-columns:1fr 1fr}}
+@media(max-width:940px){.wa-open{min-height:min(86vh,760px);padding:calc(70px + 6vh) 0 0}
+  .wa-brief{padding:46px 0 44px}.wa-key{grid-template-columns:1fr 1fr}}
+/* On a phone the type goes to the foot of the picture instead of the middle of
+   it. Centred, it lands squarely on the figure — she stands in the middle third
+   of the portrait frame — and a headline over a face reads as a mistake. */
+@media(max-width:700px){.wa-open{min-height:82vh;text-align:left;align-items:stretch;
+    justify-content:flex-end;padding:0}
+  .wa-open-bed img{object-position:22% 50%}
+  .wa-open-veil{background:linear-gradient(to bottom,rgba(11,16,13,.56) 0,rgba(11,16,13,.16) 16%,
+    rgba(11,16,13,.20) 34%,rgba(11,16,13,.72) 62%,rgba(11,16,13,.90) 100%)}
+  .wa-open-say{margin-top:auto;padding-bottom:30px}
+  .wa-open h1{font-size:clamp(38px,11vw,58px)}
+  .wa-hair{margin-left:0}.wa-open .wa-lede{margin-left:0;font-size:17px}
+  .wa-acts{justify-content:flex-start;gap:10px}
+  .wa-open-tags{margin-top:0;padding:0 20px 22px}
+  .wa-tag{flex:0 0 auto;padding:14px 16px}}
 @media(max-width:520px){.wa-key{grid-template-columns:1fr}.wa-key-item{padding:14px 0 12px;border-bottom:var(--fj-rule)}}
 
 /* ---- zones and heads ------------------------------------------------------------ */
@@ -195,24 +267,58 @@ ul,ol{list-style:none}
     <a class="btn" href="#plan">Begin a journey</a>
   </div>
 </header>
+<script>
+/* The bar is transparent while it is over the hero picture and solid once it is
+   over the page. It runs here rather than at the end of the body so the state is
+   set before the hero paints — deferring it makes the bar flash cream on load.
+   Solid is the markup default, so no-JS keeps a readable masthead. */
+(function(){
+  var mast = document.currentScript.previousElementSibling, over = null;
+  function set(){
+    var want = window.scrollY < 90;
+    if (want !== over) { over = want; mast.classList.toggle('over', want); }
+  }
+  set();
+  addEventListener('scroll', set, {passive:true});
+})();
+</script>
 
 <!-- hero -->
 <section class="wa-open">
-  <div class="wa-frame">
-    <div class="wa-open-grid">
-      <div>
-        <span class="wa-stamp">Fifty-four countries &middot; one continent</span>
-        <h1>Africa is <em>waiting</em>.</h1>
-        <p class="wa-lede">We build guided journeys through the places, people and cultures of this continent &mdash; the six climates of Cameroon, the gorilla forests of Uganda, the Serengeti and the Rift, a thousand hills in Rwanda. Each country is run by an operator who lives in it.</p>
-        <div class="wa-acts">
-          <a class="wa-act go" href="#destinations">Explore destinations <i>&rarr;</i></a>
-          <a class="wa-act faint" href="#experiences">Choose an experience <i>&rarr;</i></a>
-        </div>
-      </div>
-      <div class="wa-open-plate">
-        <img src="/images/generated/gateway-hero-africa-1536w.jpg" srcset="/images/generated/gateway-hero-africa-1536w.jpg 1536w" sizes="(min-width: 940px) 40vw, 92vw" alt="A woman in printed cloth looking out over an African view — coast and sunset on one side, forest, a waterfall, a volcanic peak, a city and grazing wildlife on the other" decoding="async" data-provider="openai" data-generated="true" data-locked="true">
-      </div>
+  <picture class="wa-open-bed">
+    <source media="(max-width:700px)" srcset="/images/generated/gateway-hero-tall-819w.jpg 819w" sizes="100vw">
+    <img src="/images/generated/gateway-hero-wide-1717w.jpg" srcset="/images/generated/gateway-hero-wide-1100w.jpg 1100w, /images/generated/gateway-hero-wide-1717w.jpg 1717w" sizes="100vw" alt="A woman in printed cloth on a ridge looking out over Africa — a snow-topped volcano at sunrise, acacia savanna with elephant and giraffe, a waterfall in forest, coastline, and a village where people are dancing" fetchpriority="high" decoding="async" data-provider="openai" data-generated="true" data-locked="true">
+  </picture>
+  <div class="wa-open-veil" aria-hidden="true"></div>
+  <div class="wa-frame wa-open-say">
+    <span class="wa-stamp">Fifty-four countries &middot; one continent</span>
+    <h1>Africa<br>is <em>waiting</em>.</h1>
+    <div class="wa-hair" aria-hidden="true"></div>
+    <p class="wa-lede">Discover the continent through its places, its people, its cultures &mdash; and journeys run by the people who live there.</p>
+    <div class="wa-acts">
+      <a class="wa-act go" href="#destinations">Explore Africa <i>&rarr;</i></a>
+      <a class="wa-act faint" href="#experiences">Choose an experience <i>&rarr;</i></a>
     </div>
+  </div>
+  <div class="wa-open-tags">
+    <div class="wa-frame wa-tags-in">
+      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</a>
+      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</a>
+      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</a>
+      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</a>
+      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg>Mountains</a>
+      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>Heritage</a>
+      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</a>
+      <a class="wa-tag" href="#experiences"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg>Rainforest</a>
+    </div>
+  </div>
+</section>
+<div class="wa-open-foot">One continent. Endless experiences.</div>
+
+<!-- what we are -->
+<section class="wa-brief">
+  <div class="wa-frame">
+    <p class="wa-lede">We build guided journeys through the places, people and cultures of this continent &mdash; the six climates of Cameroon, the gorilla forests of Uganda, the Serengeti and the Rift, a thousand hills in Rwanda. Each country is run by an operator who lives in it.</p>
     <div class="wa-key">
       <div class="wa-key-item"><b>8</b><span>Countries live today</span></div>
       <div class="wa-key-item"><b>27</b><span>Experience categories each</span></div>
