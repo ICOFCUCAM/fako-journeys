@@ -41,16 +41,42 @@ AFRICA = {
     894: "Zambia", 716: "Zimbabwe", 732: "W. Sahara", 736: "Sudan",
 }
 
-# A country we sell is a link; the rest are scenery. Slug, label, tagline, href.
-LIVE = {
-    120: ("cameroon", "Cameroon", "Africa in miniature", "/cameroon"),
-    800: ("uganda", "Uganda", "The Pearl of Africa", "https://pearl-trails-uganda.vercel.app"),
-    404: ("kenya", "Kenya", "Where the wild runs free", "/kenya"),
-    834: ("tanzania", "Tanzania", "Wild Africa, island Africa", "/tanzania"),
-    646: ("rwanda", "Rwanda", "A thousand hills", "/rwanda"),
-    516: ("namibia", "Namibia", "Where the desert meets the wild", "https://namib-skyline.vercel.app"),
-    894: ("zambia", "Zambia", "Into the real wilderness", "/zambia"),
-    710: ("south-africa", "South Africa", "A world in one country", "/south-africa"),
+# The roster, by how far along the country is. `ours` is a company of our own,
+# `live` has a destination page, `soon` is named but has nothing behind it yet —
+# and the map paints all three differently, because a visitor should be able to
+# tell at a glance what is bookable today.
+#   iso: (slug, label, tagline, href, tier)
+ROSTER = {
+    120: ("cameroon", "Cameroon", "Africa in miniature", "/cameroon", "ours"),
+    800: ("uganda", "Uganda", "The Pearl of Africa", "https://pearl-trails-uganda.vercel.app", "ours"),
+    516: ("namibia", "Namibia", "Where the desert meets the wild", "https://namib-skyline.vercel.app", "ours"),
+    404: ("kenya", "Kenya", "Where the wild runs free", "/kenya", "live"),
+    834: ("tanzania", "Tanzania", "Wild Africa, island Africa", "/tanzania", "live"),
+    646: ("rwanda", "Rwanda", "A thousand hills", "/rwanda", "live"),
+    894: ("zambia", "Zambia", "Into the real wilderness", "/zambia", "live"),
+    710: ("south-africa", "South Africa", "A world in one country", "/south-africa", "live"),
+    504: ("morocco", "Morocco", "Atlas, Sahara and the medinas", "/morocco", "live"),
+    818: ("egypt", "Egypt", "The Nile, and five thousand years", "/egypt", "live"),
+    288: ("ghana", "Ghana", "The forts, the forest and the highlife", "/ghana", "live"),
+    231: ("ethiopia", "Ethiopia", "The roof of Africa", "/ethiopia", "live"),
+     72: ("botswana", "Botswana", "A delta that never reaches the sea", "/botswana", "live"),
+    450: ("madagascar", "Madagascar", "An island that evolved alone", "/madagascar", "live"),
+    566: ("nigeria", "Nigeria", "The loudest country on the continent", "", "soon"),
+    686: ("senegal", "Senegal", "Where the Sahel meets the Atlantic", "", "soon"),
+    716: ("zimbabwe", "Zimbabwe", "Great Zimbabwe and the Zambezi", "", "soon"),
+    508: ("mozambique", "Mozambique", "Two thousand kilometres of coast", "", "soon"),
+    384: ("cote-divoire", "Côte d'Ivoire", "Lagoons, forest and the Atlantic", "", "soon"),
+    788: ("tunisia", "Tunisia", "Carthage, the Sahel and the desert south", "", "soon"),
+    690: ("seychelles", "Seychelles", "Granite islands in the Indian Ocean", "", "soon"),
+    480: ("mauritius", "Mauritius", "Reef, sugar and the volcanic interior", "", "soon"),
+}
+LIVE = ROSTER          # the map treats every roster country as a marked country
+
+# Small enough that at continental scale they are a pixel or two. They get a
+# marker instead of an outline, or they are simply invisible on the map that is
+# supposed to be the way into them.
+ISLAND_MARKS = {
+    690: (55.5, -4.6), 480: (57.5, -20.3), 174: (43.3, -11.7), 132: (-23.6, 16.0),
 }
 
 LON0, LAT0 = math.radians(19.0), math.radians(2.0)
@@ -58,6 +84,8 @@ VIEW_W, VIEW_H = 1000.0, 1060.0
 PAD = 14.0
 PRECISION = 1          # tenths of a viewBox unit; the map is ~600px wide in use
 MIN_RING_AREA = 4.0    # drop specks: unclickable, and they cost bytes
+TOLERANCE = 1.2        # continental map: ~1px of slack at the size it is drawn
+SOLO_TOLERANCE = 2.0   # a silhouette is drawn large, but from a 1000-unit box
 
 
 def decode(topo):
@@ -104,6 +132,62 @@ def polygons(geom):
     return []
 
 
+def _rdp(points, tol):
+    """Douglas-Peucker over an open polyline."""
+    if len(points) < 3:
+        return points
+    keep = [False] * len(points)
+    keep[0] = keep[-1] = True
+    stack = [(0, len(points) - 1)]
+    while stack:
+        a, b = stack.pop()
+        if b <= a + 1:
+            continue
+        ax, ay = points[a]
+        bx, by = points[b]
+        dx, dy = bx - ax, by - ay
+        span = math.hypot(dx, dy)
+        worst, at = 0.0, -1
+        for i in range(a + 1, b):
+            px, py = points[i]
+            d = (abs(dy * px - dx * py + bx * ay - by * ax) / span) if span else math.hypot(px - ax, py - ay)
+            if d > worst:
+                worst, at = d, i
+        if worst > tol and at > 0:
+            keep[at] = True
+            stack.append((a, at))
+            stack.append((at, b))
+    return [p for p, k in zip(points, keep) if k]
+
+
+def thin(points, tol):
+    """Simplify a closed ring.
+
+    50m boundaries draw a far better Cameroon than 110m — the coast stops being a
+    polygon — but they carry five times the vertices, and this map is inlined in
+    the page. Dropping every vertex within `tol` of the line its neighbours
+    already describe keeps the shape and most of the saving.
+
+    A ring has to be cut before it is simplified. Douglas-Peucker anchors on the
+    first and last vertex, and on a closed ring those are the same point: the
+    baseline has no length, every vertex measures zero away from it, and the
+    whole country collapses to two points. So the ring is split at the vertex
+    furthest from its start and simplified in two halves.
+    """
+    if len(points) < 4:
+        return points
+    closed = points[0] == points[-1]
+    ring_pts = points[:-1] if closed else points
+    if not closed:
+        return _rdp(points, tol)
+    ax, ay = ring_pts[0]
+    far = max(range(1, len(ring_pts)),
+              key=lambda i: (ring_pts[i][0] - ax) ** 2 + (ring_pts[i][1] - ay) ** 2)
+    head = _rdp(ring_pts[:far + 1], tol)
+    tail = _rdp(ring_pts[far:] + [ring_pts[0]], tol)
+    return head[:-1] + tail
+
+
 def area(points):
     s = 0.0
     for i in range(len(points)):
@@ -111,6 +195,33 @@ def area(points):
         x2, y2 = points[(i + 1) % len(points)]
         s += x1 * y2 - x2 * y1
     return abs(s) / 2.0
+
+
+def prune_outliers(rings):
+    """Drop far-flung territory that is not what the map is about.
+
+    At 50m, South Africa carries the Prince Edward Islands nineteen hundred
+    kilometres into the Southern Ocean. Fitting a silhouette to a bounding box
+    that includes them shrinks the country to a third of the frame; fitting the
+    continental map to them pushes Africa up and off centre. Zanzibar sits just
+    off Tanzania and has to survive, so the test is distance rather than size:
+    keep a ring only if it overlaps the main landmass's box, grown by a sixth.
+    """
+    if len(rings) < 2:
+        return rings
+    main = max(rings, key=area)
+    xs = [p[0] for p in main]
+    ys = [p[1] for p in main]
+    mx, my = (max(xs) - min(xs)) / 6.0, (max(ys) - min(ys)) / 6.0
+    x0, x1 = min(xs) - mx, max(xs) + mx
+    y0, y1 = min(ys) - my, max(ys) + my
+    keep = []
+    for r in rings:
+        rx = [p[0] for p in r]
+        ry = [p[1] for p in r]
+        if max(rx) >= x0 and min(rx) <= x1 and max(ry) >= y0 and min(ry) <= y1:
+            keep.append(r)
+    return keep or [main]
 
 
 def build(topo):
@@ -130,9 +241,12 @@ def build(topo):
                 if len(pts) > 3:
                     rings.append(pts)
         if rings:
-            shapes.append((code, geom["properties"]["name"], rings))
+            shapes.append((code, geom["properties"]["name"], prune_outliers(rings)))
 
+    # The island marks are part of the map, so they belong in the fit. Left out,
+    # Seychelles lands past the right edge of the viewBox and is clipped away.
     flat = [p for _c, _n, rs in shapes for r in rs for p in r]
+    flat += [project(lon, lat) for code, (lon, lat) in ISLAND_MARKS.items() if code in ROSTER]
     x0, x1 = min(p[0] for p in flat), max(p[0] for p in flat)
     y0, y1 = min(p[1] for p in flat), max(p[1] for p in flat)
     k = min((VIEW_W - 2 * PAD) / (x1 - x0), (VIEW_H - 2 * PAD) / (y1 - y0))
@@ -144,6 +258,7 @@ def build(topo):
         parts = []
         for r in rings:
             scaled = [(round(p[0] * k + ox, PRECISION), round(p[1] * k + oy, PRECISION)) for p in r]
+            scaled = thin(scaled, TOLERANCE)
             if area(scaled) < MIN_RING_AREA:
                 continue
             # Drop a vertex that rounded onto its neighbour rather than emitting it.
@@ -155,27 +270,54 @@ def build(topo):
                 parts.append("M" + "L".join("%g %g" % p for p in trimmed) + "Z")
         if parts:
             out.append((code, name, "".join(parts)))
-    out.sort(key=lambda s: (s[0] not in LIVE, s[1]))
-    return out
+    out.sort(key=lambda s: (s[0] not in ROSTER, s[1]))
+    return out, (k, ox, oy)
 
 
-def render(shapes):
+def marks(shapes):
+    """Island states rendered as a marker, since their outline is a pixel here."""
+    flat = [p for _c, _n, _d in shapes for p in []]
+    return flat
+
+
+def render(shapes, frame):
+    """frame = (k, ox, oy) from build, so the island marks land in the same space."""
+    k, ox, oy = frame
     lines = ['<svg class="wa-map-svg" viewBox="0 0 %g %g" role="img" '
-             'aria-label="Map of Africa. Eight countries are live destinations." '
-             'xmlns="http://www.w3.org/2000/svg">' % (VIEW_W, VIEW_H),
+             'aria-label="Map of Africa. %d countries are marked; %d have a destination page." '
+             'xmlns="http://www.w3.org/2000/svg">'
+             % (VIEW_W, VIEW_H, len(ROSTER),
+                sum(1 for v in ROSTER.values() if v[4] in ("ours", "live"))),
              '<g class="wa-map-rest" aria-hidden="true">']
     for code, name, d in shapes:
-        if code in LIVE:
+        if code in ROSTER:
             continue
         lines.append('<path d="%s"><title>%s</title></path>' % (d, name))
     lines.append("</g>")
     for code, _name, d in shapes:
-        if code not in LIVE:
+        # An island state gets a marker below; drawing its two-pixel outline as
+        # well would put two hit areas on the same country.
+        if code not in ROSTER or code in ISLAND_MARKS:
             continue
-        slug, label, tag, href = LIVE[code]
-        lines.append(
-            '<a class="wa-map-live" href="%s" data-slug="%s" data-name="%s" data-tag="%s">'
-            '<path d="%s"/><title>%s — %s</title></a>' % (href, slug, label, tag, d, label, tag))
+        slug, label, tag, href, tier = ROSTER[code]
+        title = "%s &#8212; %s" % (label, tag)
+        attrs = ('class="wa-map-live" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
+                 % (tier, slug, label, tag))
+        if href:
+            lines.append('<a %s href="%s"><path d="%s"/><title>%s</title></a>' % (attrs, href, d, title))
+        else:
+            lines.append('<g %s><path d="%s"/><title>%s</title></g>' % (attrs, d, title))
+    for code, (lon, lat) in sorted(ISLAND_MARKS.items()):
+        if code not in ROSTER:
+            continue
+        slug, label, tag, href, tier = ROSTER[code]
+        x, y = project(lon, lat)
+        cx, cy = x * k + ox, y * k + oy
+        attrs = ('class="wa-map-live wa-map-mark" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
+                 % (tier, slug, label, tag))
+        dot = '<circle cx="%.1f" cy="%.1f" r="9"/><title>%s &#8212; %s</title>' % (cx, cy, label, tag)
+        lines.append(('<a %s href="%s">%s</a>' % (attrs, href, dot)) if href
+                     else ('<g %s>%s</g>' % (attrs, dot)))
     lines.append("</svg>")
     return "\n".join(lines)
 
@@ -193,7 +335,10 @@ def solo(topo):
     arcs = decode(topo)
     out = {}
     for geom in topo["objects"]["countries"]["geometries"]:
-        if not str(geom.get("id", "")).isdigit() or int(geom["id"]) not in LIVE:
+        if not str(geom.get("id", "")).isdigit():
+            continue
+        entry = ROSTER.get(int(geom["id"]))
+        if not entry or entry[4] == "soon":
             continue
         rings = []
         for poly in polygons(geom):
@@ -201,6 +346,7 @@ def solo(topo):
                 pts = [project(lon, lat) for lon, lat in ring(arcs, part)]
                 if len(pts) > 3:
                     rings.append(pts)
+        rings = prune_outliers(rings)
         flat = [p for r in rings for p in r]
         x0, x1 = min(p[0] for p in flat), max(p[0] for p in flat)
         y0, y1 = min(p[1] for p in flat), max(p[1] for p in flat)
@@ -209,6 +355,7 @@ def solo(topo):
         parts = []
         for r in rings:
             pts = [(round((p[0] - x0) * k, PRECISION), round((p[1] - y0) * k, PRECISION)) for p in r]
+            pts = thin(pts, SOLO_TOLERANCE)
             if area(pts) < MIN_RING_AREA:
                 continue
             trimmed = [pts[0]]
@@ -217,7 +364,7 @@ def solo(topo):
                     trimmed.append(pt)
             if len(trimmed) > 3:
                 parts.append("M" + "L".join("%g %g" % p for p in trimmed) + "Z")
-        slug = LIVE[int(geom["id"])][0]
+        slug = entry[0]
         out[slug] = {"w": round(w, 1), "h": round(h, 1), "d": "".join(parts)}
     return out
 
@@ -233,8 +380,8 @@ if __name__ == "__main__":
         sys.stderr.write("%d silhouettes, %.1f KB\n" % (len(shapes), len(text) / 1024.0))
         print(text)
     else:
-        shapes = build(topo)
-        svg = render(shapes)
-        sys.stderr.write("%d countries, %d live, %.1f KB of path data\n"
-                         % (len(shapes), sum(1 for c, _, _ in shapes if c in LIVE), len(svg) / 1024.0))
+        shapes, frame = build(topo)
+        svg = render(shapes, frame)
+        sys.stderr.write("%d countries, %d on the roster, %.1f KB of path data\n"
+                         % (len(shapes), sum(1 for c, _, _ in shapes if c in ROSTER), len(svg) / 1024.0))
         print(svg)

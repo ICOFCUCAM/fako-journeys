@@ -1,0 +1,281 @@
+{
+ "slug": "madagascar",
+ "name": "Madagascar",
+ "adjective": "Malagasy",
+ "region": "Islands",
+ "tagline": "An island that evolved alone",
+ "summary": "Separated from Africa 160 million years ago, with ninety per cent of its wildlife found nowhere else — lemurs, baobabs, the spiny forest of the south, and rainforest along the eastern escarpment.",
+ "published": true,
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "An Island That Evolved Alone",
+   "description": "Ninety per cent of what lives here lives nowhere else, because it has been on its own since the dinosaurs.",
+   "subject": "the avenue of baobabs at Morondava at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Six Ecosystems on One Island",
+   "description": "Rainforest east, highlands centre, spiny forest south, dry deciduous west, and reef all round.",
+   "subject": "the tsingy limestone pinnacles of Bemaraha",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "A Hundred Kinds of Lemur",
+   "description": "A hundred and seven species and subspecies of lemur, every one of them endemic.",
+   "subject": "an indri lemur in the rainforest canopy at Andasibe",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Not a Safari Island",
+   "description": "No lions and no elephant — the wildlife here is small, nocturnal, and worth the torchlight.",
+   "subject": "a chameleon on a branch in Ranomafana rainforest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Highlands and Maromokotro",
+   "description": "The central highlands run to two thousand metres; Maromokotro reaches 2,876 in the Tsaratanana.",
+   "subject": "terraced rice paddies in the Madagascar highlands",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "The Eastern Escarpment",
+   "description": "Short, steep rivers off the escarpment, and waterfalls through the rainforest at Andasibe.",
+   "subject": "a waterfall in rainforest on the eastern escarpment",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Tsiribihina",
+   "description": "Three days downriver by pirogue through country with no road in it.",
+   "subject": "a pirogue on the Tsiribihina river at dawn",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Nosy Be and the East Coast",
+   "description": "Reef, whale sharks and humpbacks off Nosy Be, and long empty sand on the east coast.",
+   "subject": "a white sand beach and turquoise water at Nosy Be",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Rainforest and Spiny Forest",
+   "description": "Andasibe and Ranomafana in the east, and the spiny forest of the south which is like nowhere.",
+   "subject": "the spiny forest of octopus trees in southern Madagascar",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "The RN7 and the Tsingy",
+   "description": "The road south through the highlands, and the limestone tsingy you cross on via ferrata.",
+   "subject": "a walker crossing the tsingy on a rope bridge",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Malagasy, and Eighteen Peoples",
+   "description": "One language across the island, of Austronesian origin, and eighteen distinct peoples speaking it.",
+   "subject": "a highland Malagasy village of red brick houses",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Famadihana and the Ancestors",
+   "description": "The ancestors are present here in a way that shapes the calendar and the architecture.",
+   "subject": "a family tomb standing in highland Madagascar farmland",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Romazava and Rice",
+   "description": "Rice three times a day, and romazava — beef and greens — with it.",
+   "subject": "romazava and rice served at a Malagasy table",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Hira Gasy and Donia",
+   "description": "Hira gasy troupes in the highlands, and the Donia festival on Nosy Be in June.",
+   "subject": "a hira gasy troupe performing in the highlands",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Silk, Raffia and Zafimaniry",
+   "description": "Wild silk lambas, raffia work, and the Zafimaniry woodcarving of the south-east.",
+   "subject": "a woman weaving a silk lamba on a wooden loom",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "The Rova and the Royal Hills",
+   "description": "Ambohimanga, the royal hill of the Merina kings above Antananarivo.",
+   "subject": "the wooden royal compound at Ambohimanga",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Pirates and Kingdoms",
+   "description": "Île Sainte-Marie's pirate cemetery, and the Merina kingdom that unified the island.",
+   "subject": "the pirate cemetery on Île Sainte-Marie",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Antananarivo",
+   "description": "A capital built up twelve hills, with stairs instead of streets in half of it.",
+   "subject": "the stepped hillside houses of Antananarivo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Highland Brick",
+   "description": "Two-storey red brick with a wooden balcony, and nothing else in Africa looks like it.",
+   "subject": "red brick highland houses with wooden balconies",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Zebu Market",
+   "description": "Zebu cattle are wealth here, and the markets that trade them are the real calendar.",
+   "subject": "a zebu cattle market in the Madagascar highlands",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Slow, and Worth It",
+   "description": "Roads are slow and distances are long — but the children will hold a chameleon.",
+   "subject": "children on a village path in rural Madagascar",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Trek, Paddle, Dive",
+   "description": "Rainforest trekking, the Tsiribihina by pirogue, and reef diving off Nosy Be.",
+   "subject": "kayaks on the water off a Madagascar reef island",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Small Lodges",
+   "description": "Owner-run lodges at the park gates, and beach places on Nosy Be with a dozen rooms.",
+   "subject": "a small lodge among trees at a Madagascar park gate",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "The Reason to Come Carefully",
+   "description": "Deforestation is the country's crisis, and the parks that work are the ones the villages run.",
+   "subject": "a reforestation nursery beside a Madagascar rainforest park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Baobabs at Six",
+   "description": "The avenue at Morondava for twenty minutes at either end of the day, and nothing else like it.",
+   "subject": "baobabs silhouetted against the sky at Morondava",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Masoala",
+   "description": "The largest protected rainforest in the country, reached by boat, with whales in the bay.",
+   "subject": "the rainforest of Masoala coming down to the sea",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Nowhere Else",
+   "description": "Lemurs, baobabs, tsingy, spiny forest — none of it exists anywhere else on earth.",
+   "subject": "a ring-tailed lemur troop in southern Madagascar",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}
