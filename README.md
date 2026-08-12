@@ -1,12 +1,28 @@
-# Kamerun
+# WankonAfritour, and Kamerun
 
-Mount Cameroon, the black-sand coast, Korup, the Bamenda highlands, Foumban and
-Waza — a Cameroonian tour operator's website. The repository is still named
-`fako-journeys`; the brand is Kamerun, and "Fako" survives only as the name of
-the mountain the first circuit climbs.
+Two sites in one repository, on purpose.
 
-A five-page static site: home, services, pricing, about, contact. No build step, no
-dependencies, no framework — plain HTML and CSS. Deploy the folder as-is.
+    /            WankonAfritour — the group's gateway to the whole continent
+    /cameroon    Kamerun — the Cameroon operator, and everything under it
+    /tourism/*   generated country pages, 27 categories each, seven countries
+
+The gateway sells Africa and hands the visitor to a country. The country site
+sells the country and hands them to a circuit. That is why `index.html` is
+deliberately light — a page whose only job is routing should load instantly —
+while `cameroon.html` carries the photographs, the six climates and the
+fourteen-day route.
+
+`cameroon.html` and its four pages (services, pricing, about, contact) are the
+Kamerun site; they are still at the repository root rather than under
+`/cameroon/`, which keeps their URLs and every internal link stable. Moving them
+into a folder is a later decision, not a blocker.
+
+The repository is still named `fako-journeys` — the original operator name.
+"Fako" survives in the sites themselves only as the name of the mountain the
+first circuit climbs.
+
+No build step, no dependencies, no framework — plain HTML and CSS. Deploy the
+folder as-is.
 
 ## Deploying
 

@@ -40,7 +40,10 @@ from . import cache as cache_mod
 from . import imaging
 from .model import ROOT, attach_cache, load_countries, load_taxonomy
 
-PAGES = ("index.html", "services.html", "about.html", "contact.html", "pricing.html")
+# The site root is WankonAfritour, the group's continental gateway; the Kamerun
+# pages hang off cameroon.html. Only these five carry photograph slots — the
+# gateway is deliberately typographic, so it has none to manage.
+PAGES = ("cameroon.html", "services.html", "about.html", "contact.html", "pricing.html")
 
 # These are not the tourism taxonomy roles. They are the shapes the five
 # hand-written pages already impose in their own CSS:

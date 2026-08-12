@@ -1,7 +1,7 @@
 """Generate the country tourism pages.
 
 The design system is not re-implemented here. The masthead, the footer, the token
-block and the reveal script are lifted out of index.html at render time, so these
+block and the reveal script are lifted out of cameroon.html at render time, so these
 pages cannot drift from the rest of the site: change a token on the home page and
 every country page follows.
 
@@ -71,17 +71,17 @@ def _between(src, start_pat, end_pat):
 
 
 class Shell:
-    """The site's own chrome, read off index.html."""
+    """The site's own chrome, read off cameroon.html."""
 
     def __init__(self, index_path=None):
-        with open(index_path or os.path.join(ROOT, "index.html")) as f:
+        with open(index_path or os.path.join(ROOT, "cameroon.html")) as f:
             src = f.read()
         self.style = _between(src, r"<style>", r"</style>")
         self.masthead = _between(src, r'<header class="fj-mast">', r"</header>")
         self.footer = _between(src, r'<footer class="fj-foot">', r"</footer>")
         self.script = _between(src, r"<script>", r"</script>")
         if not (self.style and self.masthead and self.footer):
-            raise RuntimeError("could not read the shell out of index.html")
+            raise RuntimeError("could not read the shell out of cameroon.html")
         # the masthead CTA jumps to an on-page form that country pages do not have
         self.masthead = self.masthead.replace('href="#quote"', 'href="/contact"')
 

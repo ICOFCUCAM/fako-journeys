@@ -635,7 +635,11 @@ def main():
                       for r in cache_mod.load().entries.values()))
 
         # placement
-        slot = "site:index:waza-elephants"
+        # Derived, not spelled out: the slot key contains the page name, and
+        # hard-coding it broke the moment the Cameroon home page moved off the
+        # site root. The test cares that a slot can be placed, not which page.
+        waza_slot = [p for p in targets if p["id"] == "waza-elephants"][0]
+        slot = pool.placement_slot(waza_slot)
         cand = index.generated(slot)[0]
         before = open(os.path.join(root, "index.html")).read()
         report = place_mod.run({slot: cand["id"]}, cameroon, dry_run=True, log=lambda *a: None)
@@ -643,7 +647,7 @@ def main():
               report["placed"] == 1
               and open(os.path.join(root, "index.html")).read() == before)
         check("a pick naming a slot that does not exist fails the whole run",
-              place_mod.run({"site:index:nope": cand["id"]}, cameroon,
+              place_mod.run({slot + "-does-not-exist": cand["id"]}, cameroon,
                             dry_run=True, log=lambda *a: None)["errors"])
         check("a stock candidate cannot be placed by `place`",
               place_mod.run({slot: "unsplash:abc"}, cameroon,
