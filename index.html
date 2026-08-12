@@ -544,9 +544,19 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 
 /* ---- closing --------------------------------------------------------------------- */
 .wa-end{text-align:center;padding:96px 0}
+.wa-end>.wa-stamp{margin-bottom:14px}
 .wa-end h2{font-size:clamp(32px,5vw,68px)}
 .wa-end h2 em{font-style:normal;color:var(--c-accent)}
 .wa-end p{margin:18px auto 0;max-width:46ch;color:var(--c-muted)}
+/* The close reads back what the visitor chose on the way down, because the page
+   has been collecting an answer the whole time and ending on a generic form
+   would throw it away. Nothing is chosen on arrival, so the invitation is the
+   default and the summary only appears once there is something to summarise. */
+.wa-end-said{margin-top:22px}
+.wa-end-said .wa-stamp{margin-bottom:10px}
+.wa-end-line{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(20px,2.6vw,34px);line-height:1.1;color:var(--c-primary);max-width:26ch;margin:0 auto}
+.wa-end-line em{font-style:normal;color:var(--c-accent)}
 .wa-end .wa-acts{justify-content:center}
 
 /* ---- footer ---------------------------------------------------------------------- */
@@ -568,6 +578,22 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to content</a>
+<script>
+/* The page collects an answer as the visitor moves down it — a destination from
+   the atlas, an experience from the rung, a month from the finder. Three scripts
+   write here and the closing section reads it, so the page can end on what was
+   actually said rather than on a generic form. Plain object, no framework, and
+   nothing breaks if a listener never fires. */
+window.AF = {
+  state: {country: null, countryName: null, want: null, wantName: null, month: null},
+  subs: [],
+  set: function(patch){
+    for (var k in patch) this.state[k] = patch[k];
+    for (var i = 0; i < this.subs.length; i++) this.subs[i](this.state);
+  },
+  on: function(fn){ this.subs.push(fn); fn(this.state); }
+};
+</script>
 
 <!-- nav -->
 <header class="wa-mast">
@@ -1034,12 +1060,15 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
     if (view) flyTo(view.split(' ').map(Number));   // fly the map behind the swap
     paint(i, exp);
     terrain.innerHTML = '';
+    var tick = ticks.filter(function(t){ return t.dataset.slug === slug; })[0];
+    window.AF.set({country: slug, countryName: tick ? tick.textContent : null});
   }
 
   regs.forEach(function(r){
     r.addEventListener('click', function(){
       if (at !== 0) paint(0, null);
       paintRegion(r.dataset.reg);
+      window.AF.set({country: null, countryName: null});
     });
   });
   ticks.forEach(function(t){
@@ -1061,13 +1090,18 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   }
   tags.forEach(function(t){
     t.addEventListener('click', function(){
-      if (held === t.dataset.exp) { say(null); paint(0, null); paintRegion(region); return; }
+      if (held === t.dataset.exp) {
+        say(null); paint(0, null); paintRegion(region);
+        window.AF.set({want: null, wantName: null, country: null, countryName: null});
+        return;
+      }
       var pick = picks.filter(function(p){ return p.dataset.pick === t.dataset.exp; })[0];
       var slug = pick ? (pick.querySelector('.wa-pick-go').getAttribute('href') || '').replace(/^\//, '')
                       : t.dataset.slug;
       var tick = ticks.filter(function(x){ return x.dataset.slug === slug; })[0]
               || ticks.filter(function(x){ return x.dataset.slug === t.dataset.slug; })[0];
       say(t.dataset.exp);
+      window.AF.set({want: t.dataset.exp, wantName: t.textContent.trim()});
       // The recommendation below says which country and why; the one-line
       // version above it named a different one, which read as a contradiction.
       go(tick ? tick.dataset.slug : t.dataset.slug, null, tick && tick.dataset.view);
@@ -1167,7 +1201,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
       <!-- gen:months -->
       <button class="wa-month" type="button" data-month="1" aria-pressed="false"><b>Jan</b><span>12</span></button><button class="wa-month" type="button" data-month="2" aria-pressed="false"><b>Feb</b><span>12</span></button><button class="wa-month" type="button" data-month="3" aria-pressed="false"><b>Mar</b><span>11</span></button><button class="wa-month" type="button" data-month="4" aria-pressed="false"><b>Apr</b><span>8</span></button><button class="wa-month" type="button" data-month="5" aria-pressed="false"><b>May</b><span>11</span></button><button class="wa-month" type="button" data-month="6" aria-pressed="false"><b>Jun</b><span>13</span></button><button class="wa-month" type="button" data-month="7" aria-pressed="false"><b>Jul</b><span>12</span></button><button class="wa-month" type="button" data-month="8" aria-pressed="false"><b>Aug</b><span>12</span></button><button class="wa-month" type="button" data-month="9" aria-pressed="false"><b>Sep</b><span>14</span></button><button class="wa-month" type="button" data-month="10" aria-pressed="false"><b>Oct</b><span>15</span></button><button class="wa-month" type="button" data-month="11" aria-pressed="false"><b>Nov</b><span>12</span></button><button class="wa-month" type="button" data-month="12" aria-pressed="false"><b>Dec</b><span>11</span></button>      <!-- /gen:months -->
     </div>
-    <p class="wa-want-say" id="wa-want-say">Choose what you want, or the month you can travel, or both. Choose again to clear.</p>
+    <p class="wa-want-say" id="wa-want-say">Choose what you want, or the month you can travel, or both. Africa is large enough that no month is a bad month everywhere &mdash; the numbers above are how many destinations are at their best in each.</p>
     <div class="wa-dests">
       <!-- gen:destinations -->
       <h3 class="wa-dest-reg" data-region="central">Central &amp; West Africa</h3>
@@ -1296,31 +1330,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   </div>
 </section>
 
-<!-- 07 seasons -->
-<section class="wa-zone basalt" id="seasons">
-  <div class="wa-frame">
-    <div class="wa-head">
-      <div class="wa-head-no"><b>07</b><span>The year</span></div>
-      <div>
-        <h2>There is always <em>somewhere to go</em>.</h2>
-        <p class="wa-note">Africa changes dramatically through the year, and the continent is large enough that no month is a bad month everywhere. Every country has months that work and months that do not. We will tell you which.</p>
-      </div>
-    </div>
-    <div class="wa-seasons">
-      <div class="wa-season"><b>January &mdash; March</b><ul><li>Wildlife</li><li>Beaches</li><li>East Africa</li><li>Southern Africa</li></ul></div>
-      <div class="wa-season"><b>April &mdash; June</b><ul><li>Rainforest</li><li>Culture</li><li>Green landscapes</li><li>Islands</li></ul></div>
-      <div class="wa-season"><b>July &mdash; September</b><ul><li>Safari</li><li>Gorilla trekking</li><li>Mountains</li><li>Migration</li></ul></div>
-      <div class="wa-season"><b>October &mdash; December</b><ul><li>Wildlife</li><li>Coast</li><li>Adventure</li><li>Cultural journeys</li></ul></div>
-    </div>
-    <div class="wa-acts"><a class="wa-act faint" href="/contact">Find the right destination for your month <i>&rarr;</i></a></div>
-  </div>
-</section>
-
-<!-- 08 stories -->
+<!-- 07 stories -->
 <section class="wa-zone" id="stories">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>08</b><span>Stories</span></div>
+      <div class="wa-head-no"><b>07</b><span>Stories</span></div>
       <div>
         <h2>Africa is <em>more than a destination</em>.</h2>
         <p class="wa-note">Long-form writing from the countries we work in, by the guides and operators who live there. The first five are being written now; each one will sit on the country page it belongs to.</p>
@@ -1387,10 +1401,19 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 
   wants.forEach(function(b){
     b.setAttribute('aria-pressed', 'false');
-    b.addEventListener('click', function(){ want = (want === b.dataset.want) ? null : b.dataset.want; apply(); });
+    b.addEventListener('click', function(){
+      want = (want === b.dataset.want) ? null : b.dataset.want;
+      apply();
+      window.AF.set({want: want, wantName: want ? b.querySelector('b').textContent : null});
+    });
   });
   mbtns.forEach(function(b){
-    b.addEventListener('click', function(){ var m = +b.dataset.month; month = (month === m) ? null : m; apply(); });
+    b.addEventListener('click', function(){
+      var m = +b.dataset.month;
+      month = (month === m) ? null : m;
+      apply();
+      window.AF.set({month: month});
+    });
   });
 })();
 </script>
@@ -1416,13 +1439,17 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 </main>
 
 <!-- begin -->
-<section class="wa-zone">
+<section class="wa-zone" id="begin">
   <div class="wa-frame wa-end">
     <span class="wa-stamp">Begin</span>
     <h2>Your Africa. <em>Your journey</em>.</h2>
-    <p>Tell us the month, the country &mdash; or simply the thing you want to see. We will help you find the destination and the local people who can take you there.</p>
+    <p class="wa-end-idle" id="wa-end-idle">Tell us the month, the country &mdash; or simply the thing you want to see. We will help you find the destination and the local people who can take you there.</p>
+    <div class="wa-end-said" id="wa-end-said" hidden>
+      <span class="wa-stamp">You said</span>
+      <p class="wa-end-line" id="wa-end-line"></p>
+    </div>
     <div class="wa-acts">
-      <a class="wa-act go" href="/contact">Begin your journey <i>&rarr;</i></a>
+      <a class="wa-act go" id="wa-end-go" href="/contact">Begin your journey <i>&rarr;</i></a>
       <a class="wa-act faint" href="#destinations">Explore all destinations <i>&rarr;</i></a>
     </div>
   </div>
@@ -1470,8 +1497,8 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
         <b>Explore</b>
         <a href="#experiences">Experiences</a>
         <a href="#destinations">Every destination</a>
-        <a href="#begin">Where to begin</a>
-        <a href="#seasons">Travel seasons</a>
+        <a href="#destinations">Where to begin</a>
+        <a href="#destinations">Travel seasons</a>
         <a href="/tourism/">All twenty-seven categories</a>
         <a href="/contact">Start a journey</a>
         <a href="/contact">Contact an operator</a>
@@ -1480,7 +1507,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
         <b>Plan</b>
         <a href="/contact">Start a journey</a>
         <a href="/contact">Contact an operator</a>
-        <a href="#seasons">Travel seasons</a>
+        <a href="#destinations">Travel seasons</a>
         <a href="#plan">Guides</a>
         <a href="#plan">Transport</a>
         <b style="margin-top:26px">Regions</b>
@@ -1493,5 +1520,39 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
     </div>
   </div>
 </footer>
+<script>
+/* The closing section. It says nothing until there is something to say, and
+   what it says is the visitor's own words back to them, with the choices carried
+   into the enquiry link so the operator is not asked to guess. */
+(function(){
+  var idle = document.getElementById('wa-end-idle');
+  var said = document.getElementById('wa-end-said');
+  var line = document.getElementById('wa-end-line');
+  var go = document.getElementById('wa-end-go');
+  if (!idle || !said || !line || !go) return;
+  var MONTH = ['January','February','March','April','May','June',
+               'July','August','September','October','November','December'];
+  window.AF.on(function(s){
+    var bits = [];
+    if (s.wantName) bits.push('<em>' + s.wantName + '</em>');
+    if (s.month) bits.push('in <em>' + MONTH[s.month - 1] + '</em>');
+    if (s.countryName) bits.push('in <em>' + s.countryName + '</em>');
+    if (!bits.length) {
+      said.hidden = true; idle.hidden = false;
+      go.setAttribute('href', '/contact');
+      go.innerHTML = 'Begin your journey <i>&rarr;</i>';
+      return;
+    }
+    said.hidden = false; idle.hidden = true;
+    line.innerHTML = bits.join(', ') + '.';
+    var q = [];
+    if (s.want) q.push('want=' + encodeURIComponent(s.want));
+    if (s.month) q.push('month=' + s.month);
+    if (s.country) q.push('country=' + encodeURIComponent(s.country));
+    go.setAttribute('href', '/contact?' + q.join('&'));
+    go.innerHTML = 'Send this to the operator <i>&rarr;</i>';
+  });
+})();
+</script>
 </body>
 </html>
