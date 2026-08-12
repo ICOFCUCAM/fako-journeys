@@ -143,6 +143,28 @@ def open_graph(title, description, path, kind="website"):
     ]))
 
 
+def events_block(path=None):
+    """The event schema, inlined, plus the script that enforces it.
+
+    Inlined rather than fetched because it is the thing that decides what may be
+    recorded: a page that had already counted three events before its own rules
+    arrived would be a page whose rules did not apply. It is under a kilobyte.
+    """
+    import json as _json
+    import os as _os
+    from .model import ROOT as _ROOT
+    path = path or _os.path.join(_ROOT, "tourism", "events.json")
+    try:
+        with open(path) as fh:
+            data = _json.load(fh)
+    except (IOError, ValueError):
+        return ""
+    lean = {"events": data.get("events") or {}}
+    return ('<script type="application/json" id="af-events">%s</script>\n'
+            '<script src="/scripts/events.js" defer></script>'
+            % _json.dumps(lean, separators=(",", ":"), sort_keys=True))
+
+
 # ---- the stylesheet's contract ---------------------------------------------------
 
 # What the plate and the window need from afrinkong.css, listed here so that a

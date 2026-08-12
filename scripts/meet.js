@@ -29,6 +29,9 @@
   var PEOPLE = readJSON('mt-people', []);
   var VOICES = readJSON('mt-voices', []);
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  var track = function (name, props) {
+    if (window.AfrinkongEvents) window.AfrinkongEvents.track(name, props);
+  };
 
   var D = null;                 /* data/meet.json, fetched once */
   var state = {strand: null, country: null};
@@ -228,6 +231,8 @@
     var h = '#/' + (state.country ? state.country + (next.strand ? '/' + state.strand : '')
                                   : state.strand);
     if (push !== false && h !== location.hash) history.pushState(null, '', h);
+    if (state.country) track('meet_country_opened', {country: state.country});
+    else track('meet_strand_opened', {strand: state.strand});
     render();
     stage.scrollIntoView({behavior: reduced.matches ? 'auto' : 'smooth', block: 'start'});
   }

@@ -209,6 +209,7 @@ def render(countries, taxonomy):
     if not data["countries"]:
         raise IOError("no published countries — nothing to plan")
     return TEMPLATE % {
+        "events": plate.events_block(),
         "og": plate.open_graph('Build a journey — Afrinkong', 'Four questions, then one country, a journey shaped inside it, and the company that would run it.', '/journey'),
         "data": json.dumps(data, separators=(",", ":"), sort_keys=True),
         "wants": want_cards(data),
@@ -404,6 +405,7 @@ TEMPLATE = """<!DOCTYPE html>
 </main>
 
 <script type="application/json" id="jn-data">%(data)s</script>
+%(events)s
 <script src="/scripts/window.js" defer></script>
 <script src="/scripts/journey-engine.js" defer></script>
 <script src="/scripts/journey.js" defer></script>

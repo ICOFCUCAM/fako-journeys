@@ -62,6 +62,9 @@
 
   var web = document.getElementById('at-web');
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  var track = function (name, props) {
+    if (window.AfrinkongEvents) window.AfrinkongEvents.track(name, props);
+  };
   var LINKS = null;             /* data/links.json, fetched when links mode opens */
   var LABEL = 13;                      /* label size at the full continental view */
   var state = {level: 'africa', region: null, country: null, place: null,
@@ -745,6 +748,11 @@
       state.level = 'place'; state.place = key;
     }
     if (push !== false) writeHash();
+    if (level === 'region') track('atlas_region_opened', {region: state.region});
+    else if (level === 'country') {
+      track('atlas_country_opened', {country: state.country,
+        region: SP.countries[state.country] && SP.countries[state.country].regionKey});
+    } else if (level === 'place') track('atlas_place_opened', {country: state.country});
     render();
     if ((level === 'country' || level === 'place') && state.country) {
       var slug = state.country;
@@ -828,6 +836,7 @@
     var lens = e.target.closest ? e.target.closest('[data-lens]') : null;
     if (lens) {
       state.want = state.want === lens.dataset.lens ? null : lens.dataset.lens;
+      if (state.want) track('atlas_lens_used', {want: state.want, month: state.when});
       if (state.level === 'africa' || state.level === 'region') { writeHash(); render(); }
       else { writeHash(); render(false); }
       return;
@@ -844,6 +853,7 @@
       [].forEach.call(document.querySelectorAll('[data-mode]'), function (b) {
         b.setAttribute('aria-pressed', String((b.dataset.mode === 'links') === state.web));
       });
+      if (state.web) track('atlas_links_opened', {want: state.want});
       needLinks().then(function () { paintWeb(); });
       return;
     }
@@ -895,6 +905,7 @@
       if (!fresh.length) { seen = {}; fresh = pool; }
       var slug = fresh[Math.floor(Math.random() * fresh.length)];
       seen[slug] = true;
+      track('surprise_taken', {country: slug, want: state.want, month: state.when});
       fetchPlaces(slug).then(function (pack) {
         go('country', slug);
         if (pack.places.length) go('place', pack.places[0].id);

@@ -322,5 +322,143 @@ check('changing a weight changes the ranking',
   JSON.stringify(E.rank(D, {wants: [], month: 1}).map(function (x) { return x.slug; }))
   !== JSON.stringify(E.rank(zeroed, {wants: [], month: 1}).map(function (x) { return x.slug; })));
 
+/* ---- what the product counts --------------------------------------------- */
+
+/* The event layer is worth testing for the opposite reason to the engine: not
+   that it records the right things, but that it cannot record the wrong ones.
+   The rules are only worth as much as the code that enforces them, so these run
+   against the real module, loaded with the real schema as it was inlined into
+   the built page — not a copy the test wrote for itself. */
+
+const evBlock = page.match(
+  /<script type="application\/json" id="af-events">([\s\S]*?)<\/script>/);
+check('the built page carries the event schema', !!evBlock);
+
+const evFile = JSON.parse(fs.readFileSync(path.join(ROOT, 'tourism', 'events.json'), 'utf8'));
+const shipped = evBlock ? JSON.parse(evBlock[1]) : {events: {}};
+function canonical(obj) {
+  return Object.keys(obj || {}).sort().map(function (k) {
+    return k + ':' + (obj[k] || []).slice().sort().join('+');
+  }).join('|');
+}
+check('the page ships the schema the dataset holds',
+  canonical(shipped.events) === canonical(evFile.events));
+check('the page ships the rules and nothing else',
+  Object.keys(shipped).join(',') === 'events', Object.keys(shipped).join(','));
+
+/* events.js reads its schema from the document, because on a page that is where
+   it is. Standing one up is the whole of the browser this module needs. */
+global.document = {getElementById: function (id) {
+  return id === 'af-events' ? {textContent: JSON.stringify(shipped)} : null;
+}};
+const V = require(path.join(ROOT, 'scripts', 'events.js'));
+
+const SENTENCE = 'twelve days in September, wildlife and mountains';
+const names = Object.keys(evFile.events);
+
+check('an event the schema does not name is dropped',
+  V.shape('page_view', {country: 'uganda'}) === null
+  && V.shape('', {}) === null && V.shape('__proto__', {}) === null);
+check('a property not named under its event is stripped',
+  JSON.stringify(V.shape('meet_strand_opened', {strand: 'food', country: 'uganda'}))
+  === '{"strand":"food"}',
+  JSON.stringify(V.shape('meet_strand_opened', {strand: 'food', country: 'uganda'})));
+check('a property named under its event travels',
+  V.shape('journey_composed', {country: 'uganda', stages: 3}).country === 'uganda');
+
+/* The one that matters. The journey builder has a box a visitor types a
+   sentence into; try to push that sentence out through every door there is. */
+check('the sentence a visitor types cannot travel under any name',
+  names.every(function (n) {
+    const props = {};
+    (evFile.events[n] || []).forEach(function (k) { props[k] = SENTENCE; });
+    props.sentence = SENTENCE;
+    props.text = SENTENCE;
+    return JSON.stringify(V.shape(n, props)) === '{}';
+  }));
+check('free text is refused whatever it is called',
+  V.shape('journey_revealed', {band: 'we thought you might like Uganda, because'})
+  && Object.keys(V.shape('journey_revealed',
+    {band: 'we thought you might like Uganda, because'})).length === 0);
+check('a value that is not a short token or a small number is refused',
+  JSON.stringify(V.shape('journey_composed',
+    {country: {slug: 'uganda'}, stages: 1e9, month: NaN, pacing: ['a']})) === '{}');
+check('every property a schema names is described',
+  names.every(function (n) {
+    return (evFile.events[n] || []).every(function (k) {
+      return Object.prototype.hasOwnProperty.call(evFile.$props, k);
+    });
+  }));
+
+/* Drift: an event the site emits that the schema never heard of would be
+   silently dropped, which is the right failure at runtime and the wrong one to
+   discover there. */
+const emitted = [];
+['atlas.js', 'journey.js', 'meet.js'].forEach(function (f) {
+  const src = fs.readFileSync(path.join(ROOT, 'scripts', f), 'utf8');
+  let hit;
+  const re = /\btrack\(\s*'([a-z_]+)'/g;
+  while ((hit = re.exec(src))) if (emitted.indexOf(hit[1]) < 0) emitted.push(hit[1]);
+});
+const placeSrc = fs.readFileSync(path.join(ROOT, 'tools', 'tourism', 'places.py'), 'utf8');
+if (/track\('place_page_opened'/.test(placeSrc)) emitted.push('place_page_opened');
+check('every event the site emits is named in the schema',
+  emitted.every(function (n) { return names.indexOf(n) >= 0; }),
+  emitted.filter(function (n) { return names.indexOf(n) < 0; }).join(',') || emitted.length + ' emitted');
+check('every event the schema names is actually emitted',
+  names.every(function (n) { return emitted.indexOf(n) >= 0; }),
+  names.filter(function (n) { return emitted.indexOf(n) < 0; }).join(','));
+
+/* Nothing leaves, and nothing is kept between two page-loads. */
+const evSrc = fs.readFileSync(path.join(ROOT, 'scripts', 'events.js'), 'utf8')
+  .replace(/\/\*[\s\S]*?\*\//g, '');
+check('the event layer has no way to reach the network',
+  !/\b(fetch|XMLHttpRequest|sendBeacon|WebSocket|EventSource|import\s*\()/.test(evSrc));
+check('the event layer mints and stores no identifier',
+  !/\b(localStorage|sessionStorage|indexedDB|cookie|crypto|Math\.random|Date\.now)\b/
+    .test(evSrc));
+
+let sent = 0;
+V.sink(null);
+const payload = V.track('atlas_country_opened', {country: 'rwanda', region: 'east'});
+check('with no destination configured an event validates and stops there',
+  payload && payload.country === 'rwanda' && sent === 0);
+V.sink(function (name, props) { sent += 1; check.last = [name, props]; });
+V.track('atlas_country_opened', {country: 'rwanda', region: 'east', extra: 'x'});
+check('a destination receives only what survived validation',
+  sent === 1 && JSON.stringify(check.last[1]) === '{"country":"rwanda","region":"east"}',
+  JSON.stringify(check.last && check.last[1]));
+V.sink(function () { throw new Error('a badly behaved destination'); });
+let broke = false;
+try { V.track('atlas_place_opened', {country: 'kenya'}); } catch (e) { broke = true; }
+check('a destination that throws does not break the page', !broke);
+V.sink(null);
+V.track('page_view', {country: 'kenya'});
+check('an event that was refused is not counted',
+  !Object.prototype.hasOwnProperty.call(V.counted(), 'page_view'));
+check('what was counted can be read back', V.counted().atlas_country_opened === 2,
+  JSON.stringify(V.counted()));
+
+/* Do Not Track and Global Privacy Control stop the counting too: a count that
+   is kept is data that is held, whatever it was meant for. */
+const realNav = Object.getOwnPropertyDescriptor(global, 'navigator');
+function says(signal) {
+  Object.defineProperty(global, 'navigator', {value: signal, configurable: true});
+}
+says({globalPrivacyControl: true});
+const before = V.counted().atlas_place_opened || 0;
+let afterSink = 0;
+V.sink(function () { afterSink += 1; });
+check('a visitor who has said no is not counted and not sent',
+  V.refused() && V.track('atlas_place_opened', {country: 'kenya'}) === null
+  && (V.counted().atlas_place_opened || 0) === before && afterSink === 0);
+says({doNotTrack: '1'});
+check('Do Not Track is honoured as well',
+  V.refused() && V.track('atlas_place_opened', {country: 'kenya'}) === null);
+if (realNav) Object.defineProperty(global, 'navigator', realNav);
+V.sink(null);
+check('with no signal set, counting resumes',
+  !V.refused() && V.track('atlas_place_opened', {country: 'kenya'}) !== null);
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(function (l) { return l.indexOf('FAIL') === 0; }) ? 1 : 0);

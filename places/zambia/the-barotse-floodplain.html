@@ -60,6 +60,16 @@
   </aside>
 </main>
 
+<script type="application/json" id="af-events">{"events":{"alternative_opened":["country"],"atlas_country_opened":["country","region"],"atlas_lens_used":["want","month"],"atlas_links_opened":["want"],"atlas_place_opened":["country"],"atlas_region_opened":["region"],"border_crossed":["country","to"],"enquiry_started":["country","stages","month","pacing"],"journey_composed":["country","stages","pacing","month"],"journey_revealed":["country","band","wants","month"],"journey_saved":["country","stages"],"journey_shared":["country","stages"],"journey_started":["source"],"journey_tweaked":["country","pacing","month"],"meet_country_opened":["country"],"meet_strand_opened":["strand"],"place_page_opened":["country"],"question_answered":["step","wants","month","pacing","party"],"sentence_read":["wants","month","pacing"],"stage_changed":["country","stages"],"surprise_taken":["country","want","month"]}}</script>
+<script src="/scripts/events.js" defer></script>
+<script>
+/* One event, on a page with nothing to interact with: that a place was opened,
+   and which country it is in. No identifier, nothing about who, and nothing at
+   all if the visitor has asked not to be counted. */
+addEventListener('DOMContentLoaded',function(){
+  if(window.AfrinkongEvents)window.AfrinkongEvents.track('place_page_opened',{country:'zambia'});
+});
+</script>
 <footer class="pl-foot" style="--plate-tone:#8A6A3C">
   <div class="pl-foot-in">
     <div class="foot-next"><span>Next to Zambia</span><a href="/places/zimbabwe" data-border="true">Zimbabwe<i>745 km</i></a><a href="/places/namibia" data-border="true">Namibia<i>1533 km</i></a><a href="/places/mozambique" data-border="true">Mozambique<i>883 km</i></a><a href="/places/tanzania" data-border="true">Tanzania<i>899 km</i></a><p>Straight-line distances between country centres. Solid names share a land border with it.</p></div>

@@ -215,6 +215,7 @@ def render(countries, taxonomy):
         raise IOError("no published countries — nothing to meet")
     people = people_payload()
     return TEMPLATE % {
+        "events": plate.events_block(),
         "og": plate.open_graph('Meet Africa — Afrinkong', 'Seven questions, asked of twenty-two countries. The same question changes its answer at every border.', '/meet'),
         "doors": door_list(data),
         "strip": country_strip(data),
@@ -326,6 +327,7 @@ TEMPLATE = """<!DOCTYPE html>
 
 <script type="application/json" id="mt-people">%(people)s</script>
 <script type="application/json" id="mt-voices">%(voices)s</script>
+%(events)s
 <script src="/scripts/window.js" defer></script>
 <script src="/scripts/meet.js" defer></script>
 </body>

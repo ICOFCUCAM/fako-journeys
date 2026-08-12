@@ -13,6 +13,13 @@
   'use strict';
 
   var E = window.AfrinkongJourney;
+  /* Counting, not following. The layer drops anything not named in the schema
+     and strips any property not allowed under its event, so the sentence a
+     visitor types into the box below has nowhere to go — which is the one thing
+     on this page that would be tempting to record and must not be. */
+  var track = function (name, props) {
+    if (window.AfrinkongEvents) window.AfrinkongEvents.track(name, props);
+  };
   var node = document.getElementById('jn-data');
   if (!E || !node) return;
   var D = JSON.parse(node.textContent);
@@ -79,7 +86,12 @@
   form.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target.closest('button') : null;
     if (!t) return;
-    if (t.hasAttribute('data-next')) { readForm(); show(step + 1); }
+    if (t.hasAttribute('data-next')) {
+      readForm();
+      track('question_answered', {step: step, wants: brief.wants.length,
+        month: brief.month, pacing: brief.pacing, party: brief.party});
+      show(step + 1);
+    }
     else if (t.hasAttribute('data-back')) show(step - 1);
     else if (t.hasAttribute('data-open')) {
       /* "I don't know yet" is a real answer, not a skip: it drops the
@@ -122,6 +134,9 @@
       return;
     }
     out.removeAttribute('data-warn');
+    /* How many things it understood, never what was typed. */
+    track('sentence_read', {wants: got.wants.length, month: got.month,
+                            pacing: got.pacing});
     out.textContent = 'Read as: ' + got.took.map(function (t) {
       return t.say + (t.band ? ' (' + t.band + ')' : ''); }).join(' \u00b7 ')
       + '. Everything below is still yours to change.';
@@ -146,6 +161,9 @@
     compose.hidden = true;
     reveal.hidden = false;
     paintReveal();
+    var b = E.band(D, brief, chosen);
+    track('journey_revealed', {country: chosen.slug, band: b && b.label,
+      wants: brief.wants.length, month: brief.month});
     if (!quiet && !reduced.matches) {
       reveal.setAttribute('data-arriving', '');
       setTimeout(function () { reveal.removeAttribute('data-arriving'); }, 40);
@@ -268,6 +286,7 @@
         return p.slug === t.dataset.alt; })[0];
       if (!chosen) return;
       picks = [chosen].concat(picks.filter(function (p) { return p.slug !== chosen.slug; }));
+      track('alternative_opened', {country: chosen.slug});
       paintReveal();
       window.scrollTo({top: 0, behavior: reduced.matches ? 'auto' : 'smooth'});
     } else if (t.hasAttribute('data-compose')) {
@@ -330,6 +349,8 @@
       reveal.hidden = true;
       compose.hidden = false;
       paintComposer();
+      track('journey_composed', {country: slug, stages: stages.length,
+                                 pacing: brief.pacing, month: brief.month});
       writeHash();
       window.scrollTo({top: 0, behavior: 'auto'});
     });
@@ -459,6 +480,10 @@
     }
     var begin = document.getElementById('jn-begin');
     begin.href = '/contact?journey=' + encodeURIComponent(enquiry(title, c, rows, pace));
+    begin.onclick = function () {
+      track('enquiry_started', {country: chosen.slug, stages: stages.length,
+                                month: brief.month, pacing: brief.pacing});
+    };
     begin.textContent = c.operator ? 'Send this to ' + c.operator.name : 'Begin this journey';
     begin.insertAdjacentHTML('beforeend', '<i>&rarr;</i>');
   }
@@ -591,11 +616,15 @@
           if (stages.length < want && stages.indexOf(id) < 0) stages.push(id);
         });
       }
+      track('journey_tweaked', {country: chosen.slug, pacing: brief.pacing,
+                                month: brief.month});
       paintComposer(); writeHash();
     } else if (what === 'month') {
       brief.month = t.value ? Number(t.value) : null;
       chosen = E.rank(D, brief).filter(function (p) { return p.slug === chosen.slug; })[0]
         || chosen;
+      track('journey_tweaked', {country: chosen.slug, pacing: brief.pacing,
+                                month: brief.month});
       paintComposer(); writeHash();
     } else if (what === 'country' && t.value !== chosen.slug) {
       /* `chosen` is deliberately left standing: openComposer replaces it, and
@@ -616,6 +645,7 @@
       fetchPlaces(to).then(function (pack) {
         var add = E.suggestStages(pack.places, brief, {stages: 2});
         add.forEach(function (id) { stages.push(E.stageId(to, id, chosen.slug)); });
+        track('border_crossed', {country: chosen.slug, to: to});
         paintComposer(); writeHash();
       });
       return;
@@ -624,6 +654,7 @@
       var id = t.dataset.toggle;
       var at = stages.indexOf(id);
       if (at >= 0) stages.splice(at, 1); else stages.push(id);
+      track('stage_changed', {country: chosen.slug, stages: stages.length});
       paintComposer(); writeHash();
     } else if (t.hasAttribute('data-drop')) {
       stages = stages.filter(function (x) { return x !== t.dataset.drop; });
@@ -666,6 +697,7 @@
     list.unshift({url: url, title: title, country: c.name, stages: stages.length});
     try {
       localStorage.setItem(SAVED, JSON.stringify(list.slice(0, 12)));
+      track('journey_saved', {country: chosen.slug, stages: stages.length});
       say('Saved in this browser. It is also in the address bar — copy the '
         + 'link and it will open anywhere.');
     } catch (err) {
@@ -681,6 +713,7 @@
 
   function share() {
     var url = location.origin + location.pathname + E.encode(stateNow());
+    track('journey_shared', {country: chosen.slug, stages: stages.length});
     var done = function () {
       say('Link copied. Anyone who opens it sees this journey, with the stages '
         + 'you chose.');
@@ -778,5 +811,8 @@
   });
 
   paintSaved();
-  if (!restore() && !entry()) show(1);
+  var restored = restore();
+  var entered = !restored && entry();
+  track('journey_started', {source: restored ? 'link' : (entered ? 'link' : 'questions')});
+  if (!restored && !entered) show(1);
 })();

@@ -160,6 +160,7 @@ def page(country, place, pack, order, tax, ctx):
                  'border with it.</p></div>' % (esc(country.name), near)) if near else "",
         "tone": esc(tone),
         "url": esc(country.url),
+        "events": plate.events_block(),
     }
 
 
@@ -318,6 +319,15 @@ TEMPLATE = """<!DOCTYPE html>
   </aside>
 </main>
 
+%(events)s
+<script>
+/* One event, on a page with nothing to interact with: that a place was opened,
+   and which country it is in. No identifier, nothing about who, and nothing at
+   all if the visitor has asked not to be counted. */
+addEventListener('DOMContentLoaded',function(){
+  if(window.AfrinkongEvents)window.AfrinkongEvents.track('place_page_opened',{country:'%(slug)s'});
+});
+</script>
 <footer class="pl-foot" style="--plate-tone:%(tone)s">
   <div class="pl-foot-in">
     %(near)s

@@ -14,6 +14,7 @@ Nothing here writes tourism/cache/ or tourism/countries/.
 """
 
 import base64
+import glob
 import http.server
 import json
 import struct
@@ -1131,6 +1132,75 @@ def main():
               "; ".join(f.message for f in every)[:80])
         check("the check reads captions, descriptions and taglines alike",
               len(validate._sentences(clean_one)) >= 3 * len(clean_one.entries))
+
+        # -- what the product counts -----------------------------------------------
+        # The rules the event layer enforces are checked in JavaScript, against
+        # the module the page runs. What is checked here is the other half: that
+        # the schema is a closed list rather than an intention, that it reaches
+        # every page that emits, and that nothing in it has room for free text.
+        print("\nwhat the product counts")
+        from tourism import plate as plate_events
+        with open(os.path.join(ROOT_DIR, "tourism", "events.json")) as fh:
+            ev = json.load(fh)
+        events, props = ev["events"], ev["$props"]
+        check("every event names the properties it allows and no others",
+              all(isinstance(v, list) for v in events.values())
+              and all(k in props for v in events.values() for k in v))
+        check("every property described is one an event can carry",
+              all(any(k in v for v in events.values()) for k in props),
+              ", ".join(k for k in props if not any(k in v for v in events.values())))
+        loose = [k for k in props
+                 if re.search(r"text|sentence|query|note|name|email|search", k)]
+        check("no property is a place a sentence could be put", not loose,
+              ", ".join(loose))
+        check("the schema says what it does not collect", "$comment" in ev
+              and "No identifiers" in ev["$comment"])
+
+        block = plate_events.events_block()
+        check("the schema is inlined rather than fetched",
+              'id="af-events"' in block and "src=" not in block.split("</script>")[0])
+        check("only the rules are shipped, not the prose",
+              "$comment" not in block and "$props" not in block)
+        check("the rules are small enough to inline", len(block) < 2048,
+              "%d bytes" % len(block))
+        missing = plate_events.events_block(
+            os.path.join(tmp, "no-such-events.json"))
+        check("a missing schema ships nothing rather than a broken page",
+              missing == "")
+
+        pages = ["atlas.html", "journey.html", "meet.html"]
+        one_place = sorted(glob.glob(os.path.join(ROOT_DIR, "places", "*", "*.html")))
+        if one_place:
+            pages.append(os.path.relpath(one_place[0], ROOT_DIR))
+        for rel in pages:
+            full = os.path.join(ROOT_DIR, rel)
+            if not os.path.exists(full):
+                check("%s carries the event rules" % rel, False, "not built")
+                continue
+            with open(full) as fh:
+                text = fh.read()
+            check("%s carries the event rules exactly once" % rel,
+                  text.count('id="af-events"') == 1
+                  and text.count("/scripts/events.js") == 1,
+                  "%d block(s)" % text.count('id="af-events"'))
+
+        with open(os.path.join(ROOT_DIR, "scripts", "events.js")) as fh:
+            ev_src = fh.read()
+        check("the event layer is the only script that counts anything",
+              all("AfrinkongEvents.track" not in open(
+                  os.path.join(ROOT_DIR, "scripts", f)).read()
+                  or f in ("atlas.js", "journey.js", "meet.js")
+                  for f in os.listdir(os.path.join(ROOT_DIR, "scripts"))
+                  if f.endswith(".js")))
+        check("no page talks to an analytics vendor",
+              not any(re.search(r"googletagmanager|google-analytics|gtag\(|segment\."
+                                r"|mixpanel|hotjar|facebook\.net|clarity\.ms",
+                                open(os.path.join(ROOT_DIR, p)).read())
+                      for p in ["atlas.html", "journey.html", "meet.html",
+                                "index.html"]
+                      if os.path.exists(os.path.join(ROOT_DIR, p))))
+        check("counting is off until somebody chooses a destination",
+              "SINK = null" in ev_src)
 
         # -- the journey engine ----------------------------------------------------
         # The engine is JavaScript because it answers between one click and the
