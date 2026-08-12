@@ -26,7 +26,7 @@ import html as html_mod
 import os
 import re
 
-from .model import ROOT
+from .model import ROOT, load_regions, load_views
 
 PAGE = os.path.join(ROOT, "index.html")
 SHAPES = os.path.join(ROOT, "tourism", "shapes.json")
@@ -48,7 +48,11 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "months", "destinations", "operators", "footer")
+MARKERS = ("window", "captions", "ticks", "regions", "months", "destinations",
+           "operators", "footer")
+
+# How much air to leave round a zoomed view, as a fraction of its long side.
+VIEW_PAD = 0.34
 
 MONTHS = ("January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December")
@@ -112,6 +116,50 @@ def block_operators(countries):
     return "\n".join(cards)
 
 
+def pad_box(box, pad=VIEW_PAD):
+    """Grow a box so a zoomed country is not pressed against the frame."""
+    x, y, w, h = box
+    m = max(w, h) * pad
+    return [round(x - m, 1), round(y - m, 1), round(w + 2 * m, 1), round(h + 2 * m, 1)]
+
+
+def union(boxes):
+    x0 = min(b[0] for b in boxes)
+    y0 = min(b[1] for b in boxes)
+    x1 = max(b[0] + b[2] for b in boxes)
+    y1 = max(b[1] + b[3] for b in boxes)
+    return [x0, y0, x1 - x0, y1 - y0]
+
+
+def block_regions(countries, views):
+    """Africa, then five regions — the middle rung of the atlas.
+
+    A region is a view of the map and a list of countries, so its button carries
+    both: the box to fly the viewBox to, and the slugs that stay lit while it is
+    selected. The box is the union of its members', computed here rather than
+    typed, so a new country widens its region's view automatically.
+    """
+    regions = load_regions()
+    boxes = views.get("countries") or {}
+    out = ['<button class="wa-reg" type="button" data-reg="africa" aria-pressed="true" '
+           'data-view="%s" data-line="%s" data-terrain="%s">Africa</button>'
+           % (" ".join(str(v) for v in views.get("africa") or [0, 0, 1000, 1060]),
+              esc("Fifty-four countries. Twenty-two of them are destinations here."),
+              esc("Desert|Rainforest|Savanna|Mountain|Coast|Island"))]
+    for key, reg in regions.items():
+        members = [c for c in countries if c.region in reg.includes]
+        member_boxes = [boxes[c.slug] for c in members if c.slug in boxes]
+        if not member_boxes:
+            continue
+        out.append(
+            '<button class="wa-reg" type="button" data-reg="%s" aria-pressed="false" '
+            'data-view="%s" data-slugs="%s" data-line="%s" data-terrain="%s">%s</button>'
+            % (esc(key), " ".join(str(v) for v in pad_box(union(member_boxes))),
+               esc(" ".join(c.slug for c in members)), esc(reg.line),
+               esc("|".join(reg.terrain)), esc(reg.name)))
+    return "      " + "".join(out)
+
+
 def block_window(countries, shape_by_slug):
     out = []
     for i, c in enumerate(countries):
@@ -144,9 +192,15 @@ def block_captions(countries):
         for c in countries)
 
 
-def block_ticks(countries):
-    return "".join('<button class="wa-tick" type="button" data-slug="%s">%s</button>'
-                   % (esc(c.slug), esc(c.name)) for c in countries)
+def block_ticks(countries, views):
+    boxes = views.get("countries") or {}
+    out = []
+    for c in countries:
+        box = boxes.get(c.slug)
+        view = (' data-view="%s"' % " ".join(str(v) for v in pad_box(box, 0.9))) if box else ""
+        out.append('<button class="wa-tick" type="button" data-slug="%s"%s>%s</button>'
+                   % (esc(c.slug), view, esc(c.name)))
+    return "".join(out)
 
 
 def block_months(countries):
@@ -207,11 +261,13 @@ def block_footer(countries):
 def render(countries):
     seq = ordered(countries)
     shape_by_slug = shapes()
+    views = load_views()
     with_shape = [c for c in seq if c.slug in shape_by_slug]
     return {
+        "regions": block_regions(seq, views),
         "window": block_window(with_shape, shape_by_slug),
         "captions": block_captions(with_shape),
-        "ticks": block_ticks(with_shape),
+        "ticks": block_ticks(with_shape, views),
         "months": block_months(seq),
         "destinations": block_destinations(seq),
         "operators": block_operators(seq),

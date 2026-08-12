@@ -325,6 +325,45 @@ def render(shapes, frame):
 SOLO_BOX = 1000.0       # the long side of a single-country silhouette
 
 
+def views(topo):
+    """Every roster country's box in the continental map's own coordinates.
+
+    The map is meant to be navigated, not looked at: Africa, then a region, then
+    a country. That needs each country's extent in the same space the continent
+    is drawn in, so the viewBox can be animated to it. Computed here, at build
+    time, because it is geometry and the browser should not be deriving it.
+    """
+    shapes, (k, ox, oy) = build(topo)
+    arcs = decode(topo)
+    out = {}
+    for geom in topo["objects"]["countries"]["geometries"]:
+        if not str(geom.get("id", "")).isdigit():
+            continue
+        code = int(geom["id"])
+        entry = ROSTER.get(code)
+        if not entry:
+            continue
+        rings = []
+        for poly in polygons(geom):
+            for part in poly:
+                pts = [project(lon, lat) for lon, lat in ring(arcs, part)]
+                if len(pts) > 3:
+                    rings.append(pts)
+        if code in ISLAND_MARKS:
+            lon, lat = ISLAND_MARKS[code]
+            x, y = project(lon, lat)
+            rings = [[(x, y)]]
+        if not rings:
+            continue
+        rings = prune_outliers(rings) if len(rings[0]) > 1 else rings
+        flat = [(p[0] * k + ox, p[1] * k + oy) for r in rings for p in r]
+        x0, x1 = min(p[0] for p in flat), max(p[0] for p in flat)
+        y0, y1 = min(p[1] for p in flat), max(p[1] for p in flat)
+        out[entry[0]] = [round(x0, 1), round(y0, 1),
+                         round(max(x1 - x0, 24), 1), round(max(y1 - y0, 24), 1)]
+    return {"africa": [0, 0, VIEW_W, VIEW_H], "countries": out}
+
+
 def solo(topo):
     """Each live country on its own, normalised — the hero window's shape.
 
@@ -374,7 +413,12 @@ if __name__ == "__main__":
         sys.exit(__doc__.strip().splitlines()[2].strip())
     with open(sys.argv[1]) as fh:
         topo = json.load(fh)
-    if len(sys.argv) == 3 and sys.argv[2] == "--solo":
+    if len(sys.argv) == 3 and sys.argv[2] == "--views":
+        data = views(topo)
+        text = json.dumps(data, indent=1, sort_keys=True)
+        sys.stderr.write("%d country views, %.1f KB\n" % (len(data["countries"]), len(text) / 1024.0))
+        print(text)
+    elif len(sys.argv) == 3 and sys.argv[2] == "--solo":
         shapes = solo(topo)
         text = json.dumps(shapes, indent=1, sort_keys=True)
         sys.stderr.write("%d silhouettes, %.1f KB\n" % (len(shapes), len(text) / 1024.0))

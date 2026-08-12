@@ -100,14 +100,22 @@ ul,ol{list-style:none}
 .wa-act.faint{border-color:var(--c-border);color:var(--c-muted)}
 .wa-act.faint:hover{border-color:var(--c-primary);color:var(--c-primary)}
 
-.wa-win{display:grid;grid-template-columns:1fr 200px;gap:24px;align-items:center}
+.wa-win{display:grid;grid-template-columns:1fr 210px;gap:26px;align-items:center}
 .wa-win-frame{position:relative;height:min(60vh,540px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}
-.wa-win-shape,.wa-map-svg{width:100%;height:100%;overflow:visible}
+.wa-win-shape{width:100%;height:100%;overflow:visible}
+/* The map is zoomed by moving its viewBox, so it has to clip: with overflow
+   visible the parts of the continent outside the current view keep painting,
+   straight across the headline beside it. */
+.wa-map-svg{width:100%;height:100%;overflow:hidden}
 .wa-win-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
-.wa-win-caps{position:relative;min-height:236px}
+.wa-win-side{display:flex;flex-direction:column}
+/* Tall enough for the tallest readout — the region one, which carries a
+   three-line sentence. Sized rather than min-heighted because the caps are
+   stacked absolutely so they can cross-fade. */
+.wa-win-caps{position:relative;height:258px;flex:0 0 auto}
 .wa-win-cap{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;pointer-events:none}
 .wa-win-cap[data-on]{opacity:1;pointer-events:auto}
 .wa-win-region{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
@@ -115,7 +123,7 @@ ul,ol{list-style:none}
 .wa-win-tag{display:block;font-size:15px;color:var(--c-muted);margin-top:7px}
 .wa-win-op{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent);margin-top:14px}
 .wa-win-go{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px}
-.wa-win-key{position:absolute;left:0;top:100%;margin-top:14px;display:flex;flex-wrap:wrap;gap:6px 16px}
+.wa-win-key{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px}
 .wa-win-key span{display:flex;align-items:center;gap:7px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
@@ -136,6 +144,30 @@ ul,ol{list-style:none}
 .wa-win-state .wa-map-live.on path,.wa-win-state .wa-map-live:hover circle,
 .wa-win-state .wa-map-live.on circle{fill:var(--c-primary)}
 .wa-win-state .wa-map-live{cursor:pointer}
+
+/* ---- the atlas rungs: Africa, region, country ------------------------------------
+   Three rows that are one control. The map is not an illustration with buttons
+   under it — the buttons are how you move through it, and each one is a view the
+   viewBox flies to. A visitor who presses "East Africa" is not filtering a list;
+   they are looking at East Africa. */
+.wa-regs{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--c-primary)}
+.wa-reg{flex:1 1 auto;background:none;border:0;border-right:var(--fj-rule);cursor:pointer;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--c-muted);padding:13px 14px;white-space:nowrap;
+  transition:color var(--t-fast) var(--ease),background var(--t-fast) var(--ease)}
+.wa-reg:last-child{border-right:0}
+.wa-reg:hover{color:var(--c-primary)}
+.wa-reg[aria-pressed="true"]{background:var(--c-accent);color:var(--c-bg)}
+/* A country outside the region in view is still drawn — the continent does not
+   stop existing — but it steps back rather than disappearing. */
+.wa-map-live[data-dim]{opacity:.28}
+.wa-map-live path,.wa-map-live circle{transition:fill var(--t-fast) var(--ease)}
+.wa-win-state .wa-map-svg{transition:none}
+.wa-terrain{display:flex;flex-wrap:wrap;gap:5px 6px;margin-top:2px}
+.wa-terrain span{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted);border:1px solid var(--c-border);
+  padding:4px 8px}
+.wa-tick[hidden]{display:none}
 
 /* ---- the rail: every destination, and eight experiences -------------------------- */
 .wa-win-rail{padding:0 0 26px}
@@ -236,7 +268,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:1080px){.wa-win{grid-template-columns:1fr}.wa-win-caps{min-height:200px}.wa-win-frame{height:min(40vh,340px)}}
 @media(max-width:900px){.wa-ops{grid-template-columns:1fr 1fr}.wa-ops>div:nth-child(2n){border-right:0;padding-right:0}
   .wa-ops>div{padding-bottom:16px;border-bottom:var(--fj-rule)}}
-@media(max-width:1000px){.wa-win{grid-template-columns:1fr}.wa-win-caps{min-height:200px}
+@media(max-width:1000px){.wa-win{grid-template-columns:1fr}.wa-win-caps{height:200px}
   .wa-win-frame{height:min(46vh,400px)}}
 /* A phone is not the desktop layout stacked. Stacked, the hero ran to 1,323px on
    an 844px screen: the map — the entire idea — opened below the fold and its
@@ -259,8 +291,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-win-caps{min-height:186px;margin-top:18px}
   /* The key is absolutely placed under the caption on desktop; unpinned on a
      phone it has to be given its own row, or the caption lands on top of it. */
-  .wa-win-key{position:static;margin:0 0 14px}
-  .wa-win-cap{top:30px}
+  .wa-win-caps{height:236px}
   .wa-win-rail{margin-top:14px;padding-bottom:14px}
   .wa-brief{padding:48px 0 44px}}
 
@@ -707,8 +738,8 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
       </figure>
           <!-- /gen:window -->
         </div>
-        <div class="wa-win-caps" aria-live="polite">
-          <p class="wa-win-key" aria-hidden="true"><span data-tier="ours">Our own operator</span><span data-tier="live">Destination page</span></p>
+        <div class="wa-win-side">
+          <div class="wa-win-caps" aria-live="polite">
           <div class="wa-win-cap" data-slug="africa" data-on="true"><span class="wa-win-region">The continent</span><b>Africa</b><span class="wa-win-tag">Fifty-four countries. Twenty-two destinations.</span><span class="wa-win-op">Choose one on the map, or below</span><a class="wa-win-go" href="#destinations">See all destinations &rarr;</a></div>
           <!-- gen:captions -->
 <div class="wa-win-cap" data-slug="cameroon"><span class="wa-win-region">Central &amp; West Africa</span><b>Cameroon</b><span class="wa-win-tag">Africa in miniature</span><span class="wa-win-op">Operated locally by Kamerun</span><a class="wa-win-go" href="/cameroon">Enter Cameroon &rarr;</a></div>
@@ -734,13 +765,20 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
           <div class="wa-win-cap" data-slug="mauritius"><span class="wa-win-region">Islands</span><b>Mauritius</b><span class="wa-win-tag">Reef, sugar and the volcanic interior</span><span class="wa-win-op">Run with a licensed local operator</span><a class="wa-win-go" href="/mauritius">Enter Mauritius &rarr;</a></div>
           <div class="wa-win-cap" data-slug="seychelles"><span class="wa-win-region">Islands</span><b>Seychelles</b><span class="wa-win-tag">Granite islands in the Indian Ocean</span><span class="wa-win-op">Run with a licensed local operator</span><a class="wa-win-go" href="/seychelles">Enter Seychelles &rarr;</a></div>
           <!-- /gen:captions -->
+          </div>
+          <div class="wa-terrain" id="wa-terrain" aria-hidden="true"></div>
+          <p class="wa-win-key" aria-hidden="true"><span data-tier="ours">Our own operator</span><span data-tier="live">Destination page</span></p>
         </div>
       </div>
       <div class="wa-win-rail">
       <p class="wa-win-line" id="wa-win-line" aria-live="polite"></p>
+      <div class="wa-regs" role="group" aria-label="Zoom the map to a region">
+        <!-- gen:regions -->
+      <button class="wa-reg" type="button" data-reg="africa" aria-pressed="true" data-view="0 0 1000.0 1060.0" data-line="Fifty-four countries. Twenty-two of them are destinations here." data-terrain="Desert|Rainforest|Savanna|Mountain|Coast|Island">Africa</button><button class="wa-reg" type="button" data-reg="central" aria-pressed="false" data-view="-52.7 186.5 681.7 477.5" data-slugs="cameroon cote-divoire ghana nigeria senegal" data-line="Rainforest, volcanic coast, savanna, ancient kingdoms and the cultures of the Gulf of Guinea." data-terrain="Rainforest|Volcanic coast|Savanna|Kingdoms|The Sahel edge">Central &amp; West</button><button class="wa-reg" type="button" data-reg="east" aria-pressed="false" data-view="535.7 241.0 465.7 570.4" data-slugs="uganda ethiopia kenya rwanda tanzania" data-line="The Rift, the great migrations, the gorilla forests, Kilimanjaro, the Nile and the Swahili coast." data-terrain="The Rift|Migration|Gorilla forest|Glaciers on the equator|Swahili coast">East Africa</button><button class="wa-reg" type="button" data-reg="southern" aria-pressed="false" data-view="316.0 529.3 600.8 571.5" data-slugs="namibia botswana mozambique south-africa zambia zimbabwe" data-line="The Namib, the Zambezi, the Kalahari, the Cape, and wilderness you walk rather than drive." data-terrain="The Namib|The Zambezi|Delta|Kalahari|The Cape">Southern Africa</button><button class="wa-reg" type="button" data-reg="north" aria-pressed="false" data-view="-110.6 -134.6 1064.4 620.1" data-slugs="egypt morocco tunisia" data-line="The Atlas, the Sahara, the Nile, and Mediterranean cities older than most countries." data-terrain="The Atlas|Sahara|The Nile|Medinas|Mediterranean">North Africa</button><button class="wa-reg" type="button" data-reg="islands" aria-pressed="false" data-view="723.0 513.3 375.0 451.8" data-slugs="madagascar mauritius seychelles" data-line="Indian Ocean reef, granite and volcanic islands, and an ecology that evolved on its own." data-terrain="Reef|Granite islands|Spiny forest|Lemurs|Lagoon">Islands</button>        <!-- /gen:regions -->
+      </div>
       <div class="wa-ticks" role="group" aria-label="Choose a destination"><button class="wa-tick" type="button" data-slug="africa" aria-current="true">Africa</button>
         <!-- gen:ticks -->
-<button class="wa-tick" type="button" data-slug="cameroon">Cameroon</button><button class="wa-tick" type="button" data-slug="uganda">Uganda</button><button class="wa-tick" type="button" data-slug="namibia">Namibia</button><button class="wa-tick" type="button" data-slug="cote-divoire">Côte d&#x27;Ivoire</button><button class="wa-tick" type="button" data-slug="ghana">Ghana</button><button class="wa-tick" type="button" data-slug="nigeria">Nigeria</button><button class="wa-tick" type="button" data-slug="senegal">Senegal</button><button class="wa-tick" type="button" data-slug="ethiopia">Ethiopia</button><button class="wa-tick" type="button" data-slug="kenya">Kenya</button><button class="wa-tick" type="button" data-slug="rwanda">Rwanda</button><button class="wa-tick" type="button" data-slug="tanzania">Tanzania</button><button class="wa-tick" type="button" data-slug="botswana">Botswana</button><button class="wa-tick" type="button" data-slug="mozambique">Mozambique</button><button class="wa-tick" type="button" data-slug="south-africa">South Africa</button><button class="wa-tick" type="button" data-slug="zambia">Zambia</button><button class="wa-tick" type="button" data-slug="zimbabwe">Zimbabwe</button><button class="wa-tick" type="button" data-slug="egypt">Egypt</button><button class="wa-tick" type="button" data-slug="morocco">Morocco</button><button class="wa-tick" type="button" data-slug="tunisia">Tunisia</button><button class="wa-tick" type="button" data-slug="madagascar">Madagascar</button><button class="wa-tick" type="button" data-slug="mauritius">Mauritius</button><button class="wa-tick" type="button" data-slug="seychelles">Seychelles</button>
+<button class="wa-tick" type="button" data-slug="cameroon" data-view="265.2 252.3 355.6 403.5">Cameroon</button><button class="wa-tick" type="button" data-slug="uganda" data-view="594.5 427.4 198.9 203.8">Uganda</button><button class="wa-tick" type="button" data-slug="namibia" data-view="288.6 611.9 463.4 445.4">Namibia</button><button class="wa-tick" type="button" data-slug="cote-divoire" data-view="109.2 332.9 223.5 229.9">Côte d&#x27;Ivoire</button><button class="wa-tick" type="button" data-slug="ghana" data-view="175.5 329.9 201.6 228.5">Ghana</button><button class="wa-tick" type="button" data-slug="nigeria" data-view="187.6 235.6 419.7 391.7">Nigeria</button><button class="wa-tick" type="button" data-slug="senegal" data-view="22.5 261.7 195.4 184.1">Senegal</button><button class="wa-tick" type="button" data-slug="ethiopia" data-view="535.9 190.6 515.8 476.9">Ethiopia</button><button class="wa-tick" type="button" data-slug="kenya" data-view="597.6 359.6 332.7 363.7">Kenya</button><button class="wa-tick" type="button" data-slug="rwanda" data-view="628.2 537.6 71.1 69.7">Rwanda</button><button class="wa-tick" type="button" data-slug="tanzania" data-view="533.8 436.5 382.8 382.5">Tanzania</button><button class="wa-tick" type="button" data-slug="botswana" data-view="437.1 670.1 314.4 314.0">Botswana</button><button class="wa-tick" type="button" data-slug="mozambique" data-view="480.9 496.3 498.3 572.6">Mozambique</button><button class="wa-tick" type="button" data-slug="south-africa" data-view="325.8 654.4 533.7 496.4">South Africa</button><button class="wa-tick" type="button" data-slug="zambia" data-view="431.8 519.4 409.1 386.6">Zambia</button><button class="wa-tick" type="button" data-slug="zimbabwe" data-view="517.3 659.5 265.4 255.2">Zimbabwe</button><button class="wa-tick" type="button" data-slug="egypt" data-view="458.1 16.8 413.0 386.0">Egypt</button><button class="wa-tick" type="button" data-slug="morocco" data-view="-76.6 -92.6 564.5 536.7">Morocco</button><button class="wa-tick" type="button" data-slug="tunisia" data-view="323.5 2.9 198.9 242.5">Tunisia</button><button class="wa-tick" type="button" data-slug="madagascar" data-view="660.3 548.3 403.5 479.4">Madagascar</button><button class="wa-tick" type="button" data-slug="mauritius" data-view="960.9 791.2 67.2 67.2">Mauritius</button><button class="wa-tick" type="button" data-slug="seychelles" data-view="958.0 583.1 67.2 67.2">Seychelles</button>
         <!-- /gen:ticks -->
       </div>
       <div class="wa-tags-in" role="group" aria-label="Choose an experience"><button class="wa-tag" type="button" data-exp="wildlife" data-slug="kenya" data-line="The Mara, Amboseli under Kilimanjaro, and the month the migration crosses."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</button><button class="wa-tag" type="button" data-exp="mountains" data-slug="cameroon" data-line="Fako at 4,095 metres, still active, three days up through four climates."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg>Mountains</button><button class="wa-tag" type="button" data-exp="rainforest" data-slug="uganda" data-line="Bwindi and Kibale, where the gorillas and the chimpanzees still are."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg>Rainforest</button><button class="wa-tag" type="button" data-exp="coast" data-slug="tanzania" data-line="Zanzibar, and a Swahili coast trading long before Europe arrived."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</button><button class="wa-tag" type="button" data-exp="culture" data-slug="rwanda" data-line="A thousand hills, and the people farming every one of them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</button><button class="wa-tag" type="button" data-exp="food" data-slug="south-africa" data-line="The Cape table, the winelands behind it, and the fire under both."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</button><button class="wa-tag" type="button" data-exp="heritage" data-slug="zambia" data-line="Mosi-oa-Tunya, the smoke that thunders &mdash; named long before Livingstone saw it."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>Heritage</button><button class="wa-tag" type="button" data-exp="adventure" data-slug="namibia" data-line="Sossusvlei, the Skeleton Coast, and gravel roads with nobody else on them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</button></div>
@@ -756,55 +794,128 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   </div>
 </section>
 <script>
-/* One state, three ways to set it: the map in the window, the destination ticks,
-   and the experience buttons. Everything is a link or a button already, so with
-   the script gone the map still navigates and the ticks are simply inert. */
+/* The atlas. One state — a view of the map and, sometimes, a country — reached
+   three ways: the region rung, the country rung, and the map itself.
+
+   The map is navigated rather than swapped. Pressing a region flies the viewBox
+   to that region's extent and steps the rest of the continent back; pressing a
+   country flies further in and replaces the map with that country's own outline.
+   Africa is always one press away. Everything is a button or a link already, so
+   without the script the map still navigates and the rungs are simply inert. */
 (function(){
   var sec = document.currentScript.previousElementSibling;
   var states = [].slice.call(sec.querySelectorAll('.wa-win-state'));
   var caps = [].slice.call(sec.querySelectorAll('.wa-win-cap'));
+  var regs = [].slice.call(sec.querySelectorAll('.wa-reg'));
   var ticks = [].slice.call(sec.querySelectorAll('.wa-tick'));
   var tags = [].slice.call(sec.querySelectorAll('.wa-tag'));
   var rail = sec.querySelector('.wa-ticks');
   var line = sec.querySelector('#wa-win-line');
+  var terrain = sec.querySelector('#wa-terrain');
+  var africa = states[0];
+  var svg = africa.querySelector('svg');
+  var shapes = [].slice.call(africa.querySelectorAll('.wa-map-live'));
   var order = states.map(function(s){ return s.dataset.slug; });
-  var at = 0, held = null;
+  var idleCap = caps[0].innerHTML;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+
+  var at = 0, held = null, region = 'africa';
+  var view = (regs[0].dataset.view || '0 0 1000 1060').split(' ').map(Number);
+  var anim = null;
+
+  /* Animating the viewBox is the whole trick: it is four numbers, it composites
+     on the GPU, and it costs nothing next to re-rendering paths. Reduced motion
+     gets the destination immediately — the information is the view, not the
+     travelling. */
+  function flyTo(to){
+    if (anim) cancelAnimationFrame(anim);
+    if (reduced.matches) { view = to.slice(); svg.setAttribute('viewBox', view.join(' ')); return; }
+    var from = view.slice(), t0 = performance.now(), ms = 620;
+    (function step(now){
+      var p = Math.min(1, (now - t0) / ms);
+      var e = 1 - Math.pow(1 - p, 3);
+      view = from.map(function(v, i){ return v + (to[i] - v) * e; });
+      svg.setAttribute('viewBox', view.map(function(v){ return v.toFixed(1); }).join(' '));
+      if (p < 1) anim = requestAnimationFrame(step);
+    })(t0);
+  }
+
+  function setTerrain(words){
+    terrain.innerHTML = words ? words.split('|').map(function(w){
+      return '<span>' + w + '</span>'; }).join('') : '';
+  }
+
+  function paintRegion(key){
+    region = key;
+    var btn = regs.filter(function(r){ return r.dataset.reg === key; })[0] || regs[0];
+    regs.forEach(function(r){ r.setAttribute('aria-pressed', String(r === btn)); });
+    var slugs = btn.dataset.slugs ? btn.dataset.slugs.split(' ') : null;
+    shapes.forEach(function(sh){
+      if (slugs && slugs.indexOf(sh.dataset.slug) < 0) sh.setAttribute('data-dim', '');
+      else sh.removeAttribute('data-dim');
+    });
+    // The country rung narrows to the region in view: twenty-two names is a list,
+    // five is a choice.
+    ticks.forEach(function(t){ t.hidden = !!(slugs && slugs.indexOf(t.dataset.slug) < 0); });
+    setTerrain(btn.dataset.terrain || '');
+    if (btn.dataset.line) {
+      caps[0].innerHTML = '<span class="wa-win-region">' + (key === 'africa' ? 'The continent' : 'Region')
+        + '</span><b>' + btn.textContent + '</b><span class="wa-win-tag">' + btn.dataset.line
+        + '</span><a class="wa-win-go" href="#destinations">See all destinations &rarr;</a>';
+    }
+    flyTo((btn.dataset.view || '0 0 1000 1060').split(' ').map(Number));
+  }
 
   function paint(i, exp){
-    at = i;
-    held = exp || null;
+    at = i; held = exp || null;
     states.forEach(function(s, n){ s.toggleAttribute('data-on', n === i); });
     caps.forEach(function(c, n){ c.toggleAttribute('data-on', n === i); });
     ticks.forEach(function(t, n){
-      if (n !== i) { t.removeAttribute('aria-current'); return; }
+      if (order[n + 1] !== order[i]) t.removeAttribute('aria-current');
+    });
+    ticks.forEach(function(t){
+      var on = t.dataset.slug === order[i];
+      if (!on) { t.removeAttribute('aria-current'); return; }
       t.setAttribute('aria-current', 'true');
-      // Twenty-three ticks do not fit across the frame, so the rail scrolls and
-      // the current one has to be brought back into it.
       var l = t.offsetLeft, r = l + t.offsetWidth;
       if (l < rail.scrollLeft) rail.scrollLeft = l - 12;
       else if (r > rail.scrollLeft + rail.clientWidth) rail.scrollLeft = r - rail.clientWidth + 12;
     });
     tags.forEach(function(t){ t.toggleAttribute('data-on', held === t.dataset.exp); });
     line.innerHTML = held ? tags.filter(function(t){ return t.dataset.exp === held; })[0].dataset.line : '';
+    if (i === 0) { terrain.innerHTML = ''; paintRegion(region); }
   }
 
-  function go(slug, exp){
+  function go(slug, exp, view){
     var i = order.indexOf(slug);
-    if (i >= 0) paint(i, exp);
+    if (i < 0) return;
+    if (view) flyTo(view.split(' ').map(Number));   // fly the map behind the swap
+    paint(i, exp);
+    terrain.innerHTML = '';
   }
-  ticks.forEach(function(t){ t.addEventListener('click', function(){ go(t.dataset.slug, null); }); });
-  tags.forEach(function(t){ t.addEventListener('click', function(){ go(t.dataset.slug, t.dataset.exp); }); });
 
-  /* On the map, pointing at a country reads it out in the caption beside it and
-     clicking enters it. Preview on hover, commit on click — the map stays a
-     directory rather than becoming a second set of tabs. */
-  var africa = states[0];
-  var shapes = [].slice.call(africa.querySelectorAll('.wa-map-live'));
-  var idleCap = caps[0].innerHTML;
+  regs.forEach(function(r){
+    r.addEventListener('click', function(){
+      if (at !== 0) paint(0, null);
+      paintRegion(r.dataset.reg);
+    });
+  });
+  ticks.forEach(function(t){
+    t.addEventListener('click', function(){ go(t.dataset.slug, null, t.dataset.view); });
+  });
+  tags.forEach(function(t){
+    t.addEventListener('click', function(){
+      var tick = ticks.filter(function(x){ return x.dataset.slug === t.dataset.slug; })[0];
+      go(t.dataset.slug, t.dataset.exp, tick && tick.dataset.view);
+    });
+  });
+
+  /* On the map, pointing at a country reads it out and clicking enters it —
+     preview on hover, commit on click, so the map stays a directory. */
   function preview(el){
     if (at !== 0) return;
     shapes.forEach(function(s){ s.classList.toggle('on', s === el); });
-    if (!el) { caps[0].innerHTML = idleCap; return; }
+    if (!el) { paintRegion(region); return; }
     var href = el.getAttribute('href');
     caps[0].innerHTML = '<span class="wa-win-region">' + (el.dataset.region || 'Destination') + '</span>'
       + '<b>' + el.dataset.name + '</b>'
@@ -818,6 +929,8 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
     el.addEventListener('mouseleave', function(){ preview(null); });
     el.addEventListener('blur', function(){ preview(null); });
   });
+
+  paintRegion('africa');
 })();
 </script>
 

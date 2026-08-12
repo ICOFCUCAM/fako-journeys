@@ -1,0 +1,32 @@
+{
+ "central": {
+  "name": "Central & West",
+  "line": "Rainforest, volcanic coast, savanna, ancient kingdoms and the cultures of the Gulf of Guinea.",
+  "terrain": ["Rainforest", "Volcanic coast", "Savanna", "Kingdoms", "The Sahel edge"],
+  "includes": ["Central & West Africa", "West Africa"]
+ },
+ "east": {
+  "name": "East Africa",
+  "line": "The Rift, the great migrations, the gorilla forests, Kilimanjaro, the Nile and the Swahili coast.",
+  "terrain": ["The Rift", "Migration", "Gorilla forest", "Glaciers on the equator", "Swahili coast"],
+  "includes": ["East Africa"]
+ },
+ "southern": {
+  "name": "Southern Africa",
+  "line": "The Namib, the Zambezi, the Kalahari, the Cape, and wilderness you walk rather than drive.",
+  "terrain": ["The Namib", "The Zambezi", "Delta", "Kalahari", "The Cape"],
+  "includes": ["Southern Africa"]
+ },
+ "north": {
+  "name": "North Africa",
+  "line": "The Atlas, the Sahara, the Nile, and Mediterranean cities older than most countries.",
+  "terrain": ["The Atlas", "Sahara", "The Nile", "Medinas", "Mediterranean"],
+  "includes": ["North Africa"]
+ },
+ "islands": {
+  "name": "Islands",
+  "line": "Indian Ocean reef, granite and volcanic islands, and an ecology that evolved on its own.",
+  "terrain": ["Reef", "Granite islands", "Spiny forest", "Lemurs", "Lagoon"],
+  "includes": ["Islands"]
+ }
+}

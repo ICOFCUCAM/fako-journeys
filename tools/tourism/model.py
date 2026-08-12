@@ -10,6 +10,7 @@ page needs to change — the engine walks tourism/countries/ and processes whate
 it finds. That is the whole point of the layout.
 """
 
+import collections
 import json
 import os
 import re
@@ -121,6 +122,39 @@ def operator(key):
     if OPERATORS is None:
         OPERATORS = load_operators()
     return OPERATORS.get(key) if key else None
+
+
+class Region(object):
+    """One of five. A region is the middle rung of the atlas — Africa, region,
+    country — and it owns the editorial line and the terrain words that make it
+    feel physically different from the one next to it."""
+
+    def __init__(self, key, raw):
+        self.key = key
+        self.name = raw.get("name") or key
+        self.line = raw.get("line") or ""
+        self.terrain = list(raw.get("terrain") or [])
+        self.includes = list(raw.get("includes") or [])
+
+
+def load_regions(path=None):
+    path = path or os.path.join(ROOT, "tourism", "regions.json")
+    try:
+        with open(path) as fh:
+            raw = json.load(fh)
+    except (IOError, ValueError):
+        return {}
+    return collections.OrderedDict((k, Region(k, v)) for k, v in raw.items())
+
+
+def load_views(path=None):
+    """Country boxes in the continental map's coordinates, from africa_map.py."""
+    path = path or os.path.join(ROOT, "tourism", "views.json")
+    try:
+        with open(path) as fh:
+            return json.load(fh)
+    except (IOError, ValueError):
+        return {"africa": [0, 0, 1000, 1060], "countries": {}}
 
 
 class Country:
