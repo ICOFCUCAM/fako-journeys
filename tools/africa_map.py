@@ -325,6 +325,68 @@ def render(shapes, frame):
     return "\n".join(lines)
 
 
+def anchor(d):
+    """A point inside a country to hang its label on.
+
+    The centre of a bounding box is wrong for anything shaped like Namibia or
+    Mozambique — it lands in the neighbour. This takes the centroid of the
+    largest ring, which for every shape on the roster is inside the country.
+    """
+    rings, best, best_area = d.split("M")[1:], None, -1.0
+    for part in rings:
+        pts = []
+        for pair in part.rstrip("Z").split("L"):
+            x, _sep, y = pair.partition(" ")
+            if y:
+                pts.append((float(x), float(y)))
+        if len(pts) < 3:
+            continue
+        a = area(pts)
+        if a > best_area:
+            best_area, best = a, pts
+    if not best:
+        return None
+    cx = sum(p[0] for p in best) / len(best)
+    cy = sum(p[1] for p in best) / len(best)
+    return [round(cx, 1), round(cy, 1)]
+
+
+def as_map(topo):
+    """The continent as data rather than as markup.
+
+    The gateway carries the map as inline SVG, written once and pasted in. That
+    is right for one page and wrong for two: the atlas needs the same geometry
+    with different behaviour attached to it, and a second copy of thirty
+    kilobytes of path data that has to be kept in step by hand is not a map, it
+    is a liability. So the geometry is emitted once as JSON and whatever needs
+    to draw it builds its own SVG from it.
+
+    `rest` is the continent as context — the countries with nothing behind them
+    yet. `live` is the roster: shape, tier, and an anchor to label it at.
+    `marks` are the island states, which at continental scale are a dot.
+    """
+    shapes, (k, ox, oy) = build(topo)
+    out = {"view": [0, 0, VIEW_W, VIEW_H], "rest": [], "live": [], "marks": []}
+    for code, name, d in shapes:
+        if code not in ROSTER:
+            out["rest"].append({"n": name, "d": d})
+            continue
+        if code in ISLAND_MARKS:
+            continue            # drawn as a marker below, not as a two-pixel outline
+        slug, label, tag, href, tier = ROSTER[code]
+        out["live"].append({"slug": slug, "name": label, "tag": tag, "href": href,
+                            "tier": tier, "d": d, "at": anchor(d)})
+    for code, (lon, lat) in sorted(ISLAND_MARKS.items()):
+        if code not in ROSTER:
+            continue
+        slug, label, tag, href, tier = ROSTER[code]
+        x, y = project(lon, lat)
+        out["marks"].append({"slug": slug, "name": label, "tag": tag, "href": href,
+                             "tier": tier, "at": [round(x * k + ox, 1), round(y * k + oy, 1)],
+                             "r": 9})
+    return out
+
+
 SOLO_BOX = 1000.0       # the long side of a single-country silhouette
 
 
@@ -516,6 +578,13 @@ if __name__ == "__main__":
         data = views(topo)
         text = json.dumps(data, indent=1, sort_keys=True)
         sys.stderr.write("%d country views, %.1f KB\n" % (len(data["countries"]), len(text) / 1024.0))
+        print(text)
+    elif len(sys.argv) == 3 and sys.argv[2] == "--map":
+        data = as_map(topo)
+        text = json.dumps(data, indent=1, sort_keys=True)
+        sys.stderr.write("%d context countries, %d on the roster, %d island marks, %.1f KB\n"
+                         % (len(data["rest"]), len(data["live"]), len(data["marks"]),
+                            len(text) / 1024.0))
         print(text)
     elif len(sys.argv) == 3 and sys.argv[2] == "--solo":
         shapes = solo(topo)
