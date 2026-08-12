@@ -1,0 +1,281 @@
+{
+ "slug": "cote-divoire",
+ "name": "Côte d'Ivoire",
+ "adjective": "Ivorian",
+ "region": "West Africa",
+ "tagline": "Lagoons, forest and the Atlantic",
+ "summary": "Abidjan's lagoon skyline, the rainforest at Taï, the basilica at Yamoussoukro, and Atlantic beaches west towards Grand-Béréby — the economic engine of francophone West Africa.",
+ "published": true,
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Lagoons, Forest and the Atlantic",
+   "description": "A lagoon city, one of West Africa's last rainforests, and five hundred kilometres of Atlantic.",
+   "subject": "the Abidjan skyline across the Ébrié lagoon",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Forest to Savanna",
+   "description": "Rainforest in the south-west, a lagoon coast, and savanna running north to Mali.",
+   "subject": "the Ébrié lagoon fringed with palms",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Taï and Comoé",
+   "description": "Pygmy hippo and chimpanzees at Taï, and Comoé's savanna in the north-east.",
+   "subject": "dense rainforest canopy at Taï national park",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Comoé",
+   "description": "One of the largest protected areas in West Africa, with elephant, buffalo and hippo.",
+   "subject": "open savanna and gallery forest at Comoé",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mount Nimba",
+   "description": "The Nimba range on the Guinea and Liberia border, at 1,752 metres, with its own species.",
+   "subject": "the grassy summit ridge of Mount Nimba",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Man and the Waterfalls",
+   "description": "The falls around Man in the western hills, and the liana bridges strung above them.",
+   "subject": "a waterfall in the hills around Man",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Ébrié and the Bandama",
+   "description": "The lagoon system behind the coast, and the Bandama running the length of the country.",
+   "subject": "pirogues on the Ébrié lagoon at dusk",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Assinie and Grand-Béréby",
+   "description": "Assinie's sandbar east of Abidjan, and the quieter Atlantic beaches to the west.",
+   "subject": "palms and surf on the beach at Assinie",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Taï Rainforest",
+   "description": "One of the last blocks of primary rainforest in West Africa, and chimpanzees that use tools.",
+   "subject": "primary rainforest interior at Taï",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Surf, Hike, Paddle",
+   "description": "Surf at Assinie, hiking the western hills, and pirogues through the lagoon.",
+   "subject": "surfers in the water off Assinie",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Sixty Peoples",
+   "description": "Akan, Krou, Mandé and Gur — around sixty peoples inside one border.",
+   "subject": "a Baoulé mask dance in central Côte d'Ivoire",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Baoulé, Senufo and Dan",
+   "description": "Baoulé weaving, Senufo sculpture, and Dan masks from the western hills.",
+   "subject": "Senufo carved figures on a workshop bench",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Attiéké and Kedjenou",
+   "description": "Attiéké with grilled fish, and kedjenou slow-cooked in a sealed pot.",
+   "subject": "attiéké and grilled fish served at a maquis",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Abissa and the Masks",
+   "description": "Abissa at Grand-Bassam in November, and the mask festivals of the western hills.",
+   "subject": "masked dancers at the Abissa festival in Grand-Bassam",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Weaving and Carving",
+   "description": "Baoulé strip cloth, Korhogo painted cloth, and Dan masks carved for use rather than sale.",
+   "subject": "Korhogo cloth painted with mud pigment",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Grand-Bassam",
+   "description": "The first colonial capital, on a sandbar between lagoon and ocean, and now a world site.",
+   "subject": "the colonial quarter of Grand-Bassam",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Yamoussoukro",
+   "description": "A basilica larger than Saint Peter's, built in the founder's home village.",
+   "subject": "the basilica of Our Lady of Peace at Yamoussoukro",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Abidjan",
+   "description": "The Plateau's towers, the Ébrié lagoon, and a nightlife the region measures itself against.",
+   "subject": "the towers of the Plateau district in Abidjan",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Lagoon Colonial",
+   "description": "The wooden trading houses of Grand-Bassam, and Abidjan's tropical modernism.",
+   "subject": "a colonial trading house on the Grand-Bassam waterfront",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Maquis at Night",
+   "description": "The open-air maquis — grill, music and a plastic chair — is the country's real institution.",
+   "subject": "a busy open-air maquis at night in Abidjan",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Beach and Lagoon",
+   "description": "Assinie's sandbar has ocean on one side and calm lagoon on the other, which suits children.",
+   "subject": "children swimming on the lagoon side at Assinie",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Surf and Hike",
+   "description": "Assinie's breaks, and the liana bridges and falls in the hills around Man.",
+   "subject": "a liana bridge strung across a river near Man",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Assinie and Abidjan",
+   "description": "Lagoon villas at Assinie, and Abidjan hotels that serve the whole region's business.",
+   "subject": "a lagoon-side villa terrace at Assinie",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Taï and the Chimpanzees",
+   "description": "Forty years of chimpanzee research at Taï, run with the villages around the park.",
+   "subject": "a researcher on a forest trail at Taï",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Lagoon Light",
+   "description": "Pirogues on flat water at either end of the day, and a skyline behind them.",
+   "subject": "pirogues silhouetted on the lagoon at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Man",
+   "description": "The western hills, with waterfalls, mask villages and a mountain nobody climbs.",
+   "subject": "the hills and forest around the town of Man",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "The Engine of the Region",
+   "description": "The largest economy in francophone West Africa, and the easiest of them to travel.",
+   "subject": "a coastal highway running west out of Abidjan",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

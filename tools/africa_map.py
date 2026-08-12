@@ -61,14 +61,14 @@ ROSTER = {
     231: ("ethiopia", "Ethiopia", "The roof of Africa", "/ethiopia", "live"),
      72: ("botswana", "Botswana", "A delta that never reaches the sea", "/botswana", "live"),
     450: ("madagascar", "Madagascar", "An island that evolved alone", "/madagascar", "live"),
-    566: ("nigeria", "Nigeria", "The loudest country on the continent", "", "soon"),
-    686: ("senegal", "Senegal", "Where the Sahel meets the Atlantic", "", "soon"),
-    716: ("zimbabwe", "Zimbabwe", "Great Zimbabwe and the Zambezi", "", "soon"),
-    508: ("mozambique", "Mozambique", "Two thousand kilometres of coast", "", "soon"),
-    384: ("cote-divoire", "Côte d'Ivoire", "Lagoons, forest and the Atlantic", "", "soon"),
-    788: ("tunisia", "Tunisia", "Carthage, the Sahel and the desert south", "", "soon"),
-    690: ("seychelles", "Seychelles", "Granite islands in the Indian Ocean", "", "soon"),
-    480: ("mauritius", "Mauritius", "Reef, sugar and the volcanic interior", "", "soon"),
+    566: ("nigeria", "Nigeria", "The loudest country on the continent", "/nigeria", "live"),
+    686: ("senegal", "Senegal", "Where the Sahel meets the Atlantic", "/senegal", "live"),
+    716: ("zimbabwe", "Zimbabwe", "Great Zimbabwe and the Zambezi", "/zimbabwe", "live"),
+    508: ("mozambique", "Mozambique", "Two thousand kilometres of coast", "/mozambique", "live"),
+    384: ("cote-divoire", "Côte d'Ivoire", "Lagoons, forest and the Atlantic", "/cote-divoire", "live"),
+    788: ("tunisia", "Tunisia", "Carthage, the Sahel and the desert south", "/tunisia", "live"),
+    690: ("seychelles", "Seychelles", "Granite islands in the Indian Ocean", "/seychelles", "live"),
+    480: ("mauritius", "Mauritius", "Reef, sugar and the volcanic interior", "/mauritius", "live"),
 }
 LIVE = ROSTER          # the map treats every roster country as a marked country
 
