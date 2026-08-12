@@ -48,7 +48,7 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "months", "destinations", "footer")
+MARKERS = ("window", "captions", "ticks", "months", "destinations", "operators", "footer")
 
 MONTHS = ("January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December")
@@ -81,8 +81,35 @@ def shapes():
 
 
 def operator_line(c):
-    return ("Operated locally by %s" % esc(c.operator)) if c.operator \
+    return ("Operated locally by %s" % esc(c.operator.name)) if c.operator \
         else "Run with a licensed local operator"
+
+
+def block_operators(countries):
+    """The three companies of our own, as identities rather than three names.
+
+    "Run by people who live there" is the platform's whole claim, and it was
+    being made by printing a company name three times. An operator has a base, a
+    year it started and a sentence about what it actually runs; printing those is
+    the difference between a claim and evidence.
+    """
+    ours = [c for c in countries if c.operator]
+    cards = []
+    for c in ours:
+        op = c.operator
+        cards.append(
+            '      <a class="wa-op" href="%s"><span class="wa-op-where">%s</span>'
+            '<b>%s</b><span class="wa-op-base">%s &middot; since %s</span>'
+            '<p>%s</p><span class="wa-op-go">Enter %s &rarr;</span></a>'
+            % (esc(op.url), esc(c.name), esc(op.name), esc(op.base), esc(op.since),
+               esc(op.line), esc(op.name)))
+    cards.append(
+        '      <div class="wa-op wa-op--rest"><span class="wa-op-where">Everywhere else</span>'
+        '<b>%d more countries</b><span class="wa-op-base">A licensed operator in each</span>'
+        '<p>Every other destination is covered by a company based in it, working through the '
+        'same twenty-seven categories, so two countries can be compared on the same terms.</p></div>'
+        % (len(countries) - len(ours)))
+    return "\n".join(cards)
 
 
 def block_window(countries, shape_by_slug):
@@ -161,7 +188,7 @@ def block_destinations(countries):
                 '<p class="wa-dest-when">%s</p>'
                 '<a href="%s">Explore %s &rarr;</a></div>'
                 % (key, esc(" ".join(c.calls)), esc(",".join(str(m) for m in c.months)),
-                   esc(c.operator), esc(c.name), esc(c.summary), esc(c.when),
+                   esc(c.operator.name if c.operator else ''), esc(c.name), esc(c.summary), esc(c.when),
                    esc(c.url), esc(c.name)))
     return "\n".join(rows)
 
@@ -187,6 +214,7 @@ def render(countries):
         "ticks": block_ticks(with_shape),
         "months": block_months(seq),
         "destinations": block_destinations(seq),
+        "operators": block_operators(seq),
         "footer": block_footer(seq),
     }
 

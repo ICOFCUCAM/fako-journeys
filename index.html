@@ -171,12 +171,29 @@ ul,ol{list-style:none}
 .wa-claim{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
   font-size:clamp(24px,3.4vw,46px);line-height:1.08;letter-spacing:-.01em}
 .wa-claim em{font-style:normal;color:var(--c-accent)}
-.wa-ops{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;border-top:2px solid var(--c-primary)}
-.wa-ops>div{padding:18px 22px 0 0;border-right:var(--fj-rule)}
-.wa-ops>div:last-child{border-right:0;padding-right:0}
-.wa-ops b{display:block;font-family:var(--fj-display);font-size:22px;font-weight:700;text-transform:uppercase}
-.wa-ops span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent);margin-top:8px}
-.wa-ops .soon b,.wa-ops .soon span{color:var(--c-muted)}
+/* The three companies of our own, as identities. "Run by people who live there"
+   is the platform's whole claim and it was being made by printing a name. */
+.wa-ops{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;
+  border-top:2px solid var(--c-primary)}
+.wa-op{display:block;padding:22px 24px 22px 0;border-right:var(--fj-rule);
+  transition:background var(--t-fast) var(--ease)}
+.wa-op:last-child{border-right:0;padding-right:0}
+a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
+.wa-op-where{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.wa-op b{display:block;font-family:var(--fj-display);font-size:23px;font-weight:700;
+  text-transform:uppercase;line-height:1.04;margin-top:9px}
+.wa-op-base{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);margin-top:7px}
+.wa-op p{font-size:14px;color:var(--c-muted);margin-top:12px}
+.wa-op-go{display:inline-block;margin-top:14px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:3px}
+.wa-op--rest b,.wa-op--rest .wa-op-base{color:var(--c-muted)}
+@media(max-width:900px){.wa-ops{grid-template-columns:1fr 1fr}
+  .wa-op:nth-child(2n){border-right:0;padding-right:0}
+  .wa-op{border-bottom:var(--fj-rule)}}
+@media(max-width:520px){.wa-ops{grid-template-columns:1fr}
+  .wa-op{border-right:0 !important;padding-right:0 !important}}
 
 /* ---- where do you want to begin ---------------------------------------------------- */
 .wa-wants{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:2px solid var(--c-primary);margin-bottom:6px}
@@ -809,10 +826,11 @@ ul,ol{list-style:none}
   <div class="wa-frame">
     <p class="wa-claim">Fifty-four countries. Five regions.<br>Twenty-seven ways to experience each destination.<br><em>Local people behind every journey.</em></p>
     <div class="wa-ops">
-      <div><b>Cameroon</b><span>Operated locally by Kamerun</span></div>
-      <div><b>Uganda</b><span>Operated locally by Pearl Trails Uganda</span></div>
-      <div><b>Namibia</b><span>Operated locally by Namib Skyline</span></div>
-      <div class="soon"><b>And the rest</b><span>A licensed operator in each country, as each one comes online</span></div>
+      <!-- gen:operators -->
+      <a class="wa-op" href="/cameroon"><span class="wa-op-where">Cameroon</span><b>Kamerun</b><span class="wa-op-base">Buea and Douala &middot; since 2011</span><p>Runs the Mount Cameroon rotation with eleven licensed guides, and the fourteen-day transect from the Atlantic to the Sahel.</p><span class="wa-op-go">Enter Kamerun &rarr;</span></a>
+      <a class="wa-op" href="https://pearl-trails-uganda.vercel.app"><span class="wa-op-where">Uganda</span><b>Pearl Trails Uganda</b><span class="wa-op-base">Kampala &middot; since 2016</span><p>Gorilla and chimpanzee permits, the Rwenzori traverse, and the savanna parks, out of Kampala.</p><span class="wa-op-go">Enter Pearl Trails Uganda &rarr;</span></a>
+      <a class="wa-op" href="https://namib-skyline.vercel.app"><span class="wa-op-where">Namibia</span><b>Namib Skyline</b><span class="wa-op-base">Windhoek and Swakopmund &middot; since 2018</span><p>Self-drive circuits with the gravel already driven, or guided if you would rather someone else did it.</p><span class="wa-op-go">Enter Namib Skyline &rarr;</span></a>
+      <div class="wa-op wa-op--rest"><span class="wa-op-where">Everywhere else</span><b>19 more countries</b><span class="wa-op-base">A licensed operator in each</span><p>Every other destination is covered by a company based in it, working through the same twenty-seven categories, so two countries can be compared on the same terms.</p></div>      <!-- /gen:operators -->
     </div>
   </div>
 </section>

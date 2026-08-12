@@ -1,0 +1,26 @@
+{
+ "kamerun": {
+  "name": "Kamerun",
+  "country": "cameroon",
+  "base": "Buea and Douala",
+  "since": 2011,
+  "line": "Runs the Mount Cameroon rotation with eleven licensed guides, and the fourteen-day transect from the Atlantic to the Sahel.",
+  "url": "/cameroon"
+ },
+ "pearl-trails-uganda": {
+  "name": "Pearl Trails Uganda",
+  "country": "uganda",
+  "base": "Kampala",
+  "since": 2016,
+  "line": "Gorilla and chimpanzee permits, the Rwenzori traverse, and the savanna parks, out of Kampala.",
+  "url": "https://pearl-trails-uganda.vercel.app"
+ },
+ "namib-skyline": {
+  "name": "Namib Skyline",
+  "country": "namibia",
+  "base": "Windhoek and Swakopmund",
+  "since": 2018,
+  "line": "Self-drive circuits with the gravel already driven, or guided if you would rather someone else did it.",
+  "url": "https://namib-skyline.vercel.app"
+ }
+}

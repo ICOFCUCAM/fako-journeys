@@ -84,6 +84,53 @@ def window(country, entry_for):
                shape["d"], shape["d"], art))
 
 
+MONTHS = ("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")
+MONTH_NAMES = ("January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December")
+
+
+def calendar(country):
+    """This country's own year, as twelve cells rather than a paragraph.
+
+    Every country carries the months it is actually good in. Printing that as a
+    strip means a visitor can answer "can I go when I am free" in about a second,
+    which is the question that decides most trips and the one a season paragraph
+    buries.
+    """
+    if not country.months:
+        return ""
+    cells = "".join(
+        '<span class="ct-mon%s" title="%s"><b>%s</b></span>'
+        % (" is-on" if (i + 1) in country.months else "", esc(MONTH_NAMES[i]), MONTHS[i])
+        for i in range(12))
+    note = ('<p class="ct-cal-note">%s</p>' % esc(country.when)) if country.when else ""
+    return ('<section class="ct-cal"><div class="af-frame">'
+            '<h2 class="ct-cal-h">When to come</h2>'
+            '<div class="ct-cal-row" role="img" aria-label="%s is at its best in %s">%s</div>'
+            '%s</div></section>'
+            % (esc(country.name),
+               esc(", ".join(MONTH_NAMES[m - 1] for m in sorted(country.months))),
+               cells, note))
+
+
+def operator_block(country):
+    """Who actually runs this country, with enough about them to be evidence."""
+    op = country.operator
+    if not op:
+        return ('<div class="ct-op ct-op--none"><span>Local operator</span>'
+                '<b>A licensed company based in %s</b>'
+                '<p>Every destination here is run by a company in the country itself, working '
+                'through the same twenty-seven categories, so two countries can be compared on '
+                'the same terms. Tell us the month and we will put you with the right one.</p>'
+                '<a class="af-go" href="/contact">Start a journey &rarr;</a></div>'
+                % esc(country.name))
+    return ('<div class="ct-op"><span>Operated locally by</span><b>%s</b>'
+            '<p class="ct-op-base">%s &middot; since %s</p><p>%s</p>'
+            '<a class="af-go" href="%s">Enter %s &rarr;</a></div>'
+            % (esc(op.name), esc(op.name), esc(op.base), esc(op.since), esc(op.line),
+               esc(op.url), esc(op.name)))
+
+
 def neighbours(country, countries, limit=5):
     """The other countries in this region, so a country page is part of an atlas.
 
@@ -143,6 +190,8 @@ def build(country, taxonomy, countries=()):
         return country.entry(cat_id)
 
     hero_window = window(country, entry)
+    cal = calendar(country)
+    op = operator_block(country)
     near = neighbours(country, countries)
     near_html = "".join(
         '<a href="%s"><em>%s</em><span>%s</span></a>' % (esc(c.url), esc(c.name), esc(c.tagline))
@@ -196,6 +245,8 @@ def build(country, taxonomy, countries=()):
                            "to culture, food and heritage, with local guides."
                            % (country.name, country.summary)),
         "hero_window": hero_window,
+        "calendar": cal,
+        "operator": op,
         "hero_class": " has-shape" if hero_window else " no-shape",
         "near": near_html,
         "near_block": ('<section class="ct-near"><div class="af-frame"><h2>Also in %s</h2>'
@@ -271,6 +322,37 @@ TEMPLATE = """<!DOCTYPE html>
    object on the page. */
 .ct-window{height:min(58vh,520px)}
 .ct-window svg{height:100%%}
+
+/* This country's year. Twelve cells beats a season paragraph: a visitor answers
+   "can I go when I am free" in about a second. */
+.ct-cal{padding:30px 0;border-bottom:var(--fj-rule)}
+.ct-cal-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-cal-row{display:grid;grid-template-columns:repeat(12,1fr);gap:0;border:var(--fj-rule)}
+.ct-mon{display:flex;align-items:center;justify-content:center;padding:12px 0;
+  border-right:var(--fj-rule);background:var(--c-bg)}
+.ct-mon:last-child{border-right:0}
+.ct-mon b{font-family:var(--fj-mono);font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--c-muted)}
+.ct-mon.is-on{background:var(--c-accent)}
+.ct-mon.is-on b{color:var(--c-bg);font-weight:700}
+.ct-cal-note{margin-top:12px;font-size:15px;color:var(--c-muted);max-width:52em}
+
+/* Who runs this country. The platform's whole claim is that somebody local
+   does, so the page says which company, from where, and since when. */
+.ct-close{padding-bottom:8px}
+.ct-op{border-top:2px solid var(--c-accent);padding-top:22px;max-width:44em}
+.ct-op>span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.ct-op b{display:block;font-family:var(--fj-display);font-size:clamp(24px,3vw,36px);
+  font-weight:700;text-transform:uppercase;line-height:1.04;margin-top:8px}
+.ct-op-base{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);margin-top:8px}
+.ct-op p{color:var(--c-muted);margin-top:12px}
+.ct-op .af-go{margin-top:16px}
+.ct-op--none b{font-size:clamp(20px,2.2vw,27px)}
+@media(max-width:640px){.ct-cal-row{grid-template-columns:repeat(6,1fr)}
+  .ct-mon:nth-child(6n){border-right:0}
+  .ct-mon:nth-child(-n+6){border-bottom:var(--fj-rule)}}
 
 /* The region strip: the page's one link outward, and what makes a country page
    part of an atlas rather than a leaflet. */
@@ -368,6 +450,7 @@ TEMPLATE = """<!DOCTYPE html>
 </section>
 
 %(near_block)s
+%(calendar)s
 
 <section class="af-zone" id="highlights">
   <div class="af-frame">
@@ -414,6 +497,9 @@ TEMPLATE = """<!DOCTYPE html>
 </section>
 
 <section class="af-zone">
+  <div class="af-frame ct-close">
+    %(operator)s
+  </div>
   <div class="af-frame end">
     <span class="stamp">Begin</span>
     <h2>Your %(name)s <em>starts here</em>.</h2>

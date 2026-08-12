@@ -82,6 +82,47 @@ class Entry:
         self.local = raw.get("local")
 
 
+class Operator(object):
+    """One of our own companies.
+
+    An operator was a string on three countries — the name, repeated wherever it
+    was needed and carrying nothing else. It is the differentiator the whole
+    platform rests on ("run by people who live there"), so it is an entity: a
+    name, a base, a year, a sentence about what it actually runs, and where it
+    lives. A country points at one by key.
+    """
+
+    def __init__(self, key, raw):
+        self.key = key
+        self.name = raw.get("name") or key
+        self.country = raw.get("country") or ""
+        self.base = raw.get("base") or ""
+        self.since = raw.get("since") or ""
+        self.line = raw.get("line") or ""
+        self.url = raw.get("url") or ""
+
+
+def load_operators(path=None):
+    path = path or os.path.join(ROOT, "tourism", "operators.json")
+    try:
+        with open(path) as fh:
+            raw = json.load(fh)
+    except (IOError, ValueError):
+        return {}
+    return dict((k, Operator(k, v)) for k, v in raw.items())
+
+
+OPERATORS = None
+
+
+def operator(key):
+    """-> Operator or None. Loaded once; the file is three entries."""
+    global OPERATORS
+    if OPERATORS is None:
+        OPERATORS = load_operators()
+    return OPERATORS.get(key) if key else None
+
+
 class Country:
     def __init__(self, raw, path):
         self.path = path
@@ -101,7 +142,7 @@ class Country:
         # picture that belongs in its window. Editorial facts, so they live with
         # the rest of the country's editorial rather than in a table in code.
         self.calls = list(raw.get("calls") or [])
-        self.operator = raw.get("operator") or ""
+        self.operator_key = raw.get("operator") or ""
         self.window = raw.get("window") or ""
         self.window_alt = raw.get("window_alt") or ""
         # Which months are actually good here, and the sentence that says why.
@@ -113,6 +154,10 @@ class Country:
         self.by_category = {}
         for e in self.entries:
             self.by_category.setdefault(e.category, []).append(e)
+
+    @property
+    def operator(self):
+        return operator(self.operator_key)
 
     def entry(self, category_id):
         found = self.by_category.get(category_id)

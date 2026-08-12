@@ -41,6 +41,37 @@
 .ct-window{height:min(58vh,520px)}
 .ct-window svg{height:100%}
 
+/* This country's year. Twelve cells beats a season paragraph: a visitor answers
+   "can I go when I am free" in about a second. */
+.ct-cal{padding:30px 0;border-bottom:var(--fj-rule)}
+.ct-cal-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-cal-row{display:grid;grid-template-columns:repeat(12,1fr);gap:0;border:var(--fj-rule)}
+.ct-mon{display:flex;align-items:center;justify-content:center;padding:12px 0;
+  border-right:var(--fj-rule);background:var(--c-bg)}
+.ct-mon:last-child{border-right:0}
+.ct-mon b{font-family:var(--fj-mono);font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--c-muted)}
+.ct-mon.is-on{background:var(--c-accent)}
+.ct-mon.is-on b{color:var(--c-bg);font-weight:700}
+.ct-cal-note{margin-top:12px;font-size:15px;color:var(--c-muted);max-width:52em}
+
+/* Who runs this country. The platform's whole claim is that somebody local
+   does, so the page says which company, from where, and since when. */
+.ct-close{padding-bottom:8px}
+.ct-op{border-top:2px solid var(--c-accent);padding-top:22px;max-width:44em}
+.ct-op>span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.ct-op b{display:block;font-family:var(--fj-display);font-size:clamp(24px,3vw,36px);
+  font-weight:700;text-transform:uppercase;line-height:1.04;margin-top:8px}
+.ct-op-base{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);margin-top:8px}
+.ct-op p{color:var(--c-muted);margin-top:12px}
+.ct-op .af-go{margin-top:16px}
+.ct-op--none b{font-size:clamp(20px,2.2vw,27px)}
+@media(max-width:640px){.ct-cal-row{grid-template-columns:repeat(6,1fr)}
+  .ct-mon:nth-child(6n){border-right:0}
+  .ct-mon:nth-child(-n+6){border-bottom:var(--fj-rule)}}
+
 /* The region strip: the page's one link outward, and what makes a country page
    part of an atlas rather than a leaflet. */
 .ct-near{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:26px 0}
@@ -142,6 +173,7 @@
 </section>
 
 <section class="ct-near"><div class="af-frame"><h2>Also in Islands</h2><div class="ct-near-row"><a href="/madagascar"><em>Madagascar</em><span>An island that evolved alone</span></a><a href="/mauritius"><em>Mauritius</em><span>Reef, sugar and the volcanic interior</span></a></div></div></section>
+<section class="ct-cal"><div class="af-frame"><h2 class="ct-cal-h">When to come</h2><div class="ct-cal-row" role="img" aria-label="Seychelles is at its best in April, May, October, November"><span class="ct-mon" title="January"><b>J</b></span><span class="ct-mon" title="February"><b>F</b></span><span class="ct-mon" title="March"><b>M</b></span><span class="ct-mon is-on" title="April"><b>A</b></span><span class="ct-mon is-on" title="May"><b>M</b></span><span class="ct-mon" title="June"><b>J</b></span><span class="ct-mon" title="July"><b>J</b></span><span class="ct-mon" title="August"><b>A</b></span><span class="ct-mon" title="September"><b>S</b></span><span class="ct-mon is-on" title="October"><b>O</b></span><span class="ct-mon is-on" title="November"><b>N</b></span><span class="ct-mon" title="December"><b>D</b></span></div><p class="ct-cal-note">Warm all year; April, May, October and November are the calm months between trade winds.</p></div></section>
 
 <section class="af-zone" id="highlights">
   <div class="af-frame">
@@ -264,6 +296,9 @@
 </section>
 
 <section class="af-zone">
+  <div class="af-frame ct-close">
+    <div class="ct-op ct-op--none"><span>Local operator</span><b>A licensed company based in Seychelles</b><p>Every destination here is run by a company in the country itself, working through the same twenty-seven categories, so two countries can be compared on the same terms. Tell us the month and we will put you with the right one.</p><a class="af-go" href="/contact">Start a journey &rarr;</a></div>
+  </div>
   <div class="af-frame end">
     <span class="stamp">Begin</span>
     <h2>Your Seychelles <em>starts here</em>.</h2>
