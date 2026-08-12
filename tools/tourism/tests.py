@@ -795,6 +795,92 @@ def main():
               any(r["view"] != next(x["view"] for x in sp["regions"] if x["key"] == r["key"])
                   for r in small["regions"]))
 
+        # -- the human layer --------------------------------------------------------
+        # The claim this layer makes is that nothing on it is invented: every
+        # line is a caption or a description already written for that country,
+        # or an operator's own sentence. That is testable, so it is tested —
+        # by taking every string the page can print and looking for it in the
+        # country files it claims to have come from.
+        print("\nthe human layer")
+        from tourism import meet
+        from tourism.model import load_people, load_strands, load_voices
+        strands = load_strands()
+        payload = meet.strands_payload(countries, tax)
+
+        check("every strand points at categories that exist",
+              all(c in tax.by_id for s in strands.values()
+                  for c in (s.get("categories") or [])))
+        check("every strand asks a question",
+              all((s.get("asks") or "").endswith("?") for s in strands.values()))
+        check("no strand names a country",
+              not any(co.name.lower() in json.dumps(strands).lower()
+                      for co in countries if co.published))
+
+        written = set()
+        for co in countries:
+            for e in co.entries:
+                if e.caption:
+                    written.add(e.caption)
+                if e.description:
+                    written.add(e.description)
+        printed = set()
+        for rows in payload["answers"].values():
+            for answers in rows.values():
+                for a in answers:
+                    printed.add(a["title"])
+                    printed.add(a["text"])
+        check("every answer is a sentence somebody already wrote",
+              printed <= written, "%d unaccounted" % len(printed - written))
+        check("the human layer covers every published country",
+              set(payload["countries"]) ==
+              set(c.slug for c in countries if c.published))
+        thin = [s for s in payload["countries"]
+                if sum(1 for rows in payload["answers"].values() if s in rows)
+                < len(strands)]
+        check("a country with nothing behind a door is left blank, not filled in",
+              all(s in payload["countries"] for s in thin), "%d thin" % len(thin))
+
+        # People and operator notes: empty is the correct state, and the page has
+        # to be empty with them rather than reaching for something plausible.
+        page = meet.render(countries, tax)
+        check("no guide profile is invented", not load_people(),
+              "%d in people.json" % len(load_people()))
+        check("no operator is quoted saying something they did not say",
+              not load_voices(), "%d in voices.json" % len(load_voices()))
+        check("the people block ships empty rather than filled",
+              '<script type="application/json" id="mt-people">[]</script>' in page)
+        check("the first question is answered without script",
+              page.count('class="mt-answer"') ==
+              len(payload["answers"][payload["strands"][0]["key"]]))
+        check("every country on the page is a link to its own page",
+              all(('data-country="%s"' % c.slug) in page
+                  for c in countries if c.published))
+
+        # -- how people are written about --------------------------------------------
+        print("\nhow people are written about")
+        planted = type("P", (), {})()
+        planted.slug, planted.name = "test", "Testland"
+        planted.tagline = "The real Africa, untouched by civilisation"
+        planted.summary = "African culture at its most primitive."
+        planted.when = ""
+        planted.entries = []
+        hits = validate.check_language(planted)
+        found = " ".join(f.message for f in hits)
+        check("exoticising language is caught", "'primitive'" in found)
+        check("continent-wide generalisation is caught", "'african culture'" in found)
+        check("'the real Africa' is caught", "'real africa'" in found)
+        check("the finding says what to do instead",
+              "name the community" in found and "say which people" in found)
+        clean_one = [c for c in countries if c.slug == "uganda"][0]
+        check("the check does not fire on the dataset as written",
+              not validate.check_language(clean_one),
+              "; ".join(f.message for f in validate.check_language(clean_one))[:70])
+        every = [f for c in countries for f in validate.check_language(c)]
+        check("nothing in the dataset turns people into scenery", not every,
+              "; ".join(f.message for f in every)[:80])
+        check("the check reads captions, descriptions and taglines alike",
+              len(validate._sentences(clean_one)) >= 3 * len(clean_one.entries))
+
         # -- the journey engine ----------------------------------------------------
         # The engine is JavaScript because it answers between one click and the
         # next, so it is tested by running it rather than by re-implementing it

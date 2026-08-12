@@ -131,6 +131,14 @@
 .jn-reveal-tag{font-family:var(--fj-text);font-size:clamp(19px,2.2vw,27px);color:var(--c-accent);
   line-height:1.25;margin:0}
 
+/* Who lives there, above why we chose it. */
+.jn-meets{font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--c-ink);line-height:2;padding-bottom:18px;margin-bottom:20px;
+  border-bottom:var(--fj-rule)}
+.jn-meets span{display:block;color:var(--c-muted);letter-spacing:.2em}
+.jn-meets a{color:var(--c-accent);white-space:nowrap}
+.jn-meets a:hover{color:var(--c-primary)}
+
 .jn-why{border-top:2px solid var(--c-primary);padding-top:14px}
 .jn-why-head{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--c-muted)}

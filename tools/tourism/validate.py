@@ -37,6 +37,87 @@ def alt_text(country, entry):
     return "%s, %s" % (subject, country.name)
 
 
+# ---- how people are written about ------------------------------------------------
+
+# Words and phrasings that turn people into scenery. The list is short and every
+# entry earned its place: each one is a way of writing about somebody that makes
+# a visitor the subject and a resident the backdrop.
+#
+# Two kinds. `NEVER` is language that is wrong wherever it appears — "primitive",
+# "tribesman", "unspoilt by man". `GENERALISING` is a construction that is only
+# wrong at continental scale: "African culture", "the African people", "an
+# African village". Africa is fifty-four countries and roughly two thousand
+# languages, and a sentence that says "African" where it means "Bamileke" has
+# thrown away the only fact worth having.
+#
+# The check runs over every caption, description, subject, tagline and summary
+# in the dataset — every string a visitor can read — and it is a warning rather
+# than an error, because it is a prompt to a writer and not a machine's verdict
+# on their sentence. It is deliberately not a spelling of what to say.
+NEVER = (
+    "primitive", "uncivilised", "uncivilized", "backward", "savage",
+    "tribesman", "tribesmen", "tribeswoman", "native people", "the natives",
+    "witch doctor", "voodoo magic", "exotic people", "exotic tribe",
+    "untouched by civilisation", "untouched by civilization",
+    "unspoilt by man", "unspoiled by man", "third world", "dark continent",
+    "real africa", "authentic africans", "simple people", "simple life of",
+    "poverty tourism", "slum tour", "local colour", "local color",
+)
+
+GENERALISING = (
+    "african culture", "african tradition", "african traditions",
+    "african people", "the african people", "african tribes", "african tribe",
+    "african village", "african villages", "african food", "african music",
+    "african way of life", "typical african", "typically african",
+    "africans believe", "africans are",
+)
+
+# Read strings, in the order a visitor meets them.
+READABLE = ("tagline", "summary", "when")
+
+
+def _sentences(country):
+    """Every string in a country file that a visitor can read."""
+    out = []
+    for field in READABLE:
+        text = getattr(country, field, "") or ""
+        if text:
+            out.append(("", field, text))
+    for entry in country.entries:
+        for field in ("caption", "description", "subject"):
+            text = getattr(entry, field, "") or ""
+            if text:
+                out.append((entry.category or "?", field, text))
+    return out
+
+
+def check_language(country):
+    """Flag writing that turns people into scenery.
+
+    Nothing here rewrites a sentence or blocks a build. It reports, with the
+    field and the phrase, so that a human decides — which is the only way this
+    check can be right, because the same word is fine in one sentence and not in
+    the next and a program cannot tell which.
+    """
+    findings = []
+    for category, field, text in _sentences(country):
+        low = text.lower()
+        for phrase in NEVER:
+            if phrase in low:
+                findings.append(Finding(
+                    "warn", country.slug, category,
+                    "%s: %r turns people into scenery \u2014 name the community, "
+                    "the place or the practice instead" % (field, phrase)))
+        for phrase in GENERALISING:
+            if phrase in low:
+                findings.append(Finding(
+                    "warn", country.slug, category,
+                    "%s: %r generalises a continent \u2014 %s is one of "
+                    "fifty-four, say which people or which country"
+                    % (field, phrase, country.name)))
+    return findings
+
+
 def check_country(country, taxonomy, global_images, global_subjects):
     findings = []
     seen = set()
@@ -149,6 +230,7 @@ def report(countries, taxonomy):
             findings.append(Finding("error", country.path, "", "country has no slug"))
             continue
         f = check_country(country, taxonomy, global_images, global_subjects)
+        f.extend(check_language(country))
         findings.extend(f)
         present = [c["id"] for c in taxonomy.enabled if country.entry(c["id"])]
         resolved = [c["id"] for c in taxonomy.enabled

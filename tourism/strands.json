@@ -1,0 +1,53 @@
+{
+ "$comment": "The human layer's vocabulary. Seven strands, each a question every country in the set already answers in its own words — because the same twenty-seven categories are written for every country, which is what makes 'the same door, twenty-two countries' possible at all. This is deliberately not lenses.json: a lens is what a country *leads on* and is used to filter a map; a strand is a thread of storytelling and every country has all seven. Nothing here names a country, and no strand invents a subject — each one points at categories that are already written.",
+
+ "$schema": {
+  "title": "the word on the door",
+  "asks": "the question the door answers, in the second person",
+  "line": "one sentence of context, about the strand and not about any country",
+  "categories": "which of the twenty-seven write-ups belong behind this door, in order"
+ },
+
+ "people": {
+  "title": "People",
+  "asks": "Who lives here?",
+  "line": "Africa is not one people. It is roughly two thousand languages, and the answer changes at every border and often inside one.",
+  "categories": ["traditional-people", "family-community"]
+ },
+ "culture": {
+  "title": "Culture",
+  "asks": "What is kept, and who keeps it?",
+  "line": "Kingdoms that still hold court, festivals with a date and a place, and practices that belong to particular communities rather than to a continent.",
+  "categories": ["culture", "festivals"]
+ },
+ "food": {
+  "title": "Food",
+  "asks": "What is eaten here?",
+  "line": "Not a cuisine. Fifty-four of them, argued over, regional inside every country, and mostly cooked at home.",
+  "categories": ["food"]
+ },
+ "craft": {
+  "title": "Craft",
+  "asks": "What is made by hand?",
+  "line": "Work with a technique, a lineage and a place it is made — bronze, cloth, beadwork, clay — and usually a market you can buy it in from the person who made it.",
+  "categories": ["crafts", "architecture"]
+ },
+ "cities": {
+  "title": "Cities",
+  "asks": "What is it like to live here?",
+  "line": "Most Africans live in cities and most visitors fly over them. Markets, transport, music, nightlife and the ordinary weekday.",
+  "categories": ["cities", "local-life"]
+ },
+ "heritage": {
+  "title": "Heritage",
+  "asks": "What happened here?",
+  "line": "What was built, what was survived, and what is deliberately kept — including the parts that are difficult to stand in front of.",
+  "categories": ["historic-sites", "heritage"]
+ },
+ "responsibility": {
+  "title": "Responsibility",
+  "asks": "What does a visit do to this place?",
+  "line": "Who holds the permit, where the money lands, and who is employed. Stated where an operator has said it, and left blank where nobody has.",
+  "categories": ["eco-tourism"]
+ }
+}

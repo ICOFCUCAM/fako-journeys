@@ -28,7 +28,7 @@ import html as html_mod
 import json
 import os
 
-from .model import ROOT, load_operators, load_regions
+from .model import ROOT, load_operators, load_regions, load_strands
 
 PAGE = os.path.join(ROOT, "journey.html")
 SHAPES = os.path.join(ROOT, "tourism", "shapes.json")
@@ -67,6 +67,7 @@ def brief(countries, taxonomy):
     """
     lenses = clean(read(LENSES, {}))
     plan = clean(read(PLAN, {}))
+    strands = load_strands()
     regions = load_regions()
     ops = load_operators()
     shapes = read(SHAPES, {})
@@ -111,12 +112,24 @@ def brief(countries, taxonomy):
             for k in lens_of.get(e.category, []):
                 counts[k] = counts.get(k, 0) + 1
         shape = shapes.get(c.slug) or {}
+        # Who lives there, in that country's own words. One line, from the
+        # write-up that already exists — so the moment a country arrives it
+        # arrives with people in it rather than as an outline and a season.
+        meets = []
+        for key, st in strands.items():
+            if key not in ("people", "culture"):
+                continue
+            for cat in st.get("categories") or []:
+                e = c.entry(cat)
+                if e and e.caption:
+                    meets.append({"strand": key, "title": e.caption})
+                    break
         out["countries"][c.slug] = {
             "name": c.name, "adjective": c.adjective,
             "region": c.region, "regionKey": region_of.get(c.slug, ""),
             "tagline": c.tagline, "summary": c.summary,
             "months": c.months, "when": c.when, "url": c.url,
-            "calls": c.calls, "lensCounts": counts,
+            "calls": c.calls, "lensCounts": counts, "meets": meets,
             "window": c.window, "windowAlt": c.window_alt,
             "shape": {"w": shape.get("w"), "h": shape.get("h"), "d": shape.get("d")}
                      if shape.get("d") else None,
@@ -231,6 +244,7 @@ TEMPLATE = """<!DOCTYPE html>
   <a class="jn-mark" href="/"><i>Afrinkong</i><b>Build a journey</b></a>
   <nav class="jn-routes" aria-label="Primary">
     <a href="/atlas">The Atlas</a>
+    <a href="/meet">Meet Africa</a>
     <a href="/#destinations">Destinations</a>
     <a href="/compare">Compare</a>
   </nav>
@@ -341,6 +355,7 @@ TEMPLATE = """<!DOCTYPE html>
         <div class="jn-who" id="jn-who"></div>
         <div class="jn-acts jn-acts--end">
           <a class="af-btn af-btn--solid" id="jn-begin" href="/contact">Begin this journey<i>&rarr;</i></a>
+          <a class="af-btn af-btn--quiet" id="jn-meet" href="/meet">Meet the country</a>
           <button class="af-btn af-btn--quiet" type="button" data-save>Save this journey</button>
           <button class="af-btn af-btn--quiet" type="button" data-share>Copy the link</button>
         </div>

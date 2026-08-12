@@ -164,6 +164,95 @@ def load_picks(path=None):
         return {}
 
 
+class Person(object):
+    """Somebody real, who agreed to be here.
+
+    The class exists so that the difference between a real guide and a
+    convincing one is a file on disk rather than a judgement in a template.
+    Every field is optional except a name and a role, and anything missing is
+    left out of the page rather than filled in with something plausible — a
+    fabricated guide is worse than no guide at all, because a visitor cannot
+    tell the difference until they arrive.
+    """
+
+    def __init__(self, key, raw):
+        self.key = key
+        self.name = raw.get("name") or ""
+        self.role = raw.get("role") or ""
+        self.operator_key = raw.get("operator") or ""
+        self.country = raw.get("country") or ""
+        self.base = raw.get("base") or ""
+        self.languages = list(raw.get("languages") or [])
+        self.since = raw.get("since") or ""
+        self.speciality = raw.get("speciality") or ""
+        self.line = raw.get("line") or ""
+        self.photo = raw.get("photo") or ""
+        self.photo_alt = raw.get("photo_alt") or ""
+        self.verified = raw.get("verified") or ""
+
+    @property
+    def usable(self):
+        """A person with no name and no role is a placeholder, not a person."""
+        return bool(self.name and self.role)
+
+
+def load_people(path=None):
+    """-> {slug: Person}. Empty is the normal state and is not an error."""
+    path = path or os.path.join(ROOT, "tourism", "people.json")
+    raw = _read_json(path, {})
+    out = collections.OrderedDict()
+    for key, row in sorted((raw.get("people") or {}).items()):
+        person = Person(key, row)
+        if person.usable:
+            out[key] = person
+    return out
+
+
+class Voice(object):
+    """One thing an operator actually said, and the question they were asked.
+
+    `said` is verbatim and is the only text on the site attributed to a named
+    company. Anything the site itself knows — the season, the summary — is
+    attributed to the site, because putting editorial into somebody else's
+    mouth is fabrication whether or not the sentence is true.
+    """
+
+    def __init__(self, raw):
+        self.operator_key = raw.get("operator") or ""
+        self.country = raw.get("country") or ""
+        self.asked = raw.get("asked") or ""
+        self.said = raw.get("said") or ""
+        self.by = raw.get("by") or ""
+        self.verified = raw.get("verified") or ""
+
+    @property
+    def usable(self):
+        return bool(self.said and self.operator_key)
+
+
+def load_voices(path=None):
+    """-> [Voice]. Only entries with an operator and something said."""
+    path = path or os.path.join(ROOT, "tourism", "voices.json")
+    raw = _read_json(path, {})
+    return [v for v in (Voice(r) for r in (raw.get("voices") or [])) if v.usable]
+
+
+def load_strands(path=None):
+    """The seven doors of the human layer, minus the file's own notes."""
+    path = path or os.path.join(ROOT, "tourism", "strands.json")
+    raw = _read_json(path, {})
+    return collections.OrderedDict(
+        (k, v) for k, v in raw.items() if not k.startswith("$"))
+
+
+def _read_json(path, fallback):
+    try:
+        with open(path) as fh:
+            return json.load(fh)
+    except (IOError, ValueError):
+        return fallback
+
+
 def load_views(path=None):
     """Country boxes in the continental map's coordinates, from africa_map.py."""
     path = path or os.path.join(ROOT, "tourism", "views.json")

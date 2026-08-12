@@ -151,7 +151,7 @@
     document.getElementById('jn-shape').innerHTML = shapeOf(chosen.slug);
     document.getElementById('jn-name').textContent = c.name;
     document.getElementById('jn-tag').textContent = c.tagline;
-    document.getElementById('jn-why').innerHTML = whyBlock(chosen);
+    document.getElementById('jn-why').innerHTML = meetsBlock(c) + whyBlock(chosen);
     document.getElementById('jn-alts').innerHTML = picks.slice(1).map(function (p, i) {
       var a = D.countries[p.slug];
       return '<button class="jn-alt" type="button" data-alt="' + esc(p.slug) + '">'
@@ -161,6 +161,18 @@
         + '<span class="jn-alt-why">' + esc(oneLine(p)) + '</span></span>'
         + '<span class="jn-alt-go" aria-hidden="true">&rarr;</span></button>';
     }).join('');
+  }
+
+  /* Who lives there, before why we chose it. A country that arrives as an
+     outline, a season and a reason is a destination; a country that arrives
+     with the people who live in it named is a place. Both lines are write-ups
+     that already exist in that country's own file. */
+  function meetsBlock(c) {
+    if (!c.meets || !c.meets.length) return '';
+    return '<p class="jn-meets"><span>Who lives here</span>'
+      + c.meets.map(function (m) { return esc(m.title); }).join(' \u00b7 ')
+      + ' <a href="/meet#/' + esc(chosen.slug) + '">Meet ' + esc(c.name)
+      + ' &rarr;</a></p>';
   }
 
   /* Why this one, in the words of the thing that was actually matched. No
@@ -348,6 +360,11 @@
         + '<span class="jn-pick-meta">' + esc(p.group) + '</span></span></button></li>';
     }).join('');
 
+    var meet = document.getElementById('jn-meet');
+    if (meet) {
+      meet.href = '/meet#/' + encodeURIComponent(chosen.slug);
+      meet.textContent = 'Meet ' + c.name;
+    }
     var begin = document.getElementById('jn-begin');
     begin.href = '/contact?journey=' + encodeURIComponent(enquiry(title, c, rows, pace));
     begin.textContent = c.operator ? 'Send this to ' + c.operator.name : 'Begin this journey';

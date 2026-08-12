@@ -436,6 +436,7 @@ TEMPLATE = """<!DOCTYPE html>
     <nav class="routes">
       <a href="/atlas#/%(slug)s">The Atlas</a>
       <a href="/journey">Build a journey</a>
+      <a href="/meet#/%(slug)s">Meet %(name)s</a>
       <a href="#highlights">Highlights</a>
       <a href="#why">Why go</a>
       <a href="/tourism/%(slug)s">All %(count)d</a>

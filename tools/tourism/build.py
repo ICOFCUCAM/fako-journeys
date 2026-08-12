@@ -278,6 +278,14 @@ def cmd_atlas(args):
     return 0
 
 
+def cmd_meet(args):
+    """The human layer: /meet."""
+    from tourism import meet
+    tax, countries, _cache = dataset()
+    meet.run(countries, tax)
+    return 0
+
+
 def cmd_journey(args):
     """The journey engine: /journey."""
     from tourism import journey
@@ -523,6 +531,8 @@ def cmd_all(args):
     print()
     cmd_journey(args)
     print()
+    cmd_meet(args)
+    print()
     cmd_sidebyside(args)
     print()
     rc = cmd_verify(args) or rc
@@ -535,7 +545,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
-    "gateway": cmd_gateway, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey,
+    "gateway": cmd_gateway, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,

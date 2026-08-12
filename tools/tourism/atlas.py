@@ -378,6 +378,7 @@ TEMPLATE = """<!DOCTYPE html>
   <nav class="at-routes" aria-label="Primary">
     <a href="/#window">Home</a>
     <a href="/journey">Build a journey</a>
+    <a href="/meet">Meet Africa</a>
     <a href="/#destinations">Destinations</a>
     <a href="/compare">Compare</a>
   </nav>

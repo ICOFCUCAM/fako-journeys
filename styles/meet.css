@@ -1,0 +1,222 @@
+/* The human layer — /meet.
+ * ---------------------------------------------------------------------------
+ * Prefixed `mt-`. Tokens, reset, type scale and buttons come from
+ * afrinkong.css and are never redefined here.
+ *
+ * The page is a magazine spread, not a card grid: seven questions in the
+ * margin, and one long column of answers set the way a feature is set — the
+ * place small, the thing itself large, the explanation in the reading face.
+ * Twenty-two answers in a row is the whole argument, so they are a column and
+ * not a grid; a grid would invite the eye to skim and skimming is exactly how
+ * a continent becomes a mood board.
+ */
+
+/* ---- chrome -------------------------------------------------------------- */
+
+.mt-mast{position:sticky;top:0;z-index:40;height:var(--mast);display:flex;align-items:center;
+  gap:var(--sp-4);padding:0 28px;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+.mt-mark{display:flex;flex-direction:column;line-height:1}
+.mt-mark i{font-family:var(--fj-mono);font-style:normal;font-size:9.5px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--c-muted)}
+.mt-mark b{font-family:var(--fj-display);font-size:22px;letter-spacing:-.01em;
+  text-transform:uppercase;margin-top:5px;white-space:nowrap}
+.mt-routes{display:flex;gap:26px;margin-left:auto;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.mt-routes a:hover{color:var(--c-accent)}
+
+.mt{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
+
+/* ---- the opening --------------------------------------------------------- */
+
+.mt-open{max-width:64ch;padding-bottom:var(--sp-5);border-bottom:2px solid var(--c-primary)}
+.mt-h1{font-size:clamp(44px,7vw,104px);line-height:.9;margin:12px 0 0;letter-spacing:-.02em;
+  max-width:14ch}
+.mt-lede{margin-top:22px;font-size:18px;color:var(--c-muted)}
+
+/* ---- the two columns ----------------------------------------------------- */
+
+.mt-grid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);
+  gap:var(--sp-6);align-items:start;margin-top:var(--sp-5)}
+
+/* The seven questions stay in the margin the whole way down. They are the
+   spine of the page and scrolling away from them would turn each answer into
+   an isolated card. */
+.mt-doors{position:sticky;top:calc(var(--mast) + 24px)}
+.mt-doors ol{border-top:2px solid var(--c-primary)}
+.mt-doors li{border-bottom:var(--fj-rule)}
+.mt-door{display:grid;grid-template-columns:26px 1fr auto;gap:11px;align-items:baseline;
+  width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:14px 4px;
+  color:inherit;font:inherit;transition:background var(--t-fast) var(--ease)}
+.mt-door:hover{background:var(--fj-dust)}
+.mt-door-no{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;color:var(--c-muted)}
+.mt-door-body b{display:block;font-family:var(--fj-display);font-size:22px;font-weight:700;
+  text-transform:uppercase;line-height:1.04}
+.mt-door-asks{display:block;margin-top:4px;font-size:14px;line-height:1.45;color:var(--c-muted)}
+.mt-door-n{font-family:var(--fj-mono);font-size:9.5px;color:var(--c-border)}
+.mt[data-mode="country"] .mt-door-n{visibility:hidden}
+.mt-door[aria-pressed="true"]{background:var(--c-primary)}
+.mt-door[aria-pressed="true"] .mt-door-body b{color:var(--c-bg)}
+.mt-door[aria-pressed="true"] .mt-door-no,
+.mt-door[aria-pressed="true"] .mt-door-asks,
+.mt-door[aria-pressed="true"] .mt-door-n{color:var(--fj-onbasalt-dim)}
+.mt-doors-note{margin-top:18px;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted)}
+
+/* Twenty-two names, set as a block of text rather than as buttons in a row:
+   it reads as a list of places and takes a third of the space a row of chips
+   would. */
+.mt-strip{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:12px}
+.mt-flag{font-family:var(--fj-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--c-muted);border-bottom:1px solid transparent;padding:3px 0;
+  transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.mt-flag:hover{color:var(--c-primary);border-color:var(--c-accent)}
+.mt-flag[data-on]{color:var(--c-bg);background:var(--c-primary);padding:3px 6px}
+
+/* ---- the answers --------------------------------------------------------- */
+
+.mt-stage{min-width:0}
+.mt-stage-head{border-top:2px solid var(--c-primary);padding-top:14px}
+.mt-h2{font-size:clamp(30px,3.6vw,52px);line-height:.98;margin-top:10px;max-width:20ch;
+  text-transform:none;letter-spacing:-.01em}
+.mt-stage-line{margin-top:14px;font-size:17px;color:var(--c-muted);max-width:56ch}
+
+.mt-answers{margin-top:var(--sp-5)}
+
+/* One answer. The country is small and above, the thing itself is the
+   headline, the explanation is set in the reading face. The rhythm repeats
+   twenty-two times on purpose: the format is identical so the content is the
+   only thing that varies, which is what makes the variety legible. */
+.mt-answer{padding:26px 0;border-bottom:var(--fj-rule);max-width:66ch}
+.mt-answer:first-child{padding-top:0}
+.mt-answer-where{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.mt-answer-where a,.mt-answer-where button{color:var(--c-accent);background:none;border:0;
+  cursor:pointer;font:inherit;padding:0;letter-spacing:inherit;text-transform:inherit}
+.mt-answer-where a:hover,.mt-answer-where button:hover{color:var(--c-primary)}
+.mt-answer-where span{color:var(--c-muted)}
+.mt-answer-title{font-size:clamp(24px,2.7vw,36px);line-height:1.02;margin-top:10px;
+  text-transform:none;letter-spacing:-.01em}
+.mt-answer-text{margin-top:10px;font-size:17px;line-height:1.6;color:var(--c-ink)}
+.mt-answer-more{margin-top:9px;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted)}
+.mt-answer-more::before{content:"also ";color:var(--c-border)}
+
+/* ---- one country, seven doors -------------------------------------------- */
+
+.mt-answers--country{margin-top:var(--sp-4)}
+/* The country itself, at the size of a stamp rather than a poster: it is here
+   to say which country, and the seven doors beside it are the content. Where a
+   photograph exists it fills the outline, the same window used on the atlas and
+   the journey page — one metaphor, three places. */
+.mt-country{display:grid;grid-template-columns:minmax(0,140px) minmax(0,1fr);
+  gap:var(--sp-4);align-items:start}
+.mt-country-shape{position:sticky;top:calc(var(--mast) + 24px)}
+.mt-country-shape svg{width:100%;height:auto;display:block}
+.mt-country-shape .mt-shape-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
+.mt-country-shape[data-photo] .mt-shape-fill{fill:none}
+.mt-country-cap{display:block;margin-top:10px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted);line-height:1.7}
+
+.mt-rooms{border-top:2px solid var(--c-primary);min-width:0}
+.mt-room{border-bottom:var(--fj-rule)}
+.mt-room-hit{display:grid;grid-template-columns:28px 1fr 20px;gap:12px;align-items:baseline;
+  width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:17px 4px;
+  color:inherit;font:inherit;transition:background var(--t-fast) var(--ease)}
+.mt-room-hit:hover{background:var(--fj-dust)}
+.mt-room-no{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;color:var(--c-muted)}
+/* The universal word small, the particular answer large — which is the whole
+   design of the door: the label is the same for every country and what is
+   written under it never is. */
+.mt-room-eye{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.mt-room-body b{display:block;margin-top:6px;font-family:var(--fj-display);font-size:26px;
+  font-weight:700;text-transform:uppercase;line-height:1.02}
+.mt-room-go{font-family:var(--fj-mono);color:var(--c-border);
+  transition:color var(--t-fast) var(--ease),transform var(--t-fast) var(--ease)}
+.mt-room-hit:hover .mt-room-go{color:var(--c-accent)}
+.mt-room[data-open] .mt-room-go{transform:rotate(90deg);color:var(--c-accent)}
+.mt-room-in{display:none;padding:0 4px 22px 52px;max-width:62ch}
+.mt-room[data-open] .mt-room-in{display:block}
+.mt-room-text{font-size:17px;line-height:1.62}
+.mt-room-sub{margin-top:20px;font-family:var(--fj-display);font-size:17px;text-transform:uppercase}
+.mt-room-cat{margin-top:9px;font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-muted)}
+.mt-room--empty{padding:17px 4px}
+.mt-room-none{margin-top:6px;font-size:15px;color:var(--c-muted)}
+
+/* ---- local voice --------------------------------------------------------- */
+
+/* The one block on the site where somebody else is speaking, so it is set
+   apart and the attribution is not optional. */
+.mt-voice{margin-top:var(--sp-6);border-top:2px solid var(--c-accent);padding-top:16px;
+  max-width:62ch}
+.mt-voice-q{margin-top:10px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted)}
+.mt-voice-said{margin-top:12px;font-size:clamp(21px,2.4vw,30px);line-height:1.28;
+  letter-spacing:-.01em}
+.mt-voice-by{margin-top:14px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent)}
+.mt-voice-note,.mt-voice-none{margin-top:12px;font-size:14.5px;line-height:1.6;
+  color:var(--c-muted)}
+.mt-voice--none{border-top-color:var(--c-border)}
+
+/* ---- people -------------------------------------------------------------- */
+
+/* Renders nothing while people.json is empty, which is its normal state. */
+.mt-people{margin-top:var(--sp-6);border-top:2px solid var(--c-primary);padding-top:16px}
+.mt-people-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:var(--sp-4);margin-top:var(--sp-3)}
+.mt-person{display:grid;gap:14px}
+.mt-person img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.mt-person b{font-family:var(--fj-display);font-size:24px;text-transform:uppercase;display:block}
+.mt-person-role{display:block;margin-top:5px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent)}
+.mt-person p{margin-top:10px;font-size:15.5px;color:var(--c-muted)}
+.mt-person-facts{margin-top:12px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase}
+.mt-person-facts dt{color:var(--c-border)}
+.mt-person-facts dd{color:var(--c-muted)}
+
+.mt-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--sp-6)}
+
+.mt-nojs{margin-top:var(--sp-5);border:1px solid var(--c-border);padding:20px;
+  font-size:16px;color:var(--c-muted);max-width:60ch}
+.mt-nojs a{text-decoration:underline;text-underline-offset:3px}
+
+/* ---- tablet -------------------------------------------------------------- */
+
+@media(max-width:1000px){
+  .mt{padding:var(--sp-5) 28px var(--sp-6)}
+  .mt-grid{grid-template-columns:1fr;gap:var(--sp-5)}
+  .mt-doors{position:static}
+  .mt-doors ol{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .mt-doors li{border-bottom:var(--fj-rule)}
+  .mt-door-asks{display:none}
+  .mt-country{grid-template-columns:1fr}
+  .mt-country-shape{position:static;max-width:120px}
+}
+
+/* ---- phone --------------------------------------------------------------- */
+
+@media(max-width:680px){
+  .mt-mast{padding:0 14px;gap:14px}
+  .mt-routes{display:none}
+  .mt-mark b{font-size:17px}
+  .mt-mast .af-btn{padding:11px 12px;font-size:9.5px;white-space:nowrap}
+  .mt{padding:var(--sp-4) 18px var(--sp-6)}
+  .mt-h1{font-size:clamp(36px,11vw,58px)}
+  .mt-doors ol{grid-template-columns:1fr 1fr}
+  .mt-door{grid-template-columns:22px 1fr;padding:13px 4px}
+  .mt-door-n{display:none}
+  .mt-door-body b{font-size:17px}
+  .mt-answer{padding:22px 0}
+  .mt-answer-title{font-size:clamp(21px,6vw,28px)}
+  .mt-answer-text{font-size:16px}
+  .mt-room-in{padding-left:4px}
+  .mt-room-body b{font-size:20px}
+}
+
+@media(pointer:coarse){
+  .mt-flag{padding:9px 4px}
+  .mt-door,.mt-room-hit{padding-top:18px;padding-bottom:18px}
+}
