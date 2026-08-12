@@ -77,32 +77,46 @@ ul,ol{list-style:none}
    between them in the DOM rather than after both, which is what lets the phone
    put the map directly under the headline in source order — no visual reorder,
    so tab order and reading order stay the same thing. */
-.wa-open-grid{display:grid;grid-template-columns:1fr 1.14fr;gap:18px 44px;
-  align-content:center;flex:1 1 auto}
-.wa-open-say{grid-column:1;grid-row:1;align-self:end}
-.wa-open-tail{grid-column:1;grid-row:2;align-self:start}
-.wa-win{grid-column:2;grid-row:1/3;align-self:center}
-/* The rail runs under both columns. It sits between the window and the tail
-   of the copy in the DOM so that on a phone, where placement is off, the
-   controls land directly under the map they drive. */
-.wa-win-rail{grid-column:1/-1;grid-row:3;margin-top:var(--sp-4);min-width:0}
-.wa-open-say .wa-stamp{color:var(--c-accent)}
-.wa-open h1{font-size:clamp(38px,5.2vw,76px);margin:16px 0 0}
-.wa-open h1 em{font-style:normal}
-.wa-hair{width:88px;height:1px;background:var(--c-border);margin:24px 0 0}
+/* The first screen. One word at a size nothing else on the site may reach, the
+   sentence that qualifies it at a fifth of that, and the promise in accent
+   underneath — three weights, so the eye is told what to read in what order
+   instead of being handed a block. AFRICA is set to the frame's width: it is
+   architecture, not a heading, and the rest of the page hangs from it.
+
+   The composition is deliberately not a two-column grid. The type holds the
+   left three-fifths; the continent is taken out of the flow entirely and bled
+   off the right edge of the screen, rising until it crosses behind the word.
+   The overlap is over the Atlantic, which is empty, and the headline is made
+   pointer-transparent so nothing on the map is caught underneath it. */
+.wa-open-stage{position:relative}
+/* The frame keeps its own measure and its own padding — the type is narrowed
+   inside it, not the frame narrowed around the type, or the whole block drifts
+   to the middle of the screen. And nothing here may be a positioned ancestor,
+   or the continent's `right: 0` resolves against this column instead of the
+   screen and stops short of the edge it is meant to run past. */
+.wa-open-grid{display:flex;flex-direction:column;justify-content:center;
+  flex:1 1 auto;z-index:2}
+.wa-open-say,.wa-open-tail{max-width:min(66%,820px);position:relative}
+.wa-open-tail{padding-top:22px}
+.wa-h1{display:block;margin:10px 0 0;pointer-events:none}
+.wa-h1-big{display:block;font-size:clamp(74px,15.5vw,232px);line-height:.78;
+  letter-spacing:-.035em;font-weight:700}
+.wa-h1-rest{display:block;font-size:clamp(26px,3.6vw,54px);line-height:1;
+  letter-spacing:-.015em;margin-top:.12em}
 .wa-find{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(24px,3.1vw,42px);line-height:1.04;color:var(--c-accent);margin-top:20px}
-.wa-open .wa-lede{font-size:18px;color:var(--c-muted);max-width:36em;margin-top:20px}
-.wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-.wa-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);transition:background .2s,color .2s,border-color .2s}
+  font-size:clamp(18px,2.1vw,30px);line-height:1.04;color:var(--c-accent);margin-top:16px}
+.wa-open .wa-lede{font-size:17.5px;color:var(--c-muted);max-width:32em;margin-top:0}
+.wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.wa-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
 .wa-act i{font-style:normal;margin-left:9px}
 .wa-act.go{background:var(--c-primary);color:var(--c-bg)}
 .wa-act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
 .wa-act.faint{border-color:var(--c-border);color:var(--c-muted)}
 .wa-act.faint:hover{border-color:var(--c-primary);color:var(--c-primary)}
 
-.wa-win{display:grid;grid-template-columns:1fr 210px;gap:26px;align-items:center}
-.wa-win-frame{position:relative;height:min(60vh,540px)}
+.wa-win{position:absolute;right:0;top:calc(var(--mast) + 1vh);width:min(50vw,640px);
+  z-index:1;display:grid;grid-template-columns:1fr;gap:12px}
+.wa-win-frame{position:relative;height:min(50vh,450px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}
@@ -112,11 +126,13 @@ ul,ol{list-style:none}
    straight across the headline beside it. */
 .wa-map-svg{width:100%;height:100%;overflow:hidden}
 .wa-win-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
-.wa-win-side{display:flex;flex-direction:column}
+/* The readout sits under the map now, inside the frame padding, so the map
+   itself can run past the right edge of the page. */
+.wa-win-side{display:flex;flex-direction:column;padding-right:44px;max-width:520px;margin-left:auto;text-align:right;align-items:flex-end}
 /* Tall enough for the tallest readout — the region one, which carries a
    three-line sentence. Sized rather than min-heighted because the caps are
    stacked absolutely so they can cross-fade. */
-.wa-win-caps{position:relative;height:258px;flex:0 0 auto}
+.wa-win-caps{position:relative;height:146px;flex:0 0 auto;width:100%}
 .wa-win-cap{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;pointer-events:none}
 .wa-win-cap[data-on]{opacity:1;pointer-events:auto}
 .wa-win-region{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
@@ -124,7 +140,7 @@ ul,ol{list-style:none}
 .wa-win-tag{display:block;font-size:15px;color:var(--c-muted);margin-top:7px}
 .wa-win-op{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent);margin-top:14px}
 .wa-win-go{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px}
-.wa-win-key{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px}
+.wa-win-key{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 16px;margin-top:12px}
 .wa-win-key span{display:flex;align-items:center;gap:7px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
@@ -218,14 +234,18 @@ ul,ol{list-style:none}
 .wa-map-live[data-dim]{opacity:.28}
 .wa-map-live path,.wa-map-live circle{transition:fill var(--t-fast) var(--ease)}
 .wa-win-state .wa-map-svg{transition:none}
-.wa-terrain{display:flex;flex-wrap:wrap;gap:5px 6px;margin-top:2px}
+.wa-terrain{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px 6px;margin-top:2px}
 .wa-terrain span{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--c-muted);border:1px solid var(--c-border);
   padding:4px 8px}
 .wa-tick[hidden]{display:none}
 
 /* ---- the rail: every destination, and eight experiences -------------------------- */
-.wa-win-rail{padding:0 0 26px}
+/* The rungs stay inside the type column and drop to the foot of the stage. Run
+   full width they cut straight across the continent, which is bled off the right
+   edge and is not in the flow to push them out of the way. */
+.wa-win-rail{margin-top:auto;padding:var(--sp-4) 0 26px;min-width:0;position:relative;z-index:2;
+  max-width:min(52%,640px)}
 /* Fourteen destinations do not fit across 1152px, so the rail scrolls
    rather than wrapping into a second row that shifts the whole stage. */
 .wa-ticks{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0;
@@ -601,11 +621,10 @@ window.AF = {
   <div class="wa-frame wa-mast-in">
     <a class="wa-mark" href="/"><b>Afrinkong</b><span>Journeys across Africa</span></a>
     <nav class="wa-routes">
+      <a href="/atlas">The Atlas</a>
       <a href="#destinations">Destinations</a>
       <a href="#experiences">Experiences</a>
-      <a href="#regions">Regions</a>
-      <a href="#window">Map</a>
-      <a href="#plan">Plan</a>
+      <a href="/compare">Compare</a>
     </nav>
     <a class="btn" href="#plan">Begin a journey</a>
   </div>
@@ -617,8 +636,7 @@ window.AF = {
     <div class="wa-frame wa-open-grid">
       <div class="wa-open-say">
         <span class="wa-stamp">54 countries &middot; one continent &middot; countless ways to begin</span>
-        <h1>Africa isn&rsquo;t<br>one place.</h1>
-        <div class="wa-hair" aria-hidden="true"></div>
+        <h1 class="wa-h1"><span class="wa-h1-big">Africa</span><span class="wa-h1-rest">isn&rsquo;t one place.</span></h1>
         <p class="wa-find">Find your Africa.</p>
       </div>
       <div class="wa-win">
@@ -949,8 +967,8 @@ window.AF = {
       <div class="wa-open-tail">
         <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
         <div class="wa-acts">
-          <a class="wa-act go" href="#regions">Explore Africa <i>&rarr;</i></a>
-          <a class="wa-act faint" href="#destinations">Find your experience <i>&rarr;</i></a>
+          <a class="wa-act go" href="/atlas">Open the atlas <i>&rarr;</i></a>
+          <a class="wa-act faint" href="#destinations">See all destinations <i>&rarr;</i></a>
         </div>
       </div>
     </div>
@@ -1154,7 +1172,7 @@ window.AF = {
 <main id="main">
 
 <!-- 01 the scale -->
-<section class="wa-zone" id="regions">
+<section class="wa-zone" id="scale">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>01</b><span>The scale</span></div>
@@ -1513,8 +1531,9 @@ window.AF = {
         <a href="#plan">Guides</a>
         <a href="#plan">Transport</a>
         <b style="margin-top:26px">Regions</b>
-        <a href="#regions">Central &amp; West &middot; East &middot; Southern</a>
-        <a href="#regions">North &middot; Islands</a>
+        <a href="/atlas">The atlas of Africa</a>
+        <a href="#window">The five regions</a>
+        <a href="#scale">The size of Africa</a>
       </div>
     </div>
     <div class="wa-foot-bar wa-frame" style="padding-left:0;padding-right:0">
