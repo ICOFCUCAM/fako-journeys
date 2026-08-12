@@ -1,0 +1,152 @@
+{
+ "$comment": "The story model. An arc is a route through the twenty-seven write-ups every country in this set already has — a question, an order to read the answers in, and a shape to print them in. It is not a container for new writing. Everything an arc prints was written for that country, in that country's file, and an arc that finds nothing in a country simply does not exist for it.\n\nThis is what makes a story here place-based rather than generic. There is no 'Ten Things About Africa' because there is nowhere to put one: an arc has no text of its own beyond the question it asks, and the question is a question rather than a claim. 'What is made by hand in Ghana?' asserts nothing; the answer is Ghana's own paragraph about kente and Ashanti stools, and it is the same paragraph the atlas and the journey engine draw.\n\nWhy arcs and not simply the categories in order. Twenty-seven tiles in taxonomy order is an inventory. The same twenty-seven cut into eleven arcs is a set of readings, each with a lead, a shape and a reason to be next to each other — and because each arc names a format, the page they land on does not look like the page before it.",
+
+ "$schema": {
+  "title": "the arc's name, as a reader would see it",
+  "format": "which of the ten editorial formats this prints as — see $formats",
+  "asks": "the question the arc puts to a country, in the second person or the abstract; never a claim",
+  "line": "one sentence about the arc itself. Never about a country, because one sentence cannot be true of twenty-two of them",
+  "lead": "which category supplies the arc's title and its opening picture",
+  "categories": "the write-ups behind this arc, in reading order",
+  "min": "how many of those categories a country must actually have for the arc to exist there",
+  "now": "true if this arc is part of the contemporary layer — the answer to 'is this a museum'"
+ },
+
+ "$formats": {
+  "note": "A short note. One or two write-ups, set large, no furniture.",
+  "people": "A people story. Portrait proportions, the write-ups stacked, a Local Voice slot that stays empty until somebody real has been asked.",
+  "food": "A food story. Ingredient-to-table order, wide plates.",
+  "craft": "A craft story. Maker, material, process — as far as the country file goes, and no further.",
+  "heritage": "A heritage story. Dated where the dataset holds a date, undated where it does not, and never invented either way.",
+  "now": "A contemporary panel. Cities, building, business, what is being made this decade.",
+  "wild": "A field guide. What is here, when, and what is being done to keep it.",
+  "essay": "A photo essay. Between five and twelve frames, each with its own caption, no image dumping.",
+  "culture": "A culture story. What is kept and who keeps it, named as particular communities rather than as a continent.",
+  "journey": "A journey story. Built from the geography file, not from prose: where a country actually borders, and what is on the other side."
+ },
+
+ "arcs": [
+  {
+   "key": "first-light",
+   "title": "The first thing you would see",
+   "format": "note",
+   "asks": "What does this country open with?",
+   "line": "The shortest story on the site: a country's own opening line, and its reason to be visited at all.",
+   "lead": "why-visit",
+   "categories": ["why-visit", "photography"],
+   "min": 1,
+   "now": false
+  },
+  {
+   "key": "who-lives-here",
+   "title": "Who lives here",
+   "format": "people",
+   "asks": "Who lives here, and who is speaking?",
+   "line": "Africa is not one people. Roughly two thousand languages, and the answer changes at every border and usually inside one, so this arc names particular communities or it says nothing.",
+   "lead": "traditional-people",
+   "categories": ["traditional-people", "family-community", "local-life"],
+   "min": 2,
+   "now": false
+  },
+  {
+   "key": "the-table",
+   "title": "The table",
+   "format": "food",
+   "asks": "What is eaten here?",
+   "line": "Not a list of dishes. What is grown, what is sold in the market, what is cooked at home and what is only cooked for a festival.",
+   "lead": "food",
+   "categories": ["food", "local-life", "festivals"],
+   "min": 1,
+   "now": true
+  },
+  {
+   "key": "made-by-hand",
+   "title": "Made by hand",
+   "format": "craft",
+   "asks": "What is made here, and who makes it?",
+   "line": "Craft is a working economy before it is a souvenir. Where the dataset names a material, a technique or a town, this prints it; where it does not, this arc stops rather than filling in.",
+   "lead": "crafts",
+   "categories": ["crafts", "architecture"],
+   "min": 1,
+   "now": true
+  },
+  {
+   "key": "what-is-kept",
+   "title": "What is kept",
+   "format": "culture",
+   "asks": "What is kept, and who keeps it?",
+   "line": "Kingdoms that still hold court, festivals with a place and a season, practices that belong to particular communities rather than to a continent.",
+   "lead": "culture",
+   "categories": ["culture", "festivals"],
+   "min": 1,
+   "now": false
+  },
+  {
+   "key": "still-standing",
+   "title": "Still standing",
+   "format": "heritage",
+   "asks": "What happened here, and what is left of it?",
+   "line": "Sites, ruins and buildings, taken as evidence rather than as scenery. Where a date belongs to a claim the country file carries it; nothing here supplies one that it does not.",
+   "lead": "heritage",
+   "categories": ["heritage", "historic-sites", "architecture"],
+   "min": 2,
+   "now": false
+  },
+  {
+   "key": "the-city-now",
+   "title": "The city now",
+   "format": "now",
+   "asks": "What is it like to live here this decade?",
+   "line": "The part of a country that a safari catalogue leaves out: the cities, what is being built in them, what is open at night and what people do for a living.",
+   "lead": "cities",
+   "categories": ["cities", "local-life", "architecture", "luxury"],
+   "min": 2,
+   "now": true
+  },
+  {
+   "key": "what-is-wild",
+   "title": "What is wild, and what is being kept wild",
+   "format": "wild",
+   "asks": "What lives here, and who is protecting it?",
+   "line": "The animals are the easy half. The harder half is which habitat, whose land, and what a visitor's money actually does when it arrives.",
+   "lead": "wildlife",
+   "categories": ["wildlife", "safari", "forests", "eco-tourism"],
+   "min": 2,
+   "now": false
+  },
+  {
+   "key": "the-ground-itself",
+   "title": "The ground itself",
+   "format": "essay",
+   "asks": "What is the shape of this country?",
+   "line": "A photo essay in landform order — high ground first, then what runs off it, then where it meets the sea.",
+   "lead": "nature",
+   "categories": ["nature", "mountains", "waterfalls", "lakes-rivers", "forests",
+                  "beaches", "photography"],
+   "min": 4,
+   "now": false
+  },
+  {
+   "key": "off-the-line",
+   "title": "Off the line",
+   "format": "note",
+   "asks": "What would you not have found on your own?",
+   "line": "The two write-ups a country files under what most itineraries miss, and what you would have to walk to.",
+   "lead": "hidden-gems",
+   "categories": ["hidden-gems", "adventure", "outdoor"],
+   "min": 2,
+   "now": false
+  },
+  {
+   "key": "the-crossing",
+   "title": "The crossing",
+   "format": "journey",
+   "asks": "What is on the other side of the border?",
+   "line": "Built from the geography file rather than from prose: the countries this one actually shares a land border with, read off the boundary data, and what each of them leads on.",
+   "lead": null,
+   "categories": [],
+   "min": 0,
+   "now": false
+  }
+ ]
+}

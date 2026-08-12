@@ -276,7 +276,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/atlas">The Atlas</a>
     <a href="/journey">Build a journey</a>
     <a href="/places">Every place</a>
-    <a href="/#destinations">Destinations</a>
+    <a href="/stories">Stories</a>
   </nav>
   <a class="af-btn af-btn--quiet" href="/contact">Talk to us<i>&rarr;</i></a>
 </header>

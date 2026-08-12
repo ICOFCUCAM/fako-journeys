@@ -322,6 +322,90 @@ check('changing a weight changes the ranking',
   JSON.stringify(E.rank(D, {wants: [], month: 1}).map(function (x) { return x.slug; }))
   !== JSON.stringify(E.rank(zeroed, {wants: [], month: 1}).map(function (x) { return x.slug; })));
 
+/* ---- search over the story graph ------------------------------------------ */
+
+/* The interesting assertions about a search are the ones about what it refuses.
+   This one has no model behind it and no fuzzy matching on purpose: it can only
+   answer with a country, a theme or a proper name the dataset itself already
+   contains, and a word it has never seen has to come back empty rather than
+   rounded to the nearest thing in stock. */
+
+const G = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'graph.json'), 'utf8'));
+const SX = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stories.json'), 'utf8'));
+const Q = require(path.join(ROOT, 'scripts', 'story-search.js'));
+const rowsOf = SX.stories || [];
+
+check('a word this dataset has never used finds nothing',
+  Q.search('quantum tractors in Narnia', G, rowsOf).hits.length === 0);
+check('and it says so rather than showing the nearest thing',
+  /Nothing here is written about/.test(
+    Q.said(Q.search('quantum tractors', G, rowsOf), G)));
+check('it never returns a country the query did not lead to',
+  Q.search('food in Cameroon', G, rowsOf).hits
+    .every(function (h) { return h.country === 'cameroon'; }));
+check('a theme and a place are both read out of one sentence',
+  (function () {
+    const r = Q.parse('food in Cameroon', G);
+    return r.theme === 'food' && r.country === 'cameroon' && !r.missed.length;
+  })());
+check('a name narrows what follows it instead of widening it',
+  (function () {
+    const r = Q.search('history of Buea', G, rowsOf);
+    const named = G.names['Buea'].in;
+    return r.read.name === 'Buea'
+      && r.hits.every(function (h) { return named.indexOf(h.country) >= 0; });
+  })(), JSON.stringify(G.names['Buea'] && G.names['Buea'].in));
+check('a name only answers with write-ups that actually say it',
+  (function () {
+    const r = Q.search('Bwindi', G, rowsOf);
+    const at = G.names['Bwindi'].at.map(function (a) { return a.c + '/' + a.e; });
+    return r.hits.length > 0 && r.hits.every(function (h) {
+      return h.kind !== 'place' || at.indexOf(h.country + '/' + h.category) >= 0;
+    });
+  })());
+const everyUrl = {};
+rowsOf.forEach(function (s) { everyUrl[s.url] = true; });
+Object.keys(G.countries).forEach(function (slug) {
+  everyUrl['/portrait/' + slug] = true;
+  const places = G.countries[slug].places || {};
+  Object.keys(places).forEach(function (k) { everyUrl[places[k].u] = true; });
+});
+check('every address a search offers is one the build actually wrote',
+  ['food in Cameroon', 'Bwindi', 'heritage in Ethiopia', 'Kampala', 'wildlife']
+    .every(function (q) {
+      return Q.search(q, G, rowsOf).hits.every(function (h) { return everyUrl[h.url]; });
+    }));
+check('it never invents a country', Object.keys(G.countries).length === 22
+  && ['Wakanda', 'Zamunda', 'Genovia'].every(function (n) {
+    return Q.parse(n, G).country === null;
+  }));
+check('the same question gives the same answer twice',
+  JSON.stringify(Q.search('craft in Kenya', G, rowsOf).hits)
+  === JSON.stringify(Q.search('craft in Kenya', G, rowsOf).hits));
+check('it says what it did not understand',
+  /Nothing matched "narnia"/.test(Q.said(Q.search('food in Narnia', G, rowsOf), G)));
+check('an empty search asks nothing and finds nothing',
+  Q.search('', G, rowsOf).hits.length === 0 && Q.said(Q.search('', G, rowsOf), G) === '');
+
+/* "This month" is derived, never scheduled: no event in this project has a
+   date, so the only true thing to say is which countries the files call good. */
+const offBook = [];
+for (let mo = 1; mo <= 12; mo++) {
+  Q.monthly(mo, G).forEach(function (slug) {
+    if ((G.countries[slug].months || []).indexOf(mo) < 0) offBook.push(slug + '@' + mo);
+  });
+}
+check('a month only lists countries whose own file says that month',
+  !offBook.length, offBook.join(',') || 'all twelve months checked');
+check('no month is empty, and none is all twenty-two',
+  (function () {
+    for (var m = 1; m <= 12; m++) {
+      var n = Q.monthly(m, G).length;
+      if (!n || n === Object.keys(G.countries).length) return false;
+    }
+    return true;
+  })());
+
 /* ---- what the product counts --------------------------------------------- */
 
 /* The event layer is worth testing for the opposite reason to the engine: not
@@ -394,7 +478,9 @@ check('every property a schema names is described',
    silently dropped, which is the right failure at runtime and the wrong one to
    discover there. */
 const emitted = [];
-['atlas.js', 'journey.js', 'meet.js'].forEach(function (f) {
+fs.readdirSync(path.join(ROOT, 'scripts')).filter(function (f) {
+  return f.endsWith('.js') && f !== 'events.js';
+}).forEach(function (f) {
   const src = fs.readFileSync(path.join(ROOT, 'scripts', f), 'utf8');
   let hit;
   const re = /\btrack\(\s*'([a-z_]+)'/g;

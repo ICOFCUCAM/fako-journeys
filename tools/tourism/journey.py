@@ -253,7 +253,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/atlas">The Atlas</a>
     <a href="/meet">Meet Africa</a>
     <a href="/places">Every place</a>
-    <a href="/#destinations">Destinations</a>
+    <a href="/stories">Stories</a>
     <a href="/compare">Compare</a>
   </nav>
   <a class="af-btn af-btn--quiet" href="/contact">Talk to us<i>&rarr;</i></a>

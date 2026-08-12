@@ -231,7 +231,8 @@
     return '<p class="jn-meets"><span>Who lives here</span>'
       + c.meets.map(function (m) { return esc(m.title); }).join(' \u00b7 ')
       + ' <a href="/meet#/' + esc(chosen.slug) + '">Meet ' + esc(c.name)
-      + ' &rarr;</a></p>';
+      + ' &rarr;</a> <a href="/portrait/' + esc(chosen.slug) + '">Read the '
+      + 'portrait &rarr;</a></p>';
   }
 
   /* Why this one, in the words of the thing that was actually matched. No

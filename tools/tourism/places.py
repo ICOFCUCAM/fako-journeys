@@ -195,11 +195,13 @@ def sitemap(rows, ctx):
     that may as well not exist, and this is a list of every one that can be.
     """
     base = "https://afrinkong.com"
-    urls = ["/", "/atlas", "/journey", "/meet", "/compare", "/contact", "/places"]
+    urls = ["/", "/atlas", "/journey", "/meet", "/stories", "/compare", "/contact",
+            "/places"]
     for country, pack, order in rows:
         if country.url.startswith("/"):
             urls.append(country.url)
         urls.append("/tourism/%s" % country.slug)
+        urls.append("/portrait/%s" % country.slug)
         for p in pack["places"]:
             urls.append("/places/%s/%s" % (country.slug, order[p["id"]]))
     body = "".join("<url><loc>%s%s</loc></url>" % (base, esc(u)) for u in urls)
@@ -264,9 +266,9 @@ def run(countries, taxonomy, log=print):
 CHROME = """<header class="pl-mast">
   <a class="pl-mark" href="/"><i>Afrinkong</i><b>%(country)s</b></a>
   <nav class="pl-routes" aria-label="Primary">
+    <a href="/portrait/%(slug)s">Portrait</a>
     <a href="/atlas#/%(slug)s">The Atlas</a>
     <a href="/journey#/j/%(slug)s/">Build a journey</a>
-    <a href="/meet#/%(slug)s">Meet %(country)s</a>
     <a href="/places">Every place</a>
   </nav>
   <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
@@ -306,6 +308,7 @@ TEMPLATE = """<!DOCTYPE html>
     %(who)s
     <div class="pl-acts">
       <a class="af-btn af-btn--solid" href="/journey#/j/%(slug)s/">Build a journey here<i>&rarr;</i></a>
+      <a class="af-btn af-btn--quiet" href="/portrait/%(slug)s">Read the portrait of %(country)s</a>
       <a class="af-btn af-btn--quiet" href="/atlas#/%(slug)s">Find %(country)s on the map</a>
       <a class="af-btn af-btn--quiet" href="%(url)s">All of %(country)s</a>
     </div>
@@ -356,6 +359,7 @@ INDEX = """<!DOCTYPE html>
 <header class="pl-mast">
   <a class="pl-mark" href="/"><i>Afrinkong</i><b>Every place</b></a>
   <nav class="pl-routes" aria-label="Primary">
+    <a href="/stories">Stories</a>
     <a href="/atlas">The Atlas</a>
     <a href="/journey">Build a journey</a>
     <a href="/meet">Meet Africa</a>

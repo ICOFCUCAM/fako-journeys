@@ -14,7 +14,10 @@
   "stages": "how many stages the journey has",
   "step": "which of the four questions, 1-4",
   "source": "how the builder was entered: link, sentence, questions, atlas",
-  "band": "the match band's own label"
+  "band": "the match band's own label",
+  "arc": "an arc key from arcs.json",
+  "format": "a story format from arcs.json",
+  "matched": "how many results a search returned — a count, never the words typed"
  },
 
  "events": {
@@ -38,6 +41,11 @@
   "surprise_taken":        ["country", "want", "month"],
   "meet_strand_opened":    ["strand"],
   "meet_country_opened":   ["country"],
-  "place_page_opened":     ["country"]
+  "place_page_opened":     ["country"],
+  "portrait_opened":       ["country", "region"],
+  "chapter_read":          ["country", "arc"],
+  "story_opened":          ["country", "format"],
+  "story_searched":        ["matched"],
+  "month_seen":            ["month"]
  }
 }

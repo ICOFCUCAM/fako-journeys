@@ -1,0 +1,450 @@
+/* The Living Story Engine — /portrait/<country> and /stories.
+ * ---------------------------------------------------------------------------
+ * Prefixed `po-` (a portrait), `st-` (a story section inside one) and `sx-`
+ * (the discovery surface). Tokens, reset, type, buttons, the plate and the
+ * window come from afrinkong.css; the masthead, breadcrumb and footer come
+ * from places.css, which these pages load so the chrome is the same object and
+ * not a second copy of it.
+ *
+ * The brief for this file is one sentence: a country's heritage must not look
+ * like its food. Ten arcs, ten shapes — an essay is an asymmetric grid, a food
+ * story is a numbered strip, the contemporary panel is inverted, a heritage
+ * section is a numbered list of evidence beside one wide frame. A page where
+ * every section is the same rectangle reads as a database with a serif, which
+ * is the exact thing the whole system is trying not to be.
+ *
+ * Two rules hold across all ten. Every section carries its country's region
+ * tone in `--tone`, so a portrait has one colour running through it rather than
+ * a house accent applied to everything; and every image box is declared at its
+ * aspect ratio, so the day the photographs arrive nothing on any of these pages
+ * moves.
+ */
+
+/* ---- the read ------------------------------------------------------------- */
+
+.po-body{--measure:66ch}
+
+/* Reading progress. Transform-only, so it never triggers layout; painted at the
+   very top above the masthead because that is where a reader's eye already is
+   when it wants to know how much is left. */
+.po-progress{position:fixed;inset:0 0 auto;height:3px;z-index:60;
+  background:color-mix(in srgb,var(--c-primary) 12%,transparent);pointer-events:none}
+.po-progress i{display:block;height:100%;width:100%;background:var(--c-accent);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .1s linear}
+
+.po{max-width:var(--frame);margin:0 auto;padding:var(--sp-4) 44px var(--sp-7)}
+.po .pl-where{border-bottom:var(--fj-rule);padding-bottom:14px}
+
+.po-open{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);
+  gap:var(--sp-5) var(--sp-6);align-items:end;padding:var(--sp-5) 0 var(--sp-5);
+  border-bottom:3px solid var(--c-primary)}
+.po-h1{font-size:clamp(52px,10vw,132px);line-height:.86;letter-spacing:-.03em;
+  margin-top:12px}
+.po-tag{margin-top:16px;font-family:var(--fj-display);text-transform:uppercase;
+  font-size:clamp(15px,1.7vw,21px);letter-spacing:.06em;color:var(--c-accent)}
+.po-lede{margin-top:16px;font-size:19.5px;line-height:1.55;max-width:52ch}
+.po-meta{margin-top:20px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.po-open-win{min-width:0}
+.po-open-win .af-window-svg{width:100%;height:auto;display:block}
+.po-open-win .af-window-fill{fill:var(--tone,var(--c-primary));opacity:.9}
+.po-open-win span{display:block;margin-top:10px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+
+/* Contents. A horizontal scroller on every width rather than a list that
+   collapses: on a page of ten chapters a reader wants to skip to one, and a
+   sticky rail is the only version of that which survives a phone. */
+.po-contents{position:sticky;top:var(--mast);z-index:30;background:var(--c-bg);
+  border-bottom:var(--fj-rule);padding:12px 0;display:grid;
+  grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+.po-contents>span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+.po-jump{display:flex;gap:8px;overflow-x:auto;min-width:0;flex:1 1 0;
+  scrollbar-width:none;-ms-overflow-style:none}
+.po-jump::-webkit-scrollbar{display:none}
+.po-jump a{white-space:nowrap;font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);border:1px solid var(--c-border);
+  padding:7px 11px;transition:border-color var(--t-fast) var(--ease),
+  color var(--t-fast) var(--ease)}
+.po-jump a:hover{border-color:var(--c-accent);color:var(--c-accent)}
+.po-jump a[aria-current]{border-color:var(--tone,var(--c-primary));color:var(--c-primary);
+  background:color-mix(in srgb,var(--c-bg) 84%,var(--c-primary))}
+
+/* ---- a story section ------------------------------------------------------ */
+
+.st{padding:var(--sp-6) 0;border-bottom:var(--fj-rule)}
+.st-head{max-width:var(--measure)}
+.st-h2{font-size:clamp(30px,4.6vw,62px);line-height:.94;letter-spacing:-.02em;
+  text-transform:none;margin-top:12px;scroll-margin-top:calc(var(--mast) + 74px)}
+.st-asks{margin-top:14px;font-family:var(--fj-display);text-transform:uppercase;
+  letter-spacing:.05em;font-size:clamp(14px,1.5vw,18px);color:var(--tone,var(--c-primary))}
+.st-stand{margin-top:16px;font-size:clamp(18px,2vw,22px);line-height:1.5;max-width:48ch}
+.st-stand a{box-shadow:inset 0 -1px 0 var(--c-border)}
+.st-stand a:hover{color:var(--c-accent);box-shadow:inset 0 -1px 0 var(--c-accent)}
+.st-line{margin-top:16px;font-size:15.5px;color:var(--c-muted);max-width:56ch;
+  border-top:1px solid var(--c-border);padding-top:12px}
+.st--now .st-stand{color:var(--c-bg)}
+.st--now .st-stand a{box-shadow:inset 0 -1px 0 color-mix(in srgb,var(--c-bg) 34%,transparent)}
+.st-count{margin-top:var(--sp-4);font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.1em;line-height:1.9;text-transform:uppercase;color:var(--c-muted);
+  max-width:64ch;border-top:1px solid var(--c-border);padding-top:12px}
+
+.st-say{margin-top:var(--sp-3);padding-top:var(--sp-3);border-top:1px solid var(--c-border)}
+.st-say:first-child{border-top:0;padding-top:0;margin-top:0}
+.st-say h3{font-size:21px;text-transform:none;letter-spacing:-.01em}
+.st-say h3 a{background-image:linear-gradient(var(--c-accent),var(--c-accent));
+  background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;
+  transition:background-size var(--t-fast) var(--ease)}
+.st-say h3 a:hover{background-size:100% 1px;color:var(--c-accent)}
+.st-say p{margin-top:8px;font-size:17px;max-width:58ch}
+
+.st-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:var(--sp-4) var(--sp-6);align-items:start;margin-top:var(--sp-4)}
+.st-col{min-width:0}
+
+figure.st-frame,figure.st-plate,figure.st-portrait,figure.st-strip,figure.st-wide{min-width:0}
+.st-frame img,.st-plate img,.st-portrait img,.st-strip img,.st-wide img{width:100%;height:auto;
+  object-fit:cover}
+/* A caption here is a whole sentence, not a label, so it is set to be read:
+   mono uppercase is right for "Photograph by —" and wrong for thirty words. */
+.st figcaption{margin-top:9px;font-size:14.5px;line-height:1.55;color:var(--c-muted);
+  max-width:52ch}
+.st figcaption i{display:block;margin-top:5px;font-style:normal;font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-border)}
+
+/* Five hundred and sixty-seven of this site's photographs have not been placed
+   yet, which on a page showing one picture is a designed empty state and on a
+   page showing twelve is twelve copies of the same green rectangle. So the
+   ground shifts down the page: the same region tone, mixed a little further
+   towards paper or towards ink each section, and inside the essay each frame
+   again. It is still obviously one system and it is no longer one colour. */
+.st:nth-of-type(3n+2) .af-plate{background:color-mix(in srgb,var(--plate-tone) 84%,var(--c-bg))}
+.st:nth-of-type(3n+3) .af-plate{background:color-mix(in srgb,var(--plate-tone) 80%,#000)}
+.st-essay>figure:nth-child(2n) .af-plate{background:color-mix(in srgb,var(--plate-tone) 88%,var(--c-bg))}
+.st-essay>figure:nth-child(3n+1) .af-plate{background:color-mix(in srgb,var(--plate-tone) 82%,#000)}
+.st-essay>figure:nth-child(5n+3) .af-plate{background:color-mix(in srgb,var(--plate-tone) 70%,var(--c-bg))}
+
+/* -- the photo essay: an asymmetric grid, so no two frames are the same weight */
+.st-essay{margin-top:var(--sp-4);display:grid;grid-template-columns:repeat(6,1fr);
+  gap:var(--sp-3) var(--sp-4)}
+.st-essay>figure{grid-column:span 3}
+.st-essay>figure:nth-child(6n+1){grid-column:span 6}
+.st-essay>figure:nth-child(6n+4){grid-column:span 2}
+.st-essay>figure:nth-child(6n+5){grid-column:span 4}
+
+/* -- the contemporary panel: inverted, because it is an argument */
+.st--now{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:var(--sp-6) 40px;
+  margin:var(--sp-5) calc(-1 * 40px);border-bottom:0}
+.st--now .st-h2{color:var(--c-bg)}
+.st--now .st-line,.st--now .st-count{color:var(--fj-onbasalt-dim);border-color:
+  color-mix(in srgb,var(--c-bg) 22%,transparent)}
+.st--now .st-asks{color:var(--c-accent)}
+.st--now .af-stamp{color:var(--fj-onbasalt-dim)}
+.st-nowgrid{margin-top:var(--sp-4);display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:1px}
+.st-nowcard{background:var(--fj-basalt);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--c-bg) 18%,transparent)}
+.st-nowcard a{display:block;padding:22px 20px 20px;height:100%;
+  transition:background var(--t-fast) var(--ease)}
+.st-nowcard a:hover{background:color-mix(in srgb,var(--c-bg) 7%,var(--fj-basalt))}
+.st-nowcard b{font-family:var(--fj-display);font-size:20px;text-transform:uppercase;
+  line-height:1.06;display:block;color:var(--c-bg)}
+.st-nowcard p{margin-top:10px;font-size:15.5px;line-height:1.55;color:var(--fj-onbasalt-dim)}
+.st-nowcard span{display:block;margin-top:14px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent)}
+
+/* -- the short note: no furniture at all */
+.st-notebody{margin-top:var(--sp-4);max-width:34ch;
+  /* deliberately narrow: this format is two sentences and they are meant to be
+     read as a pull-quote rather than as a paragraph */}
+.st-big{font-family:var(--fj-text);font-size:clamp(21px,2.6vw,30px);line-height:1.42;
+  margin-top:var(--sp-3);max-width:22ch}
+.st-big a{color:var(--tone,var(--c-primary));
+  box-shadow:inset 0 -2px 0 color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.st-big a:hover{color:var(--c-accent)}
+.st--note .st-notebody{max-width:none;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--sp-4) var(--sp-6)}
+
+/* -- people: a portrait beside the writing, and the empty voice slot below it */
+.st--people .st-two{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+
+/* -- heritage: one wide frame, then numbered evidence */
+.st-evidence{counter-reset:ev;min-width:0}
+.st-evidence li{counter-increment:ev;padding:16px 0;border-top:1px solid var(--c-border)}
+.st-evidence li:first-child{border-top:0;padding-top:0}
+.st-evidence li a{display:flex;align-items:baseline;gap:10px}
+.st-evidence li a::before{content:counter(ev,decimal-leading-zero);font-family:var(--fj-mono);
+  font-size:10px;letter-spacing:.1em;color:var(--tone,var(--c-primary));flex:none}
+.st-evidence b{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
+  line-height:1.08}
+.st-evidence span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted)}
+.st-evidence li a:hover b{color:var(--c-accent)}
+.st-evidence p{margin-top:7px;font-size:16px;color:var(--c-ink);max-width:52ch}
+
+/* -- food and craft: a numbered strip, because both are a sequence */
+.st-steps{margin-top:var(--sp-4);display:grid;gap:var(--sp-4)}
+.st-step{display:grid;grid-template-columns:44px minmax(0,.9fr) minmax(0,1.1fr);
+  gap:var(--sp-3) var(--sp-4);align-items:start;padding-top:var(--sp-3);
+  border-top:1px solid var(--c-border)}
+.st-step:first-child{border-top:0}
+.st-n{font-family:var(--fj-display);font-size:34px;line-height:.8;color:var(--tone,var(--c-primary));
+  opacity:.5}
+.st-step h3{font-size:22px;text-transform:none;letter-spacing:-.01em}
+.st-step h3 a:hover{color:var(--c-accent)}
+.st-step p{margin-top:9px;font-size:17px;max-width:50ch}
+
+/* -- the field guide: one full-measure frame, then two columns of writing */
+.st-guide{margin-top:var(--sp-4)}
+.st--wild .st-wide{margin-bottom:var(--sp-4)}
+.st--wild .st-col{columns:2;column-gap:var(--sp-6)}
+.st--wild .st-say{break-inside:avoid}
+
+/* -- culture: the headline sits over the frame, which is the one place on the
+      site type and picture are allowed to overlap */
+.st--culture .st-two{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.st--culture .st-frame{position:relative}
+@media (min-width:900px){
+  .st--culture .st-head{position:relative;z-index:2;max-width:none}
+  .st--culture .st-h2{max-width:14ch}
+  .st--culture .st-frame{margin-top:calc(-1 * var(--sp-5));margin-left:var(--sp-5)}
+}
+
+/* -- the crossing: geography, not prose */
+/* Hairlines are drawn on the cells rather than by colouring the container and
+   letting 2px gaps show through it: an auto-filled grid whose last row is half
+   empty would otherwise end in a block of undifferentiated border colour, which
+   reads as a panel that failed to fill rather than as a list that ended. */
+.st-crossings{margin-top:var(--sp-4);display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:1px}
+.st-cross{background:var(--c-bg);padding:18px 16px;
+  box-shadow:0 0 0 1px var(--c-border)}
+.st-cross a{display:block}
+.st-cross b{display:block;font-family:var(--fj-display);font-size:20px;text-transform:uppercase;
+  line-height:1.06}
+.st-cross span{display:block;margin-top:8px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted)}
+.st-cross i{display:block;margin-top:4px;font-style:normal;font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--c-border)}
+.st-cross p{margin-top:10px;font-size:14.5px;color:var(--c-muted)}
+.st-cross.is-border{background:color-mix(in srgb,var(--c-bg) 90%,var(--tone,var(--c-primary)))}
+.st-cross.is-border span{color:var(--tone,var(--c-primary))}
+.st-cross a:hover b{color:var(--c-accent)}
+.st--journey .af-btn{margin-top:var(--sp-4)}
+
+/* ---- the four questions --------------------------------------------------- */
+
+.po-h2{font-size:clamp(26px,3.6vw,46px);line-height:.98;letter-spacing:-.02em;
+  text-transform:none;margin-top:10px;scroll-margin-top:calc(var(--mast) + 74px)}
+.po-line,.po-season,.po-respect,.po-trust,.po-onward{padding:var(--sp-6) 0;
+  border-bottom:var(--fj-rule)}
+.po-line .po-lede,.po-season .po-lede,.po-respect .po-lede{margin-top:14px;font-size:17px;
+  color:var(--c-muted);max-width:60ch}
+.po-lanes{margin-top:var(--sp-5);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:var(--sp-4)}
+.po-lane{border-top:2px solid var(--tone,var(--c-primary));padding-top:14px}
+.po-lane h3{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;font-weight:400;
+  color:var(--c-muted)}
+.po-lane a{display:block;margin-top:16px}
+.po-lane b{display:block;font-family:var(--fj-display);font-size:18px;text-transform:uppercase;
+  line-height:1.08}
+.po-lane span{display:block;margin-top:6px;font-size:14.5px;color:var(--c-muted)}
+.po-lane a:hover b{color:var(--c-accent)}
+
+/* ---- when ----------------------------------------------------------------- */
+
+.po-months{margin-top:var(--sp-4);display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
+.po-months li{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-primary));
+  padding:14px 6px;text-align:center}
+.po-months li.is-good{background:var(--tone,var(--c-primary));color:var(--c-bg)}
+.po-months b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase}
+.po-months span{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8px;
+  letter-spacing:.14em;text-transform:uppercase;opacity:.62}
+.po-months li.is-here{outline:2px solid var(--c-accent);outline-offset:-2px}
+.po-when{margin-top:18px;font-size:17px;max-width:56ch}
+.po-now{margin-top:14px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-accent);min-height:1.4em}
+
+/* ---- the empty voice ------------------------------------------------------ */
+
+.po-voice{margin-top:var(--sp-4);border-left:3px solid var(--c-accent);padding:4px 0 4px 20px}
+.po-voice p{font-size:17px;max-width:48ch}
+.po-voice cite{display:block;margin-top:12px;font-style:normal;font-family:var(--fj-mono);
+  font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted)}
+.po-voice--empty{border-left-color:var(--c-border)}
+.po-voice--empty p{color:var(--c-muted)}
+.po-voice-who{margin-top:12px;font-size:15px}
+.po-voice-who b{color:var(--c-ink)}
+
+/* ---- how to be here ------------------------------------------------------- */
+
+.po-cares{margin-top:var(--sp-5);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(244px,1fr));gap:var(--sp-4) var(--sp-6)}
+.po-care h3{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;font-weight:400;
+  color:var(--c-accent);border-bottom:1px solid var(--c-border);padding-bottom:10px}
+.po-care p{margin-top:16px;font-size:15.5px;line-height:1.6;color:var(--c-muted)}
+.po-care b{display:block;font-family:var(--fj-display);font-size:15px;letter-spacing:.02em;
+  text-transform:uppercase;color:var(--c-ink);margin-bottom:4px}
+
+/* ---- provenance ----------------------------------------------------------- */
+
+.po-dl{margin-top:var(--sp-4);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--sp-4) var(--sp-6)}
+.po-dl>div{border-top:1px solid var(--c-border);padding-top:14px}
+.po-dl dt{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-muted)}
+.po-dl dd{margin-top:10px;font-size:15.5px;line-height:1.6}
+.po-dl code{font-family:var(--fj-mono);font-size:12.5px;background:color-mix(in srgb,
+  var(--c-bg) 88%,var(--c-primary));padding:1px 5px}
+
+.po-acts{display:flex;flex-wrap:wrap;gap:11px;margin-top:var(--sp-4)}
+.po-onward{border-bottom:0}
+
+/* ---- the discovery surface ------------------------------------------------ */
+
+.sx{max-width:var(--frame);margin:0 auto;padding:var(--sp-5) 44px var(--sp-7)}
+.sx-h1{font-size:clamp(46px,8.6vw,116px);line-height:.88;letter-spacing:-.03em;margin-top:14px;
+  text-transform:none}
+.sx-h2{font-size:clamp(26px,3.6vw,46px);line-height:.98;letter-spacing:-.02em;
+  text-transform:none;margin-top:10px}
+.sx-lede{margin-top:18px;font-size:19px;line-height:1.55;max-width:56ch}
+.sx-open{padding-bottom:var(--sp-5);border-bottom:3px solid var(--c-primary)}
+
+.sx-find{margin-top:var(--sp-5);max-width:640px}
+.sx-find label{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted)}
+.sx-find input{width:100%;margin-top:10px;font-family:var(--fj-text);font-size:19px;
+  padding:14px 4px;background:transparent;color:var(--c-ink);border:0;
+  border-bottom:2px solid var(--c-primary);border-radius:0}
+.sx-find input:focus{outline:none;border-bottom-color:var(--c-accent)}
+.sx-said{margin-top:10px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);min-height:1.4em}
+.sx-results{margin-top:var(--sp-4);display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:1px}
+.sx-hit{background:var(--c-bg);padding:18px 16px;display:block;
+  box-shadow:0 0 0 1px var(--c-border)}
+.sx-hit span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-accent)}
+.sx-hit b{display:block;margin-top:9px;font-family:var(--fj-display);font-size:19px;
+  text-transform:uppercase;line-height:1.06}
+.sx-hit p{margin-top:8px;font-size:15px;color:var(--c-muted)}
+.sx-hit:hover b{color:var(--c-accent)}
+.sx-none{background:var(--c-bg);padding:22px 18px;font-size:16px;color:var(--c-muted);
+  grid-column:1/-1}
+
+.sx-nowsec{margin:var(--sp-6) -44px 0;padding:var(--sp-6) 44px;background:var(--fj-basalt);
+  color:var(--fj-onbasalt)}
+.sx-nowhead{max-width:60ch}
+.sx-nowhead .sx-h2{color:var(--c-bg)}
+.sx-nowhead p{margin-top:14px;font-size:17px;color:var(--fj-onbasalt-dim);max-width:56ch}
+.sx-nowhead .af-stamp{color:var(--c-accent)}
+.sx-nowgrid{margin-top:var(--sp-5);display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px}
+.sx-now{background:var(--fj-basalt);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--c-bg) 18%,transparent)}
+.sx-now a{display:block;padding:20px 18px;height:100%;transition:background var(--t-fast) var(--ease)}
+.sx-now a:hover{background:color-mix(in srgb,var(--c-bg) 7%,var(--fj-basalt))}
+.sx-now span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--c-accent)}
+.sx-now b{display:block;margin-top:10px;font-family:var(--fj-display);font-size:19px;
+  text-transform:uppercase;line-height:1.06;color:var(--c-bg)}
+.sx-now p{margin-top:9px;font-size:15px;line-height:1.55;color:var(--fj-onbasalt-dim)}
+
+.sx-month,.sx-portraits{padding:var(--sp-6) 0;border-bottom:var(--fj-rule)}
+.sx-monthlist{margin-top:var(--sp-4);display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px}
+.sx-mo{background:var(--c-bg);padding:16px 14px;display:block;
+  box-shadow:0 0 0 1px var(--c-border)}
+.sx-mo b{display:block;font-family:var(--fj-display);font-size:18px;text-transform:uppercase}
+.sx-mo span{display:block;margin-top:6px;font-size:14.5px;color:var(--c-muted)}
+.sx-mo:hover b{color:var(--c-accent)}
+
+.sx-portgrid{margin-top:var(--sp-4);display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:1px}
+.sx-portrait{background:var(--c-bg);padding:20px 16px 18px;border-left:4px solid var(--tone);
+  box-shadow:0 0 0 1px var(--c-border);
+  transition:background var(--t-fast) var(--ease)}
+.sx-portrait:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--tone))}
+.sx-portrait b{display:block;font-family:var(--fj-display);font-size:23px;text-transform:uppercase;
+  line-height:1.02}
+.sx-portrait span{display:block;margin-top:9px;font-size:14.5px;color:var(--c-accent)}
+.sx-portrait i{display:block;margin-top:12px;font-style:normal;font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted)}
+
+/* The rails: one per format, horizontal, because a rail says "there are more of
+   these" in a way a wrapped grid never does. */
+.sx-rail{padding:var(--sp-5) 0;border-bottom:var(--fj-rule)}
+.sx-rail h2{font-family:var(--fj-display);font-size:15px;letter-spacing:.18em;
+  text-transform:uppercase;display:flex;align-items:baseline;gap:10px}
+.sx-rail h2 span{font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;
+  color:var(--c-muted)}
+.sx-note{margin-top:8px;font-size:15px;color:var(--c-muted);max-width:60ch}
+.sx-scroll{margin-top:var(--sp-3);display:flex;gap:2px;overflow-x:auto;padding-bottom:12px;
+  scroll-snap-type:x proximity}
+.sx-card{flex:0 0 272px;scroll-snap-align:start;background:color-mix(in srgb,var(--c-bg) 93%,
+  var(--c-primary));padding:18px 16px;transition:background var(--t-fast) var(--ease)}
+.sx-card:hover{background:color-mix(in srgb,var(--c-bg) 86%,var(--c-primary))}
+.sx-card span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-accent)}
+.sx-card b{display:block;margin-top:9px;font-family:var(--fj-display);font-size:18px;
+  text-transform:uppercase;line-height:1.06}
+.sx-card p{margin-top:8px;font-size:14.5px;color:var(--c-muted)}
+
+/* ---- the phone ------------------------------------------------------------ */
+/* A magazine, not a shrunk desktop article: every multi-column grid becomes one
+   column, the pictures get taller rather than narrower, and the type does not
+   get smaller — a headline at 52px on a phone is the point of the format. */
+
+@media (max-width:1000px){
+  .po,.sx{padding-left:24px;padding-right:24px}
+  .st--now{margin-left:-24px;margin-right:-24px;padding-left:24px;padding-right:24px}
+  .sx-nowsec{margin-left:-24px;margin-right:-24px;padding-left:24px;padding-right:24px}
+  .po-open{grid-template-columns:minmax(0,1fr);align-items:start;gap:var(--sp-4)}
+  .po-open-win{max-width:340px}
+  .st-two,.st--people .st-two,.st--culture .st-two{grid-template-columns:minmax(0,1fr)}
+  .st--wild .st-col{columns:1}
+  .st-essay{grid-template-columns:repeat(2,1fr)}
+  .st-essay>figure,.st-essay>figure:nth-child(6n+1),
+  .st-essay>figure:nth-child(6n+4),.st-essay>figure:nth-child(6n+5){grid-column:span 2}
+  /* Three columns become two, and both the frame and the writing move into the
+     second one — left in the first they get the 34px the number needs and set
+     one word to a line. */
+  .st-step{grid-template-columns:34px minmax(0,1fr)}
+  .st-step .st-strip,.st-step>div{grid-column:2}
+  .po-months{grid-template-columns:repeat(6,1fr)}
+}
+
+@media (max-width:640px){
+  .po,.sx{padding-left:18px;padding-right:18px}
+  .st--now,.sx-nowsec{margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}
+  .st{padding:var(--sp-5) 0}
+  .po-contents{grid-template-columns:minmax(0,1fr)}
+  .po-contents>span{display:none}
+  .po-months{grid-template-columns:repeat(4,1fr)}
+  .sx-card{flex-basis:82vw}
+  .st-essay{grid-template-columns:1fr}
+  .st-essay>figure,.st-essay>figure:nth-child(6n+1),
+  .st-essay>figure:nth-child(6n+4),.st-essay>figure:nth-child(6n+5){grid-column:span 1}
+}
+
+/* A finger needs a target. Everything that is tapped rather than clicked gets
+   the same minimum on a touch screen, including the contents rail. */
+@media (pointer:coarse){
+  .po-jump a,.sx-mo,.sx-portrait,.st-cross{min-height:44px}
+  .po-jump a{display:flex;align-items:center}
+  /* The headings in the body are the way into the five hundred and seventy-two
+     write-up pages, so on a touch screen they are targets and not only type. */
+  .st-say h3 a,.st-evidence li a,.st-big a,.st-step h3 a{display:inline-block;
+    padding:8px 0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .po-progress i{transition:none}
+  .sx-scroll{scroll-snap-type:none}
+}
+
+@media print{
+  .po-progress,.po-contents,.pl-mast,.po-acts{display:none}
+  .st,.po-line,.po-season{break-inside:avoid;padding:18px 0}
+}

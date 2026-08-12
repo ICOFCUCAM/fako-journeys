@@ -1,0 +1,87 @@
+{
+ "$comment": "How to be here. This is the one file on the site that is a position rather than a fact, and it is marked as such everywhere it prints: it is not a claim about any country, it is what Afrinkong asks of the people it sends. That distinction matters, because everything else the site prints about a place comes from that place's own write-up and this does not.\n\nIt is short on purpose. A page of rules is a page nobody reads, and a visitor who is lectured at arrives ready to be defensive rather than ready to ask. Each note is one instruction and one reason, and the reason is the part that survives the flight.\n\nThe photography notes are separate from the rest because they are the ones most often ignored and the ones with the clearest victim. A camera pointed at somebody who did not agree to it is the single most common way a visitor turns a place into a product, and it is the easiest of all of these to simply not do.",
+
+ "$schema": {
+  "key": "stable id",
+  "title": "the instruction, in the imperative and under six words",
+  "line": "why, in one sentence. Not a rule restated at greater length",
+  "kind": "people | place | money | camera"
+ },
+
+ "$stance": "Written by Afrinkong. Not sourced from any country, community or operator in this dataset, and not to be read as one speaking.",
+
+ "notes": [
+  {
+   "key": "ask-first",
+   "kind": "camera",
+   "title": "Ask before you photograph a person",
+   "line": "A face is not scenery, and 'they did not seem to mind' is not the same as being asked — if you would not want the picture taken of you at work, do not take it."
+  },
+  {
+   "key": "no-payment-trap",
+   "kind": "camera",
+   "title": "If a photograph is worth money, pay it",
+   "line": "Somebody who poses for a living is working; somebody who does not should not be turned into a subject because a lens arrived."
+  },
+  {
+   "key": "sacred",
+   "kind": "camera",
+   "title": "Some places are not for cameras",
+   "line": "Shrines, funerals, initiations and some interiors are closed to photography by the people who use them, and a guide will tell you which if you ask before rather than after."
+  },
+  {
+   "key": "children",
+   "kind": "camera",
+   "title": "Children are not content",
+   "line": "Ask the adult responsible for them, the way you would at home, and accept no as an answer the first time."
+  },
+  {
+   "key": "guide-local",
+   "kind": "people",
+   "title": "Go with somebody from here",
+   "line": "Every operator on this site is a company registered in the country it works in, which is the difference between money that lands and money that passes through."
+  },
+  {
+   "key": "greeting",
+   "kind": "people",
+   "title": "Learn the greeting",
+   "line": "Two words in the language of the place you are standing in changes the whole shape of a conversation, and getting it slightly wrong is not the insult you are afraid of."
+  },
+  {
+   "key": "ask-dont-assume",
+   "kind": "people",
+   "title": "Ask what a thing is",
+   "line": "A festival, a garment or a building usually means something specific to a specific community, and the interesting answer is never the one you brought with you."
+  },
+  {
+   "key": "wildlife-distance",
+   "kind": "place",
+   "title": "Keep the distance you are given",
+   "line": "The distances on a gorilla trek or at a nest are set by the animals' tolerance and, in the case of primates, by what they can catch from you."
+  },
+  {
+   "key": "no-feeding",
+   "kind": "place",
+   "title": "Do not feed anything",
+   "line": "An animal that associates people with food stops being wild and starts being a problem to be dealt with, usually permanently."
+  },
+  {
+   "key": "carry-out",
+   "kind": "place",
+   "title": "Carry out what you carried in",
+   "line": "Most of the places on this site sit outside any collection route, which means what you leave stays exactly where you left it."
+  },
+  {
+   "key": "spend-here",
+   "kind": "money",
+   "title": "Buy from the maker",
+   "line": "The craft write-ups on this site name workshops and markets; a piece bought where it was made pays the person who made it rather than three people who did not."
+  },
+  {
+   "key": "fair-price",
+   "kind": "money",
+   "title": "Haggle to a fair price, not to a win",
+   "line": "The last few units of currency are worth more to the seller than to you, and a bargain that felt like a victory usually was not one."
+  }
+ ]
+}

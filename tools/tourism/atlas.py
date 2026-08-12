@@ -396,7 +396,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/journey">Build a journey</a>
     <a href="/meet">Meet Africa</a>
     <a href="/places">Every place</a>
-    <a href="/#destinations">Destinations</a>
+    <a href="/stories">Stories</a>
     <a href="/compare">Compare</a>
   </nav>
   <a class="af-btn af-btn--solid" href="/contact">Begin a journey<i>&rarr;</i></a>

@@ -124,6 +124,8 @@
       + '<div class="mt-acts">'
       + '<a class="af-btn af-btn--solid" href="/journey#/j/' + esc(state.country)
       + '/">Build a journey here<i>&rarr;</i></a>'
+      + '<a class="af-btn af-btn--quiet" href="/portrait/' + esc(state.country)
+      + '">Read the portrait</a>'
       + '<a class="af-btn af-btn--quiet" href="/atlas#/' + esc(state.country)
       + '">Find it on the map</a>'
       + '<a class="af-btn af-btn--quiet" href="' + esc(c.url) + '">All twenty-seven</a>'

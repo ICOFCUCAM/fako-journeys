@@ -15,6 +15,7 @@ Nothing here writes tourism/cache/ or tourism/countries/.
 
 import base64
 import glob
+import html as html_mod
 import http.server
 import json
 import struct
@@ -1133,6 +1134,169 @@ def main():
         check("the check reads captions, descriptions and taglines alike",
               len(validate._sentences(clean_one)) >= 3 * len(clean_one.entries))
 
+        # -- the story engine ------------------------------------------------------
+        # The portraits are the only long-form reading on this site, which makes
+        # them the one place where a generated page could quietly start saying
+        # things the dataset does not. So the checks here are almost entirely
+        # negative: no sentence that is not in the country file, no year that is
+        # not in the country file, no anchor that is not on the page, and no arc
+        # that names a category the taxonomy has never heard of.
+        print("\nthe story engine")
+        from tourism import story as story_mod
+        from tourism.model import load_operators
+        all_ops = load_operators()
+        arcs = story_mod.load_arcs()
+        arc_file = story_mod.read(story_mod.ARCS, {})
+        ids = {c["id"] for c in tax.categories}
+        check("every arc reads categories that exist",
+              all(c in ids for a in arcs for c in a["categories"]),
+              ", ".join(sorted({c for a in arcs for c in a["categories"]} - ids)))
+        check("every arc prints in a format that is drawn",
+              all(a["format"] in (arc_file.get("$formats") or {}) for a in arcs),
+              ", ".join(sorted({a["format"] for a in arcs}
+                               - set(arc_file.get("$formats") or {}))))
+        check("an arc's lead is one of its own chapters",
+              all((not a.get("lead")) or a["lead"] in a["categories"] for a in arcs))
+        check("an arc cannot demand more chapters than it names",
+              all((a.get("min") or 0) <= len(a["categories"]) or a["format"] == "journey"
+                  for a in arcs))
+        check("every arc asks rather than asserts",
+              all(a["asks"].rstrip().endswith("?") for a in arcs),
+              "; ".join(a["key"] for a in arcs if not a["asks"].rstrip().endswith("?")))
+
+        stories_file = story_mod.read(story_mod.DATA, {})
+        rows = stories_file.get("stories") or []
+        live_slugs = [c.slug for c in countries if c.published]
+        check("every published country has a portrait",
+              all(os.path.exists(os.path.join(story_mod.OUT, "%s.html" % s))
+                  for s in live_slugs))
+        check("the story index covers every country",
+              {r["country"] for r in rows} == set(live_slugs))
+
+        pages, said, years_seen = {}, 0, 0
+        for slug in live_slugs:
+            with open(os.path.join(story_mod.OUT, "%s.html" % slug)) as fh:
+                pages[slug] = fh.read()
+
+        # Every anchor the index points at is on the page it points at.
+        missing_anchor = [r["id"] for r in rows
+                          if ('id="%s"' % r["arc"]) not in pages[r["country"]]]
+        check("every story in the index has somewhere to land", not missing_anchor,
+              ", ".join(missing_anchor[:4]))
+        check("every contents link points at a section on the page",
+              all(all(('id="%s"' % href) in pages[slug]
+                      for href in re.findall(r'<a href="#([a-z-]+)">', pages[slug]))
+                  for slug in live_slugs))
+
+        # The one that matters: no sentence on a portrait that its country did
+        # not write. Every paragraph the layouts print is pulled back out of the
+        # rendered HTML and matched against that country's own descriptions.
+        strays = []
+        for slug in live_slugs:
+            country = by_slug_test(countries, slug)
+            mine = {e.description for e in country.entries if e.description}
+            page = pages[slug]
+            printed = (re.findall(r'<p class="st-stand"><a [^>]*>(.*?)</a></p>', page)
+                       + re.findall(r'<div class="st-say">.*?<p>(.*?)</p>', page)
+                       + re.findall(r'<p class="st-big"><a [^>]*>.*?</a> &mdash; (.*?)</p>', page)
+                       + re.findall(r'<figcaption>(.*?)(?:<i>|</figcaption>)', page))
+            said += len(printed)
+            for text in printed:
+                plain = html_mod.unescape(text).strip()
+                if plain and plain not in mine:
+                    strays.append("%s: %s" % (slug, plain[:60]))
+        check("every sentence on a portrait was written for that country",
+              not strays, "; ".join(strays[:3]) or "%d checked" % said)
+
+        # And no year the country file does not carry. A timeline is the obvious
+        # place for a generated page to start inventing dates, so the long line
+        # asks four questions instead and this asserts it kept to them.
+        bad_years = []
+        for slug in live_slugs:
+            country = by_slug_test(countries, slug)
+            ours = set(re.findall(r"\b(1[0-9]{3}|20[0-9]{2})\b",
+                                  " ".join([e.description or "" for e in country.entries]
+                                           + [e.caption or "" for e in country.entries]
+                                           + [country.summary or "", country.when or ""])))
+            op = all_ops.get(country.operator_key)
+            if op:
+                ours.add(str(op.since))
+            # Text only. An outline's path data is full of four-digit numbers
+            # and none of them is a date.
+            visible = re.sub(r"<[^>]+>", " ", re.sub(
+                r"<(svg|script|style)\b.*?</\1>", " ", pages[slug], flags=re.S))
+            # A four-figure number followed by a unit is a distance, not a date:
+            # this page prints straight-line kilometres and peak heights.
+            for year in set(re.findall(
+                    r"\b(1[0-9]{3}|20[0-9]{2})\b(?!\s*(?:km|kg|mm|m\b|ft))", visible)):
+                if year not in ours:
+                    bad_years.append("%s: %s" % (slug, year))
+        check("no portrait supplies a date the dataset does not have", not bad_years,
+              ", ".join(sorted(set(bad_years))[:5]))
+        check("the long line says it is not a chronology",
+              all("Four questions, not four dates" in pages[s] for s in live_slugs))
+
+        # Provenance, the empty voice, and the one section that is a position.
+        check("every portrait says who is telling you this",
+              all(('tourism/countries/%s.json' % s) in pages[s] for s in live_slugs))
+        check("every portrait says what it is not",
+              all("Not sourced reporting" in pages[s] for s in live_slugs))
+        check("the respect notes are marked as ours rather than a country's",
+              all("no community here was asked to write it" in pages[s]
+                  for s in live_slugs))
+        check("the local voice is empty and says so",
+              all("has been quoted on this page, so nobody is" in pages[s]
+                  for s in live_slugs),
+              "voices.json holds %d" % len(load_voices()))
+        check("no portrait invents a live event",
+              not any(re.search(r"this week|tonight|today at|happening now",
+                                pages[s], re.I) for s in live_slugs),
+              ", ".join(s for s in live_slugs
+                        if re.search(r"this week|tonight|today at", pages[s], re.I))[:60])
+
+        # No dead ends: every portrait can be left in every direction.
+        check("a portrait leads on to the map, the builder and the write-ups",
+              all(all(bit % s in pages[s] for bit in
+                      ('/atlas#/%s', '/journey#/j/%s/', '/meet#/%s', '/places#%s'))
+                  for s in live_slugs))
+        check("every place page leads back to its portrait",
+              all(('/portrait/%s' % s) in open(os.path.join(
+                  ROOT_DIR, "places", s, os.listdir(os.path.join(
+                      ROOT_DIR, "places", s))[0])).read() for s in live_slugs))
+        with open(os.path.join(ROOT_DIR, "sitemap.xml")) as fh:
+            sitemap = fh.read()
+        check("every portrait is in the sitemap",
+              all(("/portrait/%s<" % s) in sitemap for s in live_slugs)
+              and "/stories<" in sitemap)
+
+        # -- the story graph -------------------------------------------------------
+        print("\nthe story graph")
+        from tourism import graph as graph_mod
+        g = story_mod.read(graph_mod.OUT, {})
+        names = g.get("names") or {}
+        check("the graph read names out of the dataset", len(names) > 200,
+              "%d names" % len(names))
+        check("every name points at a country and a write-up that exist",
+              all(at["c"] in g["countries"] and at["e"] in ids
+                  for row in names.values() for at in row["at"]))
+        check("every address in the graph is a page on disk",
+              all(os.path.exists(os.path.join(ROOT_DIR, (p["u"] or "x").lstrip("/") + ".html"))
+                  for c in g["countries"].values() for p in (c.get("places") or {}).values()
+                  if p.get("u")))
+        own = {c.name.lower() for c in countries} | {(c.adjective or "").lower()
+                                                     for c in countries}
+        check("the index is not the countries talking about themselves",
+              not [n for n in names if n.lower() in own],
+              ", ".join(n for n in names if n.lower() in own)[:60])
+        check("a name is never read out of a headline",
+              not [n for n in names if n.lower() in ("rafting", "canoe", "dive")],
+              "; ".join(n for n in names if n.lower() in ("rafting", "canoe", "dive")))
+        check("every theme names categories that exist",
+              all(c in ids for t in g["themes"].values() for c in t["categories"]))
+        shared = [n for n, v in names.items() if len(v["in"]) > 1]
+        check("some names cross a border, which is the point of an index",
+              len(shared) > 5, ", ".join(sorted(shared)[:5]))
+
         # -- what the product counts -----------------------------------------------
         # The rules the event layer enforces are checked in JavaScript, against
         # the module the page runs. What is checked here is the other half: that
@@ -1186,12 +1350,15 @@ def main():
 
         with open(os.path.join(ROOT_DIR, "scripts", "events.js")) as fh:
             ev_src = fh.read()
-        check("the event layer is the only script that counts anything",
-              all("AfrinkongEvents.track" not in open(
-                  os.path.join(ROOT_DIR, "scripts", f)).read()
-                  or f in ("atlas.js", "journey.js", "meet.js")
-                  for f in os.listdir(os.path.join(ROOT_DIR, "scripts"))
-                  if f.endswith(".js")))
+        # Every page counts through the one layer that validates. A script that
+        # reached a destination directly would be a page whose events had never
+        # been through the schema, which is the whole guarantee.
+        loose = [f for f in sorted(os.listdir(os.path.join(ROOT_DIR, "scripts")))
+                 if f.endswith(".js") and f != "events.js"
+                 and re.search(r"sendBeacon|gtag\(|dataLayer|analytics|_paq",
+                               open(os.path.join(ROOT_DIR, "scripts", f)).read())]
+        check("no script reaches a destination without going through the layer",
+              not loose, ", ".join(loose))
         check("no page talks to an analytics vendor",
               not any(re.search(r"googletagmanager|google-analytics|gtag\(|segment\."
                                 r"|mixpanel|hotjar|facebook\.net|clarity\.ms",

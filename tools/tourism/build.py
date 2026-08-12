@@ -309,6 +309,22 @@ def cmd_links(args):
     return 0
 
 
+def cmd_graph(args):
+    """The story graph: every proper name in the dataset, and where it is said."""
+    from tourism import graph
+    tax, countries, _cache = dataset()
+    graph.run(countries, tax)
+    return 0
+
+
+def cmd_story(args):
+    """The living story engine: /portrait/<country> and /stories."""
+    from tourism import story
+    tax, countries, _cache = dataset()
+    story.run(countries, tax)
+    return 0
+
+
 def cmd_meet(args):
     """The human layer: /meet."""
     from tourism import meet
@@ -568,6 +584,10 @@ def cmd_all(args):
     print()
     cmd_places(args)
     print()
+    cmd_graph(args)
+    print()
+    cmd_story(args)
+    print()
     cmd_sidebyside(args)
     print()
     rc = cmd_verify(args) or rc
@@ -581,6 +601,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "gateway": cmd_gateway, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,

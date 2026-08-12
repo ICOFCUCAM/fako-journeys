@@ -114,10 +114,15 @@
 .pi-country ul{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
   gap:0 var(--sp-4)}
 .pi-country li{border-bottom:var(--fj-rule)}
-.pi-country li a{display:flex;justify-content:space-between;gap:14px;align-items:baseline;
+/* A long caption and a nowrap category label are two flex items in a 240px
+   track, and at a middling width the pair is wider than the track and pushes
+   past the edge of the page. Wrapping is the right answer rather than
+   truncation: the caption is the thing being indexed. */
+.pi-country li a{display:flex;justify-content:space-between;gap:6px 14px;
+  align-items:baseline;flex-wrap:wrap;overflow-wrap:anywhere;
   padding:11px 2px;font-family:var(--fj-display);font-size:16px;text-transform:uppercase;
   font-weight:700}
-.pi-country li i{font-style:normal;font-family:var(--fj-mono);font-size:8.5px;
+.pi-country li i{flex:0 0 auto;font-style:normal;font-family:var(--fj-mono);font-size:8.5px;
   letter-spacing:.14em;color:var(--c-muted);white-space:nowrap}
 .pi-country li a:hover{color:var(--c-accent)}
 
