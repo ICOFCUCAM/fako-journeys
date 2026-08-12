@@ -378,6 +378,7 @@ TEMPLATE = """<!DOCTYPE html>
 </main>
 
 <script type="application/json" id="jn-data">%(data)s</script>
+<script src="/scripts/window.js" defer></script>
 <script src="/scripts/journey-engine.js" defer></script>
 <script src="/scripts/journey.js" defer></script>
 </body>

@@ -26,6 +26,7 @@ import html as html_mod
 import os
 import re
 
+from . import plate
 from .model import ROOT, load_picks, load_regions, load_views
 
 PAGE = os.path.join(ROOT, "index.html")
@@ -162,24 +163,26 @@ def block_regions(countries, views):
 
 
 def block_window(countries, shape_by_slug):
+    """The hero's window states — one per country, from the shared component.
+
+    This function used to build its own clip-path, which made it the fourth
+    place on the site that knew how to mask a photograph into a country. It is
+    now the same `window_svg` the country pages, the journey engine and the
+    human layer draw, so the signature cannot drift into four dialects of
+    itself. The wrapper class stays local because the hero sizes it.
+    """
     out = []
-    for i, c in enumerate(countries):
+    for c in countries:
         s = shape_by_slug.get(c.slug)
         if not s:
             continue
-        art = ""
-        if c.window:
-            art = ('<image clip-path="url(#wc-%s)" href="%s" x="0" y="0" width="%s" height="%s" '
-                   'preserveAspectRatio="xMidYMid slice"/>'
-                   % (esc(c.slug), esc(c.window), s["w"], s["h"]))
-        label = esc(c.window_alt) if (c.window and c.window_alt) else \
-            "The outline of %s" % esc(c.name)
         out.append(
-            '      <figure class="wa-win-state" data-slug="%s">\n'
-            '        <svg class="wa-win-shape" viewBox="0 0 %s %s" role="img" aria-label="%s">\n'
-            '          <defs><clipPath id="wc-%s"><path d="%s"/></clipPath></defs>\n'
-            '          <path class="wa-win-fill" d="%s"/>%s\n        </svg>\n      </figure>'
-            % (esc(c.slug), s["w"], s["h"], label, esc(c.slug), s["d"], s["d"], art))
+            '      <figure class="wa-win-state" data-slug="%s">\n        %s\n      </figure>'
+            % (esc(c.slug),
+               plate.window_svg(s, c.name, image=c.window or None,
+                                alt=c.window_alt or None,
+                                ident="wc-%s" % c.slug,
+                                classes="wa-win-shape af-window-svg")))
     return "\n".join(out)
 
 

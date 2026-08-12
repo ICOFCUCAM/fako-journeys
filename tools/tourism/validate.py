@@ -11,6 +11,7 @@ Severities:
 """
 
 from . import imaging, providers
+from .model import ROOT
 
 
 class Finding:
@@ -35,6 +36,86 @@ def alt_text(country, entry):
     if country.name.lower() in subject.lower():
         return subject
     return "%s, %s" % (subject, country.name)
+
+
+# ---- the image quality gate ------------------------------------------------------
+
+
+def check_images(country, taxonomy, root=None):
+    """What a broken image record looks like, checked before it can be published.
+
+    Everything here is a failure the page cannot show you: a focal point outside
+    the frame quietly becomes a centre crop, a local asset that is not on disk
+    becomes a broken box, a record with no provider cannot build a URL at all,
+    and a photograph that requires attribution and carries no photographer is a
+    licence breach rather than a design problem.
+
+    Errors, not warnings, for anything that would publish something wrong. A
+    slot with no photograph is neither: it is the normal state of this dataset
+    and it renders a plate.
+    """
+    import os as _os
+    findings = []
+    root = root or ROOT
+
+    for cat in taxonomy.enabled:
+        entry = country.entry(cat["id"])
+        if not entry:
+            continue
+        role = taxonomy.role(cat["id"])
+
+        fx, fy = entry.focal["x"], entry.focal["y"]
+        if not (0 <= fx <= 100 and 0 <= fy <= 100):
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "focal point %s,%s is outside the frame" % (fx, fy)))
+
+        if entry.local:
+            path = _os.path.join(root, entry.local.lstrip("/"))
+            if not _os.path.exists(path):
+                findings.append(Finding("error", country.slug, cat["id"],
+                                        "local asset %s is not on disk" % entry.local))
+
+        record = entry.image or {}
+        if not record.get("imageUrl"):
+            continue
+
+        provider = providers.for_record(record)
+        if provider is None:
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "no registered provider owns %s"
+                                    % record.get("imageUrl")))
+            continue
+        if provider.requires_attribution and not record.get("photographer"):
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "%s requires attribution and this record names "
+                                    "no photographer" % provider.name))
+        if provider.synthetic and not record.get("generated"):
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "a %s record is not disclosed as generated"
+                                    % provider.name))
+        if record.get("generated") and not provider.synthetic:
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "record is flagged generated but %s is a "
+                                    "photography provider" % provider.name))
+        if record.get("country") and record["country"] != country.slug:
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "record belongs to %s" % record["country"]))
+        if record.get("category") and record["category"] != cat["id"]:
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "record was resolved for %s" % record["category"]))
+
+        width = record.get("width") or 0
+        wanted = role["srcset"][0] if role.get("srcset") else role["width"]
+        if width and width < wanted:
+            findings.append(Finding("warn", country.slug, cat["id"],
+                                    "%dpx original for a slot delivered at %dpx"
+                                    % (width, wanted)))
+
+        alt = (record.get("alt") or "").strip()
+        if alt and alt.lower() in (country.name.lower(), country.slug):
+            findings.append(Finding("warn", country.slug, cat["id"],
+                                    "alt text is only the country name"))
+    return findings
 
 
 # ---- how people are written about ------------------------------------------------
@@ -231,6 +312,7 @@ def report(countries, taxonomy):
             continue
         f = check_country(country, taxonomy, global_images, global_subjects)
         f.extend(check_language(country))
+        f.extend(check_images(country, taxonomy))
         findings.extend(f)
         present = [c["id"] for c in taxonomy.enabled if country.entry(c["id"])]
         resolved = [c["id"] for c in taxonomy.enabled

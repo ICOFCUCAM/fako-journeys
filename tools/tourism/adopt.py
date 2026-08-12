@@ -60,18 +60,30 @@ PAGES = ("cameroon.html", "services.html", "about.html", "contact.html", "pricin
 #
 # `sizes` is computed from the real layout: .fj-frame is 1240px with 44px
 # padding, so the content column is 1152px, divided by that slot's grid.
+# `focus` is what the crop must not throw away. It is printed on the review
+# sheet beside every candidate and compiled into the generation brief, so the
+# instruction a reviewer judges against and the instruction the generator was
+# given are the same sentence rather than two people's memory of one.
 SLOT_SPECS = (
     ("fj-vista-pic",  {"aspect": [16, 9], "width": 2400, "srcset": [1200, 1800, 2400, 3000],
-                       "sizes": "100vw", "quality": 82, "box": False}),
+                       "sizes": "100vw", "quality": 82, "box": False,
+                       "focus": "the horizon, and whatever makes this a place "
+                                "rather than a view"}),
     ("fj-seam-pic",   {"aspect": [16, 9], "width": 2400, "srcset": [1200, 1800, 2400, 3000],
-                       "sizes": "100vw", "quality": 82, "box": False}),
+                       "sizes": "100vw", "quality": 82, "box": False,
+                       "focus": "the full width of the thing this band is a band of"}),
     ("fj-open-plate", {"aspect": [3, 4], "width": 960, "srcset": [480, 720, 960, 1440],
                        "sizes": "(min-width: 1240px) 480px, (min-width: 940px) 40vw, 92vw",
-                       "quality": 82}),
+                       "quality": 82,
+                       "focus": "the subject standing upright in a tall frame — "
+                                "nothing important near the left or right edge"}),
     ("fj-slip-pic",   {"aspect": [5, 4], "width": 1000, "srcset": [500, 750, 1000, 1500],
                        "sizes": "(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw",
-                       "quality": 82}),
+                       "quality": 82,
+                       "focus": "the subject, and enough around it to say where "
+                                "this is"}),
     ("fj-craft-pic",  {"aspect": [4, 5], "width": 880, "srcset": [440, 660, 880, 1320],
+                       "focus": "the hands and the work, close",
                        "sizes": "(min-width: 1240px) 440px, (min-width: 900px) 38vw, 92vw",
                        "quality": 82}),
     ("fj-cal-col",    {"aspect": [4, 5], "width": 600, "srcset": [300, 450, 600, 900],
@@ -91,7 +103,8 @@ SLOT_SPECS = (
 # Anything the classes above do not cover kept its shape from the illustration,
 # which is 3:2. Deliver 3:2 so nothing about the layout changes.
 DEFAULT_SPEC = {"aspect": [3, 2], "width": 1600, "srcset": [800, 1200, 1600, 2400],
-                "sizes": "100vw", "quality": 82}
+                "sizes": "100vw", "quality": 82,
+                "focus": "the subject, off dead centre"}
 
 IMG_RE = re.compile(r"<img\b[^>]*>", re.S)
 ATTR_RE = re.compile(r'(\w[\w-]*)\s*=\s*"([^"]*)"')

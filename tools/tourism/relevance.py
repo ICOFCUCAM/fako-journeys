@@ -55,7 +55,37 @@ def crop_waste(candidate, role):
     return 1.0 - max(0.0, min(1.0, kept))
 
 
-def score(candidate, country, category, entry, role):
+def sameness(candidate, taken):
+    """How much this candidate looks like one already used in this country.
+
+    De-duplication by photo id catches the same photograph twice. It does not
+    catch the thing that actually ruins a country page: six different
+    photographs of the same gorilla, taken by six photographers, filling
+    wildlife, safari, forests, eco-tourism, photography and why-visit. Each one
+    is a legitimate match for its slot and the page is still a wall of one
+    animal.
+
+    So a candidate is also weighed against what the country has already taken.
+    `taken` is a list of word-bags, one per resolved slot; the overlap with the
+    closest of them is what counts, because matching one earlier slot closely is
+    the failure — matching six of them a little is just being about the country.
+    """
+    text = words(candidate.get("text")) - NOISE
+    if not text or not taken:
+        return 0.0
+    worst = 0.0
+    for earlier in taken:
+        earlier = earlier - NOISE
+        if not earlier:
+            continue
+        shared = len(text & earlier)
+        if not shared:
+            continue
+        worst = max(worst, shared / float(min(len(text), len(earlier))))
+    return worst
+
+
+def score(candidate, country, category, entry, role, taken=None):
     """-> (score, reasons). Higher is better; below MIN_SCORE is a rejection."""
     text = words(candidate.get("text"))
     terms, hint = subject_terms(entry, category)
@@ -103,6 +133,15 @@ def score(candidate, country, category, entry, role):
         # absence of evidence for it. Neither reward nor punish.
         reasons.append("no description to judge")
 
+    # Variety, weighed after relevance and never instead of it. A photograph
+    # that is genuinely the best match for its slot survives this; a sixth
+    # near-identical one does not.
+    same = sameness(candidate, taken)
+    if same > 0.5:
+        total -= (same - 0.5) * 4.0
+        reasons.append("looks like %d%% of a slot already filled here"
+                       % round(same * 100))
+
     return total, reasons
 
 
@@ -110,15 +149,15 @@ MIN_SCORE = 1.0            # below this, leave the slot unresolved
 CLEARLY_BETTER = 2.0       # margin a fallback must beat the primary by
 
 
-def rank(candidates, country, category, entry, role, seen=None):
-    """Best first, already filtered for duplicates and hopeless crops."""
+def rank(candidates, country, category, entry, role, seen=None, taken=None):
+    """Best first, already filtered for duplicates, sameness and hopeless crops."""
     seen = seen or set()
     scored = []
     for c in candidates:
         key = "%s:%s" % (c.get("provider"), c.get("photoId"))
         if key in seen:
             continue
-        s, why = score(c, country, category, entry, role)
+        s, why = score(c, country, category, entry, role, taken)
         if s < MIN_SCORE:
             continue
         scored.append((s, why, c))

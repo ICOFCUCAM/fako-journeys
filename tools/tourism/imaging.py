@@ -72,6 +72,38 @@ def object_position(focal):
     return "%d%% %d%%" % (int(focal["x"]), int(focal["y"]))
 
 
+def art_direction(record, role, focal):
+    """A second crop for narrow screens, where the role asks for one.
+
+    A 16:9 band is forty pixels tall inside a 390px phone: technically the same
+    photograph, practically a different picture with the subject cut out of it.
+    Where a role declares `mobile`, the same original is asked for again in a
+    taller frame around the same focal point, and the browser is given both and
+    told which width each belongs to.
+
+    Returns None when the role does not ask for one, or when the provider has no
+    CDN to cut a second crop with — a provider that cannot resize cannot art
+    direct either, and pretending otherwise would serve the wide file to the
+    narrow slot with a descriptor that lies about it.
+    """
+    mobile = role.get("mobile")
+    if not record or not mobile:
+        return None
+    provider = provider_for(record)
+    if not provider.supports_resize:
+        return None
+    narrow = dict(role)
+    narrow["aspect"] = mobile["aspect"]
+    narrow["width"] = min(role["width"], 1200)
+    narrow["srcset"] = [w for w in role["srcset"] if w <= 1400] or [role["srcset"][0]]
+    return {
+        "media": "(max-width: %dpx)" % int(mobile.get("upTo") or 700),
+        "srcset": srcset(record, narrow, focal),
+        "sizes": "100vw",
+        "aspect": "%d / %d" % (mobile["aspect"][0], mobile["aspect"][1]),
+    }
+
+
 def delivery(entry, role):
     """Everything a template needs for one image, resolved or not.
 
@@ -95,12 +127,18 @@ def delivery(entry, role):
         "src": None,
         "srcset": None,
         "sizes": role["sizes"],
+        # What the crop must not throw away. Carried through so the review sheet
+        # can print it beside the candidate and a reviewer can check the crop
+        # against the instruction rather than against their own memory of it.
+        "focus": role.get("focus") or "",
+        "mobile": None,
         "credit": None,
     }
     if resolved:
         provider = provider_for(record)
         out["src"] = cdn_url(record, role, focal)
         out["srcset"] = srcset(record, role, focal)
+        out["mobile"] = art_direction(record, role, focal)
         text, link = provider.attribution(record)
         out["credit"] = {
             "name": record.get("photographer"),

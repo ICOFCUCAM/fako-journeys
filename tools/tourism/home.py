@@ -28,7 +28,7 @@ import html as html_mod
 import json
 import os
 
-from . import imaging
+from . import imaging, plate
 from .model import ROOT
 
 SHAPES_PATH = os.path.join(ROOT, "tourism", "shapes.json")
@@ -65,23 +65,20 @@ def window(country, entry_for):
     art = ""
     hero = entry_for("hero")
     rec = getattr(hero, "image", None) if hero else None
+    src = None
     if rec and rec.get("imageUrl"):
         try:
             src = imaging.cdn_url(rec, {"width": 1200, "aspect": [4, 5]}, hero.focal)
-            art = ('<image clip-path="url(#shape-%s)" href="%s" x="0" y="0" width="%s" '
-                   'height="%s" preserveAspectRatio="xMidYMid slice"/>'
-                   % (esc(country.slug), esc(src), shape["w"], shape["h"]))
         except (ValueError, KeyError):
-            art = ""
-    label = ("%s, with a photograph of the country inside its own borders" % country.name
-             if art else "The outline of %s" % country.name)
-    return ('<div class="af-window ct-window">\n'
-            '        <svg viewBox="0 0 %s %s" role="img" aria-label="%s">\n'
-            '          <defs><clipPath id="shape-%s"><path d="%s"/></clipPath></defs>\n'
-            '          <path class="af-window-fill" d="%s"/>%s\n'
-            '        </svg>\n      </div>'
-            % (shape["w"], shape["h"], esc(label), esc(country.slug),
-               shape["d"], shape["d"], art))
+            src = None
+    # One definition of the window, shared with the gateway, the journey engine
+    # and the human layer. This function used to build its own clip-path.
+    return ('<div class="af-window ct-window">\n        %s\n      </div>'
+            % plate.window_svg(shape, country.name, image=src,
+                               alt=("%s, with a photograph of the country inside its "
+                                    "own borders" % country.name) if src else None,
+                               ident="shape-%s" % country.slug,
+                               classes="af-window-svg"))
 
 
 MONTHS = ("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")

@@ -79,6 +79,9 @@ def scan_page(page, category_by_local):
             "wrapper": cls,
             "aspect": list(spec["aspect"]),
             "width": spec["width"],
+            # What the crop must not throw away, carried from the role so the
+            # review sheet and the generation brief say the same thing.
+            "focus": spec.get("focus", ""),
             "illustration": illustration,
             "instruction": instruction.strip(),
             "category": category_by_local.get(illustration),

@@ -322,6 +322,7 @@ TEMPLATE = """<!DOCTYPE html>
 
 <script type="application/json" id="mt-people">%(people)s</script>
 <script type="application/json" id="mt-voices">%(voices)s</script>
+<script src="/scripts/window.js" defer></script>
 <script src="/scripts/meet.js" defer></script>
 </body>
 </html>

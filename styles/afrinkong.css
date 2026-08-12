@@ -142,8 +142,58 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
    with no photography is still finished. */
 .af-window{position:relative}
 .af-window svg{width:100%;height:100%;overflow:visible;display:block}
-.af-window .af-window-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
+/* The fill belongs to the component, not to one wrapper: the gateway's hero
+   draws the same window without an `.af-window` around it, and a scoped rule
+   left it painting black there. */
+.af-window-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
 .af-window--onbasalt .af-window-fill{fill:var(--c-accent)}
+/* One class for the SVG itself, so the build-time window (plate.py) and the
+   runtime one (scripts/window.js) cannot drift into two different components. */
+.af-window-svg{width:100%;height:100%;display:block;overflow:visible}
+
+/* ---- the plate ----------------------------------------------------------- */
+/* What a slot looks like before its photograph exists.
+ *
+ * Five hundred and sixty-seven of the five hundred and ninety-four image slots
+ * in this dataset have no photograph yet, so this is not an edge case — it is
+ * most of what the site currently looks like, and it is designed rather than
+ * merely survived. The plate occupies exactly the box the photograph will
+ * occupy, so swapping one for the other shifts nothing on the page.
+ *
+ * The ground is the country's own region tone, set per element, which is what
+ * stops a page of unresolved slots reading as a grid of identical grey holes:
+ * the Sahel and the Cape are different colours before either has a picture.
+ * The country's outline sits behind, bled off the corner, at the weight of a
+ * watermark. It never says "image missing" — it says what the photograph is of,
+ * which is true and is the most useful thing it can say. */
+.af-plate{position:relative;overflow:hidden;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:clamp(14px,4%,26px);
+  background:var(--plate-tone,var(--c-primary));color:var(--c-bg);
+  isolation:isolate}
+/* A wash of paper over the tone, so five saturated inks become five grounds a
+   headline can sit on. */
+.af-plate::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(160deg,rgba(247,242,231,.16),rgba(247,242,231,0) 62%)}
+.af-plate-shape{position:absolute;right:-14%;top:-10%;width:78%;height:auto;z-index:-1;
+  opacity:.2;fill:var(--c-bg)}
+.af-plate-eye{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;opacity:.72}
+.af-plate-say{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  line-height:1.02;letter-spacing:-.01em;margin-top:8px;
+  font-size:clamp(17px,2.6cqw,30px);text-wrap:balance}
+.af-plate-where{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;opacity:.6;margin-top:10px}
+/* The caption is sized against the plate rather than the viewport: the same
+   component is a 240px card on one page and a 1152px band on another, and a
+   headline that ignores its own box is only ever right in one of them. */
+@supports(container-type:inline-size){
+  .af-plate{container-type:inline-size}
+}
+/* Behind a headline the page already has: the outline and the ground, nothing
+   else. The shape moves to the middle and grows, because at full bleed a
+   watermark in the corner reads as an accident rather than as a decision. */
+.af-plate--ground .af-plate-shape{right:auto;left:50%;top:50%;
+  transform:translate(-30%,-50%);width:auto;height:150%;opacity:.14}
 
 /* ---- surfaces ------------------------------------------------------------ */
 .af-zone{padding:var(--sp-7) 0}

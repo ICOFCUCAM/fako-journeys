@@ -243,7 +243,8 @@ def main():
 
     from tourism import cache as cache_mod
     from tourism import imaging, providers, queries, relevance, resolve, validate
-    from tourism.model import attach_cache, load_countries, load_taxonomy
+    from tourism.model import (attach_cache, load_countries, load_country,
+                               load_taxonomy)
 
     socketserver.TCPServer.allow_reuse_address = True
     httpd = socketserver.TCPServer(("127.0.0.1", PORT), Mocks)
@@ -795,6 +796,172 @@ def main():
               any(r["view"] != next(x["view"] for x in sp["regions"] if x["key"] == r["key"])
                   for r in small["regions"]))
 
+        # -- the visual engine ------------------------------------------------------
+        # Most of what this system does is already covered above: delivery URLs,
+        # focal crops, srcsets, providers, attribution. What is new here is the
+        # part that runs when there is no photograph — which, with 567 of 594
+        # slots unresolved, is most of the site — plus the pieces that stop one
+        # component becoming four.
+        print("\nthe visual engine")
+        from tourism import plate as plate_mod
+        from tourism.model import load_regions, region_of
+
+        regions = load_regions()
+        check("every region names the ground its countries are drawn on",
+              all(r.tone.startswith("#") and len(r.tone) == 7 for r in regions.values()),
+              ", ".join("%s=%s" % (k, r.tone) for k, r in regions.items())[:60])
+        tones = {}
+        for co in countries:
+            if co.published:
+                tones.setdefault(plate_mod.tone_for(co, regions), []).append(co.slug)
+        check("every published country has a ground",
+              all(t for t in tones), "%d distinct tones" % len(tones))
+        check("two countries from different regions do not share a ground",
+              len(tones) == len({region_of(c, regions)[0]
+                                 for c in countries if c.published}))
+
+        uganda_hero = uganda.entry("hero")
+        shp = {"w": 100, "h": 120, "d": "M0 0L10 0L10 10Z"}
+        pl = plate_mod.plate(uganda, uganda_hero, [16, 9], "Uganda hero", shape=shp)
+        check("a slot with no photograph draws a plate, not a hole",
+              'class="af-plate"' in pl and 'aspect-ratio:16/9' in pl)
+        check("the plate carries the caption somebody wrote",
+              esc_test(uganda_hero.caption) in pl, uganda_hero.caption)
+        check("the plate says which country it is",
+              ">Uganda<" in pl)
+        check("the plate is labelled for a screen reader",
+              'role="img"' in pl and 'aria-label="Uganda hero"' in pl)
+        check("the plate is the same shape as the photograph it stands in for",
+              "aspect-ratio:16/9" in pl
+              and "aspect-ratio:4/5" in plate_mod.plate(uganda, uganda_hero, [4, 5],
+                                                        "x", shape=shp))
+        ground = plate_mod.plate(uganda, uganda_hero, [16, 9], "x", shape=shp, ground=True)
+        check("a plate under a headline carries no headline of its own",
+              esc_test(uganda_hero.caption) not in ground and 'aria-hidden="true"' in ground)
+        check("the plate never says the picture is missing",
+              "missing" not in pl.lower() and "coming soon" not in pl.lower())
+
+        # One window, not four.
+        win = plate_mod.window_svg(shp, "Uganda", image="/i.jpg", alt="A ridge")
+        check("the window clips the photograph with the country's own path",
+              win.count(shp["d"]) == 2 and "clipPath" in win)
+        check("the window without a photograph is the filled outline",
+              "<image" not in plate_mod.window_svg(shp, "Uganda"))
+        check("the window describes itself from the photograph where there is one",
+              'aria-label="A ridge"' in win
+              and 'aria-label="The outline of Uganda"'
+                  in plate_mod.window_svg(shp, "Uganda"))
+        js = open(os.path.join(ROOT_DIR, "scripts", "window.js")).read()
+        for page in ("journey.js", "meet.js"):
+            src = open(os.path.join(ROOT_DIR, "scripts", page)).read()
+            check("%s draws the window from the shared component" % page,
+                  "AfrinkongWindow" in src and "clipPath" not in src)
+        check("the browser's window and the build's window agree",
+              all(bit in js for bit in ("af-window-fill", "af-window-svg",
+                                        "xMidYMid slice", "clipPath")))
+
+        # Roles: what the crop must keep, and what a phone gets instead.
+        roles = [r for k, r in tax.roles.items() if not k.startswith("$")]
+        check("every role says what its crop must not throw away",
+              all(r.get("focus") for r in roles),
+              ", ".join(k for k, r in tax.roles.items()
+                        if not k.startswith("$") and not r.get("focus")))
+        wide = [r for r in roles if r["aspect"][0] / float(r["aspect"][1]) >= 1.7]
+        check("a role too wide for a phone declares a second crop",
+              all(r.get("mobile") for r in wide), "%d wide roles" % len(wide))
+        check("the second crop is taller than the first",
+              all(r["mobile"]["aspect"][0] / float(r["mobile"]["aspect"][1])
+                  < r["aspect"][0] / float(r["aspect"][1]) for r in wide))
+
+        host = os.environ["UNSPLASH_IMAGE_HOST_OVERRIDE"]
+        fake = {"provider": "unsplash", "imageUrl": host + "photo-1?ixid=t",
+                "photoId": "x", "width": 4000, "height": 2667, "photographer": "A N"}
+        hero_role = tax.role("hero")
+        art = imaging.art_direction(fake, hero_role, {"x": 50, "y": 40})
+        check("a wide slot delivers a taller crop to a phone",
+              art and "max-width" in art["media"] and art["aspect"] == "4 / 5")
+        first = (art or {}).get("srcset", "").split(",")[0]
+        import urllib.parse as _up
+        q = dict(_up.parse_qsl(_up.urlparse(first.split(" ")[0]).query))
+        check("art direction asks the CDN for the narrow crop, not CSS",
+              q.get("w") and q.get("h")
+              and round(int(q["h"]) / float(q["w"]), 2) == round(5 / 4.0, 2),
+              "%sx%s" % (q.get("w"), q.get("h")))
+        check("and it cuts around the same focal point",
+              q.get("fp-y") == "0.400", q.get("fp-y"))
+        flat = {"provider": "upload", "imageUrl": "/images/uploads/x.jpg",
+                "photoId": "u", "width": 1200, "height": 800}
+        check("a provider with no CDN is not asked to art direct",
+              imaging.art_direction(flat, hero_role, {"x": 50, "y": 50}) is None)
+        check("a role with no second crop gets none",
+              imaging.art_direction(fake, tax.role("food"), {"x": 50, "y": 50}) is None
+              or tax.role("food").get("mobile"))
+
+        # Variety: the same animal six times is six correct answers and one bad page.
+        gorilla = providers.Candidate(
+            {"provider": "unsplash", "photoId": "g9", "width": 3000, "height": 2000,
+             "text": "mountain gorilla silverback in the forest of bwindi uganda"})
+        already = [relevance.words("mountain gorilla silverback bwindi forest uganda")]
+        alone, _ = relevance.score(gorilla, uganda, tax.by_id["wildlife"],
+                                   uganda.entry("wildlife"), tax.role("wildlife"))
+        again, why = relevance.score(gorilla, uganda, tax.by_id["wildlife"],
+                                     uganda.entry("wildlife"), tax.role("wildlife"),
+                                     taken=already)
+        check("a photograph like one already used here scores lower", again < alone,
+              "%.1f -> %.1f" % (alone, again))
+        check("and the sheet says why", any("already filled" in w for w in why))
+        other = providers.Candidate(
+            {"provider": "unsplash", "photoId": "k1", "width": 3000, "height": 2000,
+             "text": "fishing boats on lake victoria at dawn uganda"})
+        same_alone, _ = relevance.score(other, uganda, tax.by_id["wildlife"],
+                                        uganda.entry("wildlife"), tax.role("wildlife"))
+        same_after, _ = relevance.score(other, uganda, tax.by_id["wildlife"],
+                                        uganda.entry("wildlife"), tax.role("wildlife"),
+                                        taken=already)
+        check("a different photograph is not punished for the first one",
+              same_alone == same_after)
+
+        # The gate.
+        print("\nthe image quality gate")
+        import copy as _copy
+
+        def gate(mutate):
+            co = load_country(uganda.path)
+            mutate(co)
+            return [f for f in validate.check_images(co, tax) if f.level == "error"]
+
+        def set_image(co, cat, rec):
+            co.entry(cat).image = rec
+
+        good = {"provider": "unsplash", "imageUrl": host + "photo-9?ixid=t",
+                "photoId": "p", "width": 4000, "height": 2667, "photographer": "A N Other"}
+        check("a sound record passes", not gate(lambda co: set_image(co, "hero", good)))
+        check("a photograph with no photographer is refused, not published",
+              gate(lambda co: set_image(co, "hero",
+                                        dict(good, photographer=""))))
+        check("a generated picture that is not disclosed is refused",
+              gate(lambda co: set_image(co, "hero",
+                                        {"provider": "openai", "photoId": "g",
+                                         "imageUrl": "/images/generated/x.png",
+                                         "width": 1536, "height": 1024})))
+        check("a photograph flagged as generated is refused",
+              gate(lambda co: set_image(co, "hero", dict(good, generated=True))))
+        check("a record from an unknown provider is refused",
+              gate(lambda co: set_image(co, "hero",
+                                        dict(good, provider="somewhere",
+                                             imageUrl="https://elsewhere/x.jpg"))))
+        check("a record resolved for another country is refused",
+              gate(lambda co: set_image(co, "hero", dict(good, country="kenya"))))
+        check("a record resolved for another slot is refused",
+              gate(lambda co: set_image(co, "hero", dict(good, category="food"))))
+        check("a focal point outside the frame is refused",
+              gate(lambda co: co.entry("hero").focal.update({"x": 140})))
+        check("a local asset that is not on disk is refused",
+              gate(lambda co: setattr(co.entry("hero"), "local", "/images/nope.svg")))
+        check("the gate is clean on the dataset as it stands",
+              not [f for c in countries for f in validate.check_images(c, tax)
+                   if f.level == "error"])
+
         # -- the human layer --------------------------------------------------------
         # The claim this layer makes is that nothing on it is invented: every
         # line is a caption or a description already written for that country,
@@ -919,6 +1086,12 @@ def main():
     if not failed:
         print("both providers are ready for real credentials")
     return 1 if failed else 0
+
+
+def esc_test(text):
+    """The plate escapes what it prints; the test has to compare like with like."""
+    import html as _html
+    return _html.escape(str(text or ""), quote=True)
 
 
 def _inside(box, view):

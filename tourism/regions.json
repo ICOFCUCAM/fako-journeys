@@ -1,32 +1,84 @@
 {
+ "$comment": "Five regions, and the tone each one is drawn in when there is no photograph. The tone is a design decision recorded as data rather than typed into a stylesheet, and it is the reason a country without a picture still looks like somewhere: every unresolved slot is drawn on its own region's ground, so moving from the Sahel to the Cape changes the colour of the page even before a photograph exists. All five sit inside the Afrinkong palette — they are values of the same ink, not five new brand colours — and none of them claims anything about the place beyond what its own terrain words already say.",
  "central": {
   "name": "Central & West",
   "line": "Rainforest, volcanic coast, savanna, ancient kingdoms and the cultures of the Gulf of Guinea.",
-  "terrain": ["Rainforest", "Volcanic coast", "Savanna", "Kingdoms", "The Sahel edge"],
-  "includes": ["Central & West Africa", "West Africa"]
+  "terrain": [
+   "Rainforest",
+   "Volcanic coast",
+   "Savanna",
+   "Kingdoms",
+   "The Sahel edge"
+  ],
+  "includes": [
+   "Central & West Africa",
+   "West Africa"
+  ],
+  "tone": "#2F4A38",
+  "tone_note": "Rainforest and volcanic ground: the darkest, greenest tone in the set."
  },
  "east": {
   "name": "East Africa",
   "line": "The Rift, the great migrations, the gorilla forests, Kilimanjaro, the Nile and the Swahili coast.",
-  "terrain": ["The Rift", "Migration", "Gorilla forest", "Glaciers on the equator", "Swahili coast"],
-  "includes": ["East Africa"]
+  "terrain": [
+   "The Rift",
+   "Migration",
+   "Gorilla forest",
+   "Glaciers on the equator",
+   "Swahili coast"
+  ],
+  "includes": [
+   "East Africa"
+  ],
+  "tone": "#3C5B45",
+  "tone_note": "The Rift and the montane forest — green, but lifted and cooler than the Congo basin."
  },
  "southern": {
   "name": "Southern Africa",
   "line": "The Namib, the Zambezi, the Kalahari, the Cape, and wilderness you walk rather than drive.",
-  "terrain": ["The Namib", "The Zambezi", "Delta", "Kalahari", "The Cape"],
-  "includes": ["Southern Africa"]
+  "terrain": [
+   "The Namib",
+   "The Zambezi",
+   "Delta",
+   "Kalahari",
+   "The Cape"
+  ],
+  "includes": [
+   "Southern Africa"
+  ],
+  "tone": "#8A6A3C",
+  "tone_note": "Desert, delta and Kalahari sand: the warm ochre end."
  },
  "north": {
   "name": "North Africa",
   "line": "The Atlas, the Sahara, the Nile, and Mediterranean cities older than most countries.",
-  "terrain": ["The Atlas", "Sahara", "The Nile", "Medinas", "Mediterranean"],
-  "includes": ["North Africa"]
+  "terrain": [
+   "The Atlas",
+   "Sahara",
+   "The Nile",
+   "Medinas",
+   "Mediterranean"
+  ],
+  "includes": [
+   "North Africa"
+  ],
+  "tone": "#A07C55",
+  "tone_note": "Atlas stone, Sahara and mud-brick — pale clay."
  },
  "islands": {
   "name": "Islands",
   "line": "Indian Ocean reef, granite and volcanic islands, and an ecology that evolved on its own.",
-  "terrain": ["Reef", "Granite islands", "Spiny forest", "Lemurs", "Lagoon"],
-  "includes": ["Islands"]
+  "terrain": [
+   "Reef",
+   "Granite islands",
+   "Spiny forest",
+   "Lemurs",
+   "Lagoon"
+  ],
+  "includes": [
+   "Islands"
+  ],
+  "tone": "#33605C",
+  "tone_note": "Reef and lagoon: the one tone in the set that leans blue."
  }
 }

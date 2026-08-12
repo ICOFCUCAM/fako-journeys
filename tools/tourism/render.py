@@ -13,7 +13,7 @@ import html
 import os
 import re
 
-from . import imaging, validate
+from . import imaging, plate as plate_mod, validate
 
 
 def alt_for(country, entry):
@@ -110,8 +110,6 @@ def masthead(country, taxonomy):
             '      <a href="/atlas">The Atlas</a>\n'
             '      <a href="/journey">Build a journey</a>\n'
             '      <a href="/meet">Meet Africa</a>\n'
-            '      <a href="/#destinations">Destinations</a>\n'
-            '      <a href="/#begin">Experiences</a>\n'
             '      <a href="/tourism/">Every country</a>\n'
             '    </nav>\n%s'
             '    <a class="btn" href="/contact">Plan a journey</a>\n'
@@ -262,7 +260,24 @@ TOURISM_CSS = """
 # ---- image markup --------------------------------------------------------------
 
 
-def img_tag(entry, role, alt, extra_class=""):
+# Loaded once. The plate draws the country's outline behind the caption, and
+# reading twenty-nine kilobytes of paths per slot would be silly.
+_SHAPES = None
+
+
+def shapes():
+    global _SHAPES
+    if _SHAPES is None:
+        import json
+        try:
+            with open(os.path.join(ROOT, "tourism", "shapes.json")) as fh:
+                _SHAPES = json.load(fh)
+        except (IOError, ValueError):
+            _SHAPES = {}
+    return _SHAPES
+
+
+def img_tag(entry, role, alt, extra_class="", country=None, ground=False):
     d = imaging.delivery(entry, role)
     box = 'width="%d" height="%d" style="aspect-ratio:%s;object-position:%s"' % (
         d["width"], d["height"], d["aspect"], d["objectPosition"])
@@ -270,9 +285,16 @@ def img_tag(entry, role, alt, extra_class=""):
         # No resolved photograph and no local stand-in. This used to print the
         # build's own diagnostic — "requires UNSPLASH_ACCESS_KEY" — into a page
         # the gateway links to as "all twenty-seven categories". A visitor is not
-        # the audience for a missing environment variable. They get a designed
-        # empty frame that says what the picture would be; the diagnostic keeps
-        # its proper home in `build.py status` and tourism/REPORT.md.
+        # the audience for a missing environment variable.
+        #
+        # Nor are they the audience for a grey box: five hundred and sixty-seven
+        # of the five hundred and ninety-four slots in this dataset are in this
+        # state, so it is not an edge case, it is the site. They get the plate —
+        # the country's own outline, the category, and the caption at the size
+        # the photograph's headline would be, on that country's region tone.
+        if country is not None:
+            return plate_mod.plate(country, entry, role["aspect"], alt,
+                                   shape=shapes().get(country.slug), ground=ground)
         return ('<div class="tq-empty %s" style="aspect-ratio:%s" data-unresolved="true" '
                 'role="img" aria-label="%s"><span>%s</span></div>'
                 % (extra_class, d["aspect"], esc(alt), esc(alt[:90])))
@@ -288,7 +310,15 @@ def img_tag(entry, role, alt, extra_class=""):
         attrs.append('decoding="async"')
     if extra_class:
         attrs.append('class="%s"' % extra_class)
-    return "<img " + " ".join(attrs) + ">"
+    tag = "<img " + " ".join(attrs) + ">"
+    # Art direction, where the role asks for it: the same photograph cut taller
+    # for a phone, around the same focal point. The <img> stays exactly as it
+    # was, so a browser that ignores <picture> loses nothing.
+    if d.get("mobile"):
+        m = d["mobile"]
+        return ('<picture><source media="%s" srcset="%s" sizes="%s">%s</picture>'
+                % (esc(m["media"]), esc(m["srcset"]), esc(m["sizes"]), tag))
+    return tag
 
 
 def credit(entry):
@@ -328,7 +358,7 @@ def render_hero(country, entry, cat, taxonomy):
     <div class="tq-facts">%s</div>
   </div>
 </section>""" % (
-        img_tag(entry, role, alt),
+        img_tag(entry, role, alt, country=country, ground=True),
         esc(country.name.upper()),
         esc(entry.caption),
         esc(country.summary or entry.description),
@@ -347,7 +377,7 @@ def render_cards(country, items, taxonomy, cols=3):
         <h3>%s</h3>
         <p>%s</p>%s
       </article>""" % (
-            esc(cat["id"]), img_tag(entry, role, alt), esc(cat["title"]),
+            esc(cat["id"]), img_tag(entry, role, alt, country=country, ground=True), esc(cat["title"]),
             esc(entry.caption), esc(entry.description), credit(entry)))
     return '<div class="tq-grid cols-%d">%s\n    </div>' % (cols, "".join(out))
 
@@ -365,7 +395,7 @@ def render_features(country, items, taxonomy):
           <h3>%s</h3>
           <p>%s</p>%s
         </div>
-      </div>""" % (esc(cat["id"]), img_tag(entry, role, alt), esc(cat["title"]),
+      </div>""" % (esc(cat["id"]), img_tag(entry, role, alt, country=country, ground=True), esc(cat["title"]),
                    esc(entry.caption), esc(entry.description), credit(entry)))
     return "".join(out)
 
@@ -380,7 +410,7 @@ def render_band(country, cat, entry, taxonomy, role_name=None):
     <span class="fj-stamp">%s</span>
     <h3>%s</h3><p>%s</p>
   </div></div>
-</section>""" % (esc(cat["id"]), img_tag(entry, role, alt), esc(cat["title"]),
+</section>""" % (esc(cat["id"]), img_tag(entry, role, alt, country=country, ground=True), esc(cat["title"]),
                  esc(entry.caption), esc(entry.description))
 
 
@@ -503,7 +533,7 @@ def render_index(countries, taxonomy, shell):
         <figure>%s</figure>
         <h3>%s</h3>
         <p>%s</p>
-      </a>""" % (esc(c.slug), img_tag(entry, role, alt), esc(c.name), esc(c.tagline)))
+      </a>""" % (esc(c.slug), img_tag(entry, role, alt, country=c, ground=True), esc(c.name), esc(c.tagline)))
     body = """
 <section class="fj-open">
   <div class="fj-frame">

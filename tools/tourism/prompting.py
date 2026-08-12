@@ -77,8 +77,16 @@ def aspect_note(role):
     loses its head when the page crops it to 1:1.
     """
     aw, ah = role["aspect"]
-    return ("The frame will be cropped to %d:%d for use, so keep the subject clear "
+    note = ("The frame will be cropped to %d:%d for use, so keep the subject clear "
             "of the edges and leave room around it." % (aw, ah))
+    # And what that crop must not take with it. The same sentence is printed on
+    # the review sheet beside every candidate, so the instruction the picture
+    # was made to and the instruction it is judged against are one sentence
+    # rather than two people's memory of one.
+    focus = (role.get("focus") or "").strip()
+    if focus:
+        note += " What the crop must keep: %s." % focus.rstrip(".")
+    return note
 
 
 def size_for(role, style):
@@ -151,7 +159,8 @@ def for_placement(country, placement, taxonomy, entry=None, style=None):
     comp = composition(focal, style)
     if comp:
         sentences.append("Compose it %s." % comp)
-    sentences.append(aspect_note({"aspect": placement["aspect"]}))
+    sentences.append(aspect_note({"aspect": placement["aspect"],
+                                  "focus": placement.get("focus", "")}))
 
     sentences.extend(style.get("look") or [])
     if _about_people(cat or {"id": ""}, subject):

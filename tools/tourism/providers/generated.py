@@ -26,6 +26,7 @@ from .base import Provider
 
 class Generated(Provider):
     name = "openai"
+    synthetic = True
     key_env = "OPENAI_API_KEY"
     image_host = "/images/generated/"
     supports_focal_crop = False     # the composition has to be right in the original

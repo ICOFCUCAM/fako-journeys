@@ -154,12 +154,25 @@ def cmd_resolve(args):
 
     filled, failures, by_provider = 0, [], {}
     exhausted = set()
+    # What each country has already been given, one word-bag per filled slot, so
+    # the ranker can score down a sixth photograph of the same animal. Seeded
+    # from the cache, because a resumed run has to know what the first run took.
+    from . import relevance as _rel
+    taken = {}
+    for c in countries:
+        bags = []
+        for cat in cats:
+            rec = cache.get(c.slug, cat["id"])
+            if rec and rec.get("imageUrl"):
+                bags.append(_rel.words(rec.get("alt") or rec.get("description") or ""))
+        taken[c.slug] = bags
     try:
         for c, cat in todo:
             entry = c.entry(cat["id"])
             try:
                 record, err = resolve.resolve_entry(c, cat, entry, tax.role(cat["id"]),
-                                                    seen, args.provider, exhausted)
+                                                    seen, args.provider, exhausted,
+                                                    taken.get(c.slug))
             except resolve.RateLimited as exc:
                 print("\n  STOPPED: %s" % exc)
                 print("  %d slot(s) still unresolved. Everything resolved so far is "
@@ -168,6 +181,8 @@ def cmd_resolve(args):
             if record:
                 cache.put(c.slug, cat["id"], record)
                 entry.image = record
+                taken.setdefault(c.slug, []).append(
+                    _rel.words(record.get("alt") or record.get("description") or ""))
                 filled += 1
                 by_provider[record["provider"]] = by_provider.get(record["provider"], 0) + 1
                 print("  ok    %-14s %-20s %-9s %-12s score %s"

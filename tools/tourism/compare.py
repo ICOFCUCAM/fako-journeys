@@ -127,6 +127,7 @@ def build(country, taxonomy, cache, path=OUT):
         <h2>%s</h2>
         <p class="where">%s &middot; <b>%s</b> &middot; delivered %d:%d</p>
         <p class="brief">%s</p>
+        <p class="focus">%s</p>
       </header>
       <div class="cands">%s</div>
     </section>""" % (
@@ -135,6 +136,7 @@ def build(country, taxonomy, cache, path=OUT):
             esc(p["wrapper"] or "default"), p["aspect"][0], p["aspect"][1],
             esc("LOCKED — hand-picked artwork, not a generated slot"
                 if p["locked"] else p["instruction"]),
+            esc(("The crop must keep: " + p["focus"]) if p.get("focus") else ""),
             "".join(card(c, p["aspect"]) for c in cands)
             or '<p class="none">no candidates yet — run <code>build.py generate</code></p>',
         ))
@@ -171,7 +173,13 @@ button:hover{background:var(--accent);color:var(--bg)}
 .slot.locked{opacity:.5}
 .slot h2{font:700 19px/1.1 "Archivo Narrow",Arial Narrow,sans-serif;text-transform:uppercase}
 .where{font:10.5px/1.6 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.brief{margin:8px 0 18px;max-width:80ch;color:var(--muted)}
+.brief{margin:8px 0 6px;max-width:80ch;color:var(--muted)}
+/* What the crop must not throw away, from the role. The one thing a reviewer is
+   actually judging and it was not on the sheet: a candidate can be the right
+   subject and still be the wrong photograph once this frame is cut out of it. */
+.focus{margin:0 0 18px;max-width:80ch;font:12px/1.6 ui-monospace,Menlo,monospace;
+  color:var(--accent)}
+.focus:empty{display:none}
 .cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,240px));gap:18px}
 .cand{display:block;cursor:pointer;border:2px solid transparent;padding:8px;background:#fff}
 .cand:hover{border-color:var(--line)}

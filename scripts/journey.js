@@ -133,17 +133,15 @@
     document.getElementById('jn-alts').innerHTML = '';
   }
 
+  /* The window, from the one place it is defined. The journey page carries the
+     silhouettes in its own payload because the reveal has to be instant — there
+     is no moment to fetch in between the last question and the answer. */
   function shapeOf(slug) {
     var c = D.countries[slug];
     if (!c || !c.shape) return '';
-    var art = c.window
-      ? '<image clip-path="url(#jc)" href="' + esc(c.window) + '" x="0" y="0" width="'
-        + c.shape.w + '" height="' + c.shape.h + '" preserveAspectRatio="xMidYMid slice"/>'
-      : '';
-    return '<svg viewBox="0 0 ' + c.shape.w + ' ' + c.shape.h + '" role="img" aria-label="'
-      + esc(c.window && c.windowAlt ? c.windowAlt : 'The outline of ' + c.name) + '">'
-      + '<defs><clipPath id="jc"><path d="' + c.shape.d + '"/></clipPath></defs>'
-      + '<path class="jn-shape-fill" d="' + c.shape.d + '"/>' + art + '</svg>';
+    return window.AfrinkongWindow.svg(c.shape, {
+      image: c.window, alt: c.windowAlt, name: c.name, ident: 'jw',
+      classes: 'af-window-svg'});
   }
 
   function paintReveal() {

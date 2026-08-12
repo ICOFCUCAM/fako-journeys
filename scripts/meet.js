@@ -31,7 +31,6 @@
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
   var D = null;                 /* data/meet.json, fetched once */
-  var shapes = null;            /* silhouettes, fetched when a country opens */
   var state = {strand: null, country: null};
   var order = [];               /* countries, in the order the continent reads */
 
@@ -135,25 +134,15 @@
   function drawShape(slug) {
     var host = document.getElementById('mt-shape');
     if (!host) return;
-    var paint = function () {
-      var s = shapes && shapes[slug];
-      var c = D.countries[slug];
+    window.AfrinkongWindow.shapes().then(function (all) {
+      var s = all[slug], c = D.countries[slug];
       if (!s || !c || !host.isConnected) return;
-      var art = c.window
-        ? '<image clip-path="url(#mtc)" href="' + esc(c.window) + '" x="0" y="0" width="'
-          + s.w + '" height="' + s.h + '" preserveAspectRatio="xMidYMid slice"/>'
-        : '';
       host.toggleAttribute('data-photo', !!c.window);
-      host.innerHTML = '<svg viewBox="0 0 ' + s.w + ' ' + s.h + '" role="img" aria-label="'
-        + esc(c.window && c.windowAlt ? c.windowAlt : 'The outline of ' + c.name) + '">'
-        + '<defs><clipPath id="mtc"><path d="' + s.d + '"/></clipPath></defs>'
-        + '<path class="mt-shape-fill" d="' + s.d + '"/>' + art + '</svg>'
+      host.innerHTML = window.AfrinkongWindow.svg(s, {
+        image: c.window, alt: c.windowAlt, name: c.name, ident: 'mtw',
+        classes: 'af-window-svg'})
         + '<span class="mt-country-cap">' + esc(c.name) + '</span>';
-    };
-    if (shapes) { paint(); return; }
-    fetch('/tourism/shapes.json').then(function (r) { return r.json(); })
-      .then(function (j) { shapes = j; paint(); })
-      .catch(function () { shapes = {}; });
+    });
   }
 
   /* ---- the people components --------------------------------------------- */

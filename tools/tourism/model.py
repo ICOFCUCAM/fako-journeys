@@ -135,6 +135,9 @@ class Region(object):
         self.line = raw.get("line") or ""
         self.terrain = list(raw.get("terrain") or [])
         self.includes = list(raw.get("includes") or [])
+        # The ground a country from this region is drawn on when it has no
+        # photograph yet. Five values of the same ink, not five brand colours.
+        self.tone = raw.get("tone") or ""
 
 
 def load_regions(path=None):
@@ -144,7 +147,18 @@ def load_regions(path=None):
             raw = json.load(fh)
     except (IOError, ValueError):
         return {}
-    return collections.OrderedDict((k, Region(k, v)) for k, v in raw.items())
+    return collections.OrderedDict((k, Region(k, v)) for k, v in raw.items()
+                                   if not k.startswith("$"))
+
+
+def region_of(country, regions=None):
+    """Which of the five a country files itself under. One definition, because
+    four modules were each deriving it from `includes` on their own."""
+    regions = regions if regions is not None else load_regions()
+    for key, reg in regions.items():
+        if country.region in reg.includes:
+            return key, reg
+    return "", None
 
 
 def load_picks(path=None):
