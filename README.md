@@ -177,13 +177,20 @@ four identical URLs with four different width descriptors — the browser believ
 descriptors, and told a 1024px file is 2400px wide it will pick it for a 2400px
 slot and scale it up.
 
-**Weight — the one thing that must be fixed before launch.** Placed files are
-copied as-is; nothing here re-encodes them. The home page alone now pulls
-**23 MB across 16 images**, and single frames over 3 MB feed 190px transect
-columns. No image library is available in the environment this was built in, so
-it could not be done here. Resize and re-encode (roughly: 2× the CSS box width,
-WebP or JPEG at q80) before this goes live. The layout is right; the payload is
-not.
+**Weight.** `place` copies files as-is, so the site accumulated 40 MB across
+29 images — 23 MB of it on the home page, with 3 MB frames feeding 190px
+columns. `npm run tourism:optimise` fixes it: each image is resized to twice
+the widest box its slot is ever painted at, re-encoded as JPEG q82 (PNG only
+where there is real transparency), and every `src` and `srcset` pointing at it
+is rewritten — including the width descriptor, which would otherwise tell the
+browser a 900px file is 3000px wide.
+
+It needs Pillow, which is the one dependency in this project and deliberately
+not a runtime one: it prepares images, it never serves them, so it stays out of
+`package.json` and the deployed site is still static files. Where Pillow is
+missing the command says so and changes nothing;
+`.github/workflows/tourism-optimise.yml` runs it on a runner, weighs the pages
+before and after, fails if any image reference is left dangling, and commits.
 
 `OPENAI_API_KEY` is server-side only, on exactly the same terms as the other
 two: read from the environment by a CLI on a developer or CI machine, never

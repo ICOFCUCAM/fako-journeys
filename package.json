@@ -25,7 +25,8 @@
     "tourism:generate": "python3 tools/tourism/build.py generate",
     "tourism:intake": "python3 tools/tourism/build.py intake",
     "tourism:compare": "python3 tools/tourism/build.py compare",
-    "tourism:place": "python3 tools/tourism/build.py place"
+    "tourism:place": "python3 tools/tourism/build.py place",
+    "tourism:optimise": "python3 tools/tourism/build.py optimise"
   },
   "engines": {
     "node": ">=18"

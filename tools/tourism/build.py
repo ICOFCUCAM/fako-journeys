@@ -15,6 +15,7 @@
     build.py intake              read incoming/ and propose a slot for each upload
     build.py compare             contact sheet: every candidate for every slot
     build.py place               put chosen candidates into their slots
+    build.py optimise            resize and re-encode the placed images
     build.py scaffold            create a new country with 27 empty slots
     build.py report              write tourism/REPORT.md
     build.py all                 validate, render, verify, report
@@ -420,6 +421,14 @@ def cmd_compare(args):
     return 0
 
 
+def cmd_optimise(args):
+    """Resize and re-encode the placed images so the site is deliverable."""
+    from tourism import optimise
+    country = _one_country(args)
+    summary = optimise.run(country, dry_run=args.dry_run)
+    return 0 if summary.get("available") else 2
+
+
 def cmd_place(args):
     """Put chosen candidates into the slots they were generated for."""
     from tourism import place
@@ -471,6 +480,7 @@ COMMANDS = {
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,
+    "optimise": cmd_optimise,
 }
 
 
