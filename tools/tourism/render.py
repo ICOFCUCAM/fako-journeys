@@ -58,7 +58,8 @@ SECTIONS = [
 
 
 def esc(s):
-    return html.escape(s or "", quote=True)
+    # str() first: a year is an int, and html.escape reaches for .replace on it.
+    return html.escape(str(s) if s is not None else "", quote=True)
 
 
 # ---- design system extraction --------------------------------------------------
@@ -70,7 +71,16 @@ def _between(src, start_pat, end_pat):
 
 
 class Shell:
-    """The site's own chrome, read off cameroon.html."""
+    """The stylesheet and the reveal script, read off cameroon.html.
+
+    It used to lift the masthead and footer too, which meant every one of these
+    pages — Kenya's, Morocco's, Nigeria's — wore Kamerun's brand, linked to
+    Kamerun's circuits and printed a Douala telephone number. That is not a
+    cosmetic mismatch: it tells somebody reading about Nigeria to call an
+    operator in Cameroon. The chrome is built per country now; only the CSS and
+    the reveal behaviour are still borrowed, because the tq- classes are written
+    against the fj- system in that block.
+    """
 
     def __init__(self, index_path=None):
         with open(index_path or os.path.join(ROOT, "cameroon.html")) as f:
@@ -81,17 +91,74 @@ class Shell:
         # rendered on white with no rules and no accent. Carry the links too.
         self.links = "\n".join(re.findall(r'<link rel="stylesheet"[^>]*>', src))
         self.style = _between(src, r"<style>", r"</style>")
-        self.masthead = _between(src, r'<header class="fj-mast">', r"</header>")
-        self.footer = _between(src, r'<footer class="fj-foot">', r"</footer>")
         self.script = _between(src, r"<script>", r"</script>")
-        if not (self.style and self.masthead and self.footer and self.links):
+        if not (self.style and self.links):
             raise RuntimeError("could not read the shell out of cameroon.html")
-        # the masthead CTA jumps to an on-page form that country pages do not have
-        self.masthead = self.masthead.replace('href="#quote"', 'href="/contact"')
+
+
+def masthead(country, taxonomy):
+    """Afrinkong chrome, naming the country you are actually reading about."""
+    op = country.operator
+    tel = ('<span class="fj-mast-tel">%s &middot; %s</span>'
+           % (esc(op.name), esc(op.base))) if op else ""
+    return ('<header class="fj-mast">\n'
+            '  <div class="fj-frame fj-mast-in">\n'
+            '    <a class="fj-mark" href="%s"><i>Afrinkong</i><b>%s</b>'
+            '<span>All %d categories</span></a>\n'
+            '    <nav class="fj-routes">\n'
+            '      %s\n'
+            '      <a href="/#destinations">Destinations</a>\n'
+            '      <a href="/#begin">Experiences</a>\n'
+            '      <a href="/tourism/">Every country</a>\n'
+            '    </nav>\n%s'
+            '    <a class="btn" href="/contact">Plan a journey</a>\n'
+            '  </div>\n</header>'
+            % (esc(country.url), esc(country.name), len(taxonomy.enabled),
+               ('<a href="%s">%s home</a>' % (esc(country.url), esc(country.name)))
+               if country.slug else '<a href="/">Afrinkong</a>', tel))
+
+
+def footer(country):
+    op = country.operator
+    who = ('<p>%s runs %s, out of %s, since %s.</p>' %
+           (esc(op.name), esc(country.name), esc(op.base), esc(op.since))) if op else \
+          ('<p>%s is covered by a licensed company based in the country itself.</p>'
+           % esc(country.name))
+    return ('<footer class="fj-foot">\n'
+            '  <div class="fj-frame">\n'
+            '    <div class="fj-foot-grid">\n'
+            '      <div>\n'
+            '        <div class="fj-foot-brand">Afrinkong<span>Journeys across Africa</span></div>\n'
+            '        <p>A group of locally run tour operators working across Africa. Every country '
+            'is worked through the same twenty-seven categories, so two of them can be compared on '
+            'the same terms.</p>\n%s'
+            '      </div>\n'
+            '      <div class="fj-foot-col">\n        <b>%s</b>\n'
+            '        <a href="%s">Destination page</a>\n'
+            '        <a href="/#destinations">All destinations</a>\n'
+            '        <a href="/#window">The map</a>\n'
+            '      </div>\n'
+            '      <div class="fj-foot-col">\n        <b>Plan</b>\n'
+            '        <a href="/contact">Start a journey</a>\n'
+            '        <a href="/contact">Contact an operator</a>\n'
+            '        <a href="/#seasons">Travel seasons</a>\n'
+            '      </div>\n'
+            '    </div>\n'
+            '    <div class="fj-foot-bar">Afrinkong &middot; %s &middot; Every picture on this page '
+            'is credited to the photographer who took it</div>\n'
+            '  </div>\n</footer>'
+            % (who, esc(country.name), esc(country.url), esc(country.name)))
 
 
 TOURISM_CSS = """
 /* ---- tourism country pages -------------------------------------------------- */
+/* The mark names the group first and the country second, so a page reached from
+   a search result says whose site it is and what it is about, in that order. */
+.fj-mark i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:8.5px;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--c-accent)}
+.fj-mast-tel{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+@media(max-width:1100px){.fj-mast-tel{display:none}}
 .tq-hero{position:relative;background:var(--fj-basalt);color:var(--fj-onphoto)}
 .tq-hero-pic{position:absolute;inset:0;overflow:hidden}
 .tq-hero-pic img{width:100%;height:100%;object-fit:cover}
@@ -396,16 +463,28 @@ def render_country(country, taxonomy, shell):
 
     hero = country.entry("hero")
     return PAGE % {
-        "title": esc("%s Tourism — 27 Experiences | Kamerun" % country.name),
+        "title": esc("%s — all %d experiences | Afrinkong"
+                     % (country.name, len(taxonomy.enabled))),
         "description": esc(country.summary or (hero.description if hero else country.name)),
         "links": shell.links,
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
-        "masthead": shell.masthead,
+        "masthead": masthead(country, taxonomy),
         "body": "\n".join(parts),
-        "footer": shell.footer,
+        "footer": footer(country),
         "script": shell.script.replace("<script>", "").replace("</script>", ""),
     }
+
+
+class _Everywhere(object):
+    """The index is not a country, but it needs the same chrome."""
+    slug = ""
+    name = "Every country"
+    url = "/tourism/"
+    operator = None
+
+
+_ALL = _Everywhere()
 
 
 def render_index(countries, taxonomy, shell):
@@ -438,14 +517,15 @@ def render_index(countries, taxonomy, shell):
   </div>
 </section>""" % "".join(cards)
     return PAGE % {
-        "title": "Tourism by Country | Kamerun",
-        "description": "Country tourism guides, each covering the same 27 travel experiences.",
+        "title": "Every country, all %d experiences | Afrinkong" % len(taxonomy.enabled),
+        "description": "Country guides across Africa, each covering the same %d travel experiences, "
+                       "so two countries can be compared on the same terms." % len(taxonomy.enabled),
         "links": shell.links,
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
-        "masthead": shell.masthead,
+        "masthead": masthead(_ALL, taxonomy),
         "body": body,
-        "footer": shell.footer,
+        "footer": footer(_ALL),
         "script": shell.script.replace("<script>", "").replace("</script>", ""),
     }
 
