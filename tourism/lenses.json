@@ -1,0 +1,34 @@
+{
+ "$comment": "The six things a country can lead on. A lens is not a tag applied to everything — every country in the set has all twenty-seven categories written up, so filtering on those would light the whole map and tell a traveller nothing. A lens is what a country declares in its own `calls`, which is editorial and deliberately short: Uganda calls wildlife and culture, and does not call coast, even though it has lakes. `categories` is the other direction — which of the twenty-seven write-ups belong to this lens, so opening a country under a lens leads with the right places.",
+
+ "wildlife": {
+  "title": "Wildlife",
+  "line": "Where the animals are the reason you came.",
+  "categories": ["wildlife", "safari"]
+ },
+ "culture": {
+  "title": "Culture",
+  "line": "Kingdoms, languages, festivals and the people who keep them.",
+  "categories": ["culture", "traditional-people", "festivals", "crafts", "local-life"]
+ },
+ "coast": {
+  "title": "Coast",
+  "line": "Atlantic, Indian Ocean, Mediterranean, and the lakes big enough to have surf.",
+  "categories": ["beaches", "lakes-rivers", "waterfalls"]
+ },
+ "heritage": {
+  "title": "Heritage",
+  "line": "What was built here, and what is still standing.",
+  "categories": ["historic-sites", "heritage", "architecture", "cities"]
+ },
+ "mountains": {
+  "title": "Mountains",
+  "line": "The Atlas, the Rwenzori, Kilimanjaro, the Simien, Fako.",
+  "categories": ["mountains", "outdoor", "adventure"]
+ },
+ "food": {
+  "title": "Food",
+  "line": "What a country actually eats, not what it serves tourists.",
+  "categories": ["food"]
+ }
+}

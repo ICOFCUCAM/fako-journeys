@@ -270,6 +270,14 @@ def cmd_sidebyside(args):
     return 0
 
 
+def cmd_atlas(args):
+    """The living atlas: /atlas, plus one places payload per country."""
+    from tourism import atlas
+    tax, countries, _cache = dataset()
+    atlas.run(countries, tax)
+    return 0
+
+
 def cmd_gateway(args):
     from tourism import gateway
     _tax, countries, _cache = dataset()
@@ -503,6 +511,8 @@ def cmd_all(args):
     print()
     cmd_gateway(args)
     print()
+    cmd_atlas(args)
+    print()
     cmd_sidebyside(args)
     print()
     rc = cmd_verify(args) or rc
@@ -515,7 +525,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
-    "gateway": cmd_gateway, "sidebyside": cmd_sidebyside,
+    "gateway": cmd_gateway, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,

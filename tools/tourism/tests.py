@@ -733,6 +733,66 @@ def main():
                          log=lambda *a: None)["matched"] >= 1
               and open(os.path.join(root, "index.html")).read() == before)
 
+        # -- the atlas -------------------------------------------------------------
+        # The geography is the one part of this system that is generated from
+        # data a human never types, so the things worth testing are that it stays
+        # generated: no country named in code, no coordinate invented, and no
+        # place claimed that the dataset does not already say.
+        print("\natlas")
+        from tourism import atlas
+        lenses = atlas.load_lenses()
+        sp = atlas.spine(countries, lenses)
+        check("every published country is on the spine",
+              set(sp["countries"]) == set(c.slug for c in countries if c.published))
+        check("every country lands in exactly one region",
+              all(sp["countries"][s]["regionKey"] for s in sp["countries"])
+              and sum(len(r["countries"]) for r in sp["regions"]) == len(sp["countries"]))
+        check("a region's view contains every one of its members",
+              all(all(_inside(sp["countries"][s]["box"], r["view"])
+                      for s in r["countries"] if sp["countries"][s]["box"])
+                  for r in sp["regions"]))
+        check("a lens holds only countries that call it themselves",
+              all(all(l["key"] in sp["countries"][s]["calls"] for s in l["countries"])
+                  for l in sp["lenses"]))
+        check("no lens is empty", all(l["countries"] for l in sp["lenses"]))
+        check("the spine carries no image URL nobody fetched",
+              "imageUrl" not in json.dumps(sp))
+
+        pack = atlas.places(uganda, tax, lenses)
+        titles = [p["title"] for p in pack["places"]]
+        check("a country's places are its own written entries",
+              set(titles) <= set(e.caption for e in uganda.entries))
+        check("the hero is not offered as a place",
+              uganda.entry("hero").caption not in titles)
+        check("places lead with what the country calls itself on",
+              pack["places"][0]["id"] in ("wildlife", "safari"), pack["places"][0]["id"])
+        check("an unresolved place carries no photograph",
+              all(p["image"] is None for p in pack["places"]))
+
+        page = atlas.render(countries, tax)
+        check("every country on the map is reachable without script",
+              all(('href="%s"' % c.url) in page
+                  for c in countries if c.published and c.url.startswith("/")))
+        check("the map is one SVG, not one per country", page.count("<svg") == 1)
+        check("the continent pane lists every region without script",
+              all(r["name"].replace("&", "&amp;") in page for r in sp["regions"]))
+        # The claim is that the atlas is data-driven, and the way to test a claim
+        # like that is to change the data and watch the output follow — not to
+        # grep the source for country names, which only tests the comments.
+        subset = [c for c in countries if c.slug in ("uganda", "kenya", "morocco")]
+        small = atlas.spine(subset, lenses)
+        check("dropping countries drops them from the map's spine",
+              set(small["countries"]) == {"uganda", "kenya", "morocco"})
+        check("a region with no members left disappears rather than emptying",
+              all(r["countries"] for r in small["regions"])
+              and len(small["regions"]) < len(sp["regions"]))
+        check("a lens narrows to whoever is left",
+              all(set(l["countries"]) <= {"uganda", "kenya", "morocco"}
+                  for l in small["lenses"]))
+        check("region views are recomputed, not cached from the full set",
+              any(r["view"] != next(x["view"] for x in sp["regions"] if x["key"] == r["key"])
+                  for r in small["regions"]))
+
     finally:
         httpd.shutdown()
         shutil.rmtree(tmp, ignore_errors=True)
@@ -746,6 +806,15 @@ def main():
     if not failed:
         print("both providers are ready for real credentials")
     return 1 if failed else 0
+
+
+def _inside(box, view):
+    """Is a country's box inside the view its region flies to?"""
+    if not box or not view:
+        return True
+    return (box[0] >= view[0] - 0.5 and box[1] >= view[1] - 0.5
+            and box[0] + box[2] <= view[0] + view[2] + 0.5
+            and box[1] + box[3] <= view[1] + view[3] + 0.5)
 
 
 def _raises(fn, exc_type):
