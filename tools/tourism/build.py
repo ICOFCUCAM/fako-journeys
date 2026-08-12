@@ -19,6 +19,7 @@
     build.py homes               a standalone home page per country
     build.py scaffold            create a new country with 27 empty slots
     build.py gateway             rewrite the gateway's country lists from the dataset
+    build.py sidebyside          write /compare.html — two countries, same questions
     build.py report              write tourism/REPORT.md
     build.py all                 validate, render, verify, report
 
@@ -262,6 +263,13 @@ def cmd_scaffold(args):
     return 0
 
 
+def cmd_sidebyside(args):
+    from tourism import sidebyside
+    tax, countries, _cache = dataset()
+    sidebyside.run(countries, tax)
+    return 0
+
+
 def cmd_gateway(args):
     from tourism import gateway
     _tax, countries, _cache = dataset()
@@ -495,6 +503,8 @@ def cmd_all(args):
     print()
     cmd_gateway(args)
     print()
+    cmd_sidebyside(args)
+    print()
     rc = cmd_verify(args) or rc
     cmd_report(args)
     return rc
@@ -505,7 +515,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
-    "gateway": cmd_gateway,
+    "gateway": cmd_gateway, "sidebyside": cmd_sidebyside,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,
