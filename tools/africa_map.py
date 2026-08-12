@@ -197,7 +197,7 @@ def area(points):
     return abs(s) / 2.0
 
 
-def prune_outliers(rings):
+def prune_outliers(rings, share=6.0):
     """Drop far-flung territory that is not what the map is about.
 
     At 50m, South Africa carries the Prince Edward Islands nineteen hundred
@@ -206,13 +206,16 @@ def prune_outliers(rings):
     continental map to them pushes Africa up and off centre. Zanzibar sits just
     off Tanzania and has to survive, so the test is distance rather than size:
     keep a ring only if it overlaps the main landmass's box, grown by a sixth.
+    `share` tightens that for the true-size comparison, where Alaska rides along
+    with the United States and doubles the width of a shape meant to be the
+    contiguous country people picture.
     """
     if len(rings) < 2:
         return rings
     main = max(rings, key=area)
     xs = [p[0] for p in main]
     ys = [p[1] for p in main]
-    mx, my = (max(xs) - min(xs)) / 6.0, (max(ys) - min(ys)) / 6.0
+    mx, my = (max(xs) - min(xs)) / share, (max(ys) - min(ys)) / share
     x0, x1 = min(xs) - mx, max(xs) + mx
     y0, y1 = min(ys) - my, max(ys) + my
     keep = []
@@ -325,6 +328,97 @@ def render(shapes, frame):
 SOLO_BOX = 1000.0       # the long side of a single-country silhouette
 
 
+# The true-size comparison. Africa is 30.4 million km2 and the world map most
+# people carry in their heads is Mercator, which inflates everything away from
+# the equator and shrinks everything on it. These four are projected with the
+# same equal-area projection as the continent — each centred on itself, which is
+# what keeps the areas honest — scaled by the same factor, and nested inside.
+# The offsets are the only hand-set numbers: where a shape sits is composition.
+# Each is laid into the middle of the continent one at a time rather than packed
+# alongside the others: four irregular outlines that between them cover most of
+# Africa's area do not tile, and a packing tuned by eye would be the one part of
+# this that was not honest geometry. Offsets centre each shape in the outline.
+SCALE_SET = (
+    (840, "United States", "9.8", (62, 200)),
+    (156, "China", "9.6", (174, 283)),
+    (356, "India", "3.3", (290, 342)),
+    ((250, 276, 724, 380, 826, 616, 620, 300, 208, 756, 40, 56, 528, 203, 348),
+     "Western Europe", "3.9", (329, 377)),
+)
+
+
+def centroid(rings):
+    flat = [p for r in rings for p in r]
+    return (sum(p[0] for p in flat) / len(flat), sum(p[1] for p in flat) / len(flat))
+
+
+def land_path(topo):
+    """Africa as one silhouette, with the internal borders left out.
+
+    The comparison is about the whole continent, and a country grid inside it
+    invites the eye to read borders instead of area.
+    """
+    shapes, _frame = build(topo)
+    return "".join(d for _code, _name, d in shapes)
+
+
+def scale_shapes(topo):
+    """Each comparison country, drawn in the continental map's own units.
+
+    Projected about its own centre rather than about Africa's: an azimuthal
+    equal-area projection preserves area from any centre, and centring each on
+    itself avoids the shear that would make the comparison look rigged.
+    """
+    global LON0, LAT0
+    _shapes, (k, _ox, _oy) = build(topo)
+    arcs = decode(topo)
+    keep = LON0, LAT0
+    by_code = {}
+    for geom in topo["objects"]["countries"]["geometries"]:
+        if str(geom.get("id", "")).isdigit():
+            by_code[int(geom["id"])] = geom
+
+    out = []
+    for codes, label, area_mkm2, (tx, ty) in SCALE_SET:
+        codes = codes if isinstance(codes, tuple) else (codes,)
+        lonlat = []
+        for code in codes:
+            geom = by_code.get(code)
+            if not geom:
+                continue
+            for poly in polygons(geom):
+                for part in poly:
+                    pts = ring(arcs, part)
+                    if len(pts) > 3:
+                        lonlat.append(pts)
+        if not lonlat:
+            continue
+        lon0, lat0 = centroid(lonlat)
+        LON0, LAT0 = math.radians(lon0), math.radians(lat0)
+        rings = [[project(lo, la) for lo, la in r] for r in lonlat]
+        rings = prune_outliers(rings, share=2.5)
+        LON0, LAT0 = keep
+        flat = [p for r in rings for p in r]
+        x0 = min(p[0] for p in flat)
+        y0 = min(p[1] for p in flat)
+        parts = []
+        for r in rings:
+            pts = [(round((p[0] - x0) * k, PRECISION), round((p[1] - y0) * k, PRECISION)) for p in r]
+            pts = thin(pts, TOLERANCE)
+            if area(pts) < MIN_RING_AREA * 4:
+                continue
+            trimmed = [pts[0]]
+            for pt in pts[1:]:
+                if pt != trimmed[-1]:
+                    trimmed.append(pt)
+            if len(trimmed) > 3:
+                parts.append("M" + "L".join("%g %g" % p for p in trimmed) + "Z")
+        if parts:
+            out.append({"label": label, "area": area_mkm2, "x": tx, "y": ty,
+                        "d": "".join(parts)})
+    return out
+
+
 def views(topo):
     """Every roster country's box in the continental map's own coordinates.
 
@@ -413,7 +507,12 @@ if __name__ == "__main__":
         sys.exit(__doc__.strip().splitlines()[2].strip())
     with open(sys.argv[1]) as fh:
         topo = json.load(fh)
-    if len(sys.argv) == 3 and sys.argv[2] == "--views":
+    if len(sys.argv) == 3 and sys.argv[2] == "--scale":
+        data = {"africa": "30.4", "land": land_path(topo), "shapes": scale_shapes(topo)}
+        text = json.dumps(data, indent=1)
+        sys.stderr.write("%d comparison shapes, %.1f KB\n" % (len(data["shapes"]), len(text) / 1024.0))
+        print(text)
+    elif len(sys.argv) == 3 and sys.argv[2] == "--views":
         data = views(topo)
         text = json.dumps(data, indent=1, sort_keys=True)
         sys.stderr.write("%d country views, %.1f KB\n" % (len(data["countries"]), len(text) / 1024.0))

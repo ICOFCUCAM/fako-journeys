@@ -30,6 +30,7 @@ from .model import ROOT, load_picks, load_regions, load_views
 
 PAGE = os.path.join(ROOT, "index.html")
 SHAPES = os.path.join(ROOT, "tourism", "shapes.json")
+SCALE = os.path.join(ROOT, "tourism", "scale.json")
 
 # Regions in the order the continent is read on this site, north-west round to
 # the islands. The only structural list here: five regions, not fifty-four
@@ -48,7 +49,7 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "regions", "months", "destinations",
+MARKERS = ("window", "captions", "ticks", "regions", "months", "scale", "destinations",
            "operators", "picks", "footer")
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
@@ -251,6 +252,52 @@ def block_picks(countries):
     return "\n".join(out)
 
 
+def block_scale():
+    """Africa at true size, with one country laid inside it at a time.
+
+    Everybody's mental map of the world is Mercator, which inflates everything
+    away from the equator and shrinks everything on it, and the result is that
+    Africa is remembered as roughly the size of Greenland. These outlines are
+    drawn with the same equal-area projection as the map in the hero — each
+    centred on itself, which is what keeps the areas honest — so this is
+    geometry rather than an illustration of a fact.
+    """
+    import json
+    try:
+        with open(SCALE) as fh:
+            data = json.load(fh)
+    except (IOError, ValueError):
+        return ""
+    shapes = data.get("shapes") or []
+    if not shapes:
+        return ""
+    figs = "".join(
+        '<g class="wa-scale-in" data-scale="%d" transform="translate(%d,%d)">'
+        '<path d="%s"/></g>' % (i, s["x"], s["y"], s["d"])
+        for i, s in enumerate(shapes))
+    btns = "".join(
+        '<button class="wa-scale-btn" type="button" data-scale="%d" aria-pressed="%s">'
+        '<b>%s</b><span>%s m km&sup2;</span></button>'
+        % (i, "true" if i == 0 else "false", esc(s["label"]), esc(s["area"]))
+        for i, s in enumerate(shapes))
+    total = sum(float(s["area"]) for s in shapes)
+    return ('      <div class="wa-scale-map">\n'
+            '        <svg viewBox="0 0 1000 1060" role="img" aria-label="Africa at true scale, '
+            'with the United States, China, India and western Europe drawn inside it at the same '
+            'equal-area scale.">\n'
+            '          <path class="wa-scale-land" d="%s"/>\n'
+            '          %s\n        </svg>\n      </div>\n'
+            '      <div class="wa-scale-side">\n'
+            '        <div class="wa-scale-btns" role="group" aria-label="Lay a country inside Africa">%s</div>\n'
+            '        <p class="wa-scale-sum"><b>%s</b><span>million km&sup2;</span></p>\n'
+            '        <p class="wa-scale-note">All four together come to %.1f million. Africa is %s. '
+            'These are drawn with the same equal-area projection as the map above, each centred on '
+            'itself &mdash; so this is geometry, not an illustration of a fact.</p>\n'
+            '      </div>'
+            % (data.get("land", ""), figs, btns, esc(data.get("africa", "30.4")),
+               total, esc(data.get("africa", "30.4"))))
+
+
 def block_destinations(countries):
     """The grid, grouped by region, each card carrying what it leads on."""
     by_region = {}
@@ -300,6 +347,7 @@ def render(countries):
         "ticks": block_ticks(with_shape, views),
         "months": block_months(seq),
         "destinations": block_destinations(seq),
+        "scale": block_scale(),
         "operators": block_operators(seq),
         "picks": block_picks(seq),
         "footer": block_footer(seq),
