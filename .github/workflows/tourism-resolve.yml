@@ -87,6 +87,10 @@ jobs:
       - name: Rebuild pages and validate
         run: |
           python3 tools/tourism/build.py all
+          # The country home pages read their pictures from the same cache, so
+          # they have to be rewritten too. Without this a resolve run fills the
+          # cache and /kenya still shows no photographs.
+          python3 tools/tourism/build.py homes
 
       - name: Per-slot status
         run: |
@@ -114,7 +118,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tourism/cache/images.json tourism/*.html tourism/REPORT.md
+          git add tourism/cache/images.json tourism/*.html tourism/REPORT.md \
+                  kenya.html rwanda.html tanzania.html south-africa.html zambia.html
           if git diff --cached --quiet; then
             echo "nothing changed — every requested slot was already cached"
           else
