@@ -93,14 +93,28 @@ ul,ol{list-style:none}
 .wa-head h2 em{font-style:normal;color:var(--c-accent)}
 @media(max-width:880px){.wa-zone{padding:62px 0}.wa-head{grid-template-columns:1fr;gap:18px;margin-bottom:34px}}
 
+/* ---- the icon medallion ---------------------------------------------------------
+   Inline SVG, drawn from the site's own stroke weight rather than pulled from an
+   icon set: a webfont or a sprite would be a network request and a second visual
+   language, and the gateway's whole argument is that it loads instantly. Each is
+   a 24px glyph in a filled disc, the way the mockup has them. */
+.wa-ico{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;
+  border-radius:50%;background:var(--c-primary);color:var(--c-bg);flex:0 0 auto}
+.wa-ico svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.6;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.wa-zone.basalt .wa-ico{background:var(--c-accent)}
+
 /* ---- regions: the continent as five rows, not five cards ------------------------ */
-.wa-regions{border-top:2px solid var(--c-primary)}
-.wa-region{display:grid;grid-template-columns:210px 1fr auto;gap:32px;align-items:baseline;padding:22px 0;border-bottom:var(--fj-rule);transition:background .2s}
-.wa-region:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
-.wa-region h3{font-size:22px}
-.wa-region p{font-size:14.5px;color:var(--c-muted)}
-.wa-region i{font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-accent);white-space:nowrap}
-@media(max-width:760px){.wa-region{grid-template-columns:1fr;gap:6px}}
+.wa-regions{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.wa-region{display:block;padding:26px 26px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule);transition:background .2s}
+.wa-region:last-child{border-right:0;padding-right:0}
+.wa-region:hover{background:color-mix(in srgb,var(--c-bg) 93%,var(--c-accent))}
+.wa-region h3{font-size:20px;margin:14px 0 8px}
+.wa-region p{font-size:14px;color:var(--c-muted)}
+.wa-region i{display:block;margin-top:16px;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-accent)}
+.wa-region.soon i{color:var(--c-muted)}
+@media(max-width:1000px){.wa-regions{grid-template-columns:1fr 1fr 1fr}.wa-region:last-child{border-right:var(--fj-rule)}}
+@media(max-width:680px){.wa-regions{grid-template-columns:1fr}.wa-region{border-right:0 !important;padding-right:0}}
 
 /* ---- destinations --------------------------------------------------------------- */
 .wa-dests{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
@@ -116,10 +130,13 @@ ul,ol{list-style:none}
 @media(max-width:560px){.wa-dests{grid-template-columns:1fr}.wa-dest{border-right:0 !important;padding-right:0 !important}}
 
 /* ---- experiences ---------------------------------------------------------------- */
-.wa-exps{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--c-primary)}
-.wa-exp{flex:1 1 200px;padding:20px 24px 18px 0;border-bottom:var(--fj-rule)}
-.wa-exp b{display:block;font-family:var(--fj-display);font-size:20px;font-weight:700;text-transform:uppercase}
-.wa-exp span{display:block;font-size:13.5px;color:var(--c-muted);margin-top:5px}
+.wa-exps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.wa-exp{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start;padding:22px 24px 20px 0;border-bottom:var(--fj-rule)}
+.wa-exp b{display:block;font-family:var(--fj-display);font-size:18px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.wa-exp span{display:block;font-size:13px;color:var(--c-muted);margin-top:5px}
+@media(max-width:1050px){.wa-exps{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:760px){.wa-exps{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.wa-exps{grid-template-columns:1fr}}
 
 /* ---- the two flagship countries -------------------------------------------------- */
 .wa-flag{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--c-accent)}
@@ -134,10 +151,12 @@ ul,ol{list-style:none}
 
 /* ---- plan ------------------------------------------------------------------------ */
 .wa-plan{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--c-primary)}
-.wa-plan div{padding:22px 22px 20px 0}
+.wa-plan>div{padding:24px 22px 20px 0;border-right:var(--fj-rule)}
+.wa-plan>div:last-child{border-right:0}
+.wa-plan .wa-ico{margin-bottom:14px}
 .wa-plan b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:9px}
 .wa-plan p{font-size:14px;color:var(--c-muted)}
-@media(max-width:900px){.wa-plan{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.wa-plan{grid-template-columns:1fr 1fr}.wa-plan>div:nth-child(2n){border-right:0}}
 @media(max-width:520px){.wa-plan{grid-template-columns:1fr}}
 
 /* ---- closing --------------------------------------------------------------------- */
@@ -215,11 +234,11 @@ ul,ol{list-style:none}
       </div>
     </div>
     <div class="wa-regions">
-      <a class="wa-region" href="#destinations"><h3>Central &amp; West</h3><p>Rainforest, volcanic coast, the Sahel edge, and the kingdoms of the Gulf of Guinea.</p><i>Cameroon &middot; live</i></a>
-      <a class="wa-region" href="#destinations"><h3>East</h3><p>The Rift, the great migrations, the gorilla forests, Kilimanjaro and the Swahili coast.</p><i>4 countries &middot; live</i></a>
-      <a class="wa-region" href="#destinations"><h3>Southern</h3><p>The Namib, the Zambezi, the Kalahari, the Cape, and wilderness you can walk rather than drive.</p><i>3 countries &middot; live</i></a>
-      <a class="wa-region" href="#plan"><h3>North</h3><p>The Atlas, the Sahara, and the cities along the Mediterranean and the Nile.</p><i>In preparation</i></a>
-      <a class="wa-region" href="#plan"><h3>Islands</h3><p>Zanzibar, S&atilde;o Tom&eacute;, the Comoros, Madagascar and the Seychelles.</p><i>In preparation</i></a>
+      <a class="wa-region" href="#destinations"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-5"/><path d="M12 16 6.5 9.5h3L5 4h14l-4.5 5.5h3z"/></svg></span><h3>Central &amp; West</h3><p>Rainforest, volcanic coast, the Sahel edge, and the kingdoms of the Gulf of Guinea.</p><i>Cameroon &middot; live</i></a>
+      <a class="wa-region" href="#destinations"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18v-5a5 5 0 0 1 5-5h5a5 5 0 0 1 5 5v5"/><path d="M8 18v-3M16 18v-3"/><path d="M12 8v9"/></svg></span><h3>East</h3><p>The Rift, the great migrations, the gorilla forests, Kilimanjaro and the Swahili coast.</p><i>4 countries &middot; live</i></a>
+      <a class="wa-region" href="#destinations"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg></span><h3>Southern</h3><p>The Namib, the Zambezi, the Kalahari, the Cape, and wilderness you can walk rather than drive.</p><i>3 countries &middot; live</i></a>
+      <a class="wa-region soon" href="#plan"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M6 20V9l6-5 6 5v11"/><path d="M10 20v-5a2 2 0 0 1 4 0v5"/></svg></span><h3>North</h3><p>The Atlas, the Sahara, and the cities along the Mediterranean and the Nile.</p><i>In preparation</i></a>
+      <a class="wa-region soon" href="#plan"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21c0-6-1-9-3-11"/><path d="M9 10c-2-3-5-3-6-1 2-1 4 0 5 1z"/><path d="M9 10c1-3 4-4 6-2-2 0-4 1-5 2z"/><path d="M9 10c3-2 6 0 6 3-1-2-3-3-5-3z"/><path d="M4 21h16"/></svg></span><h3>Islands</h3><p>Zanzibar, S&atilde;o Tom&eacute;, the Comoros, Madagascar and the Seychelles.</p><i>In preparation</i></a>
     </div>
   </div>
 </section>
@@ -260,16 +279,16 @@ ul,ol{list-style:none}
       </div>
     </div>
     <div class="wa-exps">
-      <div class="wa-exp"><b>Wildlife</b><span>Gorilla, elephant, the migration</span></div>
-      <div class="wa-exp"><b>Mountains</b><span>Kilimanjaro, Fako, the Rwenzori</span></div>
-      <div class="wa-exp"><b>Rainforest</b><span>Korup, Nyungwe, Bwindi</span></div>
-      <div class="wa-exp"><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, the Cape</span></div>
-      <div class="wa-exp"><b>Culture</b><span>Kingdoms, craft, music, markets</span></div>
-      <div class="wa-exp"><b>Food</b><span>Street, market and home cooking</span></div>
-      <div class="wa-exp"><b>Heritage</b><span>Forts, palaces, rock churches</span></div>
-      <div class="wa-exp"><b>Adventure</b><span>Trekking, rafting, the long road</span></div>
-      <div class="wa-exp"><b>Cities</b><span>Douala, Kampala, Nairobi, Cape Town</span></div>
-      <div class="wa-exp"><b>Eco-tourism</b><span>Conservation you can take part in</span></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorilla, elephant, the migration</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg></span><div><b>Mountains</b><span>Kilimanjaro, Fako, the Rwenzori</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg></span><div><b>Rainforest</b><span>Korup, Nyungwe, Bwindi</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, the Cape</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg></span><div><b>Culture</b><span>Kingdoms, craft, music, markets</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg></span><div><b>Food</b><span>Street, market and home cooking</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg></span><div><b>Heritage</b><span>Forts, palaces, rock churches</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg></span><div><b>Adventure</b><span>Trekking, rafting, the long road</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V9l6-4v16"/><path d="M10 12h9v9"/><path d="M7 12v.01M7 15v.01M13 15v.01M16 15v.01M13 18v.01M16 18v.01"/></svg></span><div><b>Cities</b><span>Douala, Kampala, Nairobi, Cape Town</span></div></div>
+      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-7"/><path d="M12 14c0-3-2-5-5-5 0 3 2 5 5 5z"/><path d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M6 21h12"/></svg></span><div><b>Eco-tourism</b><span>Conservation you can take part in</span></div></div>
     </div>
   </div>
 </section>
@@ -312,11 +331,11 @@ ul,ol{list-style:none}
       </div>
     </div>
     <div class="wa-plan">
-      <div><b>Destinations</b><p>Eight countries live, three of them run by an operator of ours.</p></div>
-      <div><b>Experiences</b><p>Day experiences through to fourteen-day transects. Fixed departures or private.</p></div>
-      <div><b>Guides</b><p>Licensed, local, and working in the language you booked in.</p></div>
-      <div><b>Transport</b><p>Vehicles that have already done the road, and internal flights where the road is two days.</p></div>
-      <div><b>Seasons</b><p>Every country has months that work and months that do not. We will tell you which.</p></div>
+      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><b>Destinations</b><p>Eight countries live, three of them run by an operator of ours.</p></div>
+      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m15 9-2 4-4 2 2-4z"/></svg></span><b>Experiences</b><p>Day experiences through to fourteen-day transects. Fixed departures or private.</p></div>
+      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span><b>Guides</b><p>Licensed, local, and working in the language you booked in.</p></div>
+      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 16V9h11l4 4v3"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/><path d="M9.3 17h5.4M3 16h1.7M18.3 16H21"/></svg></span><b>Transport</b><p>Vehicles that have already done the road, and internal flights where the road is two days.</p></div>
+      <div><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4"/></svg></span><b>Seasons</b><p>Every country has months that work and months that do not. We will tell you which.</p></div>
     </div>
   </div>
 </section>
