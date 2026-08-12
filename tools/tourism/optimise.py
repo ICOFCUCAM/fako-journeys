@@ -111,10 +111,23 @@ def encode(Image, path, width, out_dir, log=print):
     return out_path, name, w, before - after
 
 
+def pages_to_rewrite():
+    """Every HTML page at the repository root, not only the ones with slots.
+
+    `plan` finds work by scanning placements, which live on the five Kamerun
+    pages — but a file it renames may be used anywhere. The gateway uses the
+    Africa poster that the Cameroon page's band also uses, and rewriting only
+    the slot-bearing pages left index.html pointing at a file that no longer
+    existed. Anything that renames a file has to fix every reference to it, not
+    every reference it happened to be looking at.
+    """
+    return sorted(f for f in os.listdir(ROOT) if f.endswith(".html"))
+
+
 def repoint(old_url, new_url, new_width, write=True):
     """Every <img> using the old file now uses the new one, at its real width."""
     changed = 0
-    for page in pl.PAGES:
+    for page in pages_to_rewrite():
         path = os.path.join(ROOT, page)
         if not os.path.exists(path):
             continue

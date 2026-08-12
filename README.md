@@ -208,20 +208,26 @@ four identical URLs with four different width descriptors — the browser believ
 descriptors, and told a 1024px file is 2400px wide it will pick it for a 2400px
 slot and scale it up.
 
-**Weight.** `place` copies files as-is, so the site accumulated 40 MB across
-29 images — 23 MB of it on the home page, with 3 MB frames feeding 190px
-columns. `npm run tourism:optimise` fixes it: each image is resized to twice
-the widest box its slot is ever painted at, re-encoded as JPEG q82 (PNG only
-where there is real transparency), and every `src` and `srcset` pointing at it
-is rewritten — including the width descriptor, which would otherwise tell the
-browser a 900px file is 3000px wide.
+**Weight.** `place` copies files as-is, which took the site to 40 MB across 29
+images — 23 MB of it on the Cameroon home page, with 3 MB frames feeding 190px
+columns. `npm run tourism:optimise` fixed it: **40 MB down to 7.8 MB**, the
+Cameroon page from 23 MB to 3.9 MB, and the gateway to 0.4 MB. Each image is
+resized to twice the widest box its slot is ever painted at, re-encoded as JPEG
+q82 (PNG only where there is real transparency), and every `src` and `srcset`
+pointing at it is rewritten — including the width descriptor, which would
+otherwise tell the browser a 900px file is 3000px wide.
 
-It needs Pillow, which is the one dependency in this project and deliberately
-not a runtime one: it prepares images, it never serves them, so it stays out of
-`package.json` and the deployed site is still static files. Where Pillow is
-missing the command says so and changes nothing;
-`.github/workflows/tourism-optimise.yml` runs it on a runner, weighs the pages
-before and after, fails if any image reference is left dangling, and commits.
+Two things that matter if you run it again. It rewrites **every** HTML page at
+the repository root, not only the ones with slots: it renames files, and the
+gateway used a poster the Cameroon band also uses. And a slot whose wrapper
+class is missing from `adopt.SLOT_SPECS` falls back to a 1600px box — which is
+how the six transect pictures were first sized at 3000px for a 190px column.
+
+It needs Pillow, the one dependency here and deliberately not a runtime one: it
+prepares images, it never serves them, so it stays out of `package.json` and the
+deployed site is still static files.
+`.github/workflows/tourism-optimise.yml` runs it on a runner where Pillow is not
+installed locally.
 
 `OPENAI_API_KEY` is server-side only, on exactly the same terms as the other
 two: read from the environment by a CLI on a developer or CI machine, never

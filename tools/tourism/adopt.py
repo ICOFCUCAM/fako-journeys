@@ -80,6 +80,12 @@ SLOT_SPECS = (
     ("fj-crew-card",  {"aspect": [1, 1], "width": 720, "srcset": [360, 540, 720, 1080],
                        "sizes": "(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw",
                        "quality": 80}),
+    # The six climate columns. Narrow — 1152px of content over six columns is
+    # about 190px each — and easy to miss: without an entry here they fall to
+    # DEFAULT_SPEC and `optimise` sizes them for a 1600px box, which is how a
+    # 3 MB frame ends up feeding a 190px column.
+    ("fj-transect-pic", {"aspect": [4, 3], "width": 200, "srcset": [200, 300, 400, 600],
+                         "sizes": "(min-width: 900px) 190px, 33vw", "quality": 80}),
 )
 
 # Anything the classes above do not cover kept its shape from the illustration,
