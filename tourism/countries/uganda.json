@@ -1,200 +1,282 @@
 {
-  "slug": "uganda",
-  "name": "Uganda",
-  "adjective": "Ugandan",
-  "region": "East Africa",
-  "tagline": "The Pearl of Africa",
-  "summary": "Half the world's mountain gorillas, the source of the Nile, the Rwenzori snowline on the equator and savanna parks within a day's drive of each other.",
-  "published": true,
-  "entries": [
-    {
-      "category": "hero",
-      "caption": "The Pearl of Africa",
-      "description": "Gorilla forest, the Mountains of the Moon and the Nile leaving Lake Victoria — all inside one small, green country.",
-      "subject": "mist over the forested hills of Bwindi Impenetrable National Park at sunrise",
-      "focal": [50, 56]
-    },
-    {
-      "category": "nature",
-      "caption": "Green, End to End",
-      "description": "Crater lakes around Fort Portal, papyrus swamp on the Nile, and the Rwenzori snowline sitting on the equator.",
-      "subject": "the crater lakes and green hills around Fort Portal",
-      "focal": [50, 48]
-    },
-    {
-      "category": "wildlife",
-      "caption": "Wildlife Encounters",
-      "description": "Mountain gorillas in Bwindi, chimpanzees in Kibale, and tree-climbing lions in the Ishasha sector.",
-      "subject": "a mountain gorilla in the Bwindi Impenetrable Forest",
-      "focal": [52, 42]
-    },
-    {
-      "category": "safari",
-      "caption": "Queen Elizabeth and Kidepo",
-      "description": "Kob on the Kasenyi plains, elephant on the Kazinga Channel, and Kidepo Valley with almost nobody in it.",
-      "subject": "elephants on the Kazinga Channel in Queen Elizabeth National Park",
-      "focal": [48, 58]
-    },
-    {
-      "category": "mountains",
-      "caption": "The Mountains of the Moon",
-      "description": "The Rwenzori range holds glaciers three degrees from the equator, and Margherita Peak at 5,109 m.",
-      "subject": "the glaciated peaks of the Rwenzori Mountains above the moorland",
-      "focal": [50, 40]
-    },
-    {
-      "category": "waterfalls",
-      "caption": "Murchison, Through the Gap",
-      "description": "The entire Victoria Nile forced through a seven-metre gap and dropped forty-three metres into the gorge below.",
-      "subject": "the Nile forcing through the narrow gap at Murchison Falls",
-      "focal": [50, 46]
-    },
-    {
-      "category": "lakes-rivers",
-      "caption": "Where the Nile Begins",
-      "description": "The Nile leaves Lake Victoria at Jinja; Lake Bunyonyi holds twenty-nine islands and no bilharzia.",
-      "subject": "the islands and terraced shores of Lake Bunyonyi",
-      "focal": [50, 52]
-    },
-    {
-      "category": "beaches",
-      "caption": "The Ssese Islands",
-      "description": "Freshwater beaches and fishing villages on Lake Victoria, an hour and a half by ferry from Entebbe.",
-      "subject": "a sandy freshwater shore and fishing boats on the Ssese Islands",
-      "focal": [50, 56]
-    },
-    {
-      "category": "forests",
-      "caption": "Kibale and Bwindi",
-      "description": "Thirteen primate species in Kibale, and in Bwindi a forest so old and so thick it was never logged.",
-      "subject": "dense canopy and buttressed trees in Kibale Forest",
-      "focal": [50, 46]
-    },
-    {
-      "category": "adventure",
-      "caption": "Grade Five on the Nile",
-      "description": "White-water rafting below the source at Jinja, plus bungee, kayaking and the long walk up Sipi.",
-      "subject": "white-water rafting on the Nile rapids at Jinja",
-      "focal": [50, 54]
-    },
-    {
-      "category": "culture",
-      "caption": "The Kingdom of Buganda",
-      "description": "Uganda's kingdoms were never abolished for long — Buganda, Bunyoro and Toro still hold court.",
-      "subject": "a Buganda kingdom drummer in ceremonial bark cloth",
-      "focal": [50, 42]
-    },
-    {
-      "category": "traditional-people",
-      "caption": "Batwa and Karamojong",
-      "description": "The Batwa, forest people of the southwest, and the Karamojong cattle-keepers of the northeast plains.",
-      "subject": "a Karamojong herder with cattle on the plains of Karamoja",
-      "focal": [48, 38]
-    },
-    {
-      "category": "food",
-      "caption": "Rolex, Matoke, Luwombo",
-      "description": "Steamed green banana with groundnut sauce, chicken cooked in banana leaf, and an egg rolled in a chapati on every corner.",
-      "subject": "a street vendor cooking rolex chapati and eggs in Kampala",
-      "focal": [50, 52]
-    },
-    {
-      "category": "festivals",
-      "caption": "Imbalu and Nyege Nyege",
-      "description": "The Bagisu Imbalu season in the east, and four days of music on the banks of the Nile at Jinja.",
-      "subject": "drummers and dancers at the Imbalu ceremony in eastern Uganda",
-      "focal": [50, 44]
-    },
-    {
-      "category": "crafts",
-      "caption": "Bark Cloth and Basketry",
-      "description": "Bark cloth from the mutuba fig, made in Buganda for six hundred years and now UNESCO-listed.",
-      "subject": "a craftsman beating bark cloth from a mutuba fig tree",
-      "focal": [48, 50]
-    },
-    {
-      "category": "historic-sites",
-      "caption": "The Kasubi Tombs",
-      "description": "The burial ground of four Buganda kings, thatched, enormous and rebuilt by the clans who have always maintained it.",
-      "subject": "the great thatched dome of the Kasubi Tombs in Kampala",
-      "focal": [50, 48]
-    },
-    {
-      "category": "heritage",
-      "caption": "Kingdoms Still Standing",
-      "description": "Royal drums, regalia and clan structures that survived the protectorate, the 1966 crisis and the 1970s.",
-      "subject": "royal regalia and drums inside a Buganda kingdom palace",
-      "focal": [50, 46]
-    },
-    {
-      "category": "cities",
-      "caption": "Kampala on Seven Hills",
-      "description": "A capital built across hills and traffic, with the Gaddafi Mosque minaret giving the best view of all of it.",
-      "subject": "the hills and rooftops of Kampala seen from the Gaddafi Mosque minaret",
-      "focal": [50, 58]
-    },
-    {
-      "category": "architecture",
-      "caption": "Minaret, Dome and Thatch",
-      "description": "The Uganda National Mosque, the Namirembe and Rubaga cathedrals facing each other across two hills.",
-      "subject": "the minaret of the Uganda National Mosque above Kampala",
-      "focal": [50, 36]
-    },
-    {
-      "category": "local-life",
-      "caption": "Boda Bodas and Owino",
-      "description": "The boda boda is the transport system; Owino market is where the whole city goes to buy everything.",
-      "subject": "boda boda motorcycle taxis waiting at a busy Kampala street stage",
-      "focal": [50, 54]
-    },
-    {
-      "category": "family-community",
-      "caption": "Villages at the Forest Edge",
-      "description": "Community walks in Buhoma and Nkuringo, run by the villages that share the forest with the gorillas.",
-      "subject": "a community village walk beside the forest edge at Buhoma",
-      "focal": [50, 52]
-    },
-    {
-      "category": "outdoor",
-      "caption": "Sipi, Elgon, Bisoke",
-      "description": "Three waterfalls and a coffee walk at Sipi, then the long crater rim of Mount Elgon above it.",
-      "subject": "the Sipi Falls dropping off the Mount Elgon escarpment",
-      "focal": [46, 46]
-    },
-    {
-      "category": "luxury",
-      "caption": "Lodges at the Forest Edge",
-      "description": "Small lodges on the Bwindi ridge and the Kazinga Channel, close enough to walk to the trailhead after breakfast.",
-      "subject": "a lodge terrace overlooking the Bwindi forest ridge at dawn",
-      "focal": [50, 48]
-    },
-    {
-      "category": "eco-tourism",
-      "caption": "The Gorilla Permit",
-      "description": "Permit revenue funds the park and pays a share to the parishes around it — which is why the gorilla numbers are rising.",
-      "subject": "rangers and trackers setting out on a gorilla trek in Bwindi",
-      "focal": [50, 52]
-    },
-    {
-      "category": "photography",
-      "caption": "Crater Lakes at First Light",
-      "description": "The Ndali-Kasenda crater field before the haze lifts, and the Ishasha fig trees in the late afternoon.",
-      "subject": "morning mist on the Ndali-Kasenda crater lakes near Fort Portal",
-      "focal": [50, 56]
-    },
-    {
-      "category": "hidden-gems",
-      "caption": "Kidepo Valley",
-      "description": "The furthest park from Kampala and the emptiest: Narus valley, the Morungole range, and cheetah nobody photographs.",
-      "subject": "the Narus valley and mountains of Kidepo Valley National Park",
-      "focal": [50, 56]
-    },
-    {
-      "category": "why-visit",
-      "caption": "Half the World's Gorillas",
-      "description": "Nowhere else puts gorillas, chimpanzees, the Big Five, a snowline and the Nile within one week of driving.",
-      "subject": "a silverback mountain gorilla resting in the Bwindi undergrowth",
-      "focal": [52, 46]
-    }
-  ]
+ "slug": "uganda",
+ "name": "Uganda",
+ "adjective": "Ugandan",
+ "region": "East Africa",
+ "tagline": "The Pearl of Africa",
+ "summary": "Half the world's mountain gorillas, the source of the Nile, the Rwenzori snowline on the equator and savanna parks within a day's drive of each other.",
+ "published": true,
+ "url": "https://pearl-trails-uganda.vercel.app",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Pearl of Africa",
+   "description": "Gorilla forest, the Mountains of the Moon and the Nile leaving Lake Victoria — all inside one small, green country.",
+   "subject": "mist over the forested hills of Bwindi Impenetrable National Park at sunrise",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Green, End to End",
+   "description": "Crater lakes around Fort Portal, papyrus swamp on the Nile, and the Rwenzori snowline sitting on the equator.",
+   "subject": "the crater lakes and green hills around Fort Portal",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Wildlife Encounters",
+   "description": "Mountain gorillas in Bwindi, chimpanzees in Kibale, and tree-climbing lions in the Ishasha sector.",
+   "subject": "a mountain gorilla in the Bwindi Impenetrable Forest",
+   "focal": [
+    52,
+    42
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Queen Elizabeth and Kidepo",
+   "description": "Kob on the Kasenyi plains, elephant on the Kazinga Channel, and Kidepo Valley with almost nobody in it.",
+   "subject": "elephants on the Kazinga Channel in Queen Elizabeth National Park",
+   "focal": [
+    48,
+    58
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Mountains of the Moon",
+   "description": "The Rwenzori range holds glaciers three degrees from the equator, and Margherita Peak at 5,109 m.",
+   "subject": "the glaciated peaks of the Rwenzori Mountains above the moorland",
+   "focal": [
+    50,
+    40
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Murchison, Through the Gap",
+   "description": "The entire Victoria Nile forced through a seven-metre gap and dropped forty-three metres into the gorge below.",
+   "subject": "the Nile forcing through the narrow gap at Murchison Falls",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Where the Nile Begins",
+   "description": "The Nile leaves Lake Victoria at Jinja; Lake Bunyonyi holds twenty-nine islands and no bilharzia.",
+   "subject": "the islands and terraced shores of Lake Bunyonyi",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "The Ssese Islands",
+   "description": "Freshwater beaches and fishing villages on Lake Victoria, an hour and a half by ferry from Entebbe.",
+   "subject": "a sandy freshwater shore and fishing boats on the Ssese Islands",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Kibale and Bwindi",
+   "description": "Thirteen primate species in Kibale, and in Bwindi a forest so old and so thick it was never logged.",
+   "subject": "dense canopy and buttressed trees in Kibale Forest",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Grade Five on the Nile",
+   "description": "White-water rafting below the source at Jinja, plus bungee, kayaking and the long walk up Sipi.",
+   "subject": "white-water rafting on the Nile rapids at Jinja",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "The Kingdom of Buganda",
+   "description": "Uganda's kingdoms were never abolished for long — Buganda, Bunyoro and Toro still hold court.",
+   "subject": "a Buganda kingdom drummer in ceremonial bark cloth",
+   "focal": [
+    50,
+    42
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Batwa and Karamojong",
+   "description": "The Batwa, forest people of the southwest, and the Karamojong cattle-keepers of the northeast plains.",
+   "subject": "a Karamojong herder with cattle on the plains of Karamoja",
+   "focal": [
+    48,
+    38
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Rolex, Matoke, Luwombo",
+   "description": "Steamed green banana with groundnut sauce, chicken cooked in banana leaf, and an egg rolled in a chapati on every corner.",
+   "subject": "a street vendor cooking rolex chapati and eggs in Kampala",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Imbalu and Nyege Nyege",
+   "description": "The Bagisu Imbalu season in the east, and four days of music on the banks of the Nile at Jinja.",
+   "subject": "drummers and dancers at the Imbalu ceremony in eastern Uganda",
+   "focal": [
+    50,
+    44
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Bark Cloth and Basketry",
+   "description": "Bark cloth from the mutuba fig, made in Buganda for six hundred years and now UNESCO-listed.",
+   "subject": "a craftsman beating bark cloth from a mutuba fig tree",
+   "focal": [
+    48,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "The Kasubi Tombs",
+   "description": "The burial ground of four Buganda kings, thatched, enormous and rebuilt by the clans who have always maintained it.",
+   "subject": "the great thatched dome of the Kasubi Tombs in Kampala",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Kingdoms Still Standing",
+   "description": "Royal drums, regalia and clan structures that survived the protectorate, the 1966 crisis and the 1970s.",
+   "subject": "royal regalia and drums inside a Buganda kingdom palace",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Kampala on Seven Hills",
+   "description": "A capital built across hills and traffic, with the Gaddafi Mosque minaret giving the best view of all of it.",
+   "subject": "the hills and rooftops of Kampala seen from the Gaddafi Mosque minaret",
+   "focal": [
+    50,
+    58
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Minaret, Dome and Thatch",
+   "description": "The Uganda National Mosque, the Namirembe and Rubaga cathedrals facing each other across two hills.",
+   "subject": "the minaret of the Uganda National Mosque above Kampala",
+   "focal": [
+    50,
+    36
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Boda Bodas and Owino",
+   "description": "The boda boda is the transport system; Owino market is where the whole city goes to buy everything.",
+   "subject": "boda boda motorcycle taxis waiting at a busy Kampala street stage",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Villages at the Forest Edge",
+   "description": "Community walks in Buhoma and Nkuringo, run by the villages that share the forest with the gorillas.",
+   "subject": "a community village walk beside the forest edge at Buhoma",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Sipi, Elgon, Bisoke",
+   "description": "Three waterfalls and a coffee walk at Sipi, then the long crater rim of Mount Elgon above it.",
+   "subject": "the Sipi Falls dropping off the Mount Elgon escarpment",
+   "focal": [
+    46,
+    46
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Lodges at the Forest Edge",
+   "description": "Small lodges on the Bwindi ridge and the Kazinga Channel, close enough to walk to the trailhead after breakfast.",
+   "subject": "a lodge terrace overlooking the Bwindi forest ridge at dawn",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "The Gorilla Permit",
+   "description": "Permit revenue funds the park and pays a share to the parishes around it — which is why the gorilla numbers are rising.",
+   "subject": "rangers and trackers setting out on a gorilla trek in Bwindi",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Crater Lakes at First Light",
+   "description": "The Ndali-Kasenda crater field before the haze lifts, and the Ishasha fig trees in the late afternoon.",
+   "subject": "morning mist on the Ndali-Kasenda crater lakes near Fort Portal",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Kidepo Valley",
+   "description": "The furthest park from Kampala and the emptiest: Narus valley, the Morungole range, and cheetah nobody photographs.",
+   "subject": "the Narus valley and mountains of Kidepo Valley National Park",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Half the World's Gorillas",
+   "description": "Nowhere else puts gorillas, chimpanzees, the Big Five, a snowline and the Nile within one week of driving.",
+   "subject": "a silverback mountain gorilla resting in the Bwindi undergrowth",
+   "focal": [
+    52,
+    46
+   ]
+  }
+ ]
 }

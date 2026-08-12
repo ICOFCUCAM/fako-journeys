@@ -92,6 +92,11 @@ class Country:
         self.tagline = raw.get("tagline") or ""
         self.summary = raw.get("summary") or ""
         self.published = raw.get("published", True)
+        # Where this country lives. Defaults to its own generated page; a country
+        # run by a sister operator points at that operator's site instead, which
+        # is why the region strips and the gateway can link every country without
+        # anybody keeping a second list of exceptions in code.
+        self.url = raw.get("url") or ("/%s" % self.slug)
         self.entries = [Entry(e) for e in raw.get("entries", [])]
         self.by_category = {}
         for e in self.entries:

@@ -145,7 +145,7 @@ def build(country, taxonomy, countries=()):
     hero_window = window(country, entry)
     near = neighbours(country, countries)
     near_html = "".join(
-        '<a href="/%s"><em>%s</em><span>%s</span></a>' % (esc(c.slug), esc(c.name), esc(c.tagline))
+        '<a href="%s"><em>%s</em><span>%s</span></a>' % (esc(c.url), esc(c.name), esc(c.tagline))
         for c in near)
 
     highlights = []
