@@ -167,18 +167,25 @@ def places(country, taxonomy, lenses):
         for cat in lens.get("categories") or []:
             lens_of.setdefault(cat, []).append(key)
 
+    from .places import slugify
     titles = {c["id"]: c["title"] for c in taxonomy.categories}
     lead = [k for k in country.calls]
-    rows = []
+    seen_slug, rows = {}, []
     for e in country.entries:
         if e.category == "hero" or not e.caption:
             continue
         keys = lens_of.get(e.category, [])
         rank = min([lead.index(k) for k in keys if k in lead] or [99])
         img = e.image or {}
+        # Its own address. The same rule places.py uses, so the interfaces and
+        # the pages cannot disagree about where a place lives.
+        base = slugify(e.caption)
+        seen_slug[base] = seen_slug.get(base, 0) + 1
+        path = base if seen_slug[base] == 1 else "%s-%d" % (base, seen_slug[base])
         rows.append((rank, {
             "id": e.category, "group": titles.get(e.category, e.category),
             "title": e.caption, "text": e.description or "",
+            "url": "/places/%s/%s" % (country.slug, path),
             "lenses": keys,
             "image": ({"url": img.get("imageUrl"), "alt": img.get("alt") or e.description,
                        "credit": img.get("photographer"), "provider": img.get("provider")}
@@ -387,6 +394,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/#window">Home</a>
     <a href="/journey">Build a journey</a>
     <a href="/meet">Meet Africa</a>
+    <a href="/places">Every place</a>
     <a href="/#destinations">Destinations</a>
     <a href="/compare">Compare</a>
   </nav>

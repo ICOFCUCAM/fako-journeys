@@ -26,7 +26,8 @@
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
   var SAVED = 'afrinkong-journeys';
 
-  var brief = {wants: [], month: null, pacing: 'open', party: null, style: [], seed: 0};
+  var brief = {wants: [], month: null, pacing: 'open', party: null, style: [], seed: 0,
+               start: null};   /* a country named on the way in, from a link or a sentence */
   var picks = [];              /* the three the engine returned */
   var chosen = null;           /* the one being composed */
   var places = {};             /* slug -> the atlas payload, fetched once */
@@ -90,14 +91,55 @@
       readForm();
       show(2);
     } else if (t.hasAttribute('data-reveal')) { readForm(); runReveal(); }
+    else if (t.hasAttribute('data-read')) readSentence();
   });
   form.addEventListener('submit', function (e) { e.preventDefault(); readForm(); runReveal(); });
+
+  /* A sentence, turned into the same answers the buttons give. It fills the
+     controls rather than skipping them, so the visitor sees the reading and can
+     correct it before anything is decided — a parser that acts on its own
+     interpretation is a parser you cannot argue with. */
+  function readSentence() {
+    var box = document.getElementById('jn-said-it');
+    var out = document.getElementById('jn-say-got');
+    if (!box) return;
+    var got = E.parse(box.value, D);
+    var set = function (name, value) {
+      var el = value && form.querySelector('[name="' + name + '"][value="' + value + '"]');
+      if (el) { el.checked = true; return true; }
+      return false;
+    };
+    form.querySelectorAll('[name="want"]:checked').forEach(function (i) { i.checked = false; });
+    got.wants.forEach(function (k) { set('want', k); });
+    if (got.month) set('month', got.month);
+    if (got.pacing) set('pacing', got.pacing);
+    if (got.party) set('party', got.party);
+    readForm();
+    if (got.country) brief.start = got.country;
+    if (!got.took.length) {
+      out.textContent = got.missed.join(' ') + ' Use the choices below instead.';
+      out.setAttribute('data-warn', '');
+      return;
+    }
+    out.removeAttribute('data-warn');
+    out.textContent = 'Read as: ' + got.took.map(function (t) {
+      return t.say + (t.band ? ' (' + t.band + ')' : ''); }).join(' \u00b7 ')
+      + '. Everything below is still yours to change.';
+  }
 
   /* ---- the reveal -------------------------------------------------------- */
 
   function runReveal(quiet) {
     var out = E.recommend(D, brief, 3);
     picks = out.picks;
+    /* Somebody who arrived saying "Uganda" gets Uganda first — but ranked and
+       explained like everything else, and with the alternatives still there. */
+    if (brief.start && D.countries[brief.start]) {
+      var named = E.rank(D, brief).filter(function (p) { return p.slug === brief.start; })[0]
+        || {slug: brief.start, reasons: [], outOfSeason: false, matched: []};
+      picks = [named].concat(picks.filter(function (p) { return p.slug !== brief.start; }))
+        .slice(0, 3);
+    }
     if (!picks.length) { noAnswer(); return; }
     chosen = picks[0];
     form.hidden = true;
@@ -178,6 +220,7 @@
      percentage: a number implies a precision the dataset does not have, and a
      reason a traveller can check is worth more than one they cannot. */
   function whyBlock(p) {
+    var b = E.band(D, brief, p);
     var rows = p.reasons.map(function (r) {
       return '<li data-key="' + esc(r.key) + '">' + esc(r.say) + '</li>';
     });
@@ -198,7 +241,9 @@
       var s = D.style.filter(function (x) { return x.key === k; })[0];
       if (s && s.key !== 'unsure') carried.push(s.label.toLowerCase());
     });
-    return '<p class="jn-why-head">Why this one</p><ul class="jn-why-list">'
+    return (b ? '<p class="jn-band" data-kind="' + esc(b.label.split(' ')[0].toLowerCase())
+                + '"><b>' + esc(b.label) + '</b><span>' + esc(b.why) + '</span></p>' : '')
+      + '<p class="jn-why-head">Why this one</p><ul class="jn-why-list">'
       + rows.join('') + '</ul>'
       + (carried.length
          ? '<p class="jn-why-carried">Carried to the operator, not scored: '
@@ -262,13 +307,17 @@
   }
 
   function openComposer(slug, keep) {
-    needLinks().then(function () { if (!compose.hidden) paintComposer(); });
+    needLinks().then(function () {
+      if (!compose.hidden && chosen && chosen.slug === slug) paintComposer();
+    });
     /* Anything already in the journey from another country needs its places too,
        or a shared link would open a journey with holes in it. */
     var others = stages.map(function (raw) { return E.stageOf(raw, slug).country; })
       .filter(function (c, i, a) { return c !== slug && a.indexOf(c) === i; });
     others.forEach(function (c) {
-      fetchPlaces(c).then(function () { if (!compose.hidden) paintComposer(); });
+      fetchPlaces(c).then(function () {
+        if (!compose.hidden && chosen && chosen.slug === slug) paintComposer();
+      });
     });
     fetchPlaces(slug).then(function (pack) {
       chosen = chosen && chosen.slug === slug ? chosen
@@ -330,6 +379,7 @@
         + '&rsquo;s best month</span>');
     }
     document.getElementById('jn-c-why').innerHTML = carry.join('');
+    paintTweaks();
 
     /* The timeline. Stage names and country facts are the dataset's; the day
        numbers are arithmetic on the length the traveller chose, and the line
@@ -415,6 +465,36 @@
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
 
+  /* Change one thing. Starting the four questions again to see the same country
+     in a different month is the sort of thing that makes people leave, so the
+     three answers that reshape a journey are editable where the journey is. */
+  function paintTweaks() {
+    var box = document.getElementById('jn-tweak');
+    if (!box) return;
+    var pace = E.pacingFor(D, brief.pacing);
+    box.innerHTML =
+      '<span class="jn-tweak-say">Change one thing</span>'
+      + '<label class="jn-tweak-f"><span>How long</span><select data-tweak="pacing">'
+      + D.pacing.map(function (p) {
+          return '<option value="' + esc(p.key) + '"'
+            + (p.key === pace.key ? ' selected' : '') + '>' + esc(p.label) + '</option>';
+        }).join('') + '</select></label>'
+      + '<label class="jn-tweak-f"><span>When</span><select data-tweak="month">'
+      + '<option value="">Flexible</option>'
+      + D.months.map(function (m, i) {
+          return '<option value="' + (i + 1) + '"'
+            + (brief.month === i + 1 ? ' selected' : '') + '>' + esc(m) + '</option>';
+        }).join('') + '</select></label>'
+      + '<label class="jn-tweak-f"><span>Somewhere else</span><select data-tweak="country">'
+      + Object.keys(D.countries).sort(function (a, b) {
+          return D.countries[a].name < D.countries[b].name ? -1 : 1; })
+        .map(function (s) {
+          return '<option value="' + esc(s) + '"'
+            + (s === chosen.slug ? ' selected' : '') + '>' + esc(D.countries[s].name)
+            + '</option>';
+        }).join('') + '</select></label>';
+  }
+
   /* Where this journey could carry on to. Only across a real land border, and
      only into a country that answers the same brief — the two conditions that
      make a second country a continuation rather than a second holiday. */
@@ -493,6 +573,38 @@
     lines.push('', 'Built at ' + location.origin + location.pathname + E.encode(stateNow()));
     return lines.join('\n');
   }
+
+  compose.addEventListener('change', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-tweak]') : null;
+    if (!t) return;
+    var what = t.dataset.tweak;
+    if (what === 'pacing') {
+      brief.pacing = t.value;
+      /* A longer trip earns more stages; a shorter one loses the last ones
+         rather than being re-picked, so nothing the visitor chose disappears
+         without them seeing it go. */
+      var want = E.pacingFor(D, brief.pacing).stages;
+      var pack = places[chosen.slug] || {places: []};
+      if (stages.length > want) stages = stages.slice(0, want);
+      else if (stages.length < want) {
+        E.suggestStages(pack.places, brief, {stages: want}).forEach(function (id) {
+          if (stages.length < want && stages.indexOf(id) < 0) stages.push(id);
+        });
+      }
+      paintComposer(); writeHash();
+    } else if (what === 'month') {
+      brief.month = t.value ? Number(t.value) : null;
+      chosen = E.rank(D, brief).filter(function (p) { return p.slug === chosen.slug; })[0]
+        || chosen;
+      paintComposer(); writeHash();
+    } else if (what === 'country' && t.value !== chosen.slug) {
+      /* `chosen` is deliberately left standing: openComposer replaces it, and
+         everything that repaints in between reads it. Nulling it here left a
+         window in which the composer was drawing a journey with no country. */
+      stages = [];
+      openComposer(t.value, false);
+    }
+  });
 
   compose.addEventListener('click', function (e) {
     var t = e.target.closest
@@ -599,6 +711,33 @@
     steps[0].insertBefore(box, steps[0].firstChild);
   }
 
+  /* Entry points. A link can arrive already carrying an answer — from the
+     atlas's month strip, from a lens, from a country page — and the builder
+     picks up at the next unanswered question rather than asking again for
+     something the visitor has already told the site. */
+  function entry() {
+    var s = E.decode(location.hash);
+    if (s.country && D.countries[s.country]) return false;   /* restore() handles it */
+    var got = false;
+    (s.wants || []).forEach(function (k) {
+      var el = D.lenses[k] && form.querySelector('[name="want"][value="' + k + '"]');
+      if (el) { el.checked = true; got = true; }
+    });
+    var one = function (n, v) {
+      var el = v && form.querySelector('[name="' + n + '"][value="' + v + '"]');
+      if (el) { el.checked = true; return true; }
+      return false;
+    };
+    if (one('month', s.month)) got = true;
+    if (one('pacing', s.pacing)) got = true;
+    if (one('party', s.party)) got = true;
+    if (!got) return false;
+    readForm();
+    /* Start on the first thing they have not said. */
+    show(brief.wants.length ? (brief.month ? (val('pacing') ? 4 : 3) : 2) : 1);
+    return true;
+  }
+
   function restore() {
     var s = E.decode(location.hash);
     if (!s.country || !D.countries[s.country]) return false;
@@ -639,5 +778,5 @@
   });
 
   paintSaved();
-  if (!restore()) show(1);
+  if (!restore() && !entry()) show(1);
 })();

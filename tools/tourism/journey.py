@@ -102,7 +102,10 @@ def brief(countries, taxonomy):
     for key, lens in lenses.items():
         out["lenses"][key] = {"title": lens.get("title") or key,
                               "line": lens.get("line") or "",
-                              "categories": lens.get("categories") or []}
+                              "categories": lens.get("categories") or [],
+                              # What somebody might type for this. The parser
+                              # matches against these and nothing else.
+                              "words": lens.get("words") or []}
 
     for c in live:
         op = ops.get(c.operator_key)
@@ -248,6 +251,7 @@ TEMPLATE = """<!DOCTYPE html>
   <nav class="jn-routes" aria-label="Primary">
     <a href="/atlas">The Atlas</a>
     <a href="/meet">Meet Africa</a>
+    <a href="/places">Every place</a>
     <a href="/#destinations">Destinations</a>
     <a href="/compare">Compare</a>
   </nav>
@@ -263,6 +267,22 @@ TEMPLATE = """<!DOCTYPE html>
     <section class="jn-step" data-step="1" aria-labelledby="q1">
       <span class="af-stamp">Question one of four</span>
       <h1 class="jn-h1" id="q1">What kind of Africa<br>are you looking for?</h1>
+
+      <!-- A sentence, for anybody who would rather write one than press six
+           things. It is a parser and not a model: it matches months, countries,
+           a length and the words recorded for each lens, and it fills the
+           controls below rather than acting on its own. Every control it
+           touches stays editable, and it says what it took. -->
+      <div class="jn-say">
+        <label for="jn-said-it">Or say it in a sentence</label>
+        <div class="jn-say-row">
+          <input id="jn-said-it" type="text" autocomplete="off"
+                 placeholder="Twelve days in September, wildlife and mountains">
+          <button class="af-btn af-btn--quiet" type="button" data-read>Read it</button>
+        </div>
+        <p class="jn-say-got" id="jn-say-got" role="status"></p>
+      </div>
+
       <p class="jn-lede">Choose as many as are true. Every country here declares
         what it leads on, in its own words &mdash; this asks against that, so a
         match means something. Or say nothing and let us open the atlas for you.</p>
@@ -347,6 +367,9 @@ TEMPLATE = """<!DOCTYPE html>
       <h1 class="jn-h1" id="jn-c-name"></h1>
       <p class="jn-lede" id="jn-c-line"></p>
       <div class="jn-carry" id="jn-c-why"></div>
+      <!-- Change one thing rather than start again. Each control edits the
+           brief in place and the journey re-shapes around it. -->
+      <div class="jn-tweak" id="jn-tweak" aria-label="Change one thing"></div>
     </div>
     <div class="jn-compose-grid">
       <div class="jn-line-col">

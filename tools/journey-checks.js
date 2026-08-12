@@ -234,6 +234,84 @@ check('a malformed link is refused rather than half-read',
 check('a link with no journey in it decodes to no journey',
   E.decode('') .country === null && E.decode('#/nonsense').country === null);
 
+/* ---- reading a sentence -------------------------------------------------- */
+
+/* The parser's whole claim is that it never guesses. So the tests are mostly
+   about what it declines to do. */
+const said = E.parse('I have 12 days in September and want wildlife and mountains', D);
+check('a sentence becomes the same brief the buttons make',
+  said.month === 9 && said.days === 12
+  && said.wants.sort().join() === 'mountains,wildlife', JSON.stringify(said.wants));
+check('a length lands in an existing band', said.pacing === 'fortnight', said.pacing);
+check('it reports every field it took', said.took.length >= 4,
+  said.took.map(t => t.field).join(','));
+const withCountry = E.parse('two weeks in Uganda with my family', D);
+check('a country in the sentence is picked up', withCountry.country === 'uganda');
+check('"two weeks" is fourteen days', withCountry.days === 14, String(withCountry.days));
+check('who you are travelling with is picked up', withCountry.party === 'family');
+const nonsense = E.parse('zzzz qqqq wobble', D);
+check('a sentence it does not understand takes nothing',
+  !nonsense.wants.length && !nonsense.month && !nonsense.pacing && !nonsense.country);
+check('and it says so rather than guessing', nonsense.missed.length === 1);
+check('an empty sentence is not an error',
+  E.parse('', D).took.length === 0 && E.parse(null, D).wants.length === 0);
+check('it never invents a country that is not in the set',
+  !E.parse('I want to go to Wakanda and Chad', D).country);
+check('a lens is matched only on its own recorded words',
+  !E.parse('I want something nice', D).wants.length);
+check('every lens can be reached by at least one word',
+  lensKeys.every(k => (D.lenses[k].words || []).some(w => E.parse('I want ' + w, D)
+    .wants.indexOf(k) >= 0)),
+  lensKeys.filter(k => !(D.lenses[k].words || []).length).join(','));
+check('the parser is deterministic',
+  JSON.stringify(E.parse('ten days in May, coast', D))
+  === JSON.stringify(E.parse('ten days in May, coast', D)));
+
+/* ---- how good a match is this -------------------------------------------- */
+
+const bBrief = {wants: ['wildlife', 'mountains'], month: 9};
+const bTop = E.recommend(D, bBrief).picks[0];
+const bandTop = E.band(D, bBrief, bTop);
+check('a match is described in words, not in a percentage',
+  bandTop && !/\d+\s*%/.test(bandTop.label + bandTop.why), bandTop.label);
+check('a full match on what and when is called strong',
+  bandTop.matched === bandTop.asked ? bandTop.label.indexOf('Strong') === 0 : true,
+  bandTop.label + ' — ' + bandTop.why);
+const looser = E.recommend(D, bBrief).picks.find(p => p.matched.length < 2);
+check('a partial match says how many of how many',
+  !looser || /\d of the \d/.test(E.band(D, bBrief, looser).why),
+  looser ? E.band(D, bBrief, looser).why : 'no partial in the top three');
+check('asking for nothing is not scored as a failure',
+  E.band(D, {wants: [], month: null}, E.recommend(D, {wants: []}).picks[0]).label
+  === 'Where we would start');
+check('out of season is said, not scored away',
+  (function () {
+    const m = 1;
+    const row = E.rank(D, {wants: ['wildlife'], month: m}).filter(r => r.outOfSeason)[0];
+    return !row || E.band(D, {wants: ['wildlife'], month: m}, row).season === false;
+  })());
+
+/* ---- carrying on over a border ------------------------------------------- */
+
+const web = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'links.json'), 'utf8'));
+const on = E.onward(D, web, 'uganda', {wants: ['wildlife']});
+check('onward only crosses a real land border',
+  on.every(r => r.why.some(w => w.kind === 'border')), on.map(r => r.to).join(','));
+check('onward only offers countries that answer the same brief',
+  on.every(r => D.countries[r.to].calls.indexOf('wildlife') >= 0));
+check('an island is offered nowhere to carry on to',
+  E.onward(D, web, 'seychelles', {wants: []}).length === 0);
+check('a stage knows which country it is in',
+  E.stageOf('rwanda~wildlife', 'uganda').country === 'rwanda'
+  && E.stageOf('wildlife', 'uganda').country === 'uganda');
+check('a stage at home keeps the short form',
+  E.stageId('uganda', 'wildlife', 'uganda') === 'wildlife'
+  && E.stageId('rwanda', 'wildlife', 'uganda') === 'rwanda~wildlife');
+const two = {country: 'uganda', stages: ['wildlife', 'rwanda~safari'], month: 9,
+  pacing: 'fortnight', party: null, wants: ['wildlife'], style: [], seed: 0};
+check('a two-country journey survives its own link',
+  JSON.stringify(E.decode(E.encode(two))) === JSON.stringify(two), E.encode(two));
+
 /* ---- the weights are data, not code -------------------------------------- */
 
 check('the weights come from the dataset',

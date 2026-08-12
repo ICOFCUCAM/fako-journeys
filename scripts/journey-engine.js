@@ -330,6 +330,135 @@
     }).sort(function (a, b) { return b.share - a.share || (a.label < b.label ? -1 : 1); });
   }
 
+  /* ---- reading a sentence -------------------------------------------------- */
+
+  /* "Twelve days in September, wildlife and mountains" -> a brief.
+   *
+   * A parser, not a model. It matches months by name, countries by name, a
+   * duration by number-and-unit, and a lens only against the words recorded for
+   * that lens in lenses.json. A word it does not recognise selects nothing —
+   * which is the correct behaviour, because guessing at what somebody meant and
+   * being wrong is worse than asking them.
+   *
+   * It reports what it took, so the interface can show the visitor its reading
+   * before acting on it. Nothing here is ever applied silently: every field it
+   * fills also fills the control that field belongs to, and every control stays
+   * editable.
+   */
+  var NUMBERS = {one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7,
+                 eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13,
+                 fourteen: 14, fifteen: 15, twenty: 20, thirty: 30, a: 1, an: 1};
+
+  function parse(text, data) {
+    var low = ' ' + String(text || '').toLowerCase().replace(/[^a-z0-9\s'-]/g, ' ')
+      .replace(/\s+/g, ' ') + ' ';
+    var out = {wants: [], month: null, pacing: null, party: null,
+               country: null, days: null, took: [], missed: []};
+
+    data.months.forEach(function (name, i) {
+      var m = name.toLowerCase();
+      if (low.indexOf(' ' + m + ' ') >= 0 || low.indexOf(' ' + m.slice(0, 3) + ' ') >= 0) {
+        out.month = i + 1;
+        out.took.push({field: 'month', say: name});
+      }
+    });
+
+    Object.keys(data.countries).forEach(function (slug) {
+      var name = data.countries[slug].name.toLowerCase();
+      if (low.indexOf(' ' + name + ' ') >= 0) {
+        out.country = slug;
+        out.took.push({field: 'country', say: data.countries[slug].name});
+      }
+    });
+
+    Object.keys(data.lenses).forEach(function (key) {
+      var words = data.lenses[key].words || [data.lenses[key].title.toLowerCase()];
+      for (var i = 0; i < words.length; i++) {
+        if (low.indexOf(' ' + words[i] + ' ') >= 0) {
+          if (out.wants.indexOf(key) < 0) {
+            out.wants.push(key);
+            out.took.push({field: 'want', say: data.lenses[key].title, matched: words[i]});
+          }
+          return;
+        }
+      }
+    });
+
+    /* Duration. Weeks and days both, and written-out numbers, because people
+       type "two weeks" as often as "14 days". The band it lands in is the
+       existing pacing band, so there is one definition of how long is long. */
+    var dm = low.match(/(\d+|[a-z]+)[\s-]*(day|days|night|nights|week|weeks|fortnight)/);
+    if (dm) {
+      var n = /^\d+$/.test(dm[1]) ? parseInt(dm[1], 10) : NUMBERS[dm[1]];
+      if (dm[2] === 'fortnight') { n = 14; }
+      else if (n && dm[2].indexOf('week') === 0) { n = n * 7; }
+      if (n && n > 0 && n < 200) {
+        out.days = n;
+        var band = data.pacing[0];
+        data.pacing.forEach(function (b) {
+          if (b.key !== 'open' && b.days <= n) band = b;
+        });
+        out.pacing = band.key;
+        out.took.push({field: 'pacing', say: n + (n === 1 ? ' day' : ' days'),
+                       band: band.label});
+      }
+    }
+    if (low.indexOf('fortnight') >= 0 && !out.pacing) out.pacing = 'fortnight';
+
+    (data.party || []).forEach(function (opt) {
+      var label = opt.label.toLowerCase();
+      if (low.indexOf(' ' + label + ' ') >= 0
+          || (opt.key === 'family' && low.indexOf(' family ') >= 0)
+          || (opt.key === 'solo' && (low.indexOf(' solo ') >= 0
+              || low.indexOf(' alone ') >= 0 || low.indexOf(' on my own ') >= 0))
+          || (opt.key === 'couple' && (low.indexOf(' couple ') >= 0
+              || low.indexOf(' two of us ') >= 0 || low.indexOf(' my partner ') >= 0))
+          || (opt.key === 'friends' && low.indexOf(' friends ') >= 0)) {
+        out.party = opt.key;
+        out.took.push({field: 'party', say: opt.label});
+      }
+    });
+
+    if (!out.took.length) {
+      out.missed.push('Nothing in that matched a country, a month, a length or one '
+        + 'of the six things a country here can lead on.');
+    }
+    return out;
+  }
+
+  /* ---- how good a match is this ------------------------------------------- */
+
+  /* Deliberately a band and not a percentage. The dataset can say that a country
+     declares two of the three things you asked for and is at its best in your
+     month; it cannot support "87%", and a number that precise is a claim about
+     precision the data does not have. */
+  function band(data, brief, row) {
+    if (!row) return null;
+    var wants = (brief.wants || []).filter(function (k) { return !!data.lenses[k]; });
+    var hit = row.matched ? row.matched.length : 0;
+    var season = brief.month ? !row.outOfSeason : null;
+    var share = wants.length ? hit / wants.length : 1;
+    var label, why;
+    if (wants.length && share === 1 && season !== false) {
+      label = 'Strong match';
+      why = 'everything you asked for, and the month';
+    } else if (wants.length && share === 1) {
+      label = 'Strong on what, not on when';
+      why = 'everything you asked for, but not in that month';
+    } else if (wants.length && share >= 0.5) {
+      label = 'Partial match';
+      why = hit + ' of the ' + wants.length + ' things you asked for';
+    } else if (wants.length) {
+      label = 'Loose match';
+      why = 'one of the things you asked for';
+    } else {
+      label = season === false ? 'Out of season' : 'Where we would start';
+      why = brief.month ? 'you told us the month and nothing else'
+                        : 'you told us nothing to narrow by';
+    }
+    return {label: label, why: why, season: season, matched: hit, asked: wants.length};
+  }
+
   /* ---- crossing a border -------------------------------------------------- */
 
   /* A stage can belong to a country other than the one the journey started in.
@@ -410,6 +539,7 @@
     suggestStages: suggestStages, timeline: timeline,
     keyword: keyword, name: name, composition: composition,
     stageOf: stageOf, stageId: stageId, onward: onward,
+    parse: parse, band: band,
     encode: encode, decode: decode
   };
 });

@@ -356,6 +356,13 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-open-stage{min-height:0;padding:96px 0 0}
   .wa-open-grid{grid-template-columns:1fr;gap:20px}
   .wa-open-say,.wa-open-tail,.wa-win,.wa-win-rail{grid-column:1;grid-row:auto}
+  /* The window is taken out of the flow and bled off the right edge on a
+     desktop, which is the whole composition of the first screen. On a phone
+     there is no room to bleed into: left absolute it stayed a 180-pixel column
+     pinned to the right, half the screen wide, with the map inside it and the
+     country names overflowing their own box. It goes back into the flow. */
+  .wa-win{position:static;width:auto;max-width:none;top:auto;right:auto}
+  .wa-open-say,.wa-open-tail{max-width:none}
   .wa-open .wa-stamp{font-size:9.5px;letter-spacing:.2em}
   .wa-hair{margin-top:18px}
   .wa-find{margin-top:14px}
@@ -368,7 +375,15 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   /* The key is absolutely placed under the caption on desktop; unpinned on a
      phone it has to be given its own row, or the caption lands on top of it. */
   .wa-win-caps{height:236px}
-  .wa-win-rail{margin-top:14px;padding-bottom:14px}
+  /* The rail is held to the type column on a desktop so it does not cut across
+     the bled map. There is no bled map on a phone, and 52% of 360px is a
+     166-pixel scroller with twenty-two names in it. */
+  .wa-win-rail{margin-top:14px;padding-bottom:14px;max-width:none}
+  /* The readout is right-aligned against the bled map on a desktop. On a
+     phone there is no map beside it, and a 44-pixel right padding on a
+     180-pixel column leaves a measure too narrow for the words in it. */
+  .wa-win-side{padding-right:0;max-width:none;text-align:left;align-items:flex-start}
+  .wa-win-key{justify-content:flex-start}
   .wa-brief{padding:48px 0 44px}}
 
 /* Anything driven by a thumb gets a 44px target. The ticks were 33px. */
@@ -625,6 +640,7 @@ window.AF = {
       <a href="/atlas">The Atlas</a>
       <a href="/journey">Build a journey</a>
       <a href="/meet">Meet Africa</a>
+      <a href="/places">Every place</a>
       <a href="#destinations">Destinations</a>
       <a href="#experiences">Experiences</a>
       <a href="/compare">Compare</a>

@@ -226,6 +226,16 @@
     requestAnimationFrame(declutter);
   }
 
+  /* Whatever the visitor has already told the map, carried into the builder so
+     it does not ask again. An entry point is only worth having if it remembers
+     the answer that brought somebody through it. */
+  function briefQuery() {
+    var q = [];
+    if (state.want) q.push('w=' + state.want);
+    if (state.when) q.push('m=' + state.when);
+    return q.length ? '?' + q.join('&') : '';
+  }
+
   /* ---- the constellation -------------------------------------------------- */
 
   /* The same twenty-two countries, read as a network instead of as land. Every
@@ -475,6 +485,11 @@
          : '<p class="at-empty">Nothing in the set answers to that yet. '
            + 'Twenty-two countries are written up here, not fifty-four &mdash; '
            + 'so this is a gap in the dataset, not in Africa.</p>')
+      + (pool.length
+         ? '<div class="at-acts"><a class="af-btn af-btn--solid" href="/journey#/'
+           + briefQuery().replace('?', '?') + '">Build a journey around this<i>&rarr;</i></a>'
+           + '</div>'
+         : '')
       + '<p class="at-foot-note">' + pool.length
       + (pool.length === 1 ? ' country' : ' countries') + ' &middot; press one, '
       + 'or press it on the map</p>';
@@ -560,8 +575,8 @@
       + '<div class="at-acts">'
       + '<a class="af-btn af-btn--solid" href="' + esc(c.url) + '">Enter ' + esc(c.name)
       + '<i>&rarr;</i></a>'
-      + '<a class="af-btn af-btn--quiet" href="/journey#/j/' + esc(slug) + '/">'
-      + 'Build a journey here</a>'
+      + '<a class="af-btn af-btn--quiet" href="/journey#/j/' + esc(slug) + '/'
+      + briefQuery() + '">Build a journey here</a>'
       + '</div>'
       + nextBlock(slug);
     showPane('country');
@@ -599,7 +614,9 @@
       + why(slug, p)
       + who(c)
       + '<div class="at-acts">'
-      + '<a class="af-btn af-btn--solid" href="/contact">Begin this journey<i>&rarr;</i></a>'
+      + (p.url ? '<a class="af-btn af-btn--solid" href="' + esc(p.url) + '">Open '
+                 + esc(p.title) + '<i>&rarr;</i></a>' : '')
+      + '<a class="af-btn af-btn--quiet" href="/contact">Begin this journey</a>'
       + '<button class="af-btn af-btn--quiet" type="button" data-go="country" data-key="'
       + esc(slug) + '">All ' + c.places + ' in ' + esc(c.name) + '</button>'
       + '</div>';

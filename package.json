@@ -31,7 +31,8 @@
     "tourism:atlas": "python3 tools/tourism/build.py atlas",
     "tourism:journey": "python3 tools/tourism/build.py journey",
     "tourism:meet": "python3 tools/tourism/build.py meet",
-    "tourism:links": "python3 tools/tourism/build.py links"
+    "tourism:links": "python3 tools/tourism/build.py links",
+    "tourism:places": "python3 tools/tourism/build.py places"
   },
   "engines": {
     "node": ">=18"

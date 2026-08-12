@@ -1,34 +1,149 @@
 {
  "$comment": "The six things a country can lead on. A lens is not a tag applied to everything — every country in the set has all twenty-seven categories written up, so filtering on those would light the whole map and tell a traveller nothing. A lens is what a country declares in its own `calls`, which is editorial and deliberately short: Uganda calls wildlife and culture, and does not call coast, even though it has lakes. `categories` is the other direction — which of the twenty-seven write-ups belong to this lens, so opening a country under a lens leads with the right places.",
-
  "wildlife": {
   "title": "Wildlife",
   "line": "Where the animals are the reason you came.",
-  "categories": ["wildlife", "safari"]
+  "categories": [
+   "wildlife",
+   "safari"
+  ],
+  "words": [
+   "wildlife",
+   "animals",
+   "safari",
+   "game",
+   "gorillas",
+   "chimps",
+   "chimpanzees",
+   "big five",
+   "elephants",
+   "lions",
+   "gorilla",
+   "migration",
+   "birding",
+   "birds"
+  ]
  },
  "culture": {
   "title": "Culture",
   "line": "Kingdoms, languages, festivals and the people who keep them.",
-  "categories": ["culture", "traditional-people", "festivals", "crafts", "local-life"]
+  "categories": [
+   "culture",
+   "traditional-people",
+   "festivals",
+   "crafts",
+   "local-life"
+  ],
+  "words": [
+   "culture",
+   "cultural",
+   "people",
+   "festival",
+   "festivals",
+   "music",
+   "craft",
+   "crafts",
+   "markets",
+   "tradition",
+   "traditions",
+   "kingdoms",
+   "dance"
+  ]
  },
  "coast": {
   "title": "Coast",
   "line": "Atlantic, Indian Ocean, Mediterranean, and the lakes big enough to have surf.",
-  "categories": ["beaches", "lakes-rivers", "waterfalls"]
+  "categories": [
+   "beaches",
+   "lakes-rivers",
+   "waterfalls"
+  ],
+  "words": [
+   "coast",
+   "coastal",
+   "beach",
+   "beaches",
+   "sea",
+   "ocean",
+   "island",
+   "islands",
+   "diving",
+   "snorkelling",
+   "snorkeling",
+   "reef",
+   "lake",
+   "lakes",
+   "waterfall",
+   "waterfalls",
+   "river",
+   "rivers"
+  ]
  },
  "heritage": {
   "title": "Heritage",
   "line": "What was built here, and what is still standing.",
-  "categories": ["historic-sites", "heritage", "architecture", "cities"]
+  "categories": [
+   "historic-sites",
+   "heritage",
+   "architecture",
+   "cities"
+  ],
+  "words": [
+   "heritage",
+   "history",
+   "historic",
+   "historical",
+   "ruins",
+   "architecture",
+   "museums",
+   "cities",
+   "city",
+   "old town",
+   "medina",
+   "unesco"
+  ]
  },
  "mountains": {
   "title": "Mountains",
   "line": "The Atlas, the Rwenzori, Kilimanjaro, the Simien, Fako.",
-  "categories": ["mountains", "outdoor", "adventure"]
+  "categories": [
+   "mountains",
+   "outdoor",
+   "adventure"
+  ],
+  "words": [
+   "mountains",
+   "mountain",
+   "trekking",
+   "hiking",
+   "hike",
+   "trek",
+   "climbing",
+   "summit",
+   "peaks",
+   "altitude",
+   "volcano",
+   "volcanoes",
+   "walking"
+  ]
  },
  "food": {
   "title": "Food",
   "line": "What a country actually eats, not what it serves tourists.",
-  "categories": ["food"]
- }
+  "categories": [
+   "food"
+  ],
+  "words": [
+   "food",
+   "eat",
+   "eating",
+   "cuisine",
+   "cooking",
+   "market food",
+   "street food",
+   "coffee",
+   "wine"
+  ]
+ },
+ "$comment_words": "What somebody might actually type. The intent parser matches against these and against nothing else — no stemming, no fuzzy matching, no model. A word that is not in one of these lists simply does not select a lens, which is the correct behaviour: guessing at what somebody meant and being wrong is worse than asking. Every entry here is a word for the thing the lens already covers; none of them extends what a lens means."
 }
