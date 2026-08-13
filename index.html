@@ -92,9 +92,10 @@
 .wa-open .wa-act.faint:hover{border-color:var(--c-bg);color:var(--c-bg)}
 .wa-open .wa-act.plain:hover{color:var(--c-accent)}
 /* The rails: rules that were ink on paper become paper on ink. */
-.wa-open .wa-regs{border-color:var(--c-bg)}
-.wa-open .wa-reg{color:var(--c-bg);border-right-color:var(--fj-rule-dark)}
+.wa-open .wa-regs,.wa-open .wa-ticks{border-color:var(--c-bg)}
+.wa-open .wa-reg,.wa-open .wa-tick{color:var(--c-bg);border-right-color:var(--fj-rule-dark)}
 .wa-open .wa-reg[aria-pressed="true"]{background:var(--c-accent);color:var(--c-primary)}
+.wa-open .wa-tick[aria-current]{background:var(--c-bg);color:var(--c-primary)}
 .wa-open .wa-lens,.wa-open .wa-tags-in{border-color:var(--fj-rule-dark)}
 .wa-open .wa-tag{color:var(--c-bg);border-color:var(--fj-rule-dark)}
 .wa-open .wa-terrain span{border-color:color-mix(in srgb,var(--c-gold) 42%,transparent)}
@@ -558,6 +559,7 @@
 .wa-terrain span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--c-muted);border:1px solid var(--c-border);
   padding:4px 8px}
+.wa-tick[hidden]{display:none}
 
 /* ---- the rail: every destination, and eight experiences -------------------------- */
 /* The rungs stay inside the type column and drop to the foot of the stage. Run
@@ -581,21 +583,51 @@
    right edge and the readout has gone with it, and below that the rail keeps
    the narrow one. A min-width query rather than a max-width one because this is
    an enhancement at large sizes, not a repair at small ones. */
-/* THE ATLAS INDEX
-   ---------------
-   The foot of the hero, and the only interface on it. The first screen was
-   carrying nine horizontal systems — headline, lede, calls, readout, region
-   tabs, country tabs, terrain chips, legend, experience categories — which is a
-   dashboard rather than an opening spread. Four of them have gone to the
-   sections that already do their job: the countries to 02, the experiences to
-   03, and the terrain chips with them.
-
-   What is left is one row, labelled, with air above it. */
-.wa-index-say{font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--c-muted);margin:0 0 14px}
 .wa-win-rail{margin-top:auto;padding:var(--sp-4) 0 26px;min-width:0;position:relative;z-index:2;
   max-width:min(52%,640px)}
 @media(min-width:1360px){.wa-win-rail{max-width:min(66%,820px)}}
+/* Twenty-two destinations do not fit across 1152px — they measure 1615px — so
+   the rail scrolls rather than wrapping into rows that shift the whole stage.
+   Three rows would be needed, and at 1440 there are 56 pixels of slack. */
+.wa-ticks{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0;
+  gap:0;border-top:2px solid var(--c-primary);
+  /* The fade says which way there is more.
+     It used to fade the right edge and only the right edge, always — so a rail
+     scrolled to its end still promised more to the right, and a rail scrolled
+     away from its start gave no sign there was anything to the left. Twenty-two
+     destinations in a 760px window: the reader is looking at ten of them and
+     the affordance was lying about both ends.
+
+     Driven by the rail's own scroll position, so the left edge fades in as you
+     leave the start and the right edge fades out as you reach the end. No
+     script, no scroll listener — a scroll-driven animation is a timeline, and
+     the browser runs it on the compositor. Where it is not supported the two
+     custom properties keep their initial values and the mask is exactly the
+     static one it replaces. */
+  --fj-fade-l:0px; --fj-fade-r:46px;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 var(--fj-fade-l),
+    #000 calc(100% - var(--fj-fade-r)),transparent);
+  mask-image:linear-gradient(to right,transparent,#000 var(--fj-fade-l),
+    #000 calc(100% - var(--fj-fade-r)),transparent);
+  animation:wa-rail-fade linear both;
+  animation-timeline:scroll(self inline)}
+@property --fj-fade-l{syntax:"<length>";inherits:false;initial-value:0px}
+@property --fj-fade-r{syntax:"<length>";inherits:false;initial-value:46px}
+@keyframes wa-rail-fade{
+  from{--fj-fade-l:0px;   --fj-fade-r:46px}
+  to  {--fj-fade-l:46px;  --fj-fade-r:0px}}
+.wa-ticks::-webkit-scrollbar{display:none}
+/* The rail of twenty-two names under the map, which is the keyboard and
+   touch equivalent of pressing a country on it. Forest at rest so it reads as
+   a list of places rather than as metadata; sienna and ivory when it is the
+   one selected, which is the same active state the region tabs use. */
+.wa-tick{flex:0 0 auto;background:none;border:0;border-right:var(--fj-rule);cursor:pointer;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--c-primary);padding:11px 8px;text-align:left;transition:color .2s,background .2s;white-space:nowrap}
+.wa-tick:last-child{border-right:0}
+.wa-tick:hover{background:var(--c-sand)}
+.wa-tick[aria-pressed="true"],.wa-tick.on{background:var(--c-accent);color:var(--c-bg)}
+.wa-tick[aria-current]{color:var(--c-bg);background:var(--c-primary)}
 .wa-tags-in{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;min-width:0;margin-top:14px;
   border-top:var(--fj-rule);border-bottom:var(--fj-rule)}
 .wa-tags-in::-webkit-scrollbar{display:none}
@@ -774,9 +806,127 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
    layout in 070, that rule broke the longest of them across two lines from
    960 down to 860 while there was still room for all three on one. */
 @media(max-width:860px){.wa-acts .wa-act{flex:1 1 220px;min-width:0;text-align:center}}
-/* Anything driven by a thumb gets a 44px target. */
+/* Anything driven by a thumb gets a 44px target. The ticks were 33px. */
 @media(pointer:coarse){
+  .wa-tick{min-height:44px;padding-top:14px;padding-bottom:14px}
   .wa-want{padding-top:20px;padding-bottom:18px}}
+
+/* ---- the window band ------------------------------------------------------------- */
+/* THE PICTURE IS LOCKED TO THE VIEWPORT. THIS SECTION IS A WINDOW THAT TRAVELS
+   ACROSS IT.
+   ---------------------------------------------------------------------------
+   Not a parallax and not a background. .wa-seam-pic holds one full viewport of
+   photograph at position:fixed, so it never moves at all; the section is given
+   clip-path:inset(0), which clips that fixed child to the section's own box.
+   Scrolling therefore slides the window down the photograph, and the picture
+   itself is still. There is no script — this is two properties.
+
+   THE ONE WAY TO BREAK IT, WHICH BREAKS IT SILENTLY:
+
+     transform, filter, backdrop-filter, perspective, will-change and contain
+     each make an element a containing block for fixed-position descendants.
+
+   Any one of them anywhere between this section and .wa-seam-pic — or on the
+   section itself — turns that `fixed` into an `absolute` and the effect simply
+   stops, with no error and no visible breakage beyond the picture beginning to
+   scroll like an ordinary image. So nothing on .wa-seam or .wa-seam-pic may
+   carry any of the six, and a hover or transition added to either later must
+   not reach for one. This is asserted in tools/browser-checks.js rather than
+   left as a comment, because a comment does not survive the next hover effect.
+
+   background-attachment:fixed is the other way to do this and is not used: iOS
+   Safari ignores it outright, which is a silent failure on the platform most of
+   this page's readers are on.
+
+   The tint is fixed WITH the picture, not laid on the band — a tint on the band
+   would scroll while the photograph stood still, and the shading would crawl
+   across the image. It is a transparent wash rather than a scrim: the strongest
+   point is 58%, which is enough to carry ivory type and leaves the photograph
+   luminous. A dark scrim would make the contrast trivial and the picture
+   pointless.
+
+   130svh, not vh: on a phone the toolbars change vh mid-scroll, which would
+   resize the window while the reader is inside it. svh is the small viewport
+   and does not move. */
+/* clip-path already makes this a stacking context, so the copy's z-index cannot
+   climb over the masthead and no isolation property is needed. Every property on
+   these two rules is load-bearing; there is nothing here to copy loosely. */
+.wa-seam{position:relative;clip-path:inset(0);min-height:130svh;
+  display:flex;align-items:center}
+.wa-seam-pic{position:fixed;inset:0;z-index:0}
+.wa-seam-pic img{width:100%;height:100%;object-fit:cover;display:block}
+/* Deep forest rather than black, so the band belongs to the palette and the
+   photograph stays warm under it.
+   
+   GRADED, NOT FLAT. Measured against the actual pixels behind the glyphs, a
+   flat wash at half strength cannot carry this picture: the herd is lit from
+   the front and the sky is pale, so ivory type crossing a sunlit elephant came
+   out at 1.00:1 — invisible — while the same wash over the shaded left was
+   already heavier than it needed to be. Raising a flat wash until the worst
+   pixel passes means about 80% everywhere, which is the dark scrim this is
+   meant not to be.
+   
+   So the weight goes where the type is and is released where it is not. Across
+   the width it averages 44%, which is the "about half" this is built to; the
+   right third is under 10% and the plain keeps its light. */
+.wa-seam-tint{position:absolute;inset:0;background:
+  linear-gradient(100deg,
+    color-mix(in srgb,var(--c-primary) 82%,transparent) 0%,
+    color-mix(in srgb,var(--c-primary) 78%,transparent) 34%,
+    color-mix(in srgb,var(--c-primary) 62%,transparent) 50%,
+    color-mix(in srgb,var(--c-primary) 24%,transparent) 72%,
+    color-mix(in srgb,var(--c-primary) 6%,transparent) 100%)}
+.wa-seam-copy{position:relative;z-index:1;width:100%;max-width:1240px;
+  margin:0 auto;padding:0 44px}
+.wa-seam-inner{max-width:560px}
+ /* Ivory, not gold. Muted gold is the metadata voice everywhere else on this
+    site and it was the obvious choice here, but measured against the pixels it
+    actually sits on it reaches 3.15:1 where 4.5 is required — the wash that
+    carries a 52px headline at 5:1 is nowhere near enough for 10px of gold. The
+    voice is kept by size and letterspacing instead of by hue. */
+.wa-seam-stamp{font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-bg);margin:0}
+.wa-seam-copy h2{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  letter-spacing:-.01em;line-height:1.04;font-size:clamp(29px,3.5vw,52px);
+  margin:16px 0 0;color:var(--c-bg)}
+.wa-seam-hr{display:block;width:64px;height:2px;margin:26px 0;background:var(--c-accent-lit)}
+.wa-seam-say{font-size:17px;line-height:1.6;color:var(--c-bg);max-width:44ch;margin:0}
+.wa-seam-go{display:inline-block;margin-top:26px;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-bg);
+  border-bottom:2px solid var(--c-accent-lit);padding-bottom:6px}
+.wa-seam-go:hover{color:var(--c-accent-lit)}
+/* Under a laptop the copy is centred over the picture and the wash goes with
+   it, because there is no longer a right-hand half to leave alone. The band
+   also loses height: 130svh of photograph on a phone is three thumb-flicks of
+   one image, which stops reading as a moment and starts reading as a stall. */
+@media(max-width:950px){
+  .wa-seam{min-height:104svh}
+  .wa-seam-copy{padding:0 28px}
+  .wa-seam-inner{max-width:none}
+  /* UNIFORM HERE, AND IT HAS TO BE.
+     The desktop wash is graded because the copy's horizontal position never
+     changes — it is pinned to the left column, so weight put on the left stays
+     under the type for the whole travel. Vertically there is no such thing: the
+     copy traverses the entire viewport while the tint is fixed to it, so every
+     line passes through every band of a vertical gradient. Grading it simply
+     moves which scroll position fails. Measured, a 16/64/78/16 band left 16px
+     type at 1.81:1 at the moment the copy crossed the released edge.
+
+     So it is flat, and flat has to be set by the worst pixel the copy will ever
+     cross. Cover-fitting 1600x1067 into a narrow viewport crops to the middle
+     of the picture — sunlit dust at rgb(246,204,147) once the tint is taken back
+     out — and carrying ivory over that at 4.5:1 needs 68%.
+
+     That is more than the half-strength the desktop band runs at, and it is the
+     honest price of putting 16px of text over a bright photograph on a narrow
+     screen. The alternative worth knowing about is to stop putting copy on the
+     picture below 950 and let the band be picture alone, which would keep it
+     fully luminous; that is a design decision rather than a defect, so it is
+     recorded here rather than taken quietly. */
+  .wa-seam-tint{background:color-mix(in srgb,var(--c-primary) 68%,transparent)}
+  .wa-seam-copy h2{font-size:clamp(26px,5vw,38px)}
+  .wa-seam-say{font-size:16px}
+}
 
 /* ---- zones and heads ------------------------------------------------------------ */
 .wa-zone{padding:88px 0}
@@ -1277,10 +1427,9 @@ window.AF = {
       <div class="wa-win">
         <div class="wa-win-frame">
       <figure class="wa-win-state" data-slug="africa" data-on="true">
-        <!-- The countries are focusable. 082 took them out of the tab order because
-           the rail of names below the map was the same twenty-two; 110 removed that
-           rail, so this is the only keyboard route to them. See .wa-map-live. -->
-        <svg class="wa-map-svg" viewBox="0 0 1000 1060" role="img" aria-label="Map of Africa. The 22 countries written up on this site are filled in; the rest of the continent is drawn as outline only. Each is focusable, and all 22 are listed again as destinations further down this page." xmlns="http://www.w3.org/2000/svg">
+        <!-- The countries carry tabindex="-1": clickable, still in the document, and
+           out of the tab order. See the note beside .wa-map-live in the stylesheet. -->
+        <svg class="wa-map-svg" viewBox="0 0 1000 1060" role="img" aria-label="Map of Africa. The 22 countries written up on this site are filled in; the rest of the continent is drawn as outline only. The same 22 are listed as buttons directly below this map." xmlns="http://www.w3.org/2000/svg">
         <g class="wa-map-rest" aria-hidden="true">
         <path d="M416.5 85.3L412.1 90.2L413.4 92.1L411.6 98.9L412.5 106.2L410.4 111.9L402.3 119L401.4 122.6L403.2 129.6L407.2 132.3L409 138.6L416.4 144.7L420 167.4L417.6 168.7L422.4 180.4L422.6 197.6L420.3 203.2L421.3 211.9L415.7 217.8L421.8 228L424.3 237.3L438.7 241L443.7 251L389 282.9L367.2 300.5L337.8 305.2L335.4 303.1L337.4 299.9L336.3 294.3L319.7 287.1L314 281.3L314.1 277.7L211.6 193.5L215 175.8L233.8 165.5L239.4 166.5L241.7 163.5L253.3 162.6L259.7 156.7L275 151.5L273.7 148.5L275.4 142.4L283.8 141.2L286 138.3L303.9 139.1L306.3 134.7L302.8 130.6L301.4 123.8L303.2 106.2L299.5 101.5L305.4 101L319.9 93.6L323.9 94.2L328.3 90.4L338.9 86.7L353.1 86.5L366 83.6L376.3 84.1L381.5 87.4L394.7 82.6L399.1 84.8L402.4 84.4L402.2 82.9L409.3 86L416.5 85.3Z"><title>Algeria</title></path>
         <path d="M451.9 605.9L444.1 611.4L444.8 619.3L441.1 620.1L438.6 610.6L448.4 603.3L451.9 605.9ZM588.7 684.5L588.3 711.1L563.7 711.2L564 752L565.3 756.2L580.2 769.3L548 773.9L526.1 771.2L519.6 766.2L465.3 766.4L459 761.8L454.4 760.9L447.7 764L437.8 764.6L437.5 746.8L440.6 742.9L446.7 716.8L451.9 708.5L457.2 705.3L460.5 700.3L462.3 686.8L451.4 661.6L455.9 657L456.1 653L449 635.2L442.3 624.3L453.4 621.3L494.3 621.9L497.7 625.2L501.3 639L508.8 649.6L530.9 647.9L533.3 637.6L537.7 635.6L546.7 634.7L546.9 639.3L561.7 639.7L563.1 657.1L561.9 666.8L567.6 676.8L566.9 687.6L587 686.3L588.7 684.5Z"><title>Angola</title></path>
@@ -1316,26 +1465,26 @@ window.AF = {
         <path d="M212.5 188.8L208.8 209.8L171.6 206.9L165.7 239.1L158.5 241.1L151.5 246.4L149.8 265.7L105 262.2L102.9 268.9L104.8 261L130.4 262L138.2 252L145.1 234.6L152.3 231.4L157.1 225.4L164.1 221.3L171.1 206.8L175.1 205.8L181 198.8L180.7 196.2L188 195L199 198L203.1 195.3L210 195.5L211 188.7L212.5 188.8Z"><title>W. Sahara</title></path>
         <path d="M678 873.6L679 884.5L677.7 884.2L676.8 890.2L668.9 889.2L663.9 883.5L664.2 878.9L671 870.9L678 873.6Z"><title>eSwatini</title></path>
         </g>
-        <a class="wa-map-live" data-tier="live" data-slug="botswana" data-name="Botswana" data-tag="A delta that never reaches the sea" data-region="Southern Africa" href="/botswana"><path d="M603.1 771.3L602.8 773.5L611 785.6L613.5 793.1L625.5 800.2L626.5 804.9L631.6 805.6L630.9 812.2L634.3 817.8L646.7 821.5L646.8 824.3L650.5 826.5L636.5 832.5L630.8 838.7L622.6 843.3L619.3 851.4L614.6 855.6L607.8 858.1L602.2 869.4L591.8 870.2L578.2 864L574.3 864.2L568.8 874.3L561.8 880.4L557.5 883.1L546.9 883L545.6 878L547.6 871.5L542.5 860.6L538.2 857.5L538.4 823.3L550.3 823.3L550.7 777.6L578.1 773.7L582.7 779.5L592.1 773.5L594.1 774.5L603.1 771.3Z"/><title>Botswana &#8212; A delta that never reaches the sea</title></a>
-        <a class="wa-map-live" data-tier="ours" data-slug="cameroon" data-name="Cameroon" data-tag="Africa in miniature" data-region="Central &amp; West Africa" data-op="Operated locally by Kamerun" href="/cameroon"><path d="M395.2 486.7L401 472L410.9 461.4L415.5 458.4L419.7 459.8L421.4 457.7L429.1 465.5L437.1 457.1L435.9 455.1L441.9 442.4L444.1 438.4L448.9 435.7L450.1 429.5L454.2 426.3L455.2 420.3L460.7 409.8L464.2 405.6L471.5 402.1L472.3 393.8L467.1 390.8L465.6 382L471.2 383.3L478 397.6L478.5 412.7L484.9 420.9L467.3 421.1L463.9 424.7L478 439.1L483.5 449.5L473.1 467.9L469.2 470.9L471.5 473.1L470.8 480.5L472.8 489.1L477 493.1L477 497.4L489.6 510.6L490.5 525.5L470.8 519.5L432.7 518L430.1 518.1L429.8 519.7L412.8 519.7L410.6 517.9L412.1 506L407.7 498.9L410 498.3L409.4 495.7L405.2 497.3L400.7 495.1L399.8 489.3L396.5 487.8L395.4 489.6L395.2 486.7Z"/><title>Cameroon &#8212; Africa in miniature</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="cote-divoire" data-name="Côte d'Ivoire" data-tag="Lagoons, forest and the Atlantic" data-region="West Africa" href="/cote-divoire"><path d="M193.2 413.3L199.4 409.9L200.8 412.3L205.3 413.8L205.9 411.4L209.4 410.9L209.8 407.5L212.5 408.8L214.7 406.8L214.5 412.7L215.9 413.6L222.9 410.7L228.4 413.4L229.7 417.5L233.8 420.4L237.3 421.4L244.1 418.1L251 418.6L255.7 424.7L257.2 424.1L256.3 429.7L258.8 440.5L255.2 443.9L248.9 460.3L251.5 472.4L254 473.9L253.5 479.7L249.2 478.9L248.9 477L247 479.8L237.5 477.3L231.4 478.1L238.5 478.4L227.8 479.3L223.1 478.3L225.8 479.4L215.3 480.7L195 488.8L196.8 469.5L192.7 467.7L191.7 464.3L183.1 460.5L187.2 453.2L185.2 446.9L188.3 447L191.3 440.3L188.4 437.9L188.8 435.3L195.6 436.1L195.2 433.1L192.5 431.1L194.9 427.4L193.2 425.9L193.7 423L190.8 421.9L191 415.7L193.2 413.3Z"/><title>Côte d'Ivoire &#8212; Lagoons, forest and the Atlantic</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="egypt" data-name="Egypt" data-tag="The Nile, and five thousand years" data-region="North Africa" href="/egypt"><path d="M738.4 266.5L674.3 268.6L673.8 266L671.7 268.7L597.8 270.1L594.5 181.1L590.9 168.6L593.5 162.7L592.7 153.6L595.1 150.8L597.7 152.4L603.4 151L640.3 159.8L651.8 154.2L653.5 151.7L659.2 150.1L655.3 152.1L660.2 151.4L660.9 149.6L665.9 151.2L669.9 150L672.9 152.4L670 150.8L668.9 153.2L672.8 155.5L674.2 152.9L678.4 155.6L690.1 154.3L695.7 151.7L706.1 174.1L700.7 195.6L688.7 186.1L679.3 169L677.4 173.4L684.7 186.3L692.9 194.3L699.1 209.6L715.9 236.2L723.4 242.6L720.6 242.9L720.3 244.7L723.5 255.1L738.4 266.5Z"/><title>Egypt &#8212; The Nile, and five thousand years</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="ethiopia" data-name="Ethiopia" data-tag="The roof of Africa" data-region="East Africa" href="/ethiopia"><path d="M730.8 476.5L727.1 471.9L723.4 461.7L714.1 452L701.7 446.2L705 439.3L713.4 439.1L715.1 437.3L714.5 425.5L716.9 417.7L716.4 412.5L719.9 408L722.5 409.6L724.4 408.1L726.1 395.9L732.4 385.5L737.7 384.1L741.7 364.5L747.8 364.1L750.5 361.7L754.5 365.5L757.8 356.4L764.8 361.6L772.3 358.8L774 360.7L785.4 360.6L793.9 364.7L814.3 385.1L807.9 395.4L808.5 404.4L822.2 403.8L819.3 408.7L821.8 414L830.3 424.4L836.6 429L873.8 441L886 440.6L850.7 481.7L834 482.8L827.1 486.7L824.5 490.3L815.1 492.5L813.4 494.6L804.2 494.9L799.4 491L788.1 496.6L783.9 501.8L766.4 499.6L751.5 490L740.5 489.4L737.1 485.1L736.8 478.3L731.5 478.1L730.8 476.5Z"/><title>Ethiopia &#8212; The roof of Africa</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="ghana" data-name="Ghana" data-tag="The forts, the forest and the highlife" data-region="West Africa" href="/ghana"><circle class="wa-map-hit" cx="278.1" cy="441.4" r="34"/><path d="M290.5 404L290 409.6L295.5 414.7L293.2 425.2L296.8 426.1L294.6 434.7L298.3 440.1L295.5 449.8L297.2 452.3L295.6 458.7L298 463.8L303.5 468.6L300.5 472.1L291.9 472.6L263.5 484.9L249.9 480.4L253.5 479.7L254.4 476.1L251.5 472.4L249.1 458.3L255.2 443.9L258.8 440.5L256.3 429.7L256.9 414.3L255.3 409.7L256.6 404.6L283.5 406.2L287.7 403.3L290.5 404Z"/><title>Ghana &#8212; The forts, the forest and the highlife</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="kenya" data-name="Kenya" data-tag="Where the wild runs free" data-region="East Africa" href="/kenya"><path d="M714.6 559.5L715 544.5L722.4 532.6L725.7 530.8L727.9 524.7L726.4 513.6L721 506.3L720.8 500.1L717.4 498.1L714.9 492.9L730.8 476.5L731.5 478.1L736.8 478.3L737.1 485.1L740.5 489.4L751.5 490L766.4 499.6L783.9 501.8L788.1 496.6L799.4 491L804.2 494.9L813.4 494.6L802.3 509.7L802.8 557.2L809.7 567.7L806.4 571L801.7 572L801.8 575.2L798.6 578.7L793.3 580.6L792 587.9L782.5 605.5L780.5 606.4L763 593.4L760.7 591.1L761.2 585.4L714.6 559.5Z"/><title>Kenya &#8212; Where the wild runs free</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="madagascar" data-name="Madagascar" data-tag="An island that evolved alone" data-region="Islands" href="/madagascar"><path d="M902.1 707.1L906.2 715.5L907.7 737.1L909.6 742.6L908.5 748.8L905.5 753L902.7 746.4L899.6 747.8L900.6 759.7L894.9 769.3L892.2 783.4L855.3 864.7L849.5 869.1L842.8 869.8L834.8 873.7L830.3 873.2L819 865.8L816 856.9L817.9 847.2L814.4 832.6L818.8 819.7L822.5 817.6L831.5 801.9L832.7 795.6L829.4 781L829.8 769.5L835.9 760.9L836.7 755L843 754L846.4 751.4L850.9 752.1L852.3 749.8L857.8 749L860.5 751.4L860.7 747.3L867.1 742.6L869.4 745.3L869.7 741.6L873.3 736.8L874.7 736.1L874.5 739.9L878.5 735.2L880.7 735.7L878.8 731.8L881.9 726.5L881 723.5L882.9 721.8L885.3 723.5L892.3 717.8L894.2 712.2L893.2 707L899.1 702.4L902.1 707.1Z"/><title>Madagascar &#8212; An island that evolved alone</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="morocco" data-name="Morocco" data-tag="Atlas, Sahara and the medinas" data-region="North Africa" href="/morocco"><path d="M299.5 101.5L303.2 106.2L301.4 123.8L302.8 130.6L306.3 134.7L303.9 139.1L286 138.3L283.8 141.2L275.4 142.4L273.7 148.5L275 151.5L259.7 156.7L253.3 162.6L241.7 163.5L239.4 166.5L233.8 165.5L215.2 175.5L210 195.5L203.1 195.3L199 198L188 195L180.7 196.2L181 198.8L175.1 205.8L171.1 206.8L164.1 221.3L157.1 225.4L152.3 231.4L145.1 234.6L138.2 252L130.4 262L104.8 261L106.7 254.8L114.8 246.4L123.8 232L121.7 232.8L123 230.7L136.3 220.4L145.7 201.2L156.2 195.9L166.2 181.6L182.5 178L196.1 169.5L207.7 157.1L208.7 152.9L207 149.3L209.6 140.5L216.4 132.7L218.8 126.7L228.4 119L247.4 111.6L262.4 90.1L269.4 89.3L268.9 92.8L274.4 98.4L287.4 99.3L292.2 97.3L293 100.8L299.5 101.5Z"/><title>Morocco &#8212; Atlas, Sahara and the medinas</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="mozambique" data-name="Mozambique" data-tag="Two thousand kilometres of coast" data-region="Southern Africa" href="/mozambique"><path d="M673.3 829.4L687.8 815.9L689 807.9L695.5 799.6L693.4 792.1L694.5 788.6L692.8 786.5L696.9 778.7L697.4 758.6L685.3 754.9L676.9 749.7L667.1 749.3L665.1 736.6L702.1 724.7L707.1 731.7L716.3 730L718 739L713.8 748.4L715.8 753.3L723.2 760.4L722.8 763.5L725.3 764.1L724.7 756.3L727.1 752L732 750.8L734.5 736.1L727.3 723.4L719.2 716.5L717.3 701.4L720.8 694.5L732.5 694.4L735.3 692.5L741.6 695.8L748.7 694.1L756.8 695.5L761.7 690.7L768.7 692.3L785.3 686L793.5 680.4L795.1 682.9L792.2 691.4L793.4 708.1L791.4 712.5L793 712.6L792.7 732.4L794.3 730.9L794.9 734.7L790.8 744.3L780.7 754.5L781.2 756.3L771.5 763L752 770.2L744.7 775.4L737.6 785.1L735.9 784.4L735.5 786.2L730.8 787.7L719.1 797.8L715.7 796.4L715.7 806.1L718.7 810.3L721.2 820.9L721 830.2L723 826.8L723.8 829.1L723.5 837.4L720.2 847.7L722.2 848.1L718.1 855.5L690.2 868L685.4 874.3L688.1 877.6L689.5 875.4L687.9 884.8L679 884.5L677.8 871.3L679.8 855.1L673.3 829.4Z"/><title>Mozambique &#8212; Two thousand kilometres of coast</title></a>
-        <a class="wa-map-live" data-tier="ours" data-slug="namibia" data-name="Namibia" data-tag="Where the desert meets the wild" data-region="Southern Africa" data-op="Operated locally by Namib Skyline" href="https://namib-skyline.vercel.app"><path d="M580.2 769.3L591.1 767.3L599.2 768.1L603.1 771.3L594.1 774.5L592.1 773.5L583.3 779.4L578.1 773.7L550.7 777.6L550.3 823.3L538.4 823.3L538 902.5L532.9 904L528.5 908.5L516.4 907.6L508.8 905.6L507.7 900.3L504.2 897.4L497.3 904.6L488.7 896.7L484.2 889.7L479.5 876.6L477.6 860.8L473.4 850.6L472.4 829L459.8 810.1L447.1 785.4L438.5 774L437.8 764.6L447.7 764L454.4 760.9L459 761.8L465.3 766.4L519.6 766.2L526.1 771.2L548 773.9L580.2 769.3Z"/><title>Namibia &#8212; Where the desert meets the wild</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="nigeria" data-name="Nigeria" data-tag="The loudest country on the continent" data-region="West Africa" href="/nigeria"><path d="M460.1 374.1L465.6 382L467.1 390.8L472.3 393.8L471.7 401.5L463.1 406.4L460.7 409.8L455.2 420.3L454.2 426.3L450.8 428L448.2 436.6L444.1 438.4L435.9 455.1L437.1 457.1L430.2 465.1L427.5 465.4L426.3 461.8L421.4 457.7L418.9 460L415.5 458.4L401.8 470.8L395.2 486.7L391.2 484.7L391.9 489.2L383.8 489.5L382.3 487.9L379.2 489.2L376.7 487L377.6 489.6L374.7 491.1L372.8 486.9L373.9 491.3L371 491.7L370.4 490L370 491.7L366.8 492.2L366.5 490.5L365.3 492.5L358 487.7L355.4 480.7L357.7 477.2L355.7 478.1L353.4 476.4L356.6 475.4L352.3 475L344 465.9L332.2 464.9L335.2 462.6L330.3 465.1L322.5 465.3L324.4 431.1L327.8 430.8L331.5 422L335.1 419.2L335.3 414.8L337.6 413.7L337 405.5L334.5 400.1L336.7 396.8L337 387.1L342 382.1L343.7 375.4L350.2 372.1L360.4 370.5L370.2 373.4L377.7 381.8L388.8 377.8L400 383.5L410.6 384.8L416 379.9L421.4 378.4L434 378.4L445.8 381.7L451 377.2L460.1 374.1Z"/><title>Nigeria &#8212; The loudest country on the continent</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="rwanda" data-name="Rwanda" data-tag="A thousand hills" data-region="East Africa" href="/rwanda"><circle class="wa-map-hit" cx="661.6" cy="573.2" r="34"/><path d="M660.2 564.7L663.3 564L664.6 565.7L671.9 560.5L675.7 566.8L675.9 576.7L664.6 576.7L663.8 581.5L661.7 582.5L657.8 582.7L654.2 580L651.9 581.1L651.1 578.1L654.6 574.9L654.7 570.1L660.2 564.7Z"/><title>Rwanda &#8212; A thousand hills</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="senegal" data-name="Senegal" data-tag="Where the Sahel meets the Atlantic" data-region="West Africa" href="/senegal"><circle class="wa-map-hit" cx="116.7" cy="360.4" r="34"/><path d="M147 350.7L149.3 358.7L148.1 366.1L150.4 370.4L152.8 369.8L155.2 375.5L154.5 382.5L143.7 383L134.7 380.5L134 378.4L112.4 376.8L91.3 380L91 377.7L94.8 376.8L93.2 375.3L91.1 376.3L93.2 369.5L102.8 370L103.3 367.8L109.6 367.2L111.4 365.2L121.6 370L126.8 368L125.2 366.1L120.1 366.4L113.2 362L107.2 364.6L94.9 363.8L92.9 359.5L94.9 357.8L92.8 358.2L89.4 349.5L85.3 347.7L90.1 345.8L94.3 341.2L103.5 325.4L108.8 326.4L118.6 324.5L126.1 326.3L130.4 332.2L135.6 333.7L137.3 339.6L147 350.7Z"/><title>Senegal &#8212; Where the Sahel meets the Atlantic</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="south-africa" data-name="South Africa" data-tag="A world in one country" data-region="Southern Africa" href="/south-africa"><path d="M650.5 826.5L673.3 829.4L679.8 855.1L678 873.6L671 870.9L664.2 878.9L663.8 883.2L668.9 889.2L674.3 890.2L676.8 890.2L677.7 884.2L687.9 884.8L679.1 906.4L667.5 915.4L650.1 938.8L631.9 954.2L616 964.8L608.6 967.5L601.8 967.1L599.7 970.4L592.8 969.9L590.7 972.2L578.4 969.9L565.8 970L557.3 974.3L543.4 975.3L537.8 979.2L529.9 977.1L527.8 973.9L524.8 974.1L523.9 970.7L521.1 971.1L520.8 973.9L519.3 970.6L520.4 966.3L513.9 955.6L519.1 951.7L517.8 942.5L507.9 926.8L497.3 904.6L504.2 897.4L507.7 900.3L508.8 905.6L516.4 907.6L528.5 908.5L532.9 904L538 902.5L538.2 857.5L542.5 860.6L547.6 871.5L545.6 878L546.3 882.6L557.5 883.1L568.8 874.3L574.3 864.2L578.2 864L591.8 870.2L602.2 869.4L607.8 858.1L614.6 855.6L619.3 851.4L622.6 843.3L630.8 838.7L636.5 832.5L650.5 826.5ZM637.3 923.6L641.5 921.5L645.5 913.6L637.3 905.1L626.8 909.3L618.6 917.5L621.8 926L625.8 929.5L629.2 930L633.4 924.1L637.3 923.6Z"/><title>South Africa &#8212; A world in one country</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="tanzania" data-name="Tanzania" data-tag="Wild Africa, island Africa" data-region="East Africa" href="/tanzania"><path d="M783.6 625.4L783.2 629L779.6 625.4L781.4 619.6L783.6 625.4ZM788.5 609.1L786.9 616L786.1 609.4L788.5 609.1ZM700.7 666.4L688.6 661.9L681.4 656.2L676.6 655.5L667.6 636.3L659.3 627.1L658.5 623.5L660.2 619.6L656.8 609.2L657.8 603.5L664.7 601.7L675.6 587.6L675.2 584.9L670.8 582.8L672.2 577.8L675.9 576.7L676.5 574.2L675.7 566.8L671.9 560.5L715.5 559.5L761.2 585.4L760.7 591.1L780.5 606.4L775 624L775.8 627.4L783.8 636.3L780.5 642.6L782.1 648.9L780.3 654.4L784.1 664L784.7 674.4L793.5 680.4L785.3 686L768.7 692.3L761.7 690.7L756.8 695.5L748.7 694.1L741.6 695.8L735.3 692.5L732.5 694.4L725 694L720.8 687.1L720.4 674.4L718 670.6L714 667.5L712.6 669.8L700.7 666.4Z"/><title>Tanzania &#8212; Wild Africa, island Africa</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="tunisia" data-name="Tunisia" data-tag="Carthage, the Sahel and the desert south" data-region="North Africa" href="/tunisia"><circle class="wa-map-hit" cx="426.8" cy="116.7" r="34"/><path d="M444.4 131.8L443.8 141.2L429.7 149.8L427.7 152.4L428.3 160.8L424.4 165.6L420 167.4L416.2 144.2L409 138.6L407.2 132.3L403.2 129.6L401.4 122.6L402.3 119L410.4 111.9L412.5 106.2L411.6 98.9L413.4 92.1L412.1 90.2L416.5 85.3L428.6 80.8L429.9 83.3L430.5 81.9L433.8 82.6L435.6 88.4L442.7 84.5L443.3 86.9L435.8 95.1L436.7 98.7L440.9 101.9L441.8 106.7L429.2 119.7L431.7 124.8L436.1 125.4L436.1 127.5L438.8 126.2L441.1 130.9L444.4 131.8ZM438.8 125.1L436.3 124.8L436.7 123L439.6 123.9L438.8 125.1Z"/><title>Tunisia &#8212; Carthage, the Sahel and the desert south</title></a>
-        <a class="wa-map-live" data-tier="ours" data-slug="uganda" data-name="Uganda" data-tag="The Pearl of Africa" data-region="East Africa" data-op="Operated locally by Pearl Trails Uganda" href="https://pearl-trails-uganda.vercel.app"><path d="M714.6 559.5L675.7 559.6L670.1 560.6L664.6 565.7L663.3 564L660.2 564.7L661.5 548.5L664.6 537L681.2 520.9L680.2 518.1L674.5 515.8L675.8 502.6L679.7 498.8L684.7 500.1L687.8 498.5L692 502.1L694.5 499.7L702.8 497.4L709 498.9L714.9 492.9L717.4 498.1L720.8 500.1L721 506.3L726.9 515L727.9 524.7L725.7 530.8L722.4 532.6L715 544.5L714.6 559.5Z"/><title>Uganda &#8212; The Pearl of Africa</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="zambia" data-name="Zambia" data-tag="Into the real wilderness" data-region="Southern Africa" href="/zambia"><path d="M666.8 744.8L655.6 745.4L649.2 748.5L646.3 755.8L636.1 760.3L624.5 773.5L621.5 774.5L603.1 771.3L599.2 768.1L591.1 767.3L580.2 769.3L565.3 756.2L564 752L563.7 711.2L588.3 711.1L588.7 684.5L593.1 687L593.7 691.4L605.1 688.8L605.8 694L615 697.6L624.1 698.4L628.3 693.5L633.3 701.7L643.6 705.4L650.8 716.1L657.5 714.7L660.1 717.1L660.9 700.9L657.3 701.8L657 704.2L651.8 703.3L645.4 697.4L643.2 692.4L647.1 680.6L646.8 669.6L644.4 663.9L650.4 658.4L650.8 654.6L674 650.9L677.4 656.1L681.4 656.2L688.6 661.9L700.7 666.4L705.9 672.2L705.3 674.4L709.5 680.9L704.4 685.2L705.7 688.6L703.8 691.8L703.7 700.6L706.8 703.6L700.6 707.2L699.6 714.7L695.8 719.3L699.5 724.7L702.1 724.7L665.1 736.6L666.8 744.8Z"/><title>Zambia &#8212; Into the real wilderness</title></a>
-        <a class="wa-map-live" data-tier="live" data-slug="zimbabwe" data-name="Zimbabwe" data-tag="Great Zimbabwe and the Zambezi" data-region="Southern Africa" href="/zimbabwe"><path d="M673.3 829.4L650.5 826.5L646.8 824.3L646.7 821.5L634.8 818.3L630.9 812.2L631.6 805.6L626.5 804.9L625.5 800.2L613.5 793.1L611 785.6L602.8 773.5L603.1 771.3L621.5 774.5L624.5 773.5L636.1 760.3L646.3 755.8L648.5 749L658.6 744.8L666.8 744.8L667.1 749.3L676.9 749.7L685.3 754.9L697.4 758.6L696.9 778.7L692.8 786.5L694.5 788.6L693.4 792.1L695.5 799.6L689 807.9L687.8 815.9L673.3 829.4Z"/><title>Zimbabwe &#8212; Great Zimbabwe and the Zambezi</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="botswana" data-name="Botswana" data-tag="A delta that never reaches the sea" data-region="Southern Africa" href="/botswana"><path d="M603.1 771.3L602.8 773.5L611 785.6L613.5 793.1L625.5 800.2L626.5 804.9L631.6 805.6L630.9 812.2L634.3 817.8L646.7 821.5L646.8 824.3L650.5 826.5L636.5 832.5L630.8 838.7L622.6 843.3L619.3 851.4L614.6 855.6L607.8 858.1L602.2 869.4L591.8 870.2L578.2 864L574.3 864.2L568.8 874.3L561.8 880.4L557.5 883.1L546.9 883L545.6 878L547.6 871.5L542.5 860.6L538.2 857.5L538.4 823.3L550.3 823.3L550.7 777.6L578.1 773.7L582.7 779.5L592.1 773.5L594.1 774.5L603.1 771.3Z"/><title>Botswana &#8212; A delta that never reaches the sea</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="ours" data-slug="cameroon" data-name="Cameroon" data-tag="Africa in miniature" data-region="Central &amp; West Africa" data-op="Operated locally by Kamerun" href="/cameroon"><path d="M395.2 486.7L401 472L410.9 461.4L415.5 458.4L419.7 459.8L421.4 457.7L429.1 465.5L437.1 457.1L435.9 455.1L441.9 442.4L444.1 438.4L448.9 435.7L450.1 429.5L454.2 426.3L455.2 420.3L460.7 409.8L464.2 405.6L471.5 402.1L472.3 393.8L467.1 390.8L465.6 382L471.2 383.3L478 397.6L478.5 412.7L484.9 420.9L467.3 421.1L463.9 424.7L478 439.1L483.5 449.5L473.1 467.9L469.2 470.9L471.5 473.1L470.8 480.5L472.8 489.1L477 493.1L477 497.4L489.6 510.6L490.5 525.5L470.8 519.5L432.7 518L430.1 518.1L429.8 519.7L412.8 519.7L410.6 517.9L412.1 506L407.7 498.9L410 498.3L409.4 495.7L405.2 497.3L400.7 495.1L399.8 489.3L396.5 487.8L395.4 489.6L395.2 486.7Z"/><title>Cameroon &#8212; Africa in miniature</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="cote-divoire" data-name="Côte d'Ivoire" data-tag="Lagoons, forest and the Atlantic" data-region="West Africa" href="/cote-divoire"><path d="M193.2 413.3L199.4 409.9L200.8 412.3L205.3 413.8L205.9 411.4L209.4 410.9L209.8 407.5L212.5 408.8L214.7 406.8L214.5 412.7L215.9 413.6L222.9 410.7L228.4 413.4L229.7 417.5L233.8 420.4L237.3 421.4L244.1 418.1L251 418.6L255.7 424.7L257.2 424.1L256.3 429.7L258.8 440.5L255.2 443.9L248.9 460.3L251.5 472.4L254 473.9L253.5 479.7L249.2 478.9L248.9 477L247 479.8L237.5 477.3L231.4 478.1L238.5 478.4L227.8 479.3L223.1 478.3L225.8 479.4L215.3 480.7L195 488.8L196.8 469.5L192.7 467.7L191.7 464.3L183.1 460.5L187.2 453.2L185.2 446.9L188.3 447L191.3 440.3L188.4 437.9L188.8 435.3L195.6 436.1L195.2 433.1L192.5 431.1L194.9 427.4L193.2 425.9L193.7 423L190.8 421.9L191 415.7L193.2 413.3Z"/><title>Côte d'Ivoire &#8212; Lagoons, forest and the Atlantic</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="egypt" data-name="Egypt" data-tag="The Nile, and five thousand years" data-region="North Africa" href="/egypt"><path d="M738.4 266.5L674.3 268.6L673.8 266L671.7 268.7L597.8 270.1L594.5 181.1L590.9 168.6L593.5 162.7L592.7 153.6L595.1 150.8L597.7 152.4L603.4 151L640.3 159.8L651.8 154.2L653.5 151.7L659.2 150.1L655.3 152.1L660.2 151.4L660.9 149.6L665.9 151.2L669.9 150L672.9 152.4L670 150.8L668.9 153.2L672.8 155.5L674.2 152.9L678.4 155.6L690.1 154.3L695.7 151.7L706.1 174.1L700.7 195.6L688.7 186.1L679.3 169L677.4 173.4L684.7 186.3L692.9 194.3L699.1 209.6L715.9 236.2L723.4 242.6L720.6 242.9L720.3 244.7L723.5 255.1L738.4 266.5Z"/><title>Egypt &#8212; The Nile, and five thousand years</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="ethiopia" data-name="Ethiopia" data-tag="The roof of Africa" data-region="East Africa" href="/ethiopia"><path d="M730.8 476.5L727.1 471.9L723.4 461.7L714.1 452L701.7 446.2L705 439.3L713.4 439.1L715.1 437.3L714.5 425.5L716.9 417.7L716.4 412.5L719.9 408L722.5 409.6L724.4 408.1L726.1 395.9L732.4 385.5L737.7 384.1L741.7 364.5L747.8 364.1L750.5 361.7L754.5 365.5L757.8 356.4L764.8 361.6L772.3 358.8L774 360.7L785.4 360.6L793.9 364.7L814.3 385.1L807.9 395.4L808.5 404.4L822.2 403.8L819.3 408.7L821.8 414L830.3 424.4L836.6 429L873.8 441L886 440.6L850.7 481.7L834 482.8L827.1 486.7L824.5 490.3L815.1 492.5L813.4 494.6L804.2 494.9L799.4 491L788.1 496.6L783.9 501.8L766.4 499.6L751.5 490L740.5 489.4L737.1 485.1L736.8 478.3L731.5 478.1L730.8 476.5Z"/><title>Ethiopia &#8212; The roof of Africa</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="ghana" data-name="Ghana" data-tag="The forts, the forest and the highlife" data-region="West Africa" href="/ghana"><circle class="wa-map-hit" cx="278.1" cy="441.4" r="34"/><path d="M290.5 404L290 409.6L295.5 414.7L293.2 425.2L296.8 426.1L294.6 434.7L298.3 440.1L295.5 449.8L297.2 452.3L295.6 458.7L298 463.8L303.5 468.6L300.5 472.1L291.9 472.6L263.5 484.9L249.9 480.4L253.5 479.7L254.4 476.1L251.5 472.4L249.1 458.3L255.2 443.9L258.8 440.5L256.3 429.7L256.9 414.3L255.3 409.7L256.6 404.6L283.5 406.2L287.7 403.3L290.5 404Z"/><title>Ghana &#8212; The forts, the forest and the highlife</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="kenya" data-name="Kenya" data-tag="Where the wild runs free" data-region="East Africa" href="/kenya"><path d="M714.6 559.5L715 544.5L722.4 532.6L725.7 530.8L727.9 524.7L726.4 513.6L721 506.3L720.8 500.1L717.4 498.1L714.9 492.9L730.8 476.5L731.5 478.1L736.8 478.3L737.1 485.1L740.5 489.4L751.5 490L766.4 499.6L783.9 501.8L788.1 496.6L799.4 491L804.2 494.9L813.4 494.6L802.3 509.7L802.8 557.2L809.7 567.7L806.4 571L801.7 572L801.8 575.2L798.6 578.7L793.3 580.6L792 587.9L782.5 605.5L780.5 606.4L763 593.4L760.7 591.1L761.2 585.4L714.6 559.5Z"/><title>Kenya &#8212; Where the wild runs free</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="madagascar" data-name="Madagascar" data-tag="An island that evolved alone" data-region="Islands" href="/madagascar"><path d="M902.1 707.1L906.2 715.5L907.7 737.1L909.6 742.6L908.5 748.8L905.5 753L902.7 746.4L899.6 747.8L900.6 759.7L894.9 769.3L892.2 783.4L855.3 864.7L849.5 869.1L842.8 869.8L834.8 873.7L830.3 873.2L819 865.8L816 856.9L817.9 847.2L814.4 832.6L818.8 819.7L822.5 817.6L831.5 801.9L832.7 795.6L829.4 781L829.8 769.5L835.9 760.9L836.7 755L843 754L846.4 751.4L850.9 752.1L852.3 749.8L857.8 749L860.5 751.4L860.7 747.3L867.1 742.6L869.4 745.3L869.7 741.6L873.3 736.8L874.7 736.1L874.5 739.9L878.5 735.2L880.7 735.7L878.8 731.8L881.9 726.5L881 723.5L882.9 721.8L885.3 723.5L892.3 717.8L894.2 712.2L893.2 707L899.1 702.4L902.1 707.1Z"/><title>Madagascar &#8212; An island that evolved alone</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="morocco" data-name="Morocco" data-tag="Atlas, Sahara and the medinas" data-region="North Africa" href="/morocco"><path d="M299.5 101.5L303.2 106.2L301.4 123.8L302.8 130.6L306.3 134.7L303.9 139.1L286 138.3L283.8 141.2L275.4 142.4L273.7 148.5L275 151.5L259.7 156.7L253.3 162.6L241.7 163.5L239.4 166.5L233.8 165.5L215.2 175.5L210 195.5L203.1 195.3L199 198L188 195L180.7 196.2L181 198.8L175.1 205.8L171.1 206.8L164.1 221.3L157.1 225.4L152.3 231.4L145.1 234.6L138.2 252L130.4 262L104.8 261L106.7 254.8L114.8 246.4L123.8 232L121.7 232.8L123 230.7L136.3 220.4L145.7 201.2L156.2 195.9L166.2 181.6L182.5 178L196.1 169.5L207.7 157.1L208.7 152.9L207 149.3L209.6 140.5L216.4 132.7L218.8 126.7L228.4 119L247.4 111.6L262.4 90.1L269.4 89.3L268.9 92.8L274.4 98.4L287.4 99.3L292.2 97.3L293 100.8L299.5 101.5Z"/><title>Morocco &#8212; Atlas, Sahara and the medinas</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="mozambique" data-name="Mozambique" data-tag="Two thousand kilometres of coast" data-region="Southern Africa" href="/mozambique"><path d="M673.3 829.4L687.8 815.9L689 807.9L695.5 799.6L693.4 792.1L694.5 788.6L692.8 786.5L696.9 778.7L697.4 758.6L685.3 754.9L676.9 749.7L667.1 749.3L665.1 736.6L702.1 724.7L707.1 731.7L716.3 730L718 739L713.8 748.4L715.8 753.3L723.2 760.4L722.8 763.5L725.3 764.1L724.7 756.3L727.1 752L732 750.8L734.5 736.1L727.3 723.4L719.2 716.5L717.3 701.4L720.8 694.5L732.5 694.4L735.3 692.5L741.6 695.8L748.7 694.1L756.8 695.5L761.7 690.7L768.7 692.3L785.3 686L793.5 680.4L795.1 682.9L792.2 691.4L793.4 708.1L791.4 712.5L793 712.6L792.7 732.4L794.3 730.9L794.9 734.7L790.8 744.3L780.7 754.5L781.2 756.3L771.5 763L752 770.2L744.7 775.4L737.6 785.1L735.9 784.4L735.5 786.2L730.8 787.7L719.1 797.8L715.7 796.4L715.7 806.1L718.7 810.3L721.2 820.9L721 830.2L723 826.8L723.8 829.1L723.5 837.4L720.2 847.7L722.2 848.1L718.1 855.5L690.2 868L685.4 874.3L688.1 877.6L689.5 875.4L687.9 884.8L679 884.5L677.8 871.3L679.8 855.1L673.3 829.4Z"/><title>Mozambique &#8212; Two thousand kilometres of coast</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="ours" data-slug="namibia" data-name="Namibia" data-tag="Where the desert meets the wild" data-region="Southern Africa" data-op="Operated locally by Namib Skyline" href="https://namib-skyline.vercel.app"><path d="M580.2 769.3L591.1 767.3L599.2 768.1L603.1 771.3L594.1 774.5L592.1 773.5L583.3 779.4L578.1 773.7L550.7 777.6L550.3 823.3L538.4 823.3L538 902.5L532.9 904L528.5 908.5L516.4 907.6L508.8 905.6L507.7 900.3L504.2 897.4L497.3 904.6L488.7 896.7L484.2 889.7L479.5 876.6L477.6 860.8L473.4 850.6L472.4 829L459.8 810.1L447.1 785.4L438.5 774L437.8 764.6L447.7 764L454.4 760.9L459 761.8L465.3 766.4L519.6 766.2L526.1 771.2L548 773.9L580.2 769.3Z"/><title>Namibia &#8212; Where the desert meets the wild</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="nigeria" data-name="Nigeria" data-tag="The loudest country on the continent" data-region="West Africa" href="/nigeria"><path d="M460.1 374.1L465.6 382L467.1 390.8L472.3 393.8L471.7 401.5L463.1 406.4L460.7 409.8L455.2 420.3L454.2 426.3L450.8 428L448.2 436.6L444.1 438.4L435.9 455.1L437.1 457.1L430.2 465.1L427.5 465.4L426.3 461.8L421.4 457.7L418.9 460L415.5 458.4L401.8 470.8L395.2 486.7L391.2 484.7L391.9 489.2L383.8 489.5L382.3 487.9L379.2 489.2L376.7 487L377.6 489.6L374.7 491.1L372.8 486.9L373.9 491.3L371 491.7L370.4 490L370 491.7L366.8 492.2L366.5 490.5L365.3 492.5L358 487.7L355.4 480.7L357.7 477.2L355.7 478.1L353.4 476.4L356.6 475.4L352.3 475L344 465.9L332.2 464.9L335.2 462.6L330.3 465.1L322.5 465.3L324.4 431.1L327.8 430.8L331.5 422L335.1 419.2L335.3 414.8L337.6 413.7L337 405.5L334.5 400.1L336.7 396.8L337 387.1L342 382.1L343.7 375.4L350.2 372.1L360.4 370.5L370.2 373.4L377.7 381.8L388.8 377.8L400 383.5L410.6 384.8L416 379.9L421.4 378.4L434 378.4L445.8 381.7L451 377.2L460.1 374.1Z"/><title>Nigeria &#8212; The loudest country on the continent</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="rwanda" data-name="Rwanda" data-tag="A thousand hills" data-region="East Africa" href="/rwanda"><circle class="wa-map-hit" cx="661.6" cy="573.2" r="34"/><path d="M660.2 564.7L663.3 564L664.6 565.7L671.9 560.5L675.7 566.8L675.9 576.7L664.6 576.7L663.8 581.5L661.7 582.5L657.8 582.7L654.2 580L651.9 581.1L651.1 578.1L654.6 574.9L654.7 570.1L660.2 564.7Z"/><title>Rwanda &#8212; A thousand hills</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="senegal" data-name="Senegal" data-tag="Where the Sahel meets the Atlantic" data-region="West Africa" href="/senegal"><circle class="wa-map-hit" cx="116.7" cy="360.4" r="34"/><path d="M147 350.7L149.3 358.7L148.1 366.1L150.4 370.4L152.8 369.8L155.2 375.5L154.5 382.5L143.7 383L134.7 380.5L134 378.4L112.4 376.8L91.3 380L91 377.7L94.8 376.8L93.2 375.3L91.1 376.3L93.2 369.5L102.8 370L103.3 367.8L109.6 367.2L111.4 365.2L121.6 370L126.8 368L125.2 366.1L120.1 366.4L113.2 362L107.2 364.6L94.9 363.8L92.9 359.5L94.9 357.8L92.8 358.2L89.4 349.5L85.3 347.7L90.1 345.8L94.3 341.2L103.5 325.4L108.8 326.4L118.6 324.5L126.1 326.3L130.4 332.2L135.6 333.7L137.3 339.6L147 350.7Z"/><title>Senegal &#8212; Where the Sahel meets the Atlantic</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="south-africa" data-name="South Africa" data-tag="A world in one country" data-region="Southern Africa" href="/south-africa"><path d="M650.5 826.5L673.3 829.4L679.8 855.1L678 873.6L671 870.9L664.2 878.9L663.8 883.2L668.9 889.2L674.3 890.2L676.8 890.2L677.7 884.2L687.9 884.8L679.1 906.4L667.5 915.4L650.1 938.8L631.9 954.2L616 964.8L608.6 967.5L601.8 967.1L599.7 970.4L592.8 969.9L590.7 972.2L578.4 969.9L565.8 970L557.3 974.3L543.4 975.3L537.8 979.2L529.9 977.1L527.8 973.9L524.8 974.1L523.9 970.7L521.1 971.1L520.8 973.9L519.3 970.6L520.4 966.3L513.9 955.6L519.1 951.7L517.8 942.5L507.9 926.8L497.3 904.6L504.2 897.4L507.7 900.3L508.8 905.6L516.4 907.6L528.5 908.5L532.9 904L538 902.5L538.2 857.5L542.5 860.6L547.6 871.5L545.6 878L546.3 882.6L557.5 883.1L568.8 874.3L574.3 864.2L578.2 864L591.8 870.2L602.2 869.4L607.8 858.1L614.6 855.6L619.3 851.4L622.6 843.3L630.8 838.7L636.5 832.5L650.5 826.5ZM637.3 923.6L641.5 921.5L645.5 913.6L637.3 905.1L626.8 909.3L618.6 917.5L621.8 926L625.8 929.5L629.2 930L633.4 924.1L637.3 923.6Z"/><title>South Africa &#8212; A world in one country</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="tanzania" data-name="Tanzania" data-tag="Wild Africa, island Africa" data-region="East Africa" href="/tanzania"><path d="M783.6 625.4L783.2 629L779.6 625.4L781.4 619.6L783.6 625.4ZM788.5 609.1L786.9 616L786.1 609.4L788.5 609.1ZM700.7 666.4L688.6 661.9L681.4 656.2L676.6 655.5L667.6 636.3L659.3 627.1L658.5 623.5L660.2 619.6L656.8 609.2L657.8 603.5L664.7 601.7L675.6 587.6L675.2 584.9L670.8 582.8L672.2 577.8L675.9 576.7L676.5 574.2L675.7 566.8L671.9 560.5L715.5 559.5L761.2 585.4L760.7 591.1L780.5 606.4L775 624L775.8 627.4L783.8 636.3L780.5 642.6L782.1 648.9L780.3 654.4L784.1 664L784.7 674.4L793.5 680.4L785.3 686L768.7 692.3L761.7 690.7L756.8 695.5L748.7 694.1L741.6 695.8L735.3 692.5L732.5 694.4L725 694L720.8 687.1L720.4 674.4L718 670.6L714 667.5L712.6 669.8L700.7 666.4Z"/><title>Tanzania &#8212; Wild Africa, island Africa</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="tunisia" data-name="Tunisia" data-tag="Carthage, the Sahel and the desert south" data-region="North Africa" href="/tunisia"><circle class="wa-map-hit" cx="426.8" cy="116.7" r="34"/><path d="M444.4 131.8L443.8 141.2L429.7 149.8L427.7 152.4L428.3 160.8L424.4 165.6L420 167.4L416.2 144.2L409 138.6L407.2 132.3L403.2 129.6L401.4 122.6L402.3 119L410.4 111.9L412.5 106.2L411.6 98.9L413.4 92.1L412.1 90.2L416.5 85.3L428.6 80.8L429.9 83.3L430.5 81.9L433.8 82.6L435.6 88.4L442.7 84.5L443.3 86.9L435.8 95.1L436.7 98.7L440.9 101.9L441.8 106.7L429.2 119.7L431.7 124.8L436.1 125.4L436.1 127.5L438.8 126.2L441.1 130.9L444.4 131.8ZM438.8 125.1L436.3 124.8L436.7 123L439.6 123.9L438.8 125.1Z"/><title>Tunisia &#8212; Carthage, the Sahel and the desert south</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="ours" data-slug="uganda" data-name="Uganda" data-tag="The Pearl of Africa" data-region="East Africa" data-op="Operated locally by Pearl Trails Uganda" href="https://pearl-trails-uganda.vercel.app"><path d="M714.6 559.5L675.7 559.6L670.1 560.6L664.6 565.7L663.3 564L660.2 564.7L661.5 548.5L664.6 537L681.2 520.9L680.2 518.1L674.5 515.8L675.8 502.6L679.7 498.8L684.7 500.1L687.8 498.5L692 502.1L694.5 499.7L702.8 497.4L709 498.9L714.9 492.9L717.4 498.1L720.8 500.1L721 506.3L726.9 515L727.9 524.7L725.7 530.8L722.4 532.6L715 544.5L714.6 559.5Z"/><title>Uganda &#8212; The Pearl of Africa</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="zambia" data-name="Zambia" data-tag="Into the real wilderness" data-region="Southern Africa" href="/zambia"><path d="M666.8 744.8L655.6 745.4L649.2 748.5L646.3 755.8L636.1 760.3L624.5 773.5L621.5 774.5L603.1 771.3L599.2 768.1L591.1 767.3L580.2 769.3L565.3 756.2L564 752L563.7 711.2L588.3 711.1L588.7 684.5L593.1 687L593.7 691.4L605.1 688.8L605.8 694L615 697.6L624.1 698.4L628.3 693.5L633.3 701.7L643.6 705.4L650.8 716.1L657.5 714.7L660.1 717.1L660.9 700.9L657.3 701.8L657 704.2L651.8 703.3L645.4 697.4L643.2 692.4L647.1 680.6L646.8 669.6L644.4 663.9L650.4 658.4L650.8 654.6L674 650.9L677.4 656.1L681.4 656.2L688.6 661.9L700.7 666.4L705.9 672.2L705.3 674.4L709.5 680.9L704.4 685.2L705.7 688.6L703.8 691.8L703.7 700.6L706.8 703.6L700.6 707.2L699.6 714.7L695.8 719.3L699.5 724.7L702.1 724.7L665.1 736.6L666.8 744.8Z"/><title>Zambia &#8212; Into the real wilderness</title></a>
+        <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="zimbabwe" data-name="Zimbabwe" data-tag="Great Zimbabwe and the Zambezi" data-region="Southern Africa" href="/zimbabwe"><path d="M673.3 829.4L650.5 826.5L646.8 824.3L646.7 821.5L634.8 818.3L630.9 812.2L631.6 805.6L626.5 804.9L625.5 800.2L613.5 793.1L611 785.6L602.8 773.5L603.1 771.3L621.5 774.5L624.5 773.5L636.1 760.3L646.3 755.8L648.5 749L658.6 744.8L666.8 744.8L667.1 749.3L676.9 749.7L685.3 754.9L697.4 758.6L696.9 778.7L692.8 786.5L694.5 788.6L693.4 792.1L695.5 799.6L689 807.9L687.8 815.9L673.3 829.4Z"/><title>Zimbabwe &#8212; Great Zimbabwe and the Zambezi</title></a>
         <a tabindex="-1" class="wa-map-live wa-map-mark" data-tier="live" data-slug="mauritius" data-name="Mauritius" data-tag="Reef, sugar and the volcanic interior" data-region="Islands" href="/mauritius"><circle class="wa-map-hit" cx="982.5" cy="812.8" r="36"/><circle cx="982.5" cy="812.8" r="12"/><title>Mauritius &#8212; Reef, sugar and the volcanic interior</title></a>
         <a tabindex="-1" class="wa-map-live wa-map-mark" data-tier="live" data-slug="seychelles" data-name="Seychelles" data-tag="Granite islands in the Indian Ocean" data-region="Islands" href="/seychelles"><circle class="wa-map-hit" cx="979.6" cy="604.7" r="36"/><circle cx="979.6" cy="604.7" r="12"/><title>Seychelles &#8212; Granite islands in the Indian Ocean</title></a>
         </svg>
@@ -1437,6 +1586,7 @@ window.AF = {
           <div class="wa-win-cap" data-slug="seychelles"><span class="wa-win-region">Islands</span><b>Seychelles</b><span class="wa-win-tag">Granite islands in the Indian Ocean</span><span class="wa-win-op">Written up here, run by somebody else</span><a class="wa-win-go" href="/seychelles">Enter Seychelles &rarr;</a></div>
           <!-- /gen:captions -->
           </div>
+          <div class="wa-terrain" id="wa-terrain" aria-hidden="true"></div>
           <p class="wa-win-key" aria-hidden="true"><span data-tier="rest">The continent</span><span data-tier="live">A destination here</span><span data-tier="ours">An operator of ours</span></p>
         </div>
       </div>
@@ -1456,16 +1606,104 @@ window.AF = {
              out. Weights are solid / outlined / plain text, so the eye gets an
              order rather than three equal boxes. -->
         <div class="wa-acts">
-          <a class="wa-act go" href="/journey">Begin your journey <i>&rarr;</i></a>
-          <a class="wa-act faint" href="/atlas">Explore the atlas <i>&rarr;</i></a>
+          <a class="wa-act go" href="/journey">What are you looking for? <i>&rarr;</i></a>
+          <a class="wa-act faint" href="/atlas">Open the atlas <i>&rarr;</i></a>
+          <a class="wa-act plain" href="/stories">Or read a country <i>&rarr;</i></a>
         </div>
       </div>
       <div class="wa-win-rail">
       <p class="wa-win-line" id="wa-win-line" aria-live="polite"></p>
-      <p class="wa-index-say">Explore the continent</p>
       <div class="wa-regs" role="group" aria-label="Zoom the map to a region">
         <!-- gen:regions -->
       <button class="wa-reg" type="button" data-reg="africa" aria-pressed="true" data-view="0 0 1000.0 1060.0" data-line="Fifty-four countries. Twenty-two of them are destinations here." data-terrain="Desert|Rainforest|Savanna|Mountain|Coast|Island">Africa</button><button class="wa-reg" type="button" data-reg="central" aria-pressed="false" data-view="-52.7 186.5 681.7 477.5" data-slugs="cameroon cote-divoire ghana nigeria senegal" data-line="Rainforest, volcanic coast, savanna, ancient kingdoms and the cultures of the Gulf of Guinea." data-terrain="Rainforest|Volcanic coast|Savanna|Kingdoms|The Sahel edge">Central &amp; West</button><button class="wa-reg" type="button" data-reg="east" aria-pressed="false" data-view="535.7 241.0 465.7 570.4" data-slugs="uganda ethiopia kenya rwanda tanzania" data-line="The Rift, the great migrations, the gorilla forests, Kilimanjaro, the Nile and the Swahili coast." data-terrain="The Rift|Migration|Gorilla forest|Glaciers on the equator|Swahili coast">East Africa</button><button class="wa-reg" type="button" data-reg="southern" aria-pressed="false" data-view="316.0 529.3 600.8 571.5" data-slugs="namibia botswana mozambique south-africa zambia zimbabwe" data-line="The Namib, the Zambezi, the Kalahari, the Cape, and wilderness you walk rather than drive." data-terrain="The Namib|The Zambezi|Delta|Kalahari|The Cape">Southern Africa</button><button class="wa-reg" type="button" data-reg="north" aria-pressed="false" data-view="-110.6 -134.6 1064.4 620.1" data-slugs="egypt morocco tunisia" data-line="The Atlas, the Sahara, the Nile, and Mediterranean cities older than most countries." data-terrain="The Atlas|Sahara|The Nile|Medinas|Mediterranean">North Africa</button><button class="wa-reg" type="button" data-reg="islands" aria-pressed="false" data-view="723.0 513.3 375.0 451.8" data-slugs="madagascar mauritius seychelles" data-line="Indian Ocean reef, granite and volcanic islands, and an ecology that evolved on its own." data-terrain="Reef|Granite islands|Spiny forest|Lemurs|Lagoon">Islands</button>        <!-- /gen:regions -->
+      </div>
+      <div class="wa-ticks" role="group" aria-label="Choose a destination">        <!-- gen:ticks -->
+<button class="wa-tick" type="button" data-slug="cameroon" data-view="265.2 252.3 355.6 403.5">Cameroon</button><button class="wa-tick" type="button" data-slug="uganda" data-view="594.5 427.4 198.9 203.8">Uganda</button><button class="wa-tick" type="button" data-slug="namibia" data-view="288.6 611.9 463.4 445.4">Namibia</button><button class="wa-tick" type="button" data-slug="cote-divoire" data-view="109.2 332.9 223.5 229.9">Côte d&#x27;Ivoire</button><button class="wa-tick" type="button" data-slug="ghana" data-view="175.5 329.9 201.6 228.5">Ghana</button><button class="wa-tick" type="button" data-slug="nigeria" data-view="187.6 235.6 419.7 391.7">Nigeria</button><button class="wa-tick" type="button" data-slug="senegal" data-view="22.5 261.7 195.4 184.1">Senegal</button><button class="wa-tick" type="button" data-slug="ethiopia" data-view="535.9 190.6 515.8 476.9">Ethiopia</button><button class="wa-tick" type="button" data-slug="kenya" data-view="597.6 359.6 332.7 363.7">Kenya</button><button class="wa-tick" type="button" data-slug="rwanda" data-view="628.2 537.6 71.1 69.7">Rwanda</button><button class="wa-tick" type="button" data-slug="tanzania" data-view="533.8 436.5 382.8 382.5">Tanzania</button><button class="wa-tick" type="button" data-slug="botswana" data-view="437.1 670.1 314.4 314.0">Botswana</button><button class="wa-tick" type="button" data-slug="mozambique" data-view="480.9 496.3 498.3 572.6">Mozambique</button><button class="wa-tick" type="button" data-slug="south-africa" data-view="325.8 654.4 533.7 496.4">South Africa</button><button class="wa-tick" type="button" data-slug="zambia" data-view="431.8 519.4 409.1 386.6">Zambia</button><button class="wa-tick" type="button" data-slug="zimbabwe" data-view="517.3 659.5 265.4 255.2">Zimbabwe</button><button class="wa-tick" type="button" data-slug="egypt" data-view="458.1 16.8 413.0 386.0">Egypt</button><button class="wa-tick" type="button" data-slug="morocco" data-view="-76.6 -92.6 564.5 536.7">Morocco</button><button class="wa-tick" type="button" data-slug="tunisia" data-view="323.5 2.9 198.9 242.5">Tunisia</button><button class="wa-tick" type="button" data-slug="madagascar" data-view="660.3 548.3 403.5 479.4">Madagascar</button><button class="wa-tick" type="button" data-slug="mauritius" data-view="960.9 791.2 67.2 67.2">Mauritius</button><button class="wa-tick" type="button" data-slug="seychelles" data-view="958.0 583.1 67.2 67.2">Seychelles</button>
+        <!-- /gen:ticks -->
+      </div>
+      <div class="wa-tags-in" role="group" aria-label="Choose an experience"><button class="wa-tag" type="button" data-exp="wildlife" data-slug="kenya" data-line="The Mara, Amboseli under Kilimanjaro, and the month the migration crosses."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</button><button class="wa-tag" type="button" data-exp="mountains" data-slug="cameroon" data-line="Fako at 4,095 metres, still active, three days up through four climates."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg>Mountains</button><button class="wa-tag" type="button" data-exp="rainforest" data-slug="uganda" data-line="Bwindi and Kibale, where the gorillas and the chimpanzees still are."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg>Rainforest</button><button class="wa-tag" type="button" data-exp="coast" data-slug="tanzania" data-line="Zanzibar, and a Swahili coast trading long before Europe arrived."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</button><button class="wa-tag" type="button" data-exp="culture" data-slug="rwanda" data-line="A thousand hills, and the people farming every one of them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</button><button class="wa-tag" type="button" data-exp="food" data-slug="south-africa" data-line="The Cape table, the winelands behind it, and the fire under both."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</button><button class="wa-tag" type="button" data-exp="heritage" data-slug="zambia" data-line="Mosi-oa-Tunya, the smoke that thunders &mdash; named long before Livingstone saw it."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>Heritage</button><button class="wa-tag" type="button" data-exp="adventure" data-slug="namibia" data-line="Sossusvlei, the Skeleton Coast, and gravel roads with nobody else on them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</button></div>
+      <div class="wa-answer" id="wa-answer" aria-live="polite">
+        <!-- gen:picks -->
+      <article class="wa-pick" data-pick="wildlife" data-slug="uganda" hidden>
+        <p class="wa-pick-hook">Start where the forest is still breathing.</p>
+        <div class="wa-pick-body">
+          <span class="wa-pick-where">East Africa</span>
+          <b>Uganda</b>
+          <p>Half the world&#x27;s mountain gorillas, the source of the Nile, the Rwenzori snowline on the equator and savanna parks within a day&#x27;s drive of each other.</p>
+          <p class="wa-pick-why">Not the Serengeti first. Half the world&#x27;s mountain gorillas live on three volcanoes, and you walk to them.</p>
+          <a class="wa-pick-go" href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a>
+        </div>
+      </article>
+      <article class="wa-pick" data-pick="mountains" data-slug="ethiopia" hidden>
+        <p class="wa-pick-hook">Then don&#x27;t start with Kilimanjaro.</p>
+        <div class="wa-pick-body">
+          <span class="wa-pick-where">East Africa</span>
+          <b>Ethiopia</b>
+          <p>The only African country never colonised, with its own alphabet, calendar and church — rock-hewn churches at Lalibela, the Simien escarpment above four thousand metres, and the Danakil below sea level.</p>
+          <p class="wa-pick-why">Eighty per cent of Africa above three thousand metres is in one country, and the Simien escarpment has gelada on it.</p>
+          <a class="wa-pick-go" href="/ethiopia">Explore Ethiopia &rarr;</a>
+        </div>
+      </article>
+      <article class="wa-pick" data-pick="rainforest" data-slug="cameroon" hidden>
+        <p class="wa-pick-hook">Go west of the famous forests.</p>
+        <div class="wa-pick-body">
+          <span class="wa-pick-where">Central &amp; West Africa</span>
+          <b>Cameroon</b>
+          <p>Six ecological zones in nine hundred kilometres: an active 4,095 m volcano, Atlantic black sand, Korup rainforest, the Grassfields kingdoms and the Sahel edge at Waza.</p>
+          <p class="wa-pick-why">Korup is older than the Congo basin&#x27;s and has a canopy walkway thirty metres up, with almost nobody on it.</p>
+          <a class="wa-pick-go" href="/cameroon">Explore Cameroon &rarr;</a>
+        </div>
+      </article>
+      <article class="wa-pick" data-pick="coast" data-slug="mozambique" hidden>
+        <p class="wa-pick-hook">Skip the resorts on the other coast.</p>
+        <div class="wa-pick-body">
+          <span class="wa-pick-where">Southern Africa</span>
+          <b>Mozambique</b>
+          <p>The Indian Ocean coast of southern Africa — the Bazaruto and Quirimbas archipelagos, Ilha de Moçambique, Gorongosa&#x27;s restored wildlife, and a Portuguese-Swahili culture that exists nowhere else.</p>
+          <p class="wa-pick-why">Two thousand kilometres of Indian Ocean, most of it still without a road, and dhows instead of speedboats.</p>
+          <a class="wa-pick-go" href="/mozambique">Explore Mozambique &rarr;</a>
+        </div>
+      </article>
+      <article class="wa-pick" data-pick="culture" data-slug="ghana" hidden>
+        <p class="wa-pick-hook">Begin where the coast remembers.</p>
+        <div class="wa-pick-body">
+          <span class="wa-pick-where">West Africa</span>
+          <b>Ghana</b>
+          <p>The most straightforward country in West Africa to travel, with the Atlantic slave forts of the coast, the Ashanti kingdom at Kumasi, Mole&#x27;s elephants in the north, and a music scene worth planning around.</p>
+          <p class="wa-pick-why">Cape Coast and Elmina are kept as they were, the Ashanti court still sits at Kumasi, and there is a band on every night.</p>
+          <a class="wa-pick-go" href="/ghana">Explore Ghana &rarr;</a>
+        </div>
+      </article>
+      <article class="wa-pick" data-pick="food" data-slug="morocco" hidden>
+        <p class="wa-pick-hook">Eat where the bread is still communal.</p>
+        <div class="wa-pick-body">
+          <span class="wa-pick-where">North Africa</span>
+          <b>Morocco</b>
+          <p>Four thousand metres of High Atlas within three hours of the Atlantic, four imperial cities, and the edge of the Sahara at Merzouga — a country you can cross from surf to dunes in two days.</p>
+          <p class="wa-pick-why">Tagine cooked slowly, bread baked in the neighbourhood oven, and a souk that sells to the people who live there.</p>
+          <a class="wa-pick-go" href="/morocco">Explore Morocco &rarr;</a>
+        </div>
+      </article>
+      <article class="wa-pick" data-pick="heritage" data-slug="egypt" hidden>
+        <p class="wa-pick-hook">The oldest journey there is.</p>
+        <div class="wa-pick-body">
+          <span class="wa-pick-where">North Africa</span>
+          <b>Egypt</b>
+          <p>The oldest continuous tourism in the world, and still the reason most people first think of Africa — the Giza plateau, the Valley of the Kings, Abu Simbel, and the Red Sea reefs on the other coast.</p>
+          <p class="wa-pick-why">People have travelled to see this for two and a half thousand years, and the Valley of the Kings is still painted floor to ceiling.</p>
+          <a class="wa-pick-go" href="/egypt">Explore Egypt &rarr;</a>
+        </div>
+      </article>
+      <article class="wa-pick" data-pick="adventure" data-slug="namibia" hidden>
+        <p class="wa-pick-hook">Take the road with nobody on it.</p>
+        <div class="wa-pick-body">
+          <span class="wa-pick-where">Southern Africa</span>
+          <b>Namibia</b>
+          <p>The oldest desert on earth running into the Atlantic — Sossusvlei&#x27;s dunes, the Skeleton Coast, Etosha&#x27;s waterholes and Damaraland&#x27;s desert elephant, across a country with almost nobody in it.</p>
+          <p class="wa-pick-why">The best self-drive country on the continent: gravel, dunes, and the darkest measured night sky anywhere.</p>
+          <a class="wa-pick-go" href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a>
+        </div>
+      </article>        <!-- /gen:picks -->
       </div>
       </div>
     </div>
@@ -1491,9 +1729,9 @@ window.AF = {
   var states = [].slice.call(sec.querySelectorAll('.wa-win-state'));
   var caps = [].slice.call(sec.querySelectorAll('.wa-win-cap'));
   var regs = [].slice.call(sec.querySelectorAll('.wa-reg'));
-  /* The experience picker moved out of the hero in 110; it is addressed
-     from the document rather than from the section this script drives. */
-  var tags = [];   /* resolved by late(); see the note above say() */
+  var ticks = [].slice.call(sec.querySelectorAll('.wa-tick'));
+  var tags = [].slice.call(sec.querySelectorAll('.wa-tag'));
+  var rail = sec.querySelector('.wa-ticks');
   var line = sec.querySelector('#wa-win-line');
   var terrain = sec.querySelector('#wa-terrain');
   var africa = states[0];
@@ -1540,10 +1778,6 @@ window.AF = {
   }
 
   function setTerrain(words){
-    /* 110 took the terrain chips and the country rail out of the hero — the
-       first screen was carrying nine horizontal systems and reading as a
-       dashboard. Both are optional to this script now rather than assumed. */
-    if (!terrain) return;
     terrain.innerHTML = words ? words.split('|').map(function(w){
       return '<span>' + w + '</span>'; }).join('') : '';
   }
@@ -1563,6 +1797,9 @@ window.AF = {
       if (slugs && slugs.indexOf(sh.dataset.slug) < 0) sh.setAttribute('data-dim', '');
       else sh.removeAttribute('data-dim');
     });
+    // The country rung narrows to the region in view: twenty-two names is a list,
+    // five is a choice.
+    ticks.forEach(function(t){ t.hidden = !!(slugs && slugs.indexOf(t.dataset.slug) < 0); });
     setTerrain(btn.dataset.terrain || '');
     if (btn.dataset.line) {
       caps[0].innerHTML = '<span class="wa-win-region">' + (key === 'africa' ? 'The continent' : 'Region')
@@ -1577,8 +1814,19 @@ window.AF = {
     at = i; held = exp || null;
     states.forEach(function(s, n){ s.toggleAttribute('data-on', n === i); });
     caps.forEach(function(c, n){ c.toggleAttribute('data-on', n === i); });
+    ticks.forEach(function(t, n){
+      if (order[n + 1] !== order[i]) t.removeAttribute('aria-current');
+    });
+    ticks.forEach(function(t){
+      var on = t.dataset.slug === order[i];
+      if (!on) { t.removeAttribute('aria-current'); return; }
+      t.setAttribute('aria-current', 'true');
+      var l = t.offsetLeft, r = l + t.offsetWidth;
+      if (l < rail.scrollLeft) rail.scrollLeft = l - 12;
+      else if (r > rail.scrollLeft + rail.clientWidth) rail.scrollLeft = r - rail.clientWidth + 12;
+    });
     tags.forEach(function(t){ t.toggleAttribute('data-on', held === t.dataset.exp); });
-    if (i === 0) { setTerrain(''); paintRegion(region); return; }
+    if (i === 0) { terrain.innerHTML = ''; paintRegion(region); return; }
     // A country is in view, so the rung above should show the region it is in
     // rather than leaving Africa lit as though nothing had happened.
     var slug = order[i];
@@ -1591,16 +1839,15 @@ window.AF = {
   function go(slug, exp, view){
     var i = order.indexOf(slug);
     if (i < 0) return;
-    /* The state knows its own frame, so the flight survives any control being
-       taken out of the hero. A caller may still pass one — the region rail
-       flies to a union of countries, which is nobody's own frame. */
+    /* The state carries its own frame as well as the rail carrying it, so the
+       flight does not depend on which control did the selecting. Found when 110
+       briefly removed the rail and the map stopped flying entirely. */
     var v = view || states[i].dataset.view;
     if (v) flyTo(v.split(' ').map(Number));   // fly the map behind the swap
     paint(i, exp);
-    setTerrain('');
-    var cap = caps.filter(function(c){ return c.dataset.slug === slug; })[0];
-    var named = cap && cap.querySelector('b');
-    window.AF.set({country: slug, countryName: named ? named.textContent : null});
+    terrain.innerHTML = '';
+    var tick = ticks.filter(function(t){ return t.dataset.slug === slug; })[0];
+    window.AF.set({country: slug, countryName: tick ? tick.textContent : null});
   }
 
   regs.forEach(function(r){
@@ -1614,28 +1861,15 @@ window.AF = {
       window.AF.set({country: null, countryName: null});
     });
   });
+  ticks.forEach(function(t){
+    t.addEventListener('click', function(){ go(t.dataset.slug, null, t.dataset.view); });
+  });
   /* An experience does two things: it flies the map to the country we would
      actually recommend, and it says why. Pressing it again closes the answer,
      because an opinion you cannot dismiss is a billboard. */
-  /* 110 moved the experience picker and its answer out of this section and into
-     03, which is further down the document than this script. Looked up here
-     they are empty, for the same reason 067 was: an inline script only sees
-     what the parser has reached. That failure is silent — the buttons render,
-     they simply do nothing — so the parts that live downstream are resolved on
-     first use rather than on parse, and the click is delegated off the document
-     so that no handler has to be attached to an element that does not exist
-     yet. Nothing above this line may assume `tags` or `picks` is populated. */
-  var answer = null, picks = [];
-  function late(){
-    if (!answer) {
-      answer = document.getElementById('wa-answer');
-      picks = answer ? [].slice.call(answer.querySelectorAll('.wa-pick')) : [];
-    }
-    if (!tags.length) tags = [].slice.call(document.querySelectorAll('.wa-tag'));
-    return !!answer;
-  }
+  var answer = sec.querySelector('#wa-answer');
+  var picks = [].slice.call(answer.querySelectorAll('.wa-pick'));
   function say(exp){
-    if (!late()) return;
     var found = false;
     picks.forEach(function(p){
       var on = p.dataset.pick === exp;
@@ -1644,27 +1878,30 @@ window.AF = {
     });
     if (found) answer.setAttribute('data-open', ''); else answer.removeAttribute('data-open');
   }
-  document.addEventListener('click', function(ev){
-    var t = ev.target.closest && ev.target.closest('.wa-tag');
-    if (t) {
-      late();
+  tags.forEach(function(t){
+    t.addEventListener('click', function(){
       if (held === t.dataset.exp) {
         say(null); paint(0, null); paintRegion(region);
-        tags.forEach(function(x){ x.removeAttribute('data-on'); });
-        held = null;
         window.AF.set({want: null, wantName: null, country: null, countryName: null});
         return;
       }
       var pick = picks.filter(function(p){ return p.dataset.pick === t.dataset.exp; })[0];
+      /* The pick names its country outright. Recovering it from the call's href
+         works only while every country's url is a path on this site, and the
+         three with an operator of our own point at that operator instead — so
+         "wildlife" resolved to "https://pearl-trails-uganda.vercel.app", matched
+         no tick, and the map declined to fly. */
       var slug = (pick && pick.dataset.slug) || t.dataset.slug;
+      var tick = ticks.filter(function(x){ return x.dataset.slug === slug; })[0]
+              || ticks.filter(function(x){ return x.dataset.slug === t.dataset.slug; })[0];
       say(t.dataset.exp);
       window.AF.set({want: t.dataset.exp, wantName: t.textContent.trim()});
       // The recommendation below says which country and why; the one-line
       // version above it named a different one, which read as a contradiction.
-      go(slug, null, null);
+      go(tick ? tick.dataset.slug : t.dataset.slug, null, tick && tick.dataset.view);
       tags.forEach(function(x){ x.toggleAttribute('data-on', x === t); });
       held = t.dataset.exp;
-    }
+    });
   });
 
   /* A PREVIEW IS NOT A STATE CHANGE.
@@ -1956,90 +2193,6 @@ window.AF = {
          on the first screen made it read as a dashboard, and this is the
          section that already asks the same question — so it comes down to
          where it was always going. -->
-    <div class="wa-tags-in" role="group" aria-label="Choose an experience"><button class="wa-tag" type="button" data-exp="wildlife" data-slug="kenya" data-line="The Mara, Amboseli under Kilimanjaro, and the month the migration crosses."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</button><button class="wa-tag" type="button" data-exp="mountains" data-slug="cameroon" data-line="Fako at 4,095 metres, still active, three days up through four climates."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg>Mountains</button><button class="wa-tag" type="button" data-exp="rainforest" data-slug="uganda" data-line="Bwindi and Kibale, where the gorillas and the chimpanzees still are."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg>Rainforest</button><button class="wa-tag" type="button" data-exp="coast" data-slug="tanzania" data-line="Zanzibar, and a Swahili coast trading long before Europe arrived."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</button><button class="wa-tag" type="button" data-exp="culture" data-slug="rwanda" data-line="A thousand hills, and the people farming every one of them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</button><button class="wa-tag" type="button" data-exp="food" data-slug="south-africa" data-line="The Cape table, the winelands behind it, and the fire under both."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</button><button class="wa-tag" type="button" data-exp="heritage" data-slug="zambia" data-line="Mosi-oa-Tunya, the smoke that thunders &mdash; named long before Livingstone saw it."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>Heritage</button><button class="wa-tag" type="button" data-exp="adventure" data-slug="namibia" data-line="Sossusvlei, the Skeleton Coast, and gravel roads with nobody else on them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</button></div>
-    <div class="wa-answer" id="wa-answer" aria-live="polite">
-        <!-- gen:picks -->
-      <article class="wa-pick" data-pick="wildlife" data-slug="uganda" hidden>
-        <p class="wa-pick-hook">Start where the forest is still breathing.</p>
-        <div class="wa-pick-body">
-          <span class="wa-pick-where">East Africa</span>
-          <b>Uganda</b>
-          <p>Half the world&#x27;s mountain gorillas, the source of the Nile, the Rwenzori snowline on the equator and savanna parks within a day&#x27;s drive of each other.</p>
-          <p class="wa-pick-why">Not the Serengeti first. Half the world&#x27;s mountain gorillas live on three volcanoes, and you walk to them.</p>
-          <a class="wa-pick-go" href="https://pearl-trails-uganda.vercel.app">Explore Uganda &rarr;</a>
-        </div>
-      </article>
-      <article class="wa-pick" data-pick="mountains" data-slug="ethiopia" hidden>
-        <p class="wa-pick-hook">Then don&#x27;t start with Kilimanjaro.</p>
-        <div class="wa-pick-body">
-          <span class="wa-pick-where">East Africa</span>
-          <b>Ethiopia</b>
-          <p>The only African country never colonised, with its own alphabet, calendar and church — rock-hewn churches at Lalibela, the Simien escarpment above four thousand metres, and the Danakil below sea level.</p>
-          <p class="wa-pick-why">Eighty per cent of Africa above three thousand metres is in one country, and the Simien escarpment has gelada on it.</p>
-          <a class="wa-pick-go" href="/ethiopia">Explore Ethiopia &rarr;</a>
-        </div>
-      </article>
-      <article class="wa-pick" data-pick="rainforest" data-slug="cameroon" hidden>
-        <p class="wa-pick-hook">Go west of the famous forests.</p>
-        <div class="wa-pick-body">
-          <span class="wa-pick-where">Central &amp; West Africa</span>
-          <b>Cameroon</b>
-          <p>Six ecological zones in nine hundred kilometres: an active 4,095 m volcano, Atlantic black sand, Korup rainforest, the Grassfields kingdoms and the Sahel edge at Waza.</p>
-          <p class="wa-pick-why">Korup is older than the Congo basin&#x27;s and has a canopy walkway thirty metres up, with almost nobody on it.</p>
-          <a class="wa-pick-go" href="/cameroon">Explore Cameroon &rarr;</a>
-        </div>
-      </article>
-      <article class="wa-pick" data-pick="coast" data-slug="mozambique" hidden>
-        <p class="wa-pick-hook">Skip the resorts on the other coast.</p>
-        <div class="wa-pick-body">
-          <span class="wa-pick-where">Southern Africa</span>
-          <b>Mozambique</b>
-          <p>The Indian Ocean coast of southern Africa — the Bazaruto and Quirimbas archipelagos, Ilha de Moçambique, Gorongosa&#x27;s restored wildlife, and a Portuguese-Swahili culture that exists nowhere else.</p>
-          <p class="wa-pick-why">Two thousand kilometres of Indian Ocean, most of it still without a road, and dhows instead of speedboats.</p>
-          <a class="wa-pick-go" href="/mozambique">Explore Mozambique &rarr;</a>
-        </div>
-      </article>
-      <article class="wa-pick" data-pick="culture" data-slug="ghana" hidden>
-        <p class="wa-pick-hook">Begin where the coast remembers.</p>
-        <div class="wa-pick-body">
-          <span class="wa-pick-where">West Africa</span>
-          <b>Ghana</b>
-          <p>The most straightforward country in West Africa to travel, with the Atlantic slave forts of the coast, the Ashanti kingdom at Kumasi, Mole&#x27;s elephants in the north, and a music scene worth planning around.</p>
-          <p class="wa-pick-why">Cape Coast and Elmina are kept as they were, the Ashanti court still sits at Kumasi, and there is a band on every night.</p>
-          <a class="wa-pick-go" href="/ghana">Explore Ghana &rarr;</a>
-        </div>
-      </article>
-      <article class="wa-pick" data-pick="food" data-slug="morocco" hidden>
-        <p class="wa-pick-hook">Eat where the bread is still communal.</p>
-        <div class="wa-pick-body">
-          <span class="wa-pick-where">North Africa</span>
-          <b>Morocco</b>
-          <p>Four thousand metres of High Atlas within three hours of the Atlantic, four imperial cities, and the edge of the Sahara at Merzouga — a country you can cross from surf to dunes in two days.</p>
-          <p class="wa-pick-why">Tagine cooked slowly, bread baked in the neighbourhood oven, and a souk that sells to the people who live there.</p>
-          <a class="wa-pick-go" href="/morocco">Explore Morocco &rarr;</a>
-        </div>
-      </article>
-      <article class="wa-pick" data-pick="heritage" data-slug="egypt" hidden>
-        <p class="wa-pick-hook">The oldest journey there is.</p>
-        <div class="wa-pick-body">
-          <span class="wa-pick-where">North Africa</span>
-          <b>Egypt</b>
-          <p>The oldest continuous tourism in the world, and still the reason most people first think of Africa — the Giza plateau, the Valley of the Kings, Abu Simbel, and the Red Sea reefs on the other coast.</p>
-          <p class="wa-pick-why">People have travelled to see this for two and a half thousand years, and the Valley of the Kings is still painted floor to ceiling.</p>
-          <a class="wa-pick-go" href="/egypt">Explore Egypt &rarr;</a>
-        </div>
-      </article>
-      <article class="wa-pick" data-pick="adventure" data-slug="namibia" hidden>
-        <p class="wa-pick-hook">Take the road with nobody on it.</p>
-        <div class="wa-pick-body">
-          <span class="wa-pick-where">Southern Africa</span>
-          <b>Namibia</b>
-          <p>The oldest desert on earth running into the Atlantic — Sossusvlei&#x27;s dunes, the Skeleton Coast, Etosha&#x27;s waterholes and Damaraland&#x27;s desert elephant, across a country with almost nobody in it.</p>
-          <p class="wa-pick-why">The best self-drive country on the continent: gravel, dunes, and the darkest measured night sky anywhere.</p>
-          <a class="wa-pick-go" href="https://namib-skyline.vercel.app">Explore Namibia &rarr;</a>
-        </div>
-      </article>        <!-- /gen:picks -->
-    </div>
     <div class="wa-exps">
       <button class="wa-exp" type="button" data-want="wildlife" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorillas, elephants, lions, giraffes, chimpanzees, the great migration</span><i class="wa-exp-n">11 of 22 countries lead on this</i></div></button>
       <button class="wa-exp" type="button" data-want="mountains" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg></span><div><b>Mountains</b><span>Kilimanjaro, Mount Cameroon, the Rwenzori, the Atlas</span><i class="wa-exp-n">4 of 22 countries lead on this</i></div></button>
@@ -2118,6 +2271,32 @@ window.AF = {
       <a class="wa-step wa-step--go" href="/compare"><i>02</i><b>Compare</b><p>Any two of the twenty-two, through the same twenty-seven categories in the same order, so the difference is the countries and not their marketing.</p><span class="wa-step-go">Put two side by side &rarr;</span></a>
       <a class="wa-step wa-step--go" href="/contact"><i>03</i><b>Ask</b><p>Enquiries reach Kamerun in Buea and Douala. For Cameroon they are the operator; for the other nineteen they will tell you who is.</p><span class="wa-step-go">Write to them &rarr;</span></a>
       <div class="wa-step"><i>04</i><b>Travel</b><p>Where the operator is ours, the guide on the day works for the company you booked: Kamerun in Cameroon, Pearl Trails Uganda in Uganda and Namib Skyline in Namibia. Where it is not, we are not going to describe a day run by people we have not named.</p></div>      <!-- /gen:plansteps -->
+    </div>
+  </div>
+</section>
+
+<!-- the window band.
+     A full-viewport photograph the page travels across rather than scrolls with,
+     placed between the journey and the stories because it is the one moment on
+     this page that argues by showing instead of telling. The subject is Waza —
+     Sahel, in a country the rest of the site shows as rainforest and volcano —
+     which is the homepage's own headline restated as a picture: not one place. -->
+<section class="wa-seam">
+  <div class="wa-seam-pic">
+    <img src="/images/uploads/site-index-waza-elephants-1600w.jpg" width="1600" height="1067"
+         alt="A herd of elephants, adults and calves, drinking at a shrinking waterhole on open Sahel plain at Waza in northern Cameroon"
+         loading="lazy" decoding="async" data-provider="upload">
+    <span class="wa-seam-tint" aria-hidden="true"></span>
+  </div>
+  <div class="wa-seam-copy">
+    <div class="wa-seam-inner">
+      <p class="wa-seam-stamp">Waza &middot; the far north, end of the dry season</p>
+      <h2>Nine hundred kilometres north of the rainforest, the same country is Sahel.</h2>
+      <span class="wa-seam-hr" aria-hidden="true"></span>
+      <p class="wa-seam-say">Cameroon is six ecological zones deep, and Waza is the last of them &mdash; open plain,
+        acacia, and herds that come to the water in the weeks before the rains arrive and the
+        tracks close. It is a four-day drive from the coast this site opens on.</p>
+      <a class="wa-seam-go" href="/cameroon">Explore Cameroon &rarr;</a>
     </div>
   </div>
 </section>

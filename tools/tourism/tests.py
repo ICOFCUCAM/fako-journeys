@@ -1380,27 +1380,24 @@ def main():
             nums = {int(n) for n in re.findall(r'\b(\d+)\b', alt.group(1))}
             check("the map's description counts the countries the map draws",
                   nums and nums <= truth, alt.group(1)[:70])
-            # The map's shapes are the size of the countries they represent, and
-            # Rwanda is seven pixels square on a phone. WCAG 2.5.8 allows that
-            # only where an equivalent control exists, so the description has to
-            # say where that control is — and the control has to be there.
+            # The map's shapes are the size of the countries they represent,
+            # and Rwanda is seven pixels square on a phone. WCAG 2.5.8 allows
+            # that only where an equivalent control exists, so the description
+            # has to say where that control is — and the control has to be there.
             #
-            # It used to be the rail of country buttons directly beneath the map,
-            # which is why this check looked for the word "button". 110 took the
-            # rail out of the hero and the exemption moved to the destinations
-            # grid, so the wording moved with it. Checking the noun alone would
-            # have gone on passing against a rail that no longer exists, so the
-            # claim is now checked against the page rather than against itself.
+            # This checked only for the word "button", which would have gone on
+            # passing against a rail that had been removed. It now checks the
+            # claim against the page: the rail the description points at has to
+            # hold a button for every country the map draws.
             said = alt.group(1).lower()
-            check("the map's description points somewhere else on the page",
-                  "this page" in said and "destination" in said, alt.group(1)[-60:])
-            grid = re.search(r'<!-- gen:destinations -->(.*?)<!-- /gen:destinations -->',
-                             home_src, re.S)
-            n_cards = len(re.findall(r'class="wa-dest"', grid.group(1))) if grid else 0
+            check("the map's description points at the buttons that replace it",
+                  "button" in said, alt.group(1)[-56:])
+            rail = re.search(r'<!-- gen:ticks -->(.*?)<!-- /gen:ticks -->', home_src, re.S)
+            n_ticks = len(re.findall(r'class="wa-tick"', rail.group(1))) if rail else 0
             drawn = len(re.findall(r'class="wa-map-live"', home_src))
-            check("the place it points at holds every country the map draws",
-                  n_cards >= len(countries) and drawn <= n_cards,
-                  "%d cards, %d shapes" % (n_cards, drawn))
+            check("the buttons it points at reach every country the map draws",
+                  n_ticks >= len(countries) and drawn <= n_ticks,
+                  "%d buttons, %d shapes" % (n_ticks, drawn))
 
         check("the destination filter counts the grid rather than a literal",
               not re.search(r"shown \+ ' of \d", home_src))

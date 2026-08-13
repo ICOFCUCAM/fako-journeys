@@ -99,6 +99,19 @@ const NOJS_MIN_WORDS = 0.25;
 const AA_SMALL = 4.5;
 const AA_LARGE = 3.0;
 
+/* Pass three computes its ratios inside the page, because that is where the
+   computed styles are. Pass eleven has to compute them out here instead: it
+   samples the ground off a screenshot, so the numbers arrive as raw channels on
+   this side. Same formula, WCAG 2.x relative luminance. */
+function relLum(c) {
+  const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+}
+function contrast(a, b) {
+  const x = relLum(a), y = relLum(b);
+  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+}
+
 /* ---------------------------------------------------------------------------
  * PASS FOUR — horizontal overflow
  *
@@ -351,7 +364,7 @@ function serve() {
            that is invisible and still reachable. Selecting is what triggers a
            cross-fade, and a cross-fade is where the delays live. */
         const ghosts = await page.evaluate(async () => {
-          const pick = [...document.querySelectorAll('.wa-reg, .wa-tag, [data-slug]')]
+          const pick = [...document.querySelectorAll('.wa-tick, .wa-reg, [data-slug]')]
             .filter(el => typeof el.click === 'function').slice(0, 3);
           const seen = new Set();
           const sweep = () => {
@@ -481,6 +494,179 @@ function serve() {
             bad.length ? bad.slice(0, 2).join(' | ') : 'legible in all six region views');
     }
 
+    /* ---- pass eleven: the window band ------------------------------------ */
+    /*
+     * The band on the homepage locks a photograph to the viewport and makes the
+     * section a window that travels across it — position:fixed on the picture,
+     * clip-path:inset(0) on the section. There is no script, which is the point
+     * and also the problem: there is nothing to throw when it breaks.
+     *
+     * It breaks in exactly one way. transform, filter, backdrop-filter,
+     * perspective, will-change and contain each make an element a containing
+     * block for fixed-position descendants, so any one of them anywhere between
+     * the picture and <html> silently demotes that `fixed` to `absolute`. The
+     * picture then scrolls like an ordinary image, no error is raised, and the
+     * page looks merely ordinary rather than broken. A hover effect added to
+     * the section two years from now is enough to do it.
+     *
+     * So this asserts the mechanism rather than the appearance:
+     *
+     *   1. none of the six properties is set anywhere on the chain;
+     *   2. the picture's rect is byte-identical at every scroll position;
+     *   3. the copy clears the fixed masthead when the band is at rest;
+     *   4. every line of the copy clears AA against the pixels ACTUALLY behind
+     *      it — sampled off a screenshot with the copy hidden, not computed
+     *      from the colours the CSS intends.
+     *
+     * (4) is the one that cannot be reasoned about. The tint is fixed to the
+     * viewport and the copy travels the whole height of it, so the ground under
+     * any given line changes continuously as the reader scrolls; the number
+     * that matters is the worst one across the travel, not the one at rest.
+     * Measured that way the first build put the headline at 1.00:1 and 16px
+     * body text at 1.81:1, both of which read as perfectly fine in a screenshot
+     * taken at the position I happened to choose.
+     */
+    const BAND_WIDTHS = [[1920, 1080], [1440, 900], [1280, 860], [950, 800], [390, 844]];
+    const BAND_TEXT = ['.wa-seam-stamp', '.wa-seam-copy h2', '.wa-seam-say', '.wa-seam-go'];
+    const KILLERS = ['transform', 'filter', 'backdropFilter', 'perspective', 'willChange', 'contain'];
+    for (const [w, h] of BAND_WIDTHS) {
+      const page = await browser.newPage({viewport: {width: w, height: h}});
+      await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
+      if (!await page.$('.wa-seam-pic')) { await page.close(); continue; }
+      /* Every image eager, then wait for the document to stop growing. Without
+         this a scroll target computed now lands on a different section by the
+         time the scroll happens, and the sampler reads the ivory of whatever
+         section it actually hit — which looks exactly like a contrast failure. */
+      await page.evaluate(() => document.querySelectorAll('img[loading="lazy"]')
+        .forEach(i => { i.loading = 'eager'; }));
+      for (let i = 0, last = -1, same = 0; i < 60 && same < 3; i++) {
+        await page.waitForTimeout(150);
+        const tall = await page.evaluate(() => document.documentElement.scrollHeight);
+        if (tall === last) same++; else { same = 0; last = tall; }
+      }
+
+      const hazards = await page.evaluate(KILL => {
+        const bad = [];
+        for (let e = document.querySelector('.wa-seam-pic'); e; e = e.parentElement) {
+          const cs = getComputedStyle(e);
+          for (const k of KILL) {
+            const v = cs[k];
+            if (v && v !== 'none' && v !== 'auto' && v !== 'normal' && v !== '')
+              bad.push((e.className || e.tagName) + ' ' + k + ':' + v);
+          }
+        }
+        return bad;
+      }, KILLERS);
+
+      /* Park the copy `off` px from the viewport's centre, re-reading its live
+         position each time rather than trusting an offset computed earlier. */
+      const park = async off => {
+        for (let i = 0; i < 4; i++) {
+          const c = await page.evaluate(() => {
+            const r = document.querySelector('.wa-seam-copy').getBoundingClientRect();
+            return {abs: scrollY + r.top, h: r.height};
+          });
+          const want = Math.max(0, Math.round(c.abs + c.h / 2 - h / 2 + off));
+          await page.evaluate(v => scrollTo(0, v), want);
+          await page.waitForTimeout(110);
+          if (Math.abs(await page.evaluate(() => scrollY) - want) < 2) break;
+        }
+      };
+
+      let anchor = null, drifted = '', mastRide = '', worstText = '';
+      let low = {};
+      BAND_TEXT.forEach(s => { low[s] = 99; });
+      const stops = [];
+      for (let i = -6; i <= 6; i++) stops.push(Math.round(i * h / 12));
+      for (const off of stops) {
+        await park(off);
+        const mast = await page.evaluate(() => {
+          const m = document.querySelector('.wa-mast');
+          return m ? m.getBoundingClientRect().bottom : 0;
+        });
+        const rect = await page.evaluate(() => {
+          const r = document.querySelector('.wa-seam-pic').getBoundingClientRect();
+          return [r.x, r.y, r.width, r.height].map(v => Math.round(v * 100) / 100).join(',');
+        });
+        if (anchor === null) anchor = rect;
+        else if (rect !== anchor && !drifted) drifted = rect + ' vs ' + anchor;
+
+        const lines = await page.evaluate(SEL => {
+          const o = {};
+          SEL.forEach(s => {
+            const e = document.querySelector(s); if (!e) return;
+            const rg = document.createRange(); rg.selectNodeContents(e);
+            o[s] = {rects: [...rg.getClientRects()].map(r => ({x: r.x, y: r.y, w: r.width, h: r.height})),
+                    color: getComputedStyle(e).color,
+                    size: parseFloat(getComputedStyle(e).fontSize),
+                    weight: getComputedStyle(e).fontWeight};
+          });
+          return o;
+        }, BAND_TEXT);
+
+        if (off === 0 && !mastRide) {
+          for (const k in lines) {
+            if (lines[k].rects.some(r => r.y < mast && r.y + r.h > 0)) { mastRide = k; break; }
+          }
+        }
+
+        await page.evaluate(() => { document.querySelector('.wa-seam-copy').style.visibility = 'hidden'; });
+        const shot = await page.screenshot();
+        await page.evaluate(() => { document.querySelector('.wa-seam-copy').style.visibility = ''; });
+
+        const ground = await page.evaluate(async ([b64, lines, vh, mastB]) => {
+          const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+          const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+          const ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0);
+          const F = (r, g, b) => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); };
+            return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); };
+          const out = {};
+          for (const k in lines) {
+            let lo = null, hi = null, loL = 2, hiL = -1, seen = 0;
+            for (const r of lines[k].rects) {
+              /* Below the masthead only: it is fixed and opaque and paints its
+                 own background over the band, which reads as 1.00:1 on every
+                 line that happens to be passing behind it. */
+              const y0 = Math.max(mastB, Math.round(r.y)), y1 = Math.min(vh, Math.round(r.y + r.h));
+              if (y1 - y0 < 4 || r.w < 4) continue;
+              seen++;
+              const d = ctx.getImageData(Math.max(0, Math.round(r.x)), y0,
+                                         Math.max(1, Math.round(r.w)), y1 - y0).data;
+              for (let i = 0; i < d.length; i += 4) {
+                const l = F(d[i], d[i + 1], d[i + 2]);
+                if (l < loL) { loL = l; lo = [d[i], d[i + 1], d[i + 2]]; }
+                if (l > hiL) { hiL = l; hi = [d[i], d[i + 1], d[i + 2]]; }
+              }
+            }
+            if (seen) out[k] = {darkest: lo, lightest: hi, color: lines[k].color,
+                                size: lines[k].size, weight: lines[k].weight};
+          }
+          return out;
+        }, [shot.toString('base64'), lines, h, Math.ceil(mast)]);
+
+        for (const k in ground) {
+          const g = ground[k];
+          const nums = (g.color.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+          const fg = g.color.indexOf('srgb') >= 0 ? nums.map(v => Math.round(v * 255)) : nums.map(Math.round);
+          const r = Math.min(contrast(fg, g.darkest), contrast(fg, g.lightest));
+          const big = g.size >= 24 || (g.size >= 18.66 && parseInt(g.weight, 10) >= 700);
+          const need = big ? AA_LARGE : AA_SMALL;
+          if (r < low[k]) low[k] = r;
+          if (r < need && !worstText) worstText = k + ' ' + r.toFixed(2) + ':1, needs ' + need;
+        }
+      }
+      await page.close();
+      const faults = [];
+      if (hazards.length) faults.push('containing block: ' + hazards[0]);
+      if (drifted) faults.push('the picture moved: ' + drifted);
+      if (mastRide) faults.push(mastRide + ' sits under the masthead at rest');
+      if (worstText) faults.push(worstText);
+      check('the window band holds at ' + w + 'x' + h, !faults.length,
+            faults.length ? faults.join(' | ')
+              : 'fixed, ' + stops.length + ' positions, worst text '
+                + Math.min(...BAND_TEXT.map(s => low[s])).toFixed(2) + ':1');
+    }
+
     /* ---- pass eight: the hero is one composition ------------------------- */
     /*
      * Everything the other seven passes measure is true of a page. This one is
@@ -560,11 +746,10 @@ function serve() {
         /* Nothing in the hero sits on top of anything else in it. This is the
            one the other passes structurally cannot find: two columns can
            occupy the same pixels without the document overflowing by one. */
-        /* 110 took the country rail and the terrain chips out of the hero, so
-           '.wa-ticks' stopped matching. This loop skips a selector that finds
-           nothing, which means the check did not fail — it just quietly covered
-           one fewer pair. The list names what is in the hero now. */
-        const parts = ['.wa-h1', '.wa-find', '.wa-index-say', '.wa-regs', '.wa-lens',
+        /* This loop silently skips a selector that finds nothing, so a control
+           removed from the hero weakens the check rather than failing it. Every
+           name here has to be something the hero actually has. */
+        const parts = ['.wa-h1', '.wa-find', '.wa-ticks', '.wa-regs', '.wa-lens',
                        '.wa-win-cap[data-on]', '.wa-win-key', '.wa-win-go', '.wa-acts'];
         for (let i = 0; i < parts.length; i++) {
           for (let j = i + 1; j < parts.length; j++) {
@@ -928,8 +1113,17 @@ function serve() {
           if (cs.visibility === 'hidden' || +cs.opacity < 0.95) return;
           /* Text over a photograph is measured against the veil, which this
              cannot see; those components carry their own ground and are
-             excluded by having an image between them and the page. */
-          if (el.closest('[data-photo],.wa-now-art,.af-window-svg,picture')) return;
+             excluded by having an image between them and the page.
+
+             .wa-seam-copy is the same case and one step worse: its picture is a
+             fixed SIBLING rather than an ancestor, so there is no image between
+             the text and the page at all and this walks straight up to the body
+             and reports ivory on ivory — 1.00:1 on copy that measures 5:1 in
+             practice. It is not exempt from the requirement, only from this
+             pass: pass eleven samples the actual pixels behind every line at
+             thirteen scroll positions, which is the only way to measure a
+             ground that moves while the reader scrolls. */
+          if (el.closest('[data-photo],.wa-now-art,.af-window-svg,picture,.wa-seam-copy')) return;
           const fg = rgb(cs.color);
           if (!fg) return;
           const size = parseFloat(cs.fontSize);

@@ -4,7 +4,7 @@
 
 The gateway is a hand-designed page and stays one. But five regions of it were
 lists of countries typed out by hand — the hero's window states, its captions,
-its region rail, the destination grid, and the footer columns — and a
+its destination ticks, the destination grid, and the footer columns — and a
 twenty-third country meant editing all five and hoping none of them was missed.
 That is not a design that grows to fifty-four.
 
@@ -62,7 +62,7 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "regions", "claim", "months", "scale",
+MARKERS = ("window", "captions", "ticks", "regions", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer")
 
@@ -85,7 +85,7 @@ def ordered(countries):
     """Published countries, our own operators first, then by region and name.
 
     Our three lead because they are the strongest thing we have to offer, not
-    because of where they are; after that the order is geographic so the states
+    because of where they are; after that the order is geographic so the ticks
     read as a sweep across the continent rather than an alphabet.
     """
     def key(c):
@@ -357,6 +357,24 @@ def block_captions(countries):
         % (esc(c.slug), esc(c.region), esc(c.name), esc(c.tagline),
            operator_line(c), esc(c.url), esc(c.name))
         for c in countries)
+
+
+def block_ticks(countries, views):
+    """Every destination as a button under the map.
+
+    This is the keyboard and touch route to the twenty-two — the map's own
+    shapes are the size of the countries they represent, and Rwanda is seven
+    pixels square on a phone. WCAG 2.5.8 allows that only where an equivalent
+    control exists, and this is it.
+    """
+    boxes = views.get("countries") or {}
+    out = []
+    for c in countries:
+        box = boxes.get(c.slug)
+        view = (' data-view="%s"' % " ".join(str(v) for v in pad_box(box, 0.9))) if box else ""
+        out.append('<button class="wa-tick" type="button" data-slug="%s"%s>%s</button>'
+                   % (esc(c.slug), view, esc(c.name)))
+    return "".join(out)
 
 
 def block_months(countries):
@@ -725,6 +743,7 @@ def render(countries):
         "regions": block_regions(seq, views),
         "window": block_window(with_shape, shape_by_slug, views),
         "captions": block_captions(with_shape),
+        "ticks": block_ticks(with_shape, views),
         "claim": block_claim(seq),
         "months": block_months(seq),
         "destinations": block_destinations(seq),
