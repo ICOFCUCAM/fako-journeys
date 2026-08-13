@@ -462,7 +462,6 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-win-caps{min-height:186px;margin-top:18px}
   /* The key is absolutely placed under the caption on desktop; unpinned on a
      phone it has to be given its own row, or the caption lands on top of it. */
-  .wa-win-caps{height:236px}
   /* The rail is held to the type column on a desktop so it does not cut across
      the bled map. There is no bled map on a phone, and 52% of 360px is a
      166-pixel scroller with twenty-two names in it. */
@@ -1219,68 +1218,6 @@ window.AF = {
   </div>
 </section>
 <script>
-/* AFRICA is set to the width of its column. That is the claim the composition
-   makes — architecture rather than a heading, with the rest of the page hanging
-   from it — and a clamp() on viewport units cannot keep it, because the column
-   is min(66%, 820px) of a frame that is itself min(1240px, 100vw) and that is a
-   different function of the viewport than the font size is. Measured, it ran
-   109% of the column above 1600 (67px of overflow) and 62% at 768.
-
-   It cannot be done in CSS with a fixed coefficient either, even in container
-   units, because the width of the word depends on which face the reader has.
-   The stack is system fonts: Arial Narrow on Windows and macOS, Roboto
-   Condensed on Android, Arial as the floor. AFRICA measures 3.57 times its font
-   size in Arial and about 2.93 in Arial Narrow — a coefficient tuned to one
-   under-fills the column by eighteen percent on the other.
-
-   So it is measured in the browser it is being read in: set a probe size, read
-   the width of the glyph run, and solve.
-
-   Where that runs turned out to matter more than what it does. Inline directly
-   under the <h1> is the obvious place — as early as possible, before anything
-   paints — and it took layout shift on this page from 0.0017 to 0.0511, thirty
-   times worse. Reading clientWidth there forces a layout at a moment when the
-   stage is half-parsed, and the stage is `justify-content: center` over a
-   min-height of one screen, so that layout centres the copy against content
-   that is not all there yet. Chromium paints it, the rest of the page arrives,
-   and .wa-open-say travels 246 pixels upward in one frame.
-
-   Run after the section closes, the stage is complete the first time anything
-   measures it, the intermediate state is never painted, and the page scores
-   0.0000 — better than it did before the fitter existed. Still before first
-   paint, still no shift from the resize itself. With scripting off the clamp
-   above stands.
-
-   Range rather than the element's own box: .wa-h1-big is a block, so its box is
-   the column's width whatever the type is doing inside it. */
-(function(){
-  var h1 = document.querySelector('.wa-open-say > .wa-h1');
-  var big = h1 && h1.querySelector('.wa-h1-big');
-  var col = h1 && h1.parentNode;
-  if (!big || !col) return;
-  var PROBE = 200, queued = false;
-  function fit(){
-    queued = false;
-    var w = col.clientWidth;
-    if (!w) { big.style.fontSize = ''; return; }
-    big.style.fontSize = PROBE + 'px';
-    var range = document.createRange();
-    range.selectNodeContents(big);
-    var ratio = range.getBoundingClientRect().width / PROBE;
-    /* A face so wide or so narrow that the ratio is outside anything a Latin
-       six-letter word can be is a face that has not arrived. Keep the clamp. */
-    if (!(ratio > 2 && ratio < 6)) { big.style.fontSize = ''; return; }
-    big.style.fontSize = (w / ratio).toFixed(2) + 'px';
-  }
-  fit();
-  addEventListener('resize', function(){
-    if (queued) return;
-    queued = true;
-    requestAnimationFrame(fit);
-  }, {passive: true});
-})();
-</script>
-<script>
 /* The atlas. One state — a view of the map and, sometimes, a country — reached
    three ways: the region rung, the country rung, and the map itself.
 
@@ -1290,7 +1227,13 @@ window.AF = {
    Africa is always one press away. Everything is a button or a link already, so
    without the script the map still navigates and the rungs are simply inert. */
 (function(){
-  var sec = document.currentScript.previousElementSibling;
+  /* The section this drives is the element directly above this script, which
+     is a contract with the document order: anything inserted between them
+     silently becomes `sec`, every query returns nothing, and the whole atlas
+     dies on the first undefined. That happened once, in 065. Resolved by id
+     as well, so the next thing put there costs nothing. */
+  var sec = document.getElementById('window')
+        || document.currentScript.previousElementSibling;
   var states = [].slice.call(sec.querySelectorAll('.wa-win-state'));
   var caps = [].slice.call(sec.querySelectorAll('.wa-win-cap'));
   var regs = [].slice.call(sec.querySelectorAll('.wa-reg'));
@@ -1462,6 +1405,68 @@ window.AF = {
   });
 
   paintRegion('africa');
+})();
+</script>
+<script>
+/* AFRICA is set to the width of its column. That is the claim the composition
+   makes — architecture rather than a heading, with the rest of the page hanging
+   from it — and a clamp() on viewport units cannot keep it, because the column
+   is min(66%, 820px) of a frame that is itself min(1240px, 100vw) and that is a
+   different function of the viewport than the font size is. Measured, it ran
+   109% of the column above 1600 (67px of overflow) and 62% at 768.
+
+   It cannot be done in CSS with a fixed coefficient either, even in container
+   units, because the width of the word depends on which face the reader has.
+   The stack is system fonts: Arial Narrow on Windows and macOS, Roboto
+   Condensed on Android, Arial as the floor. AFRICA measures 3.57 times its font
+   size in Arial and about 2.93 in Arial Narrow — a coefficient tuned to one
+   under-fills the column by eighteen percent on the other.
+
+   So it is measured in the browser it is being read in: set a probe size, read
+   the width of the glyph run, and solve.
+
+   Where that runs turned out to matter more than what it does. Inline directly
+   under the <h1> is the obvious place — as early as possible, before anything
+   paints — and it took layout shift on this page from 0.0017 to 0.0511, thirty
+   times worse. Reading clientWidth there forces a layout at a moment when the
+   stage is half-parsed, and the stage is `justify-content: center` over a
+   min-height of one screen, so that layout centres the copy against content
+   that is not all there yet. Chromium paints it, the rest of the page arrives,
+   and .wa-open-say travels 246 pixels upward in one frame.
+
+   Run after the section closes, the stage is complete the first time anything
+   measures it, the intermediate state is never painted, and the page scores
+   0.0000 — better than it did before the fitter existed. Still before first
+   paint, still no shift from the resize itself. With scripting off the clamp
+   above stands.
+
+   Range rather than the element's own box: .wa-h1-big is a block, so its box is
+   the column's width whatever the type is doing inside it. */
+(function(){
+  var h1 = document.querySelector('.wa-open-say > .wa-h1');
+  var big = h1 && h1.querySelector('.wa-h1-big');
+  var col = h1 && h1.parentNode;
+  if (!big || !col) return;
+  var PROBE = 200, queued = false;
+  function fit(){
+    queued = false;
+    var w = col.clientWidth;
+    if (!w) { big.style.fontSize = ''; return; }
+    big.style.fontSize = PROBE + 'px';
+    var range = document.createRange();
+    range.selectNodeContents(big);
+    var ratio = range.getBoundingClientRect().width / PROBE;
+    /* A face so wide or so narrow that the ratio is outside anything a Latin
+       six-letter word can be is a face that has not arrived. Keep the clamp. */
+    if (!(ratio > 2 && ratio < 6)) { big.style.fontSize = ''; return; }
+    big.style.fontSize = (w / ratio).toFixed(2) + 'px';
+  }
+  fit();
+  addEventListener('resize', function(){
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(fit);
+  }, {passive: true});
 })();
 </script>
 
