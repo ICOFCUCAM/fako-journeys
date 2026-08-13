@@ -1024,8 +1024,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
    generated picture: these are real cities you can buy a ticket to. */
 .wa-city-plate{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   background:var(--reg-tone,var(--c-primary))}
-.wa-city-plate b{font-family:var(--fj-display);font-weight:700;font-size:64px;letter-spacing:-.02em;
-  color:color-mix(in srgb,var(--c-bg) 26%,transparent)}
+/* Two letters at 26% read as an abbreviation. Bigger, fainter and cropped by the
+   card: a printer's proof, which is deliberate and unmistakably not a photograph
+   — the distinction the whole treatment exists to keep. */
+.wa-city-plate b{font-family:var(--fj-display);font-weight:700;font-size:104px;letter-spacing:-.045em;
+  color:color-mix(in srgb,var(--c-bg) 17%,transparent);line-height:.8}
 .wa-city-say{display:block;padding:20px 22px 24px}
 .wa-city-say b{display:block;font-family:var(--fj-display);font-size:26px;font-weight:700;
   text-transform:uppercase;letter-spacing:-.01em;line-height:1}
