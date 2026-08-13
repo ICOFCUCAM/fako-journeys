@@ -1,296 +1,297 @@
 {
- "slug": "senegal",
- "name": "Senegal",
- "adjective": "Senegalese",
- "region": "West Africa",
- "tagline": "Where the Sahel meets the Atlantic",
- "summary": "The westernmost point of Africa, with Dakar on its peninsula, Gorée offshore, the Sine-Saloum delta, the Djoudj bird sanctuary and a music tradition that shaped a good deal of what came after.",
- "published": true,
- "calls": [
-  "culture",
-  "food",
-  "coast"
- ],
- "months": [
-  11,
-  12,
-  1,
-  2,
-  3,
-  4,
-  5
- ],
- "when": "Dry, and cool enough on the coast until the heat arrives in June.",
- "entries": [
-  {
-   "category": "hero",
-   "caption": "Where the Sahel Meets the Atlantic",
-   "description": "Desert to the north, delta to the south, and Dakar on a peninsula between them.",
-   "subject": "the Atlantic breaking below the cliffs at Dakar",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "nature",
-   "caption": "Delta and Dune",
-   "description": "The Sine-Saloum mangrove delta, the Casamance forest, and Sahel sand in the north.",
-   "subject": "mangrove channels in the Sine-Saloum delta",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "wildlife",
-   "caption": "Djoudj",
-   "description": "Three million migrating birds winter in the Djoudj — one of the great bird sites on earth.",
-   "subject": "pelicans massed on the water at Djoudj",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "safari",
-   "caption": "Niokolo-Koba",
-   "description": "Lion, hippo and Derby eland in the south-east, in a park that is slowly recovering.",
-   "subject": "a game track through Niokolo-Koba woodland",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "mountains",
-   "caption": "Fouta Djallon Foothills",
-   "description": "No high peaks — the ground rises to the Fouta Djallon foothills in the far south-east.",
-   "subject": "rolling hills in the south-east of Senegal",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "waterfalls",
-   "caption": "Dindefelo",
-   "description": "A hundred metres of water off the Fouta escarpment, near the Guinea border.",
-   "subject": "the Dindefelo waterfall dropping into forest",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "lakes-rivers",
-   "caption": "The Senegal and the Saloum",
-   "description": "The Senegal river along the Mauritanian border, and the Saloum spreading into the sea.",
-   "subject": "a pirogue on the Saloum delta at sunset",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "beaches",
-   "caption": "The Petite Côte",
-   "description": "Saly, Somone and Cap Skirring — Atlantic sand from the peninsula down to Casamance.",
-   "subject": "the long Atlantic beach at Cap Skirring",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "forests",
-   "caption": "Casamance",
-   "description": "Palm and rice country south of the Gambia, greener than the rest and quite different.",
-   "subject": "rice paddies and palms in Casamance",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "adventure",
-   "caption": "Surf, Sail, Paddle",
-   "description": "Dakar's surf breaks, pirogues in the delta, and the Paris-Dakar's original finish line.",
-   "subject": "surfers at Ngor island off Dakar",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "culture",
-   "caption": "Teranga",
-   "description": "The word means hospitality, and it is the thing the country most wants you to notice.",
-   "subject": "a family gathering for tea in a Senegalese courtyard",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "traditional-people",
-   "caption": "Wolof, Serer and Diola",
-   "description": "Wolof across the country, Serer in the delta, and the Diola of Casamance.",
-   "subject": "a Serer village in the Sine-Saloum",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "food",
-   "caption": "Thieboudienne",
-   "description": "Rice and fish, cooked in one pot, and the national dish by common consent.",
-   "subject": "thieboudienne served on a shared platter",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "festivals",
-   "caption": "Dak'Art and the Magal",
-   "description": "The Dakar art biennale, and the Grand Magal of Touba, which moves millions of people.",
-   "subject": "crowds gathering at the great mosque of Touba",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "crafts",
-   "caption": "Glass Painting and Weaving",
-   "description": "Sous-verre glass painting, and the strip-woven cloth of the Manjak weavers.",
-   "subject": "a sous-verre glass painting being finished",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "historic-sites",
-   "caption": "Gorée",
-   "description": "The island off Dakar, and the house of slaves that stands on it.",
-   "subject": "the pink house of slaves on Gorée island",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "heritage",
-   "caption": "Saint-Louis",
-   "description": "The old colonial capital on its island in the river mouth, with the Faidherbe bridge.",
-   "subject": "the colonial waterfront of Saint-Louis at dusk",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "cities",
-   "caption": "Dakar",
-   "description": "The most westerly city in Africa, on a peninsula, with the ocean on three sides.",
-   "subject": "the Dakar coastline seen from the Corniche",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "architecture",
-   "caption": "Colonial and Sudano-Sahelian",
-   "description": "The balconies of Saint-Louis, and the mud-and-timber mosques of the interior.",
-   "subject": "a Sudano-Sahelian mosque in the Senegalese interior",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "local-life",
-   "caption": "Ataya and the Market",
-   "description": "Three glasses of tea, poured from height, and each one stronger than the last.",
-   "subject": "tea being poured from height at a Dakar stall",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "family-community",
-   "caption": "Short Flights, Long Beaches",
-   "description": "Six hours from Europe, and beaches with a shallow warm Atlantic in front of them.",
-   "subject": "children on the beach at Saly on the Petite Côte",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "outdoor",
-   "caption": "Surf and Sail",
-   "description": "Dakar's breaks, kite-surfing on the Petite Côte, and pirogue trips through the mangrove.",
-   "subject": "kitesurfers off the Petite Côte",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "luxury",
-   "caption": "Delta Lodges",
-   "description": "Small lodges on the Saloum islands, reached only by boat, with birds outside.",
-   "subject": "a lodge deck over the water in the Saloum delta",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "eco-tourism",
-   "caption": "Community Campements",
-   "description": "The Casamance campements villageois — village-owned, village-run, and thirty years old.",
-   "subject": "a village-run campement in Casamance",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "photography",
-   "caption": "Light on Water",
-   "description": "Delta light at either end of the day, and pink water at the Lac Rose.",
-   "subject": "pink water and salt at the Lac Rose near Dakar",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "hidden-gems",
-   "caption": "Bassari Country",
-   "description": "The Bassari and Bedik villages of the south-east, up in the hills, and rarely visited.",
-   "subject": "a Bedik village on a hillside in south-east Senegal",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "why-visit",
-   "caption": "The Easy Door to West Africa",
-   "description": "Stable, straightforward, six hours from Europe, and the friendliest reputation on the coast.",
-   "subject": "the Atlantic coast road north of Dakar",
-   "focal": [
-    50,
-    52
-   ]
-  }
- ]
+  "slug": "senegal",
+  "name": "Senegal",
+  "adjective": "Senegalese",
+  "region": "West Africa",
+  "tagline": "Where the Sahel meets the Atlantic",
+  "summary": "The westernmost point of Africa, with Dakar on its peninsula, Gorée offshore, the Sine-Saloum delta, the Djoudj bird sanctuary and a music tradition that shaped a good deal of what came after.",
+  "published": true,
+  "calls": [
+    "cities",
+    "culture",
+    "food",
+    "coast"
+  ],
+  "months": [
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "when": "Dry, and cool enough on the coast until the heat arrives in June.",
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "Where the Sahel Meets the Atlantic",
+      "description": "Desert to the north, delta to the south, and Dakar on a peninsula between them.",
+      "subject": "the Atlantic breaking below the cliffs at Dakar",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "nature",
+      "caption": "Delta and Dune",
+      "description": "The Sine-Saloum mangrove delta, the Casamance forest, and Sahel sand in the north.",
+      "subject": "mangrove channels in the Sine-Saloum delta",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "wildlife",
+      "caption": "Djoudj",
+      "description": "Three million migrating birds winter in the Djoudj — one of the great bird sites on earth.",
+      "subject": "pelicans massed on the water at Djoudj",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "safari",
+      "caption": "Niokolo-Koba",
+      "description": "Lion, hippo and Derby eland in the south-east, in a park that is slowly recovering.",
+      "subject": "a game track through Niokolo-Koba woodland",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "mountains",
+      "caption": "Fouta Djallon Foothills",
+      "description": "No high peaks — the ground rises to the Fouta Djallon foothills in the far south-east.",
+      "subject": "rolling hills in the south-east of Senegal",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "waterfalls",
+      "caption": "Dindefelo",
+      "description": "A hundred metres of water off the Fouta escarpment, near the Guinea border.",
+      "subject": "the Dindefelo waterfall dropping into forest",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "The Senegal and the Saloum",
+      "description": "The Senegal river along the Mauritanian border, and the Saloum spreading into the sea.",
+      "subject": "a pirogue on the Saloum delta at sunset",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "beaches",
+      "caption": "The Petite Côte",
+      "description": "Saly, Somone and Cap Skirring — Atlantic sand from the peninsula down to Casamance.",
+      "subject": "the long Atlantic beach at Cap Skirring",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "forests",
+      "caption": "Casamance",
+      "description": "Palm and rice country south of the Gambia, greener than the rest and quite different.",
+      "subject": "rice paddies and palms in Casamance",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "adventure",
+      "caption": "Surf, Sail, Paddle",
+      "description": "Dakar's surf breaks, pirogues in the delta, and the Paris-Dakar's original finish line.",
+      "subject": "surfers at Ngor island off Dakar",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "culture",
+      "caption": "Teranga",
+      "description": "The word means hospitality, and it is the thing the country most wants you to notice.",
+      "subject": "a family gathering for tea in a Senegalese courtyard",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "traditional-people",
+      "caption": "Wolof, Serer and Diola",
+      "description": "Wolof across the country, Serer in the delta, and the Diola of Casamance.",
+      "subject": "a Serer village in the Sine-Saloum",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "food",
+      "caption": "Thieboudienne",
+      "description": "Rice and fish, cooked in one pot, and the national dish by common consent.",
+      "subject": "thieboudienne served on a shared platter",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "festivals",
+      "caption": "Dak'Art and the Magal",
+      "description": "The Dakar art biennale, and the Grand Magal of Touba, which moves millions of people.",
+      "subject": "crowds gathering at the great mosque of Touba",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "crafts",
+      "caption": "Glass Painting and Weaving",
+      "description": "Sous-verre glass painting, and the strip-woven cloth of the Manjak weavers.",
+      "subject": "a sous-verre glass painting being finished",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "historic-sites",
+      "caption": "Gorée",
+      "description": "The island off Dakar, and the house of slaves that stands on it.",
+      "subject": "the pink house of slaves on Gorée island",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "heritage",
+      "caption": "Saint-Louis",
+      "description": "The old colonial capital on its island in the river mouth, with the Faidherbe bridge.",
+      "subject": "the colonial waterfront of Saint-Louis at dusk",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "cities",
+      "caption": "Dakar",
+      "description": "The most westerly city in Africa, on a peninsula, with the ocean on three sides.",
+      "subject": "the Dakar coastline seen from the Corniche",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "architecture",
+      "caption": "Colonial and Sudano-Sahelian",
+      "description": "The balconies of Saint-Louis, and the mud-and-timber mosques of the interior.",
+      "subject": "a Sudano-Sahelian mosque in the Senegalese interior",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "local-life",
+      "caption": "Ataya and the Market",
+      "description": "Three glasses of tea, poured from height, and each one stronger than the last.",
+      "subject": "tea being poured from height at a Dakar stall",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "family-community",
+      "caption": "Short Flights, Long Beaches",
+      "description": "Six hours from Europe, and beaches with a shallow warm Atlantic in front of them.",
+      "subject": "children on the beach at Saly on the Petite Côte",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "outdoor",
+      "caption": "Surf and Sail",
+      "description": "Dakar's breaks, kite-surfing on the Petite Côte, and pirogue trips through the mangrove.",
+      "subject": "kitesurfers off the Petite Côte",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "luxury",
+      "caption": "Delta Lodges",
+      "description": "Small lodges on the Saloum islands, reached only by boat, with birds outside.",
+      "subject": "a lodge deck over the water in the Saloum delta",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Community Campements",
+      "description": "The Casamance campements villageois — village-owned, village-run, and thirty years old.",
+      "subject": "a village-run campement in Casamance",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "photography",
+      "caption": "Light on Water",
+      "description": "Delta light at either end of the day, and pink water at the Lac Rose.",
+      "subject": "pink water and salt at the Lac Rose near Dakar",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "Bassari Country",
+      "description": "The Bassari and Bedik villages of the south-east, up in the hills, and rarely visited.",
+      "subject": "a Bedik village on a hillside in south-east Senegal",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "why-visit",
+      "caption": "The Easy Door to West Africa",
+      "description": "Stable, straightforward, six hours from Europe, and the friendliest reputation on the coast.",
+      "subject": "the Atlantic coast road north of Dakar",
+      "focal": [
+        50,
+        52
+      ]
+    }
+  ]
 }

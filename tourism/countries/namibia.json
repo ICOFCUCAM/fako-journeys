@@ -1,296 +1,297 @@
 {
- "slug": "namibia",
- "name": "Namibia",
- "adjective": "Namibian",
- "region": "Southern Africa",
- "tagline": "Where the desert meets the wild",
- "summary": "The oldest desert on earth running into the Atlantic — Sossusvlei's dunes, the Skeleton Coast, Etosha's waterholes and Damaraland's desert elephant, across a country with almost nobody in it.",
- "published": true,
- "url": "https://namib-skyline.vercel.app",
- "calls": [
-  "wildlife",
-  "heritage"
- ],
- "operator": "namib-skyline",
- "months": [
-  5,
-  6,
-  7,
-  8,
-  9,
-  10
- ],
- "when": "The dry winter concentrates game at the waterholes and keeps the roads open.",
- "entries": [
-  {
-   "category": "hero",
-   "caption": "Where the Desert Meets the Wild",
-   "description": "The oldest desert on earth running straight into the Atlantic, and almost nobody on it.",
-   "subject": "red dunes at Sossusvlei with long morning shadows",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "nature",
-   "caption": "The Namib",
-   "description": "Fifty-five million years old, and dunes at Sossusvlei three hundred metres high.",
-   "subject": "the dune field of the Namib at first light",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "wildlife",
-   "caption": "Desert-Adapted Wildlife",
-   "description": "Elephant and rhino that walk sixty kilometres between water, and lion that hunt seals.",
-   "subject": "a desert-adapted elephant in a dry riverbed",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "safari",
-   "caption": "Etosha",
-   "description": "Game that comes to you: in the dry season everything in the park is at one of the waterholes.",
-   "subject": "elephants and zebra at an Etosha waterhole",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "mountains",
-   "caption": "The Brandberg and the Escarpment",
-   "description": "The Brandberg is 2,573 metres and holds the White Lady, one of Africa's known rock paintings.",
-   "subject": "the granite mass of the Brandberg above the plain",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "waterfalls",
-   "caption": "Epupa",
-   "description": "The Kunene drops through a gorge on the Angolan border, with baobabs on the rim.",
-   "subject": "the Epupa falls on the Kunene river",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "lakes-rivers",
-   "caption": "The Kunene and the Zambezi",
-   "description": "Two permanent rivers, one on each border, and dry riverbeds for everything in between.",
-   "subject": "a dry riverbed cutting through Damaraland",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "beaches",
-   "caption": "The Skeleton Coast",
-   "description": "Fifteen hundred kilometres of Atlantic, fog, shipwrecks and seal colonies.",
-   "subject": "a shipwreck half-buried on the Skeleton Coast",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "forests",
-   "caption": "The Caprivi Woodland",
-   "description": "No rainforest — the green is in the Zambezi region, riverine and full of elephant.",
-   "subject": "riverine woodland along the Zambezi in the Caprivi",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "adventure",
-   "caption": "Self-Drive Country",
-   "description": "The best self-drive country in Africa: gravel roads, long distances and nobody on them.",
-   "subject": "a gravel road running straight to the horizon",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "culture",
-   "caption": "Eleven Peoples",
-   "description": "Owambo, Herero, Damara, Nama, San and more, and German still on half the street signs.",
-   "subject": "a Herero woman in traditional dress",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "traditional-people",
-   "caption": "The Himba",
-   "description": "The Himba of the Kunene, whose way of life is genuinely intact and should be visited carefully.",
-   "subject": "a Himba homestead in the Kunene region",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "food",
-   "caption": "Braai and Biltong",
-   "description": "Game meat over coals, biltong on every counter, and German bread that is actually German.",
-   "subject": "game meat grilling over coals at a Namibian braai",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "festivals",
-   "caption": "Windhoek Karnival and Maherero Day",
-   "description": "The Windhoek carnival in April, and Maherero Day at Okahandja in August.",
-   "subject": "a Maherero Day procession at Okahandja",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "crafts",
-   "caption": "Basketry and Ostrich Shell",
-   "description": "Kavango wood carving, San ostrich-eggshell beadwork, and Herero doll making.",
-   "subject": "San ostrich eggshell beads being strung",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "historic-sites",
-   "caption": "Twyfelfontein",
-   "description": "Two thousand rock engravings on one hillside, cut into sandstone six thousand years ago.",
-   "subject": "rock engravings on sandstone at Twyfelfontein",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "heritage",
-   "caption": "Kolmanskop and the Coast",
-   "description": "A diamond town the desert has taken back, and the German colonial coast at Lüderitz.",
-   "subject": "sand filling a room in the ghost town of Kolmanskop",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "cities",
-   "caption": "Windhoek and Swakopmund",
-   "description": "Windhoek on the highveld, and Swakopmund where German architecture meets Atlantic fog.",
-   "subject": "the seafront and pier at Swakopmund in fog",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "architecture",
-   "caption": "Colonial and Desert Vernacular",
-   "description": "German colonial in the towns, and camps built to disappear into the gravel plains.",
-   "subject": "a desert lodge built low into the gravel plain",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "local-life",
-   "caption": "The Long Road",
-   "description": "Fuel, biltong and a farm stall every two hundred kilometres, and that is the day.",
-   "subject": "a roadside farm stall on a Namibian highway",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "family-community",
-   "caption": "Easy and Safe to Drive",
-   "description": "Good roads, no malaria in most of it, and children who will remember the dunes.",
-   "subject": "a family climbing a dune at Sossusvlei",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "outdoor",
-   "caption": "Dune, Quad, Balloon",
-   "description": "Climbing Big Daddy, quad biking at Swakopmund, and balloons over the Namib at dawn.",
-   "subject": "a balloon over the Namib at sunrise",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "luxury",
-   "caption": "Desert Camps",
-   "description": "Small camps in private concessions the size of counties, and almost no light pollution.",
-   "subject": "a desert camp lit under a full sky of stars",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "eco-tourism",
-   "caption": "Conservancies",
-   "description": "Communal conservancies cover a fifth of the country and are why the black rhino survived.",
-   "subject": "a community game guard on patrol in a conservancy",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "photography",
-   "caption": "The Cleanest Light in Africa",
-   "description": "Dry air, no haze, and one of the darkest night skies measured anywhere.",
-   "subject": "the Milky Way over a Namibian desert landscape",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "hidden-gems",
-   "caption": "The Kunene",
-   "description": "The far north-west: Epupa, the Himba, and roads that need two vehicles.",
-   "subject": "a track through the mountains of the Kunene region",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "why-visit",
-   "caption": "Space, and the Silence in It",
-   "description": "Two and a half million people in a country twice the size of Germany.",
-   "subject": "an empty gravel plain stretching to distant mountains",
-   "focal": [
-    50,
-    52
-   ]
-  }
- ]
+  "slug": "namibia",
+  "name": "Namibia",
+  "adjective": "Namibian",
+  "region": "Southern Africa",
+  "tagline": "Where the desert meets the wild",
+  "summary": "The oldest desert on earth running into the Atlantic — Sossusvlei's dunes, the Skeleton Coast, Etosha's waterholes and Damaraland's desert elephant, across a country with almost nobody in it.",
+  "published": true,
+  "url": "https://namib-skyline.vercel.app",
+  "calls": [
+    "wildlife",
+    "history",
+    "adventure"
+  ],
+  "operator": "namib-skyline",
+  "months": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "when": "The dry winter concentrates game at the waterholes and keeps the roads open.",
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "Where the Desert Meets the Wild",
+      "description": "The oldest desert on earth running straight into the Atlantic, and almost nobody on it.",
+      "subject": "red dunes at Sossusvlei with long morning shadows",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "nature",
+      "caption": "The Namib",
+      "description": "Fifty-five million years old, and dunes at Sossusvlei three hundred metres high.",
+      "subject": "the dune field of the Namib at first light",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "wildlife",
+      "caption": "Desert-Adapted Wildlife",
+      "description": "Elephant and rhino that walk sixty kilometres between water, and lion that hunt seals.",
+      "subject": "a desert-adapted elephant in a dry riverbed",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "safari",
+      "caption": "Etosha",
+      "description": "Game that comes to you: in the dry season everything in the park is at one of the waterholes.",
+      "subject": "elephants and zebra at an Etosha waterhole",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "mountains",
+      "caption": "The Brandberg and the Escarpment",
+      "description": "The Brandberg is 2,573 metres and holds the White Lady, one of Africa's known rock paintings.",
+      "subject": "the granite mass of the Brandberg above the plain",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "waterfalls",
+      "caption": "Epupa",
+      "description": "The Kunene drops through a gorge on the Angolan border, with baobabs on the rim.",
+      "subject": "the Epupa falls on the Kunene river",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "The Kunene and the Zambezi",
+      "description": "Two permanent rivers, one on each border, and dry riverbeds for everything in between.",
+      "subject": "a dry riverbed cutting through Damaraland",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "beaches",
+      "caption": "The Skeleton Coast",
+      "description": "Fifteen hundred kilometres of Atlantic, fog, shipwrecks and seal colonies.",
+      "subject": "a shipwreck half-buried on the Skeleton Coast",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "forests",
+      "caption": "The Caprivi Woodland",
+      "description": "No rainforest — the green is in the Zambezi region, riverine and full of elephant.",
+      "subject": "riverine woodland along the Zambezi in the Caprivi",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "adventure",
+      "caption": "Self-Drive Country",
+      "description": "The best self-drive country in Africa: gravel roads, long distances and nobody on them.",
+      "subject": "a gravel road running straight to the horizon",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "culture",
+      "caption": "Eleven Peoples",
+      "description": "Owambo, Herero, Damara, Nama, San and more, and German still on half the street signs.",
+      "subject": "a Herero woman in traditional dress",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "traditional-people",
+      "caption": "The Himba",
+      "description": "The Himba of the Kunene, whose way of life is genuinely intact and should be visited carefully.",
+      "subject": "a Himba homestead in the Kunene region",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "food",
+      "caption": "Braai and Biltong",
+      "description": "Game meat over coals, biltong on every counter, and German bread that is actually German.",
+      "subject": "game meat grilling over coals at a Namibian braai",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "festivals",
+      "caption": "Windhoek Karnival and Maherero Day",
+      "description": "The Windhoek carnival in April, and Maherero Day at Okahandja in August.",
+      "subject": "a Maherero Day procession at Okahandja",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "crafts",
+      "caption": "Basketry and Ostrich Shell",
+      "description": "Kavango wood carving, San ostrich-eggshell beadwork, and Herero doll making.",
+      "subject": "San ostrich eggshell beads being strung",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "historic-sites",
+      "caption": "Twyfelfontein",
+      "description": "Two thousand rock engravings on one hillside, cut into sandstone six thousand years ago.",
+      "subject": "rock engravings on sandstone at Twyfelfontein",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "heritage",
+      "caption": "Kolmanskop and the Coast",
+      "description": "A diamond town the desert has taken back, and the German colonial coast at Lüderitz.",
+      "subject": "sand filling a room in the ghost town of Kolmanskop",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "cities",
+      "caption": "Windhoek and Swakopmund",
+      "description": "Windhoek on the highveld, and Swakopmund where German architecture meets Atlantic fog.",
+      "subject": "the seafront and pier at Swakopmund in fog",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "architecture",
+      "caption": "Colonial and Desert Vernacular",
+      "description": "German colonial in the towns, and camps built to disappear into the gravel plains.",
+      "subject": "a desert lodge built low into the gravel plain",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "local-life",
+      "caption": "The Long Road",
+      "description": "Fuel, biltong and a farm stall every two hundred kilometres, and that is the day.",
+      "subject": "a roadside farm stall on a Namibian highway",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "family-community",
+      "caption": "Easy and Safe to Drive",
+      "description": "Good roads, no malaria in most of it, and children who will remember the dunes.",
+      "subject": "a family climbing a dune at Sossusvlei",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "outdoor",
+      "caption": "Dune, Quad, Balloon",
+      "description": "Climbing Big Daddy, quad biking at Swakopmund, and balloons over the Namib at dawn.",
+      "subject": "a balloon over the Namib at sunrise",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "luxury",
+      "caption": "Desert Camps",
+      "description": "Small camps in private concessions the size of counties, and almost no light pollution.",
+      "subject": "a desert camp lit under a full sky of stars",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Conservancies",
+      "description": "Communal conservancies cover a fifth of the country and are why the black rhino survived.",
+      "subject": "a community game guard on patrol in a conservancy",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "photography",
+      "caption": "The Cleanest Light in Africa",
+      "description": "Dry air, no haze, and one of the darkest night skies measured anywhere.",
+      "subject": "the Milky Way over a Namibian desert landscape",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "The Kunene",
+      "description": "The far north-west: Epupa, the Himba, and roads that need two vehicles.",
+      "subject": "a track through the mountains of the Kunene region",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "why-visit",
+      "caption": "Space, and the Silence in It",
+      "description": "Two and a half million people in a country twice the size of Germany.",
+      "subject": "an empty gravel plain stretching to distant mountains",
+      "focal": [
+        50,
+        52
+      ]
+    }
+  ]
 }

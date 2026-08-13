@@ -28,8 +28,8 @@ import os
 import re
 
 from . import plate
-from .model import (CATEGORY_FILE, ROOT, load_cities, load_picks, load_regions,
-                    load_views, region_of)
+from .model import (CATEGORY_FILE, ROOT, load_cities, load_lenses, load_picks,
+                    load_regions, load_views, region_of)
 
 LINKS = os.path.join(ROOT, "data", "links.json")
 
@@ -62,7 +62,8 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "regions", "cities", "claim", "months", "scale",
+MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
+           "wants", "expcards", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer")
 
@@ -204,6 +205,111 @@ def block_cities(countries):
             'countries, with no editor standing in front of it.</span>'
             '</span></a>' % (span, _spell(len(rows)).lower()))
     return "\n".join(rows)
+
+
+# One line drawing per lens. Presentation, so it lives here rather than in
+# lenses.json — but keyed by lens id, so a lens without an icon is a KeyError at
+# build time instead of a blank button on the page.
+LENS_ICONS = {
+    "cities": '<path d="M3 21h18"/><path d="M5 21V9l5-3v15"/><path d="M14 21V4l5 3v14"/>'
+              '<path d="M7.5 11v0M7.5 14v0M16.5 10v0M16.5 13v0"/>',
+    "wildlife": '<circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/>'
+                '<circle cx="17.5" cy="9.5" r="1.6"/>'
+                '<path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/>',
+    "culture": '<path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/>'
+               '<circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/>'
+               '<path d="M12 18v3"/>',
+    "coast": '<path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/>'
+             '<path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/>'
+             '<path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/>',
+    "nature": '<path d="M3 19h18L14 6l-3.2 5.6L9 9z"/><path d="M9.5 19c0-4 2.5-6.5 6.5-7"/>',
+    "food": '<path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/>'
+            '<path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/>',
+    "history": '<path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/>'
+               '<path d="M11 20v-4h2v4"/>',
+    "adventure": '<path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/>',
+}
+
+
+def block_experiences(countries):
+    """The picker, generated from the lenses rather than typed beside them.
+
+    It was eight hand-written buttons, and two of them — `rainforest` and
+    `adventure` — were not lenses at all. Nothing declared them, so pressing
+    either filtered the destinations grid to nothing and the page answered a
+    question with an empty row. Nobody noticed because the answer panel above
+    still spoke: the recommendation came from picks.json and the filter came
+    from the lens vocabulary, and the two had quietly stopped being the same
+    list.
+
+    So the buttons are the lenses now, in the lenses' own order, with the
+    country each one recommends taken from picks.json. A lens with no pick, or a
+    pick naming a country that is not published, raises here rather than
+    shipping a button that leads nowhere.
+    """
+    lenses = load_lenses()
+    picks = load_picks()
+    live = {c.slug for c in countries}
+    out = []
+    for key, lens in lenses.items():
+        pick = picks.get(key)
+        if not pick:
+            raise ValueError("lens %r has no pick in picks.json" % key)
+        if pick.get("country") not in live:
+            raise ValueError("lens %r recommends %r, which is not published"
+                             % (key, pick.get("country")))
+        out.append(
+            '<button class="wa-tag" type="button" data-exp="%s" data-slug="%s" data-line="%s">'
+            '<svg viewBox="0 0 24 24" aria-hidden="true">%s</svg>%s</button>'
+            % (esc(key), esc(pick["country"]), esc(lens["line"]),
+               LENS_ICONS[key], esc(lens["title"])))
+    return "".join(out)
+
+
+def block_wants(countries):
+    """The filter bar over the destinations grid, from the same eight lenses.
+
+    This was six hand-written buttons and the picker in the hero was eight, and
+    neither list knew about the other. Two of the hero's — `rainforest` and
+    `adventure` — were not lenses at all, so they filtered nothing; two of the
+    lenses the bar did offer had since been renamed. Four copies of one
+    taxonomy, none of them derived. There is one now.
+    """
+    lenses = load_lenses()
+    return "\n      ".join(
+        '<button class="wa-want" type="button" data-want="%s" data-line="%s">'
+        '<i>%s</i><b>%s</b></button>'
+        % (esc(key), esc(lens["filterline"]), esc(lens["verb"]), lens["label"])
+        for key, lens in lenses.items())
+
+
+def block_expcards(countries):
+    """The experience cards, with the counts derived rather than typed.
+
+    Each said "11 of 22 countries lead on this" as a literal beside a list that
+    is generated, so every count was a hostage to the next edit of the dataset —
+    and after the taxonomy changed under them, four of the six were wrong.
+    """
+    lenses = load_lenses()
+    out = []
+    for key, lens in lenses.items():
+        n = sum(1 for c in countries if key in c.calls)
+        icon = LENS_ICONS[key]
+        art = ('<span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24">%s</svg></span>'
+               % icon)
+        body = ('<div><b>%s</b><span>%s</span><i class="wa-exp-n">%s</i></div>'
+                % (lens["label"], esc(lens["examples"]),
+                   ("%d of %d countries lead on this" % (n, len(countries))) if n
+                   else ("Written up in all %d &mdash; no one leads it" % len(countries))))
+        # A lens nothing leads on is not a filter — pressing it would empty the
+        # grid. It becomes a link to everywhere instead, which is the honest
+        # answer to "show me this" when no country claims it.
+        if n:
+            out.append('<button class="wa-exp" type="button" data-want="%s" aria-pressed="false">'
+                       '%s%s</button>' % (esc(key), art, body))
+        else:
+            out.append('<a class="wa-exp wa-exp--all" href="/places">%s%s</a>' % (art, body))
+    return "\n      ".join(out)
 
 
 def block_claim(countries):
@@ -817,6 +923,9 @@ def render(countries):
     return {
         "regions": block_regions(seq, views),
         "cities": block_cities(seq),
+        "experiences": block_experiences(seq),
+        "wants": block_wants(seq),
+        "expcards": block_expcards(seq),
         "window": block_window(with_shape, shape_by_slug, views),
         "captions": block_captions(with_shape),
         "ticks": block_ticks(with_shape, views),

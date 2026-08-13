@@ -1,295 +1,296 @@
 {
- "slug": "ghana",
- "name": "Ghana",
- "adjective": "Ghanaian",
- "region": "West Africa",
- "tagline": "The forts, the forest and the highlife",
- "summary": "The most straightforward country in West Africa to travel, with the Atlantic slave forts of the coast, the Ashanti kingdom at Kumasi, Mole's elephants in the north, and a music scene worth planning around.",
- "published": true,
- "calls": [
-  "culture",
-  "heritage",
-  "coast",
-  "food"
- ],
- "months": [
-  11,
-  12,
-  1,
-  2,
-  3
- ],
- "when": "The dry season, and the harmattan haze that comes with it in January.",
- "entries": [
-  {
-   "category": "hero",
-   "caption": "The Forts, the Forest and the Highlife",
-   "description": "Coastal forts, Ashanti gold, elephants in the north, and a band playing somewhere every night.",
-   "subject": "the white walls of Cape Coast castle above the Atlantic",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "nature",
-   "caption": "Coast to Savanna",
-   "description": "Rainforest and lagoon in the south, transitional woodland through the middle, savanna at Mole.",
-   "subject": "rainforest canopy in Kakum national park",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "wildlife",
-   "caption": "Mole and Ankasa",
-   "description": "Elephants that walk into the camp waterhole at Mole, and forest elephants at Ankasa.",
-   "subject": "elephants at the waterhole below Mole motel",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "safari",
-   "caption": "Walking Safari at Mole",
-   "description": "One of the few parks in West Africa where the game drive is done on foot, with an armed ranger.",
-   "subject": "a ranger leading walkers through savanna at Mole",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "mountains",
-   "caption": "The Akwapim and Afadja",
-   "description": "Afadjato is 885 metres and the highest point, walkable in a morning from Liati Wote.",
-   "subject": "the green hills of the Volta region from Afadjato",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "waterfalls",
-   "caption": "Wli",
-   "description": "The highest falls in West Africa, dropping out of forest on the Togo border, with bats overhead.",
-   "subject": "the Wli waterfall dropping through forest in the Volta region",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "lakes-rivers",
-   "caption": "Lake Volta",
-   "description": "The largest reservoir on earth by surface area, with ferries that take a full day to cross it.",
-   "subject": "fishing boats on Lake Volta at first light",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "beaches",
-   "caption": "Busua and Cape Three Points",
-   "description": "Surf at Busua, and the point where the country runs out into the Gulf of Guinea.",
-   "subject": "palms above the beach at Busua on the Ghanaian coast",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "forests",
-   "caption": "Kakum",
-   "description": "Rainforest with a canopy walkway thirty metres up, strung between seven emergent trees.",
-   "subject": "the canopy walkway suspended above Kakum rainforest",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "adventure",
-   "caption": "Canopy, Surf and Lake",
-   "description": "The Kakum walkway, Busua's beach breaks, and hiking the Volta hills to the Togo border.",
-   "subject": "a hiking trail through the hills of the Volta region",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "culture",
-   "caption": "Ashanti",
-   "description": "A kingdom that fought the British to a standstill, and still keeps its own court at Kumasi.",
-   "subject": "the Manhyia palace grounds at Kumasi",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "traditional-people",
-   "caption": "The Ewe and the Dagomba",
-   "description": "Kente weaving in Volta and Ashanti, and the Dagbon drumming traditions of the north.",
-   "subject": "a weaver working a kente loom in Bonwire",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "food",
-   "caption": "Jollof, Banku and Grilled Tilapia",
-   "description": "The jollof argument is unwinnable; the tilapia off the grill with banku settles it.",
-   "subject": "grilled tilapia and banku served at a roadside chop bar",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "festivals",
-   "caption": "Homowo and Chale Wote",
-   "description": "Homowo in Accra in August, and the Chale Wote street art festival in Jamestown.",
-   "subject": "a street art festival crowd in Jamestown, Accra",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "crafts",
-   "caption": "Kente and Adinkra",
-   "description": "Kente woven in strips at Bonwire, and adinkra symbols stamped by hand at Ntonso.",
-   "subject": "adinkra symbols being stamped onto cloth by hand",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "historic-sites",
-   "caption": "The Slave Forts",
-   "description": "Cape Coast and Elmina — the doors of no return, kept as they were and not softened.",
-   "subject": "the door of no return at Elmina castle",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "heritage",
-   "caption": "The Year of Return",
-   "description": "Ghana asked the diaspora to come back, and a great many people did.",
-   "subject": "a memorial gathering at Cape Coast castle",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "cities",
-   "caption": "Accra and Kumasi",
-   "description": "Accra on the Atlantic, and Kumasi's Kejetia — one of the largest markets in West Africa.",
-   "subject": "the vast Kejetia market spread out at Kumasi",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "architecture",
-   "caption": "Posuban and Colonial Coast",
-   "description": "The Fante posuban shrines, and the trading architecture strung along the coast road.",
-   "subject": "a painted Fante posuban shrine in a coastal town",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "local-life",
-   "caption": "Chop Bars and Trotros",
-   "description": "The country runs on shared minibuses and roadside kitchens, and both are worth using.",
-   "subject": "a busy trotro station in Accra",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "family-community",
-   "caption": "Easy First Africa",
-   "description": "English-speaking, short distances, and about as gentle an introduction as the continent offers.",
-   "subject": "children playing on a beach on the Ghanaian coast",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "outdoor",
-   "caption": "Surf, Hike, Paddle",
-   "description": "Busua's breaks, the Volta hills, and canoes on the lake at Dodi.",
-   "subject": "a surfer walking out at Busua beach",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "luxury",
-   "caption": "Lodges on the Water",
-   "description": "Small lodges above the beach at Busua and Axim, and the Mole escarpment rooms over the waterhole.",
-   "subject": "a lodge terrace overlooking the waterhole at Mole",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "eco-tourism",
-   "caption": "Community Forest",
-   "description": "The Wechiau hippo sanctuary and the Boabeng-Fiema monkey sanctuary, both village-run.",
-   "subject": "hippos in the Black Volta at the Wechiau sanctuary",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "photography",
-   "caption": "Colour Everywhere",
-   "description": "Kente, market cloth and painted trotros — nothing here is any colour by accident.",
-   "subject": "stacked bolts of printed cloth in a Ghanaian market",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "hidden-gems",
-   "caption": "Nzulezo",
-   "description": "A village built entirely on stilts over Lake Tandane, reached only by canoe.",
-   "subject": "the stilt village of Nzulezo over the water",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "why-visit",
-   "caption": "The Gentle Introduction",
-   "description": "English, good roads, a short flight from Europe, and everything within a day's drive.",
-   "subject": "a coastal road running along the Gulf of Guinea",
-   "focal": [
-    50,
-    52
-   ]
-  }
- ]
+  "slug": "ghana",
+  "name": "Ghana",
+  "adjective": "Ghanaian",
+  "region": "West Africa",
+  "tagline": "The forts, the forest and the highlife",
+  "summary": "The most straightforward country in West Africa to travel, with the Atlantic slave forts of the coast, the Ashanti kingdom at Kumasi, Mole's elephants in the north, and a music scene worth planning around.",
+  "published": true,
+  "calls": [
+    "cities",
+    "culture",
+    "history",
+    "coast",
+    "food"
+  ],
+  "months": [
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "when": "The dry season, and the harmattan haze that comes with it in January.",
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "The Forts, the Forest and the Highlife",
+      "description": "Coastal forts, Ashanti gold, elephants in the north, and a band playing somewhere every night.",
+      "subject": "the white walls of Cape Coast castle above the Atlantic",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "nature",
+      "caption": "Coast to Savanna",
+      "description": "Rainforest and lagoon in the south, transitional woodland through the middle, savanna at Mole.",
+      "subject": "rainforest canopy in Kakum national park",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "wildlife",
+      "caption": "Mole and Ankasa",
+      "description": "Elephants that walk into the camp waterhole at Mole, and forest elephants at Ankasa.",
+      "subject": "elephants at the waterhole below Mole motel",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "safari",
+      "caption": "Walking Safari at Mole",
+      "description": "One of the few parks in West Africa where the game drive is done on foot, with an armed ranger.",
+      "subject": "a ranger leading walkers through savanna at Mole",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "mountains",
+      "caption": "The Akwapim and Afadja",
+      "description": "Afadjato is 885 metres and the highest point, walkable in a morning from Liati Wote.",
+      "subject": "the green hills of the Volta region from Afadjato",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "waterfalls",
+      "caption": "Wli",
+      "description": "The highest falls in West Africa, dropping out of forest on the Togo border, with bats overhead.",
+      "subject": "the Wli waterfall dropping through forest in the Volta region",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "Lake Volta",
+      "description": "The largest reservoir on earth by surface area, with ferries that take a full day to cross it.",
+      "subject": "fishing boats on Lake Volta at first light",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "beaches",
+      "caption": "Busua and Cape Three Points",
+      "description": "Surf at Busua, and the point where the country runs out into the Gulf of Guinea.",
+      "subject": "palms above the beach at Busua on the Ghanaian coast",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "forests",
+      "caption": "Kakum",
+      "description": "Rainforest with a canopy walkway thirty metres up, strung between seven emergent trees.",
+      "subject": "the canopy walkway suspended above Kakum rainforest",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "adventure",
+      "caption": "Canopy, Surf and Lake",
+      "description": "The Kakum walkway, Busua's beach breaks, and hiking the Volta hills to the Togo border.",
+      "subject": "a hiking trail through the hills of the Volta region",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "culture",
+      "caption": "Ashanti",
+      "description": "A kingdom that fought the British to a standstill, and still keeps its own court at Kumasi.",
+      "subject": "the Manhyia palace grounds at Kumasi",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "traditional-people",
+      "caption": "The Ewe and the Dagomba",
+      "description": "Kente weaving in Volta and Ashanti, and the Dagbon drumming traditions of the north.",
+      "subject": "a weaver working a kente loom in Bonwire",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "food",
+      "caption": "Jollof, Banku and Grilled Tilapia",
+      "description": "The jollof argument is unwinnable; the tilapia off the grill with banku settles it.",
+      "subject": "grilled tilapia and banku served at a roadside chop bar",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "festivals",
+      "caption": "Homowo and Chale Wote",
+      "description": "Homowo in Accra in August, and the Chale Wote street art festival in Jamestown.",
+      "subject": "a street art festival crowd in Jamestown, Accra",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "crafts",
+      "caption": "Kente and Adinkra",
+      "description": "Kente woven in strips at Bonwire, and adinkra symbols stamped by hand at Ntonso.",
+      "subject": "adinkra symbols being stamped onto cloth by hand",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "historic-sites",
+      "caption": "The Slave Forts",
+      "description": "Cape Coast and Elmina — the doors of no return, kept as they were and not softened.",
+      "subject": "the door of no return at Elmina castle",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "heritage",
+      "caption": "The Year of Return",
+      "description": "Ghana asked the diaspora to come back, and a great many people did.",
+      "subject": "a memorial gathering at Cape Coast castle",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "cities",
+      "caption": "Accra and Kumasi",
+      "description": "Accra on the Atlantic, and Kumasi's Kejetia — one of the largest markets in West Africa.",
+      "subject": "the vast Kejetia market spread out at Kumasi",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "architecture",
+      "caption": "Posuban and Colonial Coast",
+      "description": "The Fante posuban shrines, and the trading architecture strung along the coast road.",
+      "subject": "a painted Fante posuban shrine in a coastal town",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "local-life",
+      "caption": "Chop Bars and Trotros",
+      "description": "The country runs on shared minibuses and roadside kitchens, and both are worth using.",
+      "subject": "a busy trotro station in Accra",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "family-community",
+      "caption": "Easy First Africa",
+      "description": "English-speaking, short distances, and about as gentle an introduction as the continent offers.",
+      "subject": "children playing on a beach on the Ghanaian coast",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "outdoor",
+      "caption": "Surf, Hike, Paddle",
+      "description": "Busua's breaks, the Volta hills, and canoes on the lake at Dodi.",
+      "subject": "a surfer walking out at Busua beach",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "luxury",
+      "caption": "Lodges on the Water",
+      "description": "Small lodges above the beach at Busua and Axim, and the Mole escarpment rooms over the waterhole.",
+      "subject": "a lodge terrace overlooking the waterhole at Mole",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Community Forest",
+      "description": "The Wechiau hippo sanctuary and the Boabeng-Fiema monkey sanctuary, both village-run.",
+      "subject": "hippos in the Black Volta at the Wechiau sanctuary",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "photography",
+      "caption": "Colour Everywhere",
+      "description": "Kente, market cloth and painted trotros — nothing here is any colour by accident.",
+      "subject": "stacked bolts of printed cloth in a Ghanaian market",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "Nzulezo",
+      "description": "A village built entirely on stilts over Lake Tandane, reached only by canoe.",
+      "subject": "the stilt village of Nzulezo over the water",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "why-visit",
+      "caption": "The Gentle Introduction",
+      "description": "English, good roads, a short flight from Europe, and everything within a day's drive.",
+      "subject": "a coastal road running along the Gulf of Guinea",
+      "focal": [
+        50,
+        52
+      ]
+    }
+  ]
 }

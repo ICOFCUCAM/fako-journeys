@@ -161,6 +161,22 @@ def region_of(country, regions=None):
     return "", None
 
 
+def load_lenses(path=None):
+    """The eight lenses, minus the `$comment` the file explains itself with.
+
+    atlas.py, journey.py and graph.py each read this file for themselves. This
+    is the definition the gateway uses; consolidating the other three is worth
+    doing and is not this commit.
+    """
+    path = path or os.path.join(ROOT, "tourism", "lenses.json")
+    try:
+        with open(path) as fh:
+            raw = json.load(fh)
+    except (IOError, ValueError):
+        return {}
+    return dict((k, v) for k, v in raw.items() if not k.startswith("$"))
+
+
 def load_cities(path=None):
     """The curated city collection.
 

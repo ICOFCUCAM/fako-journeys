@@ -83,7 +83,7 @@ def read(path, fallback):
 
 
 def load_lenses():
-    """The six lenses, minus the `$comment` the file explains itself with."""
+    """The eight lenses, minus the `$comment` the file explains itself with."""
     return dict((k, v) for k, v in read(LENSES, {}).items() if not k.startswith("$"))
 
 

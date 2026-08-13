@@ -1,294 +1,294 @@
 {
- "slug": "tunisia",
- "name": "Tunisia",
- "adjective": "Tunisian",
- "region": "North Africa",
- "tagline": "Carthage, the Sahel and the desert south",
- "summary": "Carthage on the bay of Tunis, Roman Dougga and El Jem, the Sahara at Douz and Tozeur, and a Mediterranean coast that has been in the tourism business for sixty years.",
- "published": true,
- "calls": [
-  "heritage",
-  "culture",
-  "coast"
- ],
- "months": [
-  4,
-  5,
-  6,
-  9,
-  10
- ],
- "when": "Spring and early autumn, either side of a Mediterranean summer.",
- "entries": [
-  {
-   "category": "hero",
-   "caption": "Carthage, the Sahel and the Desert",
-   "description": "Mediterranean at the top, olive plains through the middle, and the Sahara at the bottom.",
-   "subject": "the ruins of Carthage above the bay of Tunis",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "nature",
-   "caption": "Coast to Chott",
-   "description": "The Cap Bon coast, the olive Sahel, and the salt flats of the Chott el Djerid.",
-   "subject": "the salt crust of the Chott el Djerid",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "wildlife",
-   "caption": "Ichkeul and the Desert",
-   "description": "Ichkeul's wintering waterfowl, and the desert fox and gazelle of the south.",
-   "subject": "flamingos on the lake at Ichkeul",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "safari",
-   "caption": "Not a Safari Country",
-   "description": "The wildlife here is birds and desert species, and Ichkeul is the reason to bring binoculars.",
-   "subject": "waders feeding on a Tunisian coastal wetland",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "mountains",
-   "caption": "The Dorsale",
-   "description": "The Atlas tail crosses the north — Jebel Chambi is 1,544 metres and the highest point.",
-   "subject": "the ridge of the Tunisian Dorsale in winter light",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "waterfalls",
-   "caption": "The Oasis Cascades",
-   "description": "Chebika, Tamerza and Mides — the mountain oases of the west, with water in a dry country.",
-   "subject": "the palm oasis and waterfall at Chebika",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "lakes-rivers",
-   "caption": "The Medjerda",
-   "description": "The only permanent river, running out of Algeria and across the northern plain.",
-   "subject": "the Medjerda river crossing the northern plain",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "beaches",
-   "caption": "The Mediterranean",
-   "description": "Hammamet, Djerba and Cap Bon — twelve hundred kilometres of it, and warm from May.",
-   "subject": "the whitewashed seafront at Sidi Bou Said",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "forests",
-   "caption": "Cork Oak in the North",
-   "description": "The Kroumirie forest of cork oak in the north-west, which surprises everyone.",
-   "subject": "cork oak forest in the Kroumirie hills",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "adventure",
-   "caption": "Desert, Diving, Dunes",
-   "description": "Camel treks from Douz, dune camps on the erg, and diving off Tabarka.",
-   "subject": "camels crossing dunes on the Grand Erg oriental",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "culture",
-   "caption": "Punic, Roman, Arab, Berber",
-   "description": "Four layers, all of them still visible, and often in the same town.",
-   "subject": "a Roman mosaic floor in a Tunisian museum",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "traditional-people",
-   "caption": "The Berber South",
-   "description": "The ksour of Tataouine, and the underground houses of Matmata.",
-   "subject": "an underground Berber courtyard house at Matmata",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "food",
-   "caption": "Couscous, Brik and Harissa",
-   "description": "Friday couscous, brik straight out of the pan, and harissa on everything.",
-   "subject": "a brik being fried at a Tunisian market stall",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "festivals",
-   "caption": "Carthage and the Sahara Festival",
-   "description": "The Carthage film and music festival in summer, and the Douz Sahara festival in December.",
-   "subject": "riders at the Sahara festival at Douz",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "crafts",
-   "caption": "Mosaic, Ceramic and Silver",
-   "description": "Roman mosaic technique still taught, Nabeul ceramic, and Berber silver from the south.",
-   "subject": "hand-painted Nabeul ceramics on a market stall",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "historic-sites",
-   "caption": "Carthage, Dougga, El Jem",
-   "description": "El Jem's amphitheatre seats thirty-five thousand and is standing almost complete.",
-   "subject": "the Roman amphitheatre at El Jem",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "heritage",
-   "caption": "The Medinas",
-   "description": "Tunis, Sousse and Kairouan — Kairouan's mosque is among the oldest in the Maghreb.",
-   "subject": "the great mosque of Kairouan from its courtyard",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "cities",
-   "caption": "Tunis and Sfax",
-   "description": "Tunis at the head of its lake, and Sfax's walled medina working as a medina still.",
-   "subject": "the medina rooftops of Tunis at dusk",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "architecture",
-   "caption": "Whitewash and Blue",
-   "description": "Sidi Bou Said's blue and white, and the vaulted ksour of the desert south.",
-   "subject": "the blue doors and white walls of Sidi Bou Said",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "local-life",
-   "caption": "The Souk and the Café",
-   "description": "Mint tea with pine nuts, and a souk that still mostly sells to the people who live there.",
-   "subject": "mint tea with pine nuts at a Tunisian café",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "family-community",
-   "caption": "Two Hours from Europe",
-   "description": "Short flights, shallow warm sea, and resorts that have been doing families for decades.",
-   "subject": "a shallow beach with families on the Tunisian coast",
-   "focal": [
-    50,
-    55
-   ]
-  },
-  {
-   "category": "outdoor",
-   "caption": "Desert and Dive",
-   "description": "Dune trekking from Douz, quad routes on the chott, and diving at Tabarka.",
-   "subject": "a trekking party on the edge of the Grand Erg",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "luxury",
-   "caption": "Riad, Dar and Dune Camp",
-   "description": "Restored dar houses in the medinas, and desert camps beyond the last palm.",
-   "subject": "the courtyard of a restored dar in the Tunis medina",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "eco-tourism",
-   "caption": "Oasis Water",
-   "description": "The oasis irrigation of Tozeur and Nefta, managing water in the driest place in the country.",
-   "subject": "traditional irrigation channels in the Tozeur oasis",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "photography",
-   "caption": "Light on White",
-   "description": "Whitewash, blue, and desert light — the reason the film crews keep coming back.",
-   "subject": "white and blue architecture in strong Mediterranean light",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "hidden-gems",
-   "caption": "Ksar Ouled Soltane",
-   "description": "Vaulted grain stores stacked four storeys high, and almost nobody there.",
-   "subject": "the stacked vaulted ksar at Ksar Ouled Soltane",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "why-visit",
-   "caption": "Rome, and the Sahara, in One Week",
-   "description": "An amphitheatre on Monday and a dune camp on Thursday, in a country the size of England.",
-   "subject": "a desert road running south towards the Sahara",
-   "focal": [
-    50,
-    52
-   ]
-  }
- ]
+  "slug": "tunisia",
+  "name": "Tunisia",
+  "adjective": "Tunisian",
+  "region": "North Africa",
+  "tagline": "Carthage, the Sahel and the desert south",
+  "summary": "Carthage on the bay of Tunis, Roman Dougga and El Jem, the Sahara at Douz and Tozeur, and a Mediterranean coast that has been in the tourism business for sixty years.",
+  "published": true,
+  "calls": [
+    "history",
+    "culture",
+    "coast"
+  ],
+  "months": [
+    4,
+    5,
+    6,
+    9,
+    10
+  ],
+  "when": "Spring and early autumn, either side of a Mediterranean summer.",
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "Carthage, the Sahel and the Desert",
+      "description": "Mediterranean at the top, olive plains through the middle, and the Sahara at the bottom.",
+      "subject": "the ruins of Carthage above the bay of Tunis",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "nature",
+      "caption": "Coast to Chott",
+      "description": "The Cap Bon coast, the olive Sahel, and the salt flats of the Chott el Djerid.",
+      "subject": "the salt crust of the Chott el Djerid",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "wildlife",
+      "caption": "Ichkeul and the Desert",
+      "description": "Ichkeul's wintering waterfowl, and the desert fox and gazelle of the south.",
+      "subject": "flamingos on the lake at Ichkeul",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "safari",
+      "caption": "Not a Safari Country",
+      "description": "The wildlife here is birds and desert species, and Ichkeul is the reason to bring binoculars.",
+      "subject": "waders feeding on a Tunisian coastal wetland",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "mountains",
+      "caption": "The Dorsale",
+      "description": "The Atlas tail crosses the north — Jebel Chambi is 1,544 metres and the highest point.",
+      "subject": "the ridge of the Tunisian Dorsale in winter light",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "waterfalls",
+      "caption": "The Oasis Cascades",
+      "description": "Chebika, Tamerza and Mides — the mountain oases of the west, with water in a dry country.",
+      "subject": "the palm oasis and waterfall at Chebika",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "The Medjerda",
+      "description": "The only permanent river, running out of Algeria and across the northern plain.",
+      "subject": "the Medjerda river crossing the northern plain",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "beaches",
+      "caption": "The Mediterranean",
+      "description": "Hammamet, Djerba and Cap Bon — twelve hundred kilometres of it, and warm from May.",
+      "subject": "the whitewashed seafront at Sidi Bou Said",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "forests",
+      "caption": "Cork Oak in the North",
+      "description": "The Kroumirie forest of cork oak in the north-west, which surprises everyone.",
+      "subject": "cork oak forest in the Kroumirie hills",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "adventure",
+      "caption": "Desert, Diving, Dunes",
+      "description": "Camel treks from Douz, dune camps on the erg, and diving off Tabarka.",
+      "subject": "camels crossing dunes on the Grand Erg oriental",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "culture",
+      "caption": "Punic, Roman, Arab, Berber",
+      "description": "Four layers, all of them still visible, and often in the same town.",
+      "subject": "a Roman mosaic floor in a Tunisian museum",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "traditional-people",
+      "caption": "The Berber South",
+      "description": "The ksour of Tataouine, and the underground houses of Matmata.",
+      "subject": "an underground Berber courtyard house at Matmata",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "food",
+      "caption": "Couscous, Brik and Harissa",
+      "description": "Friday couscous, brik straight out of the pan, and harissa on everything.",
+      "subject": "a brik being fried at a Tunisian market stall",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "festivals",
+      "caption": "Carthage and the Sahara Festival",
+      "description": "The Carthage film and music festival in summer, and the Douz Sahara festival in December.",
+      "subject": "riders at the Sahara festival at Douz",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "crafts",
+      "caption": "Mosaic, Ceramic and Silver",
+      "description": "Roman mosaic technique still taught, Nabeul ceramic, and Berber silver from the south.",
+      "subject": "hand-painted Nabeul ceramics on a market stall",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "historic-sites",
+      "caption": "Carthage, Dougga, El Jem",
+      "description": "El Jem's amphitheatre seats thirty-five thousand and is standing almost complete.",
+      "subject": "the Roman amphitheatre at El Jem",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "heritage",
+      "caption": "The Medinas",
+      "description": "Tunis, Sousse and Kairouan — Kairouan's mosque is among the oldest in the Maghreb.",
+      "subject": "the great mosque of Kairouan from its courtyard",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "cities",
+      "caption": "Tunis and Sfax",
+      "description": "Tunis at the head of its lake, and Sfax's walled medina working as a medina still.",
+      "subject": "the medina rooftops of Tunis at dusk",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "architecture",
+      "caption": "Whitewash and Blue",
+      "description": "Sidi Bou Said's blue and white, and the vaulted ksour of the desert south.",
+      "subject": "the blue doors and white walls of Sidi Bou Said",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "local-life",
+      "caption": "The Souk and the Café",
+      "description": "Mint tea with pine nuts, and a souk that still mostly sells to the people who live there.",
+      "subject": "mint tea with pine nuts at a Tunisian café",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "family-community",
+      "caption": "Two Hours from Europe",
+      "description": "Short flights, shallow warm sea, and resorts that have been doing families for decades.",
+      "subject": "a shallow beach with families on the Tunisian coast",
+      "focal": [
+        50,
+        55
+      ]
+    },
+    {
+      "category": "outdoor",
+      "caption": "Desert and Dive",
+      "description": "Dune trekking from Douz, quad routes on the chott, and diving at Tabarka.",
+      "subject": "a trekking party on the edge of the Grand Erg",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "luxury",
+      "caption": "Riad, Dar and Dune Camp",
+      "description": "Restored dar houses in the medinas, and desert camps beyond the last palm.",
+      "subject": "the courtyard of a restored dar in the Tunis medina",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Oasis Water",
+      "description": "The oasis irrigation of Tozeur and Nefta, managing water in the driest place in the country.",
+      "subject": "traditional irrigation channels in the Tozeur oasis",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "photography",
+      "caption": "Light on White",
+      "description": "Whitewash, blue, and desert light — the reason the film crews keep coming back.",
+      "subject": "white and blue architecture in strong Mediterranean light",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "Ksar Ouled Soltane",
+      "description": "Vaulted grain stores stacked four storeys high, and almost nobody there.",
+      "subject": "the stacked vaulted ksar at Ksar Ouled Soltane",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "why-visit",
+      "caption": "Rome, and the Sahara, in One Week",
+      "description": "An amphitheatre on Monday and a dune camp on Thursday, in a country the size of England.",
+      "subject": "a desert road running south towards the Sahara",
+      "focal": [
+        50,
+        52
+      ]
+    }
+  ]
 }

@@ -1,302 +1,303 @@
 {
- "slug": "south-africa",
- "name": "South Africa",
- "adjective": "South African",
- "region": "Southern Africa",
- "tagline": "A world in one country",
- "summary": "Table Mountain over Cape Town, Big Five in the Kruger lowveld, the Drakensberg escarpment, two oceans meeting, and eleven official languages.",
- "published": true,
- "calls": [
-  "food",
-  "heritage",
-  "coast",
-  "wildlife"
- ],
- "months": [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11,
-  12
- ],
- "when": "Year-round, but the Cape is a summer place and Kruger a winter one.",
- "entries": [
-  {
-   "category": "hero",
-   "caption": "A World in One Country",
-   "description": "Table Mountain above a working harbour, wine farms an hour inland, and the Big Five a short flight north.",
-   "subject": "Table Mountain above Cape Town and the harbour at sunrise",
-   "focal": [
-    50,
-    46
-   ]
-  },
-  {
-   "category": "nature",
-   "caption": "Fynbos and the Garden Route",
-   "description": "The Cape Floral Kingdom is the smallest and richest of the six on earth, and most of it grows nowhere else.",
-   "subject": "fynbos and coastline along the Garden Route",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "wildlife",
-   "caption": "The Big Five, Close",
-   "description": "Kruger and the private Sabi Sands reserves beside it, where the leopards have been watched for generations.",
-   "subject": "a leopard on a termite mound in the Sabi Sands reserve",
-   "focal": [
-    52,
-    50
-   ]
-  },
-  {
-   "category": "safari",
-   "caption": "Sabi Sands, Off-Road",
-   "description": "Private traverse means the vehicle can leave the road, which is why the sightings are what they are.",
-   "subject": "a safari vehicle beside lions in the Sabi Sands at dusk",
-   "focal": [
-    50,
-    54
-   ]
-  },
-  {
-   "category": "mountains",
-   "caption": "The Drakensberg",
-   "description": "The Amphitheatre wall runs five kilometres and drops a kilometre, with San rock art in the caves beneath it.",
-   "subject": "the Amphitheatre wall of the Drakensberg escarpment",
-   "focal": [
-    50,
-    44
-   ]
-  },
-  {
-   "category": "waterfalls",
-   "caption": "Tugela, Off the Amphitheatre",
-   "description": "Nearly a thousand metres in five leaps off the Drakensberg escarpment — among the highest falls on earth.",
-   "subject": "the Tugela Falls dropping off the Drakensberg Amphitheatre",
-   "focal": [
-    50,
-    40
-   ]
-  },
-  {
-   "category": "lakes-rivers",
-   "caption": "Blyde River Canyon",
-   "description": "The third largest canyon in the world and the greenest, with the Three Rondavels standing in the middle of it.",
-   "subject": "the Three Rondavels above the Blyde River Canyon",
-   "focal": [
-    52,
-    44
-   ]
-  },
-  {
-   "category": "beaches",
-   "caption": "Two Oceans",
-   "description": "Cold Atlantic on one side of the Cape peninsula, warm Indian on the other, forty minutes apart.",
-   "subject": "Camps Bay beach beneath the Twelve Apostles in Cape Town",
-   "focal": [
-    50,
-    54
-   ]
-  },
-  {
-   "category": "forests",
-   "caption": "Tsitsikamma",
-   "description": "Old yellowwood forest running down to a rocky coast, with the Storms River mouth cut through the middle.",
-   "subject": "the Storms River mouth suspension bridge in Tsitsikamma",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "adventure",
-   "caption": "Bloukrans and the Cage",
-   "description": "The highest commercial bridge bungee in the world, and great white cage diving out of Gansbaai.",
-   "subject": "the Bloukrans bridge bungee jump on the Garden Route",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "culture",
-   "caption": "Eleven Languages",
-   "description": "Zulu, Xhosa, Afrikaans and eight more, plus the Cape Malay cooking that came with the slave trade.",
-   "subject": "Zulu dancers in traditional dress in KwaZulu-Natal",
-   "focal": [
-    50,
-    44
-   ]
-  },
-  {
-   "category": "traditional-people",
-   "caption": "Zulu, Xhosa, Ndebele",
-   "description": "Ndebele wall painting, Zulu beadwork with its own grammar, and Xhosa initiation still practised in the Eastern Cape.",
-   "subject": "an Ndebele woman in beaded dress before a painted house wall",
-   "focal": [
-    50,
-    42
-   ]
-  },
-  {
-   "category": "food",
-   "caption": "Braai, Bunny Chow, Curry",
-   "description": "Fire is a national institution; Durban curry and Cape Malay bobotie came from two very different arrivals.",
-   "subject": "meat over the coals at a South African braai",
-   "focal": [
-    50,
-    54
-   ]
-  },
-  {
-   "category": "festivals",
-   "caption": "Carnival and AfrikaBurn",
-   "description": "The Cape Town Carnival in March, the Kaapse Klopse minstrels in January, and AfrikaBurn out in the Karoo.",
-   "subject": "performers in costume at the Cape Town Carnival",
-   "focal": [
-    50,
-    46
-   ]
-  },
-  {
-   "category": "crafts",
-   "caption": "Ndebele Beadwork",
-   "description": "Beadwork, wire sculpture and telephone-wire baskets, sold everywhere and made properly in very few places.",
-   "subject": "Ndebele beadwork and geometric wall painting",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "historic-sites",
-   "caption": "Robben Island",
-   "description": "Twelve kilometres off Cape Town, a political prison for three decades, now guided by the men who were held there.",
-   "subject": "the prison buildings on Robben Island with Table Mountain behind",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "heritage",
-   "caption": "The Cradle of Humankind",
-   "description": "The Sterkfontein caves have produced more early hominin fossils than any other site on the planet.",
-   "subject": "the limestone caves of the Cradle of Humankind at Sterkfontein",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "cities",
-   "caption": "Cape Town and Johannesburg",
-   "description": "One built around a mountain and a harbour, the other on a gold reef, and nothing about them is alike.",
-   "subject": "the Johannesburg skyline seen across the city at dusk",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "architecture",
-   "caption": "Bo-Kaap and Cape Dutch",
-   "description": "Painted Bo-Kaap terraces on the slope of Signal Hill, and gabled Cape Dutch homesteads out in the winelands.",
-   "subject": "the painted houses of the Bo-Kaap below Signal Hill",
-   "focal": [
-    50,
-    46
-   ]
-  },
-  {
-   "category": "local-life",
-   "caption": "Soweto, Sunday",
-   "description": "Vilakazi Street, the shisa nyama grills, and a township of a million people that runs at its own pace.",
-   "subject": "a shisa nyama street grill in Soweto on a Sunday",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "family-community",
-   "caption": "Township Tourism, Done Right",
-   "description": "Guided by residents, spending in the neighbourhood, and honest about what apartheid planning actually built.",
-   "subject": "a resident guide leading a walking tour in Soweto",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "outdoor",
-   "caption": "Lion's Head at Dawn",
-   "description": "Ninety minutes up a spiral path with chains near the top, for the whole peninsula at sunrise.",
-   "subject": "walkers on the spiral path up Lion's Head above Cape Town",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "luxury",
-   "caption": "The Winelands",
-   "description": "Franschhoek and Stellenbosch: Cape Dutch estates, serious kitchens, and a wine tram that means nobody drives.",
-   "subject": "a Cape Dutch wine estate among vineyards in Franschhoek",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "eco-tourism",
-   "caption": "Marine and Rhino Work",
-   "description": "Whale watching at Hermanus, penguins at Boulders, and rhino monitoring in the reserves that fund it.",
-   "subject": "African penguins on the boulders at Simon's Town",
-   "focal": [
-    50,
-    54
-   ]
-  },
-  {
-   "category": "photography",
-   "caption": "Chapman's Peak Drive",
-   "description": "Nine kilometres cut into the cliff between Hout Bay and Noordhoek, and every turnout is a photograph.",
-   "subject": "Chapman's Peak Drive cut into the cliffs above the Atlantic",
-   "focal": [
-    46,
-    56
-   ]
-  },
-  {
-   "category": "hidden-gems",
-   "caption": "The Wild Coast and Karoo",
-   "description": "Hole in the Wall and the Transkei green hills, and the Karoo's enormous silence in the other direction.",
-   "subject": "the Hole in the Wall rock arch on the Wild Coast",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "why-visit",
-   "caption": "Two Weeks, Four Countries' Worth",
-   "description": "Mountain, desert, reef, bush and two of Africa's most interesting cities, on roads you can drive yourself.",
-   "subject": "Cape Point where the two oceans meet at the tip of the peninsula",
-   "focal": [
-    50,
-    52
-   ]
-  }
- ]
+  "slug": "south-africa",
+  "name": "South Africa",
+  "adjective": "South African",
+  "region": "Southern Africa",
+  "tagline": "A world in one country",
+  "summary": "Table Mountain over Cape Town, Big Five in the Kruger lowveld, the Drakensberg escarpment, two oceans meeting, and eleven official languages.",
+  "published": true,
+  "calls": [
+    "cities",
+    "food",
+    "history",
+    "coast",
+    "wildlife"
+  ],
+  "months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "when": "Year-round, but the Cape is a summer place and Kruger a winter one.",
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "A World in One Country",
+      "description": "Table Mountain above a working harbour, wine farms an hour inland, and the Big Five a short flight north.",
+      "subject": "Table Mountain above Cape Town and the harbour at sunrise",
+      "focal": [
+        50,
+        46
+      ]
+    },
+    {
+      "category": "nature",
+      "caption": "Fynbos and the Garden Route",
+      "description": "The Cape Floral Kingdom is the smallest and richest of the six on earth, and most of it grows nowhere else.",
+      "subject": "fynbos and coastline along the Garden Route",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "wildlife",
+      "caption": "The Big Five, Close",
+      "description": "Kruger and the private Sabi Sands reserves beside it, where the leopards have been watched for generations.",
+      "subject": "a leopard on a termite mound in the Sabi Sands reserve",
+      "focal": [
+        52,
+        50
+      ]
+    },
+    {
+      "category": "safari",
+      "caption": "Sabi Sands, Off-Road",
+      "description": "Private traverse means the vehicle can leave the road, which is why the sightings are what they are.",
+      "subject": "a safari vehicle beside lions in the Sabi Sands at dusk",
+      "focal": [
+        50,
+        54
+      ]
+    },
+    {
+      "category": "mountains",
+      "caption": "The Drakensberg",
+      "description": "The Amphitheatre wall runs five kilometres and drops a kilometre, with San rock art in the caves beneath it.",
+      "subject": "the Amphitheatre wall of the Drakensberg escarpment",
+      "focal": [
+        50,
+        44
+      ]
+    },
+    {
+      "category": "waterfalls",
+      "caption": "Tugela, Off the Amphitheatre",
+      "description": "Nearly a thousand metres in five leaps off the Drakensberg escarpment — among the highest falls on earth.",
+      "subject": "the Tugela Falls dropping off the Drakensberg Amphitheatre",
+      "focal": [
+        50,
+        40
+      ]
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "Blyde River Canyon",
+      "description": "The third largest canyon in the world and the greenest, with the Three Rondavels standing in the middle of it.",
+      "subject": "the Three Rondavels above the Blyde River Canyon",
+      "focal": [
+        52,
+        44
+      ]
+    },
+    {
+      "category": "beaches",
+      "caption": "Two Oceans",
+      "description": "Cold Atlantic on one side of the Cape peninsula, warm Indian on the other, forty minutes apart.",
+      "subject": "Camps Bay beach beneath the Twelve Apostles in Cape Town",
+      "focal": [
+        50,
+        54
+      ]
+    },
+    {
+      "category": "forests",
+      "caption": "Tsitsikamma",
+      "description": "Old yellowwood forest running down to a rocky coast, with the Storms River mouth cut through the middle.",
+      "subject": "the Storms River mouth suspension bridge in Tsitsikamma",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "adventure",
+      "caption": "Bloukrans and the Cage",
+      "description": "The highest commercial bridge bungee in the world, and great white cage diving out of Gansbaai.",
+      "subject": "the Bloukrans bridge bungee jump on the Garden Route",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "culture",
+      "caption": "Eleven Languages",
+      "description": "Zulu, Xhosa, Afrikaans and eight more, plus the Cape Malay cooking that came with the slave trade.",
+      "subject": "Zulu dancers in traditional dress in KwaZulu-Natal",
+      "focal": [
+        50,
+        44
+      ]
+    },
+    {
+      "category": "traditional-people",
+      "caption": "Zulu, Xhosa, Ndebele",
+      "description": "Ndebele wall painting, Zulu beadwork with its own grammar, and Xhosa initiation still practised in the Eastern Cape.",
+      "subject": "an Ndebele woman in beaded dress before a painted house wall",
+      "focal": [
+        50,
+        42
+      ]
+    },
+    {
+      "category": "food",
+      "caption": "Braai, Bunny Chow, Curry",
+      "description": "Fire is a national institution; Durban curry and Cape Malay bobotie came from two very different arrivals.",
+      "subject": "meat over the coals at a South African braai",
+      "focal": [
+        50,
+        54
+      ]
+    },
+    {
+      "category": "festivals",
+      "caption": "Carnival and AfrikaBurn",
+      "description": "The Cape Town Carnival in March, the Kaapse Klopse minstrels in January, and AfrikaBurn out in the Karoo.",
+      "subject": "performers in costume at the Cape Town Carnival",
+      "focal": [
+        50,
+        46
+      ]
+    },
+    {
+      "category": "crafts",
+      "caption": "Ndebele Beadwork",
+      "description": "Beadwork, wire sculpture and telephone-wire baskets, sold everywhere and made properly in very few places.",
+      "subject": "Ndebele beadwork and geometric wall painting",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "historic-sites",
+      "caption": "Robben Island",
+      "description": "Twelve kilometres off Cape Town, a political prison for three decades, now guided by the men who were held there.",
+      "subject": "the prison buildings on Robben Island with Table Mountain behind",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "heritage",
+      "caption": "The Cradle of Humankind",
+      "description": "The Sterkfontein caves have produced more early hominin fossils than any other site on the planet.",
+      "subject": "the limestone caves of the Cradle of Humankind at Sterkfontein",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "cities",
+      "caption": "Cape Town and Johannesburg",
+      "description": "One built around a mountain and a harbour, the other on a gold reef, and nothing about them is alike.",
+      "subject": "the Johannesburg skyline seen across the city at dusk",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "architecture",
+      "caption": "Bo-Kaap and Cape Dutch",
+      "description": "Painted Bo-Kaap terraces on the slope of Signal Hill, and gabled Cape Dutch homesteads out in the winelands.",
+      "subject": "the painted houses of the Bo-Kaap below Signal Hill",
+      "focal": [
+        50,
+        46
+      ]
+    },
+    {
+      "category": "local-life",
+      "caption": "Soweto, Sunday",
+      "description": "Vilakazi Street, the shisa nyama grills, and a township of a million people that runs at its own pace.",
+      "subject": "a shisa nyama street grill in Soweto on a Sunday",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "family-community",
+      "caption": "Township Tourism, Done Right",
+      "description": "Guided by residents, spending in the neighbourhood, and honest about what apartheid planning actually built.",
+      "subject": "a resident guide leading a walking tour in Soweto",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "outdoor",
+      "caption": "Lion's Head at Dawn",
+      "description": "Ninety minutes up a spiral path with chains near the top, for the whole peninsula at sunrise.",
+      "subject": "walkers on the spiral path up Lion's Head above Cape Town",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "luxury",
+      "caption": "The Winelands",
+      "description": "Franschhoek and Stellenbosch: Cape Dutch estates, serious kitchens, and a wine tram that means nobody drives.",
+      "subject": "a Cape Dutch wine estate among vineyards in Franschhoek",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Marine and Rhino Work",
+      "description": "Whale watching at Hermanus, penguins at Boulders, and rhino monitoring in the reserves that fund it.",
+      "subject": "African penguins on the boulders at Simon's Town",
+      "focal": [
+        50,
+        54
+      ]
+    },
+    {
+      "category": "photography",
+      "caption": "Chapman's Peak Drive",
+      "description": "Nine kilometres cut into the cliff between Hout Bay and Noordhoek, and every turnout is a photograph.",
+      "subject": "Chapman's Peak Drive cut into the cliffs above the Atlantic",
+      "focal": [
+        46,
+        56
+      ]
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "The Wild Coast and Karoo",
+      "description": "Hole in the Wall and the Transkei green hills, and the Karoo's enormous silence in the other direction.",
+      "subject": "the Hole in the Wall rock arch on the Wild Coast",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "why-visit",
+      "caption": "Two Weeks, Four Countries' Worth",
+      "description": "Mountain, desert, reef, bush and two of Africa's most interesting cities, on roads you can drive yourself.",
+      "subject": "Cape Point where the two oceans meet at the tip of the peninsula",
+      "focal": [
+        50,
+        52
+      ]
+    }
+  ]
 }

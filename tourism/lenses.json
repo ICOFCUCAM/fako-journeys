@@ -1,5 +1,38 @@
 {
- "$comment": "The six things a country can lead on. A lens is not a tag applied to everything — every country in the set has all twenty-seven categories written up, so filtering on those would light the whole map and tell a traveller nothing. A lens is what a country declares in its own `calls`, which is editorial and deliberately short: Uganda calls wildlife and culture, and does not call coast, even though it has lakes. `categories` is the other direction — which of the twenty-seven write-ups belong to this lens, so opening a country under a lens leads with the right places.",
+ "$comment": "The eight things a country can lead on. A lens is not a tag applied to everything — every country in the set has all twenty-seven categories written up, so filtering on those would light the whole map and tell a traveller nothing. A lens is what a country declares in its own `calls`, which is editorial and deliberately short: Uganda calls wildlife and culture, and does not call coast, even though it has lakes. `categories` is the other direction — which of the twenty-seven write-ups belong to this lens, so opening a country under a lens leads with the right places. There were six, and between them they described the continent's landscape: wildlife, culture, coast, heritage, mountains, food. That is a stereotype of African tourism rather than an account of it — safari, nature, beach, village. `cities` is now a lens of its own rather than a category buried inside heritage; `mountains` widens into `nature`; `heritage` narrows to `history` once cities and architecture leave it; and `adventure` comes out of the old mountains lens to stand on its own, which also fixes a picker that offered `adventure` and `rainforest` as choices when neither was a lens and both therefore filtered to nothing.",
+ "cities": {
+  "title": "Cities",
+  "line": "Where the continent is loudest, newest and most itself.",
+  "categories": [
+   "cities",
+   "architecture"
+  ],
+  "words": [
+   "city",
+   "cities",
+   "urban",
+   "downtown",
+   "skyline",
+   "nightlife",
+   "design",
+   "architecture",
+   "gallery",
+   "galleries",
+   "museum",
+   "museums",
+   "fashion",
+   "music",
+   "bars",
+   "restaurants",
+   "street food",
+   "market",
+   "medina"
+  ],
+  "verb": "I want to be in",
+  "label": "Cities",
+  "examples": "Lagos, Cape Town, Marrakech, Nairobi, Dakar, Accra",
+  "filterline": "If the cities are what brought you here"
+ },
  "wildlife": {
   "title": "Wildlife",
   "line": "Where the animals are the reason you came.",
@@ -22,7 +55,11 @@
    "migration",
    "birding",
    "birds"
-  ]
+  ],
+  "verb": "I want to see",
+  "label": "Wildlife",
+  "examples": "Gorillas, elephants, lions, giraffes, chimpanzees, the great migration",
+  "filterline": "If wildlife is what brought you here"
  },
  "culture": {
   "title": "Culture",
@@ -48,7 +85,11 @@
    "traditions",
    "kingdoms",
    "dance"
-  ]
+  ],
+  "verb": "I want to meet",
+  "label": "People &amp; culture",
+  "examples": "Kingdoms, markets, music, dance, craft, living traditions",
+  "filterline": "If you came to meet people"
  },
  "coast": {
   "title": "Coast",
@@ -77,39 +118,21 @@
    "waterfalls",
    "river",
    "rivers"
-  ]
- },
- "heritage": {
-  "title": "Heritage",
-  "line": "What was built here, and what is still standing.",
-  "categories": [
-   "historic-sites",
-   "heritage",
-   "architecture",
-   "cities"
   ],
-  "words": [
-   "heritage",
-   "history",
-   "historic",
-   "historical",
-   "ruins",
-   "architecture",
-   "museums",
-   "cities",
-   "city",
-   "old town",
-   "medina",
-   "unesco"
-  ]
+  "verb": "I want to escape",
+  "label": "Coast &amp; islands",
+  "examples": "Zanzibar, Kribi, Lamu, Seychelles, Mauritius",
+  "filterline": "If you came for the water"
  },
- "mountains": {
-  "title": "Mountains",
-  "line": "The Atlas, the Rwenzori, Kilimanjaro, the Simien, Fako.",
+ "nature": {
+  "title": "Nature",
+  "line": "Mountain, forest, desert and the country between them.",
   "categories": [
+   "nature",
    "mountains",
+   "forests",
    "outdoor",
-   "adventure"
+   "eco-tourism"
   ],
   "words": [
    "mountains",
@@ -124,8 +147,25 @@
    "altitude",
    "volcano",
    "volcanoes",
-   "walking"
-  ]
+   "walking",
+   "nature",
+   "forest",
+   "forests",
+   "rainforest",
+   "jungle",
+   "desert",
+   "dunes",
+   "highland",
+   "highlands",
+   "crater",
+   "canopy",
+   "reserve",
+   "park"
+  ],
+  "verb": "I want to walk",
+  "label": "Nature",
+  "examples": "Kilimanjaro, Korup, the Rwenzori, the Atlas, the Namib",
+  "filterline": "If you came for the country itself"
  },
  "food": {
   "title": "Food",
@@ -143,7 +183,65 @@
    "street food",
    "coffee",
    "wine"
-  ]
+  ],
+  "verb": "I want to taste",
+  "label": "African food",
+  "examples": "Street food, markets, coastal cuisine, home cooking, coffee",
+  "filterline": "If you came to eat"
  },
- "$comment_words": "What somebody might actually type. The intent parser matches against these and against nothing else — no stemming, no fuzzy matching, no model. A word that is not in one of these lists simply does not select a lens, which is the correct behaviour: guessing at what somebody meant and being wrong is worse than asking. Every entry here is a word for the thing the lens already covers; none of them extends what a lens means."
+ "history": {
+  "title": "History",
+  "line": "Ruins, empires, and the places that remember what happened on them.",
+  "categories": [
+   "historic-sites",
+   "heritage"
+  ],
+  "words": [
+   "heritage",
+   "history",
+   "historic",
+   "historical",
+   "ruins",
+   "museums",
+   "old town",
+   "medina",
+   "unesco"
+  ],
+  "verb": "I want to discover",
+  "label": "History",
+  "examples": "Forts, palaces, ancient cities, rock churches, sacred places",
+  "filterline": "If you came for what was here before you"
+ },
+ "adventure": {
+  "title": "Adventure",
+  "line": "Long roads, thin air, white water and the walk in.",
+  "categories": [
+   "adventure"
+  ],
+  "words": [
+   "adventure",
+   "trek",
+   "trekking",
+   "hike",
+   "hiking",
+   "climb",
+   "climbing",
+   "summit",
+   "rafting",
+   "kayak",
+   "canoe",
+   "dive",
+   "diving",
+   "self-drive",
+   "gravel",
+   "4x4",
+   "expedition",
+   "traverse",
+   "overland"
+  ],
+  "verb": "I want to go",
+  "label": "Adventure",
+  "examples": "Gravel roads, the Nile at Jinja, the falls from both sides, the long traverse",
+  "filterline": "If you came to go a long way"
+ }
 }

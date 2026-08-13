@@ -1399,6 +1399,57 @@ def main():
                   n_ticks >= len(countries) and drawn <= n_ticks,
                   "%d buttons, %d shapes" % (n_ticks, drawn))
 
+        # ---- the lens taxonomy ----------------------------------------------
+        # Four copies of one list lived on this page: the hero's picker, the
+        # filter bar, the experience cards and a LINE map in script. The picker
+        # offered `rainforest` and `adventure` when neither was a lens, so both
+        # filtered the grid to nothing and the readout said "undefined". All
+        # four are generated from tourism/lenses.json now; these check they
+        # cannot drift apart again.
+        lenses = json.load(open(os.path.join(ROOT_DIR, "tourism", "lenses.json")))
+        lenses = {k: v for k, v in lenses.items() if not k.startswith("$")}
+        picks_now = json.load(open(os.path.join(ROOT_DIR, "tourism", "picks.json")))
+
+        for group, attr in (("wa-tag", "data-exp"), ("wa-want", "data-want"),
+                            ("wa-exp", "data-want")):
+            found = re.findall(r'class="%s"[^>]*%s="([a-z-]+)"' % (group, attr), home_src)
+            check("the %s controls are the lenses, in order" % group,
+                  found == list(lenses), ", ".join(found))
+
+        # A lens nobody leads on would empty the grid the moment it was pressed.
+        led = {k: sum(1 for c in countries if k in c.calls) for k in lenses}
+        dead = [k for k, n in led.items() if not n]
+        check("every lens a button offers is led by a country",
+              not dead, ", ".join(dead) or ", ".join("%s %d" % kv for kv in led.items()))
+
+        # And every lens has an answer to give, in a country that exists.
+        no_pick = [k for k in lenses if k not in picks_now]
+        bad_pick = [k for k, v in picks_now.items()
+                    if v.get("country") not in {c.slug for c in countries}]
+        check("every lens has a recommendation", not no_pick, ", ".join(no_pick))
+        check("every recommendation names a published country",
+              not bad_pick, ", ".join(bad_pick))
+
+        # A country calls `cities` exactly when it has one in the collection —
+        # the two are written down separately and would otherwise drift.
+        city_countries = {c["country"] for c in
+                          json.load(open(os.path.join(ROOT_DIR, "tourism", "cities.json")))["cities"]}
+        calls_cities = {c.slug for c in countries if "cities" in c.calls}
+        check("a country calls cities exactly when it has one",
+              calls_cities == city_countries,
+              "only in calls: %s | only in collection: %s"
+              % (sorted(calls_cities - city_countries), sorted(city_countries - calls_cities)))
+
+        # The counts printed on the experience cards are derived, and this is
+        # what says so: four of the six were wrong before they were.
+        for m in re.finditer(r'data-want="([a-z-]+)"[^>]*>.*?(\d+) of (\d+) countries lead',
+                             home_src, re.S):
+            key, said, total = m.group(1), int(m.group(2)), int(m.group(3))
+            check("the card for %s counts the countries that lead on it" % key,
+                  said == led.get(key) and total == len(countries),
+                  "says %d of %d, dataset has %d of %d"
+                  % (said, total, led.get(key, 0), len(countries)))
+
         # ---- the city collection -------------------------------------------
         # Curated rather than derived, which is exactly why it needs checking:
         # nothing recomputes it when a country is renamed or a file is moved.

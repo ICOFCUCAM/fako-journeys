@@ -1,299 +1,300 @@
 {
- "slug": "tanzania",
- "name": "Tanzania",
- "adjective": "Tanzanian",
- "region": "East Africa",
- "tagline": "Serengeti, Kilimanjaro, Zanzibar",
- "summary": "The Serengeti and the Ngorongoro crater, the highest mountain in Africa, and a spice island with a thousand-year-old stone town on it.",
- "published": true,
- "calls": [
-  "wildlife",
-  "mountains",
-  "coast"
- ],
- "window": "/images/uploads/window-tanzania-940w.jpg",
- "window_alt": "A footpath through flat-topped acacia below a snow-capped volcano",
- "months": [
-  1,
-  2,
-  3,
-  6,
-  7,
-  8,
-  9,
-  10
- ],
- "when": "Calving on the southern Serengeti in February; the crossings run June to October.",
- "entries": [
-  {
-   "category": "hero",
-   "caption": "Into the Wild",
-   "description": "The Serengeti runs unbroken to the horizon, and the migration has been circling it far longer than anyone has watched.",
-   "subject": "the endless short-grass plains of the Serengeti at sunrise",
-   "focal": [
-    50,
-    60
-   ]
-  },
-  {
-   "category": "nature",
-   "caption": "The Ngorongoro Crater",
-   "description": "A collapsed caldera twenty kilometres across with its own permanent population of thirty thousand animals.",
-   "subject": "the floor of the Ngorongoro Crater seen from the rim",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "wildlife",
-   "caption": "The Big Five, and Then Some",
-   "description": "Lion, leopard, elephant, buffalo and rhino, plus the largest elephant herds left in East Africa.",
-   "subject": "a lion pride resting on a kopje in the Serengeti",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "safari",
-   "caption": "Following the Migration",
-   "description": "Calving on the southern plains in February, the Grumeti in June, the Mara river in August — the circuit never stops.",
-   "subject": "wildebeest herds streaming across the Serengeti plains",
-   "focal": [
-    50,
-    56
-   ]
-  },
-  {
-   "category": "mountains",
-   "caption": "Kilimanjaro, 5,895 m",
-   "description": "The highest free-standing mountain on earth: rainforest, moorland, alpine desert and glacier in five days of walking.",
-   "subject": "the snow-capped summit of Kilimanjaro above the cloud line",
-   "focal": [
-    50,
-    38
-   ]
-  },
-  {
-   "category": "waterfalls",
-   "caption": "Materuni, Under Kilimanjaro",
-   "description": "Eighty metres of cold water through Chagga coffee farms on the lower slopes, an easy walk from Moshi.",
-   "subject": "the Materuni waterfall in the forest below Kilimanjaro",
-   "focal": [
-    50,
-    42
-   ]
-  },
-  {
-   "category": "lakes-rivers",
-   "caption": "Manyara and the Rufiji",
-   "description": "Flamingo and tree-climbing lions at Manyara; the Rufiji braiding through Nyerere, the largest park in Africa.",
-   "subject": "the Rufiji river braiding through Nyerere National Park",
-   "focal": [
-    50,
-    54
-   ]
-  },
-  {
-   "category": "beaches",
-   "caption": "Zanzibar, Nungwi to Paje",
-   "description": "White sand, warm shallow water and dhows still built by hand on the beach at Nungwi.",
-   "subject": "white sand and traditional dhows on the beach at Nungwi, Zanzibar",
-   "focal": [
-    50,
-    58
-   ]
-  },
-  {
-   "category": "forests",
-   "caption": "Udzungwa and Jozani",
-   "description": "The Udzungwa scarp holds species found nowhere else; Jozani holds the red colobus, also found nowhere else.",
-   "subject": "a Zanzibar red colobus monkey in Jozani Forest",
-   "focal": [
-    52,
-    46
-   ]
-  },
-  {
-   "category": "adventure",
-   "caption": "Uhuru Peak by Machame",
-   "description": "Six days up the Machame route, one very long night to the summit, and a sunrise you have to earn.",
-   "subject": "trekkers on the Machame route high on Kilimanjaro",
-   "focal": [
-    50,
-    56
-   ]
-  },
-  {
-   "category": "culture",
-   "caption": "Maasai, Chagga, Swahili",
-   "description": "Cattle-keepers on the northern plains, coffee farmers on the mountain, and a coast that has always faced east.",
-   "subject": "Maasai men in ceremonial dress on the northern Tanzanian plains",
-   "focal": [
-    50,
-    44
-   ]
-  },
-  {
-   "category": "traditional-people",
-   "caption": "The Hadzabe of Lake Eyasi",
-   "description": "One of the last hunter-gatherer peoples in Africa, speaking a click language unrelated to anything nearby.",
-   "subject": "a Hadzabe hunter with a bow near Lake Eyasi",
-   "focal": [
-    50,
-    40
-   ]
-  },
-  {
-   "category": "food",
-   "caption": "Spice, Ugali, Urojo",
-   "description": "Cloves and cardamom from the Zanzibar plantations, grilled seafood at Forodhani, and ugali everywhere else.",
-   "subject": "grilled seafood stalls at Forodhani Gardens in Stone Town",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "festivals",
-   "caption": "Sauti za Busara",
-   "description": "Four days of live music from across the continent inside the old Arab fort in Stone Town, every February.",
-   "subject": "musicians performing at the Sauti za Busara festival in Stone Town",
-   "focal": [
-    50,
-    46
-   ]
-  },
-  {
-   "category": "crafts",
-   "caption": "Tingatinga and Makonde",
-   "description": "Enamel-bright Tingatinga painting from Dar es Salaam, and Makonde ebony carving from the southern plateau.",
-   "subject": "a Makonde carver working ebony wood",
-   "focal": [
-    48,
-    50
-   ]
-  },
-  {
-   "category": "historic-sites",
-   "caption": "Stone Town and Kilwa",
-   "description": "Stone Town is UNESCO-listed; Kilwa Kisiwani was the richest port on the Swahili coast six centuries ago.",
-   "subject": "the ruins of the great mosque at Kilwa Kisiwani",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "heritage",
-   "caption": "Olduvai and the Coast",
-   "description": "Olduvai Gorge holds the earliest human record; the coast holds a thousand years of Indian Ocean trade.",
-   "subject": "the layered walls of Olduvai Gorge in the Ngorongoro conservation area",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "cities",
-   "caption": "Dar es Salaam",
-   "description": "Harbour of peace: the ferry terminal, the fish market at Kivukoni, and the dhows still working the channel.",
-   "subject": "the harbour and skyline of Dar es Salaam from the water",
-   "focal": [
-    50,
-    48
-   ]
-  },
-  {
-   "category": "architecture",
-   "caption": "The Doors of Stone Town",
-   "description": "Brass-studded Indian doors and carved Omani frames, on coral-rag houses in alleys too narrow to drive.",
-   "subject": "a brass-studded carved door in a Stone Town alley, Zanzibar",
-   "focal": [
-    50,
-    46
-   ]
-  },
-  {
-   "category": "local-life",
-   "caption": "Dala Dalas and Dhows",
-   "description": "Minibuses inland, dhows on the water, and a fish auction at Kivukoni that starts before it is light.",
-   "subject": "the early morning fish market at Kivukoni in Dar es Salaam",
-   "focal": [
-    50,
-    54
-   ]
-  },
-  {
-   "category": "family-community",
-   "caption": "Boma and Coffee Farm",
-   "description": "Maasai boma visits on the crater rim road, and Chagga coffee walks on the lower slopes of Kilimanjaro.",
-   "subject": "a Chagga family roasting coffee on a farm below Kilimanjaro",
-   "focal": [
-    50,
-    50
-   ]
-  },
-  {
-   "category": "outdoor",
-   "caption": "Snorkelling Mnemba",
-   "description": "The atoll off the northeast tip of Zanzibar, plus kite surfing at Paje and diving at Pemba.",
-   "subject": "snorkelling over coral reef at Mnemba atoll, Zanzibar",
-   "focal": [
-    50,
-    54
-   ]
-  },
-  {
-   "category": "luxury",
-   "caption": "Camps and Spice Islands",
-   "description": "Mobile camps that follow the migration, and beach houses on the Zanzibar east coast with nothing either side.",
-   "subject": "a luxury tented camp on the Serengeti plains at dusk",
-   "focal": [
-    50,
-    52
-   ]
-  },
-  {
-   "category": "eco-tourism",
-   "caption": "Ngorongoro, Shared Ground",
-   "description": "The conservation area is the rare model where Maasai pastoralists and wildlife legally use the same land.",
-   "subject": "Maasai herders and cattle on the Ngorongoro conservation area highlands",
-   "focal": [
-    50,
-    54
-   ]
-  },
-  {
-   "category": "photography",
-   "caption": "Acacia, Kopje, Sunset",
-   "description": "The Serengeti kopjes at the end of the day, and the migration column stretching past the edge of the frame.",
-   "subject": "an acacia silhouetted against the Serengeti sunset",
-   "focal": [
-    56,
-    44
-   ]
-  },
-  {
-   "category": "hidden-gems",
-   "caption": "Ruaha and Katavi",
-   "description": "The south and west: huge elephant populations, hippo crowded into shrinking pools, and no other vehicles.",
-   "subject": "elephants beneath baobabs in Ruaha National Park",
-   "focal": [
-    50,
-    56
-   ]
-  },
-  {
-   "category": "why-visit",
-   "caption": "Mountain, Plain and Reef",
-   "description": "Summit Africa's highest mountain, cross the Serengeti and sleep on the Indian Ocean, in the same fortnight.",
-   "subject": "Kilimanjaro rising above the acacia plains at sunrise",
-   "focal": [
-    50,
-    46
-   ]
-  }
- ]
+  "slug": "tanzania",
+  "name": "Tanzania",
+  "adjective": "Tanzanian",
+  "region": "East Africa",
+  "tagline": "Serengeti, Kilimanjaro, Zanzibar",
+  "summary": "The Serengeti and the Ngorongoro crater, the highest mountain in Africa, and a spice island with a thousand-year-old stone town on it.",
+  "published": true,
+  "calls": [
+    "wildlife",
+    "nature",
+    "coast",
+    "adventure"
+  ],
+  "window": "/images/uploads/window-tanzania-940w.jpg",
+  "window_alt": "A footpath through flat-topped acacia below a snow-capped volcano",
+  "months": [
+    1,
+    2,
+    3,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "when": "Calving on the southern Serengeti in February; the crossings run June to October.",
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "Into the Wild",
+      "description": "The Serengeti runs unbroken to the horizon, and the migration has been circling it far longer than anyone has watched.",
+      "subject": "the endless short-grass plains of the Serengeti at sunrise",
+      "focal": [
+        50,
+        60
+      ]
+    },
+    {
+      "category": "nature",
+      "caption": "The Ngorongoro Crater",
+      "description": "A collapsed caldera twenty kilometres across with its own permanent population of thirty thousand animals.",
+      "subject": "the floor of the Ngorongoro Crater seen from the rim",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "wildlife",
+      "caption": "The Big Five, and Then Some",
+      "description": "Lion, leopard, elephant, buffalo and rhino, plus the largest elephant herds left in East Africa.",
+      "subject": "a lion pride resting on a kopje in the Serengeti",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "safari",
+      "caption": "Following the Migration",
+      "description": "Calving on the southern plains in February, the Grumeti in June, the Mara river in August — the circuit never stops.",
+      "subject": "wildebeest herds streaming across the Serengeti plains",
+      "focal": [
+        50,
+        56
+      ]
+    },
+    {
+      "category": "mountains",
+      "caption": "Kilimanjaro, 5,895 m",
+      "description": "The highest free-standing mountain on earth: rainforest, moorland, alpine desert and glacier in five days of walking.",
+      "subject": "the snow-capped summit of Kilimanjaro above the cloud line",
+      "focal": [
+        50,
+        38
+      ]
+    },
+    {
+      "category": "waterfalls",
+      "caption": "Materuni, Under Kilimanjaro",
+      "description": "Eighty metres of cold water through Chagga coffee farms on the lower slopes, an easy walk from Moshi.",
+      "subject": "the Materuni waterfall in the forest below Kilimanjaro",
+      "focal": [
+        50,
+        42
+      ]
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "Manyara and the Rufiji",
+      "description": "Flamingo and tree-climbing lions at Manyara; the Rufiji braiding through Nyerere, the largest park in Africa.",
+      "subject": "the Rufiji river braiding through Nyerere National Park",
+      "focal": [
+        50,
+        54
+      ]
+    },
+    {
+      "category": "beaches",
+      "caption": "Zanzibar, Nungwi to Paje",
+      "description": "White sand, warm shallow water and dhows still built by hand on the beach at Nungwi.",
+      "subject": "white sand and traditional dhows on the beach at Nungwi, Zanzibar",
+      "focal": [
+        50,
+        58
+      ]
+    },
+    {
+      "category": "forests",
+      "caption": "Udzungwa and Jozani",
+      "description": "The Udzungwa scarp holds species found nowhere else; Jozani holds the red colobus, also found nowhere else.",
+      "subject": "a Zanzibar red colobus monkey in Jozani Forest",
+      "focal": [
+        52,
+        46
+      ]
+    },
+    {
+      "category": "adventure",
+      "caption": "Uhuru Peak by Machame",
+      "description": "Six days up the Machame route, one very long night to the summit, and a sunrise you have to earn.",
+      "subject": "trekkers on the Machame route high on Kilimanjaro",
+      "focal": [
+        50,
+        56
+      ]
+    },
+    {
+      "category": "culture",
+      "caption": "Maasai, Chagga, Swahili",
+      "description": "Cattle-keepers on the northern plains, coffee farmers on the mountain, and a coast that has always faced east.",
+      "subject": "Maasai men in ceremonial dress on the northern Tanzanian plains",
+      "focal": [
+        50,
+        44
+      ]
+    },
+    {
+      "category": "traditional-people",
+      "caption": "The Hadzabe of Lake Eyasi",
+      "description": "One of the last hunter-gatherer peoples in Africa, speaking a click language unrelated to anything nearby.",
+      "subject": "a Hadzabe hunter with a bow near Lake Eyasi",
+      "focal": [
+        50,
+        40
+      ]
+    },
+    {
+      "category": "food",
+      "caption": "Spice, Ugali, Urojo",
+      "description": "Cloves and cardamom from the Zanzibar plantations, grilled seafood at Forodhani, and ugali everywhere else.",
+      "subject": "grilled seafood stalls at Forodhani Gardens in Stone Town",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "festivals",
+      "caption": "Sauti za Busara",
+      "description": "Four days of live music from across the continent inside the old Arab fort in Stone Town, every February.",
+      "subject": "musicians performing at the Sauti za Busara festival in Stone Town",
+      "focal": [
+        50,
+        46
+      ]
+    },
+    {
+      "category": "crafts",
+      "caption": "Tingatinga and Makonde",
+      "description": "Enamel-bright Tingatinga painting from Dar es Salaam, and Makonde ebony carving from the southern plateau.",
+      "subject": "a Makonde carver working ebony wood",
+      "focal": [
+        48,
+        50
+      ]
+    },
+    {
+      "category": "historic-sites",
+      "caption": "Stone Town and Kilwa",
+      "description": "Stone Town is UNESCO-listed; Kilwa Kisiwani was the richest port on the Swahili coast six centuries ago.",
+      "subject": "the ruins of the great mosque at Kilwa Kisiwani",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "heritage",
+      "caption": "Olduvai and the Coast",
+      "description": "Olduvai Gorge holds the earliest human record; the coast holds a thousand years of Indian Ocean trade.",
+      "subject": "the layered walls of Olduvai Gorge in the Ngorongoro conservation area",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "cities",
+      "caption": "Dar es Salaam",
+      "description": "Harbour of peace: the ferry terminal, the fish market at Kivukoni, and the dhows still working the channel.",
+      "subject": "the harbour and skyline of Dar es Salaam from the water",
+      "focal": [
+        50,
+        48
+      ]
+    },
+    {
+      "category": "architecture",
+      "caption": "The Doors of Stone Town",
+      "description": "Brass-studded Indian doors and carved Omani frames, on coral-rag houses in alleys too narrow to drive.",
+      "subject": "a brass-studded carved door in a Stone Town alley, Zanzibar",
+      "focal": [
+        50,
+        46
+      ]
+    },
+    {
+      "category": "local-life",
+      "caption": "Dala Dalas and Dhows",
+      "description": "Minibuses inland, dhows on the water, and a fish auction at Kivukoni that starts before it is light.",
+      "subject": "the early morning fish market at Kivukoni in Dar es Salaam",
+      "focal": [
+        50,
+        54
+      ]
+    },
+    {
+      "category": "family-community",
+      "caption": "Boma and Coffee Farm",
+      "description": "Maasai boma visits on the crater rim road, and Chagga coffee walks on the lower slopes of Kilimanjaro.",
+      "subject": "a Chagga family roasting coffee on a farm below Kilimanjaro",
+      "focal": [
+        50,
+        50
+      ]
+    },
+    {
+      "category": "outdoor",
+      "caption": "Snorkelling Mnemba",
+      "description": "The atoll off the northeast tip of Zanzibar, plus kite surfing at Paje and diving at Pemba.",
+      "subject": "snorkelling over coral reef at Mnemba atoll, Zanzibar",
+      "focal": [
+        50,
+        54
+      ]
+    },
+    {
+      "category": "luxury",
+      "caption": "Camps and Spice Islands",
+      "description": "Mobile camps that follow the migration, and beach houses on the Zanzibar east coast with nothing either side.",
+      "subject": "a luxury tented camp on the Serengeti plains at dusk",
+      "focal": [
+        50,
+        52
+      ]
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Ngorongoro, Shared Ground",
+      "description": "The conservation area is the rare model where Maasai pastoralists and wildlife legally use the same land.",
+      "subject": "Maasai herders and cattle on the Ngorongoro conservation area highlands",
+      "focal": [
+        50,
+        54
+      ]
+    },
+    {
+      "category": "photography",
+      "caption": "Acacia, Kopje, Sunset",
+      "description": "The Serengeti kopjes at the end of the day, and the migration column stretching past the edge of the frame.",
+      "subject": "an acacia silhouetted against the Serengeti sunset",
+      "focal": [
+        56,
+        44
+      ]
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "Ruaha and Katavi",
+      "description": "The south and west: huge elephant populations, hippo crowded into shrinking pools, and no other vehicles.",
+      "subject": "elephants beneath baobabs in Ruaha National Park",
+      "focal": [
+        50,
+        56
+      ]
+    },
+    {
+      "category": "why-visit",
+      "caption": "Mountain, Plain and Reef",
+      "description": "Summit Africa's highest mountain, cross the Serengeti and sleep on the Indian Ocean, in the same fortnight.",
+      "subject": "Kilimanjaro rising above the acacia plains at sunrise",
+      "focal": [
+        50,
+        46
+      ]
+    }
+  ]
 }

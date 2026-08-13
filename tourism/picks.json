@@ -1,35 +1,35 @@
 {
+ "cities": {
+  "country": "nigeria",
+  "hook": "Don't start with the one on the postcard.",
+  "why": "Cape Town is the easy answer and a beautiful one. Lagos is twenty million people making most of the music, film and fashion the rest of the continent is dancing to, and almost nobody puts it first."
+ },
  "wildlife": {
   "country": "uganda",
   "hook": "Start where the forest is still breathing.",
   "why": "Not the Serengeti first. Half the world's mountain gorillas live on three volcanoes, and you walk to them."
- },
- "mountains": {
-  "country": "ethiopia",
-  "hook": "Then don't start with Kilimanjaro.",
-  "why": "Eighty per cent of Africa above three thousand metres is in one country, and the Simien escarpment has gelada on it."
- },
- "rainforest": {
-  "country": "cameroon",
-  "hook": "Go west of the famous forests.",
-  "why": "Korup is older than the Congo basin's and has a canopy walkway thirty metres up, with almost nobody on it."
- },
- "coast": {
-  "country": "mozambique",
-  "hook": "Skip the resorts on the other coast.",
-  "why": "Two thousand kilometres of Indian Ocean, most of it still without a road, and dhows instead of speedboats."
  },
  "culture": {
   "country": "ghana",
   "hook": "Begin where the coast remembers.",
   "why": "Cape Coast and Elmina are kept as they were, the Ashanti court still sits at Kumasi, and there is a band on every night."
  },
+ "coast": {
+  "country": "mozambique",
+  "hook": "Skip the resorts on the other coast.",
+  "why": "Two thousand kilometres of Indian Ocean, most of it still without a road, and dhows instead of speedboats."
+ },
+ "nature": {
+  "country": "cameroon",
+  "hook": "Go west of the famous forests.",
+  "why": "Korup is older than the Congo basin's and has a canopy walkway thirty metres up, with almost nobody on it — and the same country runs from that forest to an active volcano and out to the Sahel."
+ },
  "food": {
   "country": "morocco",
   "hook": "Eat where the bread is still communal.",
   "why": "Tagine cooked slowly, bread baked in the neighbourhood oven, and a souk that sells to the people who live there."
  },
- "heritage": {
+ "history": {
   "country": "egypt",
   "hook": "The oldest journey there is.",
   "why": "People have travelled to see this for two and a half thousand years, and the Valley of the Kings is still painted floor to ceiling."

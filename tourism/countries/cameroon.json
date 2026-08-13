@@ -1,325 +1,327 @@
 {
- "slug": "cameroon",
- "name": "Cameroon",
- "adjective": "Cameroonian",
- "region": "Central & West Africa",
- "tagline": "Africa in miniature",
- "summary": "Six ecological zones in nine hundred kilometres: an active 4,095 m volcano, Atlantic black sand, Korup rainforest, the Grassfields kingdoms and the Sahel edge at Waza.",
- "published": true,
- "calls": [
-  "mountains",
-  "coast",
-  "culture",
-  "heritage"
- ],
- "operator": "kamerun",
- "window": "/images/uploads/window-cameroon-1024w.jpg",
- "window_alt": "Black volcanic sand and palms below a volcano at dusk",
- "months": [
-  11,
-  12,
-  1,
-  2,
-  3
- ],
- "when": "Dry from November to February in the south; the north stays dry into April.",
- "entries": [
-  {
-   "category": "hero",
-   "caption": "Africa in Miniature",
-   "description": "Volcano, rainforest, highlands, coast and Sahel — one country, six climates, fourteen days on the road.",
-   "subject": "the upper slopes of Mount Cameroon at dawn above the Atlantic",
-   "focal": [
-    52,
-    58
-   ],
-   "local": "/images/mount-dawn-cinder.svg"
-  },
-  {
-   "category": "nature",
-   "caption": "Six Climates, One Country",
-   "description": "The Cameroon Volcanic Line runs from the Gulf of Guinea to the Mandara mountains, changing the landscape every two hours of driving.",
-   "subject": "layered green highland ridges in the Bamenda highlands",
-   "focal": [
-    50,
-    46
-   ],
-   "local": "/images/highlands-october.svg"
-  },
-  {
-   "category": "wildlife",
-   "caption": "Wildlife of the Rainforest",
-   "description": "Forest elephants, drills and chimpanzees in Korup and Dja — one of the oldest and least disturbed rainforests in Africa.",
-   "subject": "forest elephants among buttressed trees in Korup National Park",
-   "focal": [
-    50,
-    55
-   ],
-   "local": "/images/waza-elephants.svg"
-  },
-  {
-   "category": "safari",
-   "caption": "Sahel Safari at Waza",
-   "description": "Flat acacia savanna in the Far North, where elephant, giraffe and antelope gather at the last dry-season waterholes.",
-   "subject": "elephants and giraffe at a dry-season waterhole in Waza National Park",
-   "focal": [
-    48,
-    60
-   ],
-   "local": "/images/savanna-waterhole.svg"
-  },
-  {
-   "category": "mountains",
-   "caption": "The 4,095 m Volcano",
-   "description": "Mount Cameroon is the highest point in West Africa and still active — three days up through farm, forest, grass and bare cinder.",
-   "subject": "trekkers on the open upper slopes of Mount Cameroon above the tree line",
-   "focal": [
-    50,
-    62
-   ],
-   "local": "/images/mount-ascent-walkers.svg"
-  },
-  {
-   "category": "waterfalls",
-   "caption": "Where the River Meets the Sea",
-   "description": "The Lobé falls near Kribi drop straight over black rock into the Atlantic — one of very few waterfalls on earth that do.",
-   "subject": "the Lobe waterfalls pouring over rock directly into the Atlantic near Kribi",
-   "focal": [
-    50,
-    44
-   ],
-   "local": "/images/coast-lobe-falls.svg"
-  },
-  {
-   "category": "lakes-rivers",
-   "caption": "The Benoue and the Crater Lakes",
-   "description": "Gallery forest along the Bénoué in the north, and the volcanic crater lakes of Barombi Mbo and Nyos in the west.",
-   "subject": "the wide brown Benoue river with gallery forest along the bank",
-   "focal": [
-    50,
-    52
-   ],
-   "local": "/images/benue-river.svg"
-  },
-  {
-   "category": "beaches",
-   "caption": "Black Sand and Warm Water",
-   "description": "Volcanic grey-black sand at Limbe, white sand and fishing pirogues at Kribi, warm all year on both.",
-   "subject": "surf breaking on volcanic black sand at dusk on the Cameroon coast near Limbe",
-   "focal": [
-    50,
-    56
-   ],
-   "local": "/images/coast-black-sand-dusk.svg"
-  },
-  {
-   "category": "forests",
-   "caption": "Inside Korup",
-   "description": "One of the oldest rainforests in Africa, with a canopy suspension bridge over the Mana river and 400 tree species.",
-   "subject": "a canopy suspension bridge over a river inside Korup rainforest",
-   "focal": [
-    50,
-    48
-   ],
-   "local": "/images/forest-canopy-bridge.svg"
-  },
-  {
-   "category": "adventure",
-   "caption": "Summit, Crater, Coast",
-   "description": "The Guinness route to 4,095 m, down the north flank to Mann's Spring, and out to the sea on the same trip.",
-   "subject": "walkers crossing grass slopes below the summit huts on Mount Cameroon",
-   "focal": [
-    46,
-    60
-   ],
-   "local": "/images/mount-summit-grass.svg"
-  },
-  {
-   "category": "culture",
-   "caption": "The Grassfields Kingdoms",
-   "description": "Bamileke and Bamoun chiefdoms in the west, still functioning, with palaces, secret societies and their own calendars.",
-   "subject": "a carved and beaded royal throne inside a palace museum at Foumban",
-   "focal": [
-    50,
-    46
-   ],
-   "local": "/images/foumban-throne.svg"
-  },
-  {
-   "category": "traditional-people",
-   "caption": "Fulani, Mafa and Bamileke",
-   "description": "Two hundred and fifty ethnic groups and as many languages, from the Mafa terraces of the Mandara to the Fulani of the Sahel.",
-   "subject": "a Mafa farmer on the terraced slopes of the Mandara mountains",
-   "focal": [
-    50,
-    38
-   ],
-   "local": "/images/mount-guide-portrait.svg"
-  },
-  {
-   "category": "food",
-   "caption": "Ndole, Poulet DG and Grilled Fish",
-   "description": "Bitterleaf and groundnut ndolé, plantain, and whole fish grilled on the sand at Kribi within sight of the boat.",
-   "subject": "grilled fish and plantain served at a beachside stall in Kribi",
-   "focal": [
-    50,
-    52
-   ],
-   "local": "/images/north-craft-stalls.svg"
-  },
-  {
-   "category": "festivals",
-   "caption": "Nguon at Foumban",
-   "description": "The Bamoun Nguon, a thousand years old and UNESCO-listed, where the sultan answers to his people before the dancing starts.",
-   "subject": "masked dancers and horsemen at the Nguon festival in Foumban",
-   "focal": [
-    50,
-    44
-   ],
-   "local": "/images/north-market-street.svg"
-  },
-  {
-   "category": "crafts",
-   "caption": "The Foumban Bronze Casters",
-   "description": "Lost-wax bronze, beaded thrones and carved masks made on the craft street the same way they were three centuries ago.",
-   "subject": "a bronze caster working molten metal in a workshop at Foumban",
-   "focal": [
-    46,
-    50
-   ],
-   "local": "/images/foumban-bronze-caster.svg"
-  },
-  {
-   "category": "historic-sites",
-   "caption": "The Sultan's Palace",
-   "description": "The 1917 palace at Foumban and its museum of the Bamoun kings, plus the German colonial buildings still standing in Buea.",
-   "subject": "the Sultan's Palace at Foumban with its museum of the Bamoun kings",
-   "focal": [
-    50,
-    48
-   ],
-   "local": "/images/foumban-throne.svg"
-  },
-  {
-   "category": "heritage",
-   "caption": "Dja, Rhumsiki and the Mandara",
-   "description": "The Dja Faunal Reserve is UNESCO World Heritage; the volcanic spires above Rhumsiki are the image on the old banknote.",
-   "subject": "volcanic rock spires rising from farmland at Rhumsiki in the Mandara mountains",
-   "focal": [
-    54,
-    50
-   ],
-   "local": "/images/mandara-spires.svg"
-  },
-  {
-   "category": "cities",
-   "caption": "Douala and Yaounde",
-   "description": "The port that moves the country and the hill capital that governs it, ninety minutes apart by air and nothing alike.",
-   "subject": "a street in the Bonapriso quarter of Douala",
-   "focal": [
-    50,
-    54
-   ],
-   "local": "/images/douala-office-street.svg"
-  },
-  {
-   "category": "architecture",
-   "caption": "Chefferie and Colonial Buea",
-   "description": "Bamileke chefferie compounds with carved posts and conical roofs, and the German Schloss on the hill above Buea.",
-   "subject": "a Bamileke chieftaincy compound with carved posts and a conical thatched roof",
-   "focal": [
-    50,
-    42
-   ],
-   "local": "/images/office-frontage.svg"
-  },
-  {
-   "category": "local-life",
-   "caption": "Marche Central, Motos, Rain",
-   "description": "Bilingual, loud and unbothered: Douala's markets, the moto-taxis, and the sudden rain everyone waits out under an awning.",
-   "subject": "traders and moto-taxis in a busy Douala market street",
-   "focal": [
-    50,
-    56
-   ],
-   "local": "/images/north-market-street.svg"
-  },
-  {
-   "category": "family-community",
-   "caption": "Village and Mountain Together",
-   "description": "Guides and porters come from the mountain villages in rotation, and the trail money goes back into the village fund.",
-   "subject": "villagers and guides repairing a stone section of mountain trail together",
-   "focal": [
-    48,
-    58
-   ],
-   "local": "/images/mount-trail-repair.svg"
-  },
-  {
-   "category": "outdoor",
-   "caption": "The Ring Road on Foot",
-   "description": "Crater lakes, tea slopes and the Ring Road through the Bamenda highlands, walkable in sections between 1,200 and 2,000 m.",
-   "subject": "open dry-season slopes and ridge lines on Mount Cameroon",
-   "focal": [
-    50,
-    58
-   ],
-   "local": "/images/mount-dry-season.svg"
-  },
-  {
-   "category": "luxury",
-   "caption": "Kribi, Slowly",
-   "description": "Small beach hotels south of Kribi, a driver who knows the road, and nothing at all scheduled after lunch.",
-   "subject": "a small beach hotel terrace above the sand at Kribi",
-   "focal": [
-    50,
-    50
-   ],
-   "local": "/images/buea-office-mountain.svg"
-  },
-  {
-   "category": "eco-tourism",
-   "caption": "Korup, Dja and the Village Fund",
-   "description": "Ecotourism permits in Korup and Dja are issued through the villages, and the mountain trek runs on the Mount CEO rotation.",
-   "subject": "a forest guide identifying a tree species inside Korup rainforest",
-   "focal": [
-    56,
-    52
-   ],
-   "local": "/images/forest-guide-tree.svg"
-  },
-  {
-   "category": "photography",
-   "caption": "Cloud on the Rainforest",
-   "description": "Wet season cloud sitting on the forest above Buea, and dry season light on the Mandara spires — two countries, one lens.",
-   "subject": "cloud and rain sitting on the rainforest above Buea",
-   "focal": [
-    50,
-    48
-   ],
-   "local": "/images/mount-wet-cloud.svg"
-  },
-  {
-   "category": "hidden-gems",
-   "caption": "The 1999 Lava Fields",
-   "description": "Black lava tongues from the 1999 and 2000 flows running down to the sea near Bakingili, with green already coming back.",
-   "subject": "black solidified lava flows reaching the sea on the flank of Mount Cameroon",
-   "focal": [
-    50,
-    62
-   ],
-   "local": "/images/mount-lava-flow.svg"
-  },
-  {
-   "category": "why-visit",
-   "caption": "Everything, Within One Border",
-   "description": "Sea level to Sahel in nine hundred kilometres, French and English on the same road, and almost nobody else on it.",
-   "subject": "a 4x4 on a red laterite road between rainforest and highland farmland",
-   "focal": [
-    50,
-    56
-   ],
-   "local": "/images/laterite-road.svg"
-  }
- ]
+  "slug": "cameroon",
+  "name": "Cameroon",
+  "adjective": "Cameroonian",
+  "region": "Central & West Africa",
+  "tagline": "Africa in miniature",
+  "summary": "Six ecological zones in nine hundred kilometres: an active 4,095 m volcano, Atlantic black sand, Korup rainforest, the Grassfields kingdoms and the Sahel edge at Waza.",
+  "published": true,
+  "calls": [
+    "cities",
+    "nature",
+    "coast",
+    "culture",
+    "history",
+    "adventure"
+  ],
+  "operator": "kamerun",
+  "window": "/images/uploads/window-cameroon-1024w.jpg",
+  "window_alt": "Black volcanic sand and palms below a volcano at dusk",
+  "months": [
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "when": "Dry from November to February in the south; the north stays dry into April.",
+  "entries": [
+    {
+      "category": "hero",
+      "caption": "Africa in Miniature",
+      "description": "Volcano, rainforest, highlands, coast and Sahel — one country, six climates, fourteen days on the road.",
+      "subject": "the upper slopes of Mount Cameroon at dawn above the Atlantic",
+      "focal": [
+        52,
+        58
+      ],
+      "local": "/images/mount-dawn-cinder.svg"
+    },
+    {
+      "category": "nature",
+      "caption": "Six Climates, One Country",
+      "description": "The Cameroon Volcanic Line runs from the Gulf of Guinea to the Mandara mountains, changing the landscape every two hours of driving.",
+      "subject": "layered green highland ridges in the Bamenda highlands",
+      "focal": [
+        50,
+        46
+      ],
+      "local": "/images/highlands-october.svg"
+    },
+    {
+      "category": "wildlife",
+      "caption": "Wildlife of the Rainforest",
+      "description": "Forest elephants, drills and chimpanzees in Korup and Dja — one of the oldest and least disturbed rainforests in Africa.",
+      "subject": "forest elephants among buttressed trees in Korup National Park",
+      "focal": [
+        50,
+        55
+      ],
+      "local": "/images/waza-elephants.svg"
+    },
+    {
+      "category": "safari",
+      "caption": "Sahel Safari at Waza",
+      "description": "Flat acacia savanna in the Far North, where elephant, giraffe and antelope gather at the last dry-season waterholes.",
+      "subject": "elephants and giraffe at a dry-season waterhole in Waza National Park",
+      "focal": [
+        48,
+        60
+      ],
+      "local": "/images/savanna-waterhole.svg"
+    },
+    {
+      "category": "mountains",
+      "caption": "The 4,095 m Volcano",
+      "description": "Mount Cameroon is the highest point in West Africa and still active — three days up through farm, forest, grass and bare cinder.",
+      "subject": "trekkers on the open upper slopes of Mount Cameroon above the tree line",
+      "focal": [
+        50,
+        62
+      ],
+      "local": "/images/mount-ascent-walkers.svg"
+    },
+    {
+      "category": "waterfalls",
+      "caption": "Where the River Meets the Sea",
+      "description": "The Lobé falls near Kribi drop straight over black rock into the Atlantic — one of very few waterfalls on earth that do.",
+      "subject": "the Lobe waterfalls pouring over rock directly into the Atlantic near Kribi",
+      "focal": [
+        50,
+        44
+      ],
+      "local": "/images/coast-lobe-falls.svg"
+    },
+    {
+      "category": "lakes-rivers",
+      "caption": "The Benoue and the Crater Lakes",
+      "description": "Gallery forest along the Bénoué in the north, and the volcanic crater lakes of Barombi Mbo and Nyos in the west.",
+      "subject": "the wide brown Benoue river with gallery forest along the bank",
+      "focal": [
+        50,
+        52
+      ],
+      "local": "/images/benue-river.svg"
+    },
+    {
+      "category": "beaches",
+      "caption": "Black Sand and Warm Water",
+      "description": "Volcanic grey-black sand at Limbe, white sand and fishing pirogues at Kribi, warm all year on both.",
+      "subject": "surf breaking on volcanic black sand at dusk on the Cameroon coast near Limbe",
+      "focal": [
+        50,
+        56
+      ],
+      "local": "/images/coast-black-sand-dusk.svg"
+    },
+    {
+      "category": "forests",
+      "caption": "Inside Korup",
+      "description": "One of the oldest rainforests in Africa, with a canopy suspension bridge over the Mana river and 400 tree species.",
+      "subject": "a canopy suspension bridge over a river inside Korup rainforest",
+      "focal": [
+        50,
+        48
+      ],
+      "local": "/images/forest-canopy-bridge.svg"
+    },
+    {
+      "category": "adventure",
+      "caption": "Summit, Crater, Coast",
+      "description": "The Guinness route to 4,095 m, down the north flank to Mann's Spring, and out to the sea on the same trip.",
+      "subject": "walkers crossing grass slopes below the summit huts on Mount Cameroon",
+      "focal": [
+        46,
+        60
+      ],
+      "local": "/images/mount-summit-grass.svg"
+    },
+    {
+      "category": "culture",
+      "caption": "The Grassfields Kingdoms",
+      "description": "Bamileke and Bamoun chiefdoms in the west, still functioning, with palaces, secret societies and their own calendars.",
+      "subject": "a carved and beaded royal throne inside a palace museum at Foumban",
+      "focal": [
+        50,
+        46
+      ],
+      "local": "/images/foumban-throne.svg"
+    },
+    {
+      "category": "traditional-people",
+      "caption": "Fulani, Mafa and Bamileke",
+      "description": "Two hundred and fifty ethnic groups and as many languages, from the Mafa terraces of the Mandara to the Fulani of the Sahel.",
+      "subject": "a Mafa farmer on the terraced slopes of the Mandara mountains",
+      "focal": [
+        50,
+        38
+      ],
+      "local": "/images/mount-guide-portrait.svg"
+    },
+    {
+      "category": "food",
+      "caption": "Ndole, Poulet DG and Grilled Fish",
+      "description": "Bitterleaf and groundnut ndolé, plantain, and whole fish grilled on the sand at Kribi within sight of the boat.",
+      "subject": "grilled fish and plantain served at a beachside stall in Kribi",
+      "focal": [
+        50,
+        52
+      ],
+      "local": "/images/north-craft-stalls.svg"
+    },
+    {
+      "category": "festivals",
+      "caption": "Nguon at Foumban",
+      "description": "The Bamoun Nguon, a thousand years old and UNESCO-listed, where the sultan answers to his people before the dancing starts.",
+      "subject": "masked dancers and horsemen at the Nguon festival in Foumban",
+      "focal": [
+        50,
+        44
+      ],
+      "local": "/images/north-market-street.svg"
+    },
+    {
+      "category": "crafts",
+      "caption": "The Foumban Bronze Casters",
+      "description": "Lost-wax bronze, beaded thrones and carved masks made on the craft street the same way they were three centuries ago.",
+      "subject": "a bronze caster working molten metal in a workshop at Foumban",
+      "focal": [
+        46,
+        50
+      ],
+      "local": "/images/foumban-bronze-caster.svg"
+    },
+    {
+      "category": "historic-sites",
+      "caption": "The Sultan's Palace",
+      "description": "The 1917 palace at Foumban and its museum of the Bamoun kings, plus the German colonial buildings still standing in Buea.",
+      "subject": "the Sultan's Palace at Foumban with its museum of the Bamoun kings",
+      "focal": [
+        50,
+        48
+      ],
+      "local": "/images/foumban-throne.svg"
+    },
+    {
+      "category": "heritage",
+      "caption": "Dja, Rhumsiki and the Mandara",
+      "description": "The Dja Faunal Reserve is UNESCO World Heritage; the volcanic spires above Rhumsiki are the image on the old banknote.",
+      "subject": "volcanic rock spires rising from farmland at Rhumsiki in the Mandara mountains",
+      "focal": [
+        54,
+        50
+      ],
+      "local": "/images/mandara-spires.svg"
+    },
+    {
+      "category": "cities",
+      "caption": "Douala and Yaounde",
+      "description": "The port that moves the country and the hill capital that governs it, ninety minutes apart by air and nothing alike.",
+      "subject": "a street in the Bonapriso quarter of Douala",
+      "focal": [
+        50,
+        54
+      ],
+      "local": "/images/douala-office-street.svg"
+    },
+    {
+      "category": "architecture",
+      "caption": "Chefferie and Colonial Buea",
+      "description": "Bamileke chefferie compounds with carved posts and conical roofs, and the German Schloss on the hill above Buea.",
+      "subject": "a Bamileke chieftaincy compound with carved posts and a conical thatched roof",
+      "focal": [
+        50,
+        42
+      ],
+      "local": "/images/office-frontage.svg"
+    },
+    {
+      "category": "local-life",
+      "caption": "Marche Central, Motos, Rain",
+      "description": "Bilingual, loud and unbothered: Douala's markets, the moto-taxis, and the sudden rain everyone waits out under an awning.",
+      "subject": "traders and moto-taxis in a busy Douala market street",
+      "focal": [
+        50,
+        56
+      ],
+      "local": "/images/north-market-street.svg"
+    },
+    {
+      "category": "family-community",
+      "caption": "Village and Mountain Together",
+      "description": "Guides and porters come from the mountain villages in rotation, and the trail money goes back into the village fund.",
+      "subject": "villagers and guides repairing a stone section of mountain trail together",
+      "focal": [
+        48,
+        58
+      ],
+      "local": "/images/mount-trail-repair.svg"
+    },
+    {
+      "category": "outdoor",
+      "caption": "The Ring Road on Foot",
+      "description": "Crater lakes, tea slopes and the Ring Road through the Bamenda highlands, walkable in sections between 1,200 and 2,000 m.",
+      "subject": "open dry-season slopes and ridge lines on Mount Cameroon",
+      "focal": [
+        50,
+        58
+      ],
+      "local": "/images/mount-dry-season.svg"
+    },
+    {
+      "category": "luxury",
+      "caption": "Kribi, Slowly",
+      "description": "Small beach hotels south of Kribi, a driver who knows the road, and nothing at all scheduled after lunch.",
+      "subject": "a small beach hotel terrace above the sand at Kribi",
+      "focal": [
+        50,
+        50
+      ],
+      "local": "/images/buea-office-mountain.svg"
+    },
+    {
+      "category": "eco-tourism",
+      "caption": "Korup, Dja and the Village Fund",
+      "description": "Ecotourism permits in Korup and Dja are issued through the villages, and the mountain trek runs on the Mount CEO rotation.",
+      "subject": "a forest guide identifying a tree species inside Korup rainforest",
+      "focal": [
+        56,
+        52
+      ],
+      "local": "/images/forest-guide-tree.svg"
+    },
+    {
+      "category": "photography",
+      "caption": "Cloud on the Rainforest",
+      "description": "Wet season cloud sitting on the forest above Buea, and dry season light on the Mandara spires — two countries, one lens.",
+      "subject": "cloud and rain sitting on the rainforest above Buea",
+      "focal": [
+        50,
+        48
+      ],
+      "local": "/images/mount-wet-cloud.svg"
+    },
+    {
+      "category": "hidden-gems",
+      "caption": "The 1999 Lava Fields",
+      "description": "Black lava tongues from the 1999 and 2000 flows running down to the sea near Bakingili, with green already coming back.",
+      "subject": "black solidified lava flows reaching the sea on the flank of Mount Cameroon",
+      "focal": [
+        50,
+        62
+      ],
+      "local": "/images/mount-lava-flow.svg"
+    },
+    {
+      "category": "why-visit",
+      "caption": "Everything, Within One Border",
+      "description": "Sea level to Sahel in nine hundred kilometres, French and English on the same road, and almost nobody else on it.",
+      "subject": "a 4x4 on a red laterite road between rainforest and highland farmland",
+      "focal": [
+        50,
+        56
+      ],
+      "local": "/images/laterite-road.svg"
+    }
+  ]
 }
