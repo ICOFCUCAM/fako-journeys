@@ -406,6 +406,43 @@ function serve() {
           if (gap > band) bad.push(gap + 'px of nothing between the calls and the rail');
         }
 
+        /* The hero's type is one scale, and every step in it is a proportion
+           of the headline rather than of the window. Three of these were
+           independently clamped on vw before 072 and 079, and the ratios they
+           produced drifted with the viewport: the qualifying line ran 0.243 at
+           1440 and 0.253 at 1920, and the map's caption collapsed to 0.136 at
+           768 where the headline is at its largest. Checked only above the
+           phone floors, which deliberately break the ratio to keep small type
+           readable. */
+        const fs = s => { const e = q(s); return e ? parseFloat(getComputedStyle(e).fontSize) : 0; };
+        const head = fs('.wa-h1-big');
+        if (head > 120) {
+          const steps = [['.wa-h1-rest', 0.244], ['.wa-find', 0.141],
+                         ['.wa-win-cap[data-on] b', 0.178]];
+          for (const [sel, want] of steps) {
+            const got = fs(sel) / head;
+            if (!got) continue;
+            if (Math.abs(got - want) > 0.006) {
+              bad.push(sel + ' is ' + got.toFixed(3) + ' of the headline, wants ' + want);
+            }
+          }
+        }
+
+        /* And the monospace voice is three settings, not seven. Counted over
+           every element in the hero that holds its own words. */
+        const mono = new Set();
+        document.querySelectorAll('#window *').forEach(el => {
+          const own = [...el.childNodes].filter(n => n.nodeType === 3)
+            .map(n => n.textContent).join('').trim();
+          if (!own) return;
+          const cs = getComputedStyle(el);
+          if (cs.fontFamily.indexOf('mono') < 0 && cs.fontFamily.indexOf('Mono') < 0) return;
+          if (cs.visibility === 'hidden' || !el.getBoundingClientRect().width) return;
+          mono.add(cs.fontSize + '/' + cs.letterSpacing);
+        });
+        if (mono.size > 3) bad.push('the mono voice has ' + mono.size
+          + ' settings: ' + [...mono].sort().join(' '));
+
         /* The readout's stack stays inside the stage it belongs to. */
         const stage = B('.wa-open-stage'), side = B('.wa-win-side');
         if (stage && side && side.bottom > stage.bottom + 2) {
