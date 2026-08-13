@@ -105,7 +105,12 @@
    key has two entries where the map has three — the same fault the map itself
    was saved from by being stroked. */
 .wa-open .wa-win-key span::before{box-shadow:0 0 0 1px var(--c-bg)}
-.wa-open .wa-win-cap b{color:var(--c-bg)}
+.wa-open /* The readout is the map speaking. It was set at the weight of a section
+   heading, which put it in competition with AFRICA two hundred pixels to its
+   left — two display voices on one screen, one of which is a caption. It keeps
+   its size and loses the argument: the region above it carries the mono voice,
+   the name is the display face, and the sentence under it is prose. */
+.wa-win-cap b{color:var(--c-bg)}
 .wa-open .wa-win-go{color:var(--c-bg)}
 .wa-open .wa-h1-big,.wa-open .wa-h1-rest{color:var(--c-bg)}
 /* One screen, but not more than one composition.
@@ -343,6 +348,7 @@
                     one, and tracked wider because it is smaller.
 
    The rule is that the tighter tracking goes with the things you press. */
+.wa-win-cap b{letter-spacing:-.015em}
 .wa-win-region{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 /* The name of whatever the map is showing: the second-largest display item in
    the hero, and the last one that was still sized off the viewport after 072.
