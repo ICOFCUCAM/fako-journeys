@@ -408,16 +408,23 @@ def block_mapover(countries):
     # map; the rest are points until you ask. Labelling eleven would put type
     # across half of West Africa.
     named = {c["slug"] for c in load_cities() if c.get("photo")}
+    urls = dict((x.slug, x.url) for x in countries)
     out.append('<g class="wa-map-cities">')
     for c in d["cities"]:
         lead = ' data-lead="true"' if c["slug"] in named else ''
-        out.append('<g class="wa-map-city"%s data-slug="%s">'
+        # A point that cannot be pressed is decoration. These are places with a
+        # page behind them, so they are links — which also puts them in the tab
+        # order and gives a screen reader something to announce.
+        out.append('<a class="wa-map-city" href="%s"%s data-slug="%s">'
+                   % (esc(urls.get(c["country"], "/places")), lead, esc(c["slug"])))
+        out.append('<g class="wa-map-city-in" data-slug="%s">'
                    '<circle class="wa-map-city-dot" cx="%.1f" cy="%.1f" r="3.4"/>'
                    '<circle class="wa-map-city-ring" cx="%.1f" cy="%.1f" r="7"/>'
                    '<text class="wa-map-city-say" x="%.1f" y="%.1f">%s</text>'
                    '<title>%s</title></g>'
-                   % (lead, esc(c["slug"]), c["x"], c["y"], c["x"], c["y"],
+                   % (esc(c["slug"]), c["x"], c["y"], c["x"], c["y"],
                       c["x"] + 11, c["y"] + 4, esc(c["name"].upper()), esc(c["name"])))
+        out.append('</a>')
     out.append('</g>')
 
     r = d["rose"]
