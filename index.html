@@ -169,40 +169,10 @@
    which resolves to right:0 at every width up to 1440 — the composition that
    was tuned — and holds the same relationship above it. max() rather than a
    media query because the frame's own width is already a min(). */
-/* THE CONTINENT TAKES THE STAGE.
-   It was a 477x506 object beside the headline in an 822px stage — a diagram
-   filed next to the type. It is now 813x862: the height of the first screen,
-   held to the right, with the word set across it rather than beside it.
-
-   Three things had to move for that. The map's own column stops reserving room
-   under itself for the readout, because the readout has left it (102). The
-   overhang grows from 100px to 150px, which is what keeps the Horn and
-   Madagascar on the screen at 1440 while the west coast comes far enough left
-   to meet the word. And the copy has to be told to paint above the map: .wa-win
-   is a child of .wa-open-grid rather than a sibling, so its z-index:1 was
-   beating the copy's z-index:auto and the map was drawn over the last two
-   letters of AFRICA. */
-/* The frame is the map's viewBox; the continent is the ink inside it, and the
-   ink is what has to fit the screen. Natural Earth puts Africa between y=80.8
-   and y=979.2 of a 1060-unit box, so the ink is 0.8475 of the frame's height
-   and it starts 0.0762 of the way down. Those two numbers are the whole
-   positioning: the frame is sized so the ink is exactly the stage, and lifted
-   so the ink starts under the masthead rather than behind it.
-
-   Sized from the frame instead, the continent went 66px up under a fixed
-   masthead and took Morocco and Tunisia with it. */
-.wa-win{position:absolute;width:auto;
+.wa-win{position:absolute;top:calc(var(--mast) + 1vh);width:min(50vw,640px);
   --fj-bleed:100px;
-  /* The continent is sized to the stage, not to the viewport. 066 caps the
-     stage at 880 so a tall monitor gets a composition rather than a stretched
-     one; sizing the map off 100vh instead made it 1284 tall inside an 897-pixel
-     stage at 2560x1440, and since nothing here clips, it ran 600 pixels down
-     over the section below and drew Namibia across the next headline. */
-  --fj-ink:min(calc(100vh - var(--mast) - var(--mast)), 820px);
-  top:calc(var(--mast) - var(--fj-ink) * .0899);
   right:max(0px, calc((100vw - min(1240px, 100vw)) / 2 - var(--fj-bleed)));
-  z-index:1;display:block}
-.wa-open-say,.wa-open-tail,.wa-win-rail,.wa-win-side{position:relative;z-index:2}
+  z-index:1;display:grid;grid-template-columns:1fr;gap:12px}
 /* The frame is the continent's own box, not a rectangle it is letterboxed into.
    It was 640 wide and 450 tall against a viewBox of 1000x1060, so the map
    painted 425x450 of it and 107 pixels down each side were empty. Two things
@@ -240,14 +210,9 @@
      positioned absolutely and contributes nothing to the stage's height.
      The fitter publishes --fj-readout so the map takes exactly what is left;
      the fallback is the 487-wide case, which is right wherever it applies. */
-  /* The upper bound has to stay out of the way. `top` is computed from
-     --fj-ink and the height is derived from the same term, so the two only
-     agree while the clamp is not binding: at 2560x1440 the height wanted 1515
-     and got 1200, and the continent rose 24px above the masthead line it is
-     positioned against. The formula is already bounded by the viewport — the
-     ink is always 100vh less two mastheads — so the ceiling is only here to
-     stop something absurd, and 2400 is past any real screen. */
-  height:clamp(320px, calc(var(--fj-ink) / .8475), 2400px)}
+  height:clamp(300px,
+    calc(100vh - var(--mast) - var(--mast) - 1vh - 14px - var(--fj-readout, 215px)),
+    560px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}
@@ -270,26 +235,8 @@
    34vw is the width that keeps it clear of the copy column — which is itself
    66% of a frame that is min(1240px, 100vw) — at every width from 1024 to 1360,
    and 520 goes on binding above that. */
-/* A line of the type column, not a panel beside the map.
-   Right-aligned in a 520px column under the continent was right when the
-   continent was 477px wide and sat in the corner. With the map filling the
-   stage the readout has nowhere under it to be, so it joins the stack it has
-   always belonged to — same left edge as the headline, the lede and the calls
-   — and lies down: the eyebrow over the name, the sentence beside it, the way
-   out below. 215px tall became 96. */
-.wa-win-side{display:flex;flex-direction:column;align-items:flex-start;
-  max-width:min(820px, 66%);text-align:left;margin-top:22px}
-/* One line, on the baseline. Stacked — eyebrow over name over sentence over
-   link — the readout is 130px tall, and the column it has joined only had 121
-   to give before the rails went under a 900-pixel screen. Laid along its
-   baseline it is 62: the name reads as the subject of a sentence that the tag
-   finishes and the link answers, which is what it always was. */
-.wa-win-cap{display:flex;flex-wrap:wrap;align-items:baseline;
-  column-gap:18px;row-gap:2px}
-.wa-win-cap b{margin-top:0}
-.wa-win-tag{margin-top:0;flex:1 1 16em;min-width:0}
-.wa-win-op{margin-top:0}
-.wa-win-go{margin-top:0;padding-bottom:2px}
+.wa-win-side{display:flex;flex-direction:column;padding-right:44px;margin-left:auto;
+  max-width:min(520px, 34vw);text-align:right;align-items:flex-end}
 /* Twenty-three readouts in one box, one shown at a time — and the box has to be
    the height of the tallest of them, or the one that overruns it lands on
    whatever is underneath.
@@ -359,9 +306,7 @@
   text-wrap:balance}
 .wa-win-op{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-top:14px}
 .wa-win-go{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px}
-/* Left, since 102: these hang off the rails now, not off a right-aligned
-   panel under the map. */
-.wa-win-key{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px 16px;margin-top:12px}
+.wa-win-key{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 16px;margin-top:12px}
 .wa-win-key span{display:flex;align-items:center;gap:7px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
@@ -568,7 +513,7 @@
   fill:color-mix(in srgb, var(--c-primary) 30%, var(--c-land))}
 .wa-map-live path,.wa-map-live circle{transition:fill var(--t-fast) var(--ease)}
 .wa-win-state .wa-map-svg{transition:none}
-.wa-terrain{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:5px 6px;margin-top:6px}
+.wa-terrain{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px 6px;margin-top:2px}
 .wa-terrain span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--c-muted);border:1px solid var(--c-border);
   padding:4px 8px}
@@ -759,7 +704,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:1000px){
   .wa-open-stage{min-height:0;padding:96px 0 0}
   .wa-open-grid{grid-template-columns:1fr;gap:20px}
-  .wa-open-say,.wa-open-tail,.wa-win,.wa-win-side,.wa-win-rail{grid-column:1;grid-row:auto}
+  .wa-open-say,.wa-open-tail,.wa-win,.wa-win-rail{grid-column:1;grid-row:auto}
   /* Order on a phone: headline, then what you can do, then the map, then the
      rails. Measured at 320, 390 and 768, the calls sat between 1072 and 1289
      pixels down — behind a six-hundred-pixel map — so the first screen of the
@@ -768,12 +713,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-open-say{order:1}
   .wa-open-tail{order:2}
   .wa-win{order:3}
-  /* 102 lifted the readout out of .wa-win and made it a child of this grid.
-     A flex child with no order is order:0, so on a phone it went above the
-     headline — the page opened on the map's caption before it opened on the
-     map, or on the word. It follows the map, which is what it describes. */
-  .wa-win-side{order:4}
-  .wa-win-rail{order:5}
+  .wa-win-rail{order:4}
   /* The window is taken out of the flow and bled off the right edge on a
      desktop, which is the whole composition of the first screen. On a phone
      there is no room to bleed into: left absolute it stayed a 180-pixel column
@@ -1459,34 +1399,8 @@ window.AF = {
         <svg class="wa-win-shape af-window-svg" viewBox="0 0 603.7 1000.0" role="img" aria-label="The outline of Seychelles"><defs><path id="wc-seychelles-d" d="M602.6 595L603.7 1000L422.5 862.9L373.7 603.3L122.8 405.4L0 222.5L292.8 0L602.6 595Z"/><clipPath id="wc-seychelles"><use href="#wc-seychelles-d"/></clipPath></defs><use class="af-window-fill" href="#wc-seychelles-d"/></svg>
       </figure>
           <!-- /gen:window -->
-        </div>      </div>
-      <!-- The lede and the three calls used to close the stage, below the
-           region rail, the country rail and the lens rail. On every one of
-           nine widths from 320 to 1920 that put every call on this page
-           below the first viewport — the only one a visitor saw on arrival
-           was the masthead button. They now sit directly under the
-           headline, and the rails keep the foot of the stage. -->
-      <div class="wa-open-tail">
-        <p class="wa-lede">Twenty-two countries, written up one place at a time, by people who go there.</p>
-        <!-- Three calls, three weights, three different things — and the ladder
-             is the answer to "what can I do here": ask it a question, look at
-             the continent, or just read one. The reading room had no route out
-             of the first fold at all before this, which for a site whose
-             deepest work is twenty-two long reads was the wrong thing to leave
-             out. Weights are solid / outlined / plain text, so the eye gets an
-             order rather than three equal boxes. -->
-        <div class="wa-acts">
-          <a class="wa-act go" href="/journey">What are you looking for? <i>&rarr;</i></a>
-          <a class="wa-act faint" href="/atlas">Open the atlas <i>&rarr;</i></a>
-          <a class="wa-act plain" href="/stories">Or read a country <i>&rarr;</i></a>
         </div>
-      </div>
-      <!-- The map's readout. It lived inside .wa-win, under the map, which
-           was possible while the map was an object in the corner. The
-           continent is the stage now, so there is no "under the map" left —
-           it belongs to the type column, on the line above the rails. -->
-
-      <div class="wa-win-side">
+        <div class="wa-win-side">
           <div class="wa-win-caps" aria-live="polite">
           <div class="wa-win-cap" data-slug="africa" data-on="true"><span class="wa-win-region">The continent</span><b>Africa</b><span class="wa-win-tag">Fifty-four countries. Twenty-two destinations.</span><span class="wa-win-op">Choose one on the map, or below</span><a class="wa-win-go" href="#destinations">See all destinations &rarr;</a></div>
           <!-- gen:captions -->
@@ -1514,6 +1428,30 @@ window.AF = {
           <div class="wa-win-cap" data-slug="seychelles"><span class="wa-win-region">Islands</span><b>Seychelles</b><span class="wa-win-tag">Granite islands in the Indian Ocean</span><span class="wa-win-op">Written up here, run by somebody else</span><a class="wa-win-go" href="/seychelles">Enter Seychelles &rarr;</a></div>
           <!-- /gen:captions -->
           </div>
+          <div class="wa-terrain" id="wa-terrain" aria-hidden="true"></div>
+          <p class="wa-win-key" aria-hidden="true"><span data-tier="rest">The continent</span><span data-tier="live">A destination here</span><span data-tier="ours">An operator of ours</span></p>
+        </div>
+      </div>
+      <!-- The lede and the three calls used to close the stage, below the
+           region rail, the country rail and the lens rail. On every one of
+           nine widths from 320 to 1920 that put every call on this page
+           below the first viewport — the only one a visitor saw on arrival
+           was the masthead button. They now sit directly under the
+           headline, and the rails keep the foot of the stage. -->
+      <div class="wa-open-tail">
+        <p class="wa-lede">Twenty-two countries, written up one place at a time, by people who go there.</p>
+        <!-- Three calls, three weights, three different things — and the ladder
+             is the answer to "what can I do here": ask it a question, look at
+             the continent, or just read one. The reading room had no route out
+             of the first fold at all before this, which for a site whose
+             deepest work is twenty-two long reads was the wrong thing to leave
+             out. Weights are solid / outlined / plain text, so the eye gets an
+             order rather than three equal boxes. -->
+        <div class="wa-acts">
+          <a class="wa-act go" href="/journey">What are you looking for? <i>&rarr;</i></a>
+          <a class="wa-act faint" href="/atlas">Open the atlas <i>&rarr;</i></a>
+          <a class="wa-act plain" href="/stories">Or read a country <i>&rarr;</i></a>
+        </div>
       </div>
       <div class="wa-win-rail">
       <p class="wa-win-line" id="wa-win-line" aria-live="polite"></p>
@@ -1525,15 +1463,6 @@ window.AF = {
 <button class="wa-tick" type="button" data-slug="cameroon" data-view="265.2 252.3 355.6 403.5">Cameroon</button><button class="wa-tick" type="button" data-slug="uganda" data-view="594.5 427.4 198.9 203.8">Uganda</button><button class="wa-tick" type="button" data-slug="namibia" data-view="288.6 611.9 463.4 445.4">Namibia</button><button class="wa-tick" type="button" data-slug="cote-divoire" data-view="109.2 332.9 223.5 229.9">Côte d&#x27;Ivoire</button><button class="wa-tick" type="button" data-slug="ghana" data-view="175.5 329.9 201.6 228.5">Ghana</button><button class="wa-tick" type="button" data-slug="nigeria" data-view="187.6 235.6 419.7 391.7">Nigeria</button><button class="wa-tick" type="button" data-slug="senegal" data-view="22.5 261.7 195.4 184.1">Senegal</button><button class="wa-tick" type="button" data-slug="ethiopia" data-view="535.9 190.6 515.8 476.9">Ethiopia</button><button class="wa-tick" type="button" data-slug="kenya" data-view="597.6 359.6 332.7 363.7">Kenya</button><button class="wa-tick" type="button" data-slug="rwanda" data-view="628.2 537.6 71.1 69.7">Rwanda</button><button class="wa-tick" type="button" data-slug="tanzania" data-view="533.8 436.5 382.8 382.5">Tanzania</button><button class="wa-tick" type="button" data-slug="botswana" data-view="437.1 670.1 314.4 314.0">Botswana</button><button class="wa-tick" type="button" data-slug="mozambique" data-view="480.9 496.3 498.3 572.6">Mozambique</button><button class="wa-tick" type="button" data-slug="south-africa" data-view="325.8 654.4 533.7 496.4">South Africa</button><button class="wa-tick" type="button" data-slug="zambia" data-view="431.8 519.4 409.1 386.6">Zambia</button><button class="wa-tick" type="button" data-slug="zimbabwe" data-view="517.3 659.5 265.4 255.2">Zimbabwe</button><button class="wa-tick" type="button" data-slug="egypt" data-view="458.1 16.8 413.0 386.0">Egypt</button><button class="wa-tick" type="button" data-slug="morocco" data-view="-76.6 -92.6 564.5 536.7">Morocco</button><button class="wa-tick" type="button" data-slug="tunisia" data-view="323.5 2.9 198.9 242.5">Tunisia</button><button class="wa-tick" type="button" data-slug="madagascar" data-view="660.3 548.3 403.5 479.4">Madagascar</button><button class="wa-tick" type="button" data-slug="mauritius" data-view="960.9 791.2 67.2 67.2">Mauritius</button><button class="wa-tick" type="button" data-slug="seychelles" data-view="958.0 583.1 67.2 67.2">Seychelles</button>
         <!-- /gen:ticks -->
       </div>
-      <!-- The terrain words the region rail selects, and the key to the three
-           tones the map is drawn in. Both sat in the readout panel beside the
-           map. Neither is about the one country in view: the terrain words
-           belong to the region rung above them and the key explains the map
-           the whole ladder drives. Moving them here is also what let the
-           readout lose the 121 pixels the stage needed to keep fitting a
-           900-pixel screen. -->
-      <div class="wa-terrain" id="wa-terrain" aria-hidden="true"></div>
-      <p class="wa-win-key" aria-hidden="true"><span data-tier="rest">The continent</span><span data-tier="live">A destination here</span><span data-tier="ours">An operator of ours</span></p>
       <div class="wa-tags-in" role="group" aria-label="Choose an experience"><button class="wa-tag" type="button" data-exp="wildlife" data-slug="kenya" data-line="The Mara, Amboseli under Kilimanjaro, and the month the migration crosses."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</button><button class="wa-tag" type="button" data-exp="mountains" data-slug="cameroon" data-line="Fako at 4,095 metres, still active, three days up through four climates."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg>Mountains</button><button class="wa-tag" type="button" data-exp="rainforest" data-slug="uganda" data-line="Bwindi and Kibale, where the gorillas and the chimpanzees still are."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg>Rainforest</button><button class="wa-tag" type="button" data-exp="coast" data-slug="tanzania" data-line="Zanzibar, and a Swahili coast trading long before Europe arrived."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</button><button class="wa-tag" type="button" data-exp="culture" data-slug="rwanda" data-line="A thousand hills, and the people farming every one of them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</button><button class="wa-tag" type="button" data-exp="food" data-slug="south-africa" data-line="The Cape table, the winelands behind it, and the fire under both."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</button><button class="wa-tag" type="button" data-exp="heritage" data-slug="zambia" data-line="Mosi-oa-Tunya, the smoke that thunders &mdash; named long before Livingstone saw it."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>Heritage</button><button class="wa-tag" type="button" data-exp="adventure" data-slug="namibia" data-line="Sossusvlei, the Skeleton Coast, and gravel roads with nobody else on them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</button></div>
       <div class="wa-answer" id="wa-answer" aria-live="polite">
         <!-- gen:picks -->
@@ -1953,13 +1882,6 @@ window.AF = {
     var k = Math.min(fb.width / vb.width, fb.height / vb.height);
     var north = fb.top + (fb.height - vb.height * k) / 2 + (bbox.y - vb.y) * k;
     var cap = h1.getBoundingClientRect().top + capOffset();
-    /* The continent now fills the stage, so its northern tip sits on the
-       masthead's own line. Aligning the headline to it puts AFRICA behind a
-       fixed masthead — measured at 70px against a masthead 78px deep. The word
-       keeps its clearance; where the two would fight, the masthead wins. */
-    var floor = parseFloat(getComputedStyle(document.documentElement)
-                  .getPropertyValue('--mast')) || 78;
-    if (north < floor + 24) return;
     var shift = Math.round(north - cap);
     /* A guard, not a fudge: if the answer is not a small nudge then something
        about the layout is not what this assumes, and the stylesheet's value is

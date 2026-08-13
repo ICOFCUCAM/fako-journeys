@@ -193,21 +193,17 @@ const HERO_MAP_MIN = 240;
    the one with a cross-fade in it; the others are here because a delay left
    behind by a removed animation is not a hero-specific mistake. */
 const REDUCED_PAGES = ['/index.html', '/atlas.html', '/kenya.html', '/meet.html'];
-const HERO_BLEED = 190;
+const HERO_BLEED = 140;
 const HERO_BAND = 200;
 
-/* 101 made the continent the first screen. What that means as a number: the
-   ink — the drawn continent, not the viewBox around it — fills the stage from
-   the masthead's lower edge to the foot, at every desktop width. Sized from
-   the frame instead it rides up behind a fixed masthead and loses Morocco.
-   HERO_INK_MIN is the share of the *screen* the continent has to hold — the
-   viewport less the masthead, not the stage. The stage is content-tall and on a
-   short window it is taller than the screen, so measuring against it reported
-   38% at 1440x500 for a map that was filling every pixel available to it.
-   Below this threshold the map has gone back to being an object in the corner
-   and the composition this hero is built on has quietly reverted. */
-const HERO_INK_MIN = 0.78;
-const HERO_INK_TOP = 12;   // px the continent's top may sit off the masthead line
+/* 101 made the continent fill the first screen and 107 took it back out — the
+   map is an object in the composition again, at the size it was, so there is no
+   share of the screen for it to hold and no masthead line for it to start on.
+   Those two assertions went with the composition they described.
+
+   What survives is the pair that were never about that size: the map has to
+   stay inside the section it belongs to, and it has to stay big enough to be a
+   map. Both were written for 101 and both are true of any hero. */
 
 /* Pass ten. AFRICA is set at 213px, which is large text, so WCAG 1.4.3 asks
    3:1 — but a headline this size carries the page and 3:1 is the floor for
@@ -495,7 +491,7 @@ function serve() {
       const errs = [];
       page.on('pageerror', e => errs.push(String(e.message).slice(0, 60)));
       await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
-      const seen = await page.evaluate(([bleed, band, mapMin, inkMin, inkTop]) => {
+      const seen = await page.evaluate(([bleed, band, mapMin]) => {
         const q = s => document.querySelector(s);
         const B = s => { const e = q(s); return e && e.getBoundingClientRect(); };
         const bad = [];
@@ -525,39 +521,8 @@ function serve() {
           if (over > bleed) bad.push('map overhangs the frame by ' + over);
         }
 
-        /* The continent is the first screen. Measured on the drawn ink via
-           getBBox rather than on the frame, because the frame is a viewBox with
-           ocean in it and 101's whole point is that those are different boxes. */
         const mapSvg = q('.wa-map-svg');
-        const stage0 = B('.wa-open-stage'), win0 = B('.wa-win');
-        if (mapSvg && stage0 && win0 && say && !(win0.left < say.right - 8)) {
-          let bb = null;
-          try { bb = mapSvg.getBBox(); } catch (e) { /* not rendered */ }
-          const vb = mapSvg.viewBox && mapSvg.viewBox.baseVal;
-          const box = mapSvg.getBoundingClientRect();
-          if (bb && vb && vb.height && bb.height) {
-            const k = Math.min(box.width / vb.width, box.height / vb.height);
-            const top = box.top + (box.height - vb.height * k) / 2 + (bb.y - vb.y) * k;
-            const inkH = bb.height * k;
-            const mast = parseFloat(getComputedStyle(document.documentElement)
-                           .getPropertyValue('--mast')) || 78;
-            /* The lesser of the screen and the stage. 066 caps the stage so a
-               very tall monitor gets a composition rather than a stretched one,
-               and the continent fills the stage rather than the screen there —
-               at 2560x1440 that is 820 of an 897-pixel stage, which is right,
-               and 60% of the viewport, which would read as a fault. */
-            const room = Math.min(window.innerHeight - mast, stage0.height);
-            const share = inkH / room;
-            if (share < inkMin) {
-              bad.push('the continent is ' + Math.round(share * 100)
-                       + '% of the room it has, wants ' + Math.round(inkMin * 100) + '%');
-            }
-            if (Math.abs(top - mast) > inkTop) {
-              bad.push('the continent starts ' + Math.round(top - mast)
-                       + 'px off the masthead line');
-            }
-          }
-        }
+        const stage0 = B('.wa-open-stage');
 
         /* The frame is the continent's box. Letterboxing inside it is the
            bleed being eaten by empty space nobody can see. */
@@ -722,7 +687,7 @@ function serve() {
           bad.push('the readout runs ' + Math.round(side.bottom - stage.bottom) + 'px past the stage');
         }
         return bad;
-      }, [HERO_BLEED, HERO_BAND, HERO_MAP_MIN, HERO_INK_MIN, HERO_INK_TOP]);
+      }, [HERO_BLEED, HERO_BAND, HERO_MAP_MIN]);
       await page.close();
       check('the hero composes at ' + w + 'x' + h, !seen.length && !errs.length,
             errs.length ? 'script threw: ' + errs[0]
