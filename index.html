@@ -530,6 +530,24 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-exp{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start;padding:22px 24px 20px 0;border-bottom:var(--fj-rule)}
 .wa-exp b{display:block;font-family:var(--fj-display);font-size:18px;font-weight:700;text-transform:uppercase;line-height:1.05}
 .wa-exp span{display:block;font-size:13px;color:var(--c-muted);margin-top:5px}
+/* The experience blocks are controls now, not captions. Six of them name a lens
+   a country can declare it leads on, so they carry the true count and set the
+   filter three screens down. The other four — rainforest, adventure, cities,
+   eco-tourism — are categories every country is written up in, so there is no
+   leader to name: they say so and go to the full list. Giving them the lens
+   count of the lens they happen to sit inside would have been the mountains
+   number wearing an adventure label. */
+button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inherit;
+  border-left:0;border-top:0;border-right:0;cursor:pointer;
+  transition:background var(--t-fast) var(--ease)}
+.wa-exp--all{cursor:pointer}
+.wa-exp[aria-pressed="true"]{background:var(--fj-dust)}
+.wa-exp[aria-pressed="true"] b{color:var(--c-accent)}
+.wa-exp-n{display:block;margin-top:9px;font-style:normal;font-family:var(--fj-mono);
+  font-size:8.5px;letter-spacing:.16em;line-height:1.7;text-transform:uppercase;
+  color:var(--c-muted)}
+.wa-exp[aria-pressed="true"] .wa-exp-n{color:var(--c-accent)}
+.wa-exp:hover{background:color-mix(in srgb,var(--c-bg) 96%,var(--c-primary))}
 @media(max-width:1050px){.wa-exps{grid-template-columns:1fr 1fr 1fr}}
 @media(max-width:760px){.wa-exps{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.wa-exps{grid-template-columns:1fr}}
@@ -1310,16 +1328,16 @@ window.AF = {
       </div>
     </div>
     <div class="wa-exps">
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorillas, elephants, lions, giraffes, chimpanzees, the great migration</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg></span><div><b>Mountains</b><span>Kilimanjaro, Mount Cameroon, the Rwenzori, the Atlas</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg></span><div><b>Rainforest</b><span>Bwindi, Korup, Nyungwe, Madagascar&rsquo;s wild forests</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, Seychelles, Mauritius</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg></span><div><b>Culture</b><span>Kingdoms, markets, music, dance, craft, living traditions</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg></span><div><b>Food</b><span>Street food, markets, coastal cuisine, home cooking, coffee</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg></span><div><b>Heritage</b><span>Forts, palaces, ancient cities, rock churches, sacred places</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg></span><div><b>Adventure</b><span>Trekking, rafting, hiking, diving, road journeys</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V9l6-4v16"/><path d="M10 12h9v9"/><path d="M7 12v.01M7 15v.01M13 15v.01M16 15v.01M13 18v.01M16 18v.01"/></svg></span><div><b>Cities</b><span>Kampala, Nairobi, Kigali, Douala, Cape Town, Marrakech</span></div></div>
-      <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-7"/><path d="M12 14c0-3-2-5-5-5 0 3 2 5 5 5z"/><path d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M6 21h12"/></svg></span><div><b>Eco-tourism</b><span>Travel that connects you with conservation and communities</span></div></div>
+      <button class="wa-exp" type="button" data-want="wildlife" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorillas, elephants, lions, giraffes, chimpanzees, the great migration</span><i class="wa-exp-n">11 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="mountains" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/></svg></span><div><b>Mountains</b><span>Kilimanjaro, Mount Cameroon, the Rwenzori, the Atlas</span><i class="wa-exp-n">4 of 22 countries lead on this</i></div></button>
+      <a class="wa-exp wa-exp--all" href="/places"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-13 0 9-5 13-14 13z"/><path d="M9 15c2-3 5-5 8-6"/></svg></span><div><b>Rainforest</b><span>Bwindi, Korup, Nyungwe, Madagascar&rsquo;s wild forests</span><i class="wa-exp-n">Written up in all 22 &mdash; no one leads it</i></div></a>
+      <button class="wa-exp" type="button" data-want="coast" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, Seychelles, Mauritius</span><i class="wa-exp-n">13 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="culture" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg></span><div><b>Culture</b><span>Kingdoms, markets, music, dance, craft, living traditions</span><i class="wa-exp-n">14 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="food" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg></span><div><b>Food</b><span>Street food, markets, coastal cuisine, home cooking, coffee</span><i class="wa-exp-n">7 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="heritage" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg></span><div><b>Heritage</b><span>Forts, palaces, ancient cities, rock churches, sacred places</span><i class="wa-exp-n">10 of 22 countries lead on this</i></div></button>
+      <a class="wa-exp wa-exp--all" href="/places"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg></span><div><b>Adventure</b><span>Trekking, rafting, hiking, diving, road journeys</span><i class="wa-exp-n">Written up in all 22 &mdash; no one leads it</i></div></a>
+      <a class="wa-exp wa-exp--all" href="/places"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V9l6-4v16"/><path d="M10 12h9v9"/><path d="M7 12v.01M7 15v.01M13 15v.01M16 15v.01M13 18v.01M16 18v.01"/></svg></span><div><b>Cities</b><span>Kampala, Nairobi, Kigali, Douala, Cape Town, Marrakech</span><i class="wa-exp-n">Written up in all 22 &mdash; no one leads it</i></div></a>
+      <a class="wa-exp wa-exp--all" href="/places"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-7"/><path d="M12 14c0-3-2-5-5-5 0 3 2 5 5 5z"/><path d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M6 21h12"/></svg></span><div><b>Eco-tourism</b><span>Travel that connects you with conservation and communities</span><i class="wa-exp-n">Written up in all 22 &mdash; no one leads it</i></div></a>
     </div>
     <!-- Outlined, not solid. This page has two ends that deserve the strongest
      weight — the hero, where you arrive, and the enquiry, where you act —
@@ -1452,6 +1470,7 @@ window.AF = {
       settle = setTimeout(function () { grid.classList.remove('is-settling'); }, 90);
     }
     wants.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
+    exps.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
     mbtns.forEach(function(b){ b.setAttribute('aria-pressed', String(+b.dataset.month === month)); });
     var shown = 0, live = {};
     [].slice.call(document.querySelectorAll('.wa-dest[data-tags]')).forEach(function(c){
@@ -1480,6 +1499,21 @@ window.AF = {
     }
     say.textContent = (parts.join(', ') || 'Narrowed') + ' — ' + shown + ' of 22.';
   }
+
+  /* The experiences section, three screens up, offers the same six lenses these
+     chips do, and its own copy promises "pick it and we will tell you which
+     country does it best". It never spoke to this filter. Now it sets it and
+     brings the reader down to the answer. */
+  var exps = [].slice.call(document.querySelectorAll('.wa-exp[data-want]'));
+  exps.forEach(function (ex) {
+    ex.addEventListener('click', function () {
+      var key = ex.dataset.want;
+      want = (want === key) ? null : key;
+      apply();
+      var grid = document.getElementById('destinations');
+      if (grid) grid.scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+  });
 
   document.addEventListener('af:region', function (ev) {
     var key = ev.detail && ev.detail.key;
