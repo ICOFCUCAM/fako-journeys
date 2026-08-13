@@ -1277,7 +1277,8 @@ def main():
                 "fifty-four": 54}
         truth = {
             len(countries),                                   # 22 written up
-            sum(len(c.entries) for c in countries),            # 594 places
+            sum(len(c.entries) for c in countries),            # 594 written entries
+            len(glob.glob(os.path.join(ROOT_DIR, "places", "*", "*.html"))),  # 572 with a page
             len(ids),                                          # 27 categories
             5,                                                 # 5 region groups
             sum(1 for c in countries if c.operator),           # 3 operators
@@ -1334,6 +1335,42 @@ def main():
               not re.search(r"shown \+ ' of \d", home_src))
         check("the opening does not print the size of Africa as the size of this site",
               "54 countries &middot;" not in home_src)
+
+        # Across the whole site, not just this page. The homepage said "594
+        # places" and /places said "572" — 594 is every entry, 572 is every entry
+        # that has a page, and the twenty-two-place gap is the `hero` category,
+        # which is a country's opening picture rather than a place. Two numbers
+        # for one thing, on two pages, both generated, from two derivations.
+        SITEWIDE = ("countries", "places", "categories", "destinations", "portraits")
+        pages = sorted(set(glob.glob(os.path.join(ROOT_DIR, "*.html"))
+                           + glob.glob(os.path.join(ROOT_DIR, "places", "index.html"))
+                           + glob.glob(os.path.join(ROOT_DIR, "tourism", "*.html"))))
+        printed = {}
+        for path in pages:
+            body = re.sub(r"<(script|style|svg)\b.*?</\1>", "",
+                          open(path).read(), flags=re.S)
+            for m in re.finditer(r"\b(\d{2,4})\s+(%s)\b" % "|".join(SITEWIDE), body):
+                # "26 places" on /places is one country's count, not the site's.
+                # Only totals — three figures or two that are not a leading zero.
+                if m.group(1).startswith("0"):
+                    continue
+                printed.setdefault(m.group(2), {}).setdefault(
+                    int(m.group(1)), set()).add(os.path.relpath(path, ROOT_DIR))
+        for noun in sorted(printed):
+            counts = printed[noun]
+            # A per-country or per-region figure is smaller than the site total,
+            # so compare only the largest, which is the one claiming to be all.
+            top = max(counts)
+            where = ", ".join(sorted(counts[top]))
+            expect = {"countries": len(countries),
+                      "categories": len(ids),
+                      "destinations": len(countries),
+                      "portraits": len(countries),
+                      "places": len(glob.glob(os.path.join(
+                          ROOT_DIR, "places", "*", "*.html")))}.get(noun)
+            check("every page that counts %s counts the same %s" % (noun, noun),
+                  expect is None or top == expect,
+                  "%d on %s, dataset has %s" % (top, where, expect))
 
         # -- the story graph -------------------------------------------------------
         print("\nthe story graph")

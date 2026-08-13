@@ -71,6 +71,10 @@ VIEW_PAD = 0.34
 MONTHS = ("January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December")
 
+# The one category that is a country's opening picture rather than a place, and
+# so is the one entry in twenty-seven that never gets a page of its own.
+HERO = "hero"
+
 
 def esc(v):
     return html_mod.escape(str(v if v is not None else ""), quote=True)
@@ -142,7 +146,12 @@ def block_claim(countries):
     n = len(countries)
     regions = len(REGION_GROUPS)
     cats = len(read_json(CATEGORY_FILE, {}).get("categories", []))
-    places = sum(len(c.entries) for c in countries)
+    # Not len(entries). Twenty-seven of the twenty-seven categories are written,
+    # but one of them is `hero` — the country's own opening picture, which has no
+    # page of its own. /places counts 572 for exactly that reason, and a homepage
+    # saying 594 while /places says 572 is two numbers for one thing.
+    places = sum(1 for c in countries for e in c.entries
+                 if getattr(e, "category", None) != HERO)
     return ('      <p class="wa-claim">%s countries. %s regions.<br>'
             '%s ways to experience each of them.<br>'
             '<em>%s places, each written up on its own.</em></p>'
