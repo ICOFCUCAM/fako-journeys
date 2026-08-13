@@ -437,11 +437,26 @@ function serve() {
           const range = document.createRange();
           range.selectNodeContents(big);
           const t = range.getBoundingClientRect();
+          /* The map is zoomed by moving its viewBox, so it clips: .wa-map-svg is
+             overflow:hidden and the parts of the continent outside the current
+             view keep their geometry without being drawn. getBoundingClientRect
+             does not know that — it returns the shape's box whether or not a
+             pixel of it reaches the screen. Measured against it, this pass
+             reported the headline at 1.45:1 over nineteen countries in the East
+             Africa view, every one of them clipped away: the headline ends at
+             904 and the map's visible box starts at 963. Nothing was there.
+             So the overlap is intersected with what the map actually shows. */
+          const clip = q('.wa-map-svg') && q('.wa-map-svg').getBoundingClientRect();
           document.querySelectorAll('.wa-map-live, .wa-map-rest path').forEach(el => {
             const b = el.getBoundingClientRect();
             if (!b.width || !b.height) return;
-            const x = Math.min(t.right, b.right) - Math.max(t.left, b.left);
-            const y = Math.min(t.bottom, b.bottom) - Math.max(t.top, b.top);
+            const L = clip ? Math.max(b.left, clip.left) : b.left;
+            const R = clip ? Math.min(b.right, clip.right) : b.right;
+            const T = clip ? Math.max(b.top, clip.top) : b.top;
+            const Bm = clip ? Math.min(b.bottom, clip.bottom) : b.bottom;
+            if (R - L <= 0 || Bm - T <= 0) return;
+            const x = Math.min(t.right, R) - Math.max(t.left, L);
+            const y = Math.min(t.bottom, Bm) - Math.max(t.top, T);
             /* A sliver of a country clipping a serif is not the headline
                sitting on it; this wants real overlap. */
             if (x < 12 || y < 12) return;
