@@ -63,7 +63,7 @@ REGION_GROUPS = (
 )
 
 MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
-           "wants", "expcards", "claim", "months", "scale",
+           "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer")
 
@@ -310,6 +310,121 @@ def block_expcards(countries):
         else:
             out.append('<a class="wa-exp wa-exp--all" href="/places">%s%s</a>' % (art, body))
     return "\n      ".join(out)
+
+
+DETAIL = os.path.join(ROOT, "tourism", "atlas-detail.json")
+
+
+def _detail():
+    d = read_json(DETAIL, {})
+    if not d:
+        raise ValueError("tourism/atlas-detail.json is missing — run tools/atlas_detail.py")
+    return d
+
+
+def block_mapunder(countries):
+    """What is under the countries: ocean graticule, then water on the land.
+
+    Order matters and is the reason this is two blocks rather than one. The
+    graticule belongs under everything, because a meridian drawn over Algeria is
+    a scratch on the page. Lakes and rivers belong over the country fills and
+    under the boundaries, because a river is a feature of the ground and a
+    border is an argument about it — the Nile crosses Egypt, it does not stop at
+    Sudan. SVG has no z-index, so the only way to say that is the document.
+    """
+    d = _detail()
+    out = ['<g class="wa-map-grat" aria-hidden="true">']
+    for g in d["graticule"]:
+        out.append('<path d="%s"/>' % g["d"])
+    out.append('</g>')
+    # The labels sit in the ocean where the lines leave the frame, small enough
+    # that they are a texture until you look for them.
+    out.append('<g class="wa-map-coord" aria-hidden="true">')
+    seen = set()
+    for g in d["graticule"]:
+        x, y = g["at"]
+        vw, vh = d["fit"]["view"][2], d["fit"]["view"][3]
+        if not (12 < x < vw - 12 and 12 < y < vh - 12):
+            continue
+        key = (g["label"], round(x / 40), round(y / 40))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append('<text x="%.1f" y="%.1f">%s</text>' % (x + 4, y - 4, esc(g["label"])))
+    out.append('</g>')
+    return "".join(out)
+
+
+def block_mapover(countries):
+    """Water, then journeys, then cities, then the compass.
+
+    The cities are the layer that changes what the map is for. A map with
+    countries on it is a picture of a continent; a map that knows Lagos is
+    somewhere you can go from.
+    """
+    d = _detail()
+    out = []
+    # The coast, as its own stroke. Stroking the country polygons harder cannot
+    # produce this: an internal border carries the line on both sides and reads
+    # as a hairline, a coast carries it on one and reads as an edge.
+    out.append('<g class="wa-map-coast" aria-hidden="true">')
+    for path_d in d["coast"]:
+        out.append('<path d="%s"/>' % path_d)
+    out.append('</g>')
+    out.append('<g class="wa-map-water" aria-hidden="true">')
+    for path_d in d["rivers"]:
+        out.append('<path class="wa-map-river" d="%s"/>' % path_d)
+    for path_d in d["lakes"]:
+        out.append('<path class="wa-map-lake" d="%s"/>' % path_d)
+    out.append('</g>')
+
+    # Madagascar is not adrift. It keeps its geographic separation and gets the
+    # channel drawn across it, which is a crossing rather than a gap.
+    out.append('<path class="wa-map-strait" aria-hidden="true" d="%s"/>' % d["strait"])
+
+    # The island states are markers because their outline is a pixel here. Two
+    # unexplained circles in open water is worse on a chart than leaving them
+    # off, so they are named like everything else that has a reason to be there.
+    out.append('<g class="wa-map-isles" aria-hidden="true">')
+    for i in d["islands"]:
+        out.append('<text x="%.1f" y="%.1f">%s</text>'
+                   % (i["x"] - 13, i["y"] + 4, esc(i["name"].upper())))
+    out.append('</g>')
+
+    # Journeys. Drawn as arcs rather than segments, because a straight line
+    # between two points on this projection is not the way anybody travels.
+    out.append('<g class="wa-map-routes" aria-hidden="true">')
+    for r in d["routes"]:
+        out.append('<path class="wa-map-route" data-route="%s" d="%s"><title>%s</title></path>'
+                   % (esc(r["slug"]), r["d"], esc(r["name"] + " — " + r["line"])))
+    out.append('</g>')
+
+    # Cities. The three with a photograph in the collection are named on the
+    # map; the rest are points until you ask. Labelling eleven would put type
+    # across half of West Africa.
+    named = {c["slug"] for c in load_cities() if c.get("photo")}
+    out.append('<g class="wa-map-cities">')
+    for c in d["cities"]:
+        lead = ' data-lead="true"' if c["slug"] in named else ''
+        out.append('<g class="wa-map-city"%s data-slug="%s">'
+                   '<circle class="wa-map-city-dot" cx="%.1f" cy="%.1f" r="3.4"/>'
+                   '<circle class="wa-map-city-ring" cx="%.1f" cy="%.1f" r="7"/>'
+                   '<text class="wa-map-city-say" x="%.1f" y="%.1f">%s</text>'
+                   '<title>%s</title></g>'
+                   % (lead, esc(c["slug"]), c["x"], c["y"], c["x"], c["y"],
+                      c["x"] + 11, c["y"] + 4, esc(c["name"].upper()), esc(c["name"])))
+    out.append('</g>')
+
+    r = d["rose"]
+    out.append(
+        '<g class="wa-map-rose" aria-hidden="true" transform="translate(%.1f %.1f) rotate(%.2f)">'
+        '<circle r="%.1f"/><circle r="%.1f" class="wa-map-rose-in"/>'
+        '<path d="M0 -%.1f L4 0 L0 %.1f L-4 0 Z"/>'
+        '<path class="wa-map-rose-x" d="M-%.1f 0 H%.1f"/>'
+        '<text y="-%.1f">N</text></g>'
+        % (r["cx"], r["cy"], r["rotate"], r["r"], r["r"] * 0.62,
+           r["r"] * 0.78, r["r"] * 0.78, r["r"], r["r"], r["r"] + 5))
+    return "".join(out)
 
 
 def block_claim(countries):
@@ -926,6 +1041,8 @@ def render(countries):
         "experiences": block_experiences(seq),
         "wants": block_wants(seq),
         "expcards": block_expcards(seq),
+        "mapunder": block_mapunder(seq),
+        "mapover": block_mapover(seq),
         "window": block_window(with_shape, shape_by_slug, views),
         "captions": block_captions(with_shape),
         "ticks": block_ticks(with_shape, views),

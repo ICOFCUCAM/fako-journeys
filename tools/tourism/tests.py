@@ -1399,6 +1399,68 @@ def main():
                   n_ticks >= len(countries) and drawn <= n_ticks,
                   "%d buttons, %d shapes" % (n_ticks, drawn))
 
+        # ---- the map's cartographic layers -----------------------------------
+        # Every layer is projected with one fit. Draw a layer with a fit of its
+        # own and the Nile lands in Chad — and it would look plausible, which is
+        # why this is checked rather than eyeballed. The invariant: the fit the
+        # detail file was built with has to be the fit the map on the page is
+        # already using, recovered from two island marks whose coordinates are
+        # known and whose SVG positions are in the markup.
+        detail = json.load(open(os.path.join(ROOT_DIR, "tourism", "atlas-detail.json")))
+        marks = dict((m.group(1), (float(m.group(2)), float(m.group(3))))
+                     for m in re.finditer(
+                         r'data-slug="(mauritius|seychelles)"[^>]*>\s*<circle[^>]*'
+                         r'cx="([-\d.]+)" cy="([-\d.]+)"', home_src))
+        check("the map still carries the two marks the fit is solved from",
+              len(marks) == 2, ", ".join(sorted(marks)))
+        if len(marks) == 2:
+            import math as _m
+            LON0, LAT0 = _m.radians(19.0), _m.radians(2.0)
+
+            def _proj(lon, lat):
+                lo, la = _m.radians(lon), _m.radians(lat)
+                cos_c = (_m.sin(LAT0) * _m.sin(la)
+                         + _m.cos(LAT0) * _m.cos(la) * _m.cos(lo - LON0))
+                k = _m.sqrt(2.0 / (1.0 + cos_c))
+                return (k * _m.cos(la) * _m.sin(lo - LON0),
+                        -k * (_m.cos(LAT0) * _m.sin(la)
+                              - _m.sin(LAT0) * _m.cos(la) * _m.cos(lo - LON0)))
+            a, b = _proj(55.5, -4.6), _proj(57.5, -20.3)
+            sx, sy = marks["seychelles"]
+            mx, my = marks["mauritius"]
+            k = (my - sy) / (b[1] - a[1])
+            ox, oy = sx - k * a[0], sy - k * a[1]
+            f = detail["fit"]
+            drift = max(abs(k - f["k"]), abs(ox - f["ox"]), abs(oy - f["oy"]))
+            check("the detail layers share the map's own fit", drift < 0.05,
+                  "k %.4f/%.4f ox %.4f/%.4f oy %.4f/%.4f"
+                  % (k, f["k"], ox, f["ox"], oy, f["oy"]))
+
+        for layer in ("coast", "rivers", "lakes", "graticule", "cities", "routes"):
+            check("the map draws its %s" % layer, bool(detail.get(layer)),
+                  "%d" % len(detail.get(layer) or []))
+
+        vw, vh = detail["fit"]["view"][2], detail["fit"]["view"][3]
+        astray = [c["slug"] for c in detail["cities"]
+                  if not (0 <= c["x"] <= vw and 0 <= c["y"] <= vh)]
+        check("every city point is on the map", not astray, ", ".join(astray))
+
+        # The compass is the one drawn mark on the map, and it belongs in water:
+        # it used to stand on South Africa, which reads as a sticker rather than
+        # as a chart mark.
+        rose = detail["rose"]
+        onland = [c["slug"] for c in detail["cities"]
+                  if abs(c["x"] - rose["cx"]) < 60 and abs(c["y"] - rose["cy"]) < 60]
+        check("the compass is not standing on anything", not onland, ", ".join(onland))
+
+        # A route with one stop is not a journey, and a stop has to be a real
+        # coordinate rather than a name somebody typed.
+        for r in json.load(open(os.path.join(ROOT_DIR, "tourism", "cities.json")))["routes"]:
+            ok = len(r["stops"]) >= 2 and all(
+                len(s) == 3 and -30 <= s[1] <= 60 and -40 <= s[2] <= 40 for s in r["stops"])
+            check("the %s route is a sequence of real places" % r["slug"], ok,
+                  " to ".join(s[0] for s in r["stops"]))
+
         # ---- the lens taxonomy ----------------------------------------------
         # Four copies of one list lived on this page: the hero's picker, the
         # filter bar, the experience cards and a LINE map in script. The picker
@@ -1603,10 +1665,40 @@ def main():
                         return True
                 return False
 
+            # The operator tier stopped being --c-primary itself when it had to
+            # start reading against a --c-primary ground; it is a mix of it now,
+            # so what is checked is that the tone is derived from that token,
+            # not that it equals it. The three-tones-are-three requirement is
+            # checked on the measured values a few lines down.
             for tone, role in (("--c-land", "the continent"),
-                               ("--c-accent-fill", "a destination"),
-                               ("--c-primary", "an operator of ours")):
+                               ("--c-accent-fill", "a destination")):
                 check("the map draws %s in %s" % (role, tone), drawn_in(tone))
+            check("the map draws an operator of ours in a tone of its own",
+                  drawn_in("--c-tier-ours") or drawn_in("--c-primary"))
+            # AN OPERATOR OF OURS ON A DEEP FOREST GROUND.
+            # The tier is --c-primary and the hero's ground is --c-primary, so
+            # the three countries we run measured 1.00:1 against the ocean
+            # around them — holes in the continent, not a tier. Same fault as
+            # 108 found with gold, same rule: a tier contrasts with what it sits
+            # on, not with what surrounds it.
+            ours = re.search(r"--c-tier-ours:\s*color-mix\(in srgb,\s*var\(--c-primary\)\s*"
+                             r"(\d+)%,\s*var\((--c-[a-z-]+)\)\)", home)
+            check("the operator tier is mixed, not the ground colour", ours is not None,
+                  "%s%% forest + %s" % ours.groups() if ours else "still var(--c-primary)")
+            if ours:
+                w = int(ours.group(1)) / 100.0
+                mix = [w * a + (1 - w) * b for a, b in
+                       zip(channels(TOKENS["--c-primary"]), channels(TOKENS[ours.group(2)]))]
+                ground = relative(channels(TOKENS["--c-primary"]))
+                lit = relative(mix)
+                r = (max(ground, lit) + .05) / (min(ground, lit) + .05)
+                check("an operator of ours reads against the ground it sits on",
+                      r >= 1.35, "%.2f:1" % r)
+                dest = relative(channels(TOKENS["--c-accent-fill"]))
+                rd = (max(dest, lit) + .05) / (min(dest, lit) + .05)
+                check("and is still the darkest of the three tiers",
+                      lit < dest and rd >= 2.0, "%.2f:1 against a destination" % rd)
+
             # The land is not a fourth brand colour. It is sand with enough
             # sienna in it to have a coastline — 088 — and it has to stay
             # derived, or the palette has grown a value nobody chose.

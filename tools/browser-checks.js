@@ -867,9 +867,20 @@ function serve() {
         }
 
         /* And the monospace voice is three settings, not seven. Counted over
-           every element in the hero that holds its own words. */
+           every element in the hero that holds its own words.
+
+           Type inside the map is not in this voice and cannot be compared with
+           it: <text> in an SVG is sized in user units, so `font-size:13px` on a
+           city label is 13 of 1060 viewBox units and renders at about six CSS
+           pixels — and at a different size again when a region is flown to. It
+           is cartographic type, in the drawing's own space. Counting it beside
+           interface type reported seven settings for a hero that has three, and
+           the fix would have been to make map labels the same nominal size as
+           a button, which would render them illegible. The map's own type is
+           checked for its own consistency instead, below. */
         const mono = new Set();
         document.querySelectorAll('#window *').forEach(el => {
+          if (el.closest('svg')) return;
           const own = [...el.childNodes].filter(n => n.nodeType === 3)
             .map(n => n.textContent).join('').trim();
           if (!own) return;
@@ -878,6 +889,15 @@ function serve() {
           if (cs.visibility === 'hidden' || !el.getBoundingClientRect().width) return;
           mono.add(cs.fontSize + '/' + cs.letterSpacing);
         });
+        /* The map's own lettering, in the map's own units: a place name and a
+           survey mark. Two registers, not five. */
+        const cart = new Set();
+        document.querySelectorAll('#window svg text').forEach(el => {
+          if (!(el.textContent || '').trim()) return;
+          cart.add(getComputedStyle(el).fontSize);
+        });
+        if (cart.size > 2) bad.push('the map letters in ' + cart.size
+          + ' sizes: ' + [...cart].sort().join(' '));
         if (mono.size > 3) bad.push('the mono voice has ' + mono.size
           + ' settings: ' + [...mono].sort().join(' '));
 

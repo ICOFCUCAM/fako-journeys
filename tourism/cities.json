@@ -1,124 +1,242 @@
 {
-  "_note": [
-    "The twelve cities, as a first collection rather than a fixed list.",
-    "",
-    "Every other list on this site is derived — the destinations grid, the map,",
-    "the footer are all len() of something on disk. This one is curated, and says",
-    "so: it is an editor's twelve, not the twelve largest or the twelve anything.",
-    "",
-    "`country` has to be a published slug in tourism/countries/, because the card",
-    "links there and a card that links nowhere is not a destination. Luanda is the",
-    "one city on the brief that is missing here for exactly that reason: Angola is",
-    "not in the atlas, so adding Luanda means adding Angola first — a dataset and a",
-    "map outline, not a line in this file.",
-    "",
-    "`photo` is null until there is a real photograph of that city in the repo. It",
-    "is never filled with a generated image: these are named, real places, and a",
-    "picture of a city that does not exist is a lie about somewhere you can buy a",
-    "ticket to. A card with no photograph gets a typographic plate instead, which",
-    "is a deliberate treatment rather than a gap, and drops the picture in the",
-    "moment one arrives."
-  ],
-  "cities": [
-    {
-      "slug": "cape-town",
-      "name": "Cape Town",
-      "country": "south-africa",
-      "line": "Ocean · Mountain · Design",
-      "say": "The only city on earth with a national park through the middle of it. The mountain is inside the municipal boundary, there is an ocean on either side, and the winelands start forty minutes from the centre.",
-      "photo": "/images/uploads/city-cape-town-1080w.jpg",
-      "photo_w": 1080,
-      "photo_h": 650,
-      "alt": "The V&A Waterfront in Cape Town at midday, yachts and quaysides in the foreground and Table Mountain and Devil's Peak rising directly behind the city centre"
-    },
-    {
-      "slug": "marrakech",
-      "name": "Marrakech",
-      "country": "morocco",
-      "line": "Medina · Markets · Heritage",
-      "say": "Eleven centuries inside one set of walls. Jemaa el-Fna empties and refills twice a day — orange carts and storytellers in the afternoon, a hundred food stalls after dark, and the Atlas on the skyline behind it.",
-      "photo": "/images/uploads/city-marrakech-1200w.jpg",
-      "photo_w": 1200,
-      "photo_h": 800,
-      "alt": "Jemaa el-Fna square in Marrakech at dusk, crowds moving between rows of covered food stalls, the pink walls of the medina and a minaret behind, with the sky going orange"
-    },
-    {
-      "slug": "lagos",
-      "name": "Lagos",
-      "country": "nigeria",
-      "line": "Music · Fashion · Energy",
-      "say": "The loudest cultural output on the continent, and most of it made in the last twenty years: Afrobeats, Nollywood, a gallery and fashion scene exporting worldwide, across a city of twenty million on a lagoon.",
-      "photo": "/images/uploads/city-lagos-1200w.jpg",
-      "photo_w": 1200,
-      "photo_h": 630,
-      "alt": "The Lagos Marina waterfront seen from above, the lagoon on the left and the towers and traffic of Lagos Island running along the shoreline"
-    },
-    {
-      "slug": "nairobi",
-      "name": "Nairobi",
-      "country": "kenya",
-      "line": "Innovation · Food · Wildlife",
-      "say": "The only capital with a national park on its boundary — lion and rhino within sight of the towers — and the tech corridor that got the country called Silicon Savannah.",
-      "photo": "/images/uploads/city-nairobi-1200w.jpg",
-      "photo_w": 1200,
-      "photo_h": 800,
-      "alt": "Central Nairobi from the air on a clear day, towers and older colonial-era rooftops in the foreground and the city spreading to the horizon under cumulus cloud"
-    },
-    {
-      "slug": "accra",
-      "name": "Accra",
-      "country": "ghana",
-      "line": "Contemporary · Music · Coast",
-      "say": "Where a great deal of contemporary African design and music is actually being made, on an Atlantic coast with the forts of the slave trade a couple of hours west of it.",
-      "photo": null
-    },
-    {
-      "slug": "addis-ababa",
-      "name": "Addis Ababa",
-      "country": "ethiopia",
-      "line": "Highland · Coffee · History",
-      "say": "Two and a half thousand metres up, in the one African country never colonised — which is why the national museum, the cuisine and the calendar are all their own.",
-      "photo": null
-    },
-    {
-      "slug": "kigali",
-      "name": "Kigali",
-      "country": "rwanda",
-      "line": "Hills · Coffee · Calm",
-      "say": "Built across a set of ridges and quiet in a way no city this size has any right to be. The coffee is grown within sight of it and the memorial is not optional.",
-      "photo": null
-    },
-    {
-      "slug": "dakar",
-      "name": "Dakar",
-      "country": "senegal",
-      "line": "Atlantic · Art · Music",
-      "say": "The westernmost city on the continent, and the one that exported mbalax and a contemporary art biennale. Gorée is twenty minutes offshore.",
-      "photo": null
-    },
-    {
-      "slug": "abidjan",
-      "name": "Abidjan",
-      "country": "cote-divoire",
-      "line": "Lagoon · Design · Nightlife",
-      "say": "Built around a lagoon and out of it — the economic engine of francophone West Africa, with the architecture, the food and the nights that come with that.",
-      "photo": null
-    },
-    {
-      "slug": "maputo",
-      "name": "Maputo",
-      "country": "mozambique",
-      "line": "Indian Ocean · Architecture · Food",
-      "say": "Acacia avenues, Portuguese modernism and an Indian Ocean seafood culture, on a bay at the southern end of two thousand kilometres of coast.",
-      "photo": null
-    },
-    {
-      "slug": "douala",
-      "name": "Douala",
-      "country": "cameroon",
-      "line": "River · Commerce · Music",
-      "say": "The Wouri estuary, the port that most of central Africa's freight goes through, makossa, and the city half this site's enquiries are answered from.",
-      "photo": null
-    }
-  ]
+ "_note": [
+  "The twelve cities, as a first collection rather than a fixed list.",
+  "",
+  "Every other list on this site is derived — the destinations grid, the map,",
+  "the footer are all len() of something on disk. This one is curated, and says",
+  "so: it is an editor's twelve, not the twelve largest or the twelve anything.",
+  "",
+  "`country` has to be a published slug in tourism/countries/, because the card",
+  "links there and a card that links nowhere is not a destination. Luanda is the",
+  "one city on the brief that is missing here for exactly that reason: Angola is",
+  "not in the atlas, so adding Luanda means adding Angola first — a dataset and a",
+  "map outline, not a line in this file.",
+  "",
+  "`photo` is null until there is a real photograph of that city in the repo. It",
+  "is never filled with a generated image: these are named, real places, and a",
+  "picture of a city that does not exist is a lie about somewhere you can buy a",
+  "ticket to. A card with no photograph gets a typographic plate instead, which",
+  "is a deliberate treatment rather than a gap, and drops the picture in the",
+  "moment one arrives."
+ ],
+ "cities": [
+  {
+   "slug": "cape-town",
+   "name": "Cape Town",
+   "country": "south-africa",
+   "line": "Ocean · Mountain · Design",
+   "say": "The only city on earth with a national park through the middle of it. The mountain is inside the municipal boundary, there is an ocean on either side, and the winelands start forty minutes from the centre.",
+   "photo": "/images/uploads/city-cape-town-1080w.jpg",
+   "photo_w": 1080,
+   "photo_h": 650,
+   "alt": "The V&A Waterfront in Cape Town at midday, yachts and quaysides in the foreground and Table Mountain and Devil's Peak rising directly behind the city centre",
+   "lonlat": [
+    18.4241,
+    -33.9249
+   ]
+  },
+  {
+   "slug": "marrakech",
+   "name": "Marrakech",
+   "country": "morocco",
+   "line": "Medina · Markets · Heritage",
+   "say": "Eleven centuries inside one set of walls. Jemaa el-Fna empties and refills twice a day — orange carts and storytellers in the afternoon, a hundred food stalls after dark, and the Atlas on the skyline behind it.",
+   "photo": "/images/uploads/city-marrakech-1200w.jpg",
+   "photo_w": 1200,
+   "photo_h": 800,
+   "alt": "Jemaa el-Fna square in Marrakech at dusk, crowds moving between rows of covered food stalls, the pink walls of the medina and a minaret behind, with the sky going orange",
+   "lonlat": [
+    -7.9811,
+    31.6295
+   ]
+  },
+  {
+   "slug": "lagos",
+   "name": "Lagos",
+   "country": "nigeria",
+   "line": "Music · Fashion · Energy",
+   "say": "The loudest cultural output on the continent, and most of it made in the last twenty years: Afrobeats, Nollywood, a gallery and fashion scene exporting worldwide, across a city of twenty million on a lagoon.",
+   "photo": "/images/uploads/city-lagos-1200w.jpg",
+   "photo_w": 1200,
+   "photo_h": 630,
+   "alt": "The Lagos Marina waterfront seen from above, the lagoon on the left and the towers and traffic of Lagos Island running along the shoreline",
+   "lonlat": [
+    3.3792,
+    6.5244
+   ]
+  },
+  {
+   "slug": "nairobi",
+   "name": "Nairobi",
+   "country": "kenya",
+   "line": "Innovation · Food · Wildlife",
+   "say": "The only capital with a national park on its boundary — lion and rhino within sight of the towers — and the tech corridor that got the country called Silicon Savannah.",
+   "photo": "/images/uploads/city-nairobi-1200w.jpg",
+   "photo_w": 1200,
+   "photo_h": 800,
+   "alt": "Central Nairobi from the air on a clear day, towers and older colonial-era rooftops in the foreground and the city spreading to the horizon under cumulus cloud",
+   "lonlat": [
+    36.8172,
+    -1.2864
+   ]
+  },
+  {
+   "slug": "accra",
+   "name": "Accra",
+   "country": "ghana",
+   "line": "Contemporary · Music · Coast",
+   "say": "Where a great deal of contemporary African design and music is actually being made, on an Atlantic coast with the forts of the slave trade a couple of hours west of it.",
+   "photo": null,
+   "lonlat": [
+    -0.187,
+    5.6037
+   ]
+  },
+  {
+   "slug": "addis-ababa",
+   "name": "Addis Ababa",
+   "country": "ethiopia",
+   "line": "Highland · Coffee · History",
+   "say": "Two and a half thousand metres up, in the one African country never colonised — which is why the national museum, the cuisine and the calendar are all their own.",
+   "photo": null,
+   "lonlat": [
+    38.74,
+    9.03
+   ]
+  },
+  {
+   "slug": "kigali",
+   "name": "Kigali",
+   "country": "rwanda",
+   "line": "Hills · Coffee · Calm",
+   "say": "Built across a set of ridges and quiet in a way no city this size has any right to be. The coffee is grown within sight of it and the memorial is not optional.",
+   "photo": null,
+   "lonlat": [
+    30.0619,
+    -1.9441
+   ]
+  },
+  {
+   "slug": "dakar",
+   "name": "Dakar",
+   "country": "senegal",
+   "line": "Atlantic · Art · Music",
+   "say": "The westernmost city on the continent, and the one that exported mbalax and a contemporary art biennale. Gorée is twenty minutes offshore.",
+   "photo": null,
+   "lonlat": [
+    -17.4677,
+    14.7167
+   ]
+  },
+  {
+   "slug": "abidjan",
+   "name": "Abidjan",
+   "country": "cote-divoire",
+   "line": "Lagoon · Design · Nightlife",
+   "say": "Built around a lagoon and out of it — the economic engine of francophone West Africa, with the architecture, the food and the nights that come with that.",
+   "photo": null,
+   "lonlat": [
+    -4.0083,
+    5.36
+   ]
+  },
+  {
+   "slug": "maputo",
+   "name": "Maputo",
+   "country": "mozambique",
+   "line": "Indian Ocean · Architecture · Food",
+   "say": "Acacia avenues, Portuguese modernism and an Indian Ocean seafood culture, on a bay at the southern end of two thousand kilometres of coast.",
+   "photo": null,
+   "lonlat": [
+    32.5732,
+    -25.9692
+   ]
+  },
+  {
+   "slug": "douala",
+   "name": "Douala",
+   "country": "cameroon",
+   "line": "River · Commerce · Music",
+   "say": "The Wouri estuary, the port that most of central Africa's freight goes through, makossa, and the city half this site's enquiries are answered from.",
+   "photo": null,
+   "lonlat": [
+    9.7679,
+    4.0511
+   ]
+  }
+ ],
+ "_routes_note": [
+  "Three journeys, drawn as paths across the map rather than listed as itineraries.",
+  "A waypoint is a real place with real coordinates; it does not need a card in the",
+  "collection to be somewhere the road goes through. Kampala, Windhoek and Victoria",
+  "Falls are waypoints, not cities in the twelve."
+ ],
+ "routes": [
+  {
+   "slug": "gulf-of-guinea",
+   "name": "The Gulf of Guinea",
+   "line": "Lagos to Abidjan, along the coast the whole way",
+   "stops": [
+    [
+     "Lagos",
+     3.3792,
+     6.5244
+    ],
+    [
+     "Accra",
+     -0.187,
+     5.6037
+    ],
+    [
+     "Abidjan",
+     -4.0083,
+     5.36
+    ]
+   ]
+  },
+  {
+   "slug": "the-rift",
+   "name": "Across the Rift",
+   "line": "Nairobi to Kigali, over the escarpment and around the lake",
+   "stops": [
+    [
+     "Nairobi",
+     36.8172,
+     -1.2864
+    ],
+    [
+     "Kampala",
+     32.5825,
+     0.3476
+    ],
+    [
+     "Kigali",
+     30.0619,
+     -1.9441
+    ]
+   ]
+  },
+  {
+   "slug": "cape-to-zambezi",
+   "name": "Cape to Zambezi",
+   "line": "Cape Town to the falls, most of it gravel",
+   "stops": [
+    [
+     "Cape Town",
+     18.4241,
+     -33.9249
+    ],
+    [
+     "Windhoek",
+     17.0658,
+     -22.5609
+    ],
+    [
+     "Victoria Falls",
+     25.8572,
+     -17.9243
+    ]
+   ]
+  }
+ ]
 }
