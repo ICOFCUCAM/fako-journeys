@@ -1269,6 +1269,44 @@ def main():
               all(("/portrait/%s<" % s) in sitemap for s in live_slugs)
               and "/stories<" in sitemap)
 
+        # -- what the homepage claims about itself ---------------------------------
+        print("\nwhat the homepage claims about itself")
+        home_src = open(os.path.join(ROOT_DIR, "index.html")).read()
+        WORD = {"three": 3, "five": 5, "nineteen": 19, "twenty-two": 22,
+                "twenty-seven": 27, "fifty-four": 54}
+        truth = {
+            len(countries),                                   # 22 written up
+            sum(len(c.entries) for c in countries),            # 594 places
+            len(ids),                                          # 27 categories
+            5,                                                 # 5 region groups
+            sum(1 for c in countries if c.operator),           # 3 operators
+            len(countries) - sum(1 for c in countries if c.operator),
+        }
+        # The year an operator started is a fact about that operator, not a
+        # coverage claim, but it is printed here and reads as a figure.
+        truth |= {int(c.operator.since) for c in countries if c.operator}
+        # The brief block is the loudest sentence on the page and it used to open
+        # "Fifty-four countries", which is the size of Africa printed where a
+        # reader takes it as the size of this site. Every number in it now has to
+        # be a len() of something on disk.
+        brief = re.search(r'<section class="wa-brief".*?</section>', home_src, re.S)
+        check("the brief section is still there", bool(brief))
+        if brief:
+            said = brief.group(0).lower()
+            spelt = {w for w in WORD if re.search(r'\b%s\b' % w, said)}
+            wrong = sorted(w for w in spelt if WORD[w] not in truth)
+            check("every number spelt out in the brief is one the files have",
+                  not wrong, ", ".join(wrong))
+            figures = {int(n.replace(",", "")) for n in
+                       re.findall(r'\b(\d[\d,]{1,6})\b', re.sub(r'<[^>]+>', ' ', brief.group(0)))
+                       if int(n.replace(",", "")) > 4}
+            check("every figure printed in the brief is one the files have",
+                  figures <= truth, ", ".join(str(f) for f in sorted(figures - truth)))
+            check("the brief does not claim an operator we do not have",
+                  "operator in each" not in said and "in every" not in said)
+        check("the brief is generated rather than typed",
+              "<!-- gen:claim -->" in home_src)
+
         # -- the story graph -------------------------------------------------------
         print("\nthe story graph")
         from tourism import graph as graph_mod

@@ -341,8 +341,6 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:620px){.wa-wants{grid-template-columns:1fr 1fr}.wa-want:nth-child(3n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(2n){border-right:0;padding-right:0}}
 @media(max-width:460px){.wa-wants{grid-template-columns:1fr}.wa-want{border-right:0 !important;padding-right:0 !important}}
 @media(max-width:1080px){.wa-win{grid-template-columns:1fr}.wa-win-caps{min-height:200px}.wa-win-frame{height:min(40vh,340px)}}
-@media(max-width:900px){.wa-ops{grid-template-columns:1fr 1fr}.wa-ops>div:nth-child(2n){border-right:0;padding-right:0}
-  .wa-ops>div{padding-bottom:16px;border-bottom:var(--fj-rule)}}
 @media(max-width:1000px){.wa-win{grid-template-columns:1fr}.wa-win-caps{height:200px}
   .wa-win-frame{height:min(46vh,400px)}}
 /* A phone is not the desktop layout stacked. Stacked, the hero ran to 1,323px on
@@ -398,7 +396,6 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(pointer:coarse){
   .wa-tick{min-height:44px;padding-top:14px;padding-bottom:14px}
   .wa-want{padding-top:20px;padding-bottom:18px}}
-@media(max-width:520px){.wa-ops{grid-template-columns:1fr}.wa-ops>div{border-right:0 !important;padding-right:0 !important}}
 
 /* ---- zones and heads ------------------------------------------------------------ */
 .wa-zone{padding:88px 0}
@@ -1297,13 +1294,15 @@ window.AF = {
 <!-- what Afrinkong is -->
 <section class="wa-brief">
   <div class="wa-frame">
-    <p class="wa-claim">Fifty-four countries. Five regions.<br>Twenty-seven ways to experience each destination.<br><em>Local people behind every journey.</em></p>
+    <!-- gen:claim -->
+      <p class="wa-claim">Twenty-two countries. Five regions.<br>Twenty-seven ways to experience each of them.<br><em>594 places, each written up on its own.</em></p>
+    <!-- /gen:claim -->
     <div class="wa-ops">
       <!-- gen:operators -->
       <a class="wa-op" href="/cameroon"><span class="wa-op-where">Cameroon</span><b>Kamerun</b><span class="wa-op-base">Buea and Douala &middot; since 2011</span><p>Runs the Mount Cameroon rotation with eleven licensed guides, and the fourteen-day transect from the Atlantic to the Sahel.</p><span class="wa-op-go">Enter Kamerun &rarr;</span></a>
       <a class="wa-op" href="https://pearl-trails-uganda.vercel.app"><span class="wa-op-where">Uganda</span><b>Pearl Trails Uganda</b><span class="wa-op-base">Kampala &middot; since 2016</span><p>Gorilla and chimpanzee permits, the Rwenzori traverse, and the savanna parks, out of Kampala.</p><span class="wa-op-go">Enter Pearl Trails Uganda &rarr;</span></a>
       <a class="wa-op" href="https://namib-skyline.vercel.app"><span class="wa-op-where">Namibia</span><b>Namib Skyline</b><span class="wa-op-base">Windhoek and Swakopmund &middot; since 2018</span><p>Self-drive circuits with the gravel already driven, or guided if you would rather someone else did it.</p><span class="wa-op-go">Enter Namib Skyline &rarr;</span></a>
-      <div class="wa-op wa-op--rest"><span class="wa-op-where">Everywhere else</span><b>19 more countries</b><span class="wa-op-base">A licensed operator in each</span><p>Every other destination is covered by a company based in it, working through the same twenty-seven categories, so two countries can be compared on the same terms.</p></div>      <!-- /gen:operators -->
+      <a class="wa-op wa-op--rest" href="/places"><span class="wa-op-where">Everywhere else</span><b>Nineteen more countries</b><span class="wa-op-base">Written up, no operator of ours yet</span><p>We run companies in Cameroon, Uganda and Namibia. The other nineteen are written up to the same twenty-seven categories by the same hands, so any two countries here can be compared on the same terms &mdash; you are just booking them through someone else.</p><span class="wa-op-go">Every place, all twenty-two countries &rarr;</span></a>      <!-- /gen:operators -->
     </div>
   </div>
 </section>

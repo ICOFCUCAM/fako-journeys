@@ -28,7 +28,8 @@ import os
 import re
 
 from . import plate
-from .model import ROOT, load_picks, load_regions, load_views, region_of
+from .model import (CATEGORY_FILE, ROOT, load_picks, load_regions, load_views,
+                    region_of)
 
 LINKS = os.path.join(ROOT, "data", "links.json")
 
@@ -61,8 +62,8 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "regions", "months", "scale", "destinations",
-           "operators", "picks", "now", "stories", "footer")
+MARKERS = ("window", "captions", "ticks", "regions", "claim", "months", "scale",
+           "destinations", "operators", "picks", "now", "stories", "footer")
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
 VIEW_PAD = 0.34
@@ -102,6 +103,37 @@ def operator_line(c):
         else "Run with a licensed local operator"
 
 
+WORDS = {3: "Three", 5: "Five", 19: "Nineteen", 22: "Twenty-two", 27: "Twenty-seven"}
+
+
+def _spell(n):
+    """Small numbers read as words in this typeface; the rest stay figures."""
+    return WORDS.get(n, str(n))
+
+
+def block_claim(countries):
+    """What this site is, in three lines, counted from the files.
+
+    It used to open "Fifty-four countries" — the number of countries in Africa,
+    printed where a reader takes it as the number of countries here. Twenty-two
+    are written up. The map caption two screens above had it right all along
+    ("Fifty-four countries. Twenty-two of them are destinations here"), which is
+    how the overclaim survived: the honest sentence existed, just not in the
+    place that says it loudest.
+
+    Every number below is len() of something on disk, so the sentence cannot
+    drift from the dataset the way a hand-typed one did.
+    """
+    n = len(countries)
+    regions = len(REGION_GROUPS)
+    cats = len(read_json(CATEGORY_FILE, {}).get("categories", []))
+    places = sum(len(c.entries) for c in countries)
+    return ('      <p class="wa-claim">%s countries. %s regions.<br>'
+            '%s ways to experience each of them.<br>'
+            '<em>%s places, each written up on its own.</em></p>'
+            % (_spell(n), _spell(regions), _spell(cats), "{:,}".format(places)))
+
+
 def block_operators(countries):
     """The three companies of our own, as identities rather than three names.
 
@@ -120,12 +152,22 @@ def block_operators(countries):
             '<p>%s</p><span class="wa-op-go">Enter %s &rarr;</span></a>'
             % (esc(op.url), esc(c.name), esc(op.name), esc(op.base), esc(op.since),
                esc(op.line), esc(op.name)))
+    # The fourth card used to read "A licensed operator in each". There are three
+    # operators in tourism/operators.json and there have only ever been three, so
+    # that line was asserting nineteen companies that do not exist anywhere in
+    # this project. What is true about those nineteen is that they are written up
+    # on the same twenty-seven categories as the three — which is the more useful
+    # thing to say anyway, and it now goes somewhere instead of sitting there.
+    rest = len(countries) - len(ours)
     cards.append(
-        '      <div class="wa-op wa-op--rest"><span class="wa-op-where">Everywhere else</span>'
-        '<b>%d more countries</b><span class="wa-op-base">A licensed operator in each</span>'
-        '<p>Every other destination is covered by a company based in it, working through the '
-        'same twenty-seven categories, so two countries can be compared on the same terms.</p></div>'
-        % (len(countries) - len(ours)))
+        '      <a class="wa-op wa-op--rest" href="/places"><span class="wa-op-where">Everywhere else</span>'
+        '<b>%s more countries</b><span class="wa-op-base">Written up, no operator of ours yet</span>'
+        '<p>We run companies in %s. The other %s are written up to the same '
+        'twenty-seven categories by the same hands, so any two countries here can be '
+        'compared on the same terms &mdash; you are just booking them through someone else.</p>'
+        '<span class="wa-op-go">Every place, all %s countries &rarr;</span></a>'
+        % (_spell(rest), _and_list([c.name for c in ours]),
+           _spell(rest).lower(), _spell(len(countries)).lower()))
     return "\n".join(cards)
 
 
@@ -549,6 +591,7 @@ def render(countries):
         "window": block_window(with_shape, shape_by_slug),
         "captions": block_captions(with_shape),
         "ticks": block_ticks(with_shape, views),
+        "claim": block_claim(seq),
         "months": block_months(seq),
         "destinations": block_destinations(seq),
         "scale": block_scale(),
