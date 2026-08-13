@@ -332,6 +332,14 @@ def _neighbours(slug, links, live):
     return out
 
 
+def _and_list(parts):
+    """a, b and c — an Oxford-free list, because this is prose not a table."""
+    parts = list(parts)
+    if len(parts) <= 1:
+        return "".join(parts)
+    return ", ".join(parts[:-1]) + " and " + parts[-1]
+
+
 def block_destinations(countries):
     """The grid, grouped by region, each card carrying what it leads on and
     what it touches."""
@@ -365,16 +373,25 @@ def block_destinations(countries):
             % (key, title, esc(reg.line if reg else ""), esc(key), len(group),
                "country" if len(group) == 1 else "countries"))
         for c in sorted(group, key=lambda x: (0 if x.operator else 1, x.name)):
+            reg = region_meta.get(key)
+            tone = reg.tone if reg else ''
             near = _neighbours(c.slug, links, live)
-            borders = ('<p class="wa-dest-near"><span>Walk out of it into</span>%s</p>'
-                       % "".join('<a href="/portrait/%s">%s</a>' % (esc(s), esc(n))
-                                 for s, n in near)) if near else ""
+            # One sentence, not a stack of links. Tanzania borders five of the
+            # published countries; five underlined blocks under every write-up
+            # added more than a thousand pixels to the section and read as five
+            # more calls to action.
+            borders = ('<p class="wa-dest-near">Walk out of it into %s.</p>'
+                       % _and_list('<a href="/portrait/%s">%s</a>' % (esc(sl), esc(n))
+                                   for sl, n in near)) if near else ""
             rows.append(
-                '      <div class="wa-dest" data-region="%s" data-tags="%s" data-months="%s">'
+                '      <div class="wa-dest"%s data-region="%s" data-tags="%s" data-months="%s"'
+                ' style="--reg-tone:%s">'
                 '<b>%s</b><h3>%s</h3><p>%s</p>'
                 '<p class="wa-dest-when">%s</p>%s'
                 '<a href="%s">Explore %s &rarr;</a></div>'
-                % (key, esc(" ".join(c.calls)), esc(",".join(str(m) for m in c.months)),
+                % (' data-ours="true"' if c.operator else '',
+                   key, esc(" ".join(c.calls)), esc(",".join(str(m) for m in c.months)),
+                   esc(tone),
                    esc(c.operator.name if c.operator else ''), esc(c.name), esc(c.summary), esc(c.when),
                    borders, esc(c.url), esc(c.name)))
     return "\n".join(rows)
