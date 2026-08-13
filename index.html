@@ -66,7 +66,48 @@
    rotation stops being a journey and becomes a slideshow, and it cost three
    screens of scrolling before the page began. Selection is the right interaction
    at this size, and it behaves identically on a phone. */
-.wa-open{position:relative}
+/* THE HERO'S GROUND
+   -----------------
+   Deep forest, and only here. The rest of the page stays ivory, so scrolling
+   out of the first screen is a release rather than a change of subject — the
+   hero is the plate and the site is the paper it is bound into.
+
+   It joins the dark-ground list in the design system rather than overriding
+   colours by hand, which means it inherits the two corrections that list
+   exists for: the accent goes to its lit variant (4.53:1 on forest, against
+   burnt sienna's 1.9) and the metadata voice goes to muted gold (6.02:1,
+   against the grey's 2.4). A hundred-odd rules written against --c-accent and
+   --c-muted are correct on this surface without knowing they are on it.
+
+   The continent gains from the ground more than anything else does. Sand land
+   against ivory is 1.45:1 and needed 088 to be visible at all; against forest
+   it is 12.6:1 and the coastline draws itself. */
+.wa-open{position:relative;background:var(--c-primary);color:var(--c-bg)}
+/* The calls, which were forest on ivory and cannot be forest on forest. */
+.wa-open .wa-act{border-color:var(--c-gold);color:var(--c-bg)}
+.wa-open .wa-act.go{background:var(--c-accent);border-color:var(--c-accent);
+  color:var(--c-primary)}
+.wa-open .wa-act.go:hover{background:var(--c-bg);border-color:var(--c-bg)}
+.wa-open .wa-act.faint{border-color:color-mix(in srgb,var(--c-bg) 26%,transparent)}
+.wa-open .wa-act.faint:hover{border-color:var(--c-bg);color:var(--c-bg)}
+.wa-open .wa-act.plain:hover{color:var(--c-accent)}
+/* The rails: rules that were ink on paper become paper on ink. */
+.wa-open .wa-regs,.wa-open .wa-ticks{border-color:var(--c-bg)}
+.wa-open .wa-reg,.wa-open .wa-tick{color:var(--c-bg);border-right-color:var(--fj-rule-dark)}
+.wa-open .wa-reg[aria-pressed="true"]{background:var(--c-accent);color:var(--c-primary)}
+.wa-open .wa-tick[aria-current]{background:var(--c-bg);color:var(--c-primary)}
+.wa-open .wa-lens,.wa-open .wa-tags-in{border-color:var(--fj-rule-dark)}
+.wa-open .wa-tag{color:var(--c-bg);border-color:var(--fj-rule-dark)}
+.wa-open .wa-terrain span{border-color:color-mix(in srgb,var(--c-gold) 42%,transparent)}
+/* The readout. Its name is the one place ivory has to be at display size. */
+/* On the dark ground every swatch takes the ivory ring the map's countries
+   already have. Without it "an operator of ours" is forest on forest and the
+   key has two entries where the map has three — the same fault the map itself
+   was saved from by being stroked. */
+.wa-open .wa-win-key span::before{box-shadow:0 0 0 1px var(--c-bg)}
+.wa-open .wa-win-cap b{color:var(--c-bg)}
+.wa-open .wa-win-go{color:var(--c-bg)}
+.wa-open .wa-h1-big,.wa-open .wa-h1-rest{color:var(--c-bg)}
 /* One screen, but not more than one composition.
    Everything above the rail is a fixed height once AFRICA has stopped growing —
    headline, lede, three calls — and the rail is pinned to the foot of the stage
@@ -310,7 +351,7 @@
 .wa-win-key span{display:flex;align-items:center;gap:7px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
-.wa-win-key span[data-tier="ours"]::before{background:var(--c-primary)}
+.wa-win-key span[data-tier="ours"]::before{background:var(--c-tier-ours)}
 .wa-win-key span[data-tier="live"]::before{background:var(--c-accent-fill)}
 .wa-win-key span[data-tier="rest"]::before{background:var(--c-land);
   box-shadow:0 0 0 1px var(--c-border)}
@@ -368,7 +409,8 @@
    2.28:1 — still half again the contrast the coastline has against the page,
    so the reading order is unchanged: destinations first, then the continent,
    then the sea. Taking the land darker than this closes that gap. */
-:root{--c-land:color-mix(in srgb, var(--c-sand) 85%, var(--c-accent))}
+:root{--c-land:color-mix(in srgb, var(--c-sand) 85%, var(--c-accent));
+  --c-tier-ours:var(--c-primary)}
 .wa-win-state .wa-map-rest path{fill:var(--c-land);
   stroke:var(--c-bg);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .wa-win-state .wa-map-live path,.wa-win-state .wa-map-live circle{
@@ -377,7 +419,7 @@
 .wa-win-state .wa-map-live[data-tier="live"] path,
 .wa-win-state .wa-map-live[data-tier="live"] circle{fill:var(--c-accent-fill)}
 .wa-win-state .wa-map-live[data-tier="ours"] path,
-.wa-win-state .wa-map-live[data-tier="ours"] circle{fill:var(--c-primary)}
+.wa-win-state .wa-map-live[data-tier="ours"] circle{fill:var(--c-tier-ours)}
 /* HOVER SAYS "THIS ONE". IT DOES NOT SAY "AND ALSO IT IS SOMETHING ELSE NOW".
    Every hovered country was filled burnt sienna, whatever it had been. On a
    destination that is a step within the same hue and reads as emphasis. On one

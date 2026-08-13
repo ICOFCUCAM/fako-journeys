@@ -293,7 +293,7 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
    surface they landed on. Any new dark panel joins this list. */
 .af-zone--basalt,.af-dark,.st--now,.st-nowcard,.sx-nowsec,.sx-now,
 .wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
-.tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark{
+.tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark,.wa-open{
   --c-accent:var(--c-accent-lit);
   /* Muted gold is where the restraint in this palette lives. It is unusable on
      paper — 2.37:1 — and excellent on forest at 6.02:1, so it appears only
@@ -301,6 +301,18 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
      That is the whole of its job, and it is why a gold appearing at all reads
      as a change of ground rather than as decoration. */
   --c-muted:var(--c-gold);
+  /* The map's third tier does NOT re-point here, and the reason is worth
+     leaving: it looked as though it had to. "An operator of ours" is deep
+     forest, and on a deep forest hero a coastal one like Namibia should read
+     as a bite taken out of the continent. Gold was the obvious substitute —
+     this palette's mark of authority on a dark surface, which is what the tier
+     means. Rendered, gold measures 1.63:1 against the land it sits on and the
+     tier stopped being a tier.
+
+     Forest is 9.84:1 against the land, and the bite never happens, because
+     every country on this map is stroked in ivory: Namibia's coast is drawn
+     whether the sea behind it is paper or forest. The fix was already there.
+     A tier has to contrast with what it sits on, not with what surrounds it. */
 }
 /* And this is the whole of where gold appears: the label above a section on a
    dark ground, and the column headings in a dark footer. One or two marks per
