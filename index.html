@@ -811,6 +811,75 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-tick{min-height:44px;padding-top:14px;padding-bottom:14px}
   .wa-want{padding-top:20px;padding-bottom:18px}}
 
+/* ---- africa, in cities ----------------------------------------------------------- */
+/* A collection, not a catalogue: the first two run the full width of the grid and
+   the rest are a four-up. Twelve equal tiles would say "here are twelve things";
+   a lead and a field says somebody chose. */
+.wa-city-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  background:var(--c-border);border:2px solid var(--c-primary);margin-top:var(--sp-5)}
+.wa-city{position:relative;display:block;background:var(--c-bg);color:var(--c-ink);
+  text-decoration:none;overflow:hidden;grid-column:span 2}
+@media(min-width:1100px){
+  .wa-city{grid-column:span 1}
+  .wa-city[data-wide]{grid-column:span 2}
+}
+/* The picture is the card. aspect-ratio rather than a height so the box is
+   reserved before the photograph lands — the whole grid is lazy-loaded and
+   twelve unreserved boxes is a screen and a half of layout shift. */
+.wa-city-art{display:block;position:relative;aspect-ratio:3/2;background:var(--reg-tone,var(--c-primary))}
+.wa-city[data-wide] .wa-city-art{aspect-ratio:12/5}
+@media(max-width:1099px){.wa-city[data-wide] .wa-city-art{aspect-ratio:3/2}}
+.wa-city-art img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .5s cubic-bezier(.2,.6,.2,1)}
+.wa-city:hover .wa-city-art img{transform:scale(1.03)}
+/* A city with no photograph in the dataset yet. Not a grey box with a spinner —
+   the region's own tone with the city's initials cut out of it, which reads as a
+   plate rather than as something that failed to load. It is never filled with a
+   generated picture: these are real cities you can buy a ticket to. */
+.wa-city-plate{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:var(--reg-tone,var(--c-primary))}
+.wa-city-plate b{font-family:var(--fj-display);font-weight:700;font-size:64px;letter-spacing:-.02em;
+  color:color-mix(in srgb,var(--c-bg) 26%,transparent)}
+.wa-city-say{display:block;padding:20px 22px 24px}
+.wa-city-say b{display:block;font-family:var(--fj-display);font-size:26px;font-weight:700;
+  text-transform:uppercase;letter-spacing:-.01em;line-height:1}
+.wa-city[data-wide] .wa-city-say b{font-size:34px}
+.wa-city-where{display:block;margin-top:7px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.wa-city-line{display:block;margin-top:12px;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--c-accent)}
+.wa-city-note{display:block;margin-top:12px;font-size:14.5px;line-height:1.55;color:var(--c-muted)}
+/* Four-up is three lines of note on the widest card and six on the narrowest,
+   which makes the row ragged. The lead cards carry the sentence; the field
+   carries the three words, and the sentence is there for anyone who asks the
+   page for it rather than for the eye. */
+@media(min-width:1100px){
+  .wa-city:not([data-wide]) .wa-city-note{display:none}
+}
+@media(max-width:640px){
+  .wa-city-grid{grid-template-columns:1fr}
+  .wa-city,.wa-city[data-wide]{grid-column:span 1}
+  .wa-city-say b{font-size:24px}
+  .wa-city-note{display:block}
+}
+.wa-city:focus-visible{outline:3px solid var(--c-accent);outline-offset:-3px}
+/* The closing card has no photograph by design — it is the one card that is not
+   a place — so it fills its cell with type and takes whatever the grid has left
+   over. The span is computed, not chosen: a twelfth city would make it 2. */
+.wa-city--rest{background:var(--c-primary);color:var(--c-bg);display:flex;align-items:flex-end}
+@media(min-width:1100px){
+  .wa-city--rest[data-span="1"]{grid-column:span 1}
+  .wa-city--rest[data-span="2"]{grid-column:span 2}
+  .wa-city--rest[data-span="3"]{grid-column:span 3}
+  .wa-city--rest[data-span="4"]{grid-column:span 4}
+}
+@media(max-width:1099px){.wa-city--rest{grid-column:1/-1}}
+.wa-city--rest .wa-city-where{color:var(--c-gold)}
+.wa-city--rest .wa-city-line{color:var(--c-accent-lit)}
+/* Beats the four-up rule that hides the note on narrow cards: that rule is
+   three class selectors deep, so this has to be too. */
+.wa-city.wa-city--rest .wa-city-note{color:var(--c-sand);max-width:56ch;display:block}
+
 /* ---- the window band ------------------------------------------------------------- */
 /* THE PICTURE IS LOCKED TO THE VIEWPORT. THIS SECTION IS A WINDOW THAT TRAVELS
    ACROSS IT.
@@ -2075,6 +2144,43 @@ window.AF = {
 </script>
 
 <!-- what Afrinkong is -->
+<!-- AFRICA, IN CITIES.
+     Directly under the hero, because it is the hero's own claim being proved.
+     "Africa isn't one place" was followed by wildlife, mountains, rainforest,
+     coast, culture and food — a complete account of the landscape and a
+     stereotype of the continent. The cities were one word in a list of
+     twenty-seven categories. They are the reason a great many people come.
+     Photography first: twelve places that look nothing like each other is an
+     argument you have to see rather than read. -->
+<section class="wa-zone wa-cities" id="cities">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>01</b><span>Cities</span></div>
+      <div>
+        <h2>Africa, in <em>cities</em>.</h2>
+        <p class="wa-note">The continent is not only wilderness. Eleven cities here, each one a
+          reason to come rather than a place to sleep before the drive out &mdash; and a first
+          collection rather than a closed list.</p>
+      </div>
+    </div>
+    <div class="wa-city-grid">
+      <!-- gen:cities -->
+      <a class="wa-city" href="/south-africa" data-wide="true" data-region="southern" data-photo="true" style="--reg-tone:#9A5A2E"><span class="wa-city-art"><img src="/images/uploads/city-cape-town-1080w.jpg" width="1080" height="650" alt="The V&amp;A Waterfront in Cape Town at midday, yachts and quaysides in the foreground and Table Mountain and Devil&#x27;s Peak rising directly behind the city centre" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Cape Town</b><span class="wa-city-where">South Africa</span><span class="wa-city-line">Ocean · Mountain · Design</span><span class="wa-city-note">The only city on earth with a national park through the middle of it. The mountain is inside the municipal boundary, there is an ocean on either side, and the winelands start forty minutes from the centre.</span></span></a>
+      <a class="wa-city" href="/morocco" data-wide="true" data-region="north" data-photo="true" style="--reg-tone:#A87B3C"><span class="wa-city-art"><img src="/images/uploads/city-marrakech-1200w.jpg" width="1200" height="800" alt="Jemaa el-Fna square in Marrakech at dusk, crowds moving between rows of covered food stalls, the pink walls of the medina and a minaret behind, with the sky going orange" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Marrakech</b><span class="wa-city-where">Morocco</span><span class="wa-city-line">Medina · Markets · Heritage</span><span class="wa-city-note">Eleven centuries inside one set of walls. Jemaa el-Fna empties and refills twice a day — orange carts and storytellers in the afternoon, a hundred food stalls after dark, and the Atlas on the skyline behind it.</span></span></a>
+      <a class="wa-city" href="/nigeria" data-region="central" data-photo="true" style="--reg-tone:#1B4433"><span class="wa-city-art"><img src="/images/uploads/city-lagos-1200w.jpg" width="1200" height="630" alt="The Lagos Marina waterfront seen from above, the lagoon on the left and the towers and traffic of Lagos Island running along the shoreline" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Lagos</b><span class="wa-city-where">Nigeria</span><span class="wa-city-line">Music · Fashion · Energy</span><span class="wa-city-note">The loudest cultural output on the continent, and most of it made in the last twenty years: Afrobeats, Nollywood, a gallery and fashion scene exporting worldwide, across a city of twenty million on a lagoon.</span></span></a>
+      <a class="wa-city" href="/kenya" data-region="east" data-photo="true" style="--reg-tone:#2C6B4E"><span class="wa-city-art"><img src="/images/uploads/city-nairobi-1200w.jpg" width="1200" height="800" alt="Central Nairobi from the air on a clear day, towers and older colonial-era rooftops in the foreground and the city spreading to the horizon under cumulus cloud" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Nairobi</b><span class="wa-city-where">Kenya</span><span class="wa-city-line">Innovation · Food · Wildlife</span><span class="wa-city-note">The only capital with a national park on its boundary — lion and rhino within sight of the towers — and the tech corridor that got the country called Silicon Savannah.</span></span></a>
+      <a class="wa-city" href="/ghana" data-region="central" data-photo="false" style="--reg-tone:#1B4433"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>AC</b></span></span><span class="wa-city-say"><b>Accra</b><span class="wa-city-where">Ghana</span><span class="wa-city-line">Contemporary · Music · Coast</span><span class="wa-city-note">Where a great deal of contemporary African design and music is actually being made, on an Atlantic coast with the forts of the slave trade a couple of hours west of it.</span></span></a>
+      <a class="wa-city" href="/ethiopia" data-region="east" data-photo="false" style="--reg-tone:#2C6B4E"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>AD</b></span></span><span class="wa-city-say"><b>Addis Ababa</b><span class="wa-city-where">Ethiopia</span><span class="wa-city-line">Highland · Coffee · History</span><span class="wa-city-note">Two and a half thousand metres up, in the one African country never colonised — which is why the national museum, the cuisine and the calendar are all their own.</span></span></a>
+      <a class="wa-city" href="/rwanda" data-region="east" data-photo="false" style="--reg-tone:#2C6B4E"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>KI</b></span></span><span class="wa-city-say"><b>Kigali</b><span class="wa-city-where">Rwanda</span><span class="wa-city-line">Hills · Coffee · Calm</span><span class="wa-city-note">Built across a set of ridges and quiet in a way no city this size has any right to be. The coffee is grown within sight of it and the memorial is not optional.</span></span></a>
+      <a class="wa-city" href="/senegal" data-region="central" data-photo="false" style="--reg-tone:#1B4433"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>DA</b></span></span><span class="wa-city-say"><b>Dakar</b><span class="wa-city-where">Senegal</span><span class="wa-city-line">Atlantic · Art · Music</span><span class="wa-city-note">The westernmost city on the continent, and the one that exported mbalax and a contemporary art biennale. Gorée is twenty minutes offshore.</span></span></a>
+      <a class="wa-city" href="/cote-divoire" data-region="central" data-photo="false" style="--reg-tone:#1B4433"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>AB</b></span></span><span class="wa-city-say"><b>Abidjan</b><span class="wa-city-where">Côte d&#x27;Ivoire</span><span class="wa-city-line">Lagoon · Design · Nightlife</span><span class="wa-city-note">Built around a lagoon and out of it — the economic engine of francophone West Africa, with the architecture, the food and the nights that come with that.</span></span></a>
+      <a class="wa-city" href="/mozambique" data-region="southern" data-photo="false" style="--reg-tone:#9A5A2E"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>MA</b></span></span><span class="wa-city-say"><b>Maputo</b><span class="wa-city-where">Mozambique</span><span class="wa-city-line">Indian Ocean · Architecture · Food</span><span class="wa-city-note">Acacia avenues, Portuguese modernism and an Indian Ocean seafood culture, on a bay at the southern end of two thousand kilometres of coast.</span></span></a>
+      <a class="wa-city" href="/cameroon" data-region="central" data-photo="false" style="--reg-tone:#1B4433"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>DO</b></span></span><span class="wa-city-say"><b>Douala</b><span class="wa-city-where">Cameroon</span><span class="wa-city-line">River · Commerce · Music</span><span class="wa-city-note">The Wouri estuary, the port that most of central Africa&#x27;s freight goes through, makossa, and the city half this site&#x27;s enquiries are answered from.</span></span></a>
+      <a class="wa-city wa-city--rest" href="/places" data-span="3"><span class="wa-city-say"><b>And every other place</b><span class="wa-city-where">The atlas</span><span class="wa-city-line">A first collection, not a closed list</span><span class="wa-city-note">These eleven are a choice, and the choice is ours. The atlas holds every place written up on this site, in all twenty-two countries, with no editor standing in front of it.</span></span></a>      <!-- /gen:cities -->
+    </div>
+  </div>
+</section>
+
 <section class="wa-brief">
   <div class="wa-frame">
     <!-- gen:claim -->
@@ -2094,11 +2200,11 @@ window.AF = {
 
 <main id="main">
 
-<!-- 01 the scale -->
+<!-- 02 the scale -->
 <section class="wa-zone" id="scale">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>01</b><span>The scale</span></div>
+      <div class="wa-head-no"><b>02</b><span>The scale</span></div>
       <div>
         <h2>Africa is bigger than the map <em>in your head</em>.</h2>
         <p class="wa-note">Every world map most people have ever looked at is Mercator, which inflates everything away from the equator and shrinks everything on it. Lay the countries you already have a sense of inside the real outline and the argument for starting with a region rather than a continent makes itself.</p>
@@ -2122,11 +2228,11 @@ window.AF = {
   </div>
 </section>
 
-<!-- 02 destinations -->
+<!-- 03 destinations -->
 <section class="wa-zone dust" id="destinations">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>02</b><span>The countries</span></div>
+      <div class="wa-head-no"><b>03</b><span>The countries</span></div>
       <div>
         <h2>Twenty-two countries, <em>all of them live</em>.</h2>
         <p class="wa-note">Every country has a different Africa to show you, and every one of them has a page. Three run as operators of our own &mdash; Kamerun in Cameroon, Pearl Trails Uganda, Namib Skyline in Namibia. The rest are covered by our country pages, each working through the same twenty-seven categories, so you can compare two countries on the same terms instead of on the strength of their marketing. <a class="wa-note-go" href="/compare">Put two side by side &rarr;</a></p>
@@ -2179,11 +2285,11 @@ window.AF = {
   </div>
 </section>
 
-<!-- 03 experiences -->
+<!-- 04 experiences -->
 <section class="wa-zone" id="experiences">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>03</b><span>What you can do</span></div>
+      <div class="wa-head-no"><b>04</b><span>What you can do</span></div>
       <div>
         <h2>Start with what you <em>want to do</em>.</h2>
         <p class="wa-note">You don&rsquo;t always know the country first. Sometimes you know the experience. Pick one and the grid below narrows to the countries that lead on it &mdash; and if you add a month, to the ones that lead on it then. Nothing is ranked; the countries declare what they lead on and this asks against that.</p>
@@ -2212,8 +2318,8 @@ window.AF = {
   </div>
 </section>
 
-<!-- 04 the two flagships -->
-<!-- 04 africa now -->
+<!-- The two flagships that used to sit here are gone; see the note below. -->
+<!-- 05 africa now -->
 <!-- Replaced "Two places to start", which promoted Cameroon and Uganda for the
      third time on one page: both are named in the brief under the hero, and both
      lead their region at double width in the grid above. What the page did not
@@ -2223,7 +2329,7 @@ window.AF = {
 <section class="wa-zone basalt" id="now">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>04</b><span>Africa now</span></div>
+      <div class="wa-head-no"><b>05</b><span>Africa now</span></div>
       <div>
         <h2>Not a <em>museum</em>.</h2>
         <!-- gen:nownote -->
@@ -2254,11 +2360,11 @@ window.AF = {
      actually happens after an enquiry. Six hundred and fourteen pixels of
      claim, removed because the page had started keeping the promise. -->
 
-<!-- 05 the journey -->
+<!-- 06 the journey -->
 <section class="wa-zone dust" id="plan">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>05</b><span>The journey</span></div>
+      <div class="wa-head-no"><b>06</b><span>The journey</span></div>
       <div>
         <h2>What happens after you <em>choose Africa</em>?</h2>
         <!-- gen:plannote -->
@@ -2301,11 +2407,11 @@ window.AF = {
   </div>
 </section>
 
-<!-- 06 stories -->
+<!-- 07 stories -->
 <section class="wa-zone" id="stories">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>06</b><span>Stories</span></div>
+      <div class="wa-head-no"><b>07</b><span>Stories</span></div>
       <div>
         <h2>Africa is <em>more than a destination</em>.</h2>
         <p class="wa-note">Twenty-two long reads, one per country, each built out of what that country says about itself rather than written about it. One from each region below.</p>

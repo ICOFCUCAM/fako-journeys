@@ -161,6 +161,22 @@ def region_of(country, regions=None):
     return "", None
 
 
+def load_cities(path=None):
+    """The curated city collection.
+
+    Like load_picks, this is editorial and written down rather than computed —
+    an editor's twelve, not the twelve largest. Everything else on this site is
+    derived from the countries; a list that is a judgement has to look like one
+    in the source as well as on the page.
+    """
+    path = path or os.path.join(ROOT, "tourism", "cities.json")
+    try:
+        with open(path) as fh:
+            return json.load(fh).get("cities") or []
+    except (IOError, ValueError):
+        return []
+
+
 def load_picks(path=None):
     """What we would actually say if somebody told us what they wanted.
 

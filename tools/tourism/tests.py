@@ -1399,6 +1399,54 @@ def main():
                   n_ticks >= len(countries) and drawn <= n_ticks,
                   "%d buttons, %d shapes" % (n_ticks, drawn))
 
+        # ---- the city collection -------------------------------------------
+        # Curated rather than derived, which is exactly why it needs checking:
+        # nothing recomputes it when a country is renamed or a file is moved.
+        cities = json.load(open(os.path.join(ROOT_DIR, "tourism", "cities.json")))["cities"]
+        slugs = {c.slug for c in countries}
+        orphans = [c["slug"] for c in cities if c.get("country") not in slugs]
+        check("every city leads to a country the atlas actually has",
+              not orphans, ", ".join(orphans) or "%d cities" % len(cities))
+
+        # A photograph that is named and missing renders as a broken card; a
+        # photograph outside uploads/ is a provenance claim this cannot support.
+        missing, misfiled = [], []
+        for c in cities:
+            photo = c.get("photo")
+            if not photo:
+                continue
+            if not os.path.exists(os.path.join(ROOT_DIR, photo.lstrip("/"))):
+                missing.append(c["slug"])
+            if "/images/uploads/" not in photo:
+                misfiled.append(c["slug"])
+        check("every photograph a city names is in the repository",
+              not missing, ", ".join(missing) or "%d with a photograph"
+              % sum(1 for c in cities if c.get("photo")))
+        check("a city photograph is an upload, not a generated picture",
+              not misfiled, ", ".join(misfiled))
+
+        # Reserved boxes: the grid is lazy-loaded and twelve unreserved cards is
+        # a screen and a half of layout shift.
+        unsized = [c["slug"] for c in cities
+                   if c.get("photo") and not (c.get("photo_w") and c.get("photo_h"))]
+        check("a city photograph carries its own dimensions", not unsized,
+              ", ".join(unsized))
+        blind = [c["slug"] for c in cities if c.get("photo") and not (c.get("alt") or "").strip()]
+        check("a city photograph is described", not blind, ", ".join(blind))
+
+        # The closing card takes whatever the four-column grid has left over. If
+        # that arithmetic drifts the section ends in empty cells, which reads as
+        # a card that failed to render.
+        grid = re.search(r'<!-- gen:cities -->(.*?)<!-- /gen:cities -->', home_src, re.S)
+        body = grid.group(1) if grid else ""
+        n_cards = len(re.findall(r'class="wa-city"', body))
+        n_wide = len(re.findall(r'data-wide="true"', body))
+        span = re.search(r'data-span="(\d)"', body)
+        check("the city grid ends on a full row",
+              bool(span) and (n_cards + n_wide + int(span.group(1))) % 4 == 0,
+              "%d cards, %d wide, closing span %s"
+              % (n_cards, n_wide, span.group(1) if span else "none"))
+
         check("the destination filter counts the grid rather than a literal",
               not re.search(r"shown \+ ' of \d", home_src))
         check("the opening does not print the size of Africa as the size of this site",

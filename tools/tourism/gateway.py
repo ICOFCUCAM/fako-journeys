@@ -28,8 +28,8 @@ import os
 import re
 
 from . import plate
-from .model import (CATEGORY_FILE, ROOT, load_picks, load_regions, load_views,
-                    region_of)
+from .model import (CATEGORY_FILE, ROOT, load_cities, load_picks, load_regions,
+                    load_views, region_of)
 
 LINKS = os.path.join(ROOT, "data", "links.json")
 
@@ -62,7 +62,7 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "regions", "claim", "months", "scale",
+MARKERS = ("window", "captions", "ticks", "regions", "cities", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer")
 
@@ -129,6 +129,81 @@ def _spell(n):
     else:
         return "{:,}".format(n)
     return word[0].upper() + word[1:]
+
+
+def block_cities(countries):
+    """Africa in cities — the collection, with the photography doing the work.
+
+    The site's categories were wildlife, mountains, rainforest, coast, culture
+    and food, which is a complete description of Africa's landscape and a
+    stereotype of the continent: safari, nature, beach, village. Cape Town,
+    Lagos, Marrakech, Nairobi, Dakar and Accra are not places to sleep before a
+    game drive. They are the reason a great many people come, and they were
+    represented on this page by one word in a list of twenty-seven.
+
+    So they get a section, immediately below the hero, at the size the argument
+    deserves. "Africa isn't one place" is the headline; twelve cities that look
+    nothing like each other is the proof, and it has to be seen rather than
+    read — which is why this block is photography first and prose second.
+
+    A city with no photograph yet gets a typographic plate in its region's tone.
+    That is a treatment, not a placeholder: it carries the same name, the same
+    three words and the same link, and it is never filled with a generated
+    picture of a real city. The moment a photograph lands in the dataset the
+    plate becomes a photograph with no other change.
+    """
+    cities = load_cities()
+    by_slug = dict((c.slug, c) for c in countries)
+    rows = []
+    for i, city in enumerate(cities):
+        c = by_slug.get(city.get("country"))
+        if not c:
+            continue                      # a card has to lead somewhere real
+        key, reg = region_of(c)
+        tone = reg.tone if reg else ""
+        photo = city.get("photo")
+        # The first two run wide. Twelve equal cards is a catalogue; a collection
+        # has a lead in it.
+        wide = ' data-wide="true"' if i < 2 else ''
+        if photo:
+            art = ('<img src="%s" width="%d" height="%d" alt="%s" loading="lazy" '
+                   'decoding="async" data-provider="upload">'
+                   % (esc(photo), int(city.get("photo_w") or 0), int(city.get("photo_h") or 0),
+                      esc(city.get("alt") or "")))
+        else:
+            art = ('<span class="wa-city-plate" aria-hidden="true"><b>%s</b></span>'
+                   % esc(city["name"][:2].upper()))
+        rows.append(
+            '      <a class="wa-city" href="%s"%s data-region="%s" data-photo="%s" '
+            'style="--reg-tone:%s">'
+            '<span class="wa-city-art">%s</span>'
+            '<span class="wa-city-say">'
+            '<b>%s</b>'
+            '<span class="wa-city-where">%s</span>'
+            '<span class="wa-city-line">%s</span>'
+            '<span class="wa-city-note">%s</span>'
+            '</span></a>'
+            % (esc(c.url), wide, esc(key), "true" if photo else "false", esc(tone),
+               art, esc(city["name"]), esc(c.name), esc(city["line"]), esc(city["say"])))
+    # The grid is four columns and the first two cards are double, so the cards
+    # occupy 2*2 + (n-2) cells. Eleven cities leave three empty, and three empty
+    # cells at the end of a bordered grid read as a card that failed to render.
+    # The closing card takes exactly the remainder — and it is the sentence this
+    # collection needs anyway, because twelve chosen cities on a continent of
+    # thousands is a beginning and should say so rather than imply completeness.
+    if rows:
+        span = (-len(rows) - 2) % 4 or 4
+        rows.append(
+            '      <a class="wa-city wa-city--rest" href="/places" data-span="%d">'
+            '<span class="wa-city-say">'
+            '<b>And every other place</b>'
+            '<span class="wa-city-where">The atlas</span>'
+            '<span class="wa-city-line">A first collection, not a closed list</span>'
+            '<span class="wa-city-note">These %s are a choice, and the choice is ours. '
+            'The atlas holds every place written up on this site, in all twenty-two '
+            'countries, with no editor standing in front of it.</span>'
+            '</span></a>' % (span, _spell(len(rows)).lower()))
+    return "\n".join(rows)
 
 
 def block_claim(countries):
@@ -741,6 +816,7 @@ def render(countries):
     with_shape = [c for c in seq if c.slug in shape_by_slug]
     return {
         "regions": block_regions(seq, views),
+        "cities": block_cities(seq),
         "window": block_window(with_shape, shape_by_slug, views),
         "captions": block_captions(with_shape),
         "ticks": block_ticks(with_shape, views),
