@@ -66,7 +66,11 @@
    rotation stops being a journey and becomes a slideshow, and it cost three
    screens of scrolling before the page began. Selection is the right interaction
    at this size, and it behaves identically on a phone. */
-.wa-open{position:relative}
+/* `clip` rather than `hidden`: hidden would make this a scroll container, which
+   breaks position:sticky for anything inside it and gives the section its own
+   scrollport. clip does neither — it only stops the sheet's graticule, which is
+   drawn to run past the frame on every side, from carrying on down the page. */
+.wa-open{position:relative;overflow:clip}
 .wa-open-stage{display:flex;flex-direction:column;justify-content:center;
   min-height:calc(100vh - 78px);padding:96px 0 0}
 .wa-open-stage>.wa-frame{width:100%}
@@ -117,6 +121,120 @@
 .wa-win{position:absolute;right:0;top:calc(var(--mast) + 1vh);width:min(50vw,640px);
   z-index:1;display:grid;grid-template-columns:1fr;gap:12px}
 .wa-win-frame{position:relative;height:min(50vh,450px)}
+
+/* THE SHEET
+   ---------
+   The map used to be an object on a page. It is now printed on one: the sheet
+   is a second <svg> in the map's own frame, with the same box, the same viewBox
+   and the same preserveAspectRatio, carrying the parallels and meridians of the
+   same projection drawn a long way past the edge of that box. Because the two
+   elements resolve their transform identically, the graticule behind the
+   headline is in register with the continent at every width without a line of
+   script: a meridian leaving the top of the map arrives at the top of the page
+   on the line it would have. tools/atlas_sheet.py generates it and says how.
+
+   `overflow: visible` is the whole mechanism, which is why .wa-open clips —
+   otherwise the lines run down the page over everything below the first screen.
+   The limb is the edge of the projection itself: Lambert azimuthal reaches its
+   antipode at rho = 2 and stops, and that arc crossing behind AFRICA is the
+   real edge of the visible hemisphere rather than a drawn flourish. */
+.wa-sheet{position:absolute;inset:0;width:100%;height:100%;overflow:visible;
+  pointer-events:none;z-index:0;
+  /* Sepia, not grey. Deep forest at twelve percent on ivory is a neutral
+     hairline, and a neutral line on a warm ground is the single thing that
+     makes a warm palette look like a photocopy of itself — it was the first
+     thing visible when the graticule went in. Half burnt sienna carries it
+     back into the palette without becoming a second accent. */
+  color:color-mix(in srgb, var(--c-accent) 52%, var(--c-primary))}
+.wa-sheet path,.wa-sheet circle{fill:none;stroke:currentColor;vector-effect:non-scaling-stroke}
+.wa-sheet-grid path{stroke-width:1;opacity:.12}
+.wa-sheet-key path{stroke-width:1;opacity:.26}
+/* Off the view it is in register with. See the note beside markSheet(). The
+   transition is slower coming back than going away, because arriving in
+   register is the moment worth watching and leaving it is not. */
+.wa-sheet-grid,.wa-sheet-key{transition:opacity .55s var(--ease)}
+.wa-sheet.is-adrift .wa-sheet-grid,.wa-sheet.is-adrift .wa-sheet-key{opacity:0;
+  transition:opacity .3s var(--ease)}
+.wa-sheet-limb{stroke-width:1.25;opacity:.3}
+/* The rose is drawn where north is, not where up is — see atlas_sheet.rose().
+   Every point is two triangles meeting on its own axis; the lit half is left
+   open and the shadow half carries a wash, which is what makes eight thin
+   triangles read as a folded facet rather than as a star. North is the one
+   thing on this sheet with colour in it, because it is the one thing on it
+   pointing at something. */
+.wa-sheet-rose circle{stroke-width:1;opacity:.3}
+.wa-sheet-rose .wa-rose-ticks{stroke-width:1;opacity:.34}
+.wa-sheet-rose .wa-rose-lit{stroke-width:1;opacity:.42}
+.wa-sheet-rose .wa-rose-dim{stroke-width:1;opacity:.42;
+  fill:currentColor;fill-opacity:.13}
+.wa-sheet-rose .wa-rose-north{opacity:.62;stroke:var(--c-accent)}
+.wa-sheet-rose .wa-rose-dim.wa-rose-north{fill:var(--c-accent);fill-opacity:.5}
+@media(max-width:1000px){.wa-sheet-rose{display:none}}
+/* The map itself has to sit above the sheet, and .wa-win-state is already
+   absolutely positioned inside the same frame, so it only needs to be told. */
+.wa-win-state{z-index:1}
+
+/* PAPER RELIEF
+   ------------
+   With the graticule behind it the continent read as a hole in the sheet rather
+   than something printed on it, because a flat fill against a flat ground gives
+   the eye nothing to order the two by. Two shadows: a tight one at two pixels
+   that reads as the edge of a lifted layer, and a wide soft one that reads as
+   the light the sheet is under. drop-shadow uses the alpha of what it filters,
+   so the shape it casts is the coastline itself — no second silhouette to keep
+   in step with the first, and the islands each get their own.
+
+   The colour is the deep forest at low alpha rather than black: a neutral grey
+   shadow on a warm ground is the thing that makes a warm palette look
+   photocopied, and it was visible immediately at 1440. */
+.wa-win-state svg{filter:drop-shadow(0 1px 1px color-mix(in srgb, var(--c-primary) 20%, transparent))
+  drop-shadow(0 7px 16px color-mix(in srgb, var(--c-primary) 13%, transparent))}
+
+/* GRAIN
+   -----
+   The tooth of the paper. It is a 160px tile of fractal noise generated by the
+   browser's own filter engine from about three hundred bytes of markup — no
+   request, no image to decode, and it tiles without a seam because stitchTiles
+   is what that attribute is for. At four percent it is under the threshold of
+   anything you would call texture and over the threshold of a surface: covered
+   up, the ivory goes back to looking like a colour value.
+
+   It is under everything (z-index 0 against the grid's 2 and the window's 1)
+   and inert, so it costs the reader nothing but the paint. */
+/* THE MARGIN OF THE SHEET
+   -----------------------
+   Two hairlines down the sides of the first screen, with a coordinate set into
+   each of them the way an atlas plate carries its extent in the margin. Sides
+   only, on purpose: the masthead already draws a rule across the top of this
+   section and the section itself draws one across the bottom, so a full
+   rectangle would put two lines sixteen pixels apart at both ends and read as
+   a mistake rather than a border. The masthead's rule is the top of the sheet.
+
+   The two figures are the west and east extremes of the African mainland —
+   Pointe des Almadies in Senegal and Ras Hafun in Somalia — which is a fact
+   about the continent this map is of, and the reason there is not a prettier
+   invented number here.
+
+   The label sits on the rule and paints the page colour behind itself, which is
+   how the line is broken for it: no second element, and it re-breaks itself
+   wherever the label ends up. Below 1080 the frame's own padding drops to 20px
+   and the rules would run through the copy, so they go. */
+.wa-edge{position:absolute;inset:0 16px;z-index:3;pointer-events:none;
+  border-left:1px solid var(--c-border);border-right:1px solid var(--c-border)}
+.wa-edge-mark{position:absolute;top:50%;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted);
+  background:var(--c-bg);padding:14px 0;white-space:nowrap;writing-mode:vertical-rl}
+.wa-edge-w{left:-5px;transform:translateY(-50%) rotate(180deg)}
+.wa-edge-e{right:-5px;transform:translateY(-50%)}
+@media(max-width:1080px){.wa-edge{display:none}}
+@media print{.wa-edge{display:none}}
+
+.wa-open::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  opacity:.085;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E")}
+/* Print is paper the reader is holding, so the sheet is theirs already; and
+   at 12% grey it would go to nothing on a laser printer anyway. */
+@media print{.wa-sheet{display:none}}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}
@@ -890,6 +1008,14 @@ window.AF = {
 
 <!-- hero: the Africa window -->
 <section class="wa-open" id="window">
+  <!-- The margin of the sheet. Decorative, and marked so: the two extremes are
+       real and checkable, but they are marginalia on a map, not a route out of
+       the page, and read aloud between the masthead and the headline they would
+       be two coordinates nobody asked for. -->
+  <div class="wa-edge" aria-hidden="true">
+    <span class="wa-edge-mark wa-edge-w">17&deg; 33&prime; W &middot; Pointe des Almadies</span>
+    <span class="wa-edge-mark wa-edge-e">51&deg; 24&prime; E &middot; Ras Hafun</span>
+  </div>
   <div class="wa-open-stage">
     <div class="wa-frame wa-open-grid">
       <div class="wa-open-say">
@@ -898,6 +1024,7 @@ window.AF = {
       </div>
       <div class="wa-win">
         <div class="wa-win-frame">
+      <!-- gen:sheet --><svg class="wa-sheet" viewBox="0 0 1000 1060" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><circle class="wa-sheet-limb" cx="526.7" cy="522.1" r="1448.6"/><g class="wa-sheet-grid"><path d="M205.1 1564.3L95.8 1539.9L23.5 1516.4L-47.9 1487.0L-117.7 1451.8L-185.5 1410.7L-250.8 1363.7L-312.9 1311.1L-371.4 1253.0L-425.7 1189.7L-475.3 1121.5L-519.6 1048.9L-558.1 972.3L-590.5 892.4L-616.4 809.6L-642.5 681.7L-652.7 551.5L-650.5 464.5L-641.3 378.3L-625.2 293.6L-602.4 211.0L-573.2 131.2L-538.0 54.7L-497.2 -18.0L-451.2 -86.4L-400.6 -150.1L-345.9 -208.9L-287.5 -262.5L-226.0 -310.7L-161.8 -353.4L-61.8 -407.1"/><path d="M200.5 1536.2L129.2 1515.4L59.2 1489.3L-9.0 1458.0L-75.2 1421.6L-138.7 1380.2L-199.3 1334.0L-256.6 1283.1L-310.1 1228.0L-359.5 1168.7L-404.5 1105.7L-444.8 1039.4L-480.0 970.0L-509.9 898.1L-534.4 824.1L-553.2 748.4L-566.2 671.5L-573.4 593.9L-574.8 516.0L-570.3 438.4L-560.0 361.6L-544.0 285.9L-522.4 211.9L-495.5 140.0L-463.4 70.6L-426.5 4.0L-384.9 -59.3L-339.0 -119.0L-289.0 -175.0L-235.5 -226.8L-178.6 -274.4L-118.8 -317.4L-56.4 -355.8"/><path d="M205.7 1509.7L138.0 1484.0L72.3 1453.6L9.0 1418.7L-51.6 1379.4L-109.2 1336.0L-163.6 1288.8L-214.4 1237.9L-261.5 1183.6L-304.6 1126.3L-343.5 1066.1L-378.1 1003.5L-408.1 938.7L-433.6 872.0L-454.3 803.9L-470.2 734.5L-481.3 664.3L-487.4 593.6L-488.7 522.7L-485.0 452.0L-476.5 381.8L-463.1 312.4L-445.1 244.2L-422.4 177.4L-395.2 112.4L-363.6 49.5L-327.8 -11.0L-287.9 -69.0L-244.2 -124.0L-196.9 -175.8L-146.1 -224.3L-92.1 -269.2L-35.3 -310.3"/><path d="M219.9 1485.5L97.0 1422.0L-14.9 1343.3L-114.3 1251.3L-200.0 1147.8L-270.8 1034.9L-326.2 914.5L-365.5 788.6L-388.4 659.3L-394.8 528.4L-384.7 397.9L-358.3 269.8L-315.9 145.9L-258.2 28.1L-185.9 -81.8L-99.8 -182.0L-1.0 -270.7"/><path d="M242.0 1463.9L158.1 1413.2L56.2 1334.4L-33.6 1244.5L-110.8 1145.1L-174.8 1038.0L-225.2 924.8L-262.0 807.0L-284.9 686.2L-293.8 563.8L-293.1 502.4L-285.5 410.8L-263.3 290.2L-227.6 172.7L-178.6 59.8L-116.6 -47.1L-42.1 -146.5L44.4 -236.9"/><path d="M271.0 1445.0L197.6 1390.8L109.4 1309.5L32.5 1219.2L-33.0 1121.4L-86.9 1017.5L-129.3 908.9L-160.0 796.6L-179.1 682.0L-186.7 566.1L-179.8 421.2L-161.4 306.5L-131.7 194.2L-90.6 85.3L-38.4 -18.9L24.8 -117.2L98.8 -208.5"/><path d="M305.8 1429.1L243.7 1372.3L169.8 1289.2L105.9 1198.9L51.9 1102.7L7.5 1001.6L-27.1 896.6L-52.3 788.8L-67.9 679.0L-74.0 568.1L-68.5 429.4L-53.6 319.4L-29.4 211.2L4.2 105.6L47.1 3.8L99.3 -93.5L160.7 -185.2"/><path d="M345.3 1416.2L295.3 1357.4L236.1 1273.1L185.2 1183.1L142.4 1088.2L107.4 989.3L80.0 887.3L60.3 782.9L48.0 676.8L43.1 569.8L47.4 435.8L59.1 329.3L78.1 224.3L104.6 121.4L138.4 21.4L179.7 -74.9L228.7 -166.6"/><path d="M388.7 1406.2L351.1 1346.0L306.9 1261.0L269.0 1171.3L237.3 1077.5L211.4 980.3L191.2 880.5L176.6 778.6L167.6 675.2L164.0 571.1L167.1 440.6L175.7 336.7L189.7 234.1L209.2 133.2L234.2 34.7L264.9 -60.8L301.3 -152.6"/><path d="M482.8 1395.1L457.2 1247.8L435.6 1066.0L421.4 873.3L414.1 673.7L414.0 445.8L420.9 244.6L434.6 49.0L455.4 -137.2"/><path d="M531.6 1393.9L539.2 673.5L534.6 -135.6"/><path d="M580.3 1395.7L611.5 1248.5L637.9 1066.6L655.3 873.7L664.2 673.8L664.4 445.5L655.9 244.1L639.1 48.2L613.7 -138.0"/><path d="M627.9 1400.3L655.3 1339.4L687.4 1254.0L714.8 1164.5L737.8 1071.4L771.0 876.7L788.1 674.4L790.7 571.8L788.4 443.3L772.1 239.7L740.0 42.3L717.9 -52.7L691.5 -144.4"/><path d="M673.6 1408.0L713.7 1348.0L760.9 1263.1L801.4 1173.3L835.3 1079.3L863.0 981.9L884.6 881.7L900.2 779.3L909.9 675.5L913.8 570.8L910.4 439.7L901.2 335.5L886.2 232.4L865.4 131.1L838.6 32.4L805.8 -63.3L766.9 -155.0"/><path d="M716.3 1418.5L768.8 1360.1L830.9 1276.0L884.4 1185.9L929.5 1090.8L966.3 991.5L995.1 888.9L1015.9 783.9L1028.9 677.2L1034.0 569.5L1029.5 434.7L1017.1 327.6L997.1 222.0L969.3 118.6L933.6 18.3L890.1 -78.2L838.7 -170.0"/><path d="M755.0 1432.1L819.3 1375.7L896.1 1292.9L962.6 1202.6L1019.0 1106.0L1065.2 1004.4L1101.4 898.8L1127.6 790.2L1143.9 679.5L1150.3 567.7L1144.6 427.9L1129.0 317.0L1103.6 208.1L1068.6 102.0L1023.9 -0.4L969.5 -97.8L905.5 -189.5"/><path d="M788.7 1448.6L864.3 1395.0L955.2 1314.1L1034.7 1223.8L1102.5 1125.7L1158.4 1021.2L1202.4 911.7L1234.3 798.5L1254.1 682.7L1261.9 565.7L1254.8 419.3L1235.7 303.5L1204.8 190.3L1162.2 80.7L1108.0 -24.0L1042.6 -122.6L966.1 -213.8"/><path d="M816.4 1468.0L929.4 1399.8L1031.0 1318.5L1120.3 1226.1L1196.5 1124.2L1259.1 1014.7L1307.8 899.1L1342.2 779.1L1362.3 656.3L1368.0 532.2L1359.2 408.4L1336.3 286.5L1299.3 167.8L1248.6 54.0L1184.6 -53.5L1107.8 -153.1L1018.8 -243.2"/><path d="M837.0 1490.1L931.8 1445.1L1020.8 1390.9L1103.3 1328.3L1201.8 1233.3L1266.5 1154.4L1339.5 1040.6L1383.9 949.9L1428.7 823.6"/><path d="M1409.8 201.7L1372.5 109.4L1342.7 49.9L1271.8 -62.8L1209.3 -141.1L1163.4 -189.9L1062.1 -278.2"/><path d="M849.4 1514.8L951.6 1475.8L1017.2 1443.8L1080.3 1407.3L1169.6 1344.3L1225.2 1297.2L1302.0 1219.4L1370.0 1134.0L1428.4 1041.9"/><path d="M1412.6 10.3L1352.6 -78.2L1283.9 -159.8L1207.1 -233.7L1152.0 -278.3L1094.0 -318.9"/><path d="M852.8 1541.7L960.1 1510.2L1030.0 1482.4L1098.1 1449.3L1164.1 1411.0L1258.0 1344.0L1316.5 1293.3L1371.4 1238.0L1422.2 1178.4"/><path d="M1400.7 -130.3L1349.5 -186.4L1266.0 -262.3L1206.4 -307.2L1112.2 -365.6"/><path d="M194.2 1603.1L170.8 1564.0L164.7 1526.5L167.6 1508.8L177.1 1486.6L207.7 1452.2L253.1 1424.0L319.0 1399.5L395.7 1383.2L478.7 1374.8L574.7 1374.8L657.7 1383.2L734.3 1399.5L800.3 1424.0L851.0 1456.8L879.2 1492.0L887.1 1514.6L888.8 1532.5L879.9 1570.5"/><path d="M12.4 1571.9L-2.8 1541.3L-11.0 1511.9L-13.0 1484.1L-9.0 1458.0L0.2 1433.8L14.2 1411.4L32.5 1390.9L63.0 1366.3L130.4 1330.7L224.4 1300.6L331.2 1280.8L445.8 1270.3L578.2 1269.0L708.1 1279.0L829.0 1300.6L923.0 1330.7L990.3 1366.3L1020.8 1390.9L1039.2 1411.4L1056.8 1441.7L1064.3 1466.5L1066.3 1493.2L1062.4 1521.5"/><path d="M-172.7 1499.5L-181.2 1472.4L-186.5 1434.3L-183.8 1399.4L-174.1 1367.6L-158.2 1338.8L-136.8 1312.9L-110.6 1289.6L-69.1 1262.3L18.6 1223.8L121.3 1195.4L252.0 1173.3L409.6 1159.9L589.9 1157.9L749.8 1167.6L900.5 1188.9L1020.9 1219.2L1074.4 1239.0L1122.5 1262.3L1164.0 1289.6L1190.2 1312.9L1211.5 1338.8L1227.4 1367.6L1237.1 1399.4L1239.8 1434.3"/><path d="M-352.2 1381.0L-354.6 1350.1L-350.2 1308.0L-342.7 1282.7L-325.3 1248.5L-301.5 1218.3L-272.3 1191.7L-200.0 1147.8L-96.8 1109.1L39.9 1077.8L190.9 1057.2L371.7 1044.5L578.5 1041.6L783.2 1050.3L958.3 1068.9L1117.6 1100.1L1225.7 1135.5L1279.3 1161.2L1314.8 1183.6L1345.7 1209.1L1371.4 1238.0L1391.0 1270.8L1403.6 1308.0"/><path d="M-513.9 1214.4L-497.0 1157.2L-466.6 1110.8L-413.5 1064.6L-347.1 1028.6L-270.0 1000.3L-165.7 974.2L-51.1 954.8L92.8 938.7L289.1 926.2L492.5 921.5L719.4 924.5L917.9 935.2L1084.5 952.1L1219.1 974.2L1339.5 1005.4L1428.4 1041.9"/><path d="M-642.7 1002.8L-617.6 968.9L-575.1 932.7L-523.9 904.3L-449.6 876.7L-365.7 855.7L-273.4 839.5L-153.4 825.0L-25.0 814.4L179.8 804.2L393.8 799.3L635.5 799.1L850.2 803.5L1033.9 811.6L1185.9 823.0L1326.8 839.5L1436.5 859.5"/><path d="M-723.6 756.5L-649.4 728.3L-527.8 705.4L-364.9 690.5L-157.3 681.3L240.7 674.6L763.4 674.2L1166.3 680.1L1437.6 691.8"/><path d="M-707.3 234.9L-663.5 271.3L-611.5 300.2L-552.7 323.6L-470.4 347.0L-379.6 365.6L-260.7 383.0L3.0 406.4L389.6 420.1L811.7 417.0L1163.9 398.3L1314.1 383.0L1432.9 365.6"/><path d="M-614.4 1.3L-585.7 57.6L-545.3 102.9L-495.5 140.0L-422.4 177.4L-339.1 207.2L-227.9 235.1L-106.5 256.4L45.3 274.5L228.7 287.9L442.5 294.9L658.8 294.0L848.1 286.6L1030.3 272.3L1180.7 253.3L1319.5 226.6L1426.9 196.1"/><path d="M-480.1 -193.4L-469.2 -128.1L-458.1 -99.7L-435.3 -61.5L-383.8 -8.0L-318.6 35.1L-225.9 76.0L-120.5 107.7L15.0 135.1L160.8 154.1L358.0 168.1L560.5 171.5L762.0 164.7L935.1 149.5L1097.9 124.4L1228.0 92.9L1342.7 49.9L1425.1 1.3"/><path d="M-319.1 -342.7L-323.7 -309.7L-322.6 -264.2L-313.0 -223.2L-296.1 -186.4L-272.9 -153.4L-244.2 -124.0L-172.8 -74.3L-70.6 -29.5L64.9 7.7L214.8 32.4L393.9 47.4L598.3 49.6L779.8 38.8L952.1 14.9L1091.8 -18.9L1155.0 -41.0L1212.7 -67.1L1264.0 -97.7L1297.6 -124.0L1326.3 -153.4L1349.5 -186.4L1366.4 -223.2L1376.0 -264.2"/><path d="M-144.5 -446.3L-154.2 -418.3L-161.5 -378.5L-160.8 -341.4L-153.0 -307.2L-139.0 -275.8L-119.5 -247.2L-95.0 -221.2L-55.6 -190.4L28.9 -146.2L144.1 -108.9L273.4 -84.1L429.1 -69.5L588.9 -68.1L746.0 -79.7L893.7 -105.2L1011.1 -140.8L1098.0 -183.4L1139.2 -213.1L1165.2 -238.3L1192.4 -275.8L1206.4 -307.2L1214.1 -341.4L1214.8 -378.5"/></g><g class="wa-sheet-key"><path d="M434.8 1399.2L410.0 1338.1L381.0 1252.6L356.2 1163.1L335.4 1070.2L318.5 974.2L305.3 875.9L295.8 775.7L289.9 674.2L287.6 572.0L289.6 443.9L295.2 341.8L304.3 240.8L317.0 141.2L333.4 43.8L353.4 -51.1L377.2 -142.8"/><path d="M-745.9 493.3L-694.8 502.2L-622.5 511.4L-452.0 525.1L-208.6 536.3L91.0 543.8L438.2 547.3L815.5 545.9L1150.4 539.7L1428.5 529.4"/><path d="M-572.2 -70.5L-562.7 -38.6L-549.5 -9.9L-533.2 16.0L-514.0 39.5L-492.3 60.8L-455.4 89.2L-428.3 106.0L-384.1 128.6L-352.5 142.1L-302.3 160.1L-249.0 176.0L-192.8 189.8L-73.2 212.5L-10.2 221.5L76.6 231.6L165.9 239.5L257.3 245.5L350.2 249.6L467.7 252.3L585.7 252.3L679.8 250.4L864.8 241.2L954.7 233.8L1042.1 224.3L1126.5 212.5L1187.5 201.9L1265.2 185.4L1320.4 170.9L1372.8 154.4L1421.9 135.5"/><path d="M-603.1 1080.2L-597.1 1066.6L-582.6 1041.8L-565.1 1019.8L-544.9 1000.3L-522.4 982.9L-497.6 967.3L-470.9 953.3L-427.3 935.0L-396.2 924.2L-346.7 910.1L-294.0 897.9L-238.5 887.5L-120.0 870.9L6.9 858.8L208.9 847.1L419.8 841.7L657.2 842.0L867.4 848.1L1046.5 858.8L1193.7 873.3L1272.8 884.4L1329.2 894.3L1382.8 905.8L1433.4 919.3"/></g><g class="wa-sheet-rose"><circle cx="982.8" cy="330.2" r="182.4"/><circle cx="982.8" cy="330.2" r="173.3"/><path class="wa-rose-ticks" d="M958.1 158.7L956.8 149.6M992.0 157.2L992.3 151.8M1025.6 162.3L1026.9 157.1M1057.5 173.9L1059.8 169.1M1086.6 191.5L1092.1 184.2M1111.7 214.4L1115.6 210.8M1131.8 241.8L1136.4 239.1M1146.2 272.5L1151.2 270.8M1154.3 305.5L1163.3 304.2M1155.8 339.5L1161.1 339.7M1150.7 373.0L1155.8 374.4M1139.1 405.0L1143.9 407.3M1121.5 434.0L1128.8 439.5M1098.6 459.1L1102.1 463.1M1071.2 479.2L1073.9 483.8M1040.4 493.6L1042.2 498.6M1007.4 501.7L1008.7 510.7M973.5 503.2L973.2 508.5M939.9 498.1L938.6 503.2M908.0 486.5L905.7 491.3M878.9 468.9L873.5 476.2M853.9 446.0L849.9 449.5M833.7 418.6L829.2 421.3M819.4 387.8L814.3 389.6M811.2 354.9L802.2 356.2M809.7 320.9L804.4 320.6M814.9 287.3L809.7 286.0M826.4 255.4L821.6 253.1M844.0 226.4L836.7 220.9M867.0 201.3L863.4 197.3M894.3 181.2L891.6 176.6M925.1 166.8L923.3 161.8"/><path class="wa-rose-lit wa-rose-north" d="M961.1 179.7L945.0 302.0L982.8 330.2Z"/><path class="wa-rose-dim wa-rose-north" d="M961.1 179.7L982.8 330.2L1011.0 292.5Z"/><path class="wa-rose-lit" d="M1032.9 263.3L977.1 291.1L982.8 330.2Z"/><path class="wa-rose-dim" d="M1032.9 263.3L982.8 330.2L1021.9 324.6Z"/><path class="wa-rose-lit" d="M1133.2 308.6L1011.0 292.5L982.8 330.2Z"/><path class="wa-rose-dim" d="M1133.2 308.6L982.8 330.2L1020.5 358.4Z"/><path class="wa-rose-lit" d="M1049.7 380.3L1021.9 324.6L982.8 330.2Z"/><path class="wa-rose-dim" d="M1049.7 380.3L982.8 330.2L988.4 369.3Z"/><path class="wa-rose-lit" d="M1004.4 480.6L1020.5 358.4L982.8 330.2Z"/><path class="wa-rose-dim" d="M1004.4 480.6L982.8 330.2L954.5 367.9Z"/><path class="wa-rose-lit" d="M932.7 397.1L988.4 369.3L982.8 330.2Z"/><path class="wa-rose-dim" d="M932.7 397.1L982.8 330.2L943.6 335.8Z"/><path class="wa-rose-lit" d="M832.3 351.8L954.5 367.9L982.8 330.2Z"/><path class="wa-rose-dim" d="M832.3 351.8L982.8 330.2L945.0 302.0Z"/><path class="wa-rose-lit" d="M915.8 280.1L943.6 335.8L982.8 330.2Z"/><path class="wa-rose-dim" d="M915.8 280.1L982.8 330.2L977.1 291.1Z"/></g></svg><!-- /gen:sheet -->
       <figure class="wa-win-state" data-slug="africa" data-on="true">
         <svg class="wa-map-svg" viewBox="0 0 1000 1060" role="img" aria-label="Map of Africa. The 22 countries written up on this site are filled in; the rest of the continent is drawn as outline only. The same 22 are listed as buttons directly below this map." xmlns="http://www.w3.org/2000/svg">
         <g class="wa-map-rest" aria-hidden="true">
@@ -1213,8 +1340,36 @@ window.AF = {
      on the GPU, and it costs nothing next to re-rendering paths. Reduced motion
      gets the destination immediately — the information is the view, not the
      travelling. */
+  /* The sheet behind the map is printed at one scale — the continental one it is
+     in register with. The map is not: pressing a region flies its viewBox in,
+     and from that moment the graticule behind the coastline is the graticule of
+     a different scale, crossing the coast several degrees from where it should.
+     At East Africa it reads as a registration error, because there is no frame
+     around the map to explain it as a lens.
+
+     So the grid steps back whenever the map leaves the view it was drawn for,
+     and comes back when it returns. Not the limb, the rose or the grain: those
+     are the paper rather than the projection, and nobody can see a hemisphere
+     arc two thousand units across being a few degrees out.
+
+     Regenerating the sheet at every zoom was the other answer and it is worse:
+     at Rwanda the view is a fourteenth of the continent and a ten-degree
+     graticule puts one line on the whole screen. */
+  var sheet = sec.querySelector('.wa-sheet');
+  /* Compared as four numbers, not as a string: the africa button carries
+     "0 0 1000.0 1060.0" and toFixed(1) produces "0.0 0.0 1000.0 1060.0", so a
+     string test is false on the one view it is supposed to be true on. */
+  var homeView = (regs[0].dataset.view || '0 0 1000 1060').split(' ').map(Number);
+  function registered(to){
+    return to.every(function(v, i){ return Math.abs(v - homeView[i]) < 0.5; });
+  }
+  function markSheet(to){
+    if (sheet) { sheet.classList.toggle('is-adrift', !registered(to)); }
+  }
+
   function flyTo(to){
     if (anim) cancelAnimationFrame(anim);
+    markSheet(to);
     if (reduced.matches) { view = to.slice(); svg.setAttribute('viewBox', view.join(' ')); return; }
     var from = view.slice(), t0 = performance.now(), ms = 620;
     (function step(now){
