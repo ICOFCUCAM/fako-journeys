@@ -314,3 +314,35 @@ html.ex-open{overflow:hidden}
 @media(max-width:700px){
   .pl-routes+.ex-key,.at-routes+.ex-key,.jn-routes+.ex-key,.mt-routes+.ex-key{margin-left:auto}
 }
+/* The key at phone widths. A masthead 320 pixels wide holds a wordmark, an index
+   and a call to action only if one of them stops using words — and the index is
+   the one that must survive, because it is the only control that reaches the
+   whole site. So the glyph carries it and the label is dropped, with the
+   accessible name still on the button. */
+.ex-key-eye{width:15px;height:15px;flex:none;display:none}
+.ex-key-word{display:inline}
+@media(max-width:560px){
+  .ex-key-eye{display:block}
+  .ex-key-word{display:none}
+  .ex-key{padding:9px 11px;min-width:44px;justify-content:center}
+}
+/* Below 420px the call to action gives up letter-spacing before the index gives
+   up existing. Every masthead on the site is covered by one rule rather than
+   six, because they all put a wordmark, the index and one button on a bar that
+   is now three hundred and twenty pixels wide. */
+@media(max-width:420px){
+  header .btn,header .af-btn,header a[class*="btn"]{
+    padding:9px 10px;font-size:8.5px;letter-spacing:.08em;white-space:nowrap}
+  header .btn i,header .af-btn i,header a[class*="btn"] i{display:none}
+  .wa-mast-in,.pl-mast,.at-mast,.jn-mast,.mt-mast,.mast-in,.fj-mast-in{gap:10px}
+  .af-frame{padding:0 14px}
+  .mark b,.wa-mark b,.pl-mark b{font-size:17px}
+  .mark>span:last-child,.wa-mark span{display:none}
+  .wa-mast-in{padding-left:14px;padding-right:14px}
+  .jn-mast,.at-mast,.mt-mast{padding-left:10px;padding-right:10px;gap:8px}
+  .mark b,.wa-mark b,.pl-mark b,.mt-mark b,.jn-mark b,.at-mark b{font-size:15px;
+    letter-spacing:0}
+  header .btn,header .af-btn,header a[class*="btn"]{padding:9px 8px;font-size:8px}
+  .pl-mast{padding:0 14px}
+  .ex-key{margin-left:auto}
+}

@@ -296,7 +296,14 @@
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'ex-key';
-    b.innerHTML = 'Explore <kbd>' + (mac ? '⌘' : 'Ctrl') + 'K</kbd>';
+    /* A glyph and a word. Below 560px the word is hidden by CSS and the glyph
+       carries it alone: three labelled controls do not fit across a 320px
+       masthead, and the one that must survive is the index. */
+    b.innerHTML = '<svg class="ex-key-eye" viewBox="0 0 24 24" aria-hidden="true" '
+      + 'fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" '
+      + 'r="7"/><path d="M16.5 16.5 21 21"/></svg>'
+      + '<span class="ex-key-word">Explore</span>'
+      + '<kbd>' + (mac ? '⌘' : 'Ctrl') + 'K</kbd>';
     b.setAttribute('aria-label', 'Explore Africa — search every country, place and story');
     b.addEventListener('click', function () { open(); });
     nav.parentElement.insertBefore(b, nav.nextSibling);

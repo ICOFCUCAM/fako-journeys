@@ -379,7 +379,7 @@
 /* ---- phone --------------------------------------------------------------- */
 
 @media(max-width:720px){
-  .jn-mast{padding:0 14px;gap:14px}
+  .jn-mast{padding:0 10px;gap:8px}
   .jn-routes{display:none}
   .jn-mark b{font-size:17px}
   .jn-mast .af-btn{padding:11px 12px;font-size:9.5px;white-space:nowrap}

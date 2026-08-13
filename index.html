@@ -351,6 +351,15 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-open-stage{min-height:0;padding:96px 0 0}
   .wa-open-grid{grid-template-columns:1fr;gap:20px}
   .wa-open-say,.wa-open-tail,.wa-win,.wa-win-rail{grid-column:1;grid-row:auto}
+  /* Order on a phone: headline, then what you can do, then the map, then the
+     rails. Measured at 320, 390 and 768, the calls sat between 1072 and 1289
+     pixels down — behind a six-hundred-pixel map — so the first screen of the
+     device most people arrive on offered the headline and nothing to do with
+     it. Two lines of `order` cost nothing and put the ladder above the fold. */
+  .wa-open-say{order:1}
+  .wa-open-tail{order:2}
+  .wa-win{order:3}
+  .wa-win-rail{order:4}
   /* The window is taken out of the flow and bled off the right edge on a
      desktop, which is the whole composition of the first screen. On a phone
      there is no room to bleed into: left absolute it stayed a 180-pixel column
@@ -815,6 +824,27 @@ window.AF = {
           <p class="wa-win-key" aria-hidden="true"><span data-tier="ours">Our own operator</span><span data-tier="live">Destination page</span></p>
         </div>
       </div>
+      <!-- The lede and the three calls used to close the stage, below the
+           region rail, the country rail and the lens rail. On every one of
+           nine widths from 320 to 1920 that put every call on this page
+           below the first viewport — the only one a visitor saw on arrival
+           was the masthead button. They now sit directly under the
+           headline, and the rails keep the foot of the stage. -->
+      <div class="wa-open-tail">
+        <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
+        <!-- Three calls, three weights, three different things — and the ladder
+             is the answer to "what can I do here": ask it a question, look at
+             the continent, or just read one. The reading room had no route out
+             of the first fold at all before this, which for a site whose
+             deepest work is twenty-two long reads was the wrong thing to leave
+             out. Weights are solid / outlined / plain text, so the eye gets an
+             order rather than three equal boxes. -->
+        <div class="wa-acts">
+          <a class="wa-act go" href="/journey">What are you looking for? <i>&rarr;</i></a>
+          <a class="wa-act faint" href="/atlas">Open the atlas <i>&rarr;</i></a>
+          <a class="wa-act plain" href="/stories">Or read a country <i>&rarr;</i></a>
+        </div>
+      </div>
       <div class="wa-win-rail">
       <p class="wa-win-line" id="wa-win-line" aria-live="polite"></p>
       <div class="wa-regs" role="group" aria-label="Zoom the map to a region">
@@ -909,21 +939,6 @@ window.AF = {
         </div>
       </article>        <!-- /gen:picks -->
       </div>
-      </div>
-      <div class="wa-open-tail">
-        <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
-        <!-- Three calls, three weights, three different things — and the ladder
-             is the answer to "what can I do here": ask it a question, look at
-             the continent, or just read one. The reading room had no route out
-             of the first fold at all before this, which for a site whose
-             deepest work is twenty-two long reads was the wrong thing to leave
-             out. Weights are solid / outlined / plain text, so the eye gets an
-             order rather than three equal boxes. -->
-        <div class="wa-acts">
-          <a class="wa-act go" href="/journey">What are you looking for? <i>&rarr;</i></a>
-          <a class="wa-act faint" href="/atlas">Open the atlas <i>&rarr;</i></a>
-          <a class="wa-act plain" href="/stories">Or read a country <i>&rarr;</i></a>
-        </div>
       </div>
     </div>
   </div>
