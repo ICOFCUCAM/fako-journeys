@@ -433,6 +433,48 @@ function serve() {
           }
         }
 
+        /* The map argues three things with three colours, and it has to go on
+           doing that in every state it has. Two ways it stopped: the land was
+           1.19:1 against the page, so the continent itself was not one of the
+           three; and hover filled every tier the same sienna, so pointing at an
+           operator produced a destination. Both were invisible in a screenshot
+           of the default view, which is the only view anything else checks. */
+        const L = c => {
+          const n = (c.match(/[\d.]+/g) || []).map(Number);
+          if (n.length < 3) return null;
+          const f = v => { v = v > 1 ? v / 255 : v;
+            return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+          return 0.2126 * f(n[0]) + 0.7152 * f(n[1]) + 0.0722 * f(n[2]);
+        };
+        const CR = (a, b) => { const x = L(a), y = L(b);
+          return (x == null || y == null) ? null : (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+        const land = q('.wa-map-rest path');
+        if (land) {
+          const lf = getComputedStyle(land).fill;
+          const page = getComputedStyle(document.body).backgroundColor;
+          const r = CR(lf, page);
+          /* The coastline has to be a coastline. */
+          if (r != null && r < 1.35) bad.push('the land is ' + r.toFixed(2) + ':1 against the page');
+          /* And a destination has to stay louder than the coast is. */
+          const dest = q('.wa-map-live[data-tier="live"] path');
+          if (dest) {
+            const dr = CR(getComputedStyle(dest).fill, lf);
+            if (dr != null && dr < r) bad.push('a destination is ' + dr.toFixed(2)
+              + ':1 against the land, under the land\'s ' + r.toFixed(2) + ' against the page');
+          }
+        }
+        /* The three tiers are three colours, in every state. */
+        const tiers = ['rest', 'live', 'ours'];
+        const fills = {};
+        for (const t of tiers) {
+          const el = t === 'rest' ? q('.wa-map-rest path')
+                                  : q('.wa-map-live[data-tier="' + t + '"] path');
+          if (el) fills[t] = getComputedStyle(el).fill;
+        }
+        if (Object.keys(fills).length === 3 && new Set(Object.values(fills)).size < 3) {
+          bad.push('the map draws its three tiers in ' + new Set(Object.values(fills)).size + ' colours');
+        }
+
         /* And the monospace voice is three settings, not seven. Counted over
            every element in the hero that holds its own words. */
         const mono = new Set();
