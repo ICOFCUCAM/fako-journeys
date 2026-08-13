@@ -688,6 +688,34 @@ function serve() {
         if (mono.size > 3) bad.push('the mono voice has ' + mono.size
           + ' settings: ' + [...mono].sort().join(' '));
 
+        /* And it stays inside the section it belongs to.
+           This is the check 104 needed and did not have. The map grew until it
+           was 1284px tall in an 897px stage and ran six hundred pixels down
+           over the next section, drawing Namibia across its headline — and
+           every assertion here passed, because the only thing being measured
+           was the continent against the stage and the continent had swallowed
+           the stage. Nothing in this hero clips, so overflowing it is silent:
+           no scrollbar, no reflow, nothing PASS FOUR can see. */
+        if (mapSvg && stage0) {
+          /* The ink again, not the box. The frame is a viewBox with ocean in it
+             and it legitimately hangs below the last of South Africa — measured
+             on the box this flagged the *fixed* build at 75px while flagging
+             the broken one at 580, which is a check that cannot tell the two
+             apart. Run against a state known to be right and a state known to
+             be wrong, it said the same thing about both. */
+          let bb2 = null;
+          try { bb2 = mapSvg.getBBox(); } catch (e) { /* not rendered */ }
+          const vb2 = mapSvg.viewBox && mapSvg.viewBox.baseVal;
+          const box2 = mapSvg.getBoundingClientRect();
+          if (bb2 && vb2 && vb2.height && bb2.height) {
+            const k2 = Math.min(box2.width / vb2.width, box2.height / vb2.height);
+            const inkBottom = box2.top + (box2.height - vb2.height * k2) / 2
+                              + (bb2.y - vb2.y + bb2.height) * k2;
+            const spill = Math.round(inkBottom - stage0.bottom);
+            if (spill > 8) bad.push('the map runs ' + spill + 'px past the foot of the hero');
+          }
+        }
+
         /* The readout's stack stays inside the stage it belongs to. */
         const stage = B('.wa-open-stage'), side = B('.wa-win-side');
         if (stage && side && side.bottom > stage.bottom + 2) {
