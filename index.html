@@ -219,8 +219,17 @@
    was tuned — and holds the same relationship above it. max() rather than a
    media query because the frame's own width is already a min(). */
 .wa-win{position:absolute;top:calc(var(--mast) + 1vh);width:min(50vw,640px);
+  /* THE SHEET IS NOT TRIMMED BY THE WINDOW.
+     The bleed was 100px, which at 1240 and above resolves to right:0 — the map's
+     own box ended exactly on the viewport edge, so the island marks sat half off
+     the screen and the continent's right side had no margin at all. That reads
+     as a map cropped by the browser rather than a sheet lying on a surface,
+     which is the whole idea 114 built the shadow and the engraved coast for.
+     A sheet needs an edge you can see the whole of. */
   --fj-bleed:100px;
-  right:max(0px, calc((100vw - min(1240px, 100vw)) / 2 - var(--fj-bleed)));
+  --fj-sheet-margin:26px;
+  right:max(var(--fj-sheet-margin),
+            calc((100vw - min(1240px, 100vw)) / 2 - var(--fj-bleed)));
   z-index:1;display:grid;grid-template-columns:1fr;gap:12px}
 /* The frame is the continent's own box, not a rectangle it is letterboxed into.
    It was 640 wide and 450 tall against a viewBox of 1000x1060, so the map
