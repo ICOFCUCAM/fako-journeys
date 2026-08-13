@@ -122,10 +122,22 @@
    it at 768. */
 .wa-h1-big{display:block;font-size:clamp(74px,15.5vw,232px);line-height:.78;
   letter-spacing:-.035em;font-weight:700}
-.wa-h1-rest{display:block;font-size:clamp(26px,3.6vw,54px);line-height:1;
-  letter-spacing:-.015em;margin-top:.12em}
+/* The two lines under AFRICA are proportions of it, not of the window.
+   AFRICA is fitted to its column now, and the column is a different function of
+   the viewport than a vw-based clamp is, so a scale built on vw drifts against
+   the thing it is supposed to be subordinate to: the qualifying line measured
+   0.243 of the headline at 1440, 0.253 at 1920 and 0.265 at 390. Small numbers,
+   but the whole hierarchy of the first screen rests on them holding.
+
+   The fitter publishes the size it solved for as --fj-h1 and these key off it,
+   at the ratios the composition already had at 1440 — the width it was drawn
+   at. The clamps are floors for the phone, where a strict ratio would take the
+   promise line down to 14px, and they are the value with scripting off. */
+.wa-h1-rest{display:block;line-height:1;letter-spacing:-.015em;margin-top:.12em;
+  font-size:clamp(26px, calc(var(--fj-h1, 3.6vw) * .244), 54px)}
 .wa-find{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(18px,2.1vw,30px);line-height:1.04;color:var(--c-accent);margin-top:16px}
+  line-height:1.04;color:var(--c-accent);margin-top:16px;
+  font-size:clamp(17px, calc(var(--fj-h1, 2.1vw) * .141), 30px)}
 .wa-open .wa-lede{font-size:17.5px;color:var(--c-muted);max-width:32em;margin-top:0}
 .wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
 .wa-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
@@ -1523,7 +1535,7 @@ window.AF = {
   function fit(){
     queued = false;
     var w = col.clientWidth;
-    if (!w) { big.style.fontSize = ''; return; }
+    if (!w) { big.style.fontSize = ''; col.style.removeProperty('--fj-h1'); return; }
     big.style.fontSize = PROBE + 'px';
     var range = document.createRange();
     range.selectNodeContents(big);
@@ -1531,7 +1543,14 @@ window.AF = {
     /* A face so wide or so narrow that the ratio is outside anything a Latin
        six-letter word can be is a face that has not arrived. Keep the clamp. */
     if (!(ratio > 2 && ratio < 6)) { big.style.fontSize = ''; return; }
-    big.style.fontSize = (w / ratio).toFixed(2) + 'px';
+    var size = w / ratio;
+    big.style.fontSize = size.toFixed(2) + 'px';
+    /* The two lines under it are proportions of this — see .wa-h1-rest. */
+    /* On the column, not the <h1>: .wa-find is the h1's sibling, and custom
+       properties inherit down rather than sideways. Set on the h1 it resolved
+       for the qualifying line inside it and left the promise line under it on
+       the clamp's floor — 17px where it wanted 30. */
+    col.style.setProperty('--fj-h1', size.toFixed(2) + 'px');
   }
   fit();
   addEventListener('resize', function(){
