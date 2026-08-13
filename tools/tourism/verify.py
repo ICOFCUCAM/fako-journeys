@@ -10,9 +10,34 @@ import os
 import re
 
 from . import providers
-from .model import ROOT
+from .model import COUNTRY_DIR, ROOT
 
 TOURISM = os.path.join(ROOT, "tourism")
+
+
+def country_names():
+    """Every country's name, for the one alt text that is allowed to be short.
+
+    A photograph with no evidence behind it describes itself as its country, or
+    as its category in its country — that is what commit 057 does and why. Both
+    are correct and one of them is seven characters long, so a flat minimum
+    length reports the honest state as a fault.
+    """
+    import json
+    out = set()
+    try:
+        names = sorted(os.listdir(COUNTRY_DIR))
+    except OSError:
+        return out
+    for name in names:
+        if not name.endswith(".json") or name.startswith("_"):
+            continue
+        try:
+            with open(os.path.join(COUNTRY_DIR, name)) as fh:
+                out.add((json.load(fh).get("name") or "").strip())
+        except (IOError, ValueError):
+            continue
+    return {n for n in out if n}
 
 IMG_RE = re.compile(r"<img\b[^>]*>", re.S)
 ATTR_RE = re.compile(r'(\w[\w-]*)\s*=\s*"([^"]*)"')
@@ -22,13 +47,22 @@ def attrs(tag):
     return dict(ATTR_RE.findall(tag))
 
 
+COUNTRIES = country_names()
+
+
 def check_page(path, taxonomy, expect_categories=True):
     problems = []
     src = open(path).read()
     name = os.path.basename(path)
 
     tags = IMG_RE.findall(src)
-    empties = src.count('class="tq-empty')
+    # An unresolved slot is the plate component. It used to be a `tq-empty` div,
+    # and this line was never updated when it changed, so a country with no
+    # photographs counted zero slots against an expected twenty-seven, `verify`
+    # returned problems, `build.py all` exited 1, and the resolve workflow died
+    # at its rebuild step before it could commit anything it had just found.
+    # That is what both of the runs on 13 August did. Count either shape.
+    empties = src.count('class="tq-empty') + src.count('class="af-plate ')
 
     if expect_categories:
         # the renderer stamps data-category on every block it emits, so this is a
@@ -53,7 +87,7 @@ def check_page(path, taxonomy, expect_categories=True):
         src_url = a.get("src", "")
         if not a.get("alt"):
             problems.append("%s: <img> without alt text (%s)" % (name, src_url[:60]))
-        elif len(a["alt"]) < 12:
+        elif len(a["alt"]) < 12 and a["alt"].strip() not in COUNTRIES:
             problems.append("%s: alt text too thin: %r" % (name, a["alt"]))
         if not (a.get("width") and a.get("height")):
             problems.append("%s: <img> without width/height — layout shift (%s)"
