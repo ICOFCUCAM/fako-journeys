@@ -214,7 +214,18 @@
    only to say so, because the class it named is no longer emitted. */
 /* The readout sits under the map now, inside the frame padding, so the map
    itself can run past the right edge of the page. */
-.wa-win-side{display:flex;flex-direction:column;padding-right:44px;max-width:520px;margin-left:auto;text-align:right;align-items:flex-end}
+/* The readout is held to the right of the stage, and its box must not reach
+   back across the calls in the other column. At a flat 520px it did: on a short
+   window the map drops to its 300px floor, the readout rides up with it into the
+   row the calls are on, and at 1280 the two boxes crossed by 31x46 and at 1180
+   by 72x46. Tall windows never showed it, because there the readout sits two
+   hundred pixels below the calls and the widths never come into it.
+
+   34vw is the width that keeps it clear of the copy column — which is itself
+   66% of a frame that is min(1240px, 100vw) — at every width from 1024 to 1360,
+   and 520 goes on binding above that. */
+.wa-win-side{display:flex;flex-direction:column;padding-right:44px;margin-left:auto;
+  max-width:min(520px, 34vw);text-align:right;align-items:flex-end}
 /* Twenty-three readouts in one box, one shown at a time — and the box has to be
    the height of the tallest of them, or the one that overruns it lands on
    whatever is underneath.
@@ -598,7 +609,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
      The vh term is a ceiling on the height expressed as the width that produces
      it, so the ratio never has to be broken to honour it, and the map is
      centred rather than held to a right edge that is no longer being bled. */
-  .wa-win-frame{width:min(100%, calc(52vh * 1000 / 1060));height:auto;
+  /* The vh ceiling needs a floor under it for the same reason the desktop rule
+     does: stacked, the stage is content-tall and the viewport is not, so a 450
+     pixel-tall window — 1440x900 at 200% zoom — gave a 221x234 map inside a
+     1295px stage. There is room; the ceiling was just measuring the wrong box. */
+  .wa-win-frame{width:min(100%, max(320px, calc(52vh * 1000 / 1060)));height:auto;
     margin-inline:auto}
   .wa-win-caps{margin-top:18px}
   /* The key is absolutely placed under the caption on desktop; unpinned on a
