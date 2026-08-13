@@ -787,6 +787,870 @@
       "createdAt": "2026-08-11T16:34:25Z",
       "aspectRatio": 1.4999,
       "thumbnailUrl": "https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&fit=crop&w=400&h=300&q=70"
+    },
+    "uganda/adventure": {
+      "country": "uganda",
+      "category": "adventure",
+      "caption": "Grade Five on the Nile",
+      "description": "White-water rafting below the source at Jinja, plus bungee, kayaking and the long walk up Sipi.",
+      "provider": "unsplash",
+      "photoId": "AIfqCEt3eZY",
+      "imageUrl": "https://images.unsplash.com/photo-1595790527813-6a76c994a1dd",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1595790527813-6a76c994a1dd?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/green-trees-near-houses-under-white-clouds-and-blue-sky-during-daytime-AIfqCEt3eZY",
+      "photographer": "b40deep",
+      "photographerUrl": "https://unsplash.com/@b40deep",
+      "width": 4032,
+      "height": 3024,
+      "aspectRatio": 1.3333,
+      "alt": "white-water rafting on the Nile rapids at Jinja, Uganda",
+      "query": "Uganda Nile Jinja",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-12T20:10:55Z",
+      "verifiedAt": "2026-08-12T20:10:55Z",
+      "relevance": {
+        "score": 5.0,
+        "reasons": [
+          "subject: the,white"
+        ]
+      }
+    },
+    "uganda/architecture": {
+      "country": "uganda",
+      "category": "architecture",
+      "caption": "Minaret, Dome and Thatch",
+      "description": "The Uganda National Mosque, the Namirembe and Rubaga cathedrals facing each other across two hills.",
+      "provider": "pexels",
+      "photoId": "38101681",
+      "imageUrl": "https://images.pexels.com/photos/38101681/pexels-photo-38101681.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38101681/pexels-photo-38101681.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-uganda-national-mosque-in-kampala-38101681/",
+      "photographer": "josh_ dago__",
+      "photographerUrl": "https://www.pexels.com/@josh_-dago__-377312171",
+      "width": 4480,
+      "height": 6720,
+      "aspectRatio": 0.6667,
+      "alt": "the minaret of the Uganda National Mosque above Kampala",
+      "query": "Uganda Uganda National Mosque Kampala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 36
+      },
+      "createdAt": "2026-08-12T20:11:12Z",
+      "verifiedAt": "2026-08-12T20:11:13Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: kampala,mosque,national",
+          "category: architecture"
+        ]
+      }
+    },
+    "uganda/beaches": {
+      "country": "uganda",
+      "category": "beaches",
+      "caption": "The Ssese Islands",
+      "description": "Freshwater beaches and fishing villages on Lake Victoria, an hour and a half by ferry from Entebbe.",
+      "provider": "pexels",
+      "photoId": "32339600",
+      "imageUrl": "https://images.pexels.com/photos/32339600/pexels-photo-32339600.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32339600/pexels-photo-32339600.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/silhouette-of-people-jumping-from-a-boat-at-sunset-32339600/",
+      "photographer": "George Jhon",
+      "photographerUrl": "https://www.pexels.com/@george-jhon-742248615",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a sandy freshwater shore and fishing boats on the Ssese Islands, Uganda",
+      "query": "Uganda Ssese Islands",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-12T20:10:50Z",
+      "verifiedAt": "2026-08-12T20:10:51Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "subject: the",
+          "category: ocean"
+        ]
+      }
+    },
+    "uganda/cities": {
+      "country": "uganda",
+      "category": "cities",
+      "caption": "Kampala on Seven Hills",
+      "description": "A capital built across hills and traffic, with the Gaddafi Mosque minaret giving the best view of all of it.",
+      "provider": "pexels",
+      "photoId": "38101682",
+      "imageUrl": "https://images.pexels.com/photos/38101682/pexels-photo-38101682.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38101682/pexels-photo-38101682.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-uganda-national-mosque-in-kampala-38101682/",
+      "photographer": "josh_ dago__",
+      "photographerUrl": "https://www.pexels.com/@josh_-dago__-377312171",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "the hills and rooftops of Kampala seen from the Gaddafi Mosque minaret, Uganda",
+      "query": "Uganda Kampala Gaddafi Mosque",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 58
+      },
+      "createdAt": "2026-08-12T20:11:10Z",
+      "verifiedAt": "2026-08-12T20:11:10Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: kampala,mosque"
+        ]
+      }
+    },
+    "uganda/crafts": {
+      "country": "uganda",
+      "category": "crafts",
+      "caption": "Bark Cloth and Basketry",
+      "description": "Bark cloth from the mutuba fig, made in Buganda for six hundred years and now UNESCO-listed.",
+      "provider": "unsplash",
+      "photoId": "a_3tG4fbaNw",
+      "imageUrl": "https://images.unsplash.com/photo-1618495776257-748c1480a5e9",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1618495776257-748c1480a5e9?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/grayscale-photo-of-boy-in-t-shirt-and-shorts-standing-on-tree-trunk-a_3tG4fbaNw",
+      "photographer": "Gary Chapman",
+      "photographerUrl": "https://unsplash.com/@garyandnima",
+      "width": 3299,
+      "height": 2219,
+      "aspectRatio": 1.4867,
+      "alt": "a craftsman beating bark cloth from a mutuba fig tree, Uganda",
+      "query": "Uganda craftsman beating bark",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 48,
+        "y": 50
+      },
+      "createdAt": "2026-08-12T20:11:05Z",
+      "verifiedAt": "2026-08-12T20:11:05Z",
+      "relevance": {
+        "score": 4.19,
+        "reasons": [
+          "subject: and,tree"
+        ]
+      }
+    },
+    "uganda/culture": {
+      "country": "uganda",
+      "category": "culture",
+      "caption": "The Kingdom of Buganda",
+      "description": "Uganda's kingdoms were never abolished for long — Buganda, Bunyoro and Toro still hold court.",
+      "provider": "unsplash",
+      "photoId": "7Hv_VOeCSEE",
+      "imageUrl": "https://images.unsplash.com/photo-1620337438052-6b2f675bd9d9",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1620337438052-6b2f675bd9d9?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/herd-of-brown-and-black-horses-on-brown-dirt-road-during-daytime-7Hv_VOeCSEE",
+      "photographer": "bill wegener",
+      "photographerUrl": "https://unsplash.com/@wegenerb",
+      "width": 5162,
+      "height": 3523,
+      "aspectRatio": 1.4652,
+      "alt": "a Buganda kingdom drummer in ceremonial bark cloth",
+      "query": "Uganda Buganda",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 42
+      },
+      "createdAt": "2026-08-12T20:10:57Z",
+      "verifiedAt": "2026-08-12T20:10:58Z",
+      "relevance": {
+        "score": 3.97,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "uganda/eco-tourism": {
+      "country": "uganda",
+      "category": "eco-tourism",
+      "caption": "The Gorilla Permit",
+      "description": "Permit revenue funds the park and pays a share to the parishes around it — which is why the gorilla numbers are rising.",
+      "provider": "unsplash",
+      "photoId": "-C8tnpEG7so",
+      "imageUrl": "https://images.unsplash.com/photo-1711198583409-b3dba6a7e144",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1711198583409-b3dba6a7e144?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-close-up-of-a-gorilla-in-a-forest--C8tnpEG7so",
+      "photographer": "Gabriel Schumacher",
+      "photographerUrl": "https://unsplash.com/@gabriels501",
+      "width": 5472,
+      "height": 3648,
+      "aspectRatio": 1.5,
+      "alt": "rangers and trackers setting out on a gorilla trek in Bwindi, Uganda",
+      "query": "Uganda Bwindi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-12T20:11:19Z",
+      "verifiedAt": "2026-08-12T20:11:19Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: bwindi,gorilla"
+        ]
+      }
+    },
+    "uganda/family-community": {
+      "country": "uganda",
+      "category": "family-community",
+      "caption": "Villages at the Forest Edge",
+      "description": "Community walks in Buhoma and Nkuringo, run by the villages that share the forest with the gorillas.",
+      "provider": "pexels",
+      "photoId": "35770611",
+      "imageUrl": "https://images.pexels.com/photos/35770611/pexels-photo-35770611.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35770611/pexels-photo-35770611.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-gorilla-resting-on-a-log-in-nature-35770611/",
+      "photographer": "hartono subagio",
+      "photographerUrl": "https://www.pexels.com/@hartonosbg",
+      "width": 7952,
+      "height": 5304,
+      "aspectRatio": 1.4992,
+      "alt": "a community village walk beside the forest edge at Buhoma, Uganda",
+      "query": "Uganda Buhoma",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-12T20:11:15Z",
+      "verifiedAt": "2026-08-12T20:11:15Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "uganda/festivals": {
+      "country": "uganda",
+      "category": "festivals",
+      "caption": "Imbalu and Nyege Nyege",
+      "description": "The Bagisu Imbalu season in the east, and four days of music on the banks of the Nile at Jinja.",
+      "provider": "pexels",
+      "photoId": "38520451",
+      "imageUrl": "https://images.pexels.com/photos/38520451/pexels-photo-38520451.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38520451/pexels-photo-38520451.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-rural-landscape-with-cloudy-sky-in-uganda-38520451/",
+      "photographer": "Mwesigwa Joel",
+      "photographerUrl": "https://www.pexels.com/@mwesigwa-joel-455894964",
+      "width": 6996,
+      "height": 3935,
+      "aspectRatio": 1.7779,
+      "alt": "drummers and dancers at the Imbalu ceremony in eastern Uganda",
+      "query": "Uganda Imbalu",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 44
+      },
+      "createdAt": "2026-08-12T20:11:04Z",
+      "verifiedAt": "2026-08-12T20:11:04Z",
+      "relevance": {
+        "score": 6.5,
+        "reasons": [
+          "names the country",
+          "subject: and,uganda"
+        ]
+      }
+    },
+    "uganda/food": {
+      "country": "uganda",
+      "category": "food",
+      "caption": "Rolex, Matoke, Luwombo",
+      "description": "Steamed green banana with groundnut sauce, chicken cooked in banana leaf, and an egg rolled in a chapati on every corner.",
+      "provider": "pexels",
+      "photoId": "4618015",
+      "imageUrl": "https://images.pexels.com/photos/4618015/pexels-photo-4618015.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/4618015/pexels-photo-4618015.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/marabou-stork-sitting-on-a-street-lamp-4618015/",
+      "photographer": "saidi musiitwa",
+      "photographerUrl": "https://www.pexels.com/@saidi-musiitwa-3046478",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a street vendor cooking rolex chapati and eggs in Kampala, Uganda",
+      "query": "Uganda Kampala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-12T20:11:02Z",
+      "verifiedAt": "2026-08-12T20:11:03Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: kampala,street"
+        ]
+      }
+    },
+    "uganda/forests": {
+      "country": "uganda",
+      "category": "forests",
+      "caption": "Kibale and Bwindi",
+      "description": "Thirteen primate species in Kibale, and in Bwindi a forest so old and so thick it was never logged.",
+      "provider": "unsplash",
+      "photoId": "KI9cpDDqe7c",
+      "imageUrl": "https://images.unsplash.com/photo-1782664454335-d67b180afb35",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1782664454335-d67b180afb35?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-chimpanzee-rests-in-a-tree-amidst-lush-green-forest-KI9cpDDqe7c",
+      "photographer": "Dmitrii Zhodzishskii",
+      "photographerUrl": "https://unsplash.com/@dmitrii_zhodzishskii",
+      "width": 5516,
+      "height": 3678,
+      "aspectRatio": 1.4997,
+      "alt": "dense canopy and buttressed trees in Kibale Forest, Uganda",
+      "query": "Uganda Kibale Forest",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-12T20:10:53Z",
+      "verifiedAt": "2026-08-12T20:10:53Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: forest,kibale",
+          "category: forest"
+        ]
+      }
+    },
+    "uganda/heritage": {
+      "country": "uganda",
+      "category": "heritage",
+      "caption": "Kingdoms Still Standing",
+      "description": "Royal drums, regalia and clan structures that survived the protectorate, the 1966 crisis and the 1970s.",
+      "provider": "unsplash",
+      "photoId": "zXu9RsYKgHA",
+      "imageUrl": "https://images.unsplash.com/photo-1551357176-7d517a48c209",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1551357176-7d517a48c209?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/woman-standing-outdoor-zXu9RsYKgHA",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 3000,
+      "height": 2000,
+      "aspectRatio": 1.5,
+      "alt": "royal regalia and drums inside a Buganda kingdom palace",
+      "query": "Uganda Buganda",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-12T20:11:08Z",
+      "verifiedAt": "2026-08-12T20:11:08Z",
+      "relevance": {
+        "score": 2.03,
+        "reasons": [
+          "subject: standing"
+        ]
+      }
+    },
+    "uganda/hero": {
+      "country": "uganda",
+      "category": "hero",
+      "caption": "The Pearl of Africa",
+      "description": "Gorilla forest, the Mountains of the Moon and the Nile leaving Lake Victoria — all inside one small, green country.",
+      "provider": "unsplash",
+      "photoId": "pjMnGNI7mT4",
+      "imageUrl": "https://images.unsplash.com/photo-1711198617874-e86cedbf3707",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1711198617874-e86cedbf3707?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-baby-gorilla-laying-on-its-back-in-the-forest-pjMnGNI7mT4",
+      "photographer": "Gabriel Schumacher",
+      "photographerUrl": "https://unsplash.com/@gabriels501",
+      "width": 5472,
+      "height": 3648,
+      "aspectRatio": 1.5,
+      "alt": "mist over the forested hills of Bwindi Impenetrable National Park at sunrise, Uganda",
+      "query": "Uganda Bwindi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-12T20:10:35Z",
+      "verifiedAt": "2026-08-12T20:10:36Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: bwindi,impenetrable,the"
+        ]
+      }
+    },
+    "uganda/hidden-gems": {
+      "country": "uganda",
+      "category": "hidden-gems",
+      "caption": "Kidepo Valley",
+      "description": "The furthest park from Kampala and the emptiest: Narus valley, the Morungole range, and cheetah nobody photographs.",
+      "provider": "pexels",
+      "photoId": "30135588",
+      "imageUrl": "https://images.pexels.com/photos/30135588/pexels-photo-30135588.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30135588/pexels-photo-30135588.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-giraffe-in-mbarara-s-scenic-landscape-30135588/",
+      "photographer": "Anthony Desrochers",
+      "photographerUrl": "https://www.pexels.com/@antho",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the Narus valley and mountains of Kidepo Valley National Park, Uganda",
+      "query": "Uganda Narus Kidepo",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-12T20:11:23Z",
+      "verifiedAt": "2026-08-12T20:11:23Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: national,park",
+          "category: the"
+        ]
+      }
+    },
+    "uganda/historic-sites": {
+      "country": "uganda",
+      "category": "historic-sites",
+      "caption": "The Kasubi Tombs",
+      "description": "The burial ground of four Buganda kings, thatched, enormous and rebuilt by the clans who have always maintained it.",
+      "provider": "pexels",
+      "photoId": "29843680",
+      "imageUrl": "https://images.pexels.com/photos/29843680/pexels-photo-29843680.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/29843680/pexels-photo-29843680.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-rock-cut-tomb-in-mugla-turkiye-29843680/",
+      "photographer": "From Salih",
+      "photographerUrl": "https://www.pexels.com/@fromsalih",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the great thatched dome of the Kasubi Tombs in Kampala, Uganda",
+      "query": "Uganda Kasubi Tombs Kampala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-12T20:11:07Z",
+      "verifiedAt": "2026-08-12T20:11:08Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: the,tombs",
+          "category: historic"
+        ]
+      }
+    },
+    "uganda/lakes-rivers": {
+      "country": "uganda",
+      "category": "lakes-rivers",
+      "caption": "Where the Nile Begins",
+      "description": "The Nile leaves Lake Victoria at Jinja; Lake Bunyonyi holds twenty-nine islands and no bilharzia.",
+      "provider": "pexels",
+      "photoId": "36470053",
+      "imageUrl": "https://images.pexels.com/photos/36470053/pexels-photo-36470053.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36470053/pexels-photo-36470053.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-fishing-boat-on-lake-victoria-uganda-36470053/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the islands and terraced shores of Lake Bunyonyi, Uganda",
+      "query": "Uganda Lake Bunyonyi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-12T20:10:49Z",
+      "verifiedAt": "2026-08-12T20:10:50Z",
+      "relevance": {
+        "score": 4.93,
+        "reasons": [
+          "names the country",
+          "subject: lake",
+          "category: lake"
+        ]
+      }
+    },
+    "uganda/local-life": {
+      "country": "uganda",
+      "category": "local-life",
+      "caption": "Boda Bodas and Owino",
+      "description": "The boda boda is the transport system; Owino market is where the whole city goes to buy everything.",
+      "provider": "pexels",
+      "photoId": "33740723",
+      "imageUrl": "https://images.pexels.com/photos/33740723/pexels-photo-33740723.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33740723/pexels-photo-33740723.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/bustling-street-in-a-ugandan-town-33740723/",
+      "photographer": "Enock Ojambo",
+      "photographerUrl": "https://www.pexels.com/@enock-ojambo-1365731",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "boda boda motorcycle taxis waiting at a busy Kampala street stage, Uganda",
+      "query": "Uganda Kampala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-12T20:11:13Z",
+      "verifiedAt": "2026-08-12T20:11:14Z",
+      "relevance": {
+        "score": 9.17,
+        "reasons": [
+          "names the country",
+          "subject: and,street",
+          "category: daily,life"
+        ]
+      }
+    },
+    "uganda/luxury": {
+      "country": "uganda",
+      "category": "luxury",
+      "caption": "Lodges at the Forest Edge",
+      "description": "Small lodges on the Bwindi ridge and the Kazinga Channel, close enough to walk to the trailhead after breakfast.",
+      "provider": "unsplash",
+      "photoId": "ACMElze1x00",
+      "imageUrl": "https://images.unsplash.com/photo-1672172672923-6910a8c55539",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1672172672923-6910a8c55539?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-house-in-the-middle-of-a-lush-green-forest-ACMElze1x00",
+      "photographer": "2H Media",
+      "photographerUrl": "https://unsplash.com/@2hmedia",
+      "width": 4220,
+      "height": 2373,
+      "aspectRatio": 1.7783,
+      "alt": "a lodge terrace overlooking the Bwindi forest ridge at dawn, Uganda",
+      "query": "Uganda Bwindi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-12T20:11:17Z",
+      "verifiedAt": "2026-08-12T20:11:18Z",
+      "relevance": {
+        "score": 6.5,
+        "reasons": [
+          "subject: bwindi,forest,lodge",
+          "category: lodge"
+        ]
+      }
+    },
+    "uganda/mountains": {
+      "country": "uganda",
+      "category": "mountains",
+      "caption": "The Mountains of the Moon",
+      "description": "The Rwenzori range holds glaciers three degrees from the equator, and Margherita Peak at 5,109 m.",
+      "provider": "pexels",
+      "photoId": "38520453",
+      "imageUrl": "https://images.pexels.com/photos/38520453/pexels-photo-38520453.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38520453/pexels-photo-38520453.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-roadside-view-in-rural-uganda-38520453/",
+      "photographer": "Mwesigwa Joel",
+      "photographerUrl": "https://www.pexels.com/@mwesigwa-joel-455894964",
+      "width": 7008,
+      "height": 3942,
+      "aspectRatio": 1.7778,
+      "alt": "the glaciated peaks of the Rwenzori Mountains above the moorland, Uganda",
+      "query": "Uganda Rwenzori Mountains",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 40
+      },
+      "createdAt": "2026-08-12T20:10:45Z",
+      "verifiedAt": "2026-08-12T20:10:46Z",
+      "relevance": {
+        "score": 4.5,
+        "reasons": [
+          "names the country",
+          "subject: mountains"
+        ]
+      }
+    },
+    "uganda/nature": {
+      "country": "uganda",
+      "category": "nature",
+      "caption": "Green, End to End",
+      "description": "Crater lakes around Fort Portal, papyrus swamp on the Nile, and the Rwenzori snowline sitting on the equator.",
+      "provider": "unsplash",
+      "photoId": "k12dnEEB55o",
+      "imageUrl": "https://images.unsplash.com/photo-1661883723725-57bd93747f75",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1661883723725-57bd93747f75?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-sunset-over-a-forest-k12dnEEB55o",
+      "photographer": "Ivan Sabayuki",
+      "photographerUrl": "https://unsplash.com/@ivansabayuki",
+      "width": 4496,
+      "height": 3000,
+      "aspectRatio": 1.4987,
+      "alt": "the crater lakes and green hills around Fort Portal, Uganda",
+      "query": "Uganda Fort Portal",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-12T20:10:38Z",
+      "verifiedAt": "2026-08-12T20:10:38Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: around,fort,portal"
+        ]
+      }
+    },
+    "uganda/outdoor": {
+      "country": "uganda",
+      "category": "outdoor",
+      "caption": "Sipi, Elgon, Bisoke",
+      "description": "Three waterfalls and a coffee walk at Sipi, then the long crater rim of Mount Elgon above it.",
+      "provider": "pexels",
+      "photoId": "38820403",
+      "imageUrl": "https://images.pexels.com/photos/38820403/pexels-photo-38820403.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38820403/pexels-photo-38820403.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-yosemite-falls-in-stunning-california-landscape-38820403/",
+      "photographer": "Harry Xie",
+      "photographerUrl": "https://www.pexels.com/@homeofhx",
+      "width": 7952,
+      "height": 5304,
+      "aspectRatio": 1.4992,
+      "alt": "the Sipi Falls dropping off the Mount Elgon escarpment, Uganda",
+      "query": "Uganda sipi falls dropping",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 46,
+        "y": 46
+      },
+      "createdAt": "2026-08-12T20:11:17Z",
+      "verifiedAt": "2026-08-12T20:11:17Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: falls"
+        ]
+      }
+    },
+    "uganda/photography": {
+      "country": "uganda",
+      "category": "photography",
+      "caption": "Crater Lakes at First Light",
+      "description": "The Ndali-Kasenda crater field before the haze lifts, and the Ishasha fig trees in the late afternoon.",
+      "provider": "pexels",
+      "photoId": "38520450",
+      "imageUrl": "https://images.pexels.com/photos/38520450/pexels-photo-38520450.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38520450/pexels-photo-38520450.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-daily-life-on-ugandan-street-38520450/",
+      "photographer": "Mwesigwa Joel",
+      "photographerUrl": "https://www.pexels.com/@mwesigwa-joel-455894964",
+      "width": 7008,
+      "height": 3942,
+      "aspectRatio": 1.7778,
+      "alt": "morning mist on the Ndali-Kasenda crater lakes near Fort Portal, Uganda",
+      "query": "Uganda Ndali-Kasenda Fort Portal",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-12T20:11:21Z",
+      "verifiedAt": "2026-08-12T20:11:22Z",
+      "relevance": {
+        "score": 3.29,
+        "reasons": [
+          "names the country",
+          "category: scenic"
+        ]
+      }
+    },
+    "uganda/safari": {
+      "country": "uganda",
+      "category": "safari",
+      "caption": "Queen Elizabeth and Kidepo",
+      "description": "Kob on the Kasenyi plains, elephant on the Kazinga Channel, and Kidepo Valley with almost nobody in it.",
+      "provider": "unsplash",
+      "photoId": "jwlnfO135yI",
+      "imageUrl": "https://images.unsplash.com/photo-1782504354311-5c104bf10185",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1782504354311-5c104bf10185?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/elephant-wading-in-water-with-lush-green-background-jwlnfO135yI",
+      "photographer": "Dmitrii Zhodzishskii",
+      "photographerUrl": "https://unsplash.com/@dmitrii_zhodzishskii",
+      "width": 5213,
+      "height": 3475,
+      "aspectRatio": 1.5001,
+      "alt": "elephants on the Kazinga Channel in Queen Elizabeth National Park, Uganda",
+      "query": "Uganda Kazinga Channel Queen",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 48,
+        "y": 58
+      },
+      "createdAt": "2026-08-12T20:10:42Z",
+      "verifiedAt": "2026-08-12T20:10:43Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: channel,elizabeth,kazinga"
+        ]
+      }
+    },
+    "uganda/traditional-people": {
+      "country": "uganda",
+      "category": "traditional-people",
+      "caption": "Batwa and Karamojong",
+      "description": "The Batwa, forest people of the southwest, and the Karamojong cattle-keepers of the northeast plains.",
+      "provider": "unsplash",
+      "photoId": "Cfq5AOCxjms",
+      "imageUrl": "https://images.unsplash.com/photo-1595157724160-4aca7d33ea23",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1595157724160-4aca7d33ea23?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/man-and-woman-holding-hands-while-walking-during-daytime-Cfq5AOCxjms",
+      "photographer": "Roman Derrick Okello",
+      "photographerUrl": "https://unsplash.com/@okello_1",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a Karamojong herder with cattle on the plains of Karamoja, Uganda",
+      "query": "Uganda Karamojong Karamoja",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 48,
+        "y": 38
+      },
+      "createdAt": "2026-08-12T20:11:00Z",
+      "verifiedAt": "2026-08-12T20:11:00Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "uganda/waterfalls": {
+      "country": "uganda",
+      "category": "waterfalls",
+      "caption": "Murchison, Through the Gap",
+      "description": "The entire Victoria Nile forced through a seven-metre gap and dropped forty-three metres into the gorge below.",
+      "provider": "unsplash",
+      "photoId": "Qa2ln5HC1uk",
+      "imageUrl": "https://images.unsplash.com/photo-1672590273072-6a92fa9e7f30",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1672590273072-6a92fa9e7f30?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-river-running-through-a-lush-green-forest-Qa2ln5HC1uk",
+      "photographer": "K3N",
+      "photographerUrl": "https://unsplash.com/@mkasujja",
+      "width": 3024,
+      "height": 4032,
+      "aspectRatio": 0.75,
+      "alt": "the Nile forcing through the narrow gap at Murchison Falls, Uganda",
+      "query": "Uganda Nile Murchison Falls",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-12T20:10:47Z",
+      "verifiedAt": "2026-08-12T20:10:47Z",
+      "relevance": {
+        "score": 6.0,
+        "reasons": [
+          "names the country",
+          "subject: falls,murchison,through"
+        ]
+      }
+    },
+    "uganda/why-visit": {
+      "country": "uganda",
+      "category": "why-visit",
+      "caption": "Half the World's Gorillas",
+      "description": "Nowhere else puts gorillas, chimpanzees, the Big Five, a snowline and the Nile within one week of driving.",
+      "provider": "unsplash",
+      "photoId": "NrrzGBcU6aM",
+      "imageUrl": "https://images.unsplash.com/photo-1620148878899-7c9b16ce9651",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1620148878899-7c9b16ce9651?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/black-gorilla-on-green-grass-during-daytime-NrrzGBcU6aM",
+      "photographer": "Ylenia Vimercati Molano",
+      "photographerUrl": "https://unsplash.com/@ylenia_vimercati_molano",
+      "width": 4272,
+      "height": 2848,
+      "aspectRatio": 1.5,
+      "alt": "a silverback mountain gorilla resting in the Bwindi undergrowth, Uganda",
+      "query": "Uganda Bwindi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 52,
+        "y": 46
+      },
+      "createdAt": "2026-08-12T20:11:23Z",
+      "verifiedAt": "2026-08-12T20:11:24Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: bwindi,gorilla,gorillas"
+        ]
+      }
+    },
+    "uganda/wildlife": {
+      "country": "uganda",
+      "category": "wildlife",
+      "caption": "Wildlife Encounters",
+      "description": "Mountain gorillas in Bwindi, chimpanzees in Kibale, and tree-climbing lions in the Ishasha sector.",
+      "provider": "unsplash",
+      "photoId": "ayK9OL49mq4",
+      "imageUrl": "https://images.unsplash.com/photo-1711198598802-c890ae001719",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1711198598802-c890ae001719?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-black-gorilla-laying-in-the-middle-of-a-forest-ayK9OL49mq4",
+      "photographer": "Gabriel Schumacher",
+      "photographerUrl": "https://unsplash.com/@gabriels501",
+      "width": 5472,
+      "height": 3648,
+      "aspectRatio": 1.5,
+      "alt": "a mountain gorilla in the Bwindi Impenetrable Forest, Uganda",
+      "query": "Uganda Bwindi Impenetrable Forest",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 52,
+        "y": 42
+      },
+      "createdAt": "2026-08-12T20:10:40Z",
+      "verifiedAt": "2026-08-12T20:10:41Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: bwindi,forest,gorilla"
+        ]
+      }
     }
   }
 }
