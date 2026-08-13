@@ -490,7 +490,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:1000px){.wa-wants{grid-template-columns:1fr 1fr 1fr}.wa-want:nth-child(6n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(3n){border-right:0;padding-right:0}}
 @media(max-width:620px){.wa-wants{grid-template-columns:1fr 1fr}.wa-want:nth-child(3n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(2n){border-right:0;padding-right:0}}
 @media(max-width:460px){.wa-wants{grid-template-columns:1fr}.wa-want{border-right:0 !important;padding-right:0 !important}}
-@media(max-width:1080px){.wa-win{grid-template-columns:1fr}.wa-win-frame{height:min(40vh,340px)}}
+@media(max-width:1080px){.wa-win{grid-template-columns:1fr}}
 @media(max-width:1000px){.wa-win{grid-template-columns:1fr}
   .wa-win-frame{height:min(46vh,400px)}}
 /* A phone is not the desktop layout stacked. Stacked, the hero ran to 1,323px on
@@ -537,7 +537,21 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-open .wa-lede{margin-top:0;font-size:17px}
   .wa-acts{margin-top:20px}
   .wa-win{display:block}
-  .wa-win-frame{height:min(42vh,320px)}
+  /* Sized from the width here, not from the height.
+     071 gave the frame an aspect-ratio so the map would stop being letterboxed
+     inside it, which is right on a desktop where the height is the constraint
+     and the map is bled off the right edge. Stacked, the constraint is the
+     column: a height capped at 320 times the map's 1000/1060 is a 302-pixel
+     frame, and at 320px wide the column is 280. PASS FOUR found it as two
+     pixels of horizontal overflow — the difference between the frame's overrun
+     and the frame's own padding — which is what a 22-pixel mistake looks like
+     from outside.
+
+     The vh term is a ceiling on the height expressed as the width that produces
+     it, so the ratio never has to be broken to honour it, and the map is
+     centred rather than held to a right edge that is no longer being bled. */
+  .wa-win-frame{width:min(100%, calc(52vh * 1000 / 1060));height:auto;
+    margin-inline:auto}
   .wa-win-caps{margin-top:18px}
   /* The key is absolutely placed under the caption on desktop; unpinned on a
      phone it has to be given its own row, or the caption lands on top of it. */
