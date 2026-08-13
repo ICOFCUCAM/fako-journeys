@@ -725,7 +725,8 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    actually said rather than on a generic form. Plain object, no framework, and
    nothing breaks if a listener never fires. */
 window.AF = {
-  state: {country: null, countryName: null, want: null, wantName: null, month: null},
+  state: {country: null, countryName: null, want: null, wantName: null, month: null,
+          region: null, regionName: null},
   subs: [],
   set: function(patch){
     for (var k in patch) this.state[k] = patch[k];
@@ -1517,6 +1518,11 @@ window.AF = {
       var key = ex.dataset.want;
       want = (want === key) ? null : key;
       apply();
+      /* Publish, like the chips below do. Setting the filter and not saying so
+         is how the closing section ended up offering a generic enquiry to a
+         visitor who had already named what they wanted. */
+      window.AF.set({want: want,
+                     wantName: want ? ex.querySelector('b').textContent.trim() : null});
       var grid = document.getElementById('destinations');
       if (grid) grid.scrollIntoView({behavior: 'smooth', block: 'start'});
     });
@@ -1526,6 +1532,9 @@ window.AF = {
     var key = ev.detail && ev.detail.key;
     region = (!key || key === 'africa') ? null : key;
     apply();
+    var band = region && document.querySelector(
+      '.wa-dest-band[data-region="' + region + '"] .wa-dest-reg');
+    window.AF.set({region: region, regionName: band ? band.textContent.trim() : null});
   });
 
   wants.forEach(function(b){
@@ -1670,6 +1679,7 @@ window.AF = {
     if (s.wantName) bits.push('<em>' + s.wantName + '</em>');
     if (s.month) bits.push('in <em>' + MONTH[s.month - 1] + '</em>');
     if (s.countryName) bits.push('in <em>' + s.countryName + '</em>');
+    else if (s.regionName) bits.push('in <em>' + s.regionName + '</em>');
     if (!bits.length) {
       said.hidden = true; idle.hidden = false;
       go.setAttribute('href', '/contact');
@@ -1678,11 +1688,17 @@ window.AF = {
     }
     said.hidden = false; idle.hidden = true;
     line.innerHTML = bits.join(', ') + '.';
-    var q = [];
-    if (s.want) q.push('want=' + encodeURIComponent(s.want));
-    if (s.month) q.push('month=' + s.month);
-    if (s.country) q.push('country=' + encodeURIComponent(s.country));
-    go.setAttribute('href', '/contact?' + q.join('&'));
+    /* Written out as a sentence and sent as ?journey=, which is the parameter
+       /contact actually reads — it drops it into the message box where the
+       visitor can see it, edit it and argue with it before sending. This link
+       used to carry ?want=&month=&country=, none of which that page has ever
+       looked at: the button said "send this to the operator" and nothing went.
+       One mechanism, the one that works. */
+    var plain = bits.join(', ').replace(/<\/?em>/g, '');
+    var q = 'I am looking for ' + plain + '.'
+      + ' (Chosen on the Afrinkong homepage \u2014 please tell me which country '
+      + 'and which month suits it best.)';
+    go.setAttribute('href', '/contact?journey=' + encodeURIComponent(q));
     go.innerHTML = 'Send this to the operator <i>&rarr;</i>';
   });
 })();
