@@ -1499,6 +1499,10 @@ def main():
             "the person who answers your enquiry is in the country",
             "meet the local operator responsible for your destination",
             "working in the language you booked in",
+            # A site that says "nothing is scored" on /compare cannot promise a
+            # ranking on the homepage.
+            "which country does it best",
+            "every operator on this site is a company registered",
             "every country is covered by a company based in it",
             "is covered by a company based in it",
             "operated by a licensed company based in it",
