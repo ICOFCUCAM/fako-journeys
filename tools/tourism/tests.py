@@ -234,6 +234,14 @@ def resolve_all(tax, country, cache, seen=None, only=None):
     return filled, failed
 
 
+def read_json_file(path, fallback=None):
+    try:
+        with open(path) as fh:
+            return json.load(fh)
+    except (IOError, ValueError):
+        return fallback if fallback is not None else {}
+
+
 def main():
     tmp = tempfile.mkdtemp(prefix="tourism-tests-")
     os.environ["UNSPLASH_API_BASE"] = "http://localhost:%d/unsplash" % PORT
@@ -1502,6 +1510,98 @@ def main():
         twice = sorted(p for p in set(heroes) if heroes.count(p) > 1)
         check("no page names two images as its most urgent", not twice,
               ", ".join(twice[:4]))
+
+        # -- numbers spelled out in the prose --------------------------------------
+        print("\nnumbers spelled out in the prose")
+        # 034 through 049 fixed a dozen counts that had been typed beside a block
+        # generated from the data. The figures are guarded already; the words are
+        # not, and "three countries" or "twenty-seven categories" reads exactly as
+        # authoritative. Every generator and every hand-written page is scanned
+        # for a spelled number followed by a noun this dataset can count, and the
+        # word has to match.
+        # Every number from one to ninety-nine, generated rather than listed. A
+        # hand-written table only catches the numbers already thought of: the
+        # first version of this had sixteen entries in it and let "thirty-one
+        # categories" through, because thirty-one had never been wrong before.
+        ONES = ("zero one two three four five six seven eight nine ten eleven "
+                "twelve thirteen fourteen fifteen sixteen seventeen eighteen "
+                "nineteen").split()
+        TENS = ("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+                "eighty", "ninety")
+        SPELLED = {}
+        for k in range(1, 100):
+            SPELLED[ONES[k] if k < 20 else
+                    TENS[k // 10] + ("-" + ONES[k % 10] if k % 10 else "")] = k
+        NUMBER_NOUN = re.compile(
+            r"(?<![-\w])(" + "|".join(sorted(SPELLED, key=len, reverse=True))
+            + r") (countries|destinations|portraits|categories|headings|"
+              r"operators|regions|strands|questions)\b")
+
+        # Not one number per noun — several are legitimate, and all of them are
+        # counts of something rather than opinions. "Nineteen countries" is the
+        # nineteen without an operator; "four countries" on a place page is that
+        # country's neighbours; "four questions" is the journey builder and
+        # "seven questions" is /meet. What is not legitimate is a number that
+        # counts nothing here, which is how "fifty-four countries" and "twenty
+        # -seven countries" would read.
+        ops = sum(1 for c in countries if c.operator)
+        strands = read_json_file(os.path.join(ROOT_DIR, "tourism", "strands.json"))
+        strand_keys = [k for k in (strands or {}) if not k.startswith("$")]
+        strand_cats = {c for k in strand_keys
+                       for c in (strands[k].get("categories") or [])}
+        links = read_json_file(os.path.join(ROOT_DIR, "data", "links.json")).get("links") or {}
+        neighbours = {len(v) for v in links.values()} | {1, 2, 3, 4, 5}
+        OK = {
+            "countries": {len(countries), len(countries) - ops, ops, 5} | neighbours,
+            "destinations": {len(countries)},
+            "portraits": {len(countries)},
+            "categories": {len(ids), len(strand_cats)},
+            "headings": {len(ids)},
+            "operators": {ops},
+            "regions": {5},
+            "strands": {len(strand_keys)},
+            "questions": {len(strand_keys), 4},
+        }
+        # Phrases where the number is deliberately about Africa, not about this
+        # site, and says so in the same sentence.
+        ALLOWED_PHRASE = ("fifty-four countries. twenty-two",
+                          "fifty-four countries. not one place")
+        wrong = {}
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                     recursive=True)):
+            rel = os.path.relpath(path, ROOT_DIR)
+            if "/incoming/" in path or rel == "tourism/compare.html":
+                continue
+            body = re.sub(r"<(script|style|svg)\b.*?</\1>", " ",
+                          open(path).read(), flags=re.S)
+            text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", body)).lower()
+            text = text.replace("&mdash;", " ").replace("&middot;", " ")
+            # One pass per page rather than 99 words x 9 nouns of them: at 650
+            # pages the nested version took minutes.
+            for found in NUMBER_NOUN.finditer(text):
+                word, noun = found.group(1), found.group(2)
+                n = SPELLED.get(word)
+                fine = OK.get(noun)
+                if n is None or fine is None or n in fine:
+                    continue
+                near = text[max(0, found.start() - 40):found.start() + 40]
+                if any(a in near for a in ALLOWED_PHRASE):
+                    continue
+                wrong.setdefault("%s %s (this dataset counts %s)"
+                                 % (word, noun,
+                                    ", ".join(str(x) for x in sorted(fine)[:4])),
+                                 set()).add(rel)
+        check("every number spelled out in the prose counts something real",
+              not wrong,
+              "; ".join("%s on %d pages e.g. %s" % (k, len(v), sorted(v)[0])
+                        for k, v in sorted(wrong.items())[:3]))
+        check("the seven strands draw on twelve categories, as /meet says",
+              len(strand_cats) == 12 and len(strand_keys) == 7,
+              "%d strands, %d categories" % (len(strand_keys), len(strand_cats)))
+        meet_page = open(os.path.join(ROOT_DIR, "meet.html")).read()
+        answers = len(strand_keys) * len(countries)
+        check("/meet counts its own answers", str(answers) in meet_page,
+              "%d expected" % answers)
 
         # -- companies that do not exist -------------------------------------------
         print("\ncompanies that do not exist")
