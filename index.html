@@ -861,8 +861,12 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-want:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-want i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-accent)}
 .wa-want b{display:block;font-family:var(--fj-display);font-size:clamp(17px,1.6vw,22px);font-weight:700;text-transform:uppercase;margin-top:8px;line-height:1.05}
-.wa-want[aria-pressed="true"]{background:var(--c-primary)}
+/* Pressed is a state, not a hue: colour alone fails anyone who cannot see this
+   particular pair, and the bar is the primary control over the grid below it.
+   The keel says pressed as well as the fill does. */
+.wa-want[aria-pressed="true"]{background:var(--c-primary);box-shadow:inset 4px 0 0 var(--c-accent-lit)}
 .wa-want[aria-pressed="true"] b{color:var(--c-bg)}
+.wa-want[aria-pressed="true"] i{color:var(--c-gold)}
 /* The second dimension. "What do I want" and "when can I go" are the two
    questions a traveller actually has, and across a continent the second one has
    a real answer — the dry season in Zambia is the cyclone season in Mauritius.
