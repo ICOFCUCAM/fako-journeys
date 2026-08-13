@@ -80,7 +80,18 @@
      grey shadow of the paper rather than a second ground; sand is the
      colour the palette actually has for this, and against ivory it is a
      change you can see rather than one you can measure. */
-  --fj-dust:var(--c-sand);
+  /* THE ZONE GROUND STOPS BEING THE MAP'S MATERIAL.
+     A dust section measured 1.19:1 against the page, so the band that is meant
+     to say "this is a different part of the argument" said almost nothing — on
+     a laptop the two grounds are one ground. It could not simply be darkened,
+     because --c-sand is also what the continent is mixed from: the land is 85%
+     sand, and taking sand down closes the gap between a destination and the
+     land it sits on, which is the reading order the whole map depends on.
+     Measured: at #DFCFB4 the zone reads at 1.36 but a destination falls to
+     1.25x the coastline, under the 1.3 the map holds.
+     So they are two tokens now. The map keeps its material and the page gets a
+     ground: 1.36:1, which is a band you can see, and nothing on the map moves. */
+  --fj-dust:#DFCFB4;
   --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
   --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
