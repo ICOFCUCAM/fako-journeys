@@ -102,6 +102,8 @@
 .wa-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
 .wa-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
 .wa-act i{font-style:normal;margin-left:9px}
+.wa-act.plain{border-color:transparent;padding-left:4px;padding-right:4px;color:var(--c-muted)}
+.wa-act.plain:hover{color:var(--c-accent)}
 .wa-act.go{background:var(--c-primary);color:var(--c-bg)}
 .wa-act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
 .wa-act.faint{border-color:var(--c-border);color:var(--c-muted)}
@@ -361,7 +363,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-find{margin-top:14px}
   .wa-open .wa-lede{margin-top:0;font-size:17px}
   .wa-acts{margin-top:20px}
-  .wa-acts .wa-act{flex:1 1 auto;text-align:center}
+  .wa-acts .wa-act{flex:1 1 220px;min-width:0;text-align:center}
   .wa-win{display:block}
   .wa-win-frame{height:min(42vh,320px)}
   .wa-win-caps{min-height:186px;margin-top:18px}
@@ -910,9 +912,17 @@ window.AF = {
       </div>
       <div class="wa-open-tail">
         <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
+        <!-- Three calls, three weights, three different things — and the ladder
+             is the answer to "what can I do here": ask it a question, look at
+             the continent, or just read one. The reading room had no route out
+             of the first fold at all before this, which for a site whose
+             deepest work is twenty-two long reads was the wrong thing to leave
+             out. Weights are solid / outlined / plain text, so the eye gets an
+             order rather than three equal boxes. -->
         <div class="wa-acts">
           <a class="wa-act go" href="/journey">What are you looking for? <i>&rarr;</i></a>
           <a class="wa-act faint" href="/atlas">Open the atlas <i>&rarr;</i></a>
+          <a class="wa-act plain" href="/stories">Or read a country <i>&rarr;</i></a>
         </div>
       </div>
     </div>
@@ -1221,7 +1231,10 @@ window.AF = {
       <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V9l6-4v16"/><path d="M10 12h9v9"/><path d="M7 12v.01M7 15v.01M13 15v.01M16 15v.01M13 18v.01M16 18v.01"/></svg></span><div><b>Cities</b><span>Kampala, Nairobi, Kigali, Douala, Cape Town, Marrakech</span></div></div>
       <div class="wa-exp"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-7"/><path d="M12 14c0-3-2-5-5-5 0 3 2 5 5 5z"/><path d="M12 14c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M6 21h12"/></svg></span><div><b>Eco-tourism</b><span>Travel that connects you with conservation and communities</span></div></div>
     </div>
-    <div class="wa-acts"><a class="wa-act go" href="/tourism/">Find your experience <i>&rarr;</i></a></div>
+    <!-- Outlined, not solid. This page has two ends that deserve the strongest
+     weight — the hero, where you arrive, and the enquiry, where you act —
+     and a third solid button in the middle flattens both of them. -->
+    <div class="wa-acts"><a class="wa-act faint" href="/tourism/">Find your experience <i>&rarr;</i></a></div>
   </div>
 </section>
 
