@@ -235,7 +235,14 @@
      positioned absolutely and contributes nothing to the stage's height.
      The fitter publishes --fj-readout so the map takes exactly what is left;
      the fallback is the 487-wide case, which is right wherever it applies. */
-  height:clamp(320px, calc(var(--fj-ink) / .8475), 1200px)}
+  /* The upper bound has to stay out of the way. `top` is computed from
+     --fj-ink and the height is derived from the same term, so the two only
+     agree while the clamp is not binding: at 2560x1440 the height wanted 1515
+     and got 1200, and the continent rose 24px above the masthead line it is
+     positioned against. The formula is already bounded by the viewport — the
+     ink is always 100vh less two mastheads — so the ceiling is only here to
+     stop something absurd, and 2400 is past any real screen. */
+  height:clamp(320px, calc(var(--fj-ink) / .8475), 2400px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}

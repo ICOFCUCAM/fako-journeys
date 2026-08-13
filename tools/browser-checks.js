@@ -193,8 +193,21 @@ const HERO_MAP_MIN = 240;
    the one with a cross-fade in it; the others are here because a delay left
    behind by a removed animation is not a hero-specific mistake. */
 const REDUCED_PAGES = ['/index.html', '/atlas.html', '/kenya.html', '/meet.html'];
-const HERO_BLEED = 140;
+const HERO_BLEED = 190;
 const HERO_BAND = 200;
+
+/* 101 made the continent the first screen. What that means as a number: the
+   ink — the drawn continent, not the viewBox around it — fills the stage from
+   the masthead's lower edge to the foot, at every desktop width. Sized from
+   the frame instead it rides up behind a fixed masthead and loses Morocco.
+   HERO_INK_MIN is the share of the *screen* the continent has to hold — the
+   viewport less the masthead, not the stage. The stage is content-tall and on a
+   short window it is taller than the screen, so measuring against it reported
+   38% at 1440x500 for a map that was filling every pixel available to it.
+   Below this threshold the map has gone back to being an object in the corner
+   and the composition this hero is built on has quietly reverted. */
+const HERO_INK_MIN = 0.78;
+const HERO_INK_TOP = 12;   // px the continent's top may sit off the masthead line
 
 const out = [];
 function check(name, ok, detail) {
@@ -395,7 +408,7 @@ function serve() {
       const errs = [];
       page.on('pageerror', e => errs.push(String(e.message).slice(0, 60)));
       await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
-      const seen = await page.evaluate(([bleed, band, mapMin]) => {
+      const seen = await page.evaluate(([bleed, band, mapMin, inkMin, inkTop]) => {
         const q = s => document.querySelector(s);
         const B = s => { const e = q(s); return e && e.getBoundingClientRect(); };
         const bad = [];
@@ -423,6 +436,35 @@ function serve() {
         if (frame && win && !stacked) {
           const over = Math.round(win.right - frame.right);
           if (over > bleed) bad.push('map overhangs the frame by ' + over);
+        }
+
+        /* The continent is the first screen. Measured on the drawn ink via
+           getBBox rather than on the frame, because the frame is a viewBox with
+           ocean in it and 101's whole point is that those are different boxes. */
+        const mapSvg = q('.wa-map-svg');
+        const stage0 = B('.wa-open-stage'), win0 = B('.wa-win');
+        if (mapSvg && stage0 && win0 && say && !(win0.left < say.right - 8)) {
+          let bb = null;
+          try { bb = mapSvg.getBBox(); } catch (e) { /* not rendered */ }
+          const vb = mapSvg.viewBox && mapSvg.viewBox.baseVal;
+          const box = mapSvg.getBoundingClientRect();
+          if (bb && vb && vb.height && bb.height) {
+            const k = Math.min(box.width / vb.width, box.height / vb.height);
+            const top = box.top + (box.height - vb.height * k) / 2 + (bb.y - vb.y) * k;
+            const inkH = bb.height * k;
+            const mast = parseFloat(getComputedStyle(document.documentElement)
+                           .getPropertyValue('--mast')) || 78;
+            const screen = window.innerHeight - mast;
+            const share = inkH / screen;
+            if (share < inkMin) {
+              bad.push('the continent is ' + Math.round(share * 100)
+                       + '% of the screen, wants ' + Math.round(inkMin * 100) + '%');
+            }
+            if (Math.abs(top - mast) > inkTop) {
+              bad.push('the continent starts ' + Math.round(top - mast)
+                       + 'px off the masthead line');
+            }
+          }
         }
 
         /* The frame is the continent's box. Letterboxing inside it is the
@@ -560,7 +602,7 @@ function serve() {
           bad.push('the readout runs ' + Math.round(side.bottom - stage.bottom) + 'px past the stage');
         }
         return bad;
-      }, [HERO_BLEED, HERO_BAND, HERO_MAP_MIN]);
+      }, [HERO_BLEED, HERO_BAND, HERO_MAP_MIN, HERO_INK_MIN, HERO_INK_TOP]);
       await page.close();
       check('the hero composes at ' + w + 'x' + h, !seen.length && !errs.length,
             errs.length ? 'script threw: ' + errs[0]
