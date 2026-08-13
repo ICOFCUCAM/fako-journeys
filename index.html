@@ -193,7 +193,12 @@
    masthead and took Morocco and Tunisia with it. */
 .wa-win{position:absolute;width:auto;
   --fj-bleed:100px;
-  --fj-ink:calc(100vh - var(--mast) - var(--mast));
+  /* The continent is sized to the stage, not to the viewport. 066 caps the
+     stage at 880 so a tall monitor gets a composition rather than a stretched
+     one; sizing the map off 100vh instead made it 1284 tall inside an 897-pixel
+     stage at 2560x1440, and since nothing here clips, it ran 600 pixels down
+     over the section below and drew Namibia across the next headline. */
+  --fj-ink:min(calc(100vh - var(--mast) - var(--mast)), 820px);
   top:calc(var(--mast) - var(--fj-ink) * .0899);
   right:max(0px, calc((100vw - min(1240px, 100vw)) / 2 - var(--fj-bleed)));
   z-index:1;display:block}
