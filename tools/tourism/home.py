@@ -318,8 +318,29 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
 .routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
 .btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
 .btn:hover{background:var(--c-accent)}
-@media(max-width:1010px){.routes{display:none}}
-@media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}.btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
+/* The masthead row, measured rather than guessed. The 1010px breakpoint was set
+   before the Explore key existed; with it there the row wanted 1,271px on the
+   longest country name and pushed "Plan a journey" 179px off a 1011 screen and
+   126px off a 1024 one, on nineteen pages.
+
+   Two in-page anchors — Highlights, Why go — came out of the nav as well: a
+   masthead that scrolls with you is for leaving the page, and the page's own
+   sections are a scroll away. Four routes left, all of them somewhere else.
+
+   Below 1180 the routes go. Below 480 the mark's tagline goes with them: one
+   line of nowrap mono, and it was the whole of the 320px overflow. */
+@media(max-width:1180px){.routes{display:none}}
+@media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}
+  .mast-in{gap:12px}
+  .btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
+@media(max-width:480px){.mark span{display:none}
+  .mark-up{font-size:8px;letter-spacing:.2em}}
+/* "Madagascar" and "South Africa" set at 20px are 147 and 150 pixels of nowrap
+   on their own; with the Explore key and the call beside them the row wanted
+   349 on a 320 screen. The country name is the one thing on this masthead that
+   cannot be shortened, so everything around it gives way instead. */
+@media(max-width:400px){.frame{padding:0 16px}.mast-in{gap:10px}
+  .mark b{font-size:17px}}
 
 .open{padding:calc(var(--sp-6) + 8px) 0 var(--sp-6);border-bottom:var(--fj-rule)}
 .open-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
@@ -385,6 +406,12 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
 @media(max-width:900px){.open-grid{grid-template-columns:1fr;gap:34px}
   .ct-window{height:min(46vh,360px);max-width:420px}
   .ct-near-row{gap:0 22px}}
+/* A grid item will not shrink below the widest unbreakable thing inside it, and
+   here that is the country's name set at the clamp's 46px floor: "MADAGASCAR"
+   is 328 pixels on its own, so the whole opening column stayed 328 wide inside
+   a 320 screen and took the stamp, the tagline, the lede and the calls out with
+   it. The floor comes down before the phone does. */
+@media(max-width:420px){.open h1{font-size:clamp(30px,10vw,46px)}}
 
 .highs{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 32px}
 .ct-high b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
@@ -510,8 +537,6 @@ TEMPLATE = """<!DOCTYPE html>
       <a href="/atlas#/%(slug)s">The Atlas</a>
       <a href="/journey">Build a journey</a>
       <a href="/meet#/%(slug)s">Meet %(name)s</a>
-      <a href="#highlights">Highlights</a>
-      <a href="#why">Why go</a>
       <a href="/tourism/%(slug)s">All %(count)d</a>
     </nav>
     <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>

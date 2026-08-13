@@ -220,3 +220,8 @@
   .mt-flag{padding:9px 4px}
   .mt-door,.mt-room-hit{padding-top:18px;padding-bottom:18px}
 }
+
+/* Two doors abreast is right on a 680 phone and wrong on a 320 one: at that
+   width each column is 145px and "What is kept, and who keeps it" does not
+   fit in it, so the list ran 8px past the screen. One column below 400. */
+@media(max-width:400px){.mt-doors ol{grid-template-columns:1fr}}

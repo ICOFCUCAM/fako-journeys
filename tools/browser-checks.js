@@ -99,6 +99,25 @@ const NOJS_MIN_WORDS = 0.25;
 const AA_SMALL = 4.5;
 const AA_LARGE = 3.0;
 
+/* ---------------------------------------------------------------------------
+ * PASS FOUR — horizontal overflow
+ *
+ * A page wider than the screen is the one layout fault a reader cannot work
+ * around: they scroll sideways to read a paragraph, or they never find the
+ * button that is off the edge. It is also the one that hides from a desktop
+ * browser, and from a phone emulator set to a common width, because it usually
+ * lives in a band — a masthead between the width where its nav is still shown
+ * and the width where its content stops fitting.
+ *
+ * Four of those bands were live when this pass was written: the country pages'
+ * call sat 179px off screen between 1011 and 1180, the journey masthead 97px
+ * off between 721 and 836, /meet's door list 8px off at 320, and Cameroon's
+ * opening column 93px off at 320 because a hand-broken headline had no space
+ * around its <br> and became one 393-pixel word when the break was hidden.
+ * None of the four is visible at 1440, 390 or 768.
+ */
+const WIDTHS = [320, 360, 390, 430, 560, 768, 900, 1024, 1100, 1180, 1440, 1920];
+
 const out = [];
 function check(name, ok, detail) {
   out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
@@ -213,6 +232,32 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass four: nothing runs off the side ---------------------------- */
+    for (const url of PAGES) {
+      const wrong = [];
+      for (const width of WIDTHS) {
+        const page = await browser.newPage({viewport: {width, height: 900}});
+        await page.goto(base + url, {waitUntil: 'networkidle'});
+        const seen = await page.evaluate(() => {
+          const over = document.documentElement.scrollWidth - window.innerWidth;
+          if (over <= 1) return null;
+          const who = [];
+          document.querySelectorAll('body *').forEach(el => {
+            const box = el.getBoundingClientRect();
+            if (box.right > window.innerWidth + 1 && box.width > 30
+                && getComputedStyle(el).position !== 'fixed') {
+              who.push(el.tagName + '.' + String(el.className).slice(0, 18));
+            }
+          });
+          return {over, who: who.slice(0, 2)};
+        });
+        await page.close();
+        if (seen) wrong.push(width + 'px +' + seen.over + ' [' + seen.who.join(', ') + ']');
+      }
+      check(url + ' fits every screen from 320 to 1920', !wrong.length,
+            wrong.slice(0, 2).join(' | '));
+    }
+
     /* ---- pass three: contrast ------------------------------------------- */
     for (const url of PAGES) {
       const page = await browser.newPage({viewport: {width: 1280, height: 900}});

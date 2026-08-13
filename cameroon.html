@@ -96,6 +96,13 @@ ul,ol{list-style:none}
    unit for a condensed face — 20ch measured narrower than "AN EXTRAORDINARY"
    sets at 60px and broke the line it was supposed to protect. */
 .fj-open h1{font-size:clamp(32px,3.6vw,52px);margin:20px 0 0}
+/* The headline is broken by hand into four lines, so its minimum width is
+   the longest of them — "world to discover." at 393px, which held the whole
+   opening column 393 wide inside a 320 screen and took the stamp, the lede,
+   the calls and the photograph out past the edge with it. Below 480 the
+   hand breaks come out and the browser wraps it where it fits. */
+@media(max-width:480px){.fj-open h1 .fj-br{display:none}
+  .fj-open h1{font-size:clamp(26px,7.6vw,32px)}}
 @media(max-width:940px){.fj-br{display:none}}
 .fj-open h1 em{font-style:normal;color:var(--c-accent)}
 .fj-open .fj-lede{margin-top:24px}
@@ -505,7 +512,7 @@ ul,ol{list-style:none}
     <div class="fj-open-grid">
       <div class="fj-rise seen">
         <span class="fj-stamp">Buea &middot; Douala <i>&middot; l'Afrique en miniature</i></span>
-        <h1>One country.<br class="fj-br"><em>Six climates.</em><br class="fj-br">An extraordinary<br class="fj-br">world to discover.</h1>
+        <h1>One country. <br class="fj-br"><em>Six climates.</em> <br class="fj-br">An extraordinary <br class="fj-br">world to discover.</h1>
         <p class="fj-lede">Black sand and Atlantic surf, a 4,095-metre volcano, the Korup rainforest, highland villages, the palaces at Foumban, and the savanna at Waza. Kamerun brings all of it into one journey &mdash; small groups, licensed guides, 4x4s that have already done the road once this month.</p>
         <div class="fj-acts">
           <a class="fj-act go" href="#quote">Plan your experience <i>&rarr;</i></a>

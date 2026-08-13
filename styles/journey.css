@@ -382,7 +382,10 @@
 
 /* ---- phone --------------------------------------------------------------- */
 
-@media(max-width:720px){
+/* 860, not 720. The routes plus the mark plus the Explore key plus the call
+   want 837 pixels; hiding the routes at 720 left the call hanging 97px off a
+   740 screen and 17px off an 820 one. Measured across 700-900 in 20px steps. */
+@media(max-width:860px){
   .jn-mast{padding:0 10px;gap:8px}
   .jn-routes{display:none}
   .jn-mark b{font-size:17px}

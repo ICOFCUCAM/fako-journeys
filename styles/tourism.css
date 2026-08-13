@@ -98,6 +98,13 @@ ul,ol{list-style:none}
    unit for a condensed face — 20ch measured narrower than "AN EXTRAORDINARY"
    sets at 60px and broke the line it was supposed to protect. */
 .fj-open h1{font-size:clamp(32px,3.6vw,52px);margin:20px 0 0}
+/* The headline is broken by hand into four lines, so its minimum width is
+   the longest of them — "world to discover." at 393px, which held the whole
+   opening column 393 wide inside a 320 screen and took the stamp, the lede,
+   the calls and the photograph out past the edge with it. Below 480 the
+   hand breaks come out and the browser wraps it where it fits. */
+@media(max-width:480px){.fj-open h1 .fj-br{display:none}
+  .fj-open h1{font-size:clamp(26px,7.6vw,32px)}}
 @media(max-width:940px){.fj-br{display:none}}
 .fj-open h1 em{font-style:normal;color:var(--c-accent)}
 .fj-open .fj-lede{margin-top:24px}
