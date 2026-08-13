@@ -351,7 +351,7 @@ function serve() {
            that is invisible and still reachable. Selecting is what triggers a
            cross-fade, and a cross-fade is where the delays live. */
         const ghosts = await page.evaluate(async () => {
-          const pick = [...document.querySelectorAll('.wa-tick, .wa-reg, [data-slug]')]
+          const pick = [...document.querySelectorAll('.wa-reg, .wa-tag, [data-slug]')]
             .filter(el => typeof el.click === 'function').slice(0, 3);
           const seen = new Set();
           const sweep = () => {
@@ -446,7 +446,8 @@ function serve() {
              Africa view, every one of them clipped away: the headline ends at
              904 and the map's visible box starts at 963. Nothing was there.
              So the overlap is intersected with what the map actually shows. */
-          const clip = q('.wa-map-svg') && q('.wa-map-svg').getBoundingClientRect();
+          const mapBox = document.querySelector('.wa-map-svg');
+          const clip = mapBox && mapBox.getBoundingClientRect();
           document.querySelectorAll('.wa-map-live, .wa-map-rest path').forEach(el => {
             const b = el.getBoundingClientRect();
             if (!b.width || !b.height) return;
@@ -559,8 +560,12 @@ function serve() {
         /* Nothing in the hero sits on top of anything else in it. This is the
            one the other passes structurally cannot find: two columns can
            occupy the same pixels without the document overflowing by one. */
-        const parts = ['.wa-ticks', '.wa-regs', '.wa-lens', '.wa-win-cap[data-on]',
-                       '.wa-win-key', '.wa-win-go', '.wa-acts'];
+        /* 110 took the country rail and the terrain chips out of the hero, so
+           '.wa-ticks' stopped matching. This loop skips a selector that finds
+           nothing, which means the check did not fail — it just quietly covered
+           one fewer pair. The list names what is in the hero now. */
+        const parts = ['.wa-h1', '.wa-find', '.wa-index-say', '.wa-regs', '.wa-lens',
+                       '.wa-win-cap[data-on]', '.wa-win-key', '.wa-win-go', '.wa-acts'];
         for (let i = 0; i < parts.length; i++) {
           for (let j = i + 1; j < parts.length; j++) {
             const a = B(parts[i]), c = B(parts[j]);
@@ -577,9 +582,32 @@ function serve() {
            where there is a composition to grow it in. Stacked, the map and its
            readout are between the calls and the rail, so the distance between
            those two is content rather than nothing, and reading it as a gap
-           reported 646px at 390 on a layout that has no gap at all. */
+           reported 646px at 390 on a layout that has no gap at all.
+
+           The defect this was written for was the rail floating alone in the
+           bottom-left with a quarter-screen of nothing above it while both
+           columns finished by 740 — the distance was the symptom, and the
+           disease was a row with nothing tying it to the composition.
+
+           110 makes the foot of the hero an Atlas Index deliberately pinned to
+           the bottom edge, so distance from the calls is now the intent rather
+           than the fault: the air above it is the whitespace the spread is
+           built on. What still has to hold is that the index is a band across
+           the foot and not a stray row — so the two columns must end together.
+           Measured against the original defect, that reads 140px out of true
+           and still fails; measured against the intended composition it reads
+           5px. Where the columns do NOT end together there is no band, and the
+           old distance limit is what applies.
+
+           Measured on the inked rows — the index buttons and the legend — not
+           on their padded boxes. The rail carries 26px of bottom padding the
+           legend does not, so comparing the boxes reports 31px out of true on a
+           foot that is level to within five. */
         const acts = B('.wa-acts'), rail = B('.wa-win-rail');
-        if (!stacked && acts && rail && rail.top > acts.bottom) {
+        const lastLeft = B('.wa-regs'), lastRight = B('.wa-win-key') || B('.wa-win-cap[data-on]');
+        const banded = lastLeft && lastRight
+          && Math.abs(lastLeft.bottom - lastRight.bottom) <= 24;
+        if (!stacked && !banded && acts && rail && rail.top > acts.bottom) {
           const gap = Math.round(rail.top - acts.bottom);
           if (gap > band) bad.push(gap + 'px of nothing between the calls and the rail');
         }

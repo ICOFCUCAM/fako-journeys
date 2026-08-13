@@ -4,7 +4,7 @@
 
 The gateway is a hand-designed page and stays one. But five regions of it were
 lists of countries typed out by hand — the hero's window states, its captions,
-its destination ticks, the destination grid, and the footer columns — and a
+its region rail, the destination grid, and the footer columns — and a
 twenty-third country meant editing all five and hoping none of them was missed.
 That is not a design that grows to fifty-four.
 
@@ -62,7 +62,7 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "regions", "claim", "months", "scale",
+MARKERS = ("window", "captions", "regions", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer")
 
@@ -85,7 +85,7 @@ def ordered(countries):
     """Published countries, our own operators first, then by region and name.
 
     Our three lead because they are the strongest thing we have to offer, not
-    because of where they are; after that the order is geographic so the ticks
+    because of where they are; after that the order is geographic so the states
     read as a sweep across the continent rather than an alphabet.
     """
     def key(c):
@@ -315,7 +315,7 @@ def block_regions(countries, views):
     return "      " + "".join(out)
 
 
-def block_window(countries, shape_by_slug):
+def block_window(countries, shape_by_slug, views):
     """The hero's window states — one per country, from the shared component.
 
     This function used to build its own clip-path, which made it the fourth
@@ -323,15 +323,25 @@ def block_window(countries, shape_by_slug):
     now the same `window_svg` the country pages, the journey engine and the
     human layer draw, so the signature cannot drift into four dialects of
     itself. The wrapper class stays local because the hero sizes it.
+
+    Each state carries the viewBox the map flies to when that country is
+    entered. It used to live on the country rail instead, which meant that
+    taking the rail out of the hero silently took the flight with it — the
+    experience buttons still swapped the card but the map sat at Africa. A
+    country's own frame belongs on the country, not on one of the several
+    controls that happen to select it.
     """
+    boxes = views.get("countries") or {}
     out = []
     for c in countries:
         s = shape_by_slug.get(c.slug)
         if not s:
             continue
+        box = boxes.get(c.slug)
+        view = (' data-view="%s"' % " ".join(str(v) for v in pad_box(box, 0.9))) if box else ""
         out.append(
-            '      <figure class="wa-win-state" data-slug="%s">\n        %s\n      </figure>'
-            % (esc(c.slug),
+            '      <figure class="wa-win-state" data-slug="%s"%s>\n        %s\n      </figure>'
+            % (esc(c.slug), view,
                plate.window_svg(s, c.name, image=c.window or None,
                                 alt=c.window_alt or None,
                                 ident="wc-%s" % c.slug,
@@ -347,17 +357,6 @@ def block_captions(countries):
         % (esc(c.slug), esc(c.region), esc(c.name), esc(c.tagline),
            operator_line(c), esc(c.url), esc(c.name))
         for c in countries)
-
-
-def block_ticks(countries, views):
-    boxes = views.get("countries") or {}
-    out = []
-    for c in countries:
-        box = boxes.get(c.slug)
-        view = (' data-view="%s"' % " ".join(str(v) for v in pad_box(box, 0.9))) if box else ""
-        out.append('<button class="wa-tick" type="button" data-slug="%s"%s>%s</button>'
-                   % (esc(c.slug), view, esc(c.name)))
-    return "".join(out)
 
 
 def block_months(countries):
@@ -385,6 +384,14 @@ def block_picks(countries):
     counter-suggestion — "then don't start with Kilimanjaro" — is what makes it
     a recommendation instead of a filter, and it is the closest thing this site
     has to a voice.
+
+    Each pick names its country in `data-slug`. The hero used to recover it from
+    the href on the call below, stripped of its leading slash — which works only
+    while every country's url is a path on this site. Three of them are not:
+    where we have an operator of our own, `c.url` is that operator's site, so
+    "https://pearl-trails-uganda.vercel.app" came back as the slug, matched
+    nothing, and the map silently declined to fly. A slug is data; a href is a
+    destination that is allowed to be somewhere else.
     """
     picks = load_picks()
     by_slug = dict((c.slug, c) for c in countries)
@@ -394,7 +401,7 @@ def block_picks(countries):
         if not c:
             continue
         out.append(
-            '      <article class="wa-pick" data-pick="%s" hidden>\n'
+            '      <article class="wa-pick" data-pick="%s" data-slug="%s" hidden>\n'
             '        <p class="wa-pick-hook">%s</p>\n'
             '        <div class="wa-pick-body">\n'
             '          <span class="wa-pick-where">%s</span>\n'
@@ -403,7 +410,7 @@ def block_picks(countries):
             '          <p class="wa-pick-why">%s</p>\n'
             '          <a class="wa-pick-go" href="%s">Explore %s &rarr;</a>\n'
             '        </div>\n      </article>'
-            % (esc(want), esc(p.get("hook")), esc(c.region), esc(c.name),
+            % (esc(want), esc(c.slug), esc(p.get("hook")), esc(c.region), esc(c.name),
                esc(c.summary), esc(p.get("why")), esc(c.url), esc(c.name)))
     return "\n".join(out)
 
@@ -716,9 +723,8 @@ def render(countries):
     with_shape = [c for c in seq if c.slug in shape_by_slug]
     return {
         "regions": block_regions(seq, views),
-        "window": block_window(with_shape, shape_by_slug),
+        "window": block_window(with_shape, shape_by_slug, views),
         "captions": block_captions(with_shape),
-        "ticks": block_ticks(with_shape, views),
         "claim": block_claim(seq),
         "months": block_months(seq),
         "destinations": block_destinations(seq),

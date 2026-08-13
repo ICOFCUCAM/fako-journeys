@@ -1380,8 +1380,27 @@ def main():
             nums = {int(n) for n in re.findall(r'\b(\d+)\b', alt.group(1))}
             check("the map's description counts the countries the map draws",
                   nums and nums <= truth, alt.group(1)[:70])
-            check("the map's description points at the buttons that replace it",
-                  "button" in alt.group(1).lower())
+            # The map's shapes are the size of the countries they represent, and
+            # Rwanda is seven pixels square on a phone. WCAG 2.5.8 allows that
+            # only where an equivalent control exists, so the description has to
+            # say where that control is — and the control has to be there.
+            #
+            # It used to be the rail of country buttons directly beneath the map,
+            # which is why this check looked for the word "button". 110 took the
+            # rail out of the hero and the exemption moved to the destinations
+            # grid, so the wording moved with it. Checking the noun alone would
+            # have gone on passing against a rail that no longer exists, so the
+            # claim is now checked against the page rather than against itself.
+            said = alt.group(1).lower()
+            check("the map's description points somewhere else on the page",
+                  "this page" in said and "destination" in said, alt.group(1)[-60:])
+            grid = re.search(r'<!-- gen:destinations -->(.*?)<!-- /gen:destinations -->',
+                             home_src, re.S)
+            n_cards = len(re.findall(r'class="wa-dest"', grid.group(1))) if grid else 0
+            drawn = len(re.findall(r'class="wa-map-live"', home_src))
+            check("the place it points at holds every country the map draws",
+                  n_cards >= len(countries) and drawn <= n_cards,
+                  "%d cards, %d shapes" % (n_cards, drawn))
 
         check("the destination filter counts the grid rather than a literal",
               not re.search(r"shown \+ ' of \d", home_src))
@@ -1467,13 +1486,31 @@ def main():
                   r < 4.5 and "color:var(--c-accent-fill)" not in css,
                   "%.2f:1 on ivory, so fills only" % r)
             # The map's three tones have to be three, not two and a hint.
+            #
+            # This used to demand the token literally, and 108 broke it without
+            # anyone noticing: it put the operator tier behind --c-tier-ours so
+            # the hero could re-point it, the rule went on resolving to
+            # --c-primary, and the check went red for a change that was correct.
+            # A check that cannot see through one alias fails honest work and
+            # teaches you to stop reading it, so it follows aliases now — and
+            # still insists the three tones end up at three different values.
             home = open(os.path.join(ROOT_DIR, "index.html")).read()
+            alias = dict(re.findall(r"(--c-[a-z-]+):\s*var\((--c-[a-z-]+)\)", home))
+
+            def drawn_in(want):
+                for m in re.finditer(r"wa-map-(?:rest|live)[^{]*\{[^}]*?fill:var\((--c-[a-z-]+)\)", home):
+                    tok, seen = m.group(1), set()
+                    while tok in alias and tok not in seen:
+                        seen.add(tok)
+                        tok = alias[tok]
+                    if tok == want:
+                        return True
+                return False
+
             for tone, role in (("--c-land", "the continent"),
                                ("--c-accent-fill", "a destination"),
                                ("--c-primary", "an operator of ours")):
-                check("the map draws %s in %s" % (role, tone),
-                      re.search(r"wa-map-(rest|live)[^{]*\{[^}]*fill:var\(%s\)" % tone,
-                                home) is not None)
+                check("the map draws %s in %s" % (role, tone), drawn_in(tone))
             # The land is not a fourth brand colour. It is sand with enough
             # sienna in it to have a coastline — 088 — and it has to stay
             # derived, or the palette has grown a value nobody chose.
