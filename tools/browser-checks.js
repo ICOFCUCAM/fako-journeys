@@ -178,7 +178,16 @@ const TAB_STOPS = 80;
  * the rail. Unbounded it reached 594px.
  */
 const HERO_WIDTHS = [[2560, 1440], [1920, 1080], [1440, 900], [1366, 768],
-                     [1180, 820], [960, 760], [900, 700], [390, 844], [320, 700]];
+                     [1180, 820], [960, 760], [900, 700], [390, 844], [320, 700],
+                     /* Short windows, which are a different axis and were not
+                        covered by any of the above. A browser at half a screen,
+                        a laptop carrying two toolbars, and 1440x900 at 200%
+                        zoom — which is 720x450 CSS pixels and is the shape WCAG
+                        1.4.4 asks a page to survive. At 1440x500 the map was
+                        96x102 inside a 707-pixel stage before 080. */
+                     [1440, 500], [1920, 540], [1280, 600], [720, 450]];
+/* The map has to stay big enough to pick a country out of, at every shape. */
+const HERO_MAP_MIN = 240;
 const HERO_BLEED = 140;
 const HERO_BAND = 200;
 
@@ -322,7 +331,7 @@ function serve() {
       const errs = [];
       page.on('pageerror', e => errs.push(String(e.message).slice(0, 60)));
       await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
-      const seen = await page.evaluate(([bleed, band]) => {
+      const seen = await page.evaluate(([bleed, band, mapMin]) => {
         const q = s => document.querySelector(s);
         const B = s => { const e = q(s); return e && e.getBoundingClientRect(); };
         const bad = [];
@@ -359,6 +368,14 @@ function serve() {
           const k = Math.min(svg.width / 1000, svg.height / 1060);
           const slack = Math.round(Math.max(svg.width - 1000 * k, svg.height - 1060 * k));
           if (slack > 8) bad.push(slack + 'px of letterbox around the map');
+          /* And it is still a map. Sized off the viewport while the stage sizes
+             off its own content, it collapsed to 102px tall inside a 707px
+             stage on a short window — small enough that the countries stop
+             being things a pointer can hit. */
+          if (svg.height < mapMin) {
+            bad.push('the map is ' + Math.round(svg.width) + 'x' + Math.round(svg.height)
+              + ' in a ' + Math.round(B('.wa-open-stage').height) + 'px stage');
+          }
         }
 
         /* Nothing in the hero sits on top of anything else in it. This is the
@@ -395,7 +412,7 @@ function serve() {
           bad.push('the readout runs ' + Math.round(side.bottom - stage.bottom) + 'px past the stage');
         }
         return bad;
-      }, [HERO_BLEED, HERO_BAND]);
+      }, [HERO_BLEED, HERO_BAND, HERO_MAP_MIN]);
       await page.close();
       check('the hero composes at ' + w + 'x' + h, !seen.length && !errs.length,
             errs.length ? 'script threw: ' + errs[0]
