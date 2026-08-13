@@ -16,36 +16,71 @@
  */
 
 :root{
-  /* Paper and ink. The site is set on warm paper, not white: it is a printed
-     journal that happens to be a website, and pure white reads as software. */
-  --c-bg:#F7F2E7;
-  --c-primary:#1C2A25;
-  --c-ink:#1F211C;
-  --c-border:#DDD4C1;
-
-  /* Two inks that were very slightly too light to be read.
+  /* Paper and ink.
      ---------------------------------------------------------------------
-     The metadata voice and the accent are the two most-repeated colours on
-     the site — every stamp, every nav item, every category label, every
-     caption — and on this paper they measured 4.46:1 and 4.16:1 against a
-     4.5:1 requirement. Marginal, and failing is failing: the type they carry
-     is 9 to 11px, which is exactly the size that has no margin to spare.
-     Both are darkened by a step small enough that nothing about the palette
-     reads differently and large enough to clear the bar on paper (5.8:1 and
-     5.2:1) and on the dust surface underneath it. */
-  --c-accent:#A8481F;
-  --c-muted:#5C5F55;
+     The site is set on warm paper, not white: it is a printed journal that
+     happens to be a website, and pure white reads as software. What it was
+     not, until this palette, was warm enough to be a decision — a pale cream
+     with a pale peach on it reads as an archive rather than as a place.
 
-  /* The same accent cannot work on both grounds: an ink dark enough to read
-     on cream is too dark to read on basalt. So there is a lit variant, and
-     the dark surfaces below re-point --c-accent at it — which means every
-     `color:var(--c-accent)` already written keeps working and gets the right
-     one, rather than a hundred and forty rules each needing a second colour. */
-  --c-accent-lit:#D9773F;
+     Ivory is the paper. Sand is the second surface, and it is a real surface
+     rather than a 6% tint of the ink: a band of sand under a band of ivory
+     is a change of ground, which a mix of the two never quite is.
+
+     Deep Forest is the authority — every solid call, every dark ground, the
+     border under the masthead. Charcoal is the reading ink. They are close
+     enough to belong together and far enough apart that a headline set in
+     charcoal on ivory does not read as the same object as a button. */
+  --c-bg:#F6F1E7;          /* Warm Ivory  — the paper */
+  --c-sand:#E9DDCA;        /* Sand        — the second surface */
+  --c-primary:#10251F;     /* Deep Forest — authority, calls, dark grounds */
+  --c-ink:#171A17;         /* Charcoal    — the reading ink */
+  --c-border:#DCCEB6;      /* a rule that belongs to sand, not to grey */
+
+  /* The African accent, in two weights and for a measurable reason.
+     ---------------------------------------------------------------------
+     Terracotta #C96A45 is the energy of this palette and it cannot carry
+     small text on paper: 3.31:1 against ivory, where AA asks 4.5. The site
+     sets its accent at 9 to 11 pixels — every stamp, every nav item, every
+     category label — so an accent that fails at that size fails everywhere
+     it is actually used.
+
+     So the accent is two colours with one job each, and neither is a
+     compromise. Burnt Sienna carries type: 5.39:1 on ivory and 4.52:1 on
+     sand, both clear. Terracotta fills: the map's destinations, an active
+     tab, a band. Where terracotta carries type it carries charcoal at
+     4.71:1, never ivory at 3.31.
+
+     Burnt Sienna is #B94E2E darkened by one step. As given it measures
+     4.45:1 on ivory — under 4.5 by four hundredths, which is failing. */
+  --c-accent:#A44529;      /* Burnt Sienna, text weight */
+  --c-accent-fill:#C96A45; /* Terracotta, fill weight */
+
+  /* On a dark ground the accent has to go the other way, and terracotta as
+     given is 4.31:1 on forest — again just short. Lightened by one step it
+     is 4.53:1 on forest and 4.94:1 on charcoal. The dark surfaces below
+     re-point --c-accent at this, so every `color:var(--c-accent)` already
+     written gets the right one without a second rule. */
+  --c-accent-lit:#CB6F4B;
+
+  /* Muted gold does not work on paper — 2.37:1 — and is excellent on forest
+     at 6.02:1. It is the metadata voice on every dark ground, and a fill
+     (never a text colour) on light ones. Restraint is the point: it appears
+     on the dark bands and in the map's legend and nowhere else. */
+  --c-gold:#B99A63;
+
+  /* Sage as given is 3.22:1 on ivory, which is a surface colour rather than
+     an ink. Darkened to the same rule as the accent it reads as the same
+     family and clears the bar: 5.37:1 on ivory, 4.51:1 on sand. */
+  --c-muted:#5B6654;
 
   /* Derived surfaces. Mixed rather than hand-picked, so changing --c-bg or
      --c-primary moves the whole system together instead of leaving orphans. */
-  --fj-dust:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
+  /* The alternating band. It was ivory mixed 6% toward the ink, which is a
+     grey shadow of the paper rather than a second ground; sand is the
+     colour the palette actually has for this, and against ivory it is a
+     change you can see rather than one you can measure. */
+  --fj-dust:var(--c-sand);
   --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
   --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
@@ -128,8 +163,11 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 .af-btn i{font-style:normal;margin-left:9px}
 .af-btn--solid{background:var(--c-primary);color:var(--c-bg)}
 .af-btn--solid:hover{background:var(--c-accent);border-color:var(--c-accent)}
-.af-btn--quiet{border-color:var(--c-border);color:var(--c-muted)}
-.af-btn--quiet:hover{border-color:var(--c-primary);color:var(--c-primary)}
+/* The alternative, not the afterthought. It was a sand rule round muted type,
+   which on a sand band is a button you have to look for. Forest on ivory is the
+   same authority as the solid call with the weight taken out of it. */
+.af-btn--quiet{border-color:var(--c-primary);color:var(--c-primary);background:var(--c-bg)}
+.af-btn--quiet:hover{background:var(--c-primary);color:var(--c-bg)}
 
 /* The underlined onward link, used wherever a block leads somewhere. */
 .af-go{display:inline-block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;
@@ -241,8 +279,22 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 .wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
 .tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark{
   --c-accent:var(--c-accent-lit);
-  --c-muted:var(--fj-onbasalt-dim);
+  /* Muted gold is where the restraint in this palette lives. It is unusable on
+     paper — 2.37:1 — and excellent on forest at 6.02:1, so it appears only
+     here: the metadata voice on every dark ground, and nowhere on a light one.
+     That is the whole of its job, and it is why a gold appearing at all reads
+     as a change of ground rather than as decoration. */
+  --c-muted:var(--c-gold);
 }
+/* And this is the whole of where gold appears: the label above a section on a
+   dark ground, and the column headings in a dark footer. One or two marks per
+   band. Gold on every paragraph would be a theme; gold on the thing that names
+   the section is a material. 6.15:1 on basalt. */
+.af-zone--basalt .af-stamp,.wa-zone.basalt .af-stamp,.fj-zone.basalt .af-stamp,
+.wa-zone.basalt .wa-head-no span,.af-zone--basalt .af-head-no span,
+.wa-foot .wa-foot-col b,.fj-foot .fj-foot-col b,.foot .foot-col b,
+.pl-foot .pl-foot-col b{color:var(--c-gold)}
+
 .af-zone--basalt{background:var(--fj-basalt);color:var(--fj-onbasalt)}
 .af-zone--basalt h2,.af-zone--basalt h3{color:var(--c-bg)}
 .af-zone--basalt .af-note{color:var(--fj-onbasalt-dim)}
