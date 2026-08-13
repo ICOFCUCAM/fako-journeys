@@ -457,7 +457,12 @@
    fixed descendants. It is safe here — the map is nowhere near the fixed
    picture in the window band — but the rule is real and the band's own note
    explains it. Nothing that wraps .wa-seam-pic may borrow this. */
-.wa-win-state .wa-map-svg{filter:drop-shadow(0 10px 22px rgba(6,18,14,.5))}
+/* Two shadows, not one. A single soft drop is a glow; paper on a surface has a
+   tight contact shadow where it touches and a wide diffuse one further out, and
+   the eye reads the pair as thickness. Both are offset down, from the same light
+   the whole page is lit by. */
+.wa-win-state .wa-map-svg{filter:drop-shadow(0 2px 2px rgba(6,18,14,.55))
+                                 drop-shadow(0 14px 30px rgba(6,18,14,.45))}
 .wa-map-rest,.wa-map-live{filter:url(#fj-ink)}
 .wa-win-state .wa-map-rest path{fill:var(--c-land);
   stroke:color-mix(in srgb,var(--c-bg) 46%, transparent);stroke-width:.75;
