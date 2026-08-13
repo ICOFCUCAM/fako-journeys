@@ -317,13 +317,31 @@
    three fills above are three different colours doing three different jobs, and
    the legend under the map names them.
 
-   Ivory strokes at 1.4px keep the borders legible between two warm fills; the
-   pressed state is burnt sienna, which is darker than terracotta and warmer
-   than forest, so it is unambiguous against either. */
+   Ivory strokes keep the borders legible between two warm fills; the pressed
+   state is burnt sienna, which is darker than terracotta and warmer than
+   forest, so it is unambiguous against either.
+
+   A BORDER IS A HAIRLINE AT EVERY SCALE
+
+   1.4 was 1.4 *user units*, and the map is drawn in a 1000x1060 viewBox
+   letterboxed into a frame. Measured, that put the borders between countries at
+   0.49px on a phone, 0.66px at 1440 and 0.74px at 1920 — under one device pixel
+   everywhere, so the browser could not draw a line and drew a grey smear
+   instead. It is the reason the interior of the continent looked washed rather
+   than engraved.
+
+   And it went the other way on zoom: the same 1.4 units at Rwanda's fourteen-
+   fold viewBox is a nine-pixel band of ivory across a country three hundred
+   pixels wide.
+
+   non-scaling-stroke takes the stroke out of the user-unit space entirely, so
+   it is one CSS pixel at the continent and one CSS pixel at Rwanda, which is
+   what a border on a map is. */
 .wa-win-state .wa-map-rest path{fill:var(--c-sand);
-  stroke:var(--c-bg);stroke-width:1.4;stroke-linejoin:round}
+  stroke:var(--c-bg);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .wa-win-state .wa-map-live path,.wa-win-state .wa-map-live circle{
-  stroke:var(--c-bg);stroke-width:1.4;stroke-linejoin:round;transition:fill .2s}
+  stroke:var(--c-bg);stroke-width:1;vector-effect:non-scaling-stroke;
+  stroke-linejoin:round;transition:fill .2s}
 .wa-win-state .wa-map-live[data-tier="live"] path,
 .wa-win-state .wa-map-live[data-tier="live"] circle{fill:var(--c-accent-fill)}
 .wa-win-state .wa-map-live[data-tier="ours"] path,
