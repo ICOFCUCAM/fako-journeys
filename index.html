@@ -169,10 +169,26 @@
 /* The readout sits under the map now, inside the frame padding, so the map
    itself can run past the right edge of the page. */
 .wa-win-side{display:flex;flex-direction:column;padding-right:44px;max-width:520px;margin-left:auto;text-align:right;align-items:flex-end}
-/* Tall enough for the tallest readout — the region one, which carries a
-   three-line sentence. Sized rather than min-heighted because the caps are
-   stacked absolutely so they can cross-fade. */
-.wa-win-caps{position:relative;height:146px;flex:0 0 auto;width:100%}
+/* Twenty-three readouts in one box, one shown at a time — and the box has to be
+   the height of the tallest of them, or the one that overruns it lands on
+   whatever is underneath.
+
+   It was 146px, with a note above it saying that was tall enough for the
+   tallest readout, and that the tallest was the region one. Measured, the
+   tallest is the idle one — the state the page opens in — at 163px, and its
+   last line, the "see all destinations" link, hung seventeen pixels out of the
+   box and crossed the legend under it by three at 1920, 1440, 1366 and 1180.
+   Four more fixed heights further down this stylesheet were each a different
+   guess at the same number.
+
+   Stacking with grid instead of absolute positioning removes the guess: every
+   cap is placed in the same single cell, so they still overlay and still
+   cross-fade, and the container is exactly as tall as the tallest of the
+   twenty-three. Hidden ones keep contributing their height, which is what makes
+   it a constant rather than something that changes as you move across the map —
+   the box measures the same before and after a selection, so nothing under it
+   reflows. */
+.wa-win-caps{display:grid;grid-template-columns:100%;flex:0 0 auto;width:100%}
 /* Twenty-two captions stacked in one box, one shown at a time. Opacity alone
    hides them from the eye and from nothing else: all twenty-two stayed in the
    tab order, so a keyboard user crossing the hero took twenty-two stops on
@@ -180,7 +196,7 @@
    `visibility` removes an element from the tab order and the accessibility tree
    as well; the zero-second delayed transition keeps it visible for the length
    of the fade out, so the animation is unchanged. */
-.wa-win-cap{position:absolute;inset:0;opacity:0;visibility:hidden;
+.wa-win-cap{grid-area:1/1;opacity:0;visibility:hidden;
   transition:opacity .45s ease,visibility 0s linear .45s;pointer-events:none}
 .wa-win-cap[data-on]{opacity:1;visibility:visible;pointer-events:auto;
   transition:opacity .45s ease,visibility 0s linear 0s}
@@ -423,8 +439,8 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:1000px){.wa-wants{grid-template-columns:1fr 1fr 1fr}.wa-want:nth-child(6n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(3n){border-right:0;padding-right:0}}
 @media(max-width:620px){.wa-wants{grid-template-columns:1fr 1fr}.wa-want:nth-child(3n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(2n){border-right:0;padding-right:0}}
 @media(max-width:460px){.wa-wants{grid-template-columns:1fr}.wa-want{border-right:0 !important;padding-right:0 !important}}
-@media(max-width:1080px){.wa-win{grid-template-columns:1fr}.wa-win-caps{min-height:200px}.wa-win-frame{height:min(40vh,340px)}}
-@media(max-width:1000px){.wa-win{grid-template-columns:1fr}.wa-win-caps{height:200px}
+@media(max-width:1080px){.wa-win{grid-template-columns:1fr}.wa-win-frame{height:min(40vh,340px)}}
+@media(max-width:1000px){.wa-win{grid-template-columns:1fr}
   .wa-win-frame{height:min(46vh,400px)}}
 /* A phone is not the desktop layout stacked. Stacked, the hero ran to 1,323px on
    an 844px screen: the map — the entire idea — opened below the fold and its
@@ -459,7 +475,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-acts .wa-act{flex:1 1 220px;min-width:0;text-align:center}
   .wa-win{display:block}
   .wa-win-frame{height:min(42vh,320px)}
-  .wa-win-caps{min-height:186px;margin-top:18px}
+  .wa-win-caps{margin-top:18px}
   /* The key is absolutely placed under the caption on desktop; unpinned on a
      phone it has to be given its own row, or the caption lands on top of it. */
   /* The rail is held to the type column on a desktop so it does not cut across
