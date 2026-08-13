@@ -231,14 +231,31 @@
   transition:opacity .45s ease,visibility 0s linear .45s;pointer-events:none}
 .wa-win-cap[data-on]{opacity:1;visibility:visible;pointer-events:auto;
   transition:opacity .45s ease,visibility 0s linear 0s}
-.wa-win-region{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+/* THE MONO VOICE
+   ---------------
+   Three sizes, and each one means something. Counted across the hero it was
+   seven combinations of size and tracking — 8.5/.16, 9/.16, 9.5/.16, 9.5/.2,
+   10/.18, 10/.2, 11/.18 — which is not a scale, it is what happens when every
+   component picks its own number. In one composition, in the same face, at
+   sizes two and a half pixels apart, none of the differences carried meaning.
+
+     11px / .18em   a call. The three things you can do from here.
+     10px / .18em   a control. The region tabs, the twenty-two country names
+                    and the readout's link — two rungs of one ladder plus the
+                    way out of it, and they were 10, 9.5 and 10 before.
+      9px / .2em    a label. The eyebrow, the operator line, the legend and the
+                    terrain chips: type that names a thing rather than doing
+                    one, and tracked wider because it is smaller.
+
+   The rule is that the tighter tracking goes with the things you press. */
+.wa-win-region{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-cap b{display:block;font-family:var(--fj-display);font-size:clamp(26px,2.9vw,38px);font-weight:700;text-transform:uppercase;line-height:1.02;margin-top:8px}
 .wa-win-tag{display:block;font-size:15px;color:var(--c-muted);margin-top:7px}
-.wa-win-op{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent);margin-top:14px}
-.wa-win-go{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px}
+.wa-win-op{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-top:14px}
+.wa-win-go{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px}
 .wa-win-key{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 16px;margin-top:12px}
 .wa-win-key span{display:flex;align-items:center;gap:7px;font-family:var(--fj-mono);font-size:9px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
 .wa-win-key span[data-tier="ours"]::before{background:var(--c-primary)}
 .wa-win-key span[data-tier="live"]::before{background:var(--c-accent-fill)}
@@ -347,7 +364,7 @@
 .wa-map-live path,.wa-map-live circle{transition:fill var(--t-fast) var(--ease)}
 .wa-win-state .wa-map-svg{transition:none}
 .wa-terrain{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px 6px;margin-top:2px}
-.wa-terrain span{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.16em;
+.wa-terrain span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--c-muted);border:1px solid var(--c-border);
   padding:4px 8px}
 .wa-tick[hidden]{display:none}
@@ -391,7 +408,7 @@
    a list of places rather than as metadata; sienna and ivory when it is the
    one selected, which is the same active state the region tabs use. */
 .wa-tick{flex:0 0 auto;background:none;border:0;border-right:var(--fj-rule);cursor:pointer;
-  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--c-primary);padding:11px 8px;text-align:left;transition:color .2s,background .2s;white-space:nowrap}
 .wa-tick:last-child{border-right:0}
 .wa-tick:hover{background:var(--c-sand)}
