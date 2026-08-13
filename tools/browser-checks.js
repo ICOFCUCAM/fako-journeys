@@ -416,7 +416,12 @@ function serve() {
            readable. */
         const fs = s => { const e = q(s); return e ? parseFloat(getComputedStyle(e).fontSize) : 0; };
         const head = fs('.wa-h1-big');
-        if (head > 120) {
+        /* Above the width at which the last of the three floors stops binding.
+           They are 26, 17 and 26 against ratios of .244, .141 and .178, so the
+           map's caption is the last to come off its floor, at a headline of
+           146px. Below that the clamps are deliberately breaking the ratio to
+           keep small type readable and there is nothing here to assert. */
+        if (head > 150) {
           const steps = [['.wa-h1-rest', 0.244], ['.wa-find', 0.141],
                          ['.wa-win-cap[data-on] b', 0.178]];
           for (const [sel, want] of steps) {
