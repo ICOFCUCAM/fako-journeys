@@ -104,7 +104,7 @@ def shapes():
 
 def operator_line(c):
     return ("Operated locally by %s" % esc(c.operator.name)) if c.operator \
-        else "Run with a licensed local operator"
+        else "Written up here, run by somebody else"
 
 
 # This page spells its numbers. A figure in the middle of a display line reads

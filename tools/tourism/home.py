@@ -141,12 +141,14 @@ def operator_block(country):
     op = country.operator
     if not op:
         return ('<div class="ct-op ct-op--none"><span>Local operator</span>'
-                '<b>A licensed company based in %s</b>'
-                '<p>Every destination here is run by a company in the country itself, working '
-                'through the same twenty-seven categories, so two countries can be compared on '
-                'the same terms. Tell us the month and we will put you with the right one.</p>'
-                '<a class="af-go" href="/contact">Start a journey &rarr;</a></div>'
-                % esc(country.name))
+                '<b>None of ours in %s</b>'
+                '<p>We run companies in three countries and %s is not one of them. '
+                'It is written up here through the same twenty-seven categories as '
+                'the rest, so it can be compared with them on the same terms &mdash; '
+                'you would just be booking it through somebody else. Tell us the '
+                'month and we will say who to ask.</p>'
+                '<a class="af-go" href="/contact">Ask anyway &rarr;</a></div>'
+                % (esc(country.name), esc(country.name)))
     return ('<div class="ct-op"><span>Operated locally by</span><b>%s</b>'
             '<p class="ct-op-base">%s &middot; since %s</p><p>%s</p>'
             '<a class="af-go" href="%s">Enter %s &rarr;</a></div>'

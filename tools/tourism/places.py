@@ -133,11 +133,17 @@ def page(country, place, pack, order, tax, ctx):
            % (esc(op.name), esc(op.base), esc(op.line),
               ('<a class="af-go" href="%s">Open %s &rarr;</a>' % (esc(op.url), esc(op.name)))
               if op.url else "")) if op else (
-           '<div class="pl-who"><span class="af-stamp">Who would take you</span>'
-           '<b>A licensed company based in %s</b>'
-           '<p>Every destination here is run by a company in the country itself. '
-           'Tell us the month and we will put you with the right one.</p></div>'
-           % esc(country.name))
+           # "A licensed company based in <Country>" named a company that does
+           # not exist. tourism/operators.json holds three and has only ever held
+           # three; for the other nineteen there is no company here, licensed or
+           # otherwise. What is true is that nobody of ours runs it.
+           '<div class="pl-who pl-who--none"><span class="af-stamp">Who would take you</span>'
+           '<b>Not us, in %s</b>'
+           '<p>We run companies in three countries and %s is not one of them. '
+           'It is written up here to the same twenty-seven categories as the '
+           'rest &mdash; tell us the month and we will say who to ask.</p>'
+           '<a class="af-go" href="/contact">Ask anyway &rarr;</a></div>'
+           % (esc(country.name), esc(country.name)))
 
     title = "%s, %s" % (place["title"], country.name)
     return TEMPLATE % {

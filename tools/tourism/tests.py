@@ -1372,6 +1372,63 @@ def main():
                   expect is None or top == expect,
                   "%d on %s, dataset has %s" % (top, where, expect))
 
+        # -- companies that do not exist -------------------------------------------
+        print("\ncompanies that do not exist")
+        # tourism/operators.json holds three and has only ever held three. For the
+        # other nineteen countries there is no company named anywhere in this
+        # project, so any sentence asserting one is an invention. These are the
+        # exact shapes that were on the site, kept as strings rather than a clever
+        # pattern because a clever pattern would find prose that is fine.
+        INVENTED = (
+            "a licensed company based in",
+            "a licensed local company",
+            "a licensed local operator",
+            "a licensed operator in each",
+            "covered by a licensed",
+            "covered by an operator based in the country",
+            "run by a company in the country itself",
+            "operated by a licensed company based in it",
+            "is run by a company based in it",
+        )
+        HAS_GUIDES = ("eleven licensed guides",)   # Kamerun, about Kamerun, true
+        looked = sorted(p for p in
+                        glob.glob(os.path.join(ROOT_DIR, "**", "*.html"), recursive=True)
+                        + glob.glob(os.path.join(ROOT_DIR, "scripts", "*.js"))
+                        + glob.glob(os.path.join(ROOT_DIR, "tools", "tourism", "*.py"))
+                        if "/incoming/" not in p and "/node_modules/" not in p)
+        def uncommented(path, text):
+            """Comments explaining what was removed are not the thing itself.
+
+            Without this the check fails on its own paper trail: three of these
+            files carry a comment saying "this used to read 'a licensed company
+            based in <country>' and it named a company that does not exist".
+            """
+            if path.endswith(".js"):
+                text = re.sub(r"/\*.*?\*/", " ", text, flags=re.S)
+                return re.sub(r"^\s*//.*$", " ", text, flags=re.M)
+            if path.endswith(".py"):
+                text = re.sub(r'"""[\s\S]*?"""', " ", text)
+                return re.sub(r"(?m)^\s*#.*$", " ", text)
+            return re.sub(r"<!--.*?-->", " ", text, flags=re.S)
+
+        caught = {}
+        for path in looked:
+            body = uncommented(path, open(path).read()).lower()
+            for ok in HAS_GUIDES:
+                body = body.replace(ok, "")
+            for claim in INVENTED:
+                if claim in body:
+                    # tests.py itself lists them; that is this list.
+                    if os.path.basename(path) == "tests.py":
+                        continue
+                    caught.setdefault(claim, []).append(os.path.relpath(path, ROOT_DIR))
+        check("no page claims an operator the dataset does not have", not caught,
+              "; ".join("%r on %d files (%s)" % (c, len(w), w[0])
+                        for c, w in sorted(caught.items())[:3]))
+        named = {c.operator.name for c in countries if c.operator}
+        check("exactly the operators in the dataset are named as ours",
+              len(named) == 3, ", ".join(sorted(named)))
+
         # -- what a page family pays twice for -------------------------------------
         print("\nwhat a page family pays twice for")
         blocks = {}

@@ -552,15 +552,15 @@
   }
 
   /* Local means a company with an address, a year and a sentence about what it
-     actually runs. Where we have that, print it; where we do not, say what is
-     true — that the country is covered by a licensed company based in it —
-     rather than pinning on a badge that means nothing. */
+     actually runs. Where we have that, print it. Where we do not, there is no
+     company — the earlier version said "a licensed company based in <country>",
+     which invented one for nineteen countries — so say that instead. */
   function whoBlock(c) {
     if (!c.operator) {
-      return '<div class="jn-who-in"><span class="af-stamp">Who would run it</span>'
-        + '<b>A licensed company based in ' + esc(c.name) + '</b>'
-        + '<p>We have not published its details here yet. Send the journey and we '
-        + 'will put you in touch with the company that operates it.</p></div>';
+      return '<div class="jn-who-in" data-none><span class="af-stamp">Who would run it</span>'
+        + '<b>Nobody of ours, in ' + esc(c.name) + '</b>'
+        + '<p>We run companies in three countries and this is not one of them. '
+        + 'Send the journey anyway and we will say who to ask.</p></div>';
     }
     var o = c.operator;
     return '<div class="jn-who-in" data-ours><span class="af-stamp">Operated locally by</span>'

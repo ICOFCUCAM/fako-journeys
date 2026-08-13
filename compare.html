@@ -169,9 +169,9 @@
       months(B.months) + '<p class="cp-val cp-val--muted" style="margin-top:10px">' + esc(B.when) + '</p>',
       A.months.join() !== B.months.join());
     h += row('Who runs it',
-      '<p class="cp-val cp-val--big">' + esc(A.operator || 'A licensed local company') + '</p>'
+      '<p class="cp-val cp-val--big">' + esc(A.operator || 'No operator of ours') + '</p>'
         + (A.base ? '<p class="cp-val cp-val--muted">' + esc(A.base) + '</p>' : ''),
-      '<p class="cp-val cp-val--big">' + esc(B.operator || 'A licensed local company') + '</p>'
+      '<p class="cp-val cp-val--big">' + esc(B.operator || 'No operator of ours') + '</p>'
         + (B.base ? '<p class="cp-val cp-val--muted">' + esc(B.base) + '</p>' : ''),
       (A.operator ? 1 : 0) !== (B.operator ? 1 : 0));
     /* A category one country answers and the other does not is the most useful

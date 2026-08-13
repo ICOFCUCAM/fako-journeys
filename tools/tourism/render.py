@@ -123,7 +123,8 @@ def footer(country):
     op = country.operator
     who = ('<p>%s runs %s, out of %s, since %s.</p>' %
            (esc(op.name), esc(country.name), esc(op.base), esc(op.since))) if op else \
-          ('<p>%s is covered by a licensed company based in the country itself.</p>'
+          ('<p>We do not run a company in %s. It is written up here to the same '
+           'twenty-seven categories as the rest, and booked through someone else.</p>'
            % esc(country.name))
     return ('<footer class="fj-foot">\n'
             '  <div class="fj-frame">\n'

@@ -452,8 +452,8 @@ def trust_block(country, pack, ops, arcs_used):
                 'run a journey here. Nothing on this page is a quotation from them '
                 'or written by them.' % (esc(op.name), esc(op.base), esc(op.since)))
                if op else
-               'A licensed company registered in %s. Nothing on this page is '
-               'written by an operator.' % esc(country.name),
+               'No operator of ours runs %s. Nothing on this page is written by '
+               'an operator either way.' % esc(country.name),
                arcs_used, total))
 
 
