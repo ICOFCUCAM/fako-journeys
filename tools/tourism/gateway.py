@@ -23,11 +23,22 @@ index.html, names a country.
 """
 
 import html as html_mod
+import json
 import os
 import re
 
 from . import plate
 from .model import ROOT, load_picks, load_regions, load_views
+
+LINKS = os.path.join(ROOT, "data", "links.json")
+
+
+def read_json(path, fallback=None):
+    try:
+        with open(path) as fh:
+            return json.load(fh)
+    except (IOError, ValueError):
+        return fallback if fallback is not None else {}
 
 PAGE = os.path.join(ROOT, "index.html")
 SHAPES = os.path.join(ROOT, "tourism", "shapes.json")
@@ -301,8 +312,31 @@ def block_scale():
                total, esc(data.get("africa", "30.4"))))
 
 
+def _neighbours(slug, links, live):
+    """Which of the published countries this one shares a land border with.
+
+    Read off links.json, which links.py built by finding shared vertices in the
+    Natural Earth polygons — so this is geometry rather than a typed list, and a
+    country that borders nothing published here says so instead of being given a
+    neighbour it does not have. Islands are the honest empty case: Seychelles
+    touches nobody, and printing nothing for it is correct.
+    """
+    rows = links.get(slug) or []
+    out = []
+    for r in rows:
+        if r["to"] not in live:
+            continue
+        if not any(w["kind"] == "border" for w in r.get("why") or []):
+            continue
+        out.append((r["to"], r["name"]))
+    return out
+
+
 def block_destinations(countries):
-    """The grid, grouped by region, each card carrying what it leads on."""
+    """The grid, grouped by region, each card carrying what it leads on and
+    what it touches."""
+    links = (read_json(LINKS) or {}).get("links") or {}
+    live = {c.slug for c in countries}
     by_region = {}
     for c in countries:
         for key, _title, regions in REGION_GROUPS:
@@ -316,14 +350,18 @@ def block_destinations(countries):
             continue
         rows.append('      <h3 class="wa-dest-reg" data-region="%s">%s</h3>' % (key, title))
         for c in sorted(group, key=lambda x: (0 if x.operator else 1, x.name)):
+            near = _neighbours(c.slug, links, live)
+            borders = ('<p class="wa-dest-near"><span>Walk out of it into</span>%s</p>'
+                       % "".join('<a href="/portrait/%s">%s</a>' % (esc(s), esc(n))
+                                 for s, n in near)) if near else ""
             rows.append(
                 '      <div class="wa-dest" data-region="%s" data-tags="%s" data-months="%s">'
                 '<b>%s</b><h3>%s</h3><p>%s</p>'
-                '<p class="wa-dest-when">%s</p>'
+                '<p class="wa-dest-when">%s</p>%s'
                 '<a href="%s">Explore %s &rarr;</a></div>'
                 % (key, esc(" ".join(c.calls)), esc(",".join(str(m) for m in c.months)),
                    esc(c.operator.name if c.operator else ''), esc(c.name), esc(c.summary), esc(c.when),
-                   esc(c.url), esc(c.name)))
+                   borders, esc(c.url), esc(c.name)))
     return "\n".join(rows)
 
 
