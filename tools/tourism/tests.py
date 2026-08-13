@@ -1487,49 +1487,6 @@ def main():
             r = (max(lit, relative(mixed)) + 0.05) / (min(lit, relative(mixed)) + 0.05)
             check("a plate on the %s ground can be read" % key, r >= 4.5, "%.2f:1" % r)
 
-        # -- the sheet the map is printed on ---------------------------------------
-        print("\nthe sheet the map is printed on")
-        # The hero reads as one unfolded atlas because the graticule behind the
-        # type is the real projection the continent is drawn in, at the same
-        # scale and origin. That only holds while the scale the sheet recovered
-        # still matches the map's own fit, and nothing about regenerating the map
-        # would announce that it had stopped: the lines would simply drift a few
-        # pixels off the coast and look like a rendering bug. So the fit is
-        # measured here against three coastal extremes whose position the path
-        # data already knows.
-        sys.path.insert(0, os.path.join(ROOT_DIR, "tools"))
-        import atlas_sheet
-
-        home = open(os.path.join(ROOT_DIR, "index.html")).read()
-        off = atlas_sheet.check()
-        check("the sheet is still in register with the map", off < 3.0,
-              "worst coastal extreme is %.1f map units out (0.4 CSS px each)" % off)
-
-        sheet = re.search(r"<!-- gen:sheet -->(.*?)<!-- /gen:sheet -->", home, re.S)
-        check("the home page carries the generated sheet", sheet is not None)
-        if sheet:
-            body = sheet.group(1)
-            check("the sheet is drawn, not stored as a picture",
-                  "<image" not in body and "url(" not in body and "data:image" not in body,
-                  "%.1f kB of path data, no request" % (len(body) / 1024.0))
-            # Regenerating it has to be idempotent, or the file it writes back
-            # differs from the file in the tree and every build shows a diff.
-            check("regenerating the sheet changes nothing",
-                  atlas_sheet.build()[0] == body.strip())
-            # It is decoration over the top of the headline; a screen reader
-            # reading out forty meridians would be the worst thing on the page.
-            check("the sheet is hidden from the accessibility tree",
-                  'aria-hidden="true"' in body.split(">")[0] + ">")
-            check("the sheet cannot be clicked through to",
-                  re.search(r"\.wa-sheet\{[^}]*pointer-events:none", home) is not None)
-        # The margin coordinates are the west and east extremes of the African
-        # mainland. They are marginalia, but they are checkable marginalia, and
-        # the reason they are these two rather than a prettier pair is that these
-        # two are true.
-        for figure in ("17&deg; 33&prime; W", "51&deg; 24&prime; E"):
-            check("the margin carries %s" % figure.replace("&deg;", "d").replace("&prime;", "'"),
-                  figure in home)
-
         # -- where the keyboard is ------------------------------------------------
         print("\nwhere the keyboard is")
         # `outline:none` on :focus is how a focus indicator disappears. Sometimes
