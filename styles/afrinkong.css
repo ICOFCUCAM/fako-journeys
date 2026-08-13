@@ -53,7 +53,7 @@
 
      Burnt Sienna is #B94E2E darkened by one step. As given it measures
      4.45:1 on ivory — under 4.5 by four hundredths, which is failing. */
-  --c-accent:#A44529;      /* Burnt Sienna, text weight */
+  --c-accent:#8F4128;      /* Burnt Sienna, text weight */
   --c-accent-fill:#C96A45; /* Terracotta, fill weight */
 
   /* On a dark ground the accent has to go the other way, and terracotta as
@@ -72,7 +72,7 @@
   /* Sage as given is 3.22:1 on ivory, which is a surface colour rather than
      an ink. Darkened to the same rule as the accent it reads as the same
      family and clears the bar: 5.37:1 on ivory, 4.51:1 on sand. */
-  --c-muted:#5B6654;
+  --c-muted:#505D4D;
 
   /* Derived surfaces. Mixed rather than hand-picked, so changing --c-bg or
      --c-primary moves the whole system together instead of leaving orphans. */
@@ -92,6 +92,15 @@
      So they are two tokens now. The map keeps its material and the page gets a
      ground: 1.36:1, which is a band you can see, and nothing on the map moves. */
   --fj-dust:#DFCFB4;
+  /* The two inks that sit on it had to move with it, and this is the finding
+     the whole change turned on: the old ground was not 1.19:1 by taste. It was
+     pinned there by --c-muted and --c-accent, which measured 4.51 and 4.52
+     against it — AA to two decimal places. Any darker ground broke both, on
+     every page with a dust band, which is how 69 pieces of text on the home page
+     and a button on the atlas went under at once.
+     So the metadata voice and the accent take 14% of the forest: 4.55 and 4.65
+     on the new ground, 6.19 and 6.33 on the page, and darker links on paper is
+     not a cost. */
   --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
   --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));

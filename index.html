@@ -167,7 +167,8 @@
    sitting in the top third with the lede tight under a 224px headline. The lede
    gets the air, the gap gives it up, and the composition stops being top-heavy. */
 .wa-open-tail{padding-top:22px}
-@media(min-width:1360px){.wa-open-tail{padding-top:38px}}
+@media(min-width:1360px){.wa-open-tail{padding-top:38px}
+  .wa-win{--fj-sheet-margin:26px}}
 @media(min-width:1600px){.wa-open-tail{padding-top:56px}}
 .wa-h1{display:block;margin:10px 0 0;pointer-events:none}
 /* The clamp is the value with scripting off, and it is an approximation of the
@@ -232,7 +233,12 @@
      which is the whole idea 114 built the shadow and the engraved coast for.
      A sheet needs an edge you can see the whole of. */
   --fj-bleed:100px;
-  --fj-sheet-margin:26px;
+  /* Only where there is room for it. Below 1360 the bleed has already collapsed
+     to nothing and the map is as narrow as the composition allows, so taking
+     another 26px off its right edge walks the readout left into the calls —
+     measured, 12x14 of overlap at 1180 and 6x46 at 1280. The margin is what a
+     wide window can afford, not a constant. */
+  --fj-sheet-margin:0px;
   right:max(var(--fj-sheet-margin),
             calc((100vw - min(1240px, 100vw)) / 2 - var(--fj-bleed)));
   z-index:1;display:grid;grid-template-columns:1fr;gap:12px}
@@ -375,7 +381,7 @@
    rails carry and sits hard against the map's own right edge, so the eye reads
    map-then-key rather than three more words. */
 .wa-win-key{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 18px;
-  margin-top:14px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--c-bg) 22%,transparent)}
+  margin-top:7px;padding-top:6px;border-top:1px solid color-mix(in srgb,var(--c-bg) 22%,transparent)}
 .wa-win-key span{display:flex;align-items:center;gap:7px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
@@ -542,6 +548,9 @@
    ink: the halo grows and the name arrives, which is the same thing hover does.
    Keyboard and pointer should not be two different maps. */
 .wa-map-city{cursor:pointer}
+/* outline:none is safe here and only here: the ring is replaced two rules
+   below, on :focus-visible, by the halo growing and the name arriving — a
+   rectangle around a point on a map is not where the place is. */
 .wa-map-city:focus{outline:none}
 .wa-map-city:focus-visible .wa-map-city-ring{stroke:var(--c-bg);stroke-width:2;r:10}
 .wa-map-city:focus-visible .wa-map-city-say{opacity:1}

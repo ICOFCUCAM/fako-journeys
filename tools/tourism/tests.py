@@ -1746,6 +1746,10 @@ def main():
             ".at-c:focus",             # the same, on the atlas
             ".ex-bar input:focus",     # the only tabbable thing in its dialog
             ".jn-h1:focus",            # a heading focused to be announced
+            # A city on the map. The ring is replaced on :focus-visible two rules
+            # later — the halo grows and the name arrives, which is what hover
+            # does — because a rectangle around a point is not where the place is.
+            ".wa-map-city:focus",
         )
         killed = {}
         for path in sorted(glob.glob(os.path.join(ROOT_DIR, "styles", "*.css"))
