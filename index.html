@@ -155,7 +155,15 @@
 .wa-open-grid{display:flex;flex-direction:column;justify-content:center;
   flex:1 1 auto;z-index:2}
 .wa-open-say,.wa-open-tail{max-width:min(66%,820px);position:relative}
+/* The stage is taller than the composition wants above 1600, and every pixel of
+   that goes into one gap between the calls and the foot — 203px at 1920, which
+   111 established is allowed because the foot is a band across both columns.
+   Allowed is not the same as good: some of it belongs to the copy, which was
+   sitting in the top third with the lede tight under a 224px headline. The lede
+   gets the air, the gap gives it up, and the composition stops being top-heavy. */
 .wa-open-tail{padding-top:22px}
+@media(min-width:1360px){.wa-open-tail{padding-top:38px}}
+@media(min-width:1600px){.wa-open-tail{padding-top:56px}}
 .wa-h1{display:block;margin:10px 0 0;pointer-events:none}
 /* The clamp is the value with scripting off, and it is an approximation of the
    right answer rather than the right answer — see the fitter below the <h1>.
