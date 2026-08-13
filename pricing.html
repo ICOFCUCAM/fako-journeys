@@ -47,6 +47,24 @@ ul,ol{list-style:none}
 .fj-rise.seen{opacity:1;transform:none}
 
 /* ---- masthead ---------------------------------------------------------------- */
+/* Whose pages these are. This is one operator's site served from the group's
+   domain, on addresses (/about, /pricing, /services) a visitor reads as the
+   group's. The bar is the name on the door — see tools/tourism/enquiry.py. */
+.fj-from{background:var(--fj-raffia);border-bottom:var(--fj-rule)}
+.fj-from-in{padding:14px 0 16px}
+.fj-from p{font-size:15px;line-height:1.5;max-width:96ch}
+.fj-from-else{max-width:none}
+.fj-from b{font-weight:400;color:var(--c-primary)}
+/* .fj-from p wins on specificity over a bare .fj-from-else, so the mono line
+   was rendering at 15px. Matched here rather than raised with !important. */
+.fj-from p.fj-from-else{margin-top:6px;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--c-muted)}
+.fj-from-else a{color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.fj-from-else a:hover{border-bottom-color:var(--c-accent)}
+.fj-from-else a+a{margin-left:14px}
+@media(max-width:640px){.fj-from-in{padding:12px 0 13px}
+  .fj-from p{font-size:14px}}
 .fj-mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
 .fj-mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
 .fj-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
@@ -379,6 +397,13 @@ ul,ol{list-style:none}
     <a class="btn" href="#quote">Plan a circuit</a>
   </div>
 </header>
+<!-- gen:handoff -->
+<div class="fj-from" data-af-handoff>
+  <div class="fj-frame fj-from-in">
+    <p><b>These are Kamerun&rsquo;s pages.</b> Kamerun is the Afrinkong operator for Cameroon, based in Buea and Douala &mdash; the circuits, rates and people described here are theirs, and any enquiry sent from this page is read by them.</p>
+    <p class="fj-from-else">Somewhere else in Africa? <a href="https://namib-skyline.vercel.app">Namibia &mdash; Namib Skyline</a><a href="https://pearl-trails-uganda.vercel.app">Uganda &mdash; Pearl Trails Uganda</a> or start from <a href="/atlas">the atlas</a>.</p>
+  </div>
+</div><!-- /gen:handoff -->
 <main id="main">
 <!-- opening -->
 <section class="fj-open">
@@ -679,5 +704,8 @@ ul,ol{list-style:none}
 </footer>
 <script src="/scripts/story-search.js" defer></script>
 <script src="/scripts/explore.js" defer></script>
+<!-- gen:reach -->
+<script type="application/json" id="fj-reach">{"home":"cameroon","ours":{"cameroon":{"name":"Cameroon","op":"Kamerun","url":"/cameroon"},"namibia":{"name":"Namibia","op":"Namib Skyline","url":"https://namib-skyline.vercel.app"},"uganda":{"name":"Uganda","op":"Pearl Trails Uganda","url":"https://pearl-trails-uganda.vercel.app"}},"rest":{"botswana":"Botswana","cote-divoire":"Côte d'Ivoire","egypt":"Egypt","ethiopia":"Ethiopia","ghana":"Ghana","kenya":"Kenya","madagascar":"Madagascar","mauritius":"Mauritius","morocco":"Morocco","mozambique":"Mozambique","nigeria":"Nigeria","rwanda":"Rwanda","senegal":"Senegal","seychelles":"Seychelles","south-africa":"South Africa","tanzania":"Tanzania","tunisia":"Tunisia","zambia":"Zambia","zimbabwe":"Zimbabwe"}}</script><!-- /gen:reach -->
+<script src="/scripts/enquiry.js" defer></script>
 </body>
 </html>

@@ -202,7 +202,16 @@ def sitemap(rows, ctx):
     """
     base = "https://afrinkong.com"
     urls = ["/", "/atlas", "/journey", "/meet", "/stories", "/compare", "/contact",
-            "/places"]
+            "/places",
+            # /tourism is the hub every /tourism/<country> page hangs off and it
+            # is linked from twenty-four footers; all twenty-two children were
+            # listed and the parent was not.
+            "/tourism",
+            # The operator's own pages. They are substantial — a thousand words
+            # each — they are real, and their titles say whose they are, so
+            # leaving them out only meant the operator was unfindable while
+            # their enquiry page was listed.
+            "/about", "/pricing", "/services"]
     for country, pack, order in rows:
         if country.url.startswith("/"):
             urls.append(country.url)

@@ -1465,6 +1465,23 @@ def main():
         ours_ops = [c for c in countries if c.operator]
         host = ([c for c in ours_ops if c.operator.url.startswith("/")]
                 or ours_ops)[0]
+        # The bar belongs on every page wearing this operator's masthead, not
+        # only the one with the form on it. /about, /pricing, /services and
+        # /cameroon sit on group addresses a visitor reads as the group's, and
+        # all four carry the same form mailing the same operator.
+        from tourism import enquiry as enq
+        wearing = enq.cluster(host.operator.name)
+        check("every page wearing the operator's masthead is known", len(wearing) >= 4,
+              ", ".join(os.path.relpath(p, ROOT_DIR) for p in wearing))
+        barless = [os.path.relpath(p, ROOT_DIR) for p in wearing
+                   if 'class="fj-from"' not in open(p).read()]
+        check("every one of them says whose pages they are", not barless,
+              ", ".join(barless))
+        unlisted = [u for u in ("/tourism", "/about", "/pricing", "/services")
+                    if "<loc>https://afrinkong.com%s</loc>" % u not in sitemap]
+        check("every real page of theirs is in the sitemap", not unlisted,
+              ", ".join(unlisted))
+
         bar = re.search(r'<div class="fj-from"[^>]*>(.*?)</div>\s*</div>', con, re.S)
         check("the primary call of the site still lands on /contact",
               'href="/contact"' in open(os.path.join(ROOT_DIR, "index.html")).read())

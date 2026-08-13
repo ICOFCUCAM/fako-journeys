@@ -56,9 +56,12 @@ ul,ol{list-style:none}
    that anything is broken, it is the name on the door. */
 .fj-from{background:var(--fj-raffia);border-bottom:var(--fj-rule)}
 .fj-from-in{padding:14px 0 16px}
-.fj-from p{font-size:15px;line-height:1.55;max-width:78ch}
+.fj-from p{font-size:15px;line-height:1.5;max-width:96ch}
+.fj-from-else{max-width:none}
 .fj-from b{font-weight:400;color:var(--c-primary)}
-.fj-from-else{margin-top:6px;font-family:var(--fj-mono);font-size:10.5px;
+/* .fj-from p wins on specificity over a bare .fj-from-else, so the mono line
+   was rendering at 15px. Matched here rather than raised with !important. */
+.fj-from p.fj-from-else{margin-top:6px;font-family:var(--fj-mono);font-size:10.5px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--c-muted)}
 .fj-from-else a,.fj-from-warn a{color:var(--c-accent);
   border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
@@ -66,7 +69,7 @@ ul,ol{list-style:none}
 .fj-from-else a+a{margin-left:14px}
 /* The second sentence only exists when the journey names somewhere this desk
    does not run, so it is allowed to be the loud one. */
-.fj-from-warn{margin-top:12px;padding-top:12px;border-top:var(--fj-rule);
+.fj-from p.fj-from-warn{margin-top:12px;padding-top:12px;border-top:var(--fj-rule);
   font-size:15.5px}
 .fj-from-warn a{display:inline-block;margin-right:16px}
 @media(max-width:640px){.fj-from-in{padding:12px 0 13px}
@@ -405,7 +408,7 @@ ul,ol{list-style:none}
 <!-- gen:handoff -->
 <div class="fj-from" data-af-handoff>
   <div class="fj-frame fj-from-in">
-    <p><b>You are on Kamerun&rsquo;s enquiry page.</b> Kamerun is the Afrinkong operator for Cameroon, based in Buea and Douala, and everything sent from this form is read by them.</p>
+    <p><b>These are Kamerun&rsquo;s pages.</b> Kamerun is the Afrinkong operator for Cameroon, based in Buea and Douala &mdash; the circuits, rates and people described here are theirs, and any enquiry sent from this page is read by them.</p>
     <p class="fj-from-else">Somewhere else in Africa? <a href="https://namib-skyline.vercel.app">Namibia &mdash; Namib Skyline</a><a href="https://pearl-trails-uganda.vercel.app">Uganda &mdash; Pearl Trails Uganda</a> or start from <a href="/atlas">the atlas</a>.</p>
   </div>
 </div><!-- /gen:handoff -->

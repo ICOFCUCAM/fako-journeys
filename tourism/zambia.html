@@ -49,6 +49,24 @@ ul,ol{list-style:none}
 .fj-rise.seen{opacity:1;transform:none}
 
 /* ---- masthead ---------------------------------------------------------------- */
+/* Whose pages these are. This is one operator's site served from the group's
+   domain, on addresses (/about, /pricing, /services) a visitor reads as the
+   group's. The bar is the name on the door — see tools/tourism/enquiry.py. */
+.fj-from{background:var(--fj-raffia);border-bottom:var(--fj-rule)}
+.fj-from-in{padding:14px 0 16px}
+.fj-from p{font-size:15px;line-height:1.5;max-width:96ch}
+.fj-from-else{max-width:none}
+.fj-from b{font-weight:400;color:var(--c-primary)}
+/* .fj-from p wins on specificity over a bare .fj-from-else, so the mono line
+   was rendering at 15px. Matched here rather than raised with !important. */
+.fj-from p.fj-from-else{margin-top:6px;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--c-muted)}
+.fj-from-else a{color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.fj-from-else a:hover{border-bottom-color:var(--c-accent)}
+.fj-from-else a+a{margin-left:14px}
+@media(max-width:640px){.fj-from-in{padding:12px 0 13px}
+  .fj-from p{font-size:14px}}
 .fj-mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
 .fj-mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
 .fj-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
