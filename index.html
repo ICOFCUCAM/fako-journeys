@@ -468,7 +468,20 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
    comes straight after it, its controls come next, and the paragraph and the
    buttons go below all three. The signature is the first thing on the screen,
    which is the one thing that has to be true on the device most people use. */
-@media(max-width:860px){
+/* The width at which the map comes out of the bleed and goes back into the flow.
+   It was 860, and between 880 and 960 that left a band where the composition is
+   still two columns but no longer has the room for two: measured at ten widths,
+   the country rail crosses the map's legend from 960 down to 880, and the region
+   rail crosses the caption as well from 940. Eighty pixels of the desktop
+   layout in which the hero's two halves are physically on top of each other.
+
+   PASS FOUR never saw it because PASS FOUR measures document overflow and this
+   overflows nothing — the two columns simply occupy the same pixels. Its width
+   list has 900 and 1024 in it and the band sits between them.
+
+   1000 rather than 980, because 1000 is already a breakpoint in this file and
+   one fewer number to keep in step is worth the twenty pixels. */
+@media(max-width:1000px){
   .wa-open-stage{min-height:0;padding:96px 0 0}
   .wa-open-grid{grid-template-columns:1fr;gap:20px}
   .wa-open-say,.wa-open-tail,.wa-win,.wa-win-rail{grid-column:1;grid-row:auto}
@@ -492,7 +505,6 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-find{margin-top:14px}
   .wa-open .wa-lede{margin-top:0;font-size:17px}
   .wa-acts{margin-top:20px}
-  .wa-acts .wa-act{flex:1 1 220px;min-width:0;text-align:center}
   .wa-win{display:block}
   .wa-win-frame{height:min(42vh,320px)}
   .wa-win-caps{margin-top:18px}
@@ -510,6 +522,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-brief{padding:48px 0 44px}}
 
 /* Anything driven by a thumb gets a 44px target. The ticks were 33px. */
+/* The three calls only need to become equal-width blocks when they can no
+   longer sit on one line. Carried up to 1000 with the rest of the stacked
+   layout in 070, that rule broke the longest of them across two lines from
+   960 down to 860 while there was still room for all three on one. */
+@media(max-width:860px){.wa-acts .wa-act{flex:1 1 220px;min-width:0;text-align:center}}
 @media(pointer:coarse){
   .wa-tick{min-height:44px;padding-top:14px;padding-bottom:14px}
   .wa-want{padding-top:20px;padding-bottom:18px}}
