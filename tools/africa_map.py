@@ -304,7 +304,13 @@ def render(shapes, frame):
             continue
         slug, label, tag, href, tier = ROSTER[code]
         title = "%s &#8212; %s" % (label, tag)
-        attrs = ('class="wa-map-live" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
+        # tabindex -1: the shape is a pointer target, not a tab stop. The rail of
+        # twenty-two names below the map is the keyboard route to the same
+        # twenty-two places, and the svg's own label says so. Left in the tab
+        # order it put twenty-two stops on shapes inside a role="img" — which a
+        # screen reader does not expose in the first place — between the
+        # masthead and this page's own calls to action.
+        attrs = ('tabindex="-1" class="wa-map-live" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
                  % (tier, slug, label, tag))
         if href:
             lines.append('<a %s href="%s"><path d="%s"/><title>%s</title></a>' % (attrs, href, d, title))
@@ -316,7 +322,7 @@ def render(shapes, frame):
         slug, label, tag, href, tier = ROSTER[code]
         x, y = project(lon, lat)
         cx, cy = x * k + ox, y * k + oy
-        attrs = ('class="wa-map-live wa-map-mark" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
+        attrs = ('tabindex="-1" class="wa-map-live wa-map-mark" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
                  % (tier, slug, label, tag))
         dot = '<circle cx="%.1f" cy="%.1f" r="9"/><title>%s &#8212; %s</title>' % (cx, cy, label, tag)
         lines.append(('<a %s href="%s">%s</a>' % (attrs, href, dot)) if href
