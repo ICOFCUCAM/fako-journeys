@@ -481,6 +481,15 @@ ul,ol{list-style:none}
   *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important;animation-iteration-count:1 !important}
   .fj-rise{opacity:1;transform:none}
 }
+/* WCAG 2.5.8 asks for 24x24 CSS pixels and these are 13, 17 and 23 tall — mono
+   at 9 to 11px with a rule under them and no padding. Only where a finger is
+   the pointer; on a mouse they keep the setting they were drawn at. */
+@media(pointer:coarse){
+  .fj-mark{padding:5px 0}
+  .fj-slip-more,.fj-way a{display:inline-block;padding-top:6px;padding-bottom:8px}
+  .fj-route-foot a{display:inline-block;padding:5px 0 7px}
+  .fj-foot-bar a{padding-block:6px;display:inline-block}
+}
 
 /* ---- tourism country pages -------------------------------------------------- */
 /* The mark names the group first and the country second, so a page reached from

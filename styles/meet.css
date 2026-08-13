@@ -225,3 +225,7 @@
    width each column is 145px and "What is kept, and who keeps it" does not
    fit in it, so the list ran 8px past the screen. One column below 400. */
 @media(max-width:400px){.mt-doors ol{grid-template-columns:1fr}}
+
+@media(pointer:coarse){
+  .mt-answer-where a,.mt-answer-where button{padding:6px 2px 8px;min-height:26px}
+}

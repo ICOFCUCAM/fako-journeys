@@ -356,3 +356,18 @@ html.ex-open{overflow:hidden}
   .pl-mast{padding:0 14px}
   .ex-key{margin-left:auto}
 }
+
+/* ---- a finger is not a mouse pointer ------------------------------------- */
+/* WCAG 2.5.8 asks for 24x24 CSS pixels. Measured on a 390px phone, twelve of
+   the eighteen page families had targets at 23, 20, 17 and 13 pixels tall — all
+   of them wide enough and none of them tall enough, because they are set in
+   mono at 9 to 11px with a rule under them and no padding.
+
+   The widths are fine, so only the block padding changes, and only where a
+   finger is the pointer: on a mouse these keep the tighter setting the design
+   was drawn at. A link sitting inside a sentence is exempt under the same
+   success criterion and is left alone. */
+@media(pointer:coarse){
+  .af-go{padding-top:6px;padding-bottom:9px}
+  .af-stamp{padding-block:2px}
+}

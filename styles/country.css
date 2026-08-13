@@ -188,3 +188,7 @@
 .foot-bar a{border-bottom:1px solid var(--c-accent)}
 @media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
+@media(pointer:coarse){
+  .mark{padding:5px 0}
+  .foot-bar a{padding-block:6px;display:inline-block}
+}

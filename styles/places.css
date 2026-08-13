@@ -177,3 +177,8 @@
 @media(pointer:coarse){
   .pl-sibs a,.pi-country li a{padding-top:14px;padding-bottom:14px}
 }
+
+@media(pointer:coarse){
+  .pi-jump a{padding:7px 0 8px}
+  .pl-foot-bar a{padding-block:6px;display:inline-block}
+}

@@ -132,6 +132,19 @@ const WIDTHS = [320, 360, 390, 430, 560, 768, 900, 1024, 1100, 1180, 1440, 1920]
  */
 const MEASURE_CAP = 92;
 
+/* ---------------------------------------------------------------------------
+ * PASS SIX — target size
+ *
+ * WCAG 2.5.8 asks for 24 by 24 CSS pixels. On a 390px phone with a coarse
+ * pointer, twelve of the eighteen page families had targets at 23, 20, 17 and
+ * 13 pixels tall: mono type at 9 to 11px with a rule under it and no padding.
+ * Every one of them was wide enough. None was tall enough.
+ *
+ * It has to run in a touch context — `pointer:coarse` is what the fix keys on,
+ * so a desktop context measures the un-fixed setting and reports nothing wrong.
+ */
+const TARGET_MIN = 24;
+
 const out = [];
 function check(name, ok, detail) {
   out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
@@ -246,6 +259,42 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass six: what a finger can hit --------------------------------- */
+    const touch = await browser.newContext({viewport: {width: 390, height: 844},
+                                            isMobile: true, hasTouch: true});
+    for (const url of PAGES) {
+      const page = await touch.newPage();
+      await page.goto(base + url, {waitUntil: 'networkidle'});
+      const small = await page.evaluate((min) => {
+        const out = [];
+        document.querySelectorAll(
+          'a[href],button,input:not([type=hidden]),select,summary').forEach(el => {
+          const box = el.getBoundingClientRect();
+          if (!box.width || !box.height) return;
+          if (el.closest('svg')) return;
+          const cs = getComputedStyle(el);
+          /* Two exceptions the success criterion itself grants. A link set
+             inline inside a sentence, where enlarging it would break the line;
+             and a control whose real target is something else — a visually
+             hidden radio inside a label the size of a card. */
+          if (cs.display === 'inline'
+              && el.closest('p,li,blockquote,figcaption')) return;
+          if (el.matches('input') && el.closest('label')) return;
+          if (box.height < min || box.width < min) {
+            out.push(Math.round(box.width) + 'x' + Math.round(box.height) + ' '
+              + el.tagName + '.'
+              + (String(el.className) || el.parentElement.className).slice(0, 18));
+          }
+        });
+        return [...new Set(out)];
+      }, TARGET_MIN);
+      await page.close();
+      check(url + ' has nothing too small to press', !small.length,
+            small.length ? small.length + ' under ' + TARGET_MIN + 'px: '
+              + small.slice(0, 2).join(' | ') : 'all at least ' + TARGET_MIN + 'px');
+    }
+    await touch.close();
+
     /* ---- pass five: how long a line of prose gets ------------------------ */
     for (const url of PAGES) {
       const page = await browser.newPage({viewport: {width: 1440, height: 900}});
