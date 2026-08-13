@@ -929,8 +929,12 @@ def main():
 
         # One window, not four.
         win = plate_mod.window_svg(shp, "Uganda", image="/i.jpg", alt="A ridge")
+        # Once, not twice: the outline is defined once and referenced by both the
+        # clipPath and the visible fill. It used to be written out twice, which
+        # is 1.3 KB of duplicate coordinates per country and 26 KB on the gateway.
         check("the window clips the photograph with the country's own path",
-              win.count(shp["d"]) == 2 and "clipPath" in win)
+              win.count(shp["d"]) == 1 and "clipPath" in win
+              and win.count("<use ") == 2)
         check("the window without a photograph is the filled outline",
               "<image" not in plate_mod.window_svg(shp, "Uganda"))
         check("the window describes itself from the photograph where there is one",
@@ -945,6 +949,10 @@ def main():
         check("the browser's window and the build's window agree",
               all(bit in js for bit in ("af-window-fill", "af-window-svg",
                                         "xMidYMid slice", "clipPath")))
+        # Including the part that is easy to change in one and forget in the
+        # other: both define the outline once and <use> it twice.
+        check("the browser's window defines its outline once too",
+              js.count('d="\' + shape.d') == 1 and js.count("<use ") == 2)
 
         # Roles: what the crop must keep, and what a phone gets instead.
         roles = [r for k, r in tax.roles.items() if not k.startswith("$")]

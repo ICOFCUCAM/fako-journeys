@@ -59,11 +59,18 @@ def window_svg(shape, name, image=None, alt=None, ident="w", classes="af-window-
         art = ('<image clip-path="url(#%s)" href="%s" x="0" y="0" width="%s" '
                'height="%s" preserveAspectRatio="xMidYMid slice"/>'
                % (esc(ident), esc(image), shape["w"], shape["h"]))
+    # The outline goes in once and is referenced twice. It used to be written
+    # out twice — once inside the clipPath and once as the visible fill — which
+    # is 1.3 KB of identical coordinates per country and 27.5 KB on the gateway
+    # alone, where twenty-two of these are inlined. <use> inside a clipPath is
+    # plain SVG 1.1 and has worked everywhere since it existed.
     return ('<svg class="%s" viewBox="0 0 %s %s" role="img" aria-label="%s">'
-            '<defs><clipPath id="%s"><path d="%s"/></clipPath></defs>'
-            '<path class="af-window-fill" d="%s"/>%s</svg>'
+            '<defs><path id="%s-d" d="%s"/>'
+            '<clipPath id="%s"><use href="#%s-d"/></clipPath></defs>'
+            '<use class="af-window-fill" href="#%s-d"/>%s</svg>'
             % (esc(classes), shape["w"], shape["h"], esc(label),
-               esc(ident), shape["d"], shape["d"], art))
+               esc(ident), shape["d"],
+               esc(ident), esc(ident), esc(ident), art))
 
 
 # ---- the plate -------------------------------------------------------------------
