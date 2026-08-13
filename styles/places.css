@@ -103,7 +103,35 @@
 .pi-open{max-width:60ch;padding-bottom:var(--sp-5);border-bottom:2px solid var(--c-primary)}
 .pi-h1{font-size:clamp(40px,6.5vw,92px);line-height:.9;margin:12px 0 0;letter-spacing:-.02em}
 .pi-lede{margin-top:20px;font-size:17.5px;color:var(--c-muted)}
-.pi-country{margin-top:var(--sp-5);border-top:2px solid var(--c-primary);padding-top:14px}
+/* Twenty-two countries, one line. The index is eighteen screens on a desktop
+   and thirty-eight on a phone, and every one of the 572 place pages links into
+   the middle of it, so the way to another country has to be at the top of the
+   section you land in rather than nine countries back up the page. Sticky, so
+   it is still the way out after you have scrolled into Zimbabwe. */
+.pi-jump{position:sticky;top:var(--mast);z-index:20;margin-top:var(--sp-4);
+  padding:12px 0 11px;background:var(--c-bg);border-top:2px solid var(--c-primary);
+  border-bottom:var(--fj-rule);display:flex;flex-wrap:wrap;gap:2px 16px}
+/* The hierarchy is name against count, and it is made with weight and size
+   rather than by fading the count out: mixing it 62% toward the page ground
+   put it at 2.64:1, which the contrast pass caught on the first run. */
+.pi-jump a{font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-primary);white-space:nowrap;
+  border-bottom:1px solid transparent;padding:3px 0}
+.pi-jump a i{font-style:normal;margin-left:5px;font-size:8.5px;
+  letter-spacing:0;color:var(--c-muted)}
+.pi-jump a:hover{color:var(--c-accent);border-bottom-color:var(--c-accent)}
+/* Wrapped, twenty-two names are six lines and 144 pixels of a phone screen —
+   a sixth of the viewport permanently occupied by the way out. One line that
+   scrolls sideways costs 38. */
+@media(max-width:700px){.pi-country{scroll-margin-top:calc(var(--mast) + 58px)}
+  .pi-jump{flex-wrap:nowrap;overflow-x:auto;gap:0 14px;
+    padding:9px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .pi-jump::-webkit-scrollbar{display:none}
+  .pi-jump a{font-size:9.5px;letter-spacing:.1em}
+  .pi-jump a i{display:none}}
+/* Arriving from /places#kenya must not put the heading under the strip. */
+.pi-country{margin-top:var(--sp-5);border-top:2px solid var(--c-primary);
+  padding-top:14px;scroll-margin-top:calc(var(--mast) + 92px)}
 /* Each country's block carries its own region tone, so scrolling the index is
    the same sweep across the continent that every other surface makes. */
 .pi-country h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;

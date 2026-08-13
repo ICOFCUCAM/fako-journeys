@@ -192,8 +192,18 @@ def index(rows, ctx):
             % (esc(country.slug), esc(plate.tone_for(country, ctx["regions"])),
                esc(country.slug), esc(order[pack["places"][0]["id"]]),
                esc(country.name), esc(country.region), len(pack["places"]), items))
+    # Eighteen screens on a desktop and thirty-eight on a phone, with twenty-two
+    # country sections in it and, until now, one in-page link. Somebody arriving
+    # at /places#zimbabwe from a place page — which every one of the 572 does —
+    # had no way to reach Zambia except to scroll back through nine countries.
+    jump = "".join(
+        '<a href="#%s">%s<i>%d</i></a>'
+        % (esc(country.slug), esc(country.name), len(pack["places"]))
+        for country, pack, _o in rows)
     total = sum(len(p["places"]) for _c, p, _o in rows)
     return INDEX % {"blocks": "\n".join(blocks), "n": total, "countries": len(rows),
+                    "jump": ('<nav class="pi-jump" aria-label="Jump to a country">%s</nav>'
+                             % jump),
                     "explore": plate.explore_block(),
                     "og": plate.open_graph("Every place — Afrinkong",
                                            "%d places across %d countries, each with its "
@@ -398,6 +408,7 @@ INDEX = """<!DOCTYPE html>
       put them in an order; this is the plain list, which is the one a search
       engine can read and the one that works with nothing switched on.</p>
   </section>
+%(jump)s
 %(blocks)s
 </main>
 %(explore)s
