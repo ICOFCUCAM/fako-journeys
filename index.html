@@ -34,6 +34,12 @@
 .wa-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
 .wa-mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:1;white-space:nowrap}
 .wa-mark span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+/* Five items, not eight. Destinations, Experiences and Compare came out when
+   the universal index shipped: two of them were anchors to sections further
+   down this same page, the third is one keystroke away from anywhere on the
+   site, and eight items plus the Explore key pushed "Begin a journey" — the
+   page's primary call — sixty-six pixels off the right edge of a 1440 screen.
+   A navigation bar is not an index. The index is the index. */
 .wa-routes{display:flex;gap:26px}
 .wa-routes a{font-family:var(--fj-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .wa-routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
@@ -626,12 +632,9 @@ window.AF = {
     <nav class="wa-routes" aria-label="Primary">
       <a href="/atlas">The Atlas</a>
       <a href="/journey">Build a journey</a>
-      <a href="/meet">Meet Africa</a>
       <a href="/stories">Stories</a>
+      <a href="/meet">Meet Africa</a>
       <a href="/places">Every place</a>
-      <a href="#destinations">Destinations</a>
-      <a href="#experiences">Experiences</a>
-      <a href="/compare">Compare</a>
     </nav>
     <a class="btn" href="#plan">Begin a journey</a>
   </div>
