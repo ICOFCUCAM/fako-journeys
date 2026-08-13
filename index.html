@@ -317,8 +317,13 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
    a real answer — the dry season in Zambia is the cyclone season in Mauritius.
    The count under each month is how many destinations are good in it, so the
    shape of the African year is legible before anything is pressed. */
+/* #seasons. Twenty-three pages link "Travel seasons" here and the target did
+   not exist, so all twenty-three landed at the top of the homepage. Extra
+   scroll-margin so the arrival shows the two rails and the sentence under them
+   rather than twelve months against the masthead with no explanation. */
 .wa-months{display:grid;grid-template-columns:repeat(12,1fr);gap:0;
-  border-bottom:var(--fj-rule);margin-bottom:16px}
+  border-bottom:var(--fj-rule);margin-bottom:16px;
+  scroll-margin-top:calc(var(--mast) + 92px)}
 .wa-month{background:none;border:0;border-right:var(--fj-rule);cursor:pointer;
   padding:12px 4px 11px;text-align:center;transition:background var(--t-fast) var(--ease)}
 .wa-month:last-child{border-right:0}
@@ -1355,7 +1360,7 @@ window.AF = {
       <button class="wa-want" type="button" data-want="food"><i>I want to taste</i><b>African food</b></button>
       <button class="wa-want" type="button" data-want="heritage"><i>I want to discover</i><b>Heritage</b></button>
     </div>
-    <div class="wa-months" role="group" aria-label="Filter destinations by month">
+    <div class="wa-months" id="seasons" role="group" aria-label="Filter destinations by month">
       <!-- gen:months -->
       <button class="wa-month" type="button" data-month="1" aria-pressed="false"><b>Jan</b><span>12</span></button><button class="wa-month" type="button" data-month="2" aria-pressed="false"><b>Feb</b><span>12</span></button><button class="wa-month" type="button" data-month="3" aria-pressed="false"><b>Mar</b><span>11</span></button><button class="wa-month" type="button" data-month="4" aria-pressed="false"><b>Apr</b><span>8</span></button><button class="wa-month" type="button" data-month="5" aria-pressed="false"><b>May</b><span>11</span></button><button class="wa-month" type="button" data-month="6" aria-pressed="false"><b>Jun</b><span>13</span></button><button class="wa-month" type="button" data-month="7" aria-pressed="false"><b>Jul</b><span>12</span></button><button class="wa-month" type="button" data-month="8" aria-pressed="false"><b>Aug</b><span>12</span></button><button class="wa-month" type="button" data-month="9" aria-pressed="false"><b>Sep</b><span>14</span></button><button class="wa-month" type="button" data-month="10" aria-pressed="false"><b>Oct</b><span>15</span></button><button class="wa-month" type="button" data-month="11" aria-pressed="false"><b>Nov</b><span>12</span></button><button class="wa-month" type="button" data-month="12" aria-pressed="false"><b>Dec</b><span>11</span></button>      <!-- /gen:months -->
     </div>

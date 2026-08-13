@@ -1372,6 +1372,55 @@ def main():
                   expect is None or top == expect,
                   "%d on %s, dataset has %s" % (top, where, expect))
 
+        # -- where the links actually go -------------------------------------------
+        print("\nwhere the links actually go")
+        html_pages = sorted(p for p in glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                                 recursive=True)
+                            if "/incoming/" not in p and "/node_modules/" not in p)
+        anchors, dead, broken = {}, {}, {}
+
+        def anchors_of(path):
+            if path not in anchors:
+                body = open(path).read()
+                anchors[path] = ({m.group(1) for m in re.finditer(r'\bid="([^"]+)"', body)}
+                                 | {m.group(1) for m in
+                                    re.finditer(r'<a[^>]*\bname="([^"]+)"', body)})
+            return anchors[path]
+
+        def as_file(base):
+            stem = base.lstrip("/")
+            for cand in (stem, stem + ".html", os.path.join(stem, "index.html")):
+                full = os.path.join(ROOT_DIR, cand)
+                if os.path.isfile(full):
+                    return full
+            return None
+
+        for path in html_pages:
+            body = re.sub(r"<(script|style)\b.*?</\1>", "", open(path).read(), flags=re.S)
+            rel = os.path.relpath(path, ROOT_DIR)
+            for m in re.finditer(r'href="([^"]+)"', body):
+                url = m.group(1)
+                if url.startswith(("http", "mailto:", "tel:", "data:", "javascript:")):
+                    continue
+                base, _, frag = url.partition("#")
+                base = base.split("?")[0]
+                # "#/kenya" and "#/j/kenya/" are hash routes read by atlas.js and
+                # journey.js, not anchors, and there is no element to find.
+                if frag.startswith("/"):
+                    continue
+                target = path if base == "" else as_file(base)
+                if base and target is None:
+                    dead.setdefault(base, set()).add(rel)
+                elif frag and target and frag not in anchors_of(target):
+                    broken.setdefault("%s#%s" % (base or rel, frag), set()).add(rel)
+
+        check("every internal link points at a page that exists", not dead,
+              "; ".join("%s (from %s)" % (u, sorted(w)[0]) for u, w in
+                        sorted(dead.items())[:4]))
+        check("every anchor link points at an element that exists", not broken,
+              "; ".join("%s (from %d pages)" % (u, len(w)) for u, w in
+                        sorted(broken.items())[:4]))
+
         # -- the story graph -------------------------------------------------------
         print("\nthe story graph")
         from tourism import graph as graph_mod

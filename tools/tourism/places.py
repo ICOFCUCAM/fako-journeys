@@ -117,8 +117,12 @@ def page(country, place, pack, order, tax, ctx):
         % (esc(country.slug), esc(order[p["id"]]), esc(p["title"]), esc(p["group"]))
         for p in here[:12])
 
+    # /places/<slug> is a folder of place pages with no index in it, so every one
+    # of these was a 404 — four of them on each of 572 pages, in the block whose
+    # entire job is "where to go next". /places#<slug> is that country's section
+    # on the index, which is the list this link was always describing.
     near = "".join(
-        '<a href="/places/%s"%s>%s<i>%s</i></a>'
+        '<a href="/places#%s"%s>%s<i>%s</i></a>'
         % (esc(r["to"]), ' data-border="true"' if any(
             w["kind"] == "border" for w in r["why"]) else "", esc(r["name"]),
            esc("%d km" % r["km"] if r.get("km") is not None else ""))

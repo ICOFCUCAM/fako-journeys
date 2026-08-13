@@ -136,7 +136,10 @@ def chapter_body(place, country):
     thing on this site that can be indexed, sent, or read with JavaScript off.
     """
     return ('<div class="st-say"><h3><a href="%s">%s</a></h3><p>%s</p></div>'
-            % (esc(place.get("url") or "/places/%s" % country.slug),
+            # The fallback is for a place whose page was not written; /places/<slug>
+            # is a folder with no index and would 404, so it falls back to that
+            # country's section on the places index instead.
+            % (esc(place.get("url") or "/places#%s" % country.slug),
                esc(place["title"]), esc(place["text"])))
 
 
