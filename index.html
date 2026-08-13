@@ -169,10 +169,35 @@
    which resolves to right:0 at every width up to 1440 — the composition that
    was tuned — and holds the same relationship above it. max() rather than a
    media query because the frame's own width is already a min(). */
-.wa-win{position:absolute;top:calc(var(--mast) + 1vh);width:min(50vw,640px);
+/* THE CONTINENT TAKES THE STAGE.
+   It was a 477x506 object beside the headline in an 822px stage — a diagram
+   filed next to the type. It is now 813x862: the height of the first screen,
+   held to the right, with the word set across it rather than beside it.
+
+   Three things had to move for that. The map's own column stops reserving room
+   under itself for the readout, because the readout has left it (102). The
+   overhang grows from 100px to 150px, which is what keeps the Horn and
+   Madagascar on the screen at 1440 while the west coast comes far enough left
+   to meet the word. And the copy has to be told to paint above the map: .wa-win
+   is a child of .wa-open-grid rather than a sibling, so its z-index:1 was
+   beating the copy's z-index:auto and the map was drawn over the last two
+   letters of AFRICA. */
+/* The frame is the map's viewBox; the continent is the ink inside it, and the
+   ink is what has to fit the screen. Natural Earth puts Africa between y=80.8
+   and y=979.2 of a 1060-unit box, so the ink is 0.8475 of the frame's height
+   and it starts 0.0762 of the way down. Those two numbers are the whole
+   positioning: the frame is sized so the ink is exactly the stage, and lifted
+   so the ink starts under the masthead rather than behind it.
+
+   Sized from the frame instead, the continent went 66px up under a fixed
+   masthead and took Morocco and Tunisia with it. */
+.wa-win{position:absolute;width:auto;
   --fj-bleed:100px;
+  --fj-ink:calc(100vh - var(--mast) - var(--mast));
+  top:calc(var(--mast) - var(--fj-ink) * .0899);
   right:max(0px, calc((100vw - min(1240px, 100vw)) / 2 - var(--fj-bleed)));
-  z-index:1;display:grid;grid-template-columns:1fr;gap:12px}
+  z-index:1;display:block}
+.wa-open-say,.wa-open-tail,.wa-win-rail,.wa-win-side{position:relative;z-index:2}
 /* The frame is the continent's own box, not a rectangle it is letterboxed into.
    It was 640 wide and 450 tall against a viewBox of 1000x1060, so the map
    painted 425x450 of it and 107 pixels down each side were empty. Two things
@@ -210,9 +235,7 @@
      positioned absolutely and contributes nothing to the stage's height.
      The fitter publishes --fj-readout so the map takes exactly what is left;
      the fallback is the 487-wide case, which is right wherever it applies. */
-  height:clamp(300px,
-    calc(100vh - var(--mast) - var(--mast) - 1vh - 14px - var(--fj-readout, 215px)),
-    560px)}
+  height:clamp(320px, calc(var(--fj-ink) / .8475), 1200px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}
@@ -1882,6 +1905,13 @@ window.AF = {
     var k = Math.min(fb.width / vb.width, fb.height / vb.height);
     var north = fb.top + (fb.height - vb.height * k) / 2 + (bbox.y - vb.y) * k;
     var cap = h1.getBoundingClientRect().top + capOffset();
+    /* The continent now fills the stage, so its northern tip sits on the
+       masthead's own line. Aligning the headline to it puts AFRICA behind a
+       fixed masthead — measured at 70px against a masthead 78px deep. The word
+       keeps its clearance; where the two would fight, the masthead wins. */
+    var floor = parseFloat(getComputedStyle(document.documentElement)
+                  .getPropertyValue('--mast')) || 78;
+    if (north < floor + 24) return;
     var shift = Math.round(north - cap);
     /* A guard, not a fudge: if the answer is not a small nudge then something
        about the layout is not what this assumes, and the stylesheet's value is
