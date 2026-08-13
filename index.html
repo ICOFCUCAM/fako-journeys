@@ -155,7 +155,26 @@
   --fj-bleed:100px;
   right:max(0px, calc((100vw - min(1240px, 100vw)) / 2 - var(--fj-bleed)));
   z-index:1;display:grid;grid-template-columns:1fr;gap:12px}
-.wa-win-frame{position:relative;height:min(50vh,450px)}
+/* The frame is the continent's own box, not a rectangle it is letterboxed into.
+   It was 640 wide and 450 tall against a viewBox of 1000x1060, so the map
+   painted 425x450 of it and 107 pixels down each side were empty. Two things
+   followed from that and both were invisible until they were measured:
+
+   The bleed was not happening. At 1440 the frame's right edge is the screen's,
+   and the continent's right edge was 107px inside it — seven pixels short of
+   the text frame it is supposed to run a hundred pixels past. The composition's
+   own comment says the continent is bled off the right edge of the screen and
+   rises until it crosses behind the word. It stopped short of both.
+
+   And the map was small. 425 pixels of continent across a 1240-pixel frame, at
+   every desktop width from 1180 to 2560, because the width was pinned and the
+   height was capped at 450 whatever the stage had to give.
+
+   aspect-ratio makes the width follow the height, margin-left:auto holds it to
+   the right edge, and the height is what the stage can actually spare: its own
+   height less the masthead clearance and the readout under the map. */
+.wa-win-frame{position:relative;margin-left:auto;aspect-ratio:1000/1060;width:auto;
+  height:min(calc(100vh - var(--mast) - 320px), 560px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}
