@@ -279,11 +279,19 @@
   /* A visible affordance, because a keystroke nobody is told about is not a
      feature — and because a phone has no Cmd key. Injected into whichever
      masthead this page happens to carry, so the six mastheads on this site do
-     not each need editing. */
+     not each need editing.
+     
+     Placed *beside* the nav rather than inside it. Every masthead on this site
+     hides its list of routes below about a thousand pixels, and a button inside
+     a hidden list is a hidden button — which would have made the index, the one
+     thing that works the same everywhere, reachable on desktop only. On a phone
+     it is the only way in besides the five links, so it cannot be the thing
+     that disappears first. */
   addEventListener('DOMContentLoaded', function () {
     var nav = document.querySelector('.pl-routes,.at-routes,.jn-routes,.mt-routes,'
       + '.wa-routes,.fj-routes,.routes');
-    if (!nav || nav.querySelector('.ex-key')) return;
+    if (!nav || !nav.parentElement
+        || nav.parentElement.querySelector('.ex-key')) return;
     var mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '');
     var b = document.createElement('button');
     b.type = 'button';
@@ -291,7 +299,7 @@
     b.innerHTML = 'Explore <kbd>' + (mac ? '⌘' : 'Ctrl') + 'K</kbd>';
     b.setAttribute('aria-label', 'Explore Africa — search every country, place and story');
     b.addEventListener('click', function () { open(); });
-    nav.appendChild(b);
+    nav.parentElement.insertBefore(b, nav.nextSibling);
   });
 
   window.AfrinkongExplore = {open: open, close: close, match: match, build: build};

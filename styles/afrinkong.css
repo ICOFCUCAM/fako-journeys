@@ -259,7 +259,10 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 .ex-key:hover{border-color:var(--c-accent);color:var(--c-accent)}
 .ex-key kbd{font-family:inherit;font-size:9px;letter-spacing:.08em;
   border:1px solid var(--c-border);padding:1px 5px;color:var(--c-muted)}
-@media(max-width:700px){.ex-key kbd{display:none}}
+/* The keycap hint goes at 900, not 700: between those two widths the nav is
+   still on and the pair together pushed the key past the right edge of a
+   768 tablet on the busiest masthead. The word carries it alone. */
+@media(max-width:900px){.ex-key kbd{display:none}}
 
 html.ex-open{overflow:hidden}
 .ex{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-start;
@@ -299,3 +302,15 @@ html.ex-open{overflow:hidden}
   .ex-row{padding:14px 16px}
 }
 @media(pointer:coarse){.ex-key,.ex-esc{min-height:44px}}
+/* The key sits between the routes and the page's primary call, and stays when
+   the routes go. On a phone it is the label that carries it: there is no Cmd
+   key to hint at, so the kbd hint is dropped and the word does the work. */
+.ex-key{margin-left:auto}
+.pl-routes+.ex-key,.at-routes+.ex-key,.jn-routes+.ex-key,.mt-routes+.ex-key,
+.wa-routes+.ex-key,.fj-routes+.ex-key,.routes+.ex-key{margin-left:6px}
+@media(max-width:1010px){
+  .wa-routes+.ex-key,.fj-routes+.ex-key,.routes+.ex-key{margin-left:auto}
+}
+@media(max-width:700px){
+  .pl-routes+.ex-key,.at-routes+.ex-key,.jn-routes+.ex-key,.mt-routes+.ex-key{margin-left:auto}
+}
