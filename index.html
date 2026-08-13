@@ -67,8 +67,27 @@
    screens of scrolling before the page began. Selection is the right interaction
    at this size, and it behaves identically on a phone. */
 .wa-open{position:relative}
+/* One screen, but not more than one composition.
+   Everything above the rail is a fixed height once AFRICA has stopped growing —
+   headline, lede, three calls — and the rail is pinned to the foot of the stage
+   by margin-top:auto. So every pixel the stage gains beyond the height the
+   composition wants goes into the one gap between them:
+
+     1366 and below     0px
+     1440, 1600        56px
+     1920             234px
+     2560             594px
+
+   At 1920 the copy and the map both finish by 740 and the rail sits alone in
+   the bottom-left corner with a quarter of a screen of nothing above it. At
+   2560 it is two thirds of a screen.
+
+   The cap is the height the composition is actually built for — 880 is 1440x900
+   plus a little air — and past it the hero simply stops being taller and the
+   next section starts to show at the fold, which is not a loss. It is what the
+   page below is for. */
 .wa-open-stage{display:flex;flex-direction:column;justify-content:center;
-  min-height:calc(100vh - 78px);padding:96px 0 0}
+  min-height:min(calc(100vh - var(--mast)), 880px);padding:96px 0 0}
 .wa-open-stage>.wa-frame{width:100%}
 /* Three children, two columns: the headline and the tail of the copy stack in
    column one and the window spans both rows of column two. The window sits
