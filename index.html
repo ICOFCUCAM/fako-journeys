@@ -270,7 +270,11 @@
   stroke-linecap:round;stroke-linejoin:round}
 
 /* ---- what Afrinkong is ------------------------------------------------------------ */
-.wa-brief{padding:70px 0 62px;border-top:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* 88 top and bottom, like every other zone. A spacing audit across the whole
+   page found the rhythm already consistent — 88/88 on every section and 48px
+   after every section head — with this one band the single exception at
+   70/62. It was the only thing that pass had to change. */
+.wa-brief{padding:88px 0;border-top:var(--fj-rule);border-bottom:var(--fj-rule)}
 .wa-claim{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
   font-size:clamp(24px,3.4vw,46px);line-height:1.08;letter-spacing:-.01em}
 .wa-claim em{font-style:normal;color:var(--c-accent)}
@@ -524,6 +528,19 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-dest .soon{font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);display:inline-block;margin-top:16px;border-bottom:2px solid var(--c-border);padding-bottom:4px}
 @media(max-width:900px){.wa-dests{grid-template-columns:1fr 1fr}.wa-dest:nth-child(3n){border-right:var(--fj-rule);padding-right:28px}.wa-dest:nth-child(2n){border-right:0;padding-right:0}}
 @media(max-width:560px){.wa-dests{grid-template-columns:1fr}.wa-dest{border-right:0 !important;padding-right:0 !important}}
+
+/* Three of the five steps name something this site can actually do, so they are
+   links to the thing that does it. Four and five happen after you land and stay
+   as prose — a link there would be a link to nothing. */
+.wa-step--go{display:block;transition:background var(--t-fast) var(--ease)}
+.wa-step--go:hover{background:var(--fj-dust)}
+.wa-step--go:hover b{color:var(--c-accent)}
+.wa-step-go{display:inline-block;margin-top:12px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);
+  border-bottom:1px solid var(--c-border);padding-bottom:3px}
+.wa-step--go:hover .wa-step-go{color:var(--c-accent);border-color:var(--c-accent)}
+.wa-scale-go{margin-top:18px}
+@media(pointer:coarse){.wa-step--go{min-height:44px}}
 
 /* ---- africa now ------------------------------------------------------------------
    Inverted, because it is an argument rather than a listing: the thing it argues
@@ -1298,6 +1315,7 @@ window.AF = {
       <div class="wa-scale-side">
         <div class="wa-scale-btns" role="group" aria-label="Lay a country inside Africa"><button class="wa-scale-btn" type="button" data-scale="0" aria-pressed="true"><b>United States</b><span>9.8 m km&sup2;</span></button><button class="wa-scale-btn" type="button" data-scale="1" aria-pressed="false"><b>China</b><span>9.6 m km&sup2;</span></button><button class="wa-scale-btn" type="button" data-scale="2" aria-pressed="false"><b>India</b><span>3.3 m km&sup2;</span></button><button class="wa-scale-btn" type="button" data-scale="3" aria-pressed="false"><b>Western Europe</b><span>3.9 m km&sup2;</span></button></div>
         <p class="wa-scale-sum"><b>30.4</b><span>million km&sup2;</span></p>
+        <p class="wa-scale-go"><a class="af-go" href="/atlas">See it at that size in the atlas &rarr;</a></p>
         <p class="wa-scale-note">All four together come to 26.6 million. Africa is 30.4. These are drawn with the same equal-area projection as the map above, each centred on itself &mdash; so this is geometry, not an illustration of a fact.</p>
       </div>      <!-- /gen:scale -->
     </div>
@@ -1445,9 +1463,9 @@ window.AF = {
       </div>
     </div>
     <div class="wa-steps">
-      <div class="wa-step"><i>01</i><b>Discover</b><p>Tell us where you want to go &mdash; or simply what you want to experience.</p></div>
-      <div class="wa-step"><i>02</i><b>Explore</b><p>Compare destinations, experiences, seasons and ways to travel.</p></div>
-      <div class="wa-step"><i>03</i><b>Connect</b><p>Meet the local operator responsible for your destination.</p></div>
+      <a class="wa-step wa-step--go" href="/journey"><i>01</i><b>Discover</b><p>Tell us where you want to go &mdash; or simply what you want to experience.</p><span class="wa-step-go">Start with a question &rarr;</span></a>
+      <a class="wa-step wa-step--go" href="/atlas"><i>02</i><b>Explore</b><p>Compare destinations, experiences, seasons and ways to travel.</p><span class="wa-step-go">Open the atlas &rarr;</span></a>
+      <a class="wa-step wa-step--go" href="/contact"><i>03</i><b>Connect</b><p>Meet the local operator responsible for your destination.</p><span class="wa-step-go">Reach the operator &rarr;</span></a>
       <div class="wa-step"><i>04</i><b>Travel</b><p>Your guide, transport and itinerary are organised around your journey. Licensed, local, and working in the language you booked in.</p></div>
       <div class="wa-step"><i>05</i><b>Remember</b><p>Return home with more than photographs.</p></div>
     </div>

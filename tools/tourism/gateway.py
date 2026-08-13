@@ -304,6 +304,11 @@ def block_scale():
             '      <div class="wa-scale-side">\n'
             '        <div class="wa-scale-btns" role="group" aria-label="Lay a country inside Africa">%s</div>\n'
             '        <p class="wa-scale-sum"><b>%s</b><span>million km&sup2;</span></p>\n'
+            # This section argues the continent is bigger than the map people
+            # carry in their heads and then stopped. The atlas is that argument
+            # continuing — same equal-area projection, and you can move in it.
+            '        <p class="wa-scale-go"><a class="af-go" href="/atlas">'
+            'See it at that size in the atlas &rarr;</a></p>\n'
             '        <p class="wa-scale-note">All four together come to %.1f million. Africa is %s. '
             'These are drawn with the same equal-area projection as the map above, each centred on '
             'itself &mdash; so this is geometry, not an illustration of a fact.</p>\n'
