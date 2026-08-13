@@ -591,6 +591,16 @@
    colour and gains a keel and a shadow: gold at full weight, and a drop shadow
    at the angle the whole sheet is already lit from. */
 .wa-map-live path,.wa-map-live circle{transition:filter .18s ease}
+/* Everything added to the map since 114 animates: the hover keel, the city halo,
+   the route dim. The stylesheet's reduced-motion block zeroes transitions
+   globally, but it does it with a wildcard on `*` — and an SVG geometry property
+   animated through `r` is not covered by a rule written for CSS transitions on
+   ordinary boxes in every engine. Named here so the answer does not depend on
+   which engine is reading. */
+@media(prefers-reduced-motion:reduce){
+  .wa-map-live path,.wa-map-live circle,.wa-map-city-ring,.wa-map-city-say,
+  .wa-map-route,.wa-city-art img{transition:none !important}
+}
 .wa-map-live:hover path,.wa-map-live:focus-visible path,.wa-map-live.on path,
 .wa-map-live:hover circle,.wa-map-live.on circle{
   stroke:var(--c-gold);stroke-width:2.2;
