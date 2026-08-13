@@ -28,7 +28,7 @@ import os
 import re
 
 from . import plate
-from .model import ROOT, load_picks, load_regions, load_views
+from .model import ROOT, load_picks, load_regions, load_views, region_of
 
 LINKS = os.path.join(ROOT, "data", "links.json")
 
@@ -62,7 +62,7 @@ REGION_GROUPS = (
 )
 
 MARKERS = ("window", "captions", "ticks", "regions", "months", "scale", "destinations",
-           "operators", "picks", "stories", "footer")
+           "operators", "picks", "now", "stories", "footer")
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
 VIEW_PAD = 0.34
@@ -397,6 +397,73 @@ def block_destinations(countries):
     return "\n".join(rows)
 
 
+def block_now(countries):
+    """Africa now — the contemporary layer, and the argument against a museum.
+
+    Three of the eleven story arcs are marked `now` in arcs.json: the table,
+    made by hand, and the city now. Sixty-six chapters across the twenty-two,
+    all of them about what a country cooks, makes and builds this decade rather
+    than what is behind glass in it. None of that was on the homepage.
+
+    Evergreen and saying so. There is no feed behind this and no dated event in
+    the dataset, so it does not pretend to be current — it is the part of the
+    writing that is about now, which is a different and true claim.
+
+    Six of them, across six countries, with the three arcs alternating. Six
+    rather than nine because this replaced a section of 984 pixels and nine cards
+    made it 1693 — the argument does not get better for being three rows tall,
+    and this page has grown in every wave already.
+    """
+    data = read_json(os.path.join(ROOT, "data", "stories.json"))
+    rows = [r for r in (data.get("stories") or []) if r.get("now")]
+    if not rows:
+        return '      <p class="wa-note">No contemporary chapters built yet.</p>'
+    live = {c.slug: c for c in countries}
+    regions = load_regions()
+
+    # A photograph earns a place first — six of them exist and they are the only
+    # colour this section has. Then fill by rotating the three arcs so the strip
+    # reads cooked / made / built rather than nine of one.
+    arcs, picked = ["the-table", "made-by-hand", "the-city-now"], []
+    taken = set()
+
+    def take(r):
+        picked.append(r)
+        taken.add(r["country"])
+
+    # One card per country, without exception. Letting the photographed ones in
+    # first put Cameroon and Uganda on this strip three times each — the two
+    # countries whose over-promotion is the reason the section they replaced was
+    # removed. So a country with a photograph gets that arc, and one card.
+    for r in rows:
+        if r.get("image") and r["country"] in live and r["country"] not in taken:
+            take(r)
+    i = 0
+    while len(picked) < 6 and i < 200:
+        arc = arcs[i % len(arcs)]
+        i += 1
+        for r in rows:
+            if r["arc"] == arc and r["country"] in live and r["country"] not in taken:
+                take(r)
+                break
+
+    out = []
+    for r in picked[:6]:
+        c = live[r["country"]]
+        key, _reg = region_of(c, regions)
+        art = ('<img src="%s" alt="%s" width="800" height="600" loading="lazy" '
+               'decoding="async">' % (esc(r["image"]), esc(r["text"]))) if r.get("image") else (
+              '<span class="wa-now-plate" aria-hidden="true"></span>')
+        out.append(
+            '      <a class="wa-now%s" href="%s" style="--reg-tone:%s">'
+            '<span class="wa-now-art">%s</span>'
+            '<span class="wa-now-say"><i>%s &middot; %s</i><b>%s</b><p>%s</p></span></a>'
+            % (" has-shot" if r.get("image") else "", esc(r["url"]),
+               esc((regions.get(key).tone if regions.get(key) else "")), art,
+               esc(r["countryName"]), esc(r["arcTitle"]), esc(r["title"]), esc(r["text"])))
+    return "\n".join(out)
+
+
 def block_stories(countries):
     """The reading room, as it actually is.
 
@@ -482,6 +549,7 @@ def render(countries):
         "scale": block_scale(),
         "operators": block_operators(seq),
         "picks": block_picks(seq),
+        "now": block_now(seq),
         "stories": block_stories(seq),
         "footer": block_footer(seq),
     }

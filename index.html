@@ -525,6 +525,37 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:900px){.wa-dests{grid-template-columns:1fr 1fr}.wa-dest:nth-child(3n){border-right:var(--fj-rule);padding-right:28px}.wa-dest:nth-child(2n){border-right:0;padding-right:0}}
 @media(max-width:560px){.wa-dests{grid-template-columns:1fr}.wa-dest{border-right:0 !important;padding-right:0 !important}}
 
+/* ---- africa now ------------------------------------------------------------------
+   Inverted, because it is an argument rather than a listing: the thing it argues
+   against is a continent filed under wildlife and left there. Same dark-panel
+   language as the contemporary chapter on every portrait and the module on
+   /stories, so a reader who has met it once recognises it.
+
+   Two of the nine carry a photograph, which is how many countries the resolver
+   has covered. The other seven take a tonal plate at the same aspect ratio, so
+   the strip does not reflow as the rest arrive. */
+.wa-nows{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  background:color-mix(in srgb,var(--c-bg) 14%,transparent);margin-top:var(--sp-5)}
+.wa-now{display:flex;flex-direction:column;background:var(--fj-basalt);
+  transition:background var(--t-fast) var(--ease)}
+.wa-now:hover{background:color-mix(in srgb,var(--c-bg) 7%,var(--fj-basalt))}
+.wa-now-art{display:block;position:relative;aspect-ratio:4/3;overflow:hidden}
+.wa-now-art img{width:100%;height:100%;object-fit:cover}
+.wa-now-plate{position:absolute;inset:0;
+  background:color-mix(in srgb,var(--reg-tone,var(--c-primary)) 62%,var(--c-primary))}
+.wa-now-plate::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(247,242,231,.10),rgba(247,242,231,0) 62%)}
+.wa-now-say{display:block;padding:20px 18px 22px}
+.wa-now-say i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.wa-now-say b{display:block;margin-top:10px;font-family:var(--fj-display);font-size:20px;
+  text-transform:uppercase;line-height:1.06;color:var(--c-bg)}
+.wa-now-say p{margin-top:9px;font-size:14.5px;line-height:1.55;color:var(--fj-onbasalt-dim)}
+.wa-now:hover .wa-now-say b{color:var(--c-accent)}
+@media(pointer:coarse){.wa-now{min-height:44px}}
+@media(max-width:900px){.wa-nows{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.wa-nows{grid-template-columns:1fr}}
+
 /* ---- experiences ---------------------------------------------------------------- */
 .wa-exps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--c-primary)}
 .wa-exp{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start;padding:22px 24px 20px 0;border-bottom:var(--fj-rule)}
@@ -1360,30 +1391,34 @@ window.AF = {
 </section>
 
 <!-- 04 the two flagships -->
-<section class="wa-zone basalt" id="cameroon">
+<!-- 04 africa now -->
+<!-- Replaced "Two places to start", which promoted Cameroon and Uganda for the
+     third time on one page: both are named in the brief under the hero, and both
+     lead their region at double width in the grid above. What the page did not
+     have was any contemporary layer at all — the argument that this continent is
+     not a museum, made with the part of the writing that is about what a country
+     cooks, makes and builds now. -->
+<section class="wa-zone basalt" id="now">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>04</b><span>Two places to start</span></div>
+      <div class="wa-head-no"><b>04</b><span>Africa now</span></div>
       <div>
-        <h2>Two countries that <em>each contain a continent</em>.</h2>
-        <p class="wa-note">If you have never been, start with one of these. Both are unusually varied for their size, both are straightforward to travel, and both are ours to run end to end.</p>
+        <h2>Not a <em>museum</em>.</h2>
+        <p class="wa-note">Sixty-six chapters across the twenty-two countries are
+          about what is cooked, made and built this decade rather than what is
+          behind glass. Nine of them here. Not a feed and not an events calendar
+          &mdash; this site holds no dates and will not invent any; these are
+          evergreen, and they are true for longer than a week.</p>
       </div>
     </div>
-    <div class="wa-panels">
-      <div class="wa-panel">
-        <img src="/images/uploads/panel-cameroon-1600w.jpg" alt="An aerial view of dark volcanic sand where the Atlantic meets unbroken rainforest" loading="lazy" decoding="async" data-provider="upload" data-locked="true">
-        <span class="wa-stamp">Africa in miniature</span>
-        <h3>Cameroon</h3>
-        <p>One country, six climates. From Atlantic black-sand beaches to the 4,095-metre summit of Mount Cameroon, through rainforest, highland kingdoms and northern savanna. Run by Kamerun, out of Buea and Douala.</p>
-        <a class="wa-panel-go" href="/cameroon">Enter Cameroon &rarr;</a>
-      </div>
-      <div class="wa-panel">
-        <img src="/images/uploads/window-uganda-1200w.jpg" alt="Ridge after ridge of montane rainforest under low cloud" loading="lazy" decoding="async" data-provider="upload" data-locked="true">
-        <span class="wa-stamp">The Pearl of Africa</span>
-        <h3>Uganda</h3>
-        <p>Where wildlife, wilderness and adventure meet. Mountain gorillas in Bwindi, chimpanzees in Kibale, the Nile forced through six metres of rock at Murchison, Queen Elizabeth National Park and the Rwenzori. Run by Pearl Trails Uganda, out of Kampala.</p>
-        <a class="wa-panel-go" href="https://pearl-trails-uganda.vercel.app">Enter Uganda &rarr;</a>
-      </div>
+    <div class="wa-nows">
+      <!-- gen:now -->
+      <a class="wa-now has-shot" href="/portrait/cameroon#the-table" style="--reg-tone:#2F4A38"><span class="wa-now-art"><img src="https://images.unsplash.com/photo-1659947234285-ebf2826cfe15" alt="Bitterleaf and groundnut ndolé, plantain, and whole fish grilled on the sand at Kribi within sight of the boat." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Cameroon &middot; The table</i><b>Ndole, Poulet DG and Grilled Fish</b><p>Bitterleaf and groundnut ndolé, plantain, and whole fish grilled on the sand at Kribi within sight of the boat.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/uganda#the-table" style="--reg-tone:#3C5B45"><span class="wa-now-art"><img src="https://images.pexels.com/photos/4618015/pexels-photo-4618015.jpeg" alt="Steamed green banana with groundnut sauce, chicken cooked in banana leaf, and an egg rolled in a chapati on every corner." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Uganda &middot; The table</i><b>Rolex, Matoke, Luwombo</b><p>Steamed green banana with groundnut sauce, chicken cooked in banana leaf, and an egg rolled in a chapati on every corner.</p></span></a>
+      <a class="wa-now" href="/portrait/botswana#the-table" style="--reg-tone:#8A6A3C"><span class="wa-now-art"><span class="wa-now-plate" aria-hidden="true"></span></span><span class="wa-now-say"><i>Botswana &middot; The table</i><b>Seswaa and Bogobe</b><p>Slow-pounded beef and sorghum porridge, and braai wherever there is a fire.</p></span></a>
+      <a class="wa-now" href="/portrait/cote-divoire#made-by-hand" style="--reg-tone:#2F4A38"><span class="wa-now-art"><span class="wa-now-plate" aria-hidden="true"></span></span><span class="wa-now-say"><i>Côte d&#x27;Ivoire &middot; Made by hand</i><b>Weaving and Carving</b><p>Baoulé strip cloth, Korhogo painted cloth, and Dan masks carved for use rather than sale.</p></span></a>
+      <a class="wa-now" href="/portrait/egypt#the-city-now" style="--reg-tone:#A07C55"><span class="wa-now-art"><span class="wa-now-plate" aria-hidden="true"></span></span><span class="wa-now-say"><i>Egypt &middot; The city now</i><b>Cairo and Alexandria</b><p>Twenty million people on the Nile, and a Mediterranean city that remembers being Greek.</p></span></a>
+      <a class="wa-now" href="/portrait/ethiopia#the-table" style="--reg-tone:#3C5B45"><span class="wa-now-art"><span class="wa-now-plate" aria-hidden="true"></span></span><span class="wa-now-say"><i>Ethiopia &middot; The table</i><b>Injera and Doro Wat</b><p>Sourdough injera under everything, and fasting food that has made vegans of visitors.</p></span></a>      <!-- /gen:now -->
     </div>
   </div>
 </section>
