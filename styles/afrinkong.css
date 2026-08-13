@@ -276,6 +276,11 @@ html.ex-open{overflow:hidden}
   border-bottom:2px solid var(--c-primary)}
 .ex-bar input{flex:1 1 0;min-width:0;font-family:var(--fj-text);font-size:19px;
   background:transparent;color:var(--c-ink);border:0;padding:4px 0}
+/* The one field where the ring is genuinely redundant: the dialog it sits in
+   opens with this input already focused and nothing else in it is tabbable
+   until a result is highlighted, so a ring here marks the only place focus can
+   be. The bar's own 2px rule under it is the boundary, and it is drawn in
+   --c-primary against the page ground at 12:1. */
 .ex-bar input:focus{outline:none}
 .ex-esc{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--c-muted);background:none;border:1px solid var(--c-border);padding:6px 9px;

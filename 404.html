@@ -37,7 +37,14 @@
 .nf-find input{width:100%;margin-top:10px;font-family:var(--fj-text);font-size:19px;
   padding:13px 4px;background:transparent;color:var(--c-ink);border:0;
   border-bottom:2px solid var(--c-primary);border-radius:0}
-.nf-find input:focus{outline:none;border-bottom-color:var(--c-accent)}
+/* Keyboard focus keeps the design system's ring; a mouse click does not.
+   The colour-only version measured 2.57:1 between the resting border and the
+   focused one on the two search fields, under the 3:1 WCAG 2.2 asks for a focus
+   indicator, and it changed no area at all. :focus-visible is what tells the
+   two apart, and the ring it restores is the same one every other control on
+   the site uses. */
+.nf-find input:focus:not(:focus-visible){outline:none}
+.nf-find input:focus{border-bottom-color:var(--c-accent)}
 .nf-doors{margin-top:var(--sp-4);display:grid;
   grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:1px}
 .nf-door{background:var(--c-bg);box-shadow:0 0 0 1px var(--c-border);padding:18px 16px;

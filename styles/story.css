@@ -320,7 +320,14 @@ figure.st-frame,figure.st-plate,figure.st-portrait,figure.st-strip,figure.st-wid
 .sx-find input{width:100%;margin-top:10px;font-family:var(--fj-text);font-size:19px;
   padding:14px 4px;background:transparent;color:var(--c-ink);border:0;
   border-bottom:2px solid var(--c-primary);border-radius:0}
-.sx-find input:focus{outline:none;border-bottom-color:var(--c-accent)}
+/* Keyboard focus keeps the design system's ring; a mouse click does not.
+   The colour-only version measured 2.57:1 between the resting border and the
+   focused one on the two search fields, under the 3:1 WCAG 2.2 asks for a focus
+   indicator, and it changed no area at all. :focus-visible is what tells the
+   two apart, and the ring it restores is the same one every other control on
+   the site uses. */
+.sx-find input:focus:not(:focus-visible){outline:none}
+.sx-find input:focus{border-bottom-color:var(--c-accent)}
 .sx-said{margin-top:10px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--c-muted);min-height:1.4em}
 .sx-results{margin-top:var(--sp-4);display:grid;

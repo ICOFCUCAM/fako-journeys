@@ -1380,6 +1380,40 @@ def main():
                   expect is None or top == expect,
                   "%d on %s, dataset has %s" % (top, where, expect))
 
+        # -- where the keyboard is ------------------------------------------------
+        print("\nwhere the keyboard is")
+        # `outline:none` on :focus is how a focus indicator disappears. Sometimes
+        # it is right — an element that replaces the ring with something at least
+        # as visible, or one nobody tabs to — and each of those is allowed by
+        # name below, with the reason written beside the rule in the stylesheet.
+        # Every other one is a control a keyboard user cannot find.
+        ALLOWED = (
+            ".wa-map-live:focus",      # the country path strokes instead
+            ".at-c:focus",             # the same, on the atlas
+            ".ex-bar input:focus",     # the only tabbable thing in its dialog
+            ".jn-h1:focus",            # a heading focused to be announced
+        )
+        killed = {}
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "styles", "*.css"))
+                           + glob.glob(os.path.join(ROOT_DIR, "*.html"))):
+            rel = os.path.relpath(path, ROOT_DIR)
+            body = re.sub(r"/\*.*?\*/", " ", open(path).read(), flags=re.S)
+            for m in re.finditer(r"([^{}\n]*:focus[^{}\n]*)\{([^}]*)\}", body):
+                sel, decl = m.group(1).strip(), m.group(2)
+                if "outline:none" not in decl.replace(" ", ""):
+                    continue
+                if ":not(:focus-visible)" in sel:
+                    continue
+                if any(a in sel for a in ALLOWED):
+                    continue
+                killed.setdefault(sel[:60], set()).add(rel)
+        check("no control hides its focus ring without saying why", not killed,
+              "; ".join("%s (%s)" % (s, ", ".join(sorted(w))[:40])
+                        for s, w in sorted(killed.items())[:3]))
+        check("the design system still defines one ring for everything",
+              re.search(r":focus-visible\{[^}]*outline:\s*2px",
+                        open(os.path.join(ROOT_DIR, "styles", "afrinkong.css")).read()))
+
         # -- what an image costs before it arrives ---------------------------------
         print("\nwhat an image costs before it arrives")
         SKIP_IMG = {"tourism/compare.html"}

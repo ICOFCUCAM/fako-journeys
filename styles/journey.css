@@ -35,6 +35,10 @@
 .jn-progress span[data-on]{background:var(--c-accent)}
 
 .jn-h1{font-size:clamp(40px,6vw,86px);line-height:.92;margin:12px 0 0;max-width:16ch}
+/* The step heading takes focus when the builder moves on, so a screen reader
+   announces the new question. It is a heading, not a control — nobody tabs to
+   it — and ringing it would say "you are on this" about something you cannot
+   act on. Keyboard focus on the controls below it is ringed as usual. */
 .jn-h1:focus{outline:none}
 .jn-h2{font-family:var(--fj-display);font-size:13px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--c-muted);border-top:2px solid var(--c-primary);padding-top:12px;

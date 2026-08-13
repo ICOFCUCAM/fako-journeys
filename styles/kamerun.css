@@ -348,7 +348,15 @@ ul,ol{list-style:none}
 .fj-cell label{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);margin-bottom:7px}
 .fj-cell input,.fj-cell select,.fj-cell textarea{width:100%;font-family:var(--fj-text);font-size:16px;color:var(--c-ink);background:var(--c-bg);border:var(--fj-rule);padding:11px 13px;transition:border-color .2s}
 .fj-cell textarea{resize:vertical}
-.fj-cell input:focus,.fj-cell select:focus,.fj-cell textarea:focus{outline:none;border-color:var(--c-accent)}
+/* Keyboard focus keeps the design system's ring; a mouse click does not.
+   The colour-only version measured 2.57:1 between the resting border and the
+   focused one on the two search fields, under the 3:1 WCAG 2.2 asks for a focus
+   indicator, and it changed no area at all. :focus-visible is what tells the
+   two apart, and the ring it restores is the same one every other control on
+   the site uses. */
+.fj-cell input:focus:not(:focus-visible),.fj-cell select:focus:not(:focus-visible),
+.fj-cell textarea:focus:not(:focus-visible){outline:none}
+.fj-cell input:focus,.fj-cell select:focus,.fj-cell textarea:focus{border-color:var(--c-accent)}
 .fj-send{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);border:0;padding:14px 28px;cursor:pointer;transition:background .2s}
 .fj-send:hover{background:var(--c-accent)}
 .fj-fine{margin-top:14px;font-size:13px;color:var(--c-muted)}
