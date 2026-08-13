@@ -36,7 +36,7 @@ ul,ol{list-style:none}
 .fj-frame{max-width:1240px;margin:0 auto;padding:0 44px}
 .fj-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
 .fj-stamp i{font-style:normal;color:var(--c-muted)}
-.fj-lede{font-size:19px;color:var(--c-muted);max-width:40em}
+.fj-lede{font-size:19px;color:var(--c-muted);max-width:70ch}
 
 /* reveal — never applied to a fixed-window band or to any ancestor of one */
 .fj-rise{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
@@ -48,7 +48,7 @@ ul,ol{list-style:none}
    group's. The bar is the name on the door — see tools/tourism/enquiry.py. */
 .fj-from{background:var(--fj-raffia);border-bottom:var(--fj-rule)}
 .fj-from-in{padding:14px 0 16px}
-.fj-from p{font-size:15px;line-height:1.5;max-width:96ch}
+.fj-from p{font-size:15px;line-height:1.5;max-width:72ch}
 .fj-from-else{max-width:none}
 .fj-from b{font-weight:400;color:var(--c-primary)}
 /* .fj-from p wins on specificity over a bare .fj-from-else, so the mono line
@@ -118,7 +118,12 @@ ul,ol{list-style:none}
 .fj-zone.basalt .fj-head-no span{color:var(--fj-onbasalt-dim)}
 .fj-head h2{font-size:clamp(30px,4vw,54px);max-width:24ch}
 .fj-head h2 em{font-style:normal;color:var(--c-accent)}
-.fj-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+/* 44em of a 17px face is 748 pixels and 96 average characters a line. The
+   comfortable range for continuous prose is 45-85; past 90 the eye loses
+   the start of the next line on the way back. 72ch measures 78 average
+   characters in this face — ch is the width of a zero, which here is 1.09
+   times the average lowercase letter, so the two are not the same number. */
+.fj-note{margin-top:16px;color:var(--c-muted);max-width:72ch}
 @media(max-width:880px){.fj-zone{padding:66px 0}.fj-head{grid-template-columns:1fr;gap:18px;margin-bottom:38px}.fj-head-no b{font-size:30px}}
 
 /* ---- transect (the coast-to-Sahel gradient bar) -------------------------------- */
@@ -316,7 +321,9 @@ ul,ol{list-style:none}
 .fj-log-row{display:grid;grid-template-columns:110px 1fr;gap:32px;padding:22px 0;border-bottom:var(--fj-rule)}
 .fj-log-row b{font-family:var(--fj-display);font-size:22px;font-weight:700;color:var(--c-accent)}
 .fj-log-row h3{font-size:19px;margin-bottom:6px}
-.fj-log-row p{color:var(--c-muted);font-size:15px;max-width:54em}
+/* 54em of a 15px face is 810 pixels and 118 average characters a line — the
+   longest measure left on the site after the notes were capped. */
+.fj-log-row p{color:var(--c-muted);font-size:15px;max-width:72ch}
 @media(max-width:640px){.fj-log-row{grid-template-columns:1fr;gap:6px}}
 
 .fj-prose{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}

@@ -384,7 +384,10 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
   font-weight:700;text-transform:uppercase;line-height:1.04;margin-top:8px}
 .ct-op-base{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--c-accent);margin-top:8px}
-.ct-op p{color:var(--c-muted);margin-top:12px}
+/* The operator block's own width is 44em of a 17px face — 748 pixels, 96
+   average characters. Capped where the paragraph is, not where the block is,
+   so the heading above it keeps the block's full width. */
+.ct-op p{color:var(--c-muted);margin-top:12px;max-width:72ch}
 .ct-op .af-go{margin-top:16px}
 .ct-op--none b{font-size:clamp(20px,2.2vw,27px)}
 @media(max-width:640px){.ct-cal-row{grid-template-columns:repeat(6,1fr)}

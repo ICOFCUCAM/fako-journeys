@@ -24,7 +24,12 @@
    of it is declared. What follows is layout, which is genuinely this page's. */
 .wa-frame{max-width:1240px;margin:0 auto;padding:0 44px}
 .wa-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
-.wa-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+/* 44em of a 17px face is 748 pixels and 96 average characters a line. The
+   comfortable range for continuous prose is 45-85; past 90 the eye loses
+   the start of the next line on the way back. 72ch measures 78 average
+   characters in this face — ch is the width of a zero, which here is 1.09
+   times the average lowercase letter, so the two are not the same number. */
+.wa-note{margin-top:16px;color:var(--c-muted);max-width:72ch}
 .wa-note-go{white-space:nowrap;color:var(--c-accent);border-bottom:1px solid var(--c-accent)}
 
 /* ---- masthead ------------------------------------------------------------------
@@ -340,7 +345,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:760px){.wa-months{grid-template-columns:repeat(6,1fr)}
   .wa-month:nth-child(6n){border-right:0}
   .wa-month:nth-child(-n+6){border-bottom:var(--fj-rule)}}
-.wa-want-say{margin:16px 0 26px;font-size:15px;color:var(--c-muted)}
+/* Unbounded, this ran to 167 characters a line across a 1440 screen. The
+   comfortable range for continuous prose is 45-85; past 90 the eye loses the
+   start of the next line. 72ch of CSS is 78 average characters in this face,
+   which is where every capped paragraph on the site now lands. */
+.wa-want-say{margin:16px 0 26px;font-size:15px;color:var(--c-muted);max-width:72ch}
 .wa-dest[hidden]{display:none}
 @media(max-width:1000px){.wa-wants{grid-template-columns:1fr 1fr 1fr}.wa-want:nth-child(6n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(3n){border-right:0;padding-right:0}}
 @media(max-width:620px){.wa-wants{grid-template-columns:1fr 1fr}.wa-want:nth-child(3n){border-right:var(--fj-rule);padding-right:18px}.wa-want:nth-child(2n){border-right:0;padding-right:0}}

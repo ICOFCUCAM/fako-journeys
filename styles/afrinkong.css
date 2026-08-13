@@ -148,7 +148,12 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
   text-transform:uppercase;color:var(--c-muted);margin-top:8px}
 .af-head h2{font-size:clamp(30px,4vw,54px);max-width:24ch}
 .af-head h2 em{font-style:normal;color:var(--c-accent)}
-.af-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+/* 44em of a 17px face is 748 pixels and 96 average characters a line. The
+   comfortable range for continuous prose is 45-85; past 90 the eye loses
+   the start of the next line on the way back. 72ch measures 78 average
+   characters in this face — ch is the width of a zero, which here is 1.09
+   times the average lowercase letter, so the two are not the same number. */
+.af-note{margin-top:16px;color:var(--c-muted);max-width:72ch}
 @media(max-width:880px){.af-head{grid-template-columns:1fr;gap:18px;margin-bottom:var(--sp-4)}}
 
 /* ---- the country window -------------------------------------------------- */

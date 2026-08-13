@@ -118,6 +118,20 @@ const AA_LARGE = 3.0;
  */
 const WIDTHS = [320, 360, 390, 430, 560, 768, 900, 1024, 1100, 1180, 1440, 1920];
 
+/* ---------------------------------------------------------------------------
+ * PASS FIVE — measure
+ *
+ * The comfortable line for continuous prose is 45-85 characters; past ninety
+ * the eye starts losing its place on the return sweep. Five rules on this site
+ * set their width in em or left it unset and produced 96, 104, 118, 148 and
+ * 167 characters — the last of them the sentence under the experiences picker,
+ * running the full 1240px frame.
+ *
+ * Only paragraphs of fourteen words or more count. A three-word caption at 200
+ * characters would be a different fault and this is not the check for it.
+ */
+const MEASURE_CAP = 92;
+
 const out = [];
 function check(name, ok, detail) {
   out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
@@ -232,6 +246,48 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass five: how long a line of prose gets ------------------------ */
+    for (const url of PAGES) {
+      const page = await browser.newPage({viewport: {width: 1440, height: 900}});
+      await page.goto(base + url, {waitUntil: 'networkidle'});
+      const long = await page.evaluate((cap) => {
+        /* Measured in average lowercase letters, not CSS ch. `ch` is the width
+           of a zero, which in this serif is 1.09x the average letter, so a rule
+           saying max-width:72ch produces 78 characters of prose and a rule
+           saying 44em produces 96. The number that matters is the one a reader
+           actually crosses. */
+        const probe = document.createElement('span');
+        probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre';
+        document.body.appendChild(probe);
+        const over = [];
+        document.querySelectorAll('p,li,blockquote,dd').forEach(el => {
+          const text = [...el.childNodes]
+            .filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim();
+          if (text.split(/\s+/).length < 14) return;   // a label is not prose
+          const cs = getComputedStyle(el);
+          if (+cs.opacity < 0.9 || cs.visibility === 'hidden') return;
+          const box = el.getBoundingClientRect();
+          if (!box.width) return;
+          probe.style.font = cs.font;
+          probe.style.letterSpacing = cs.letterSpacing;
+          probe.textContent = 'abcdefghijklmnopqrstuvwxyz';
+          const per = probe.getBoundingClientRect().width / 26;
+          const ch = Math.round(box.width / per);
+          if (ch > cap) {
+            over.push(ch + 'ch — ' + el.tagName + '.'
+              + (String(el.className) || el.parentElement.className).slice(0, 20)
+              + ' [' + text.slice(0, 22) + ']');
+          }
+        });
+        probe.remove();
+        return [...new Set(over)];
+      }, MEASURE_CAP);
+      await page.close();
+      check(url + ' keeps its prose to a readable line', !long.length,
+            long.length ? long.length + ' over ' + MEASURE_CAP + 'ch: '
+              + long.slice(0, 2).join(' | ') : 'all within ' + MEASURE_CAP + 'ch');
+    }
+
     /* ---- pass four: nothing runs off the side ---------------------------- */
     for (const url of PAGES) {
       const wrong = [];

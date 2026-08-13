@@ -27,7 +27,7 @@
 .open{padding:calc(var(--mast) + 52px) 0 30px}
 .open h1{font-size:clamp(34px,5vw,64px);max-width:18ch;margin-top:14px}
 .open h1 em{font-style:normal;color:var(--c-accent)}
-.open p{margin-top:18px;color:var(--c-muted);max-width:48em}
+.open p{margin-top:18px;color:var(--c-muted);max-width:72ch}
 
 /* Two columns are the page. Every row spans them, so the eye runs down one
    country and across to the other without needing a legend. */
@@ -62,7 +62,10 @@
   border:1px solid var(--c-border);padding:4px 7px;color:var(--c-muted)}
 .cp-only{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent)}
-.cp-note{margin:32px 0 0;color:var(--c-muted);max-width:46em;font-size:15px}
+/* Three widths set in em, which is not the unit a reader crosses: 46em of a
+   15px face is 100 average characters, 48em of a 17px face is 105, 44em is 96.
+   72ch measures 78 in this serif, which is where the rest of the site sits. */
+.cp-note{margin:32px 0 0;color:var(--c-muted);max-width:72ch;font-size:15px}
 /* The table is built by the script, so #cp-body is empty when the page paints
    and everything below it — the note, the footer — sat at the top of the
    viewport and then dropped 3,500 pixels when the rows arrived. Measured at
@@ -91,7 +94,7 @@
 
 .foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:52px 0;margin-top:66px}
 .foot a{border-bottom:1px solid var(--c-accent)}
-.foot p{max-width:44em;color:var(--fj-onbasalt-dim)}
+.foot p{max-width:72ch;color:var(--fj-onbasalt-dim)}
 </style>
 <noscript><style>
 /* After the block above, not before it: same specificity, so the later rule is
