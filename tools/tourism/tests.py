@@ -1316,6 +1316,19 @@ def main():
                   "operator in each" not in said and "in every" not in said)
         check("the brief is generated rather than typed",
               "<!-- gen:claim -->" in home_src)
+        # The journey section describes the service, so it is counted from
+        # operators.json for the same reason the brief is.
+        for mark in ("plannote", "plansteps"):
+            check("the journey section's %s is generated" % mark,
+                  "<!-- gen:%s -->" % mark in home_src)
+        plan = re.search(r'<section[^>]*id="plan".*?</section>', home_src, re.S)
+        check("the journey section is still there", bool(plan))
+        if plan:
+            steps = len(re.findall(r'class="wa-step[ "]', plan.group(0)))
+            cols = re.search(r"\.wa-steps\{[^}]*repeat\((\d+),", home_src)
+            check("the step grid has as many columns as there are steps",
+                  bool(cols) and int(cols.group(1)) == steps,
+                  "%s columns, %d steps" % (cols.group(1) if cols else "?", steps))
 
         # The same failure twice more: a sentence typed beside a block that is
         # generated, and the two stopped agreeing the moment the block changed.
@@ -1482,6 +1495,10 @@ def main():
             "covered by a licensed",
             "covered by an operator based in the country",
             "run by a company in the country itself",
+            # The journey section promised these about all twenty-two.
+            "the person who answers your enquiry is in the country",
+            "meet the local operator responsible for your destination",
+            "working in the language you booked in",
             "every country is covered by a company based in it",
             "is covered by a company based in it",
             "operated by a licensed company based in it",

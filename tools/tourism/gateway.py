@@ -63,7 +63,8 @@ REGION_GROUPS = (
 )
 
 MARKERS = ("window", "captions", "ticks", "regions", "claim", "months", "scale",
-           "destinations", "operators", "picks", "nownote", "now", "stories", "footer")
+           "destinations", "operators", "picks", "plannote", "plansteps",
+           "nownote", "now", "stories", "footer")
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
 VIEW_PAD = 0.34
@@ -156,6 +157,81 @@ def block_claim(countries):
             '%s ways to experience each of them.<br>'
             '<em>%s places, each written up on its own.</em></p>'
             % (_spell(n), _spell(regions), _spell(cats), _spell(places)))
+
+
+def block_plan(countries):
+    """What actually happens after an enquiry, rather than what sells well.
+
+    This section made four claims and three of them were false:
+
+      "The person who answers your enquiry is in the country you are asking
+      about"  —  every enquiry on this site opens a mailto to one address, in
+      Douala. Ask about Kenya and a Cameroonian operator reads it. 038 put a bar
+      on /contact saying exactly that; this paragraph, two screens above the
+      button, said the opposite.
+
+      "Meet the local operator responsible for your destination"  —  there are
+      three operators for twenty-two countries.
+
+      "Licensed, local, and working in the language you booked in"  —  nothing in
+      this dataset records a licence, and nothing records a language.
+
+    The fourth, "Return home with more than photographs", is not false because
+    it does not say anything. It is gone with the rest.
+
+    What replaces them is the same shape — numbered steps, two of them links —
+    counted from operators.json, so the promise cannot outgrow the company.
+    """
+    ours = [c for c in countries if c.operator]
+    host = ([c for c in ours if c.operator.url.startswith("/")] or ours)[0]
+    rest = len(countries) - len(ours)
+    names = _and_list([c.name for c in ours])
+
+    note = ('We run tour operators in %s. The other %s are written up here to '
+            'the same twenty-seven categories, and booked through somebody else '
+            '&mdash; which we say before you write, not after.'
+            % (names, _spell(rest).lower()))
+
+    steps = [
+        ('/journey', 'Discover',
+         'Four questions, or a sentence in your own words, and the atlas opens '
+         'somewhere rather than everywhere.', 'Start with a question'),
+        ('/compare', 'Compare',
+         'Any two of the %s, through the same %s categories in the same order, '
+         'so the difference is the countries and not their marketing.'
+         % (_spell(len(countries)).lower(),
+            _spell(len(read_json(CATEGORY_FILE, {}).get("categories", []))).lower()),
+         'Put two side by side'),
+        ('/contact', 'Ask',
+         'Enquiries reach %s in %s. For %s they are the operator; for the other '
+         '%s they will tell you who is.'
+         % (esc(host.operator.name), esc(host.operator.base), esc(host.name),
+            _spell(rest).lower()),
+         'Write to them'),
+    ]
+    out = []
+    for i, (url, title, text, go) in enumerate(steps, 1):
+        out.append('      <a class="wa-step wa-step--go" href="%s"><i>%02d</i>'
+                   '<b>%s</b><p>%s</p><span class="wa-step-go">%s &rarr;</span></a>'
+                   % (esc(url), i, esc(title), text, esc(go)))
+    # The last step is the only one that is not a link, because it is the only
+    # one that happens away from this website.
+    out.append('      <div class="wa-step"><i>%02d</i><b>Travel</b><p>Where the '
+               'operator is ours, the guide on the day works for the company you '
+               'booked: %s. Where it is not, we are not going to describe a day '
+               'run by people we have not named.</p></div>'
+               % (len(steps) + 1,
+                  _and_list(['%s in %s' % (esc(c.operator.name), esc(c.name))
+                             for c in ours])))
+    return note, "\n".join(out)
+
+
+def block_plannote(countries):
+    return '        <p class="wa-note">%s</p>' % block_plan(countries)[0]
+
+
+def block_plansteps(countries):
+    return block_plan(countries)[1]
 
 
 def block_operators(countries):
@@ -649,6 +725,8 @@ def render(countries):
         "scale": block_scale(),
         "operators": block_operators(seq),
         "picks": block_picks(seq),
+        "plannote": block_plannote(seq),
+        "plansteps": block_plansteps(seq),
         "nownote": block_nownote(seq),
         "now": block_now(seq),
         "stories": block_stories(seq),

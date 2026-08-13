@@ -644,7 +644,9 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 @media(max-width:520px){.wa-why{grid-template-columns:1fr}.wa-why>div{border-right:0 !important;padding-right:0 !important;border-bottom:var(--fj-rule)}}
 
 /* ---- the journey: five steps, read as a track ------------------------------------- */
-.wa-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--c-primary)}
+/* Four, not five. The fifth step said "Return home with more than
+   photographs", which is not a step and not a claim. */
+.wa-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--c-primary)}
 .wa-step{position:relative;padding:30px 22px 24px 0}
 /* The dot on the rule is what makes five boxes read as one sequence. It sits on
    the border above, so it is drawn outside the padding box on purpose. */
@@ -653,7 +655,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-step i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;color:var(--c-muted)}
 .wa-step b{display:block;font-family:var(--fj-display);font-size:23px;font-weight:700;text-transform:uppercase;margin:10px 0 8px}
 .wa-step p{font-size:14px;color:var(--c-muted)}
-@media(max-width:1000px){.wa-steps{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:1000px){.wa-steps{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.wa-steps{grid-template-columns:1fr}.wa-step{padding-top:26px;border-bottom:var(--fj-rule)}}
 
 /* ---- seasons ---------------------------------------------------------------------- */
@@ -997,7 +999,7 @@ window.AF = {
            was the masthead button. They now sit directly under the
            headline, and the rails keep the foot of the stage. -->
       <div class="wa-open-tail">
-        <p class="wa-lede">Guided journeys through Africa&rsquo;s places, people and cultures &mdash; with local operators who live there.</p>
+        <p class="wa-lede">Twenty-two countries, written up one place at a time, by people who go there.</p>
         <!-- Three calls, three weights, three different things — and the ladder
              is the answer to "what can I do here": ask it a question, look at
              the continent, or just read one. The reading room had no route out
@@ -1477,15 +1479,16 @@ window.AF = {
       <div class="wa-head-no"><b>05</b><span>The journey</span></div>
       <div>
         <h2>What happens after you <em>choose Africa</em>?</h2>
-        <p class="wa-note">We are a group of local operators rather than a broker. The person who answers your enquiry is in the country you are asking about, and the guide on the day works for the company you booked.</p>
+        <!-- gen:plannote -->
+        <p class="wa-note">We run tour operators in Cameroon, Uganda and Namibia. The other nineteen are written up here to the same twenty-seven categories, and booked through somebody else &mdash; which we say before you write, not after.</p>        <!-- /gen:plannote -->
       </div>
     </div>
     <div class="wa-steps">
-      <a class="wa-step wa-step--go" href="/journey"><i>01</i><b>Discover</b><p>Tell us where you want to go &mdash; or simply what you want to experience.</p><span class="wa-step-go">Start with a question &rarr;</span></a>
-      <a class="wa-step wa-step--go" href="/atlas"><i>02</i><b>Explore</b><p>Compare destinations, experiences, seasons and ways to travel.</p><span class="wa-step-go">Open the atlas &rarr;</span></a>
-      <a class="wa-step wa-step--go" href="/contact"><i>03</i><b>Connect</b><p>Meet the local operator responsible for your destination.</p><span class="wa-step-go">Reach the operator &rarr;</span></a>
-      <div class="wa-step"><i>04</i><b>Travel</b><p>Your guide, transport and itinerary are organised around your journey. Licensed, local, and working in the language you booked in.</p></div>
-      <div class="wa-step"><i>05</i><b>Remember</b><p>Return home with more than photographs.</p></div>
+      <!-- gen:plansteps -->
+      <a class="wa-step wa-step--go" href="/journey"><i>01</i><b>Discover</b><p>Four questions, or a sentence in your own words, and the atlas opens somewhere rather than everywhere.</p><span class="wa-step-go">Start with a question &rarr;</span></a>
+      <a class="wa-step wa-step--go" href="/compare"><i>02</i><b>Compare</b><p>Any two of the twenty-two, through the same twenty-seven categories in the same order, so the difference is the countries and not their marketing.</p><span class="wa-step-go">Put two side by side &rarr;</span></a>
+      <a class="wa-step wa-step--go" href="/contact"><i>03</i><b>Ask</b><p>Enquiries reach Kamerun in Buea and Douala. For Cameroon they are the operator; for the other nineteen they will tell you who is.</p><span class="wa-step-go">Write to them &rarr;</span></a>
+      <div class="wa-step"><i>04</i><b>Travel</b><p>Where the operator is ours, the guide on the day works for the company you booked: Kamerun in Cameroon, Pearl Trails Uganda in Uganda and Namib Skyline in Namibia. Where it is not, we are not going to describe a day run by people we have not named.</p></div>      <!-- /gen:plansteps -->
     </div>
   </div>
 </section>
