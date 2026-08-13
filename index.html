@@ -134,8 +134,17 @@
    three-line sentence. Sized rather than min-heighted because the caps are
    stacked absolutely so they can cross-fade. */
 .wa-win-caps{position:relative;height:146px;flex:0 0 auto;width:100%}
-.wa-win-cap{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;pointer-events:none}
-.wa-win-cap[data-on]{opacity:1;pointer-events:auto}
+/* Twenty-two captions stacked in one box, one shown at a time. Opacity alone
+   hides them from the eye and from nothing else: all twenty-two stayed in the
+   tab order, so a keyboard user crossing the hero took twenty-two stops on
+   links they could not see, each one putting the focus ring on nothing.
+   `visibility` removes an element from the tab order and the accessibility tree
+   as well; the zero-second delayed transition keeps it visible for the length
+   of the fade out, so the animation is unchanged. */
+.wa-win-cap{position:absolute;inset:0;opacity:0;visibility:hidden;
+  transition:opacity .45s ease,visibility 0s linear .45s;pointer-events:none}
+.wa-win-cap[data-on]{opacity:1;visibility:visible;pointer-events:auto;
+  transition:opacity .45s ease,visibility 0s linear 0s}
 .wa-win-region{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-cap b{display:block;font-family:var(--fj-display);font-size:clamp(26px,2.9vw,38px);font-weight:700;text-transform:uppercase;line-height:1.02;margin-top:8px}
 .wa-win-tag{display:block;font-size:15px;color:var(--c-muted);margin-top:7px}

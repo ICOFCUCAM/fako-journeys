@@ -145,6 +145,22 @@ const MEASURE_CAP = 92;
  */
 const TARGET_MIN = 24;
 
+/* ---------------------------------------------------------------------------
+ * PASS SEVEN — focus that lands on nothing
+ *
+ * Hiding something with opacity hides it from the eye and from nothing else. It
+ * stays in the tab order and in the accessibility tree, so a keyboard user
+ * walks through controls that are not on the screen and the focus ring appears
+ * to vanish.
+ *
+ * Two of those here. The gateway stacks twenty-two country captions in one box
+ * and shows one — twenty-two invisible links in the tab order, in the hero.
+ * And the reveal starts every block at zero opacity until it is scrolled to, so
+ * tabbing into the enquiry form put the cursor in a field that was not yet
+ * visible and the first characters went into nothing.
+ */
+const TAB_STOPS = 80;
+
 const out = [];
 function check(name, ok, detail) {
   out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
@@ -259,6 +275,43 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass seven: where the keyboard can go --------------------------- */
+    for (const url of PAGES) {
+      const page = await browser.newPage({viewport: {width: 1280, height: 900}});
+      await page.goto(base + url, {waitUntil: 'networkidle'});
+      let stops = 0;
+      const blind = [];
+      for (let i = 0; i < TAB_STOPS; i++) {
+        await page.keyboard.press('Tab');
+        const seen = await page.evaluate(() => {
+          const el = document.activeElement;
+          if (!el || el === document.body) return null;
+          /* Opacity is inherited down the tree by compositing, so the lowest
+             value on the way up is the one the eye gets. */
+          let node = el, opacity = 1;
+          while (node && node !== document.body) {
+            opacity = Math.min(opacity, +getComputedStyle(node).opacity);
+            node = node.parentElement;
+          }
+          const box = el.getBoundingClientRect();
+          return {
+            hidden: opacity < 0.05 || getComputedStyle(el).visibility === 'hidden',
+            real: box.width > 1 && box.height > 1,
+            what: el.tagName + '.' + String(el.className).slice(0, 20)
+          };
+        });
+        if (!seen) continue;
+        stops++;
+        if (seen.hidden && seen.real) blind.push(seen.what);
+      }
+      await page.close();
+      check(url + ' never puts the focus ring on something invisible',
+            !blind.length,
+            blind.length ? blind.length + ' of ' + stops + ' stops: '
+              + [...new Set(blind)].slice(0, 2).join(' | ')
+            : stops + ' stops, all visible');
+    }
+
     /* ---- pass six: what a finger can hit --------------------------------- */
     const touch = await browser.newContext({viewport: {width: 390, height: 844},
                                             isMobile: true, hasTouch: true});

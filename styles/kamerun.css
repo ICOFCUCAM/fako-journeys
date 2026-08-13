@@ -41,6 +41,12 @@ ul,ol{list-style:none}
 /* reveal — never applied to a fixed-window band or to any ancestor of one */
 .fj-rise{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .fj-rise.seen{opacity:1;transform:none}
+/* A control inside a block that has not been revealed yet is invisible and
+   still focusable: tabbing into the enquiry form landed the cursor in a field
+   at zero opacity, and the first characters were typed into nothing. Focus
+   anywhere inside finishes the reveal immediately. */
+.fj-rise:focus-within{opacity:1;transform:none;transition:none}
+
 
 /* ---- masthead ---------------------------------------------------------------- */
 /* Whose pages these are. This is one operator's site served from the group's
