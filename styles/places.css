@@ -1,0 +1,151 @@
+/* A page for one place — /places/<country>/<place>.
+ * ---------------------------------------------------------------------------
+ * Prefixed `pl-` (a place) and `pi-` (the index). Tokens, reset, type scale,
+ * buttons, the plate and the window come from afrinkong.css.
+ *
+ * Five hundred and seventy-two of these exist, so the design has to survive
+ * repetition: one column, one photograph, one paragraph, and the country it
+ * belongs to never more than a click away. Nothing here is a card grid, because
+ * a place is a page and not a tile.
+ */
+
+.pl-mast{position:sticky;top:0;z-index:40;height:var(--mast);display:flex;align-items:center;
+  gap:var(--sp-4);padding:0 28px;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+.pl-mark{display:flex;flex-direction:column;line-height:1}
+.pl-mark i{font-family:var(--fj-mono);font-style:normal;font-size:9.5px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--c-muted)}
+.pl-mark b{font-family:var(--fj-display);font-size:22px;letter-spacing:-.01em;
+  text-transform:uppercase;margin-top:5px;white-space:nowrap}
+.pl-routes{display:flex;gap:24px;margin-left:auto;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.pl-routes a:hover{color:var(--c-accent)}
+
+.pl{max-width:var(--frame);margin:0 auto;padding:var(--sp-5) 44px var(--sp-7);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);
+  gap:var(--sp-4) var(--sp-6);align-items:start}
+
+/* The ladder this page sits in, at the top rather than the bottom: on a page
+   this deep the first thing a visitor needs is where they are. */
+.pl-where{grid-column:1/-1;border-bottom:var(--fj-rule);padding-bottom:14px}
+.pl-where ol{display:flex;flex-wrap:wrap;align-items:baseline;gap:9px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-muted)}
+.pl-where li+li::before{content:"/";margin-right:9px;color:var(--c-border)}
+.pl-where a:hover{color:var(--c-accent)}
+.pl-where [aria-current]{color:var(--c-primary)}
+
+.pl-body{min-width:0}
+.pl-h1{font-size:clamp(34px,5.4vw,72px);line-height:.96;margin:10px 0 0;letter-spacing:-.015em;
+  text-transform:none}
+.pl-lede{margin-top:18px;font-size:19px;line-height:1.55;max-width:44ch}
+
+.pl-hero{margin-top:var(--sp-4)}
+.pl-hero img{width:100%;height:auto;object-fit:cover;display:block}
+.pl-hero figcaption{margin-top:9px;font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted)}
+
+.pl-tags{margin-top:var(--sp-4);display:flex;flex-wrap:wrap;gap:6px;align-items:baseline}
+.pl-tags>span{width:100%;font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted)}
+.pl-tag{font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--c-border);padding:8px 11px;color:var(--c-muted);
+  transition:border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.pl-tag:hover{border-color:var(--c-accent);color:var(--c-accent)}
+
+.pl-who{margin-top:var(--sp-5);border-top:2px solid var(--c-accent);padding-top:14px;
+  max-width:52ch}
+.pl-who b{display:block;font-family:var(--fj-display);font-size:24px;text-transform:uppercase;
+  margin-top:8px;line-height:1.05}
+.pl-who p{margin-top:8px;font-size:15.5px;color:var(--c-muted)}
+.pl-who .af-go{margin-top:11px}
+
+.pl-acts{display:flex;flex-wrap:wrap;gap:11px;margin-top:var(--sp-5)}
+
+/* Everything else in this country, so a place is never a dead end. */
+.pl-more{min-width:0;position:sticky;top:calc(var(--mast) + 22px)}
+.pl-h2{font-family:var(--fj-display);font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-muted);border-top:2px solid var(--c-primary);padding-top:12px}
+.pl-note{margin-top:8px;font-size:14.5px;color:var(--c-accent)}
+.pl-sibs{margin-top:14px;max-height:52vh;overflow-y:auto;
+  -webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 22px),transparent);
+  mask-image:linear-gradient(to bottom,#000 calc(100% - 22px),transparent)}
+.pl-sibs li{border-bottom:var(--fj-rule)}
+.pl-sibs a{display:block;padding:11px 2px}
+.pl-sibs b{display:block;font-family:var(--fj-display);font-size:16px;text-transform:uppercase;
+  line-height:1.1;font-weight:700}
+.pl-sibs span{display:block;margin-top:3px;font-family:var(--fj-mono);font-size:8.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.pl-sibs a:hover b{color:var(--c-accent)}
+.pl-more .af-go{margin-top:14px}
+
+.pl-foot{background:var(--plate-tone,var(--c-primary));color:var(--c-bg);
+  padding:var(--sp-5) 0}
+.pl-foot-in{max-width:var(--frame);margin:0 auto;padding:0 44px}
+.pl-foot .foot-next{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;
+  padding-bottom:22px;margin-bottom:22px;border-bottom:var(--fj-rule-dark)}
+.pl-foot .foot-next>span{width:100%;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;opacity:.6}
+.pl-foot .foot-next a{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
+  opacity:.62;border-bottom:1px solid transparent}
+.pl-foot .foot-next a[data-border]{opacity:1}
+.pl-foot .foot-next a:hover{border-color:var(--c-bg)}
+.pl-foot .foot-next i{font-style:normal;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.14em;margin-left:7px;opacity:.6}
+.pl-foot .foot-next p{width:100%;margin-top:6px;font-size:12.5px;line-height:1.6;opacity:.62}
+.pl-foot-bar{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;opacity:.7}
+.pl-foot-bar a{border-bottom:1px solid transparent}
+.pl-foot-bar a:hover{border-color:var(--c-bg)}
+
+/* ---- the index ----------------------------------------------------------- */
+
+.pi{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
+.pi-open{max-width:60ch;padding-bottom:var(--sp-5);border-bottom:2px solid var(--c-primary)}
+.pi-h1{font-size:clamp(40px,6.5vw,92px);line-height:.9;margin:12px 0 0;letter-spacing:-.02em}
+.pi-lede{margin-top:20px;font-size:17.5px;color:var(--c-muted)}
+.pi-country{margin-top:var(--sp-5);border-top:2px solid var(--c-primary);padding-top:14px}
+/* Each country's block carries its own region tone, so scrolling the index is
+   the same sweep across the continent that every other surface makes. */
+.pi-country h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;
+  font-size:clamp(26px,3.2vw,42px)}
+.pi-country h2 a{border-bottom:3px solid var(--plate-tone,var(--c-accent))}
+.pi-country h2 span{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-muted)}
+.pi-country ul{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:0 var(--sp-4)}
+.pi-country li{border-bottom:var(--fj-rule)}
+/* A long caption and a nowrap category label are two flex items in a 240px
+   track, and at a middling width the pair is wider than the track and pushes
+   past the edge of the page. Wrapping is the right answer rather than
+   truncation: the caption is the thing being indexed. */
+.pi-country li a{display:flex;justify-content:space-between;gap:6px 14px;
+  align-items:baseline;flex-wrap:wrap;overflow-wrap:anywhere;
+  padding:11px 2px;font-family:var(--fj-display);font-size:16px;text-transform:uppercase;
+  font-weight:700}
+.pi-country li i{flex:0 0 auto;font-style:normal;font-family:var(--fj-mono);font-size:8.5px;
+  letter-spacing:.14em;color:var(--c-muted);white-space:nowrap}
+.pi-country li a:hover{color:var(--c-accent)}
+
+@media(max-width:1000px){
+  .pl{grid-template-columns:1fr;padding:var(--sp-4) 28px var(--sp-6)}
+  .pl-more{position:static}
+  .pl-sibs{max-height:none;-webkit-mask-image:none;mask-image:none}
+  .pi{padding:var(--sp-5) 28px var(--sp-6)}
+}
+
+@media(max-width:680px){
+  .pl-mast{padding:0 14px;gap:12px}
+  .pl-routes{display:none}
+  .pl-mark b{font-size:17px}
+  .pl-mast .af-btn{padding:11px 12px;font-size:9.5px;white-space:nowrap}
+  .pl{padding:var(--sp-4) 18px var(--sp-6)}
+  .pl-foot-in{padding:0 18px}
+  .pl-h1{font-size:clamp(30px,9vw,44px)}
+  .pl-lede{font-size:17px}
+  .pi{padding:var(--sp-4) 18px var(--sp-6)}
+  .pi-country ul{grid-template-columns:1fr}
+}
+
+@media(pointer:coarse){
+  .pl-sibs a,.pi-country li a{padding-top:14px;padding-bottom:14px}
+}

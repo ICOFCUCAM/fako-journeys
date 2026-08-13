@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seychelles — Granite islands in the Indian Ocean | Guided Journeys and Experiences</title>
+<meta name="description" content="Seychelles: The only granite islands in the middle of an ocean anywhere on earth — Mahé, Praslin and La Digue, the coco de mer in the Vallée de Mai, and Aldabra&#x27;s giant tortoises a thousand kilometres out. Twenty-seven kinds of experience, from wildlife and mountains to culture, food and heritage, with local guides.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="Seychelles — Granite islands in the Indian Ocean | Afrinkong">
+<meta property="og:description" content="The only granite islands in the middle of an ocean anywhere on earth — Mahé, Praslin and La Digue, the coco de mer in the Vallée de Mai, and Aldabra&#x27;s giant tortoises a thousand kilometres out.">
+<meta property="og:url" content="https://afrinkong.com/seychelles">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://afrinkong.com/seychelles">
+<link rel="stylesheet" href="/styles/afrinkong.css">
+<style>
+/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
+   What follows is this page shape only. */
+.mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+.mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
+.mark{margin-right:auto;display:flex;flex-direction:column;gap:3px}
+.mark-up{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--c-accent)}
+.mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;line-height:1;white-space:nowrap}
+.mark span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+.routes{display:flex;gap:26px}
+.routes a{font-family:var(--fj-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
+.btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
+.btn:hover{background:var(--c-accent)}
+@media(max-width:1010px){.routes{display:none}}
+@media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}.btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
+
+.open{padding:calc(var(--sp-6) + 8px) 0 var(--sp-6);border-bottom:var(--fj-rule)}
+.open-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
+.open-grid.no-shape{grid-template-columns:1fr;max-width:36em}
+.open h1{font-size:clamp(46px,7vw,104px);margin:14px 0 0;letter-spacing:-.02em}
+/* The tagline is the country's argument and gets its own line at display size,
+   rather than being appended to the name in accent — which made the name the
+   smaller half of its own headline. */
+.open-tag{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(20px,2.6vw,34px);line-height:1.05;color:var(--c-accent);margin-top:10px}
+.lede{font-size:19px;color:var(--c-muted);margin-top:22px;max-width:38em}
+.acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+/* The window. Height-led, so every country is drawn at the same visual weight
+   whatever its proportions — Chad and Rwanda should feel like the same kind of
+   object on the page. */
+.ct-window{height:min(58vh,520px)}
+.ct-window svg{height:100%}
+
+/* This country's year. Twelve cells beats a season paragraph: a visitor answers
+   "can I go when I am free" in about a second. */
+.ct-cal{padding:30px 0;border-bottom:var(--fj-rule)}
+.ct-cal-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-cal-row{display:grid;grid-template-columns:repeat(12,1fr);gap:0;border:var(--fj-rule)}
+.ct-mon{display:flex;align-items:center;justify-content:center;padding:12px 0;
+  border-right:var(--fj-rule);background:var(--c-bg)}
+.ct-mon:last-child{border-right:0}
+.ct-mon b{font-family:var(--fj-mono);font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--c-muted)}
+.ct-mon.is-on{background:var(--c-accent)}
+.ct-mon.is-on b{color:var(--c-bg);font-weight:700}
+.ct-cal-note{margin-top:12px;font-size:15px;color:var(--c-muted);max-width:52em}
+
+/* Who runs this country. The platform's whole claim is that somebody local
+   does, so the page says which company, from where, and since when. */
+.ct-close{padding-bottom:8px}
+.ct-op{border-top:2px solid var(--c-accent);padding-top:22px;max-width:44em}
+.ct-op>span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.ct-op b{display:block;font-family:var(--fj-display);font-size:clamp(24px,3vw,36px);
+  font-weight:700;text-transform:uppercase;line-height:1.04;margin-top:8px}
+.ct-op-base{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);margin-top:8px}
+.ct-op p{color:var(--c-muted);margin-top:12px}
+.ct-op .af-go{margin-top:16px}
+.ct-op--none b{font-size:clamp(20px,2.2vw,27px)}
+@media(max-width:640px){.ct-cal-row{grid-template-columns:repeat(6,1fr)}
+  .ct-mon:nth-child(6n){border-right:0}
+  .ct-mon:nth-child(-n+6){border-bottom:var(--fj-rule)}}
+
+/* The region strip: the page's one link outward, and what makes a country page
+   part of an atlas rather than a leaflet. */
+.ct-note-go{white-space:nowrap;color:var(--c-accent);border-bottom:1px solid var(--c-accent)}
+.ct-near{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:26px 0}
+.ct-near h2{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-near-row{display:flex;flex-wrap:wrap;gap:0 34px}
+.ct-near-row a{padding:8px 0;transition:color var(--t-fast) var(--ease)}
+.ct-near-row a:hover{color:var(--c-accent)}
+.ct-near-row em{font-style:normal;font-family:var(--fj-display);font-size:19px;font-weight:700;text-transform:uppercase}
+.ct-near-row span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);margin-left:10px}
+@media(max-width:900px){.open-grid{grid-template-columns:1fr;gap:34px}
+  .ct-window{height:min(46vh,360px);max-width:420px}
+  .ct-near-row{gap:0 22px}}
+
+.highs{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 32px}
+.ct-high b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.ct-high h3{font-size:22px;margin:8px 0 8px}
+.ct-high p{font-size:15px;color:var(--c-muted)}
+.ct-high .ct-shot{display:block;margin-bottom:16px}
+.ct-high .ct-shot img{width:100%;aspect-ratio:4/3;object-fit:cover}
+@media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
+@media(max-width:560px){.highs{grid-template-columns:1fr}}
+
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
+.ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
+.ct-group li:last-child{border-bottom:0}
+.ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
+@media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+
+.reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
+.ct-reason{padding:28px 34px 24px 0}
+.ct-reason b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:10px}
+.ct-reason h3{font-size:24px;margin-bottom:10px}
+.ct-reason p{font-size:15px}
+@media(max-width:760px){.reasons{grid-template-columns:1fr}}
+
+.end{text-align:center;padding:92px 0}
+.end h2{font-size:clamp(30px,4.6vw,60px)}
+.end h2 em{font-style:normal;color:var(--c-accent)}
+.end p{margin:16px auto 0;max-width:46ch;color:var(--c-muted)}
+.end .acts{justify-content:center}
+
+.foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:56px 0 0}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
+.foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
+.foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
+.foot-grid p{margin-top:14px;font-size:14.5px;max-width:32em;color:var(--fj-onbasalt-dim)}
+.foot-col b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px;font-weight:400}
+.foot-col a,.foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--fj-onbasalt-dim)}
+.foot-col a:hover{color:var(--c-bg)}
+/* Where you are, at the foot of the page: the ladder you came down and the
+   countries beside this one. It replaces nothing — the site map is still below
+   — but it is the last chance to say that this country has neighbours. */
+.foot-where{padding-bottom:26px;margin-bottom:26px;border-bottom:var(--fj-rule-dark)}
+.foot-where ol{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.foot-where li+li::before{content:"/";margin-right:10px;color:var(--fj-onbasalt-dim);
+  opacity:.5}
+.foot-where a{color:var(--fj-onbasalt-dim)}
+.foot-where a:hover{color:var(--c-bg)}
+.foot-where [aria-current]{color:var(--c-accent)}
+.foot-next{margin-top:18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
+.foot-next>span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);width:100%}
+.foot-next a{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
+  color:var(--fj-onbasalt-dim);border-bottom:1px solid transparent}
+.foot-next a[data-border]{color:var(--c-bg)}
+.foot-next a:hover{border-color:var(--c-accent)}
+.foot-next i{font-style:normal;font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  margin-left:7px;color:var(--fj-onbasalt-dim)}
+.foot-next p{width:100%;margin-top:6px;font-size:12.5px;line-height:1.6;
+  color:var(--fj-onbasalt-dim)}
+.foot-bar{margin-top:40px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.foot-bar a{border-bottom:1px solid var(--c-accent)}
+@media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
+</style>
+</head>
+<body>
+<a class="af-skip" href="#main">Skip to content</a>
+<header class="mast">
+  <div class="af-frame mast-in">
+    <a class="mark" href="/seychelles"><span class="mark-up">Afrinkong</span><b>Seychelles</b><span>Granite islands in the Indian Ocean</span></a>
+    <nav class="routes" aria-label="Primary">
+      <a href="/atlas#/seychelles">The Atlas</a>
+      <a href="/journey">Build a journey</a>
+      <a href="/meet#/seychelles">Meet Seychelles</a>
+      <a href="#highlights">Highlights</a>
+      <a href="#why">Why go</a>
+      <a href="/tourism/seychelles">All 27</a>
+    </nav>
+    <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="open">
+  <div class="af-frame">
+    <div class="open-grid has-shape">
+      <div>
+        <span class="af-stamp">Islands &middot; Afrinkong</span>
+        <h1>Seychelles</h1>
+        <p class="open-tag">Granite islands in the Indian Ocean.</p>
+        <p class="lede">The only granite islands in the middle of an ocean anywhere on earth — Mahé, Praslin and La Digue, the coco de mer in the Vallée de Mai, and Aldabra&#x27;s giant tortoises a thousand kilometres out.</p>
+        <div class="acts">
+          <a class="af-btn af-btn--solid" href="/contact">Plan a journey <i>&rarr;</i></a>
+          <a class="af-btn af-btn--quiet" href="#experiences">What you can do here <i>&rarr;</i></a>
+        </div>
+      </div>
+      <div class="af-window ct-window">
+        <svg class="af-window-svg" viewBox="0 0 603.7 1000.0" role="img" aria-label="The outline of Seychelles"><defs><clipPath id="shape-seychelles"><path d="M602.6 595L603.7 1000L422.5 862.9L373.7 603.3L122.8 405.4L0 222.5L292.8 0L602.6 595Z"/></clipPath></defs><path class="af-window-fill" d="M602.6 595L603.7 1000L422.5 862.9L373.7 603.3L122.8 405.4L0 222.5L292.8 0L602.6 595Z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ct-near"><div class="af-frame"><h2>Also in Islands</h2><div class="ct-near-row"><a href="/madagascar"><em>Madagascar</em><span>An island that evolved alone</span></a><a href="/mauritius"><em>Mauritius</em><span>Reef, sugar and the volcanic interior</span></a></div></div></section>
+<section class="ct-cal"><div class="af-frame"><h2 class="ct-cal-h">When to come</h2><div class="ct-cal-row" role="img" aria-label="Seychelles is at its best in April, May, October, November"><span class="ct-mon" title="January"><b>J</b></span><span class="ct-mon" title="February"><b>F</b></span><span class="ct-mon" title="March"><b>M</b></span><span class="ct-mon is-on" title="April"><b>A</b></span><span class="ct-mon is-on" title="May"><b>M</b></span><span class="ct-mon" title="June"><b>J</b></span><span class="ct-mon" title="July"><b>J</b></span><span class="ct-mon" title="August"><b>A</b></span><span class="ct-mon" title="September"><b>S</b></span><span class="ct-mon is-on" title="October"><b>O</b></span><span class="ct-mon is-on" title="November"><b>N</b></span><span class="ct-mon" title="December"><b>D</b></span></div><p class="ct-cal-note">Warm all year; April, May, October and November are the calm months between trade winds.</p></div></section>
+
+<section class="af-zone" id="highlights">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>01</b><span>Highlights</span></div>
+      <div>
+        <h2>What Seychelles is <em>known for</em>.</h2>
+        <p class="af-note">Six of the twenty-seven, and the ones most people come for. The rest are below &mdash; and none of them is filler.</p>
+      </div>
+    </div>
+    <div class="highs">
+      <article class="ct-high">
+        <b>Nature &amp; Landscapes</b>
+        <h3>Forty-Three Granite Islands</h3>
+        <p>Granite in the inner islands, coral atolls in the outer, and a thousand kilometres between.</p>
+      </article>
+      <article class="ct-high">
+        <b>Wildlife</b>
+        <h3>Endemic Everywhere</h3>
+        <p>The black parrot, the magpie robin, and giant tortoises that live free on Curieuse.</p>
+      </article>
+      <article class="ct-high">
+        <b>Mountains</b>
+        <h3>Morne Seychellois</h3>
+        <p>Nine hundred metres of forested granite above Victoria, with trails through the mist forest.</p>
+      </article>
+      <article class="ct-high">
+        <b>Beaches &amp; Coast</b>
+        <h3>Anse Source d&#x27;Argent</h3>
+        <p>The most photographed beach in the world, and the granite is the reason why.</p>
+      </article>
+      <article class="ct-high">
+        <b>Forests &amp; Rainforest</b>
+        <h3>The Vallée de Mai</h3>
+        <p>Coco de mer palms in a valley on Praslin, and the largest seed of any plant on earth.</p>
+      </article>
+      <article class="ct-high">
+        <b>Culture</b>
+        <h3>Creole</h3>
+        <p>African, French, Indian and Chinese, in one Creole language and one kitchen.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone af-zone--dust" id="experiences">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>02</b><span>Experiences</span></div>
+      <div>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. <a class="ct-note-go" href="/compare?a=seychelles">Compare Seychelles with another &rarr;</a> The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
+      </div>
+    </div>
+    <div class="groups">
+      <div class="ct-group"><b>Landscapes</b>
+        <ul>
+        <li><b>Forty-Three Granite Islands</b><span>Granite in the inner islands, coral atolls in the outer, and a thousand kilometres between.</span></li>
+        <li><b>Morne Seychellois</b><span>Nine hundred metres of forested granite above Victoria, with trails through the mist forest.</span></li>
+        <li><b>Sauzier and the Streams</b><span>Short granite streams off the ridges, and the Sauzier falls in the west of Mahé.</span></li>
+        <li><b>No Rivers, All Sea</b><span>The water here is the Indian Ocean, and the lagoons inside the reef.</span></li>
+        <li><b>Anse Source d&#x27;Argent</b><span>The most photographed beach in the world, and the granite is the reason why.</span></li>
+        <li><b>The Vallée de Mai</b><span>Coco de mer palms in a valley on Praslin, and the largest seed of any plant on earth.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Wildlife</b>
+        <ul>
+        <li><b>Endemic Everywhere</b><span>The black parrot, the magpie robin, and giant tortoises that live free on Curieuse.</span></li>
+        <li><b>Not a Safari, a Reef</b><span>The game here is under the water — reef fish, turtle, and whale shark off Mahé in season.</span></li>
+        <li><b>Half the Country Is Protected</b><span>Forty-two per cent of the land is national park, and the marine parks now match it.</span></li>
+        <li><b>Dive, Kayak, Cycle</b><span>Granite dive sites, kayaks in the lagoons, and La Digue where the bicycle is the transport.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>People and culture</b>
+        <ul>
+        <li><b>Creole</b><span>African, French, Indian and Chinese, in one Creole language and one kitchen.</span></li>
+        <li><b>Island Life</b><span>A hundred thousand people across a hundred and fifteen islands, most on three of them.</span></li>
+        <li><b>Festival Kreol</b><span>Festival Kreol in October, and the sega and moutya danced through it.</span></li>
+        <li><b>Boatbuilding and Weaving</b><span>Pirogue building on La Digue, and coconut palm weaving still done by hand.</span></li>
+        <li><b>Fish, Coconut and Chilli</b><span>Grilled fish, coconut curry, breadfruit, and a chilli sauce that is not a suggestion.</span></li>
+        <li><b>Shallow, Warm, Safe</b><span>Lagoons inside the reef, no dangerous surf on most beaches, and short boat rides.</span></li>
+        <li><b>The Fish Market</b><span>Victoria&#x27;s market at eight in the morning is the most useful hour on the island.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Places</b>
+        <ul>
+        <li><b>Victoria</b><span>One of the smallest capitals in the world, with a clock tower and a market.</span></li>
+        <li><b>Creole Houses</b><span>Steep roofs, wide verandas and louvres — built for heat before anyone had a choice.</span></li>
+        <li><b>The Plantations</b><span>L&#x27;Union Estate on La Digue, with its vanilla, copra mill and colonial house.</span></li>
+        <li><b>Aldabra</b><span>A thousand kilometres out, with a hundred thousand giant tortoises and almost no people.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Ways to travel</b>
+        <ul>
+        <li><b>Dive, Sail, Walk</b><span>Diving the granite drop-offs, sailing the inner islands, and walking Mahé&#x27;s ridge trails.</span></li>
+        <li><b>The Private Islands</b><span>North Island, Frégate and Denis — private islands with a dozen villas on each.</span></li>
+        <li><b>Granite and Turquoise</b><span>Grey granite, white sand and three shades of blue — the reason every camera comes here.</span></li>
+        <li><b>La Digue by Bicycle</b><span>No real roads and few cars — an island best measured in bicycle hours.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone af-zone--basalt" id="why">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>03</b><span>Why go</span></div>
+      <div>
+        <h2>The case for <em>Seychelles</em>.</h2>
+      </div>
+    </div>
+    <div class="reasons">
+      <div class="ct-reason"><b>Why Visit This Country</b><h3>Nowhere Else Is Built Like This</h3><p>Granite in mid-ocean, a palm that grows nowhere else, and tortoises older than the state.</p></div>
+      <div class="ct-reason"><b>Hidden Gems</b><h3>La Digue by Bicycle</h3><p>No real roads and few cars — an island best measured in bicycle hours.</p></div>
+      <div class="ct-reason"><b>Eco Tourism</b><h3>Half the Country Is Protected</h3><p>Forty-two per cent of the land is national park, and the marine parks now match it.</p></div>
+      <div class="ct-reason"><b>Heritage</b><h3>Aldabra</h3><p>A thousand kilometres out, with a hundred thousand giant tortoises and almost no people.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone">
+  <div class="af-frame ct-close">
+    <div class="ct-op ct-op--none"><span>Local operator</span><b>A licensed company based in Seychelles</b><p>Every destination here is run by a company in the country itself, working through the same twenty-seven categories, so two countries can be compared on the same terms. Tell us the month and we will put you with the right one.</p><a class="af-go" href="/contact">Start a journey &rarr;</a></div>
+  </div>
+  <div class="af-frame end">
+    <span class="stamp">Begin</span>
+    <h2>Your Seychelles <em>starts here</em>.</h2>
+    <p>Tell us the month, or simply the thing you want to see, and a guide who works there will answer.</p>
+    <div class="acts">
+      <a class="act go" href="/contact">Plan a journey <i>&rarr;</i></a>
+      <a class="act faint" href="/tourism/seychelles">See all 27 experiences <i>&rarr;</i></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="af-frame">
+    <!-- Where you are, and what is next to it. A footer on this site is not a
+         site map; it is the last place the visitor can be told that the country
+         they are reading about has neighbours. -->
+    <nav class="foot-where" aria-label="Where you are">
+      <ol>
+        <li><a href="/atlas">Africa</a></li>
+        <li><a href="/atlas#/islands">Islands</a></li>
+        <li><span aria-current="page">Seychelles</span></li>
+      </ol>
+      <div class="foot-next"><span>Next to it</span><a href="/atlas#/madagascar">Madagascar<i>1744 km</i></a><a href="/atlas#/mauritius">Mauritius<i>1751 km</i></a><a href="/atlas#/mozambique">Mozambique<i>2605 km</i></a><a href="/atlas#/kenya">Kenya<i>2081 km</i></a><p>Straight-line distances between country centres. Solid names share a land border with Seychelles.</p></div>
+    </nav>
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Seychelles<span>Granite islands in the Indian Ocean</span></div>
+        <p>The only granite islands in the middle of an ocean anywhere on earth — Mahé, Praslin and La Digue, the coco de mer in the Vallée de Mai, and Aldabra&#x27;s giant tortoises a thousand kilometres out.</p>
+      </div>
+      <div class="foot-col">
+        <b>Seychelles</b>
+        <a href="#highlights">Highlights</a>
+        <a href="#experiences">Experiences</a>
+        <a href="#why">Why go</a>
+        <a href="/tourism/seychelles">All 27 experiences</a>
+      </div>
+      <div class="foot-col">
+        <b>Elsewhere</b>
+        <a href="/">Afrinkong</a>
+        <a href="/cameroon">Cameroon</a>
+        <a href="/tourism/">Every destination</a>
+        <a href="/contact">Enquire</a>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <a href="/">Part of Afrinkong</a> &middot; Seychelles &middot; 0 of 27 slots illustrated &middot; Figures and contact details are illustrative until verified
+    </div>
+  </div>
+</footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
+</body>
+</html>

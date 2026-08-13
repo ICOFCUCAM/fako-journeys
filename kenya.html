@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kenya — Where the safari was invented | Guided Journeys and Experiences</title>
+<meta name="description" content="Kenya: The Mara migration, Amboseli elephants under Kilimanjaro, the Rift Valley lakes, the Swahili coast and a capital with a national park on its doorstep. Twenty-seven kinds of experience, from wildlife and mountains to culture, food and heritage, with local guides.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="Kenya — Where the safari was invented | Afrinkong">
+<meta property="og:description" content="The Mara migration, Amboseli elephants under Kilimanjaro, the Rift Valley lakes, the Swahili coast and a capital with a national park on its doorstep.">
+<meta property="og:url" content="https://afrinkong.com/kenya">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://afrinkong.com/kenya">
+<link rel="stylesheet" href="/styles/afrinkong.css">
+<style>
+/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
+   What follows is this page shape only. */
+.mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+.mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
+.mark{margin-right:auto;display:flex;flex-direction:column;gap:3px}
+.mark-up{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--c-accent)}
+.mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;line-height:1;white-space:nowrap}
+.mark span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+.routes{display:flex;gap:26px}
+.routes a{font-family:var(--fj-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
+.btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
+.btn:hover{background:var(--c-accent)}
+@media(max-width:1010px){.routes{display:none}}
+@media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}.btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
+
+.open{padding:calc(var(--sp-6) + 8px) 0 var(--sp-6);border-bottom:var(--fj-rule)}
+.open-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
+.open-grid.no-shape{grid-template-columns:1fr;max-width:36em}
+.open h1{font-size:clamp(46px,7vw,104px);margin:14px 0 0;letter-spacing:-.02em}
+/* The tagline is the country's argument and gets its own line at display size,
+   rather than being appended to the name in accent — which made the name the
+   smaller half of its own headline. */
+.open-tag{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(20px,2.6vw,34px);line-height:1.05;color:var(--c-accent);margin-top:10px}
+.lede{font-size:19px;color:var(--c-muted);margin-top:22px;max-width:38em}
+.acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+/* The window. Height-led, so every country is drawn at the same visual weight
+   whatever its proportions — Chad and Rwanda should feel like the same kind of
+   object on the page. */
+.ct-window{height:min(58vh,520px)}
+.ct-window svg{height:100%}
+
+/* This country's year. Twelve cells beats a season paragraph: a visitor answers
+   "can I go when I am free" in about a second. */
+.ct-cal{padding:30px 0;border-bottom:var(--fj-rule)}
+.ct-cal-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-cal-row{display:grid;grid-template-columns:repeat(12,1fr);gap:0;border:var(--fj-rule)}
+.ct-mon{display:flex;align-items:center;justify-content:center;padding:12px 0;
+  border-right:var(--fj-rule);background:var(--c-bg)}
+.ct-mon:last-child{border-right:0}
+.ct-mon b{font-family:var(--fj-mono);font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--c-muted)}
+.ct-mon.is-on{background:var(--c-accent)}
+.ct-mon.is-on b{color:var(--c-bg);font-weight:700}
+.ct-cal-note{margin-top:12px;font-size:15px;color:var(--c-muted);max-width:52em}
+
+/* Who runs this country. The platform's whole claim is that somebody local
+   does, so the page says which company, from where, and since when. */
+.ct-close{padding-bottom:8px}
+.ct-op{border-top:2px solid var(--c-accent);padding-top:22px;max-width:44em}
+.ct-op>span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.ct-op b{display:block;font-family:var(--fj-display);font-size:clamp(24px,3vw,36px);
+  font-weight:700;text-transform:uppercase;line-height:1.04;margin-top:8px}
+.ct-op-base{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);margin-top:8px}
+.ct-op p{color:var(--c-muted);margin-top:12px}
+.ct-op .af-go{margin-top:16px}
+.ct-op--none b{font-size:clamp(20px,2.2vw,27px)}
+@media(max-width:640px){.ct-cal-row{grid-template-columns:repeat(6,1fr)}
+  .ct-mon:nth-child(6n){border-right:0}
+  .ct-mon:nth-child(-n+6){border-bottom:var(--fj-rule)}}
+
+/* The region strip: the page's one link outward, and what makes a country page
+   part of an atlas rather than a leaflet. */
+.ct-note-go{white-space:nowrap;color:var(--c-accent);border-bottom:1px solid var(--c-accent)}
+.ct-near{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:26px 0}
+.ct-near h2{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-near-row{display:flex;flex-wrap:wrap;gap:0 34px}
+.ct-near-row a{padding:8px 0;transition:color var(--t-fast) var(--ease)}
+.ct-near-row a:hover{color:var(--c-accent)}
+.ct-near-row em{font-style:normal;font-family:var(--fj-display);font-size:19px;font-weight:700;text-transform:uppercase}
+.ct-near-row span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);margin-left:10px}
+@media(max-width:900px){.open-grid{grid-template-columns:1fr;gap:34px}
+  .ct-window{height:min(46vh,360px);max-width:420px}
+  .ct-near-row{gap:0 22px}}
+
+.highs{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 32px}
+.ct-high b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.ct-high h3{font-size:22px;margin:8px 0 8px}
+.ct-high p{font-size:15px;color:var(--c-muted)}
+.ct-high .ct-shot{display:block;margin-bottom:16px}
+.ct-high .ct-shot img{width:100%;aspect-ratio:4/3;object-fit:cover}
+@media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
+@media(max-width:560px){.highs{grid-template-columns:1fr}}
+
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
+.ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
+.ct-group li:last-child{border-bottom:0}
+.ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
+@media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+
+.reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
+.ct-reason{padding:28px 34px 24px 0}
+.ct-reason b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:10px}
+.ct-reason h3{font-size:24px;margin-bottom:10px}
+.ct-reason p{font-size:15px}
+@media(max-width:760px){.reasons{grid-template-columns:1fr}}
+
+.end{text-align:center;padding:92px 0}
+.end h2{font-size:clamp(30px,4.6vw,60px)}
+.end h2 em{font-style:normal;color:var(--c-accent)}
+.end p{margin:16px auto 0;max-width:46ch;color:var(--c-muted)}
+.end .acts{justify-content:center}
+
+.foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:56px 0 0}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
+.foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
+.foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
+.foot-grid p{margin-top:14px;font-size:14.5px;max-width:32em;color:var(--fj-onbasalt-dim)}
+.foot-col b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px;font-weight:400}
+.foot-col a,.foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--fj-onbasalt-dim)}
+.foot-col a:hover{color:var(--c-bg)}
+/* Where you are, at the foot of the page: the ladder you came down and the
+   countries beside this one. It replaces nothing — the site map is still below
+   — but it is the last chance to say that this country has neighbours. */
+.foot-where{padding-bottom:26px;margin-bottom:26px;border-bottom:var(--fj-rule-dark)}
+.foot-where ol{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.foot-where li+li::before{content:"/";margin-right:10px;color:var(--fj-onbasalt-dim);
+  opacity:.5}
+.foot-where a{color:var(--fj-onbasalt-dim)}
+.foot-where a:hover{color:var(--c-bg)}
+.foot-where [aria-current]{color:var(--c-accent)}
+.foot-next{margin-top:18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
+.foot-next>span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);width:100%}
+.foot-next a{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
+  color:var(--fj-onbasalt-dim);border-bottom:1px solid transparent}
+.foot-next a[data-border]{color:var(--c-bg)}
+.foot-next a:hover{border-color:var(--c-accent)}
+.foot-next i{font-style:normal;font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  margin-left:7px;color:var(--fj-onbasalt-dim)}
+.foot-next p{width:100%;margin-top:6px;font-size:12.5px;line-height:1.6;
+  color:var(--fj-onbasalt-dim)}
+.foot-bar{margin-top:40px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.foot-bar a{border-bottom:1px solid var(--c-accent)}
+@media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
+</style>
+</head>
+<body>
+<a class="af-skip" href="#main">Skip to content</a>
+<header class="mast">
+  <div class="af-frame mast-in">
+    <a class="mark" href="/kenya"><span class="mark-up">Afrinkong</span><b>Kenya</b><span>Where the safari was invented</span></a>
+    <nav class="routes" aria-label="Primary">
+      <a href="/atlas#/kenya">The Atlas</a>
+      <a href="/journey">Build a journey</a>
+      <a href="/meet#/kenya">Meet Kenya</a>
+      <a href="#highlights">Highlights</a>
+      <a href="#why">Why go</a>
+      <a href="/tourism/kenya">All 27</a>
+    </nav>
+    <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="open">
+  <div class="af-frame">
+    <div class="open-grid has-shape">
+      <div>
+        <span class="af-stamp">East Africa &middot; Afrinkong</span>
+        <h1>Kenya</h1>
+        <p class="open-tag">Where the safari was invented.</p>
+        <p class="lede">The Mara migration, Amboseli elephants under Kilimanjaro, the Rift Valley lakes, the Swahili coast and a capital with a national park on its doorstep.</p>
+        <div class="acts">
+          <a class="af-btn af-btn--solid" href="/contact">Plan a journey <i>&rarr;</i></a>
+          <a class="af-btn af-btn--quiet" href="#experiences">What you can do here <i>&rarr;</i></a>
+        </div>
+      </div>
+      <div class="af-window ct-window">
+        <svg class="af-window-svg" viewBox="0 0 761.0 1000.0" role="img" aria-label="The outline of Kenya"><defs><clipPath id="shape-kenya"><path d="M681.1 748.8L677.3 749.7L679.4 744L689.8 736.6L694.3 738.2L692.9 742.9L681.1 748.8ZM0.3 639.1L4.1 523.6L13 511.8L25.1 481.2L35.8 473.1L48.9 455.2L55.8 438L67.1 426.6L86.2 417.8L84.7 404.5L101.8 378.5L103.1 365.7L101.5 337.3L93.1 302.5L95.1 296.4L79.1 263.3L64.4 253L57.6 233.8L50.3 229.7L45.4 205.3L48.5 181.8L22.3 166.2L24 160.6L19.1 158.8L3.3 126.4L125 0L124.9 7.9L130.8 12.4L144.5 6.9L171.3 13.8L175.6 20.3L176.9 32.2L173.2 52.6L174.2 66.5L199.7 99.7L284.4 103.9L399.1 177.6L449.1 181.6L534.1 194.6L549.4 182.2L566.7 155L653.7 111.7L690.1 141.9L707.3 143.5L761 139.1L710.9 216.9L675.6 255.9L679.9 621.2L731.7 690.3L732.6 702.5L718.8 719.7L707.4 727.5L691.9 731.2L681.3 728.2L677.1 738.7L671.2 735.5L674.2 752.3L671.7 759.9L664.1 766.5L663.4 772L647.1 786.7L624.4 788.5L606.7 801.7L602.4 814.6L603.9 834.5L596.1 857.4L583.9 867.2L571.2 889.7L566.8 910.4L558.2 931L534.4 978.9L523.1 993.5L514.9 991.8L508.2 1000L505.4 998.6L373.5 900L365.4 886.9L355.4 882.7L362.9 863.8L359.4 838.2L14.6 642.6L0.3 639.1Z"/></clipPath></defs><path class="af-window-fill" d="M681.1 748.8L677.3 749.7L679.4 744L689.8 736.6L694.3 738.2L692.9 742.9L681.1 748.8ZM0.3 639.1L4.1 523.6L13 511.8L25.1 481.2L35.8 473.1L48.9 455.2L55.8 438L67.1 426.6L86.2 417.8L84.7 404.5L101.8 378.5L103.1 365.7L101.5 337.3L93.1 302.5L95.1 296.4L79.1 263.3L64.4 253L57.6 233.8L50.3 229.7L45.4 205.3L48.5 181.8L22.3 166.2L24 160.6L19.1 158.8L3.3 126.4L125 0L124.9 7.9L130.8 12.4L144.5 6.9L171.3 13.8L175.6 20.3L176.9 32.2L173.2 52.6L174.2 66.5L199.7 99.7L284.4 103.9L399.1 177.6L449.1 181.6L534.1 194.6L549.4 182.2L566.7 155L653.7 111.7L690.1 141.9L707.3 143.5L761 139.1L710.9 216.9L675.6 255.9L679.9 621.2L731.7 690.3L732.6 702.5L718.8 719.7L707.4 727.5L691.9 731.2L681.3 728.2L677.1 738.7L671.2 735.5L674.2 752.3L671.7 759.9L664.1 766.5L663.4 772L647.1 786.7L624.4 788.5L606.7 801.7L602.4 814.6L603.9 834.5L596.1 857.4L583.9 867.2L571.2 889.7L566.8 910.4L558.2 931L534.4 978.9L523.1 993.5L514.9 991.8L508.2 1000L505.4 998.6L373.5 900L365.4 886.9L355.4 882.7L362.9 863.8L359.4 838.2L14.6 642.6L0.3 639.1Z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ct-near"><div class="af-frame"><h2>Also in East Africa</h2><div class="ct-near-row"><a href="/ethiopia"><em>Ethiopia</em><span>The roof of Africa</span></a><a href="/rwanda"><em>Rwanda</em><span>Land of a thousand hills</span></a><a href="/tanzania"><em>Tanzania</em><span>Serengeti, Kilimanjaro, Zanzibar</span></a><a href="https://pearl-trails-uganda.vercel.app"><em>Uganda</em><span>The Pearl of Africa</span></a></div></div></section>
+<section class="ct-cal"><div class="af-frame"><h2 class="ct-cal-h">When to come</h2><div class="ct-cal-row" role="img" aria-label="Kenya is at its best in January, February, March, June, July, August, September, October"><span class="ct-mon is-on" title="January"><b>J</b></span><span class="ct-mon is-on" title="February"><b>F</b></span><span class="ct-mon is-on" title="March"><b>M</b></span><span class="ct-mon" title="April"><b>A</b></span><span class="ct-mon" title="May"><b>M</b></span><span class="ct-mon is-on" title="June"><b>J</b></span><span class="ct-mon is-on" title="July"><b>J</b></span><span class="ct-mon is-on" title="August"><b>A</b></span><span class="ct-mon is-on" title="September"><b>S</b></span><span class="ct-mon is-on" title="October"><b>O</b></span><span class="ct-mon" title="November"><b>N</b></span><span class="ct-mon" title="December"><b>D</b></span></div><p class="ct-cal-note">The migration crosses the Mara July to October; January to March is calving.</p></div></section>
+
+<section class="af-zone" id="highlights">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>01</b><span>Highlights</span></div>
+      <div>
+        <h2>What Kenya is <em>known for</em>.</h2>
+        <p class="af-note">Six of the twenty-seven, and the ones most people come for. The rest are below &mdash; and none of them is filler.</p>
+      </div>
+    </div>
+    <div class="highs">
+      <article class="ct-high">
+        <b>Nature &amp; Landscapes</b>
+        <h3>The Great Rift Valley</h3>
+        <p>The escarpment drops away below the Naivasha road, holding a chain of soda lakes and dormant volcanoes.</p>
+      </article>
+      <article class="ct-high">
+        <b>Wildlife</b>
+        <h3>Wildlife on the Savannah</h3>
+        <p>The Big Five, plus the reticulated giraffe and Grevy&#x27;s zebra that live nowhere south of here.</p>
+      </article>
+      <article class="ct-high">
+        <b>Mountains</b>
+        <h3>Mount Kenya, 5,199 m</h3>
+        <p>Equatorial glaciers, giant lobelia, and a trekking route to Point Lenana that needs no technical climbing.</p>
+      </article>
+      <article class="ct-high">
+        <b>Beaches &amp; Coast</b>
+        <h3>The Swahili Coast</h3>
+        <p>Diani, Watamu and Lamu: white sand, warm Indian Ocean, and a coastline that traded with Arabia for a thousand years.</p>
+      </article>
+      <article class="ct-high">
+        <b>Forests &amp; Rainforest</b>
+        <h3>Kakamega, the Last of It</h3>
+        <p>The only Kenyan remnant of the Guineo-Congolian rainforest that once ran clear across the continent.</p>
+      </article>
+      <article class="ct-high">
+        <b>Culture</b>
+        <h3>Maasai and Swahili</h3>
+        <p>Two Kenyas: the cattle-keeping highlands and the coral-stone, Arabic-inflected coast.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone af-zone--dust" id="experiences">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>02</b><span>Experiences</span></div>
+      <div>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. <a class="ct-note-go" href="/compare?a=kenya">Compare Kenya with another &rarr;</a> The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
+      </div>
+    </div>
+    <div class="groups">
+      <div class="ct-group"><b>Landscapes</b>
+        <ul>
+        <li><b>The Great Rift Valley</b><span>The escarpment drops away below the Naivasha road, holding a chain of soda lakes and dormant volcanoes.</span></li>
+        <li><b>Mount Kenya, 5,199 m</b><span>Equatorial glaciers, giant lobelia, and a trekking route to Point Lenana that needs no technical climbing.</span></li>
+        <li><b>Thomson&#x27;s Falls</b><span>The Ewaso Ng&#x27;iro drops seventy-four metres into a fern gorge at Nyahururu, on the way north to Samburu.</span></li>
+        <li><b>Flamingo Country</b><span>Nakuru, Bogoria and Elementaita hold soda water, hot springs and flamingo in numbers that change by the season.</span></li>
+        <li><b>The Swahili Coast</b><span>Diani, Watamu and Lamu: white sand, warm Indian Ocean, and a coastline that traded with Arabia for a thousand years.</span></li>
+        <li><b>Kakamega, the Last of It</b><span>The only Kenyan remnant of the Guineo-Congolian rainforest that once ran clear across the continent.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Wildlife</b>
+        <ul>
+        <li><b>Wildlife on the Savannah</b><span>The Big Five, plus the reticulated giraffe and Grevy&#x27;s zebra that live nowhere south of here.</span></li>
+        <li><b>The Great Migration</b><span>Between July and October a million wildebeest cross the Mara river, and the crocodiles are already waiting.</span></li>
+        <li><b>Rhino, Counted Daily</b><span>Ol Pejeta and Lewa run some of Africa&#x27;s most closely monitored rhino populations, funded by the beds on the property.</span></li>
+        <li><b>Walking Hell&#x27;s Gate</b><span>The one Kenyan park you can walk and cycle through, with gorge scrambling and geothermal steam.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>People and culture</b>
+        <ul>
+        <li><b>Maasai and Swahili</b><span>Two Kenyas: the cattle-keeping highlands and the coral-stone, Arabic-inflected coast.</span></li>
+        <li><b>Samburu and Maasai</b><span>Samburu in the northern drylands, Maasai in the south, both still moving cattle between seasonal grazing.</span></li>
+        <li><b>Lamu Cultural Festival</b><span>Dhow races, donkey races, henna and taarab music in the alleys of a town with almost no cars.</span></li>
+        <li><b>Beadwork and Kisii Stone</b><span>Maasai beadwork, Kisii soapstone carving, and kiondo sisal baskets made the way they always were.</span></li>
+        <li><b>Nyama Choma and Ugali</b><span>Goat roasted over charcoal, maize meal, sukuma wiki, and coastal biryani that came in by dhow.</span></li>
+        <li><b>The Conservancies</b><span>Community conservancies lease grazing land back for wildlife, and the lease pays the schools around the Mara.</span></li>
+        <li><b>Matatus and Markets</b><span>Painted, over-amplified matatus, Maasai Market on rotation through the week, and tea at every stop.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Places</b>
+        <ul>
+        <li><b>Nairobi, Green City in the Sun</b><span>The only capital on earth with a national park inside the city limits, and lions in sight of the skyline.</span></li>
+        <li><b>Coral Stone and Carved Doors</b><span>Swahili coral-rag houses with inner courtyards, and doors carved in Lamu and shipped up the coast.</span></li>
+        <li><b>Fort Jesus, Mombasa</b><span>Portuguese, built 1593, taken and retaken nine times — now UNESCO World Heritage above the old harbour.</span></li>
+        <li><b>Lamu Old Town</b><span>The oldest continuously inhabited Swahili settlement, carved doors, coral rag walls and no room for a car.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Ways to travel</b>
+        <ul>
+        <li><b>Balloon Over the Mara</b><span>Up before dawn, an hour over the plains at treetop height, and breakfast on the grass where you land.</span></li>
+        <li><b>Camps on the Mara</b><span>Small tented camps on private conservancies, night drives and off-road access the main reserve does not allow.</span></li>
+        <li><b>Kilimanjaro from Amboseli</b><span>The mountain is in Tanzania; the view of it is in Kenya, and it is only clear for an hour at each end of the day.</span></li>
+        <li><b>Chalbi and Marsabit</b><span>The desert north: Chalbi&#x27;s salt pan, Marsabit&#x27;s forested crater and the road down to Lake Turkana.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone af-zone--basalt" id="why">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>03</b><span>Why go</span></div>
+      <div>
+        <h2>The case for <em>Kenya</em>.</h2>
+      </div>
+    </div>
+    <div class="reasons">
+      <div class="ct-reason"><b>Why Visit This Country</b><h3>Magical Kenya</h3><p>Migration, glacier, reef and desert inside one border, with the infrastructure to see all four in a fortnight.</p></div>
+      <div class="ct-reason"><b>Hidden Gems</b><h3>Chalbi and Marsabit</h3><p>The desert north: Chalbi&#x27;s salt pan, Marsabit&#x27;s forested crater and the road down to Lake Turkana.</p></div>
+      <div class="ct-reason"><b>Eco Tourism</b><h3>Rhino, Counted Daily</h3><p>Ol Pejeta and Lewa run some of Africa&#x27;s most closely monitored rhino populations, funded by the beds on the property.</p></div>
+      <div class="ct-reason"><b>Heritage</b><h3>Lamu Old Town</h3><p>The oldest continuously inhabited Swahili settlement, carved doors, coral rag walls and no room for a car.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone">
+  <div class="af-frame ct-close">
+    <div class="ct-op ct-op--none"><span>Local operator</span><b>A licensed company based in Kenya</b><p>Every destination here is run by a company in the country itself, working through the same twenty-seven categories, so two countries can be compared on the same terms. Tell us the month and we will put you with the right one.</p><a class="af-go" href="/contact">Start a journey &rarr;</a></div>
+  </div>
+  <div class="af-frame end">
+    <span class="stamp">Begin</span>
+    <h2>Your Kenya <em>starts here</em>.</h2>
+    <p>Tell us the month, or simply the thing you want to see, and a guide who works there will answer.</p>
+    <div class="acts">
+      <a class="act go" href="/contact">Plan a journey <i>&rarr;</i></a>
+      <a class="act faint" href="/tourism/kenya">See all 27 experiences <i>&rarr;</i></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="af-frame">
+    <!-- Where you are, and what is next to it. A footer on this site is not a
+         site map; it is the last place the visitor can be told that the country
+         they are reading about has neighbours. -->
+    <nav class="foot-where" aria-label="Where you are">
+      <ol>
+        <li><a href="/atlas">Africa</a></li>
+        <li><a href="/atlas#/east">East Africa</a></li>
+        <li><span aria-current="page">Kenya</span></li>
+      </ol>
+      <div class="foot-next"><span>Next to it</span><a href="/atlas#/tanzania" data-border="true">Tanzania<i>880 km</i></a><a href="/atlas#/uganda" data-border="true">Uganda<i>606 km</i></a><a href="/atlas#/ethiopia" data-border="true">Ethiopia<i>958 km</i></a><a href="/atlas#/madagascar">Madagascar<i>2305 km</i></a><p>Straight-line distances between country centres. Solid names share a land border with Kenya.</p></div>
+    </nav>
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Kenya<span>Where the safari was invented</span></div>
+        <p>The Mara migration, Amboseli elephants under Kilimanjaro, the Rift Valley lakes, the Swahili coast and a capital with a national park on its doorstep.</p>
+      </div>
+      <div class="foot-col">
+        <b>Kenya</b>
+        <a href="#highlights">Highlights</a>
+        <a href="#experiences">Experiences</a>
+        <a href="#why">Why go</a>
+        <a href="/tourism/kenya">All 27 experiences</a>
+      </div>
+      <div class="foot-col">
+        <b>Elsewhere</b>
+        <a href="/">Afrinkong</a>
+        <a href="/cameroon">Cameroon</a>
+        <a href="/tourism/">Every destination</a>
+        <a href="/contact">Enquire</a>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <a href="/">Part of Afrinkong</a> &middot; Kenya &middot; 0 of 27 slots illustrated &middot; Figures and contact details are illustrative until verified
+    </div>
+  </div>
+</footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
+</body>
+</html>

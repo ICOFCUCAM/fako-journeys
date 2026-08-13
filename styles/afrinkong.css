@@ -1,0 +1,348 @@
+/* Afrinkong — the design system.
+ * ---------------------------------------------------------------------------
+ * Every page on this site used to carry its own copy of the tokens, the reset
+ * and the type scale, inline, which meant the palette existed in twenty-five
+ * places and drifted in each of them. This file is the single definition. Pages
+ * still carry their own layout rules inline — that part is genuinely per-page,
+ * and inlining it is why the site paints in one request — but nothing below is
+ * ever redefined by a page.
+ *
+ * Naming: `af-` is the system. Page-local classes keep their own prefixes
+ * (`wa-` gateway, `fj-` Kamerun, `ct-` country) so it is always obvious from a
+ * class name whether a rule is shared or local.
+ *
+ * The system has to hold for fifty-four countries and twenty-seven categories
+ * per country, so nothing here encodes a country, a region or a count.
+ */
+
+:root{
+  /* Paper and ink. The site is set on warm paper, not white: it is a printed
+     journal that happens to be a website, and pure white reads as software. */
+  --c-bg:#F7F2E7;
+  --c-primary:#1C2A25;
+  --c-ink:#1F211C;
+  --c-border:#DDD4C1;
+
+  /* Two inks that were very slightly too light to be read.
+     ---------------------------------------------------------------------
+     The metadata voice and the accent are the two most-repeated colours on
+     the site — every stamp, every nav item, every category label, every
+     caption — and on this paper they measured 4.46:1 and 4.16:1 against a
+     4.5:1 requirement. Marginal, and failing is failing: the type they carry
+     is 9 to 11px, which is exactly the size that has no margin to spare.
+     Both are darkened by a step small enough that nothing about the palette
+     reads differently and large enough to clear the bar on paper (5.8:1 and
+     5.2:1) and on the dust surface underneath it. */
+  --c-accent:#A8481F;
+  --c-muted:#5C5F55;
+
+  /* The same accent cannot work on both grounds: an ink dark enough to read
+     on cream is too dark to read on basalt. So there is a lit variant, and
+     the dark surfaces below re-point --c-accent at it — which means every
+     `color:var(--c-accent)` already written keeps working and gets the right
+     one, rather than a hundred and forty rules each needing a second colour. */
+  --c-accent-lit:#D9773F;
+
+  /* Derived surfaces. Mixed rather than hand-picked, so changing --c-bg or
+     --c-primary moves the whole system together instead of leaving orphans. */
+  --fj-dust:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
+  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
+  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
+  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
+  --fj-rule:1px solid var(--c-border);
+  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
+
+  /* Three voices and no more: a condensed grotesque for anything that shouts,
+     a serif for anything that has to be read, a mono for anything that labels.
+     All three are system stacks — a webfont is a render-blocking request and
+     this site's argument is that it arrives instantly. */
+  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
+  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
+  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+
+  /* Spacing is a scale, not a set of numbers typed at the moment of need. */
+  --sp-1:6px; --sp-2:12px; --sp-3:20px; --sp-4:32px;
+  --sp-5:48px; --sp-6:72px; --sp-7:104px;
+
+  /* One motion vocabulary. Everything that moves uses these, so the whole site
+     accelerates the same way. */
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --t-fast:.2s; --t-mid:.45s; --t-slow:.75s;
+
+  --frame:1240px;      /* the measure everything is set inside */
+  --mast:78px;         /* the fixed masthead, so heroes can clear it */
+  color-scheme:light;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--mast) + 16px)}
+body{font-family:var(--fj-text);background:var(--c-bg);color:var(--c-ink);
+  line-height:1.66;font-size:17px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+/* The reset the browser gives `hidden` is a `display:none` at the weakest
+   possible specificity, so any component rule that sets `display` silently
+   defeats it — a hidden section that is still a flex container is still on the
+   page, taking its full height, with everything after it pushed past the fold. */
+[hidden]{display:none !important}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+::selection{background:var(--c-accent);color:var(--c-bg)}
+
+/* Display type is always uppercase condensed and always tight. `text-wrap:
+   balance` is what stops a three-word headline breaking one-two, which at this
+   size is the difference between a masthead and an accident. */
+h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
+  letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+
+/* ---- accessibility ------------------------------------------------------- */
+/* A visible focus ring on keyboard focus only. The site is dense with links;
+   without this, tabbing through it is invisible. */
+:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
+
+.af-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--c-primary);
+  color:var(--c-bg);padding:12px 18px;font-family:var(--fj-mono);font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase}
+.af-skip:focus{left:0}
+
+/* Motion is decoration here, never information: every transition can be removed
+   without losing meaning, so reduced-motion removes all of it. */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important}
+}
+
+/* ---- primitives ---------------------------------------------------------- */
+.af-frame{max-width:var(--frame);margin:0 auto;padding:0 44px}
+
+/* The eyebrow. Mono, tracked wide, accent — it labels a thing without competing
+   with the thing. */
+.af-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--c-accent)}
+
+/* Two buttons and no third. Solid is the one thing to do next; quiet is the
+   alternative. A page with three equal buttons has no hierarchy. */
+.af-btn{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;padding:13px 22px;border:1px solid var(--c-primary);
+  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease)}
+.af-btn i{font-style:normal;margin-left:9px}
+.af-btn--solid{background:var(--c-primary);color:var(--c-bg)}
+.af-btn--solid:hover{background:var(--c-accent);border-color:var(--c-accent)}
+.af-btn--quiet{border-color:var(--c-border);color:var(--c-muted)}
+.af-btn--quiet:hover{border-color:var(--c-primary);color:var(--c-primary)}
+
+/* The underlined onward link, used wherever a block leads somewhere. */
+.af-go{display:inline-block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px;
+  transition:color var(--t-fast) var(--ease)}
+.af-go:hover{color:var(--c-accent)}
+
+/* Numbered section head. The number is the navigation; the sentence is the
+   argument. Used on every long page so a visitor always knows where they are. */
+.af-head{display:grid;grid-template-columns:150px 1fr;gap:40px;align-items:start;
+  margin-bottom:var(--sp-5)}
+.af-head-no{border-top:2px solid var(--c-accent);padding-top:12px}
+.af-head-no b{display:block;font-family:var(--fj-display);font-size:38px;font-weight:700;
+  line-height:1;color:var(--c-accent)}
+.af-head-no span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-muted);margin-top:8px}
+.af-head h2{font-size:clamp(30px,4vw,54px);max-width:24ch}
+.af-head h2 em{font-style:normal;color:var(--c-accent)}
+.af-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+@media(max-width:880px){.af-head{grid-template-columns:1fr;gap:18px;margin-bottom:var(--sp-4)}}
+
+/* ---- the country window -------------------------------------------------- */
+/* The signature. A photograph masked into the country's own borders, or the
+   outline filled in accent where there is no photograph yet. It is defined
+   here, once, because it has to look identical on the gateway and on all
+   fifty-four country pages — that is the whole point of it being a signature.
+   It degrades to the filled outline rather than to a grey box, so a country
+   with no photography is still finished. */
+.af-window{position:relative}
+.af-window svg{width:100%;height:100%;overflow:visible;display:block}
+/* The fill belongs to the component, not to one wrapper: the gateway's hero
+   draws the same window without an `.af-window` around it, and a scoped rule
+   left it painting black there. */
+.af-window-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
+.af-window--onbasalt .af-window-fill{fill:var(--c-accent)}
+/* One class for the SVG itself, so the build-time window (plate.py) and the
+   runtime one (scripts/window.js) cannot drift into two different components. */
+.af-window-svg{width:100%;height:100%;display:block;overflow:visible}
+
+/* ---- the plate ----------------------------------------------------------- */
+/* What a slot looks like before its photograph exists.
+ *
+ * Five hundred and sixty-seven of the five hundred and ninety-four image slots
+ * in this dataset have no photograph yet, so this is not an edge case — it is
+ * most of what the site currently looks like, and it is designed rather than
+ * merely survived. The plate occupies exactly the box the photograph will
+ * occupy, so swapping one for the other shifts nothing on the page.
+ *
+ * The ground is the country's own region tone, set per element, which is what
+ * stops a page of unresolved slots reading as a grid of identical grey holes:
+ * the Sahel and the Cape are different colours before either has a picture.
+ * The country's outline sits behind, bled off the corner, at the weight of a
+ * watermark. It never says "image missing" — it says what the photograph is of,
+ * which is true and is the most useful thing it can say. */
+/* The ground is the region's tone taken two thirds of the way to the house ink,
+   not the tone itself. Two of the five region tones — the sand of North Africa
+   and the ochre of Southern Africa — are light enough that cream type on them
+   measured 3.4:1 and 2.5:1, and this component is the empty state on five
+   hundred and sixty-seven image slots, so that was unreadable type across most
+   of the site. Darkening the tone rather than the palette keeps each region's
+   hue doing its job on the map, where it sits on paper and is never typed on.
+   Worst case is now 5.4:1. */
+.af-plate{position:relative;overflow:hidden;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:clamp(14px,4%,26px);
+  background:color-mix(in srgb,var(--plate-tone,var(--c-primary)) 66%,var(--c-primary));
+  color:var(--c-bg);isolation:isolate}
+/* A wash of paper over the tone, so five saturated inks become five grounds a
+   headline can sit on. */
+.af-plate::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(160deg,rgba(247,242,231,.16),rgba(247,242,231,0) 62%)}
+.af-plate-shape{position:absolute;right:-14%;top:-10%;width:78%;height:auto;z-index:-1;
+  opacity:.2;fill:var(--c-bg)}
+.af-plate-eye{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase}
+.af-plate-say{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  line-height:1.02;letter-spacing:-.01em;margin-top:8px;
+  font-size:clamp(17px,2.6cqw,30px);text-wrap:balance}
+.af-plate-where{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;margin-top:10px}
+/* The caption is sized against the plate rather than the viewport: the same
+   component is a 240px card on one page and a 1152px band on another, and a
+   headline that ignores its own box is only ever right in one of them. */
+@supports(container-type:inline-size){
+  .af-plate{container-type:inline-size}
+}
+/* Behind a headline the page already has: the outline and the ground, nothing
+   else. The shape moves to the middle and grows, because at full bleed a
+   watermark in the corner reads as an accident rather than as a decision. */
+.af-plate--ground .af-plate-shape{right:auto;left:50%;top:50%;
+  transform:translate(-30%,-50%);width:auto;height:150%;opacity:.14}
+
+/* ---- surfaces ------------------------------------------------------------ */
+.af-zone{padding:var(--sp-7) 0}
+.af-zone--dust{background:var(--fj-dust)}
+/* Every dark ground re-points the accent at its lit variant, so the rules
+   written against --c-accent do not need to know which surface they landed on.
+   Any new dark panel joins this list and inherits the same correction. */
+/* Dark grounds repoint two tokens, not one. --c-muted is a grey chosen against
+   cream paper; on basalt it measures 2.4:1, so any metadata that wandered onto a
+   dark panel was unreadable. Re-pointing it here means the hundred-odd rules
+   already written against --c-muted keep working and get the right grey for the
+   surface they landed on. Any new dark panel joins this list. */
+.af-zone--basalt,.af-dark,.st--now,.st-nowcard,.sx-nowsec,.sx-now,
+.wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
+.tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark{
+  --c-accent:var(--c-accent-lit);
+  --c-muted:var(--fj-onbasalt-dim);
+}
+.af-zone--basalt{background:var(--fj-basalt);color:var(--fj-onbasalt)}
+.af-zone--basalt h2,.af-zone--basalt h3{color:var(--c-bg)}
+.af-zone--basalt .af-note{color:var(--fj-onbasalt-dim)}
+.af-zone--basalt .af-head-no span{color:var(--fj-onbasalt-dim)}
+@media(max-width:880px){.af-zone{padding:var(--sp-6) 0}}
+
+@media(max-width:560px){.af-frame{padding:0 20px}}
+
+/* ---- explore: the universal index ---------------------------------------- */
+/* Cmd/Ctrl-K from any page on the site. Lives in the design system rather than
+   in a page's stylesheet because it is on every page, including the 404 — it is
+   the one component whose whole job is that the site has a single way in. */
+
+.ex-key{margin-left:6px;display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--c-muted);background:none;border:1px solid var(--c-border);
+  padding:6px 10px;cursor:pointer;white-space:nowrap;
+  transition:border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.ex-key:hover{border-color:var(--c-accent);color:var(--c-accent)}
+.ex-key kbd{font-family:inherit;font-size:9px;letter-spacing:.08em;
+  border:1px solid var(--c-border);padding:1px 5px;color:var(--c-muted)}
+/* The keycap hint goes at 900, not 700: between those two widths the nav is
+   still on and the pair together pushed the key past the right edge of a
+   768 tablet on the busiest masthead. The word carries it alone. */
+@media(max-width:900px){.ex-key kbd{display:none}}
+
+html.ex-open{overflow:hidden}
+.ex{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-start;
+  justify-content:center;padding:max(6vh,48px) 20px 20px}
+.ex-veil{position:absolute;inset:0;background:color-mix(in srgb,var(--c-primary) 62%,transparent)}
+.ex-panel{position:relative;width:min(680px,100%);max-height:82svh;display:flex;
+  flex-direction:column;background:var(--c-bg);border:2px solid var(--c-primary);
+  box-shadow:0 30px 80px color-mix(in srgb,var(--c-primary) 34%,transparent)}
+.ex-h{position:absolute;left:-9999px}
+.ex-bar{display:flex;align-items:center;gap:12px;padding:16px 18px;
+  border-bottom:2px solid var(--c-primary)}
+.ex-bar input{flex:1 1 0;min-width:0;font-family:var(--fj-text);font-size:19px;
+  background:transparent;color:var(--c-ink);border:0;padding:4px 0}
+.ex-bar input:focus{outline:none}
+.ex-esc{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--c-muted);background:none;border:1px solid var(--c-border);padding:6px 9px;
+  cursor:pointer}
+.ex-esc:hover{border-color:var(--c-primary);color:var(--c-primary)}
+.ex-status{padding:10px 18px 0;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted);min-height:1.2em}
+.ex-list{overflow-y:auto;padding:8px 0 14px;flex:1 1 auto;overscroll-behavior:contain}
+.ex-group{padding:16px 18px 6px;font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-accent)}
+.ex-row{display:block;padding:11px 18px;border-left:3px solid transparent}
+.ex-row b{display:block;font-family:var(--fj-display);font-size:18px;text-transform:uppercase;
+  line-height:1.1;font-weight:700}
+.ex-row span{display:block;margin-top:3px;font-size:14.5px;color:var(--c-muted)}
+.ex-row:hover,.ex-row.is-on{background:var(--fj-dust);border-left-color:var(--c-accent)}
+.ex-row.is-on b{color:var(--c-accent)}
+.ex-none{padding:18px;font-size:16px;color:var(--c-muted)}
+.ex-foot{padding:12px 18px;border-top:1px solid var(--c-border);font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.14em;line-height:1.8;text-transform:uppercase;
+  color:var(--c-muted)}
+@media(max-width:640px){
+  .ex{padding:0}
+  .ex-panel{width:100%;max-height:100svh;height:100svh;border-width:0}
+  .ex-row{padding:14px 16px}
+}
+@media(pointer:coarse){.ex-key,.ex-esc{min-height:44px}}
+/* The key sits between the routes and the page's primary call, and stays when
+   the routes go. On a phone it is the label that carries it: there is no Cmd
+   key to hint at, so the kbd hint is dropped and the word does the work. */
+.ex-key{margin-left:auto}
+.pl-routes+.ex-key,.at-routes+.ex-key,.jn-routes+.ex-key,.mt-routes+.ex-key,
+.wa-routes+.ex-key,.fj-routes+.ex-key,.routes+.ex-key{margin-left:6px}
+@media(max-width:1010px){
+  .wa-routes+.ex-key,.fj-routes+.ex-key,.routes+.ex-key{margin-left:auto}
+}
+@media(max-width:700px){
+  .pl-routes+.ex-key,.at-routes+.ex-key,.jn-routes+.ex-key,.mt-routes+.ex-key{margin-left:auto}
+}
+/* The key at phone widths. A masthead 320 pixels wide holds a wordmark, an index
+   and a call to action only if one of them stops using words — and the index is
+   the one that must survive, because it is the only control that reaches the
+   whole site. So the glyph carries it and the label is dropped, with the
+   accessible name still on the button. */
+.ex-key-eye{width:15px;height:15px;flex:none;display:none}
+.ex-key-word{display:inline}
+@media(max-width:560px){
+  .ex-key-eye{display:block}
+  .ex-key-word{display:none}
+  .ex-key{padding:9px 11px;min-width:44px;justify-content:center}
+}
+/* Below 420px the call to action gives up letter-spacing before the index gives
+   up existing. Every masthead on the site is covered by one rule rather than
+   six, because they all put a wordmark, the index and one button on a bar that
+   is now three hundred and twenty pixels wide. */
+@media(max-width:420px){
+  header .btn,header .af-btn,header a[class*="btn"]{
+    padding:9px 10px;font-size:8.5px;letter-spacing:.08em;white-space:nowrap}
+  header .btn i,header .af-btn i,header a[class*="btn"] i{display:none}
+  .wa-mast-in,.pl-mast,.at-mast,.jn-mast,.mt-mast,.mast-in,.fj-mast-in{gap:10px}
+  .af-frame{padding:0 14px}
+  .mark b,.wa-mark b,.pl-mark b{font-size:17px}
+  .mark>span:last-child,.wa-mark span{display:none}
+  .wa-mast-in{padding-left:14px;padding-right:14px}
+  .jn-mast,.at-mast,.mt-mast{padding-left:10px;padding-right:10px;gap:8px}
+  .mark b,.wa-mark b,.pl-mark b,.mt-mark b,.jn-mark b,.at-mark b{font-size:15px;
+    letter-spacing:0}
+  header .btn,header .af-btn,header a[class*="btn"]{padding:9px 8px;font-size:8px}
+  .pl-mast{padding:0 14px}
+  .ex-key{margin-left:auto}
+}

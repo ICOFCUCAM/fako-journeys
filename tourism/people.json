@@ -1,0 +1,20 @@
+{
+ "$comment": "The people behind the journeys — guides, cooks, craftspeople, drivers, rangers. It is empty, and that is the correct state until somebody has asked a real person for their details and their permission. Nothing on this site will invent a guide, a name, a photograph, a language list or a number of years worked; a fabricated person is worse than an absent one, because a visitor cannot tell the difference until they arrive. The components that render this file simply do not appear while it is empty, which is why the operator block on every page says who the company is and stops there.\n\nTo add somebody: one object per person, keyed by a slug, with the fields below. `operator` must match a key in operators.json. `photo` must be a real photograph of that person, held under /images/uploads/ with their permission — never a generated image, and never a stock photograph of somebody else standing in for them.",
+
+ "$schema": {
+  "name": "the name they go by, as they gave it",
+  "role": "what they actually do — 'Forest guide', 'Cook', 'Bronze caster'",
+  "operator": "key in operators.json, or omitted for an independent",
+  "country": "country slug",
+  "base": "the town or village they work out of",
+  "languages": "array, as they listed them",
+  "since": "year they started this work, if they said",
+  "speciality": "one short phrase",
+  "line": "one or two sentences, in their words or approved by them",
+  "photo": "/images/uploads/... a real photograph, with permission",
+  "photo_alt": "what the photograph shows",
+  "verified": "the date somebody at Afrinkong confirmed this with them"
+ },
+
+ "people": {}
+}

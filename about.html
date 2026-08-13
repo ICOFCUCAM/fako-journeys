@@ -3,37 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Operator — Guides, Licensing, Community and Conservation | Fako Journeys</title>
-<meta name="description" content="A Buea outfit that grew into a national tour operator: eleven Mount CEO certified guides working in the regions they come from, a MINTOUL Class A licence, a village fund taking three per cent of turnover, and trail work on the mountain twice a year.">
+<title>The Operator — Guides, Licensing, Community and Conservation | Kamerun</title>
+<meta name="description" content="A Buea outfit that grew into a national tour operator: eleven Mount CEO certified guides working in the regions they come from, a MINTOUL Class A licence, a village fund taking three per cent of turnover, and trail work on the mountain twice a year."
+<link rel="canonical" href="https://afrinkong.com/about">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="The Operator — Guides, Licensing, Community and Conservation | Kamerun">
+<meta property="og:description" content="A Buea outfit that grew into a national tour operator: eleven Mount CEO certified guides working in the regions they come from, a MINTOUL Class A licence, a village fund taking three per cent of turnover, and trail work on the mountain twice a year.">
+<meta property="og:url" content="https://afrinkong.com/about">
+<meta name="twitter:card" content="summary">>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
+/* Tokens, reset, type scale, focus and motion behaviour are in
+   /styles/afrinkong.css. What is left here is the Kamerun operator's own
+   extension of the palette — the tokens the group system has no use for — and
+   this page's layout. */
 :root{
-  /* master tokens (rebrandable) — laterite-relief: raffia paper, basalt ink, laterite road */
-  --c-bg:#F7F2E7;
-  --c-primary:#1C2A25;
-  --c-accent:#BE5527;
-  --c-ink:#1F211C;
-  --c-muted:#6E7166;
-  --c-border:#DDD4C1;
-  /* derived surfaces */
   --fj-raffia:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
-  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-canopy:color-mix(in srgb,var(--c-primary) 82%,var(--c-accent));
   --fj-ember:color-mix(in srgb,var(--c-accent) 14%,var(--c-bg));
-  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
-  --fj-rule:1px solid var(--c-border);
-  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
-  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
-  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
-  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
-  /* photograph-relative values: these sit ON imagery, so they are tuned to the photograph
-     rather than to the brand palette and stay legible whatever picture is dropped in */
   --fj-shade:#141310;
   --fj-onphoto:#FAF5EA;
   --fj-onphoto-soft:#F2EBDB;
   --fj-onphoto-dim:#EBE2CE;
-  color-scheme:light;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -125,11 +117,11 @@ ul,ol{list-style:none}
 .fj-transect-step.lv5{min-height:150px}
 .fj-transect-step.lv6{min-height:132px}
 .fj-transect-alt{font-family:var(--fj-display);font-size:23px;font-weight:700;line-height:1}
-.fj-transect-step.lv3 .fj-transect-alt{color:var(--c-bg)}
+.fj-transect-step.lv6 .fj-transect-alt{color:var(--c-bg)}
 .fj-transect-step b{display:block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:10px;font-weight:400;color:var(--c-accent)}
-.fj-transect-step.lv3 b{color:var(--fj-ember)}
+.fj-transect-step.lv6 b{color:var(--c-accent)}
 .fj-transect-step p{font-size:13.5px;line-height:1.45;color:var(--c-muted);margin-top:6px}
-.fj-transect-step.lv3 p{color:var(--fj-onbasalt-dim)}
+.fj-transect-step.lv6 p{color:var(--fj-onbasalt-dim)}
 .fj-transect-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:14px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 @media(max-width:900px){.fj-transect{grid-template-columns:repeat(3,1fr)}.fj-transect-step{min-height:0 !important;padding:14px 12px}}
 @media(max-width:520px){.fj-transect{grid-template-columns:1fr 1fr}}
@@ -143,7 +135,12 @@ ul,ol{list-style:none}
    degrade to `absolute` and the effect would vanish with no error at all.
    background-attachment:fixed is not a substitute — iOS Safari ignores it.
    No script drives this. Verified by `npm run test:fixedwindow`. */
-.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
+.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center;background:var(--c-primary)}
+/* The ground is the house ink, not nothing. This panel sets cream type over a
+   fixed photograph, and the photograph for it has not been placed — which left
+   a full-height section of cream on cream, measured at 1.03:1 and invisible.
+   With a ground the panel reads either way, and the photograph covers it when
+   one arrives. */
 .fj-vista-pic{position:fixed;inset:0;z-index:0}
 .fj-vista-pic img{width:100%;height:100%;object-fit:cover}
 /* Veil 1 — a directional wash off the western flank: deep across the reading column
@@ -367,11 +364,12 @@ ul,ol{list-style:none}
 </style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to the page</a>
 <!-- nav -->
 <header class="fj-mast">
   <div class="fj-frame fj-mast-in">
-    <a class="fj-mark" href="/"><b>Fako Journeys</b><span>Cameroun &middot; Circuits guid&eacute;s / Guided circuits</span></a>
-    <nav class="fj-routes">
+    <a class="fj-mark" href="/cameroon"><b>Kamerun</b><span>Discover Cameroon.</span></a>
+    <nav class="fj-routes" aria-label="Primary">
       <a href="/services">Circuits</a>
       <a href="/pricing">Rates &amp; Fees</a>
       <a href="/about">The Operator</a>
@@ -381,6 +379,7 @@ ul,ol{list-style:none}
     <a class="btn" href="#quote">Plan a circuit</a>
   </div>
 </header>
+<main id="main">
 <!-- opening -->
 <section class="fj-open">
   <div class="fj-frame">
@@ -395,7 +394,7 @@ ul,ol{list-style:none}
         </div>
       </div>
       <div class="fj-open-plate fj-rise">
-        <img src="/images/mount-trailhead-dawn.svg" alt="Guides and porters gathered at a trailhead registration point in Buea at dawn">
+        <img src="/images/uploads/site-about-mount-trailhead-dawn-1600w.jpg" srcset="/images/uploads/site-about-mount-trailhead-dawn-1600w.jpg 1600w" alt="Guides and porters gathered at a trailhead registration point in Buea at dawn" decoding="async" style="object-position:50% 50%" data-illustration="/images/mount-trailhead-dawn.svg" data-illustration-alt="Guides and porters gathered at a trailhead registration point in Buea at dawn" data-provider="upload" data-placed="true">
         <div class="fj-open-tag"><b>MINTOUL licence 0412/AG/19</b><span>Class A tour operator, renewed annually</span></div>
       </div>
     </div>
@@ -499,17 +498,17 @@ ul,ol{list-style:none}
     </div>
     <div class="fj-crew">
       <div class="fj-crew-card fj-rise">
-        <img src="https://images.pexels.com/photos/38330925/pexels-photo-38330925.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=720&h=720" srcset="https://images.pexels.com/photos/38330925/pexels-photo-38330925.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=360&h=360 360w, https://images.pexels.com/photos/38330925/pexels-photo-38330925.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=540&h=540 540w, https://images.pexels.com/photos/38330925/pexels-photo-38330925.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=720&h=720 720w, https://images.pexels.com/photos/38330925/pexels-photo-38330925.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1080&h=1080 1080w" sizes="(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw" alt="a Mafa farmer on the terraced slopes of the Mandara mountains, Cameroon" loading="lazy" decoding="async" style="object-position:50% 38%" data-illustration="/images/mount-guide-portrait.svg" data-illustration-alt="A mountain guide in a fleece and cap on the upper slopes at first light" data-provider="pexels">
+        <img src="/images/generated/site-about-mount-guide-portrait-1254w.jpg" srcset="/images/generated/site-about-mount-guide-portrait-1254w.jpg 1254w" sizes="(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw" alt="A mountain guide in a fleece and cap on the upper slopes at first light" loading="lazy" decoding="async" style="object-position:50% 38%" data-illustration="/images/mount-guide-portrait.svg" data-illustration-alt="A mountain guide in a fleece and cap on the upper slopes at first light" data-provider="openai" data-placed="true" data-generated="true">
         <b>Head of mountain operations</b><span>Buea &middot; with us since 2011</span>
         <p>Grew up at Bokwango on the mountain's south flank and has been to the summit more than three hundred times. Sets the turnaround times and trains every new guide on the hill before they take a group anywhere else.</p>
       </div>
       <div class="fj-crew-card fj-rise">
-        <img src="https://images.unsplash.com/photo-1615463738213-b9381d217b4e?auto=format&fit=crop&crop=focalpoint&fp-x=0.560&fp-y=0.520&w=720&h=720&q=80" srcset="https://images.unsplash.com/photo-1615463738213-b9381d217b4e?auto=format&fit=crop&crop=focalpoint&fp-x=0.560&fp-y=0.520&w=360&h=360&q=80 360w, https://images.unsplash.com/photo-1615463738213-b9381d217b4e?auto=format&fit=crop&crop=focalpoint&fp-x=0.560&fp-y=0.520&w=540&h=540&q=80 540w, https://images.unsplash.com/photo-1615463738213-b9381d217b4e?auto=format&fit=crop&crop=focalpoint&fp-x=0.560&fp-y=0.520&w=720&h=720&q=80 720w, https://images.unsplash.com/photo-1615463738213-b9381d217b4e?auto=format&fit=crop&crop=focalpoint&fp-x=0.560&fp-y=0.520&w=1080&h=1080&q=80 1080w" sizes="(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw" alt="a forest guide identifying a tree species inside Korup rainforest, Cameroon" loading="lazy" decoding="async" style="object-position:56% 52%" data-illustration="/images/forest-guide-tree.svg" data-illustration-alt="A forest guide pointing out a tree species inside dense rainforest" data-provider="unsplash">
+        <img src="/images/uploads/site-about-forest-guide-tree-1440w.jpg" srcset="/images/uploads/site-about-forest-guide-tree-1440w.jpg 1440w" sizes="(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw" alt="A forest guide pointing out a tree species inside dense rainforest" loading="lazy" decoding="async" style="object-position:56% 52%" data-illustration="/images/forest-guide-tree.svg" data-illustration-alt="A forest guide pointing out a tree species inside dense rainforest" data-provider="upload" data-placed="true">
         <b>Lead forest guide</b><span>Mundemba &middot; with us since 2015</span>
         <p>Trained as a park ranger at Korup before joining us. Reads the forest floor for drill and elephant sign, knows the camp keepers by name, and carries the leech socks nobody believes they will need.</p>
       </div>
       <div class="fj-crew-card fj-rise">
-        <img src="https://images.unsplash.com/photo-1775138622438-f9568c3e279d?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.440&w=720&h=720&q=80" srcset="https://images.unsplash.com/photo-1775138622438-f9568c3e279d?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.440&w=360&h=360&q=80 360w, https://images.unsplash.com/photo-1775138622438-f9568c3e279d?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.440&w=540&h=540&q=80 540w, https://images.unsplash.com/photo-1775138622438-f9568c3e279d?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.440&w=720&h=720&q=80 720w, https://images.unsplash.com/photo-1775138622438-f9568c3e279d?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.440&w=1080&h=1080&q=80 1080w" sizes="(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw" alt="masked dancers and horsemen at the Nguon festival in Foumban, Cameroon" loading="lazy" decoding="async" style="object-position:50% 44%" data-illustration="/images/north-market-street.svg" data-illustration-alt="A guide talking with a market trader beside a vehicle in a northern town" data-provider="unsplash">
+        <img src="/images/uploads/site-about-north-market-street-1440w.jpg" srcset="/images/uploads/site-about-north-market-street-1440w.jpg 1440w" sizes="(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw" alt="A guide talking with a market trader beside a vehicle in a northern town" loading="lazy" decoding="async" style="object-position:50% 44%" data-illustration="/images/north-market-street.svg" data-illustration-alt="A guide talking with a market trader beside a vehicle in a northern town" data-provider="upload" data-placed="true">
         <b>Northern circuits lead</b><span>Maroua &middot; with us since 2018</span>
         <p>Fulfulde, French and English. Runs the B&eacute;nou&eacute;&ndash;Waza loop, handles the park service and the checkpoints, and is the reason a nine-day northern circuit feels like an easy one.</p>
       </div>
@@ -521,7 +520,7 @@ ul,ol{list-style:none}
 <section class="fj-zone basalt">
   <div class="fj-frame">
     <div class="fj-craft">
-      <div class="fj-craft-pic fj-rise"><img src="https://images.unsplash.com/photo-1689762063112-a6220c5e1f70?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.580&w=880&h=1100&q=82" srcset="https://images.unsplash.com/photo-1689762063112-a6220c5e1f70?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.580&w=440&h=550&q=82 440w, https://images.unsplash.com/photo-1689762063112-a6220c5e1f70?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.580&w=660&h=825&q=82 660w, https://images.unsplash.com/photo-1689762063112-a6220c5e1f70?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.580&w=880&h=1100&q=82 880w, https://images.unsplash.com/photo-1689762063112-a6220c5e1f70?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.580&w=1320&h=1650&q=82 1320w" sizes="(min-width: 1240px) 440px, (min-width: 900px) 38vw, 92vw" alt="villagers and guides repairing a stone section of mountain trail together, Cameroon" loading="lazy" decoding="async" style="object-position:48% 58%" data-illustration="/images/mount-trail-repair.svg" data-illustration-alt="Villagers and guides working together on a repaired section of mountain trail" data-provider="unsplash"></div>
+      <div class="fj-craft-pic fj-rise"><img src="/images/uploads/site-about-mount-trail-repair-1536w.jpg" srcset="/images/uploads/site-about-mount-trail-repair-1536w.jpg 1536w" sizes="(min-width: 1240px) 440px, (min-width: 900px) 38vw, 92vw" alt="Villagers and guides working together on a repaired section of mountain trail" loading="lazy" decoding="async" style="object-position:48% 58%" data-illustration="/images/mount-trail-repair.svg" data-illustration-alt="Villagers and guides working together on a repaired section of mountain trail" data-provider="upload" data-placed="true"></div>
       <div class="fj-craft-copy fj-rise">
         <span class="fj-stamp">04 &mdash; Community &amp; conservation</span>
         <h2>Three per cent of turnover, and the <em>rotation we did not invent</em>.</h2>
@@ -550,10 +549,10 @@ ul,ol{list-style:none}
           <div><dt>Licence</dt><dd>MINTOUL 0412/AG/19, Class A tour operator</dd></div>
           <div><dt>Insurance</dt><dd>Public liability and passenger cover, certificates on request</dd></div>
           <div><dt>Guides</dt><dd>Mount CEO certified, first aid renewed every two years</dd></div>
-          <div><dt>Written</dt><dd>bonjour@fakojourneys.cm</dd></div>
+          <div><dt>Written</dt><dd>bonjour@kamerun.cm</dd></div>
         </dl>
       </div>
-      <form class="fj-form fj-rise" data-lead-mailto="bonjour@fakojourneys.cm" data-lead-form data-lead-success="Thank you — your message has reached the Douala office. One of the two of us will answer it personally within one working day, in whichever language you wrote in." data-lead-error="That did not send. Please telephone +237 233 42 09 61 or write to bonjour@fakojourneys.cm and we will pick it up from there.">
+      <form class="fj-form fj-rise" data-lead-mailto="bonjour@kamerun.cm" data-lead-form data-lead-success="Thank you — your message has reached the Douala office. One of the two of us will answer it personally within one working day, in whichever language you wrote in." data-lead-error="That did not send. Please telephone +237 233 42 09 61 or write to bonjour@kamerun.cm and we will pick it up from there.">
         <div class="fj-row">
           <div class="fj-cell"><label for="anm">Your name</label><input id="anm" name="name" required></div>
           <div class="fj-cell"><label for="aph">Telephone or WhatsApp</label><input id="aph" name="phone"></div>
@@ -602,11 +601,12 @@ ul,ol{list-style:none}
 })();
 </script>
 <!-- footer -->
+</main>
 <footer class="fj-foot">
   <div class="fj-frame">
     <div class="fj-foot-grid">
       <div>
-        <div class="fj-foot-brand">Fako<span>Tour operator &middot; Buea &amp; Douala</span></div>
+        <div class="fj-foot-brand">Kamerun<span>Discover Cameroon.</span></div>
         <p>Licensed circuits across the whole country &mdash; volcano, rainforest, highlands, coast and Sahel &mdash; run by guides who live in the regions they walk you through. Bookings taken in French and in English.</p>
       </div>
       <div class="fj-foot-col">
@@ -629,11 +629,13 @@ ul,ol{list-style:none}
         <span>Rue Njo-Njo, Bonapriso, Douala</span>
         <span>Sandpit Road, Molyko, Buea</span>
         <span>+237 233 42 09 61</span>
-        <span>bonjour@fakojourneys.cm</span>
+        <span>bonjour@kamerun.cm</span>
       </div>
     </div>
-    <div class="fj-foot-bar">&copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
+    <div class="fj-foot-bar"><a href="/" style="border-bottom:1px solid var(--c-accent)">Part of Afrinkong</a> &middot; &copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
   </div>
 </footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
 </body>
 </html>

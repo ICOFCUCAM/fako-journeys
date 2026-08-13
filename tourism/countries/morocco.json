@@ -1,0 +1,296 @@
+{
+ "slug": "morocco",
+ "name": "Morocco",
+ "adjective": "Moroccan",
+ "region": "North Africa",
+ "tagline": "Atlas, Sahara and the medinas",
+ "summary": "Four thousand metres of High Atlas within three hours of the Atlantic, four imperial cities, and the edge of the Sahara at Merzouga — a country you can cross from surf to dunes in two days.",
+ "published": true,
+ "calls": [
+  "mountains",
+  "culture",
+  "food",
+  "heritage"
+ ],
+ "months": [
+  3,
+  4,
+  5,
+  9,
+  10,
+  11
+ ],
+ "when": "Spring and autumn: the Atlas is walkable and the south is not yet an oven.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Where the Atlas Meets the Sahara",
+   "description": "Snow on the High Atlas in the morning and the first dunes of the Sahara by evening.",
+   "subject": "the High Atlas mountains rising behind a Moroccan kasbah",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Draa and the Dades",
+   "description": "Palm oases strung along the Draa, and gorges cut red through the Dades and the Todra.",
+   "subject": "the Todra gorge with red rock walls and a river below",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Barbary Macaques and the Argan Forest",
+   "description": "Macaques in the cedar forest above Azrou, and goats standing in the argan trees near Essaouira.",
+   "subject": "Barbary macaques in the cedar forest of the Middle Atlas",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Desert Country",
+   "description": "Not the safari of the east — the wildlife here is desert-adapted, and you look for it at first light.",
+   "subject": "a desert track through stony hammada in southern Morocco",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The High Atlas",
+   "description": "Toubkal is 4,167 metres and the highest point in North Africa, walkable in two days from Imlil.",
+   "subject": "Mount Toubkal under snow above the village of Imlil",
+   "focal": [
+    50,
+    44
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Ouzoud",
+   "description": "A hundred metres of water in three stages, with macaques in the olive trees beside it.",
+   "subject": "the Ouzoud falls dropping in stages through olive trees",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Draa River",
+   "description": "The longest river in Morocco, mostly dry, and green the whole way where it is not.",
+   "subject": "palm groves along the Draa valley in southern Morocco",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "The Atlantic Coast",
+   "description": "Essaouira's wind, Taghazout's point breaks, and the long empty beaches between them.",
+   "subject": "the walled seafront of Essaouira with fishing boats",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Cedar Forest",
+   "description": "The Middle Atlas cedar, some of it a thousand years old, above Ifrane and Azrou.",
+   "subject": "ancient Atlas cedar trees in the Middle Atlas forest",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Dunes, Gorges and Surf",
+   "description": "Trekking in the Atlas, surfing the Atlantic points, and a night out on the erg at Chegaga.",
+   "subject": "a trekking trail high on a ridge in the High Atlas",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Amazigh and Arab",
+   "description": "Three Amazigh languages, Arabic, French and Spanish, and a culture that predates all of them.",
+   "subject": "an Amazigh village of earth houses built into a hillside",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The People of the Atlas",
+   "description": "Village life at two thousand metres, where the year is still organised around the snow.",
+   "subject": "a shepherd with his flock on a High Atlas terrace",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Tagine, Bread and Mint",
+   "description": "Slow-cooked tagine, bread baked in the neighbourhood oven, and tea poured from height.",
+   "subject": "a tagine cooking over charcoal at a roadside stall",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Moussem and Gnaoua",
+   "description": "The Gnaoua festival in Essaouira in June, and the moussems that mark the harvest.",
+   "subject": "musicians playing at the Gnaoua festival in Essaouira",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Zellige, Leather and Wool",
+   "description": "Tile cut by hand in Fez, tanned leather, and carpets woven to patterns held in memory.",
+   "subject": "a craftsman cutting zellige tile by hand in Fez",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Volubilis and the Kasbahs",
+   "description": "A Roman city on the plain at Volubilis, and Ait Benhaddou standing above the Ounila.",
+   "subject": "the earth kasbah of Ait Benhaddou above the river",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Imperial Cities",
+   "description": "Fez, Marrakesh, Meknes and Rabat — four capitals, each of a different dynasty.",
+   "subject": "the tanneries and rooftops of the Fez medina",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Marrakesh and Casablanca",
+   "description": "Jemaa el-Fnaa at dusk, and the Atlantic modernism of Casablanca an hour up the road.",
+   "subject": "Jemaa el-Fnaa square in Marrakesh filling at dusk",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Riad and Medina",
+   "description": "Rooms built inward around a courtyard, because the street was never meant to see in.",
+   "subject": "the tiled courtyard of a traditional Moroccan riad",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Souk in the Morning",
+   "description": "Before the tour groups, the medina is simply where people buy their vegetables.",
+   "subject": "a produce market in a Moroccan medina early in the morning",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Easy Travelling",
+   "description": "Short drives, good roads, and a train line down the coast that children enjoy.",
+   "subject": "a family walking a quiet lane in a Moroccan hill village",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Trek, Surf, Ride",
+   "description": "Multi-day Atlas treks, Atlantic surf schools, and horses on the Essaouira sand.",
+   "subject": "surfers walking the beach at Taghazout at sunset",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Desert Camps and Riads",
+   "description": "Erg Chigaga camps well beyond the day-trip dunes, and riads restored room by room.",
+   "subject": "a desert camp of tents on the dunes at Erg Chigaga",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Oasis Agriculture",
+   "description": "The khettara irrigation channels still working, and the argan cooperatives run by women.",
+   "subject": "a palm oasis irrigated by traditional channels",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Light on Earth Walls",
+   "description": "Pisé takes late light the way nothing else does, which is why every photographer comes here.",
+   "subject": "late light on the earth walls of a southern Moroccan kasbah",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Chefchaouen and the Rif",
+   "description": "The blue town in the Rif, and a mountain range most itineraries drive straight past.",
+   "subject": "the blue-painted lanes of Chefchaouen in the Rif",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Two Days, Four Climates",
+   "description": "Surf in the morning, cedar forest by lunch, and the Sahara the following evening.",
+   "subject": "a road climbing a High Atlas pass with the Sahara beyond",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

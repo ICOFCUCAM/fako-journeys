@@ -1,0 +1,99 @@
+name: Optimise images
+
+# Resize and re-encode the placed images on a runner, where Pillow is available.
+#
+# The site's own environment has no image library, so this cannot be done where
+# the images are placed. Same arrangement as the resolver and the generator:
+# the network- or dependency-bound step runs here and commits its result back.
+#
+# Start with dry_run to see which files are oversized and what they would be
+# resized to. Nothing is committed on a dry run.
+
+on:
+  workflow_dispatch:
+    inputs:
+      country:
+        description: "Country slug (decides which slots are scanned)"
+        required: false
+        default: cameroon
+      dry_run:
+        description: "List what would change; re-encode nothing"
+        type: boolean
+        required: false
+        default: true
+      commit:
+        description: "Commit the re-encoded images and the rewritten pages"
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tourism-optimise-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  optimise:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Pillow
+        run: pip install --quiet Pillow
+
+      - name: Weigh the pages before
+        run: |
+          python3 - <<'PY'
+          import re, os
+          for page in ("index.html","services.html","about.html","contact.html","pricing.html"):
+              s = open(page).read(); total = 0; n = 0
+              for m in re.findall(r'src="(/images/[^"]*)"', s):
+                  p = m.lstrip('/')
+                  if os.path.exists(p): total += os.path.getsize(p); n += 1
+              print("  %-14s %2d images  %6.1f MB" % (page, n, total/1048576.0))
+          PY
+
+      - name: Optimise
+        run: |
+          ARGS="--country ${{ inputs.country }}"
+          [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
+          python3 tools/tourism/build.py optimise $ARGS
+
+      - name: Weigh the pages after, and check nothing broke
+        if: ${{ !inputs.dry_run }}
+        run: |
+          python3 - <<'PY'
+          import re, os, sys
+          missing = []
+          for page in ("index.html","services.html","about.html","contact.html","pricing.html"):
+              s = open(page).read(); total = 0; n = 0
+              for m in re.findall(r'src="(/images/[^"]*)"', s):
+                  p = m.lstrip('/')
+                  if not os.path.exists(p): missing.append(m)
+                  else: total += os.path.getsize(p); n += 1
+              print("  %-14s %2d images  %6.1f MB" % (page, n, total/1048576.0))
+          if missing:
+              print("::error::these images are referenced but no longer exist: %s" % ", ".join(missing))
+              sys.exit(1)
+          PY
+          python3 tools/tourism/build.py verify
+
+      - name: Commit
+        if: ${{ inputs.commit && !inputs.dry_run }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A images *.html
+          if git diff --cached --quiet; then
+            echo "nothing to do — every image was already small enough"
+          else
+            git commit -m "Optimise images" \
+                       -m "Ran tools/tourism/build.py optimise on a runner. Each image is resized to twice the widest box its slot is painted at and re-encoded; every src and srcset pointing at it was rewritten to match."
+            git push
+          fi

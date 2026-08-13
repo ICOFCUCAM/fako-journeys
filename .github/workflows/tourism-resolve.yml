@@ -22,7 +22,7 @@ on:
       country:
         description: "Country slug, or blank for every country"
         required: false
-        default: cameroon
+        default: ""
       category:
         description: "Category id, or blank for all 27"
         required: false
@@ -86,6 +86,10 @@ jobs:
 
       - name: Rebuild pages and validate
         run: |
+          # `all` runs validate, render, homes, gateway, verify and report — the
+          # country pages and the gateway read their pictures from the same cache
+          # the resolver just filled, so both have to be rewritten here or the
+          # run fills the cache and every page still shows what it showed before.
           python3 tools/tourism/build.py all
 
       - name: Per-slot status
@@ -114,7 +118,12 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tourism/cache/images.json tourism/*.html tourism/REPORT.md
+          # Every generated page, not a list of five that was true when there
+          # were five. The country pages and the gateway are both regenerated
+          # above, and naming them individually is how fourteen of them came to
+          # be silently dropped.
+          git add tourism/cache/images.json tourism/REPORT.md tourism/*.html \
+                  index.html *.html
           if git diff --cached --quiet; then
             echo "nothing changed — every requested slot was already cached"
           else

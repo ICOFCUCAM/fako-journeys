@@ -13,11 +13,17 @@ verification, caching, resumability and render.
 Nothing here writes tourism/cache/ or tourism/countries/.
 """
 
+import base64
+import glob
+import html as html_mod
 import http.server
 import json
+import struct
+import zlib
 import os
 import re
 import shutil
+import subprocess
 import socketserver
 import sys
 import tempfile
@@ -25,10 +31,27 @@ import threading
 import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.dirname(HERE))
 
 PORT = 8791
 JPEG = b"\xff\xd8\xff\xe0" + b"\x00" * 4000 + b"\xff\xd9"
+
+
+def png(width, height, seed=0):
+    """A real PNG at exactly these dimensions, so the header the code parses is
+    the header a generator would actually send."""
+    rows = [b"\x00" + bytes([(x + y + seed) % 256 for x in range(width * 3)])
+            for y in range(height)]
+
+    def chunk(tag, data):
+        block = tag + data
+        return (struct.pack(">I", len(data)) + block
+                + struct.pack(">I", zlib.crc32(block) & 0xFFFFFFFF))
+
+    header = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", header)
+            + chunk(b"IDAT", zlib.compress(b"".join(rows))) + chunk(b"IEND", b""))
 
 RESULTS = []
 CALLS = []
@@ -45,6 +68,7 @@ class Mocks(http.server.BaseHTTPRequestHandler):
     unsplash_empty = False
     unsplash_irrelevant = False
     pexels_empty = False
+    openai_down = False
 
     def log_message(self, *a):
         pass
@@ -92,6 +116,24 @@ class Mocks(http.server.BaseHTTPRequestHandler):
         }
 
     # -- routes -----------------------------------------------------------------
+
+    def do_POST(self):
+        """gpt-image-1 and the vision endpoint. Returns real PNG bytes at the
+        requested size, so the caller has to measure them like it would in
+        production rather than trusting what it asked for."""
+        body = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
+        if not self.headers.get("Authorization", "").startswith("Bearer "):
+            return self._json({"error": {"message": "no key"}}, status=401)
+        if self.openai_down:
+            return self._json({"error": {"message": "rate limited"}}, status=429)
+        CALLS.append(("openai", self.path))
+        if self.path.endswith("/images/generations"):
+            w, h = (int(v) for v in body["size"].split("x"))
+            return self._json({"data": [
+                {"b64_json": base64.b64encode(png(w, h, i)).decode()}
+                for i in range(body.get("n", 1))]})
+        return self._json({"choices": [{"message": {"content":
+            "Elephants at a waterhole in dry acacia savanna."}}]})
 
     def do_GET(self):
         url = urllib.parse.urlparse(self.path)
@@ -171,6 +213,7 @@ def no_keys():
     os.environ.pop("UNSPLASH_ACCESS_KEY", None)
     os.environ.pop("UNSPLASH_API_KEY", None)
     os.environ.pop("PEXELS_API_KEY", None)
+    os.environ.pop("OPENAI_API_KEY", None)
 
 
 def resolve_all(tax, country, cache, seen=None, only=None):
@@ -202,7 +245,8 @@ def main():
 
     from tourism import cache as cache_mod
     from tourism import imaging, providers, queries, relevance, resolve, validate
-    from tourism.model import attach_cache, load_countries, load_taxonomy
+    from tourism.model import (attach_cache, load_countries, load_country,
+                               load_taxonomy)
 
     socketserver.TCPServer.allow_reuse_address = True
     httpd = socketserver.TCPServer(("127.0.0.1", PORT), Mocks)
@@ -510,6 +554,845 @@ def main():
               and not re.search(r"(UNSPLASH_ACCESS_KEY|PEXELS_API_KEY)=\S", body))
         check("the cache schema has no key field",
               not any("key" in f.lower() for f in cache_mod.FIELDS))
+        check(".env.example declares OPENAI_API_KEY, empty",
+              "OPENAI_API_KEY=" in body and not re.search(r"OPENAI_API_KEY=\S", body))
+
+        # ---- the generation engine ------------------------------------------
+        print("\ngeneration engine")
+        from tourism import candidates as pool, generate as gen
+        from tourism import intake, place as place_mod, placements as pl, prompting
+
+        style = prompting.load_style()
+        placements = pl.scan(cameroon)
+        targets = pl.targetable(placements)
+
+        check("every image slot on the five pages is found",
+              len(placements) >= 30, "%d slots" % len(placements))
+        check("locked artwork is never a generation target",
+              all(not p["locked"] for p in targets)
+              and any(p["locked"] for p in placements))
+        check("each slot carries the shape its own stylesheet imposes",
+              {tuple(p["aspect"]) for p in placements} >= {(3, 4), (4, 5), (5, 4)})
+        check("one illustration used at two shapes is two different jobs",
+              any(len({tuple(i["aspect"]) for i in items}) > 1
+                  for items in pl.duplicates(placements).values()))
+
+        jobs = gen.plan_jobs(cameroon, tax, pool.Pool(path=os.path.join(tmp, "p.json")),
+                             style, "site")
+        prompts = {j.slot: j.prompt for j in jobs}
+        check("every targetable slot compiles to an instruction",
+              len(jobs) == len(targets) and all(prompts.values()))
+        check("the instruction names the slot's own subject",
+              all(j.prompt.startswith("A documentary travel photograph. Subject:")
+                  for j in jobs))
+        check("the instruction states the delivered crop",
+              all("cropped to %d:%d" % tuple(j.aspect) in j.prompt for j in jobs))
+        check("the instruction forbids text baked into the picture",
+              all("watermarks" in j.prompt and "travel-poster" in j.prompt for j in jobs))
+        check("prompts are deterministic",
+              prompts == {j.slot: j.prompt for j in
+                          gen.plan_jobs(cameroon, tax,
+                                        pool.Pool(path=os.path.join(tmp, "p2.json")),
+                                        style, "site")})
+        check("a portrait slot asks for a portrait frame",
+              all(prompting.size_for_aspect(j.aspect, style) == "1024x1536"
+                  for j in jobs if j.aspect[1] > j.aspect[0]))
+
+        # generation against the mock, which returns real PNG bytes
+        os.environ["OPENAI_API_BASE"] = "http://localhost:%d/openai/v1" % PORT
+        os.environ["TOURISM_CANDIDATES_FILE"] = os.path.join(tmp, "candidates.json")
+        gen.CANDIDATE_DIR = os.path.join(tmp, "candidates")
+        place_mod.DESTINATIONS = {
+            "openai": (os.path.join(tmp, "images", "generated"), "/images/generated/"),
+            "upload": (os.path.join(tmp, "images", "uploads"), "/images/uploads/"),
+        }
+
+        os.environ.pop("OPENAI_API_KEY", None)
+        check("no key means no generation, and a clear reason",
+              _raises(lambda: gen.run(cameroon, tax, scope="site", only="waza-elephants",
+                                      log=lambda *a: None),
+                      gen.Unavailable))
+        check("a dry run sends nothing and needs no key",
+              gen.run(cameroon, tax, scope="site", only="waza-elephants",
+                      dry_run=True, log=lambda *a: None)["generated"] == 0)
+
+        os.environ["OPENAI_API_KEY"] = "mock-openai-key"
+        summary = gen.run(cameroon, tax, scope="site", only="waza-elephants",
+                          log=lambda *a: None)
+        index = pool.load()
+        made = [c for slot in index.slots for c in index.generated(slot)]
+        check("generation writes real image files",
+              summary["generated"] == 2 and len(made) == 2)
+        check("dimensions are read from the bytes, not from the request",
+              all(c["width"] and c["height"] and
+                  os.path.exists(os.path.join(root, c["file"])) for c in made))
+        check("the same subject at two shapes gets two different pictures",
+              len({c["id"] for c in made}) == 2
+              and len({tuple(c["aspect"]) for c in made}) == 2)
+        check("a generated candidate records the instruction it came from",
+              all(c.get("prompt") and c.get("where") for c in made))
+        check("a second run generates nothing already held",
+              gen.run(cameroon, tax, scope="site", only="waza-elephants",
+                      log=lambda *a: None)["generated"] == 0)
+
+        check("nothing generated is in the live cache",
+              not any(r.get("provider") in ("openai", "upload")
+                      for r in cache_mod.load().entries.values()))
+
+        # placement
+        # Derived, not spelled out: the slot key contains the page name, and
+        # hard-coding it broke the moment the Cameroon home page moved off the
+        # site root. The test cares that a slot can be placed, not which page.
+        waza_slot = [p for p in targets if p["id"] == "waza-elephants"][0]
+        slot = pool.placement_slot(waza_slot)
+        cand = index.generated(slot)[0]
+        before = open(os.path.join(root, "index.html")).read()
+        report = place_mod.run({slot: cand["id"]}, cameroon, dry_run=True, log=lambda *a: None)
+        check("a dry-run placement writes no page and no file",
+              report["placed"] == 1
+              and open(os.path.join(root, "index.html")).read() == before)
+        check("a pick naming a slot that does not exist fails the whole run",
+              place_mod.run({slot + "-does-not-exist": cand["id"]}, cameroon,
+                            dry_run=True, log=lambda *a: None)["errors"])
+        check("a stock candidate cannot be placed by `place`",
+              place_mod.run({slot: "unsplash:abc"}, cameroon,
+                            dry_run=True, log=lambda *a: None)["errors"])
+
+        tag = place_mod.rewrite_tag(
+            '<img src="/images/waza-elephants.svg" alt="Elephants" loading="lazy">',
+            "/images/generated/x.png", cand, "Elephants at a waterhole", {"x": 50, "y": 55})
+        check("a placed tag keeps the illustration it replaced",
+              'data-illustration="/images/waza-elephants.svg"' in tag
+              and 'data-illustration-alt="Elephants"' in tag)
+        check("a placed tag is marked so `adopt` cannot overwrite it",
+              'data-placed="true"' in tag and 'data-generated="true"' in tag)
+        check("a placed tag has no width or height attribute",
+              " width=" not in tag and " height=" not in tag)
+        check("srcset states the one width there actually is",
+              'srcset="/images/generated/x.png %dw"' % cand["width"] in tag)
+        check("reverting a placed tag restores the drawing exactly",
+              place_mod.revert_tag(tag) ==
+              '<img src="/images/waza-elephants.svg" alt="Elephants" loading="lazy">')
+
+        # a generated record is deliverable through the ordinary imaging path
+        rec = {"provider": "openai", "photoId": "x", "photographer": "AI",
+               "imageUrl": "/images/generated/x.png", "width": 1536, "height": 1024}
+        role = tax.role("wildlife")
+        check("a generated record delivers through the normal imaging path",
+              imaging.cdn_url(rec, role, {"x": 50, "y": 50}) == "/images/generated/x.png")
+        check("a provider with no CDN gets one honest srcset entry",
+              imaging.srcset(rec, role, {"x": 50, "y": 50})
+              == "/images/generated/x.png 1536w")
+        check("a generated image is credited as generated, not as a photographer",
+              providers.BY_NAME["openai"].attribution(
+                  dict(rec, model="gpt-image-1"))[0] == "AI-generated · gpt-image-1")
+        check("an uploaded image is never labelled AI",
+              providers.BY_NAME["upload"].attribution({"photographer": "A Name"})
+              == ("A Name", None))
+        check("generators are not searchable",
+              _raises(lambda: providers.BY_NAME["openai"].search("x", "landscape"),
+                      NotImplementedError)
+              and "openai" not in [p.name for p in providers.all_providers()])
+
+        # intake
+        up = os.path.join(tmp, "incoming")
+        os.makedirs(up, exist_ok=True)
+        shutil.copy(os.path.join(root, cand["file"]),
+                    os.path.join(up, "waza-elephants-waterhole-savanna.png"))
+        shutil.copy(os.path.join(root, cand["file"]), os.path.join(up, "IMG_9931.png"))
+        found = intake.scan_folder(up)
+        check("intake reads dimensions out of the uploaded files",
+              len(found) == 2 and all(f["width"] and f["height"] for f in found))
+        matched, unmatched = intake.assign(found, targets)
+        check("a named upload is matched to the slot it describes",
+              any(m["placement"]["id"] == "waza-elephants" for m in matched))
+        check("an unnamed upload is reported, not guessed at",
+              any(f["name"] == "IMG_9931.png" for f in unmatched))
+        check("intake never matches two images to one slot",
+              len({m["slot"] for m in matched}) == len(matched))
+        waza = [p for p in targets if p["id"] == "waza-elephants"][0]
+        named = dict(found[0], name="waza-elephants.png",
+                     words=intake.stem_words("waza-elephants.png"))
+        tall = dict(named, width=1000, height=3000)
+        wide = dict(named, width=3000, height=1000)
+        check("a filename that is a slot id beats every other signal",
+              intake.score(named, waza)[0] >= intake.EXACT_NAME)
+        check("a bad shape is a penalty, not a veto",
+              0 < intake.score(tall, waza)[0] < intake.score(wide, waza)[0])
+        check("the crop loss is reported so it can be judged",
+              any("discards" in r for r in intake.score(tall, waza)[1]))
+        anon = dict(found[0], name="DSC_0042.png", words=[])
+        check("a picture with nothing to go on stays below the floor whatever its shape",
+              all(intake.score(dict(anon, width=w, height=h), p)[0] < intake.MIN_SCORE
+                  for p in targets for w, h in ((3000, 2000), (2000, 3000), (2000, 2000))))
+        gen_dir = os.path.join(up, intake.GENERATED_SUBDIR)
+        os.makedirs(gen_dir, exist_ok=True)
+        shutil.copy(os.path.join(root, cand["file"]),
+                    os.path.join(gen_dir, "waza-elephants.png"))
+        origins = {f["name"]: f.get("origin") for f in intake.scan_folder(up)}
+        check("an upload from incoming/generated/ is marked AI-generated",
+              origins.get("waza-elephants.png") == "openai"
+              and origins.get("IMG_9931.png") == "upload")
+        check("intake proposes only; it never writes a page",
+              intake.run(cameroon, tax, directory=up, dry_run=True,
+                         log=lambda *a: None)["matched"] >= 1
+              and open(os.path.join(root, "index.html")).read() == before)
+
+        # -- the atlas -------------------------------------------------------------
+        # The geography is the one part of this system that is generated from
+        # data a human never types, so the things worth testing are that it stays
+        # generated: no country named in code, no coordinate invented, and no
+        # place claimed that the dataset does not already say.
+        print("\natlas")
+        from tourism import atlas
+        lenses = atlas.load_lenses()
+        sp = atlas.spine(countries, lenses)
+        check("every published country is on the spine",
+              set(sp["countries"]) == set(c.slug for c in countries if c.published))
+        check("every country lands in exactly one region",
+              all(sp["countries"][s]["regionKey"] for s in sp["countries"])
+              and sum(len(r["countries"]) for r in sp["regions"]) == len(sp["countries"]))
+        check("a region's view contains every one of its members",
+              all(all(_inside(sp["countries"][s]["box"], r["view"])
+                      for s in r["countries"] if sp["countries"][s]["box"])
+                  for r in sp["regions"]))
+        check("a lens holds only countries that call it themselves",
+              all(all(l["key"] in sp["countries"][s]["calls"] for s in l["countries"])
+                  for l in sp["lenses"]))
+        check("no lens is empty", all(l["countries"] for l in sp["lenses"]))
+        check("the spine carries no image URL nobody fetched",
+              "imageUrl" not in json.dumps(sp))
+
+        pack = atlas.places(uganda, tax, lenses)
+        titles = [p["title"] for p in pack["places"]]
+        check("a country's places are its own written entries",
+              set(titles) <= set(e.caption for e in uganda.entries))
+        check("the hero is not offered as a place",
+              uganda.entry("hero").caption not in titles)
+        check("places lead with what the country calls itself on",
+              pack["places"][0]["id"] in ("wildlife", "safari"), pack["places"][0]["id"])
+        check("an unresolved place carries no photograph",
+              all(p["image"] is None for p in pack["places"]))
+
+        page = atlas.render(countries, tax)
+        check("every country on the map is reachable without script",
+              all(('href="%s"' % c.url) in page
+                  for c in countries if c.published and c.url.startswith("/")))
+        check("the map is one SVG, not one per country", page.count("<svg") == 1)
+        check("the continent pane lists every region without script",
+              all(r["name"].replace("&", "&amp;") in page for r in sp["regions"]))
+        # The claim is that the atlas is data-driven, and the way to test a claim
+        # like that is to change the data and watch the output follow — not to
+        # grep the source for country names, which only tests the comments.
+        subset = [c for c in countries if c.slug in ("uganda", "kenya", "morocco")]
+        small = atlas.spine(subset, lenses)
+        check("dropping countries drops them from the map's spine",
+              set(small["countries"]) == {"uganda", "kenya", "morocco"})
+        check("a region with no members left disappears rather than emptying",
+              all(r["countries"] for r in small["regions"])
+              and len(small["regions"]) < len(sp["regions"]))
+        check("a lens narrows to whoever is left",
+              all(set(l["countries"]) <= {"uganda", "kenya", "morocco"}
+                  for l in small["lenses"]))
+        check("region views are recomputed, not cached from the full set",
+              any(r["view"] != next(x["view"] for x in sp["regions"] if x["key"] == r["key"])
+                  for r in small["regions"]))
+
+        # -- the spatial model ------------------------------------------------------
+        # The claim is that every connection this site draws is a fact somebody
+        # could check on a map or in a country file. So each one is checked
+        # against the thing it claims to come from.
+        print("\nthe spatial model")
+        from tourism import atlas as atlas_mod, links as links_mod
+        geo = links_mod.geometry()
+        lenses_all = atlas_mod.load_lenses()
+        net = links_mod.payload(countries, lenses_all)
+        published = set(c.slug for c in countries if c.published)
+
+        check("every published country is on the network",
+              set(net["nodes"]) == published)
+        check("every node sits at its own country's centre",
+              all(n["at"] and n["lonlat"] for n in net["nodes"].values()))
+        check("borders are symmetric",
+              all(a in geo["borders"].get(b, []) for a, bs in geo["borders"].items()
+                  for b in bs))
+        check("no country borders itself",
+              not any(a in bs for a, bs in geo["borders"].items()))
+        # Spot-checks against an actual map. If the geometry reader breaks, these
+        # break, and they are things anybody can verify.
+        check("Uganda borders Kenya, Rwanda and Tanzania and nothing else here",
+              set(geo["borders"]["uganda"]) == {"kenya", "rwanda", "tanzania"},
+              ", ".join(geo["borders"]["uganda"]))
+        check("South Africa borders its four neighbours in the set",
+              set(geo["borders"]["south-africa"])
+              == {"botswana", "mozambique", "namibia", "zimbabwe"},
+              ", ".join(geo["borders"]["south-africa"]))
+        check("an island borders nobody",
+              not geo["borders"]["seychelles"] and not geo["borders"]["mauritius"])
+        check("Egypt borders nothing else in this set",
+              not geo["borders"]["egypt"])
+        check("distance is symmetric and non-zero",
+              all(geo["km"][a][b] == geo["km"][b][a] and geo["km"][a][b] > 0
+                  for a in ("uganda", "morocco") for b in ("kenya", "ghana")))
+        check("Kampala to Kigali is about four hundred and fifty kilometres",
+              440 <= geo["km"]["uganda"]["rwanda"] <= 470,
+              "%d km" % geo["km"]["uganda"]["rwanda"])
+
+        bad = []
+        for a, rows in net["links"].items():
+            for r in rows:
+                for w in r["why"]:
+                    if w["kind"] == "border" and r["to"] not in geo["borders"].get(a, []):
+                        bad.append("%s-%s border" % (a, r["to"]))
+                    if w["kind"] == "lens":
+                        shared = set(by_slug_test(countries, a).calls) \
+                            & set(by_slug_test(countries, r["to"]).calls)
+                        if not shared:
+                            bad.append("%s-%s lens" % (a, r["to"]))
+                    if w["kind"] == "season":
+                        shared = set(by_slug_test(countries, a).months) \
+                            & set(by_slug_test(countries, r["to"]).months)
+                        if len(shared) != len(w["months"]):
+                            bad.append("%s-%s season" % (a, r["to"]))
+        check("every connection is backed by the fact it names", not bad,
+              ", ".join(bad[:3]))
+        check("no connection is offered without evidence",
+              all(r["why"] for rows in net["links"].values() for r in rows))
+        check("nothing is connected to itself",
+              not any(r["to"] == a for a, rows in net["links"].items() for r in rows))
+        check("a land border always outranks a shared season",
+              all(next((i for i, r in enumerate(rows)
+                        if any(w["kind"] == "border" for w in r["why"])), 0)
+                  < next((len(rows) for r in rows), 1)
+                  for rows in net["links"].values() if rows))
+        far = [(a, r["to"], r["km"]) for a, rows in net["links"].items() for r in rows
+               if r["km"] and r["km"] > links_mod.FAR_KM
+               and not any(w["kind"] == "border" for w in r["why"])]
+        check("nothing across the Sahara is called nearby", not far,
+              ", ".join("%s-%s %dkm" % f for f in far[:2]))
+        check("no connection claims a travel time",
+              not any("hour" in json.dumps(r) or "drive" in json.dumps(r)
+                      for rows in net["links"].values() for r in rows))
+
+        # A journey can cross a border, and only across one.
+        engine = os.path.join(ROOT_DIR, "scripts", "journey-engine.js")
+        src = open(engine).read()
+        check("the journey engine can carry a stage in another country",
+              "stageOf" in src and "onward" in src)
+        check("crossing requires a shared land border",
+              "w.kind === 'border'" in src)
+
+        # -- the visual engine ------------------------------------------------------
+        # Most of what this system does is already covered above: delivery URLs,
+        # focal crops, srcsets, providers, attribution. What is new here is the
+        # part that runs when there is no photograph — which, with 567 of 594
+        # slots unresolved, is most of the site — plus the pieces that stop one
+        # component becoming four.
+        print("\nthe visual engine")
+        from tourism import plate as plate_mod
+        from tourism.model import load_regions, region_of
+
+        regions = load_regions()
+        check("every region names the ground its countries are drawn on",
+              all(r.tone.startswith("#") and len(r.tone) == 7 for r in regions.values()),
+              ", ".join("%s=%s" % (k, r.tone) for k, r in regions.items())[:60])
+        tones = {}
+        for co in countries:
+            if co.published:
+                tones.setdefault(plate_mod.tone_for(co, regions), []).append(co.slug)
+        check("every published country has a ground",
+              all(t for t in tones), "%d distinct tones" % len(tones))
+        check("two countries from different regions do not share a ground",
+              len(tones) == len({region_of(c, regions)[0]
+                                 for c in countries if c.published}))
+
+        uganda_hero = uganda.entry("hero")
+        shp = {"w": 100, "h": 120, "d": "M0 0L10 0L10 10Z"}
+        pl = plate_mod.plate(uganda, uganda_hero, [16, 9], "Uganda hero", shape=shp)
+        check("a slot with no photograph draws a plate, not a hole",
+              'class="af-plate"' in pl and 'aspect-ratio:16/9' in pl)
+        check("the plate carries the caption somebody wrote",
+              esc_test(uganda_hero.caption) in pl, uganda_hero.caption)
+        check("the plate says which country it is",
+              ">Uganda<" in pl)
+        check("the plate is labelled for a screen reader",
+              'role="img"' in pl and 'aria-label="Uganda hero"' in pl)
+        check("the plate is the same shape as the photograph it stands in for",
+              "aspect-ratio:16/9" in pl
+              and "aspect-ratio:4/5" in plate_mod.plate(uganda, uganda_hero, [4, 5],
+                                                        "x", shape=shp))
+        ground = plate_mod.plate(uganda, uganda_hero, [16, 9], "x", shape=shp, ground=True)
+        check("a plate under a headline carries no headline of its own",
+              esc_test(uganda_hero.caption) not in ground and 'aria-hidden="true"' in ground)
+        check("the plate never says the picture is missing",
+              "missing" not in pl.lower() and "coming soon" not in pl.lower())
+
+        # One window, not four.
+        win = plate_mod.window_svg(shp, "Uganda", image="/i.jpg", alt="A ridge")
+        check("the window clips the photograph with the country's own path",
+              win.count(shp["d"]) == 2 and "clipPath" in win)
+        check("the window without a photograph is the filled outline",
+              "<image" not in plate_mod.window_svg(shp, "Uganda"))
+        check("the window describes itself from the photograph where there is one",
+              'aria-label="A ridge"' in win
+              and 'aria-label="The outline of Uganda"'
+                  in plate_mod.window_svg(shp, "Uganda"))
+        js = open(os.path.join(ROOT_DIR, "scripts", "window.js")).read()
+        for page in ("journey.js", "meet.js"):
+            src = open(os.path.join(ROOT_DIR, "scripts", page)).read()
+            check("%s draws the window from the shared component" % page,
+                  "AfrinkongWindow" in src and "clipPath" not in src)
+        check("the browser's window and the build's window agree",
+              all(bit in js for bit in ("af-window-fill", "af-window-svg",
+                                        "xMidYMid slice", "clipPath")))
+
+        # Roles: what the crop must keep, and what a phone gets instead.
+        roles = [r for k, r in tax.roles.items() if not k.startswith("$")]
+        check("every role says what its crop must not throw away",
+              all(r.get("focus") for r in roles),
+              ", ".join(k for k, r in tax.roles.items()
+                        if not k.startswith("$") and not r.get("focus")))
+        wide = [r for r in roles if r["aspect"][0] / float(r["aspect"][1]) >= 1.7]
+        check("a role too wide for a phone declares a second crop",
+              all(r.get("mobile") for r in wide), "%d wide roles" % len(wide))
+        check("the second crop is taller than the first",
+              all(r["mobile"]["aspect"][0] / float(r["mobile"]["aspect"][1])
+                  < r["aspect"][0] / float(r["aspect"][1]) for r in wide))
+
+        host = os.environ["UNSPLASH_IMAGE_HOST_OVERRIDE"]
+        fake = {"provider": "unsplash", "imageUrl": host + "photo-1?ixid=t",
+                "photoId": "x", "width": 4000, "height": 2667, "photographer": "A N"}
+        hero_role = tax.role("hero")
+        art = imaging.art_direction(fake, hero_role, {"x": 50, "y": 40})
+        check("a wide slot delivers a taller crop to a phone",
+              art and "max-width" in art["media"] and art["aspect"] == "4 / 5")
+        first = (art or {}).get("srcset", "").split(",")[0]
+        import urllib.parse as _up
+        q = dict(_up.parse_qsl(_up.urlparse(first.split(" ")[0]).query))
+        check("art direction asks the CDN for the narrow crop, not CSS",
+              q.get("w") and q.get("h")
+              and round(int(q["h"]) / float(q["w"]), 2) == round(5 / 4.0, 2),
+              "%sx%s" % (q.get("w"), q.get("h")))
+        check("and it cuts around the same focal point",
+              q.get("fp-y") == "0.400", q.get("fp-y"))
+        flat = {"provider": "upload", "imageUrl": "/images/uploads/x.jpg",
+                "photoId": "u", "width": 1200, "height": 800}
+        check("a provider with no CDN is not asked to art direct",
+              imaging.art_direction(flat, hero_role, {"x": 50, "y": 50}) is None)
+        check("a role with no second crop gets none",
+              imaging.art_direction(fake, tax.role("food"), {"x": 50, "y": 50}) is None
+              or tax.role("food").get("mobile"))
+
+        # Variety: the same animal six times is six correct answers and one bad page.
+        gorilla = providers.Candidate(
+            {"provider": "unsplash", "photoId": "g9", "width": 3000, "height": 2000,
+             "text": "mountain gorilla silverback in the forest of bwindi uganda"})
+        already = [relevance.words("mountain gorilla silverback bwindi forest uganda")]
+        alone, _ = relevance.score(gorilla, uganda, tax.by_id["wildlife"],
+                                   uganda.entry("wildlife"), tax.role("wildlife"))
+        again, why = relevance.score(gorilla, uganda, tax.by_id["wildlife"],
+                                     uganda.entry("wildlife"), tax.role("wildlife"),
+                                     taken=already)
+        check("a photograph like one already used here scores lower", again < alone,
+              "%.1f -> %.1f" % (alone, again))
+        check("and the sheet says why", any("already filled" in w for w in why))
+        other = providers.Candidate(
+            {"provider": "unsplash", "photoId": "k1", "width": 3000, "height": 2000,
+             "text": "fishing boats on lake victoria at dawn uganda"})
+        same_alone, _ = relevance.score(other, uganda, tax.by_id["wildlife"],
+                                        uganda.entry("wildlife"), tax.role("wildlife"))
+        same_after, _ = relevance.score(other, uganda, tax.by_id["wildlife"],
+                                        uganda.entry("wildlife"), tax.role("wildlife"),
+                                        taken=already)
+        check("a different photograph is not punished for the first one",
+              same_alone == same_after)
+
+        # The gate.
+        print("\nthe image quality gate")
+        import copy as _copy
+
+        def gate(mutate):
+            co = load_country(uganda.path)
+            mutate(co)
+            return [f for f in validate.check_images(co, tax) if f.level == "error"]
+
+        def set_image(co, cat, rec):
+            co.entry(cat).image = rec
+
+        good = {"provider": "unsplash", "imageUrl": host + "photo-9?ixid=t",
+                "photoId": "p", "width": 4000, "height": 2667, "photographer": "A N Other"}
+        check("a sound record passes", not gate(lambda co: set_image(co, "hero", good)))
+        check("a photograph with no photographer is refused, not published",
+              gate(lambda co: set_image(co, "hero",
+                                        dict(good, photographer=""))))
+        check("a generated picture that is not disclosed is refused",
+              gate(lambda co: set_image(co, "hero",
+                                        {"provider": "openai", "photoId": "g",
+                                         "imageUrl": "/images/generated/x.png",
+                                         "width": 1536, "height": 1024})))
+        check("a photograph flagged as generated is refused",
+              gate(lambda co: set_image(co, "hero", dict(good, generated=True))))
+        check("a record from an unknown provider is refused",
+              gate(lambda co: set_image(co, "hero",
+                                        dict(good, provider="somewhere",
+                                             imageUrl="https://elsewhere/x.jpg"))))
+        check("a record resolved for another country is refused",
+              gate(lambda co: set_image(co, "hero", dict(good, country="kenya"))))
+        check("a record resolved for another slot is refused",
+              gate(lambda co: set_image(co, "hero", dict(good, category="food"))))
+        check("a focal point outside the frame is refused",
+              gate(lambda co: co.entry("hero").focal.update({"x": 140})))
+        check("a local asset that is not on disk is refused",
+              gate(lambda co: setattr(co.entry("hero"), "local", "/images/nope.svg")))
+        check("the gate is clean on the dataset as it stands",
+              not [f for c in countries for f in validate.check_images(c, tax)
+                   if f.level == "error"])
+
+        # -- the human layer --------------------------------------------------------
+        # The claim this layer makes is that nothing on it is invented: every
+        # line is a caption or a description already written for that country,
+        # or an operator's own sentence. That is testable, so it is tested —
+        # by taking every string the page can print and looking for it in the
+        # country files it claims to have come from.
+        print("\nthe human layer")
+        from tourism import meet
+        from tourism.model import load_people, load_strands, load_voices
+        strands = load_strands()
+        payload = meet.strands_payload(countries, tax)
+
+        check("every strand points at categories that exist",
+              all(c in tax.by_id for s in strands.values()
+                  for c in (s.get("categories") or [])))
+        check("every strand asks a question",
+              all((s.get("asks") or "").endswith("?") for s in strands.values()))
+        check("no strand names a country",
+              not any(co.name.lower() in json.dumps(strands).lower()
+                      for co in countries if co.published))
+
+        written = set()
+        for co in countries:
+            for e in co.entries:
+                if e.caption:
+                    written.add(e.caption)
+                if e.description:
+                    written.add(e.description)
+        printed = set()
+        for rows in payload["answers"].values():
+            for answers in rows.values():
+                for a in answers:
+                    printed.add(a["title"])
+                    printed.add(a["text"])
+        check("every answer is a sentence somebody already wrote",
+              printed <= written, "%d unaccounted" % len(printed - written))
+        check("the human layer covers every published country",
+              set(payload["countries"]) ==
+              set(c.slug for c in countries if c.published))
+        thin = [s for s in payload["countries"]
+                if sum(1 for rows in payload["answers"].values() if s in rows)
+                < len(strands)]
+        check("a country with nothing behind a door is left blank, not filled in",
+              all(s in payload["countries"] for s in thin), "%d thin" % len(thin))
+
+        # People and operator notes: empty is the correct state, and the page has
+        # to be empty with them rather than reaching for something plausible.
+        page = meet.render(countries, tax)
+        check("no guide profile is invented", not load_people(),
+              "%d in people.json" % len(load_people()))
+        check("no operator is quoted saying something they did not say",
+              not load_voices(), "%d in voices.json" % len(load_voices()))
+        check("the people block ships empty rather than filled",
+              '<script type="application/json" id="mt-people">[]</script>' in page)
+        check("the first question is answered without script",
+              page.count('class="mt-answer"') ==
+              len(payload["answers"][payload["strands"][0]["key"]]))
+        check("every country on the page is a link to its own page",
+              all(('data-country="%s"' % c.slug) in page
+                  for c in countries if c.published))
+
+        # -- how people are written about --------------------------------------------
+        print("\nhow people are written about")
+        planted = type("P", (), {})()
+        planted.slug, planted.name = "test", "Testland"
+        planted.tagline = "The real Africa, untouched by civilisation"
+        planted.summary = "African culture at its most primitive."
+        planted.when = ""
+        planted.entries = []
+        hits = validate.check_language(planted)
+        found = " ".join(f.message for f in hits)
+        check("exoticising language is caught", "'primitive'" in found)
+        check("continent-wide generalisation is caught", "'african culture'" in found)
+        check("'the real Africa' is caught", "'real africa'" in found)
+        check("the finding says what to do instead",
+              "name the community" in found and "say which people" in found)
+        clean_one = [c for c in countries if c.slug == "uganda"][0]
+        check("the check does not fire on the dataset as written",
+              not validate.check_language(clean_one),
+              "; ".join(f.message for f in validate.check_language(clean_one))[:70])
+        every = [f for c in countries for f in validate.check_language(c)]
+        check("nothing in the dataset turns people into scenery", not every,
+              "; ".join(f.message for f in every)[:80])
+        check("the check reads captions, descriptions and taglines alike",
+              len(validate._sentences(clean_one)) >= 3 * len(clean_one.entries))
+
+        # -- the story engine ------------------------------------------------------
+        # The portraits are the only long-form reading on this site, which makes
+        # them the one place where a generated page could quietly start saying
+        # things the dataset does not. So the checks here are almost entirely
+        # negative: no sentence that is not in the country file, no year that is
+        # not in the country file, no anchor that is not on the page, and no arc
+        # that names a category the taxonomy has never heard of.
+        print("\nthe story engine")
+        from tourism import story as story_mod
+        from tourism.model import load_operators
+        all_ops = load_operators()
+        arcs = story_mod.load_arcs()
+        arc_file = story_mod.read(story_mod.ARCS, {})
+        ids = {c["id"] for c in tax.categories}
+        check("every arc reads categories that exist",
+              all(c in ids for a in arcs for c in a["categories"]),
+              ", ".join(sorted({c for a in arcs for c in a["categories"]} - ids)))
+        check("every arc prints in a format that is drawn",
+              all(a["format"] in (arc_file.get("$formats") or {}) for a in arcs),
+              ", ".join(sorted({a["format"] for a in arcs}
+                               - set(arc_file.get("$formats") or {}))))
+        check("an arc's lead is one of its own chapters",
+              all((not a.get("lead")) or a["lead"] in a["categories"] for a in arcs))
+        check("an arc cannot demand more chapters than it names",
+              all((a.get("min") or 0) <= len(a["categories"]) or a["format"] == "journey"
+                  for a in arcs))
+        check("every arc asks rather than asserts",
+              all(a["asks"].rstrip().endswith("?") for a in arcs),
+              "; ".join(a["key"] for a in arcs if not a["asks"].rstrip().endswith("?")))
+
+        stories_file = story_mod.read(story_mod.DATA, {})
+        rows = stories_file.get("stories") or []
+        live_slugs = [c.slug for c in countries if c.published]
+        check("every published country has a portrait",
+              all(os.path.exists(os.path.join(story_mod.OUT, "%s.html" % s))
+                  for s in live_slugs))
+        check("the story index covers every country",
+              {r["country"] for r in rows} == set(live_slugs))
+
+        pages, said, years_seen = {}, 0, 0
+        for slug in live_slugs:
+            with open(os.path.join(story_mod.OUT, "%s.html" % slug)) as fh:
+                pages[slug] = fh.read()
+
+        # Every anchor the index points at is on the page it points at.
+        missing_anchor = [r["id"] for r in rows
+                          if ('id="%s"' % r["arc"]) not in pages[r["country"]]]
+        check("every story in the index has somewhere to land", not missing_anchor,
+              ", ".join(missing_anchor[:4]))
+        check("every contents link points at a section on the page",
+              all(all(('id="%s"' % href) in pages[slug]
+                      for href in re.findall(r'<a href="#([a-z-]+)">', pages[slug]))
+                  for slug in live_slugs))
+
+        # The one that matters: no sentence on a portrait that its country did
+        # not write. Every paragraph the layouts print is pulled back out of the
+        # rendered HTML and matched against that country's own descriptions.
+        strays = []
+        for slug in live_slugs:
+            country = by_slug_test(countries, slug)
+            mine = {e.description for e in country.entries if e.description}
+            page = pages[slug]
+            printed = (re.findall(r'<p class="st-stand"><a [^>]*>(.*?)</a></p>', page)
+                       + re.findall(r'<div class="st-say">.*?<p>(.*?)</p>', page)
+                       + re.findall(r'<p class="st-big"><a [^>]*>.*?</a> &mdash; (.*?)</p>', page)
+                       + re.findall(r'<figcaption>(.*?)(?:<i>|</figcaption>)', page))
+            said += len(printed)
+            for text in printed:
+                plain = html_mod.unescape(text).strip()
+                if plain and plain not in mine:
+                    strays.append("%s: %s" % (slug, plain[:60]))
+        check("every sentence on a portrait was written for that country",
+              not strays, "; ".join(strays[:3]) or "%d checked" % said)
+
+        # And no year the country file does not carry. A timeline is the obvious
+        # place for a generated page to start inventing dates, so the long line
+        # asks four questions instead and this asserts it kept to them.
+        bad_years = []
+        for slug in live_slugs:
+            country = by_slug_test(countries, slug)
+            ours = set(re.findall(r"\b(1[0-9]{3}|20[0-9]{2})\b",
+                                  " ".join([e.description or "" for e in country.entries]
+                                           + [e.caption or "" for e in country.entries]
+                                           + [country.summary or "", country.when or ""])))
+            op = all_ops.get(country.operator_key)
+            if op:
+                ours.add(str(op.since))
+            # Text only. An outline's path data is full of four-digit numbers
+            # and none of them is a date.
+            visible = re.sub(r"<[^>]+>", " ", re.sub(
+                r"<(svg|script|style)\b.*?</\1>", " ", pages[slug], flags=re.S))
+            # A four-figure number followed by a unit is a distance, not a date:
+            # this page prints straight-line kilometres and peak heights.
+            for year in set(re.findall(
+                    r"\b(1[0-9]{3}|20[0-9]{2})\b(?!\s*(?:km|kg|mm|m\b|ft))", visible)):
+                if year not in ours:
+                    bad_years.append("%s: %s" % (slug, year))
+        check("no portrait supplies a date the dataset does not have", not bad_years,
+              ", ".join(sorted(set(bad_years))[:5]))
+        check("the long line says it is not a chronology",
+              all("Four questions, not four dates" in pages[s] for s in live_slugs))
+
+        # Provenance, the empty voice, and the one section that is a position.
+        check("every portrait says who is telling you this",
+              all(('tourism/countries/%s.json' % s) in pages[s] for s in live_slugs))
+        check("every portrait says what it is not",
+              all("Not sourced reporting" in pages[s] for s in live_slugs))
+        check("the respect notes are marked as ours rather than a country's",
+              all("no community here was asked to write it" in pages[s]
+                  for s in live_slugs))
+        check("the local voice is empty and says so",
+              all("has been quoted on this page, so nobody is" in pages[s]
+                  for s in live_slugs),
+              "voices.json holds %d" % len(load_voices()))
+        check("no portrait invents a live event",
+              not any(re.search(r"this week|tonight|today at|happening now",
+                                pages[s], re.I) for s in live_slugs),
+              ", ".join(s for s in live_slugs
+                        if re.search(r"this week|tonight|today at", pages[s], re.I))[:60])
+
+        # No dead ends: every portrait can be left in every direction.
+        check("a portrait leads on to the map, the builder and the write-ups",
+              all(all(bit % s in pages[s] for bit in
+                      ('/atlas#/%s', '/journey#/j/%s/', '/meet#/%s', '/places#%s'))
+                  for s in live_slugs))
+        check("every place page leads back to its portrait",
+              all(('/portrait/%s' % s) in open(os.path.join(
+                  ROOT_DIR, "places", s, os.listdir(os.path.join(
+                      ROOT_DIR, "places", s))[0])).read() for s in live_slugs))
+        with open(os.path.join(ROOT_DIR, "sitemap.xml")) as fh:
+            sitemap = fh.read()
+        check("every portrait is in the sitemap",
+              all(("/portrait/%s<" % s) in sitemap for s in live_slugs)
+              and "/stories<" in sitemap)
+
+        # -- the story graph -------------------------------------------------------
+        print("\nthe story graph")
+        from tourism import graph as graph_mod
+        g = story_mod.read(graph_mod.OUT, {})
+        names = g.get("names") or {}
+        check("the graph read names out of the dataset", len(names) > 200,
+              "%d names" % len(names))
+        check("every name points at a country and a write-up that exist",
+              all(at["c"] in g["countries"] and at["e"] in ids
+                  for row in names.values() for at in row["at"]))
+        check("every address in the graph is a page on disk",
+              all(os.path.exists(os.path.join(ROOT_DIR, (p["u"] or "x").lstrip("/") + ".html"))
+                  for c in g["countries"].values() for p in (c.get("places") or {}).values()
+                  if p.get("u")))
+        own = {c.name.lower() for c in countries} | {(c.adjective or "").lower()
+                                                     for c in countries}
+        check("the index is not the countries talking about themselves",
+              not [n for n in names if n.lower() in own],
+              ", ".join(n for n in names if n.lower() in own)[:60])
+        check("a name is never read out of a headline",
+              not [n for n in names if n.lower() in ("rafting", "canoe", "dive")],
+              "; ".join(n for n in names if n.lower() in ("rafting", "canoe", "dive")))
+        check("every theme names categories that exist",
+              all(c in ids for t in g["themes"].values() for c in t["categories"]))
+        shared = [n for n, v in names.items() if len(v["in"]) > 1]
+        check("some names cross a border, which is the point of an index",
+              len(shared) > 5, ", ".join(sorted(shared)[:5]))
+
+        # -- what the product counts -----------------------------------------------
+        # The rules the event layer enforces are checked in JavaScript, against
+        # the module the page runs. What is checked here is the other half: that
+        # the schema is a closed list rather than an intention, that it reaches
+        # every page that emits, and that nothing in it has room for free text.
+        print("\nwhat the product counts")
+        from tourism import plate as plate_events
+        with open(os.path.join(ROOT_DIR, "tourism", "events.json")) as fh:
+            ev = json.load(fh)
+        events, props = ev["events"], ev["$props"]
+        check("every event names the properties it allows and no others",
+              all(isinstance(v, list) for v in events.values())
+              and all(k in props for v in events.values() for k in v))
+        check("every property described is one an event can carry",
+              all(any(k in v for v in events.values()) for k in props),
+              ", ".join(k for k in props if not any(k in v for v in events.values())))
+        loose = [k for k in props
+                 if re.search(r"text|sentence|query|note|name|email|search", k)]
+        check("no property is a place a sentence could be put", not loose,
+              ", ".join(loose))
+        check("the schema says what it does not collect", "$comment" in ev
+              and "No identifiers" in ev["$comment"])
+
+        block = plate_events.events_block()
+        check("the schema is inlined rather than fetched",
+              'id="af-events"' in block and "src=" not in block.split("</script>")[0])
+        check("only the rules are shipped, not the prose",
+              "$comment" not in block and "$props" not in block)
+        check("the rules are small enough to inline", len(block) < 2048,
+              "%d bytes" % len(block))
+        missing = plate_events.events_block(
+            os.path.join(tmp, "no-such-events.json"))
+        check("a missing schema ships nothing rather than a broken page",
+              missing == "")
+
+        pages = ["atlas.html", "journey.html", "meet.html"]
+        one_place = sorted(glob.glob(os.path.join(ROOT_DIR, "places", "*", "*.html")))
+        if one_place:
+            pages.append(os.path.relpath(one_place[0], ROOT_DIR))
+        for rel in pages:
+            full = os.path.join(ROOT_DIR, rel)
+            if not os.path.exists(full):
+                check("%s carries the event rules" % rel, False, "not built")
+                continue
+            with open(full) as fh:
+                text = fh.read()
+            check("%s carries the event rules exactly once" % rel,
+                  text.count('id="af-events"') == 1
+                  and text.count("/scripts/events.js") == 1,
+                  "%d block(s)" % text.count('id="af-events"'))
+
+        with open(os.path.join(ROOT_DIR, "scripts", "events.js")) as fh:
+            ev_src = fh.read()
+        # Every page counts through the one layer that validates. A script that
+        # reached a destination directly would be a page whose events had never
+        # been through the schema, which is the whole guarantee.
+        loose = [f for f in sorted(os.listdir(os.path.join(ROOT_DIR, "scripts")))
+                 if f.endswith(".js") and f != "events.js"
+                 and re.search(r"sendBeacon|gtag\(|dataLayer|analytics|_paq",
+                               open(os.path.join(ROOT_DIR, "scripts", f)).read())]
+        check("no script reaches a destination without going through the layer",
+              not loose, ", ".join(loose))
+        check("no page talks to an analytics vendor",
+              not any(re.search(r"googletagmanager|google-analytics|gtag\(|segment\."
+                                r"|mixpanel|hotjar|facebook\.net|clarity\.ms",
+                                open(os.path.join(ROOT_DIR, p)).read())
+                      for p in ["atlas.html", "journey.html", "meet.html",
+                                "index.html"]
+                      if os.path.exists(os.path.join(ROOT_DIR, p))))
+        check("counting is off until somebody chooses a destination",
+              "SINK = null" in ev_src)
+
+        # -- the journey engine ----------------------------------------------------
+        # The engine is JavaScript because it answers between one click and the
+        # next, so it is tested by running it rather than by re-implementing it
+        # here. The checks live next to the code they test and report back one
+        # line each; if node is not installed they are reported as skipped and
+        # counted as neither passed nor failed, because a check that did not run
+        # is not a check that passed.
+        print("\njourney engine")
+        node = shutil.which("node")
+        script = os.path.join(ROOT_DIR, "tools", "journey-checks.js")
+        if not node:
+            print("  SKIPPED: node is not installed; the engine checks did not run")
+        elif not os.path.exists(os.path.join(ROOT_DIR, "journey.html")):
+            print("  SKIPPED: journey.html is not built; run build.py journey")
+        else:
+            proc = subprocess.run([node, script], capture_output=True, text=True,
+                                  cwd=ROOT_DIR)
+            lines = [l for l in proc.stdout.splitlines() if "\t" in l]
+            if not lines:
+                check("the journey engine checks ran", False,
+                      (proc.stderr or "no output").strip().splitlines()[-1][:90])
+            for line in lines:
+                verdict, name, detail = (line.split("\t") + ["", ""])[:3]
+                check(name, verdict == "PASS", detail)
 
     finally:
         httpd.shutdown()
@@ -524,6 +1407,25 @@ def main():
     if not failed:
         print("both providers are ready for real credentials")
     return 1 if failed else 0
+
+
+def by_slug_test(countries, slug):
+    return [c for c in countries if c.slug == slug][0]
+
+
+def esc_test(text):
+    """The plate escapes what it prints; the test has to compare like with like."""
+    import html as _html
+    return _html.escape(str(text or ""), quote=True)
+
+
+def _inside(box, view):
+    """Is a country's box inside the view its region flies to?"""
+    if not box or not view:
+        return True
+    return (box[0] >= view[0] - 0.5 and box[1] >= view[1] - 0.5
+            and box[0] + box[2] <= view[0] + view[2] + 0.5
+            and box[1] + box[3] <= view[1] + view[3] + 0.5)
 
 
 def _raises(fn, exc_type):

@@ -13,6 +13,7 @@ from .base import Candidate, Provider, RateLimited, Unavailable
 
 class Unsplash(Provider):
     name = "unsplash"
+    requires_attribution = True
     key_env = "UNSPLASH_ACCESS_KEY"
     image_host = "https://images.unsplash.com/"
     supports_focal_crop = True      # imgix: crop=focalpoint&fp-x&fp-y

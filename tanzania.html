@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tanzania — Serengeti, Kilimanjaro, Zanzibar | Guided Journeys and Experiences</title>
+<meta name="description" content="Tanzania: The Serengeti and the Ngorongoro crater, the highest mountain in Africa, and a spice island with a thousand-year-old stone town on it. Twenty-seven kinds of experience, from wildlife and mountains to culture, food and heritage, with local guides.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="Tanzania — Serengeti, Kilimanjaro, Zanzibar | Afrinkong">
+<meta property="og:description" content="The Serengeti and the Ngorongoro crater, the highest mountain in Africa, and a spice island with a thousand-year-old stone town on it.">
+<meta property="og:url" content="https://afrinkong.com/tanzania">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://afrinkong.com/tanzania">
+<link rel="stylesheet" href="/styles/afrinkong.css">
+<style>
+/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
+   What follows is this page shape only. */
+.mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+.mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
+.mark{margin-right:auto;display:flex;flex-direction:column;gap:3px}
+.mark-up{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--c-accent)}
+.mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;line-height:1;white-space:nowrap}
+.mark span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+.routes{display:flex;gap:26px}
+.routes a{font-family:var(--fj-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;color:var(--c-muted);padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
+.btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
+.btn:hover{background:var(--c-accent)}
+@media(max-width:1010px){.routes{display:none}}
+@media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}.btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
+
+.open{padding:calc(var(--sp-6) + 8px) 0 var(--sp-6);border-bottom:var(--fj-rule)}
+.open-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
+.open-grid.no-shape{grid-template-columns:1fr;max-width:36em}
+.open h1{font-size:clamp(46px,7vw,104px);margin:14px 0 0;letter-spacing:-.02em}
+/* The tagline is the country's argument and gets its own line at display size,
+   rather than being appended to the name in accent — which made the name the
+   smaller half of its own headline. */
+.open-tag{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(20px,2.6vw,34px);line-height:1.05;color:var(--c-accent);margin-top:10px}
+.lede{font-size:19px;color:var(--c-muted);margin-top:22px;max-width:38em}
+.acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+
+/* The window. Height-led, so every country is drawn at the same visual weight
+   whatever its proportions — Chad and Rwanda should feel like the same kind of
+   object on the page. */
+.ct-window{height:min(58vh,520px)}
+.ct-window svg{height:100%}
+
+/* This country's year. Twelve cells beats a season paragraph: a visitor answers
+   "can I go when I am free" in about a second. */
+.ct-cal{padding:30px 0;border-bottom:var(--fj-rule)}
+.ct-cal-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-cal-row{display:grid;grid-template-columns:repeat(12,1fr);gap:0;border:var(--fj-rule)}
+.ct-mon{display:flex;align-items:center;justify-content:center;padding:12px 0;
+  border-right:var(--fj-rule);background:var(--c-bg)}
+.ct-mon:last-child{border-right:0}
+.ct-mon b{font-family:var(--fj-mono);font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--c-muted)}
+.ct-mon.is-on{background:var(--c-accent)}
+.ct-mon.is-on b{color:var(--c-bg);font-weight:700}
+.ct-cal-note{margin-top:12px;font-size:15px;color:var(--c-muted);max-width:52em}
+
+/* Who runs this country. The platform's whole claim is that somebody local
+   does, so the page says which company, from where, and since when. */
+.ct-close{padding-bottom:8px}
+.ct-op{border-top:2px solid var(--c-accent);padding-top:22px;max-width:44em}
+.ct-op>span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted)}
+.ct-op b{display:block;font-family:var(--fj-display);font-size:clamp(24px,3vw,36px);
+  font-weight:700;text-transform:uppercase;line-height:1.04;margin-top:8px}
+.ct-op-base{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);margin-top:8px}
+.ct-op p{color:var(--c-muted);margin-top:12px}
+.ct-op .af-go{margin-top:16px}
+.ct-op--none b{font-size:clamp(20px,2.2vw,27px)}
+@media(max-width:640px){.ct-cal-row{grid-template-columns:repeat(6,1fr)}
+  .ct-mon:nth-child(6n){border-right:0}
+  .ct-mon:nth-child(-n+6){border-bottom:var(--fj-rule)}}
+
+/* The region strip: the page's one link outward, and what makes a country page
+   part of an atlas rather than a leaflet. */
+.ct-note-go{white-space:nowrap;color:var(--c-accent);border-bottom:1px solid var(--c-accent)}
+.ct-near{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:26px 0}
+.ct-near h2{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}
+.ct-near-row{display:flex;flex-wrap:wrap;gap:0 34px}
+.ct-near-row a{padding:8px 0;transition:color var(--t-fast) var(--ease)}
+.ct-near-row a:hover{color:var(--c-accent)}
+.ct-near-row em{font-style:normal;font-family:var(--fj-display);font-size:19px;font-weight:700;text-transform:uppercase}
+.ct-near-row span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);margin-left:10px}
+@media(max-width:900px){.open-grid{grid-template-columns:1fr;gap:34px}
+  .ct-window{height:min(46vh,360px);max-width:420px}
+  .ct-near-row{gap:0 22px}}
+
+.highs{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 32px}
+.ct-high b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.ct-high h3{font-size:22px;margin:8px 0 8px}
+.ct-high p{font-size:15px;color:var(--c-muted)}
+.ct-high .ct-shot{display:block;margin-bottom:16px}
+.ct-high .ct-shot img{width:100%;aspect-ratio:4/3;object-fit:cover}
+@media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
+@media(max-width:560px){.highs{grid-template-columns:1fr}}
+
+/* Two columns, not three: these carry a sentence each now, and a sentence
+   in a third of the measure sets to four words a line. */
+.groups{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.ct-group{padding:26px 34px 22px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+.ct-group:nth-child(2n){border-right:0;padding-right:0}
+.ct-group>b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:14px}
+.ct-group li{padding:13px 0;border-bottom:var(--fj-rule)}
+.ct-group li:last-child{border-bottom:0}
+.ct-group li b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase}
+.ct-group li span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted);margin-top:5px}
+@media(max-width:900px){.groups{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.groups{grid-template-columns:1fr}.ct-group{border-right:0;padding-right:0}}
+
+.reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid var(--c-accent)}
+.ct-reason{padding:28px 34px 24px 0}
+.ct-reason b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:10px}
+.ct-reason h3{font-size:24px;margin-bottom:10px}
+.ct-reason p{font-size:15px}
+@media(max-width:760px){.reasons{grid-template-columns:1fr}}
+
+.end{text-align:center;padding:92px 0}
+.end h2{font-size:clamp(30px,4.6vw,60px)}
+.end h2 em{font-style:normal;color:var(--c-accent)}
+.end p{margin:16px auto 0;max-width:46ch;color:var(--c-muted)}
+.end .acts{justify-content:center}
+
+.foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:56px 0 0}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
+.foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
+.foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
+.foot-grid p{margin-top:14px;font-size:14.5px;max-width:32em;color:var(--fj-onbasalt-dim)}
+.foot-col b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin-bottom:12px;font-weight:400}
+.foot-col a,.foot-col span{display:block;font-size:14.5px;padding:5px 0;color:var(--fj-onbasalt-dim)}
+.foot-col a:hover{color:var(--c-bg)}
+/* Where you are, at the foot of the page: the ladder you came down and the
+   countries beside this one. It replaces nothing — the site map is still below
+   — but it is the last chance to say that this country has neighbours. */
+.foot-where{padding-bottom:26px;margin-bottom:26px;border-bottom:var(--fj-rule-dark)}
+.foot-where ol{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.foot-where li+li::before{content:"/";margin-right:10px;color:var(--fj-onbasalt-dim);
+  opacity:.5}
+.foot-where a{color:var(--fj-onbasalt-dim)}
+.foot-where a:hover{color:var(--c-bg)}
+.foot-where [aria-current]{color:var(--c-accent)}
+.foot-next{margin-top:18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
+.foot-next>span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);width:100%}
+.foot-next a{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
+  color:var(--fj-onbasalt-dim);border-bottom:1px solid transparent}
+.foot-next a[data-border]{color:var(--c-bg)}
+.foot-next a:hover{border-color:var(--c-accent)}
+.foot-next i{font-style:normal;font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  margin-left:7px;color:var(--fj-onbasalt-dim)}
+.foot-next p{width:100%;margin-top:6px;font-size:12.5px;line-height:1.6;
+  color:var(--fj-onbasalt-dim)}
+.foot-bar{margin-top:40px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.foot-bar a{border-bottom:1px solid var(--c-accent)}
+@media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
+</style>
+</head>
+<body>
+<a class="af-skip" href="#main">Skip to content</a>
+<header class="mast">
+  <div class="af-frame mast-in">
+    <a class="mark" href="/tanzania"><span class="mark-up">Afrinkong</span><b>Tanzania</b><span>Serengeti, Kilimanjaro, Zanzibar</span></a>
+    <nav class="routes" aria-label="Primary">
+      <a href="/atlas#/tanzania">The Atlas</a>
+      <a href="/journey">Build a journey</a>
+      <a href="/meet#/tanzania">Meet Tanzania</a>
+      <a href="#highlights">Highlights</a>
+      <a href="#why">Why go</a>
+      <a href="/tourism/tanzania">All 27</a>
+    </nav>
+    <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="open">
+  <div class="af-frame">
+    <div class="open-grid has-shape">
+      <div>
+        <span class="af-stamp">East Africa &middot; Afrinkong</span>
+        <h1>Tanzania</h1>
+        <p class="open-tag">Serengeti, Kilimanjaro, Zanzibar.</p>
+        <p class="lede">The Serengeti and the Ngorongoro crater, the highest mountain in Africa, and a spice island with a thousand-year-old stone town on it.</p>
+        <div class="acts">
+          <a class="af-btn af-btn--solid" href="/contact">Plan a journey <i>&rarr;</i></a>
+          <a class="af-btn af-btn--quiet" href="#experiences">What you can do here <i>&rarr;</i></a>
+        </div>
+      </div>
+      <div class="af-window ct-window">
+        <svg class="af-window-svg" viewBox="0 0 1000.0 998.0" role="img" aria-label="The outline of Tanzania"><defs><clipPath id="shape-tanzania"><path d="M927.5 481.9L933.9 502L932.8 505.7L925.2 508.1L920.3 498.2L916.6 499.8L910.6 491.7L904.1 491.4L898.8 481.8L900.3 459.2L907.4 451.8L911.6 439.5L921.8 476.4L927.5 481.9ZM963.6 362.9L961.9 395.8L952.1 413.4L942.7 406.4L948.1 382.5L946.2 365L956 366.6L963.6 362.9ZM321.5 781.7L282.6 763.6L277.8 758.4L233.1 748.8L231.4 738.3L222.3 734.6L209.2 735.2L198.6 725.7L196.8 717.1L180.3 707.1L155.3 707.6L145.5 701.9L133 686.6L88 577L79 561.6L69.3 550.3L33.4 522.7L18.3 494.5L13 467.8L25.3 439.8L0 363.4L7.7 321.7L36.5 322.3L57.8 308.6L76.5 288L87.6 266.1L95.3 259.6L102.4 241.9L121.3 226L121.1 219.4L136 212.6L138 205.7L135.2 185.7L105.4 177.2L102.8 170.8L107.2 158.7L102.9 153.9L112.9 133.8L140.1 125.5L144.5 107.5L139.3 91.2L138.7 53.6L129.5 38.2L122.2 35.4L111 20.7L107.3 13.6L108 9.1L112 7.1L119.3 7.9L138.8 0.7L429.8 0L764 189.2L767.4 213.6L760.3 231.5L769.8 235.5L777.5 248L905.4 343L882 420.4L866.8 454.1L864.7 472.2L870.7 496.5L880.2 508.3L893 517.7L907 541.9L923.5 548L929.6 561.5L927 570.9L911.4 591.2L905 607.8L903.9 633L908.3 629.2L916.8 635.4L917.2 654L907.3 675.7L903.4 694.4L909.3 720.4L918.6 733.6L915 741.2L931.3 764.7L928.9 785L940.8 825L941.1 832.1L935.6 840.2L948.2 842.3L958.3 855.3L967.4 855.1L979 862.9L993.7 873.6L1000 884.1L972.5 904.8L940.1 925.5L916.8 931.4L894.5 944.7L880.7 948.8L864.2 948.6L846.8 954.3L818.7 971.2L803 961.6L790.8 958.4L767.8 959.8L764.4 961.7L758.9 977L749 986.2L732.1 994.9L716.7 998L693.6 992L681.7 984.3L663 988.2L653.9 995.1L639.5 997.9L620.4 996.9L610.5 993.4L609.1 987.8L601 980.9L586 973.3L574.7 973L553.9 986.7L499.4 984.1L493.9 966.8L490.5 962.9L483.7 962.1L469.6 937.7L475.8 903.4L469.2 886.1L468.8 859.9L465.2 840.2L447.8 812.4L419.1 790.3L414.7 796.8L414.7 805.5L408.8 806.6L391.7 799.7L366.4 800.6L358.5 792.3L340.2 790L326.4 780.6L321.5 781.7ZM941.7 651L936.8 652.1L932.1 647L960.7 620.3L952.4 643.7L946.5 644.8L941.7 651Z"/></clipPath></defs><path class="af-window-fill" d="M927.5 481.9L933.9 502L932.8 505.7L925.2 508.1L920.3 498.2L916.6 499.8L910.6 491.7L904.1 491.4L898.8 481.8L900.3 459.2L907.4 451.8L911.6 439.5L921.8 476.4L927.5 481.9ZM963.6 362.9L961.9 395.8L952.1 413.4L942.7 406.4L948.1 382.5L946.2 365L956 366.6L963.6 362.9ZM321.5 781.7L282.6 763.6L277.8 758.4L233.1 748.8L231.4 738.3L222.3 734.6L209.2 735.2L198.6 725.7L196.8 717.1L180.3 707.1L155.3 707.6L145.5 701.9L133 686.6L88 577L79 561.6L69.3 550.3L33.4 522.7L18.3 494.5L13 467.8L25.3 439.8L0 363.4L7.7 321.7L36.5 322.3L57.8 308.6L76.5 288L87.6 266.1L95.3 259.6L102.4 241.9L121.3 226L121.1 219.4L136 212.6L138 205.7L135.2 185.7L105.4 177.2L102.8 170.8L107.2 158.7L102.9 153.9L112.9 133.8L140.1 125.5L144.5 107.5L139.3 91.2L138.7 53.6L129.5 38.2L122.2 35.4L111 20.7L107.3 13.6L108 9.1L112 7.1L119.3 7.9L138.8 0.7L429.8 0L764 189.2L767.4 213.6L760.3 231.5L769.8 235.5L777.5 248L905.4 343L882 420.4L866.8 454.1L864.7 472.2L870.7 496.5L880.2 508.3L893 517.7L907 541.9L923.5 548L929.6 561.5L927 570.9L911.4 591.2L905 607.8L903.9 633L908.3 629.2L916.8 635.4L917.2 654L907.3 675.7L903.4 694.4L909.3 720.4L918.6 733.6L915 741.2L931.3 764.7L928.9 785L940.8 825L941.1 832.1L935.6 840.2L948.2 842.3L958.3 855.3L967.4 855.1L979 862.9L993.7 873.6L1000 884.1L972.5 904.8L940.1 925.5L916.8 931.4L894.5 944.7L880.7 948.8L864.2 948.6L846.8 954.3L818.7 971.2L803 961.6L790.8 958.4L767.8 959.8L764.4 961.7L758.9 977L749 986.2L732.1 994.9L716.7 998L693.6 992L681.7 984.3L663 988.2L653.9 995.1L639.5 997.9L620.4 996.9L610.5 993.4L609.1 987.8L601 980.9L586 973.3L574.7 973L553.9 986.7L499.4 984.1L493.9 966.8L490.5 962.9L483.7 962.1L469.6 937.7L475.8 903.4L469.2 886.1L468.8 859.9L465.2 840.2L447.8 812.4L419.1 790.3L414.7 796.8L414.7 805.5L408.8 806.6L391.7 799.7L366.4 800.6L358.5 792.3L340.2 790L326.4 780.6L321.5 781.7ZM941.7 651L936.8 652.1L932.1 647L960.7 620.3L952.4 643.7L946.5 644.8L941.7 651Z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ct-near"><div class="af-frame"><h2>Also in East Africa</h2><div class="ct-near-row"><a href="/ethiopia"><em>Ethiopia</em><span>The roof of Africa</span></a><a href="/kenya"><em>Kenya</em><span>Where the safari was invented</span></a><a href="/rwanda"><em>Rwanda</em><span>Land of a thousand hills</span></a><a href="https://pearl-trails-uganda.vercel.app"><em>Uganda</em><span>The Pearl of Africa</span></a></div></div></section>
+<section class="ct-cal"><div class="af-frame"><h2 class="ct-cal-h">When to come</h2><div class="ct-cal-row" role="img" aria-label="Tanzania is at its best in January, February, March, June, July, August, September, October"><span class="ct-mon is-on" title="January"><b>J</b></span><span class="ct-mon is-on" title="February"><b>F</b></span><span class="ct-mon is-on" title="March"><b>M</b></span><span class="ct-mon" title="April"><b>A</b></span><span class="ct-mon" title="May"><b>M</b></span><span class="ct-mon is-on" title="June"><b>J</b></span><span class="ct-mon is-on" title="July"><b>J</b></span><span class="ct-mon is-on" title="August"><b>A</b></span><span class="ct-mon is-on" title="September"><b>S</b></span><span class="ct-mon is-on" title="October"><b>O</b></span><span class="ct-mon" title="November"><b>N</b></span><span class="ct-mon" title="December"><b>D</b></span></div><p class="ct-cal-note">Calving on the southern Serengeti in February; the crossings run June to October.</p></div></section>
+
+<section class="af-zone" id="highlights">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>01</b><span>Highlights</span></div>
+      <div>
+        <h2>What Tanzania is <em>known for</em>.</h2>
+        <p class="af-note">Six of the twenty-seven, and the ones most people come for. The rest are below &mdash; and none of them is filler.</p>
+      </div>
+    </div>
+    <div class="highs">
+      <article class="ct-high">
+        <b>Nature &amp; Landscapes</b>
+        <h3>The Ngorongoro Crater</h3>
+        <p>A collapsed caldera twenty kilometres across with its own permanent population of thirty thousand animals.</p>
+      </article>
+      <article class="ct-high">
+        <b>Wildlife</b>
+        <h3>The Big Five, and Then Some</h3>
+        <p>Lion, leopard, elephant, buffalo and rhino, plus the largest elephant herds left in East Africa.</p>
+      </article>
+      <article class="ct-high">
+        <b>Mountains</b>
+        <h3>Kilimanjaro, 5,895 m</h3>
+        <p>The highest free-standing mountain on earth: rainforest, moorland, alpine desert and glacier in five days of walking.</p>
+      </article>
+      <article class="ct-high">
+        <b>Beaches &amp; Coast</b>
+        <h3>Zanzibar, Nungwi to Paje</h3>
+        <p>White sand, warm shallow water and dhows still built by hand on the beach at Nungwi.</p>
+      </article>
+      <article class="ct-high">
+        <b>Forests &amp; Rainforest</b>
+        <h3>Udzungwa and Jozani</h3>
+        <p>The Udzungwa scarp holds species found nowhere else; Jozani holds the red colobus, also found nowhere else.</p>
+      </article>
+      <article class="ct-high">
+        <b>Culture</b>
+        <h3>Maasai, Chagga, Swahili</h3>
+        <p>Cattle-keepers on the northern plains, coffee farmers on the mountain, and a coast that has always faced east.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone af-zone--dust" id="experiences">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>02</b><span>Experiences</span></div>
+      <div>
+        <h2>25 ways to <em>spend the time</em>.</h2>
+        <p class="af-note">Every country we cover works through the same twenty-seven categories, so you can hold two of them side by side and compare like with like rather than one brochure against another. <a class="ct-note-go" href="/compare?a=tanzania">Compare Tanzania with another &rarr;</a> The two not listed here are the hero picture and the case for going, which has a section of its own below.</p>
+      </div>
+    </div>
+    <div class="groups">
+      <div class="ct-group"><b>Landscapes</b>
+        <ul>
+        <li><b>The Ngorongoro Crater</b><span>A collapsed caldera twenty kilometres across with its own permanent population of thirty thousand animals.</span></li>
+        <li><b>Kilimanjaro, 5,895 m</b><span>The highest free-standing mountain on earth: rainforest, moorland, alpine desert and glacier in five days of walking.</span></li>
+        <li><b>Materuni, Under Kilimanjaro</b><span>Eighty metres of cold water through Chagga coffee farms on the lower slopes, an easy walk from Moshi.</span></li>
+        <li><b>Manyara and the Rufiji</b><span>Flamingo and tree-climbing lions at Manyara; the Rufiji braiding through Nyerere, the largest park in Africa.</span></li>
+        <li><b>Zanzibar, Nungwi to Paje</b><span>White sand, warm shallow water and dhows still built by hand on the beach at Nungwi.</span></li>
+        <li><b>Udzungwa and Jozani</b><span>The Udzungwa scarp holds species found nowhere else; Jozani holds the red colobus, also found nowhere else.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Wildlife</b>
+        <ul>
+        <li><b>The Big Five, and Then Some</b><span>Lion, leopard, elephant, buffalo and rhino, plus the largest elephant herds left in East Africa.</span></li>
+        <li><b>Following the Migration</b><span>Calving on the southern plains in February, the Grumeti in June, the Mara river in August — the circuit never stops.</span></li>
+        <li><b>Ngorongoro, Shared Ground</b><span>The conservation area is the rare model where Maasai pastoralists and wildlife legally use the same land.</span></li>
+        <li><b>Snorkelling Mnemba</b><span>The atoll off the northeast tip of Zanzibar, plus kite surfing at Paje and diving at Pemba.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>People and culture</b>
+        <ul>
+        <li><b>Maasai, Chagga, Swahili</b><span>Cattle-keepers on the northern plains, coffee farmers on the mountain, and a coast that has always faced east.</span></li>
+        <li><b>The Hadzabe of Lake Eyasi</b><span>One of the last hunter-gatherer peoples in Africa, speaking a click language unrelated to anything nearby.</span></li>
+        <li><b>Sauti za Busara</b><span>Four days of live music from across the continent inside the old Arab fort in Stone Town, every February.</span></li>
+        <li><b>Tingatinga and Makonde</b><span>Enamel-bright Tingatinga painting from Dar es Salaam, and Makonde ebony carving from the southern plateau.</span></li>
+        <li><b>Spice, Ugali, Urojo</b><span>Cloves and cardamom from the Zanzibar plantations, grilled seafood at Forodhani, and ugali everywhere else.</span></li>
+        <li><b>Boma and Coffee Farm</b><span>Maasai boma visits on the crater rim road, and Chagga coffee walks on the lower slopes of Kilimanjaro.</span></li>
+        <li><b>Dala Dalas and Dhows</b><span>Minibuses inland, dhows on the water, and a fish auction at Kivukoni that starts before it is light.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Places</b>
+        <ul>
+        <li><b>Dar es Salaam</b><span>Harbour of peace: the ferry terminal, the fish market at Kivukoni, and the dhows still working the channel.</span></li>
+        <li><b>The Doors of Stone Town</b><span>Brass-studded Indian doors and carved Omani frames, on coral-rag houses in alleys too narrow to drive.</span></li>
+        <li><b>Stone Town and Kilwa</b><span>Stone Town is UNESCO-listed; Kilwa Kisiwani was the richest port on the Swahili coast six centuries ago.</span></li>
+        <li><b>Olduvai and the Coast</b><span>Olduvai Gorge holds the earliest human record; the coast holds a thousand years of Indian Ocean trade.</span></li>
+        </ul>
+      </div>
+      <div class="ct-group"><b>Ways to travel</b>
+        <ul>
+        <li><b>Uhuru Peak by Machame</b><span>Six days up the Machame route, one very long night to the summit, and a sunrise you have to earn.</span></li>
+        <li><b>Camps and Spice Islands</b><span>Mobile camps that follow the migration, and beach houses on the Zanzibar east coast with nothing either side.</span></li>
+        <li><b>Acacia, Kopje, Sunset</b><span>The Serengeti kopjes at the end of the day, and the migration column stretching past the edge of the frame.</span></li>
+        <li><b>Ruaha and Katavi</b><span>The south and west: huge elephant populations, hippo crowded into shrinking pools, and no other vehicles.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone af-zone--basalt" id="why">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>03</b><span>Why go</span></div>
+      <div>
+        <h2>The case for <em>Tanzania</em>.</h2>
+      </div>
+    </div>
+    <div class="reasons">
+      <div class="ct-reason"><b>Why Visit This Country</b><h3>Mountain, Plain and Reef</h3><p>Summit Africa&#x27;s highest mountain, cross the Serengeti and sleep on the Indian Ocean, in the same fortnight.</p></div>
+      <div class="ct-reason"><b>Hidden Gems</b><h3>Ruaha and Katavi</h3><p>The south and west: huge elephant populations, hippo crowded into shrinking pools, and no other vehicles.</p></div>
+      <div class="ct-reason"><b>Eco Tourism</b><h3>Ngorongoro, Shared Ground</h3><p>The conservation area is the rare model where Maasai pastoralists and wildlife legally use the same land.</p></div>
+      <div class="ct-reason"><b>Heritage</b><h3>Olduvai and the Coast</h3><p>Olduvai Gorge holds the earliest human record; the coast holds a thousand years of Indian Ocean trade.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="af-zone">
+  <div class="af-frame ct-close">
+    <div class="ct-op ct-op--none"><span>Local operator</span><b>A licensed company based in Tanzania</b><p>Every destination here is run by a company in the country itself, working through the same twenty-seven categories, so two countries can be compared on the same terms. Tell us the month and we will put you with the right one.</p><a class="af-go" href="/contact">Start a journey &rarr;</a></div>
+  </div>
+  <div class="af-frame end">
+    <span class="stamp">Begin</span>
+    <h2>Your Tanzania <em>starts here</em>.</h2>
+    <p>Tell us the month, or simply the thing you want to see, and a guide who works there will answer.</p>
+    <div class="acts">
+      <a class="act go" href="/contact">Plan a journey <i>&rarr;</i></a>
+      <a class="act faint" href="/tourism/tanzania">See all 27 experiences <i>&rarr;</i></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="af-frame">
+    <!-- Where you are, and what is next to it. A footer on this site is not a
+         site map; it is the last place the visitor can be told that the country
+         they are reading about has neighbours. -->
+    <nav class="foot-where" aria-label="Where you are">
+      <ol>
+        <li><a href="/atlas">Africa</a></li>
+        <li><a href="/atlas#/east">East Africa</a></li>
+        <li><span aria-current="page">Tanzania</span></li>
+      </ol>
+      <div class="foot-next"><span>Next to it</span><a href="/atlas#/kenya" data-border="true">Kenya<i>880 km</i></a><a href="/atlas#/mozambique" data-border="true">Mozambique<i>1196 km</i></a><a href="/atlas#/rwanda" data-border="true">Rwanda<i>714 km</i></a><a href="/atlas#/uganda" data-border="true">Uganda<i>924 km</i></a><p>Straight-line distances between country centres. Solid names share a land border with Tanzania.</p></div>
+    </nav>
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Tanzania<span>Serengeti, Kilimanjaro, Zanzibar</span></div>
+        <p>The Serengeti and the Ngorongoro crater, the highest mountain in Africa, and a spice island with a thousand-year-old stone town on it.</p>
+      </div>
+      <div class="foot-col">
+        <b>Tanzania</b>
+        <a href="#highlights">Highlights</a>
+        <a href="#experiences">Experiences</a>
+        <a href="#why">Why go</a>
+        <a href="/tourism/tanzania">All 27 experiences</a>
+      </div>
+      <div class="foot-col">
+        <b>Elsewhere</b>
+        <a href="/">Afrinkong</a>
+        <a href="/cameroon">Cameroon</a>
+        <a href="/tourism/">Every destination</a>
+        <a href="/contact">Enquire</a>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <a href="/">Part of Afrinkong</a> &middot; Tanzania &middot; 0 of 27 slots illustrated &middot; Figures and contact details are illustrative until verified
+    </div>
+  </div>
+</footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
+</body>
+</html>

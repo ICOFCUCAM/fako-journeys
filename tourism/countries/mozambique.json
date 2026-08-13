@@ -1,0 +1,295 @@
+{
+ "slug": "mozambique",
+ "name": "Mozambique",
+ "adjective": "Mozambican",
+ "region": "Southern Africa",
+ "tagline": "Two thousand kilometres of coast",
+ "summary": "The Indian Ocean coast of southern Africa — the Bazaruto and Quirimbas archipelagos, Ilha de Moçambique, Gorongosa's restored wildlife, and a Portuguese-Swahili culture that exists nowhere else.",
+ "published": true,
+ "calls": [
+  "coast",
+  "wildlife"
+ ],
+ "months": [
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "when": "Dry, clear and calm on the coast from April to October.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Two Thousand Kilometres of Coast",
+   "description": "Reef, dune and island for the whole length of the country, and warm water all year.",
+   "subject": "a dhow sailing off a Mozambican island at sunrise",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Reef and Miombo",
+   "description": "Coral reef the whole coast, miombo woodland inland, and the Rift's southern end at Gorongosa.",
+   "subject": "the Gorongosa floodplain in the green season",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Gorongosa",
+   "description": "A park that lost almost everything in the war and has spent twenty years getting it back.",
+   "subject": "waterbuck on the Gorongosa floodplain",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Niassa and Gorongosa",
+   "description": "Niassa is one of the largest reserves in Africa, and among the least visited anywhere.",
+   "subject": "a game track through Niassa reserve woodland",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mount Namuli and Gorongosa",
+   "description": "Namuli at 2,419 metres, and Gorongosa's own mountain with rainforest on top of it.",
+   "subject": "the granite dome of Mount Namuli rising from farmland",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Murchison of the South",
+   "description": "Waterfalls off the Zambezi escarpment, and the Lugenda's rapids in the far north.",
+   "subject": "a waterfall off the escarpment in northern Mozambique",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Zambezi and Cahora Bassa",
+   "description": "The Zambezi's last five hundred kilometres, and the Cahora Bassa lake above them.",
+   "subject": "the Zambezi river wide in the Mozambican lowlands",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Bazaruto and the Quirimbas",
+   "description": "Dune islands in the south, coral islands in the north, and dhows between them.",
+   "subject": "the sand dunes and turquoise water of Bazaruto",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Coastal Forest",
+   "description": "The coastal dry forest of the north, and the mangrove that lines most of the delta.",
+   "subject": "mangrove forest along a northern Mozambique estuary",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Dive, Sail, Kayak",
+   "description": "Manta and whale shark at Tofo, dhow safaris in the Quirimbas, and kayaks in the mangrove.",
+   "subject": "a diver with a manta ray off Tofo",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Portuguese and Swahili",
+   "description": "Five hundred years of Portuguese on a Swahili coast, and a culture made from both.",
+   "subject": "the coral-stone lanes of Ilha de Moçambique",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Makonde and Makua",
+   "description": "Makonde carving in the north, and the Makua women's mussiro face paint.",
+   "subject": "a Makonde carver at work in northern Mozambique",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Peri-Peri and Matapa",
+   "description": "Prawns with peri-peri, and matapa — cassava leaf and coconut — with rice.",
+   "subject": "grilled prawns with peri-peri at a beach kitchen",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Marrabenta and Timbila",
+   "description": "Marrabenta on the coast, and the Chopi timbila orchestras of Inhambane.",
+   "subject": "a Chopi timbila orchestra performing",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Carving and Basketry",
+   "description": "Makonde blackwood carving, and the palm basketry of the northern islands.",
+   "subject": "Makonde blackwood carvings on a workshop bench",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Ilha de Moçambique",
+   "description": "The old capital, on a coral island a kilometre long, with a fort at one end.",
+   "subject": "the fortress of São Sebastião on Ilha de Moçambique",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Swahili Coast",
+   "description": "Ibo, Angoche and Sofala — Indian Ocean trading towns older than the Portuguese.",
+   "subject": "the crumbling colonial buildings of Ibo island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Maputo",
+   "description": "Wide avenues, a Mediterranean seafront, and the market Eiffel's company built.",
+   "subject": "the Maputo waterfront and the Indian Ocean",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Coral Stone and Colonial",
+   "description": "Coral rag on the islands, and Portuguese modernism through Maputo and Beira.",
+   "subject": "a colonial-era building in Maputo with modernist lines",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Beach Market",
+   "description": "Fish landed and sold on the sand, and the dhow that brought it still on the beach.",
+   "subject": "fish being sold on the sand beside a dhow",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Warm Water All Year",
+   "description": "Shallow, warm and calm inside the reef — as easy a sea as the continent offers.",
+   "subject": "children swimming in shallow water inside a reef",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Dive and Sail",
+   "description": "Whale shark season at Tofo, dhow safaris in the Quirimbas, and reef diving throughout.",
+   "subject": "a dhow under sail between coral islands",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Island Lodges",
+   "description": "A handful of very good island lodges in Bazaruto and the Quirimbas, and little else on them.",
+   "subject": "an island lodge among palms above a white beach",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Gorongosa's Restoration",
+   "description": "Local employment, local science, and a park brought back from nothing — worth understanding.",
+   "subject": "a park scientist at work in Gorongosa",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Dhow Light",
+   "description": "Lateen sails at either end of the day, and water that photographs as three colours at once.",
+   "subject": "dhows silhouetted against a Mozambican sunrise",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Ibo Island",
+   "description": "Silversmiths, a fort, mangrove channels, and about as far from a resort as it gets.",
+   "subject": "a silversmith working inside the fort on Ibo island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "The Coast Nobody Has Ruined Yet",
+   "description": "Two thousand kilometres of Indian Ocean, and most of it still without a road to it.",
+   "subject": "an empty Indian Ocean beach with palms behind it",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

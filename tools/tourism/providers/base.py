@@ -41,6 +41,22 @@ class Provider:
     key_env = ""
     image_host = ""            # every stored imageUrl must start with this
     supports_focal_crop = False   # can the CDN crop around a focal point?
+    supports_resize = True        # can it serve the same picture at another width?
+    generates = False             # makes images rather than finding them
+
+    # Two facts the quality gate needs and could otherwise only guess at from
+    # the provider's name — which is exactly the sort of guess that lets a
+    # synthetic picture publish itself as documentary photography.
+    #
+    #   synthetic              the pictures are made, not taken. Every record
+    #                          from this provider must carry `generated`, and
+    #                          the credit line must say so.
+    #   requires_attribution   the licence obliges us to name the photographer.
+    #                          A record without one is a licence breach, not a
+    #                          design shortfall, so the gate treats it as an
+    #                          error and refuses to publish the country.
+    synthetic = False
+    requires_attribution = False
 
     # -- configuration ----------------------------------------------------------
 

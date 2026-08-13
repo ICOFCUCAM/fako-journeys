@@ -107,7 +107,8 @@ def build_record(candidate, provider, country, category, entry, query, tier, rol
     }
 
 
-def _best_from(provider, query, orient, country, category, entry, role, seen):
+def _best_from(provider, query, orient, country, category, entry, role, seen,
+               taken=None):
     """Search one provider, rank, and return the best candidate that survives a
     real HTTP fetch. Returns (record, score, notes, candidate).
 
@@ -124,7 +125,7 @@ def _best_from(provider, query, orient, country, category, entry, role, seen):
     if not candidates:
         return None, 0.0, ["%s: no results" % provider.name], None
 
-    ranked = relevance.rank(candidates, country, category, entry, role, seen)
+    ranked = relevance.rank(candidates, country, category, entry, role, seen, taken)
     if not ranked:
         return None, 0.0, ["%s: %d results, none relevant enough"
                            % (provider.name, len(candidates))], None
@@ -148,12 +149,18 @@ def _best_from(provider, query, orient, country, category, entry, role, seen):
     return None, 0.0, notes, None
 
 
-def resolve_entry(country, category, entry, role, seen, only=None, exhausted=None):
+def resolve_entry(country, category, entry, role, seen, only=None, exhausted=None,
+                  taken=None):
     """Fill one slot. Returns (record, error).
 
     Walks the query ladder; at each rung tries every available provider in
     priority order before broadening the query, because a precise query on the
     fallback beats a vague one on the primary.
+
+    `taken` is what this country has already been given — one word-bag per
+    filled slot — so a sixth photograph of the same gorilla can be scored down
+    without needing a second pass over the country. It is optional: a caller
+    that does not track it gets the old behaviour.
 
     `exhausted` carries rate-limit state across slots for one run. When a
     provider spends its quota it is dropped for the rest of the run and the
@@ -177,7 +184,7 @@ def resolve_entry(country, category, entry, role, seen, only=None, exhausted=Non
         for provider in list(usable):
             try:
                 record, score, why, cand = _best_from(provider, query, orient, country,
-                                                      category, entry, role, seen)
+                                                      category, entry, role, seen, taken)
             except RateLimited as exc:
                 exhausted.add(provider.name)
                 usable = [p for p in usable if p.name is not provider.name]

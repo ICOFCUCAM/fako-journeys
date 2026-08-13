@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .env
 .env.local
+
+# Regenerated in one command from the candidate pool; not worth versioning.
+tourism/compare.html

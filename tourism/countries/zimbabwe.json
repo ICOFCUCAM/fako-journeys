@@ -1,0 +1,294 @@
+{
+ "slug": "zimbabwe",
+ "name": "Zimbabwe",
+ "adjective": "Zimbabwean",
+ "region": "Southern Africa",
+ "tagline": "Great Zimbabwe and the Zambezi",
+ "summary": "Victoria Falls on one border, Great Zimbabwe's stone city in the interior, Hwange's elephant herds and Mana Pools — the park where the walking safari was refined into an art.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "heritage"
+ ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "when": "The falls are fullest in April; the game viewing is best from August.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Great Zimbabwe and the Zambezi",
+   "description": "A stone city built without mortar, and the largest sheet of falling water on earth.",
+   "subject": "the stone walls of Great Zimbabwe",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Highveld and Escarpment",
+   "description": "Granite kopjes across the highveld, and the Zambezi escarpment dropping into the valley.",
+   "subject": "balancing granite boulders on the Zimbabwean highveld",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Hwange's Elephant",
+   "description": "Forty thousand elephant in Hwange, drinking at pumped pans through the dry season.",
+   "subject": "elephants crowding a pumped waterhole in Hwange",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Mana Pools on Foot",
+   "description": "The park where you may walk unguided, and where the elephant stand on their hind legs.",
+   "subject": "an elephant reaching into an albida tree at Mana Pools",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Eastern Highlands",
+   "description": "Nyanga, Vumba and Chimanimani along the Mozambique border, up to 2,592 metres.",
+   "subject": "the green Eastern Highlands at Nyanga",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Victoria Falls",
+   "description": "Mosi-oa-Tunya — a mile and a half wide, and a hundred metres down, in full flood.",
+   "subject": "Victoria Falls in full flood with spray rising",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Zambezi and Kariba",
+   "description": "The Zambezi above the falls, and Kariba's drowned forest downstream of them.",
+   "subject": "dead trees standing in Lake Kariba at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Landlocked",
+   "description": "No coast — the water here is the Zambezi, Kariba, and the pools of the Mana floodplain.",
+   "subject": "the Zambezi river wide and slow above the falls",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Msasa and Miombo",
+   "description": "Miombo woodland across the country, and msasa that comes into red leaf in September.",
+   "subject": "msasa trees in red new leaf in September",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Walking, Canoeing, Rafting",
+   "description": "Canoe the Zambezi past hippo, raft the gorge below the falls, and walk Mana with a guide.",
+   "subject": "canoes on the Zambezi below Mana Pools",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Shona and Ndebele",
+   "description": "Shona across the centre and east, Ndebele in the west, and stone sculpture from both.",
+   "subject": "a Shona stone sculptor at work",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Stone Sculptors",
+   "description": "Zimbabwean stone sculpture is the country's clearest contemporary export.",
+   "subject": "finished stone sculptures in a Zimbabwean workshop",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Sadza and Braai",
+   "description": "Sadza with relish, and meat over coals wherever there is a fire and company.",
+   "subject": "sadza and relish served at a Zimbabwean table",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "HIFA and the Harvest",
+   "description": "The Harare arts festival, and the harvest ceremonies that still open the season.",
+   "subject": "a performance at an arts festival in Harare",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Stone, Basket and Wire",
+   "description": "Serpentine carving, Binga basketry, and wire sculpture sold on every roadside.",
+   "subject": "woven Binga baskets from the Zambezi valley",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Great Zimbabwe",
+   "description": "Eight hundred years old, mortarless, and the largest stone structure south of the Sahara.",
+   "subject": "the conical tower inside the Great Enclosure",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Khami and Matobo",
+   "description": "Khami's terraces, and the Matobo hills where Mzilikazi and Rhodes are both buried.",
+   "subject": "balancing rocks and rock art in the Matobo hills",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Harare and Bulawayo",
+   "description": "Harare on the highveld, and Bulawayo's wide colonial grid built for turning an ox wagon.",
+   "subject": "the wide colonial streets of Bulawayo",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Dry Stone",
+   "description": "Great Zimbabwe's coursed granite is the architecture, and nothing since has matched it.",
+   "subject": "coursed dry stone walling at Great Zimbabwe",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Kombis and Musika",
+   "description": "The country runs on kombis and market days, both of which are worth an afternoon.",
+   "subject": "a busy produce market in a Zimbabwean town",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Falls and Elephant",
+   "description": "Victoria Falls, a steam train, and elephant at a waterhole — a good week for children.",
+   "subject": "a family watching elephants from a Hwange hide",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Raft, Canoe, Walk",
+   "description": "Grade five rafting below the falls, multi-day canoe trails, and walking safaris in Mana.",
+   "subject": "rafts in the Batoka gorge below Victoria Falls",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "The Old Safari Standard",
+   "description": "Small owner-run camps in Mana and Hwange, run by guides with the country's toughest licence.",
+   "subject": "a tented camp on the Zambezi floodplain at dusk",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "CAMPFIRE",
+   "description": "The community wildlife programme that much of the region's conservation policy was built on.",
+   "subject": "a community conservation meeting beside a wildlife area",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Albida Light",
+   "description": "The winterthorn cathedrals of Mana Pools, in dust and low sun, are photographed everywhere.",
+   "subject": "dust and low sun through winterthorn trees at Mana Pools",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Chimanimani",
+   "description": "A mountain range on the Mozambique border that you walk into and camp in.",
+   "subject": "the Chimanimani mountains on the Mozambique border",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Guides, and Great Ruins",
+   "description": "The hardest guiding exam in Africa, and a stone city most visitors have never heard of.",
+   "subject": "a professional guide leading walkers through Mana Pools",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

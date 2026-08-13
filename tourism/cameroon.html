@@ -3,38 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cameroon Tourism — 27 Experiences | Fako Journeys</title>
+<title>Cameroon — all 27 experiences | Afrinkong</title>
 <meta name="description" content="Six ecological zones in nine hundred kilometres: an active 4,095 m volcano, Atlantic black sand, Korup rainforest, the Grassfields kingdoms and the Sahel edge at Waza.">
+<link rel="canonical" href="https://afrinkong.com/tourism/cameroon">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="Cameroon — all 27 experiences">
+<meta property="og:description" content="Six ecological zones in nine hundred kilometres: an active 4,095 m volcano, Atlantic black sand, Korup rainforest, the Grassfields kingdoms and the Sahel edge at Waza.">
+<meta property="og:url" content="https://afrinkong.com/tourism/cameroon">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://afrinkong.com/tourism/cameroon">
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
+/* Tokens, reset, type scale, focus and motion behaviour are in
+   /styles/afrinkong.css. What is left here is the Kamerun operator's own
+   extension of the palette — the tokens the group system has no use for — and
+   this page's layout. */
 :root{
-  /* master tokens (rebrandable) — laterite-relief: raffia paper, basalt ink, laterite road */
-  --c-bg:#F7F2E7;
-  --c-primary:#1C2A25;
-  --c-accent:#BE5527;
-  --c-ink:#1F211C;
-  --c-muted:#6E7166;
-  --c-border:#DDD4C1;
-  /* derived surfaces */
   --fj-raffia:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
-  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-canopy:color-mix(in srgb,var(--c-primary) 82%,var(--c-accent));
   --fj-ember:color-mix(in srgb,var(--c-accent) 14%,var(--c-bg));
-  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
-  --fj-rule:1px solid var(--c-border);
-  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
-  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
-  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
-  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
-  /* photograph-relative values: these sit ON imagery, so they are tuned to the photograph
-     rather than to the brand palette and stay legible whatever picture is dropped in */
   --fj-shade:#141310;
   --fj-onphoto:#FAF5EA;
   --fj-onphoto-soft:#F2EBDB;
   --fj-onphoto-dim:#EBE2CE;
-  color-scheme:light;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -78,17 +71,33 @@ ul,ol{list-style:none}
 
 /* ---- page opener -------------------------------------------------------------- */
 .fj-open{padding:78px 0 66px;border-bottom:var(--fj-rule)}
-.fj-open-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:64px;align-items:end}
-.fj-open h1{font-size:clamp(38px,4.8vw,68px);margin:20px 0 0;max-width:16ch}
+.fj-open-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:end}
+/* The headline is four phrases and it is meant to read as four lines. No width
+   gets that from auto-wrapping — "six climates. an" fits on one line at any
+   width that also fits "world to discover." — so the breaks are explicit, and
+   dropped below 940px where the hero stacks and the column is narrow anyway. */
+/* No max-width: the grid column already bounds it, and a ch limit is the wrong
+   unit for a condensed face — 20ch measured narrower than "AN EXTRAORDINARY"
+   sets at 60px and broke the line it was supposed to protect. */
+.fj-open h1{font-size:clamp(32px,3.6vw,52px);margin:20px 0 0}
+@media(max-width:940px){.fj-br{display:none}}
 .fj-open h1 em{font-style:normal;color:var(--c-accent)}
 .fj-open .fj-lede{margin-top:24px}
 .fj-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
 .fj-act{display:inline-block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 20px;border:1px solid var(--c-primary);transition:background .2s,color .2s,border-color .2s}
 .fj-act:hover{background:var(--c-primary);color:var(--c-bg)}
+/* Two identical outlined buttons meant neither was the primary action. One
+   filled, one outlined: the eye now has somewhere to go first. */
+.fj-act.go{background:var(--c-primary);color:var(--c-bg);border-color:var(--c-primary)}
+.fj-act.go:hover{background:var(--c-accent);border-color:var(--c-accent)}
+.fj-act i{font-style:normal;margin-left:9px}
 .fj-act.faint{border-color:var(--c-border);color:var(--c-muted)}
 .fj-act.faint:hover{border-color:var(--c-primary);background:transparent;color:var(--c-primary)}
 .fj-open-plate{position:relative}
-.fj-open-plate img{width:100%;aspect-ratio:3/4;object-fit:cover}
+/* 4:5, not 3:4. In a .88fr column at 3:4 the picture read as a narrow vertical
+   slot rather than a photograph — the frame was fighting the landscape inside
+   it. Wider column, shallower ratio: same layout, the picture can breathe. */
+.fj-open-plate img{width:100%;aspect-ratio:4/5;object-fit:cover}
 .fj-open-tag{position:absolute;left:0;bottom:0;right:24%;background:var(--c-primary);color:var(--fj-onbasalt);padding:13px 16px}
 .fj-open-tag b{display:block;font-family:var(--fj-display);font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
 .fj-open-tag span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onbasalt-dim);margin-top:5px}
@@ -118,21 +127,43 @@ ul,ol{list-style:none}
 
 /* ---- transect (the coast-to-Sahel gradient bar) -------------------------------- */
 .fj-transect{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;align-items:end;border-bottom:2px solid var(--c-primary)}
-.fj-transect-step{background:var(--fj-dust);padding:16px 14px 14px;display:flex;flex-direction:column;justify-content:flex-end}
-.fj-transect-step.lv1{min-height:120px}
-.fj-transect-step.lv2{min-height:168px}
-.fj-transect-step.lv3{min-height:300px;background:var(--c-primary);color:var(--fj-onbasalt)}
-.fj-transect-step.lv4{min-height:216px}
-.fj-transect-step.lv5{min-height:150px}
-.fj-transect-step.lv6{min-height:132px}
+.fj-transect-step{background:var(--fj-dust);display:flex;flex-direction:column;justify-content:flex-end}
+/* The bar is made of photographs. The column heights rank by altitude — Kribi
+   at sea level shortest, the 4,095 m cone tallest — which is the idea on this
+   page worth keeping, so the picture inherits the height instead of the chart
+   being replaced by a row of equal tiles. Indicative, not a linear scale: 0 m
+   still needs a column you can see. Six climates, each showing what actually
+   stands at that height. */
+.fj-transect-pic{display:block;width:100%;overflow:hidden;background:var(--c-primary)}
+.fj-transect-pic img{width:100%;height:100%;object-fit:cover}
+/* Fixed, so the tops of the pictures still read as a gradient: without it one
+   extra line of copy lifts that column's photograph and the altitude the height
+   is meant to encode stops being true. */
+.fj-transect-body{padding:15px 14px 14px;min-height:158px}
+/* lv1..lv6 are altitude rank, low to high — 0 m, 150 m, 320 m, 1,200 m,
+   1,800 m, 4,095 m — so a taller column is always a higher place. The heights
+   the section inherited were not ordered that way (150 m stood taller than
+   320 m), which was harmless while the labels were place names and a plain
+   contradiction once the section started claiming to show height. */
+.fj-transect-step.lv1 .fj-transect-pic{height:96px}
+.fj-transect-step.lv2 .fj-transect-pic{height:116px}
+.fj-transect-step.lv3 .fj-transect-pic{height:132px}
+.fj-transect-step.lv4 .fj-transect-pic{height:170px}
+.fj-transect-step.lv5 .fj-transect-pic{height:202px}
+.fj-transect-step.lv6 .fj-transect-pic{height:272px}
+.fj-transect-step.lv6{background:var(--c-primary);color:var(--fj-onbasalt)}
 .fj-transect-alt{font-family:var(--fj-display);font-size:23px;font-weight:700;line-height:1}
-.fj-transect-step.lv3 .fj-transect-alt{color:var(--c-bg)}
+.fj-transect-step.lv6 .fj-transect-alt{color:var(--c-bg)}
 .fj-transect-step b{display:block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:10px;font-weight:400;color:var(--c-accent)}
-.fj-transect-step.lv3 b{color:var(--fj-ember)}
+.fj-transect-step.lv6 b{color:var(--c-accent)}
 .fj-transect-step p{font-size:13.5px;line-height:1.45;color:var(--c-muted);margin-top:6px}
-.fj-transect-step.lv3 p{color:var(--fj-onbasalt-dim)}
+.fj-transect-step.lv6 p{color:var(--fj-onbasalt-dim)}
 .fj-transect-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:14px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
-@media(max-width:900px){.fj-transect{grid-template-columns:repeat(3,1fr)}.fj-transect-step{min-height:0 !important;padding:14px 12px}}
+@media(max-width:900px){
+  .fj-transect{grid-template-columns:repeat(3,1fr)}
+  .fj-transect-body{padding:13px 12px;min-height:0}
+  .fj-transect-step .fj-transect-pic{height:118px !important}
+}
 @media(max-width:520px){.fj-transect{grid-template-columns:1fr 1fr}}
 
 /* ==== FIXED-WINDOW BAND 1 — THE ASCENT ==========================================
@@ -143,35 +174,41 @@ ul,ol{list-style:none}
    .fj-vista-pic, or to anything between them and <html>: `fixed` would silently
    degrade to `absolute` and the effect would vanish with no error at all.
    background-attachment:fixed is not a substitute — iOS Safari ignores it.
-   No script drives this. Verified by `npm run test:fixedwindow`. */
-.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
+   No script drives this. */
+.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center;background:var(--c-primary)}
+/* The ground is the house ink, not nothing. This panel sets cream type over a
+   fixed photograph, and the photograph for it has not been placed — which left
+   a full-height section of cream on cream, measured at 1.03:1 and invisible.
+   With a ground the panel reads either way, and the photograph covers it when
+   one arrives. */
 .fj-vista-pic{position:fixed;inset:0;z-index:0}
 .fj-vista-pic img{width:100%;height:100%;object-fit:cover}
-/* Veil 1 — a directional wash off the western flank: deep across the reading column
-   on the left, releasing to near-clear over the open right of the frame, so the
-   mountain keeps its own light instead of turning into a grey rectangle. */
-.fj-vista-veil{position:absolute;inset:0;background:linear-gradient(93deg,
-  color-mix(in srgb,var(--fj-shade) 90%,transparent) 0%,
-  color-mix(in srgb,var(--fj-shade) 86%,transparent) 34%,
-  color-mix(in srgb,var(--fj-shade) 78%,transparent) 56%,
-  color-mix(in srgb,var(--fj-shade) 34%,transparent) 80%,
-  color-mix(in srgb,var(--fj-shade) 16%,transparent) 100%)}
-.fj-vista-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;color:var(--fj-onphoto)}
+/* Veil 1 — nothing is laid over the photograph: no wash, no band of shade. The
+   element stays because it is the documented place a scrim would go, and the
+   answer for these pictures is that there isn't one. */
+.fj-vista-veil{position:absolute;inset:0;background:none}
+/* Band 1 carries no plate: the copy sits straight on the photograph. With no
+   panel and no wash, the only thing holding the type up is a shadow on the
+   glyphs themselves — two of them, a tight one for edge contrast and a wide
+   soft one to lift the whole block off whatever is behind it. That is why the
+   type is light here and dark in band 2. */
+.fj-vista-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;color:var(--fj-onphoto);
+  text-shadow:0 1px 2px rgba(20,19,16,.7),0 2px 26px rgba(20,19,16,.6)}
 .fj-vista-inner{max-width:600px}
-.fj-vista-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
-.fj-vista-copy h2{font-size:clamp(38px,5.4vw,74px);margin:18px 0 20px;color:var(--fj-onphoto)}
-.fj-vista-copy p{max-width:42ch;font-size:18px;color:var(--fj-onphoto-soft)}
-.fj-ledger{display:grid;grid-template-columns:repeat(3,auto);gap:0 34px;justify-content:start;margin-top:30px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--fj-onphoto) 40%,transparent)}
+.fj-vista-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--fj-onphoto)}
+.fj-vista-copy h2{font-size:clamp(36px,5vw,66px);margin:18px 0 20px;color:var(--fj-onphoto)}
+.fj-vista-copy p{max-width:42ch;font-size:18px;color:var(--fj-onphoto)}
+/* Small type needs more help than the headline: a 66px letter carries its own
+   mass against a busy frame, an 11px mono caption carries none. Same technique,
+   turned up — a wider dark halo hugging the glyphs. */
+.fj-vista-stamp,.fj-vista-copy p,.fj-ledger dt{
+  text-shadow:0 1px 2px rgba(20,19,16,.85),0 0 12px rgba(20,19,16,.8),0 0 30px rgba(20,19,16,.6)}
+.fj-ledger{display:grid;grid-template-columns:repeat(3,auto);gap:0 34px;justify-content:start;margin-top:30px;padding-top:18px;border-top:1px solid color-mix(in srgb,var(--fj-onphoto) 45%,transparent)}
 .fj-ledger div{min-width:96px}
 .fj-ledger dt{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
 .fj-ledger dd{font-family:var(--fj-display);font-size:26px;font-weight:700;margin-top:4px;color:var(--fj-onphoto)}
 @media(max-width:1010px){
-  .fj-vista-veil{background:linear-gradient(170deg,
-    color-mix(in srgb,var(--fj-shade) 44%,transparent) 0%,
-    color-mix(in srgb,var(--fj-shade) 78%,transparent) 20%,
-    color-mix(in srgb,var(--fj-shade) 88%,transparent) 52%,
-    color-mix(in srgb,var(--fj-shade) 80%,transparent) 86%,
-    color-mix(in srgb,var(--fj-shade) 48%,transparent) 100%)}
+  .fj-vista-veil{background:none}
   .fj-vista-copy{padding:0 28px}
   .fj-vista-copy h2{font-size:clamp(30px,6vw,46px);margin:14px 0 16px}
   .fj-vista-copy p{font-size:16.5px}
@@ -189,36 +226,75 @@ ul,ol{list-style:none}
 .fj-seam{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
 .fj-seam-pic{position:fixed;inset:0;z-index:0}
 .fj-seam-pic img{width:100%;height:100%;object-fit:cover}
-/* Veil 2 — a band of shade laid across the middle of the picture and released at the
-   top and the bottom, so the sky above and the black sand below keep their light. */
-.fj-seam-veil{position:absolute;inset:0;background:linear-gradient(180deg,
-  color-mix(in srgb,var(--fj-shade) 14%,transparent) 0%,
-  color-mix(in srgb,var(--fj-shade) 40%,transparent) 14%,
-  color-mix(in srgb,var(--fj-shade) 84%,transparent) 25%,
-  color-mix(in srgb,var(--fj-shade) 88%,transparent) 50%,
-  color-mix(in srgb,var(--fj-shade) 84%,transparent) 75%,
-  color-mix(in srgb,var(--fj-shade) 40%,transparent) 87%,
-  color-mix(in srgb,var(--fj-shade) 14%,transparent) 100%)}
-.fj-seam-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;color:var(--fj-onphoto);display:flex;justify-content:center}
-.fj-seam-inner{max-width:660px;text-align:center}
-.fj-seam-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
-.fj-seam-copy h2{font-family:var(--fj-text);font-weight:400;text-transform:none;letter-spacing:-.005em;line-height:1.16;font-size:clamp(29px,3.9vw,50px);margin:20px auto 0;color:var(--fj-onphoto)}
-.fj-seam-hr{display:block;width:64px;height:2px;margin:26px auto;background:color-mix(in srgb,var(--fj-onphoto) 70%,transparent)}
-.fj-seam-copy p{font-size:17px;color:var(--fj-onphoto-soft);max-width:52ch;margin:0 auto}
-.fj-seam-cite{display:block;margin-top:22px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--fj-onphoto-dim)}
+/* Veil 2 — as above: no wash, no band of shade. The picture is shown as it is,
+   and the copy carries its own paper. */
+.fj-seam-veil{position:absolute;inset:0;background:none}
+.fj-seam-copy{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:0 44px;display:flex;justify-content:center}
+.fj-seam-inner{max-width:660px;text-align:center;background:var(--c-bg);color:var(--c-ink);border-top:3px solid var(--c-accent);padding:36px 44px 40px;box-shadow:0 14px 40px rgba(20,19,16,.22)}
+.fj-seam-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--c-accent)}
+.fj-seam-copy h2{font-family:var(--fj-text);font-weight:400;text-transform:none;letter-spacing:-.005em;line-height:1.16;font-size:clamp(26px,3.2vw,40px);margin:18px auto 0;color:var(--c-primary)}
+.fj-seam-hr{display:block;width:64px;height:2px;margin:24px auto;background:var(--c-accent)}
+.fj-seam-copy p{font-size:17px;color:var(--c-muted);max-width:52ch;margin:0 auto}
+.fj-seam-cite{display:block;margin-top:22px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--c-muted)}
 @media(max-width:1010px){
-  .fj-seam-veil{background:linear-gradient(180deg,
-    color-mix(in srgb,var(--fj-shade) 30%,transparent) 0%,
-    color-mix(in srgb,var(--fj-shade) 62%,transparent) 9%,
-    color-mix(in srgb,var(--fj-shade) 86%,transparent) 20%,
-    color-mix(in srgb,var(--fj-shade) 89%,transparent) 50%,
-    color-mix(in srgb,var(--fj-shade) 86%,transparent) 80%,
-    color-mix(in srgb,var(--fj-shade) 62%,transparent) 91%,
-    color-mix(in srgb,var(--fj-shade) 30%,transparent) 100%)}
+  .fj-seam-veil{background:none}
   .fj-seam-copy{padding:0 28px}
-  .fj-seam-copy h2{font-size:clamp(25px,5.2vw,38px)}
+  .fj-seam-inner{padding:26px 26px 30px}
+  .fj-seam-copy h2{font-size:clamp(23px,4.4vw,32px)}
   .fj-seam-copy p{font-size:16px}
   .fj-seam-hr{margin:20px auto}
+}
+@media(max-width:560px){.fj-seam-inner{padding:22px 20px 26px}}
+
+/* ---- the three ways to travel, and the four reasons ------------------------------
+   Both are card rows on the same grid so they read as one system, not two
+   inventions. The keyword rule under the first is the site's own mono stamp at
+   full width: a spine for the section rather than decoration. */
+.fj-keys{display:flex;flex-wrap:wrap;gap:0 26px;padding:16px 0 0;margin-top:26px;border-top:2px solid var(--c-primary);font-family:var(--fj-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent)}
+.fj-keys span::after{content:" \00b7";color:var(--c-border)}
+.fj-keys span:last-child::after{content:""}
+.fj-ways{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.fj-way{padding:28px 30px 26px 0;border-right:var(--fj-rule)}
+.fj-way:last-child{border-right:0;padding-right:0}
+.fj-way h3{font-size:21px;margin-bottom:10px}
+.fj-way p{font-size:15px;color:var(--c-muted)}
+.fj-way a{display:inline-block;margin-top:18px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px;transition:color .2s}
+.fj-way a:hover{color:var(--c-accent)}
+.fj-reasons{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--c-primary)}
+.fj-reason{padding:26px 26px 22px 0}
+.fj-reason b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-bottom:11px}
+.fj-reason h3{font-size:18px;margin-bottom:8px}
+.fj-reason p{font-size:14.5px;color:var(--c-muted)}
+.fj-zone.basalt .fj-reason p{color:var(--fj-onbasalt-dim)}
+.fj-zone.basalt .fj-reasons{border-top-color:var(--c-accent)}
+@media(max-width:900px){
+  .fj-ways{grid-template-columns:1fr}
+  .fj-way{border-right:0;border-bottom:var(--fj-rule);padding:22px 0 20px}
+  .fj-way:last-child{border-bottom:0}
+  .fj-reasons{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){.fj-reasons{grid-template-columns:1fr}.fj-reason{padding:20px 0 16px;border-bottom:var(--fj-rule)}}
+
+/* ---- the fourteen-day route ----------------------------------------------------
+   A route, not a feature list: six stages left to right with one rule running
+   through them, so it reads as a single journey rather than six separate
+   offers. The rule is the road; the dot is where you are on it. */
+.fj-route{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-top:2px solid var(--c-primary);margin-top:6px}
+.fj-leg{position:relative;padding:26px 22px 8px 0}
+.fj-leg::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;background:var(--c-bg);border:2px solid var(--c-accent);border-radius:50%}
+.fj-leg.here::before{background:var(--c-accent)}
+.fj-leg-day{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.fj-leg h3{font-size:19px;margin:9px 0 7px;color:var(--c-primary)}
+.fj-leg p{font-size:13.5px;line-height:1.5;color:var(--c-muted)}
+.fj-leg-alt{display:block;margin-top:9px;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.fj-route-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:34px;padding-top:16px;border-top:var(--fj-rule);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.fj-route-foot a{border-bottom:2px solid var(--c-accent);padding-bottom:3px;transition:color .2s}
+.fj-route-foot a:hover{color:var(--c-accent)}
+@media(max-width:1000px){.fj-route{grid-template-columns:repeat(3,1fr)}.fj-leg{padding-right:18px}}
+@media(max-width:620px){
+  .fj-route{grid-template-columns:1fr;border-top:0}
+  .fj-leg{padding:16px 0 16px 26px;border-left:2px solid var(--c-border)}
+  .fj-leg::before{top:20px;left:-7px}
 }
 
 /* ---- circuit slips ------------------------------------------------------------- */
@@ -368,6 +444,13 @@ ul,ol{list-style:none}
 
 
 /* ---- tourism country pages -------------------------------------------------- */
+/* The mark names the group first and the country second, so a page reached from
+   a search result says whose site it is and what it is about, in that order. */
+.fj-mark i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:8.5px;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--c-accent)}
+.fj-mast-tel{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+@media(max-width:1100px){.fj-mast-tel{display:none}}
 .tq-hero{position:relative;background:var(--fj-basalt);color:var(--fj-onphoto)}
 .tq-hero-pic{position:absolute;inset:0;overflow:hidden}
 .tq-hero-pic img{width:100%;height:100%;object-fit:cover}
@@ -447,26 +530,42 @@ ul,ol{list-style:none}
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 </style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to Cameroon</a>
 <header class="fj-mast">
   <div class="fj-frame fj-mast-in">
-    <a class="fj-mark" href="/"><b>Fako Journeys</b><span>Cameroun &middot; Circuits guid&eacute;s / Guided circuits</span></a>
-    <nav class="fj-routes">
-      <a href="/services">Circuits</a>
-      <a href="/pricing">Rates &amp; Fees</a>
-      <a href="/about">The Operator</a>
-      <a href="/contact">Enquire</a>
+    <a class="fj-mark" href="/cameroon"><i>Afrinkong</i><b>Cameroon</b><span>All 27 categories</span></a>
+    <nav class="fj-routes" aria-label="Primary">
+      <a href="/cameroon">Cameroon home</a>
+      <a href="/atlas">The Atlas</a>
+      <a href="/journey">Build a journey</a>
+      <a href="/meet">Meet Africa</a>
+      <a href="/tourism/">Every country</a>
     </nav>
-    <span class="fj-mast-tel">Douala +237 233 42 09 61</span>
-    <a class="btn" href="/contact">Plan a circuit</a>
+<span class="fj-mast-tel">Kamerun &middot; Buea and Douala</span>    <a class="btn" href="/contact">Plan a journey</a>
   </div>
 </header>
+<main id="main">
 
 <section class="tq-hero" data-category="hero">
-  <div class="tq-hero-pic"><img src="https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=2400&amp;h=1350&amp;q=82" alt="the upper slopes of Mount Cameroon at dawn above the Atlantic" width="2400" height="1350" style="aspect-ratio:16 / 9;object-position:52% 58%" srcset="https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=1200&amp;h=675&amp;q=82 1200w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=1800&amp;h=1012&amp;q=82 1800w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=2400&amp;h=1350&amp;q=82 2400w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=3000&amp;h=1688&amp;q=82 3000w" sizes="100vw" fetchpriority="high" decoding="async"><div class="tq-hero-scrim"></div></div>
+  <div class="tq-hero-pic"><picture><source media="(max-width: 700px)" srcset="https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=1200&amp;h=1500&amp;q=82 1200w" sizes="100vw"><img src="https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=2400&amp;h=1350&amp;q=82" alt="the upper slopes of Mount Cameroon at dawn above the Atlantic" width="2400" height="1350" style="aspect-ratio:16 / 9;object-position:52% 58%" srcset="https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=1200&amp;h=675&amp;q=82 1200w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=1800&amp;h=1012&amp;q=82 1800w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=2400&amp;h=1350&amp;q=82 2400w, https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.520&amp;fp-y=0.580&amp;w=3000&amp;h=1688&amp;q=82 3000w" sizes="100vw" fetchpriority="high" decoding="async"></picture><div class="tq-hero-scrim"></div></div>
   <div class="fj-frame tq-hero-in">
     <span class="fj-stamp">CAMEROON <i>&middot; Tourism</i></span>
     <h1>Africa in Miniature</h1>
@@ -524,7 +623,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="wildlife">
-        <figure><img src="https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=1800&amp;h=1012&amp;q=82" alt="forest elephants among buttressed trees in Korup National Park, Cameroon" width="1800" height="1012" style="aspect-ratio:16 / 9;object-position:50% 55%" srcset="https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=900&amp;h=506&amp;q=82 900w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=1400&amp;h=788&amp;q=82 1400w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=1800&amp;h=1012&amp;q=82 1800w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=2400&amp;h=1350&amp;q=82 2400w" sizes="(min-width: 1240px) 1152px, 100vw" loading="lazy" decoding="async"></figure>
+        <figure><picture><source media="(max-width: 700px)" srcset="https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=900&amp;h=1125&amp;q=82 900w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=1400&amp;h=1750&amp;q=82 1400w" sizes="100vw"><img src="https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=1800&amp;h=1012&amp;q=82" alt="forest elephants among buttressed trees in Korup National Park, Cameroon" width="1800" height="1012" style="aspect-ratio:16 / 9;object-position:50% 55%" srcset="https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=900&amp;h=506&amp;q=82 900w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=1400&amp;h=788&amp;q=82 1400w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=1800&amp;h=1012&amp;q=82 1800w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.550&amp;w=2400&amp;h=1350&amp;q=82 2400w" sizes="(min-width: 1240px) 1152px, 100vw" loading="lazy" decoding="async"></picture></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Wildlife</span>
           <h3>Wildlife of the Rainforest</h3>
@@ -553,7 +652,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="culture">
-        <figure><img src="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=1800&amp;h=1012&amp;q=82" alt="a carved and beaded royal throne inside a palace museum at Foumban, Cameroon" width="1800" height="1012" style="aspect-ratio:16 / 9;object-position:50% 46%" srcset="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=900&amp;h=506&amp;q=82 900w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=1400&amp;h=788&amp;q=82 1400w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=1800&amp;h=1012&amp;q=82 1800w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=2400&amp;h=1350&amp;q=82 2400w" sizes="(min-width: 1240px) 1152px, 100vw" loading="lazy" decoding="async"></figure>
+        <figure><picture><source media="(max-width: 700px)" srcset="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=900&amp;h=1125&amp;q=82 900w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=1400&amp;h=1750&amp;q=82 1400w" sizes="100vw"><img src="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=1800&amp;h=1012&amp;q=82" alt="a carved and beaded royal throne inside a palace museum at Foumban, Cameroon" width="1800" height="1012" style="aspect-ratio:16 / 9;object-position:50% 46%" srcset="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=900&amp;h=506&amp;q=82 900w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=1400&amp;h=788&amp;q=82 1400w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=1800&amp;h=1012&amp;q=82 1800w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&amp;fit=crop&amp;crop=focalpoint&amp;fp-x=0.500&amp;fp-y=0.460&amp;w=2400&amp;h=1350&amp;q=82 2400w" sizes="(min-width: 1240px) 1152px, 100vw" loading="lazy" decoding="async"></picture></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Culture</span>
           <h3>The Grassfields Kingdoms</h3>
@@ -633,7 +732,7 @@ ul,ol{list-style:none}
     </div>
     
       <div class="tq-feature fj-rise" data-category="adventure">
-        <figure><img src="https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1800&amp;h=1012" alt="walkers crossing grass slopes below the summit huts on Mount Cameroon" width="1800" height="1012" style="aspect-ratio:16 / 9;object-position:46% 60%" srcset="https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=900&amp;h=506 900w, https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1400&amp;h=788 1400w, https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1800&amp;h=1012 1800w, https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=2400&amp;h=1350 2400w" sizes="(min-width: 1240px) 1152px, 100vw" loading="lazy" decoding="async"></figure>
+        <figure><picture><source media="(max-width: 700px)" srcset="https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=900&amp;h=1125 900w, https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1400&amp;h=1750 1400w" sizes="100vw"><img src="https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1800&amp;h=1012" alt="walkers crossing grass slopes below the summit huts on Mount Cameroon" width="1800" height="1012" style="aspect-ratio:16 / 9;object-position:46% 60%" srcset="https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=900&amp;h=506 900w, https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1400&amp;h=788 1400w, https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1800&amp;h=1012 1800w, https://images.pexels.com/photos/4994530/pexels-photo-4994530.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=2400&amp;h=1350 2400w" sizes="(min-width: 1240px) 1152px, 100vw" loading="lazy" decoding="async"></picture></figure>
         <div class="tq-feature-txt">
           <span class="fj-stamp">Adventure</span>
           <h3>Summit, Crater, Coast</h3>
@@ -676,7 +775,7 @@ ul,ol{list-style:none}
 </section>
 
 <section class="tq-band" data-category="why-visit">
-  <img src="https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=2400&amp;h=1029" alt="a 4x4 on a red laterite road between rainforest and highland farmland, Cameroon" width="2400" height="1029" style="aspect-ratio:21 / 9;object-position:50% 56%" srcset="https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1200&amp;h=514 1200w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1800&amp;h=771 1800w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=2400&amp;h=1029 2400w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=3000&amp;h=1286 3000w" sizes="100vw" loading="lazy" decoding="async">
+  <picture><source media="(max-width: 700px)" srcset="https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1200&amp;h=800 1200w" sizes="100vw"><img src="https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=2400&amp;h=1029" alt="a 4x4 on a red laterite road between rainforest and highland farmland, Cameroon" width="2400" height="1029" style="aspect-ratio:21 / 9;object-position:50% 56%" srcset="https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1200&amp;h=514 1200w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=1800&amp;h=771 1800w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=2400&amp;h=1029 2400w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;w=3000&amp;h=1286 3000w" sizes="100vw" loading="lazy" decoding="async"></picture>
   <div class="tq-band-txt"><div class="fj-frame">
     <span class="fj-stamp">Why Visit This Country</span>
     <h3>Everything, Within One Border</h3><p>Sea level to Sahel in nine hundred kilometres, French and English on the same road, and almost nobody else on it.</p>
@@ -690,37 +789,28 @@ ul,ol{list-style:none}
     <a class="btn" href="/contact">Plan a circuit</a>
   </div>
 </section>
+</main>
 <footer class="fj-foot">
   <div class="fj-frame">
     <div class="fj-foot-grid">
       <div>
-        <div class="fj-foot-brand">Fako<span>Tour operator &middot; Buea &amp; Douala</span></div>
-        <p>Licensed circuits across the whole country &mdash; volcano, rainforest, highlands, coast and Sahel &mdash; run by guides who live in the regions they walk you through. Bookings taken in French and in English.</p>
+        <div class="fj-foot-brand">Afrinkong<span>Journeys across Africa</span></div>
+        <p>A group of locally run tour operators working across Africa. Every country is worked through the same twenty-seven categories, so two of them can be compared on the same terms.</p>
+<p>Kamerun runs Cameroon, out of Buea and Douala, since 2011.</p>      </div>
+      <div class="fj-foot-col">
+        <b>Cameroon</b>
+        <a href="/cameroon">Destination page</a>
+        <a href="/#destinations">All destinations</a>
+        <a href="/#window">The map</a>
       </div>
       <div class="fj-foot-col">
-        <b>Circuits</b>
-        <a href="/services">Mount Cameroon trek</a>
-        <a href="/services">Coast &amp; Lob&eacute; falls</a>
-        <a href="/services">Ring Road &amp; Foumban</a>
-        <a href="/services">Waza &amp; the north</a>
-      </div>
-      <div class="fj-foot-col">
-        <b>Practical</b>
-        <a href="/pricing">Rates per person</a>
-        <a href="/pricing">Park &amp; guide fees</a>
-        <a href="/about">Guides &amp; licensing</a>
-        <a href="/contact">Seasons &amp; booking</a>
-        <a href="/tourism">Tourism by country</a>
-      </div>
-      <div class="fj-foot-col">
-        <b>Offices</b>
-        <span>Rue Njo-Njo, Bonapriso, Douala</span>
-        <span>Sandpit Road, Molyko, Buea</span>
-        <span>+237 233 42 09 61</span>
-        <span>bonjour@fakojourneys.cm</span>
+        <b>Plan</b>
+        <a href="/contact">Start a journey</a>
+        <a href="/contact">Contact an operator</a>
+        <a href="/#seasons">Travel seasons</a>
       </div>
     </div>
-    <div class="fj-foot-bar">&copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
+    <div class="fj-foot-bar">Afrinkong &middot; Cameroon &middot; Every picture on this page is credited to the photographer who took it</div>
   </div>
 </footer>
 <script>

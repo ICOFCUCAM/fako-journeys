@@ -3,37 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Enquire — Douala & Buea Offices, Seasons and Booking Process | Fako Journeys</title>
-<meta name="description" content="Write in French or English and get an answer within one working day. Douala handles bookings, Buea runs the mountain — with the season-by-season calendar, the five-step booking process, visa and vaccination notes and the enquiry form.">
+<title>Enquire — Douala & Buea Offices, Seasons and Booking Process | Kamerun</title>
+<meta name="description" content="Write in French or English and get an answer within one working day. Douala handles bookings, Buea runs the mountain — with the season-by-season calendar, the five-step booking process, visa and vaccination notes and the enquiry form."
+<link rel="canonical" href="https://afrinkong.com/contact">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="Enquire — Douala & Buea Offices, Seasons and Booking Process | Kamerun">
+<meta property="og:description" content="Write in French or English and get an answer within one working day. Douala handles bookings, Buea runs the mountain — with the season-by-season calendar, the five-step booking process, visa and vaccination notes and the enquiry form.">
+<meta property="og:url" content="https://afrinkong.com/contact">
+<meta name="twitter:card" content="summary">>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
+/* Tokens, reset, type scale, focus and motion behaviour are in
+   /styles/afrinkong.css. What is left here is the Kamerun operator's own
+   extension of the palette — the tokens the group system has no use for — and
+   this page's layout. */
 :root{
-  /* master tokens (rebrandable) — laterite-relief: raffia paper, basalt ink, laterite road */
-  --c-bg:#F7F2E7;
-  --c-primary:#1C2A25;
-  --c-accent:#BE5527;
-  --c-ink:#1F211C;
-  --c-muted:#6E7166;
-  --c-border:#DDD4C1;
-  /* derived surfaces */
   --fj-raffia:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
-  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-canopy:color-mix(in srgb,var(--c-primary) 82%,var(--c-accent));
   --fj-ember:color-mix(in srgb,var(--c-accent) 14%,var(--c-bg));
-  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
-  --fj-rule:1px solid var(--c-border);
-  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
-  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
-  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
-  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
-  /* photograph-relative values: these sit ON imagery, so they are tuned to the photograph
-     rather than to the brand palette and stay legible whatever picture is dropped in */
   --fj-shade:#141310;
   --fj-onphoto:#FAF5EA;
   --fj-onphoto-soft:#F2EBDB;
   --fj-onphoto-dim:#EBE2CE;
-  color-scheme:light;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -125,11 +117,11 @@ ul,ol{list-style:none}
 .fj-transect-step.lv5{min-height:150px}
 .fj-transect-step.lv6{min-height:132px}
 .fj-transect-alt{font-family:var(--fj-display);font-size:23px;font-weight:700;line-height:1}
-.fj-transect-step.lv3 .fj-transect-alt{color:var(--c-bg)}
+.fj-transect-step.lv6 .fj-transect-alt{color:var(--c-bg)}
 .fj-transect-step b{display:block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:10px;font-weight:400;color:var(--c-accent)}
-.fj-transect-step.lv3 b{color:var(--fj-ember)}
+.fj-transect-step.lv6 b{color:var(--c-accent)}
 .fj-transect-step p{font-size:13.5px;line-height:1.45;color:var(--c-muted);margin-top:6px}
-.fj-transect-step.lv3 p{color:var(--fj-onbasalt-dim)}
+.fj-transect-step.lv6 p{color:var(--fj-onbasalt-dim)}
 .fj-transect-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:14px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 @media(max-width:900px){.fj-transect{grid-template-columns:repeat(3,1fr)}.fj-transect-step{min-height:0 !important;padding:14px 12px}}
 @media(max-width:520px){.fj-transect{grid-template-columns:1fr 1fr}}
@@ -143,7 +135,12 @@ ul,ol{list-style:none}
    degrade to `absolute` and the effect would vanish with no error at all.
    background-attachment:fixed is not a substitute — iOS Safari ignores it.
    No script drives this. Verified by `npm run test:fixedwindow`. */
-.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
+.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center;background:var(--c-primary)}
+/* The ground is the house ink, not nothing. This panel sets cream type over a
+   fixed photograph, and the photograph for it has not been placed — which left
+   a full-height section of cream on cream, measured at 1.03:1 and invisible.
+   With a ground the panel reads either way, and the photograph covers it when
+   one arrives. */
 .fj-vista-pic{position:fixed;inset:0;z-index:0}
 .fj-vista-pic img{width:100%;height:100%;object-fit:cover}
 /* Veil 1 — a directional wash off the western flank: deep across the reading column
@@ -367,11 +364,12 @@ ul,ol{list-style:none}
 </style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to the page</a>
 <!-- nav -->
 <header class="fj-mast">
   <div class="fj-frame fj-mast-in">
-    <a class="fj-mark" href="/"><b>Fako Journeys</b><span>Cameroun &middot; Circuits guid&eacute;s / Guided circuits</span></a>
-    <nav class="fj-routes">
+    <a class="fj-mark" href="/cameroon"><b>Kamerun</b><span>Discover Cameroon.</span></a>
+    <nav class="fj-routes" aria-label="Primary">
       <a href="/services">Circuits</a>
       <a href="/pricing">Rates &amp; Fees</a>
       <a href="/about">The Operator</a>
@@ -381,6 +379,7 @@ ul,ol{list-style:none}
     <a class="btn" href="#quote">Plan a circuit</a>
   </div>
 </header>
+<main id="main">
 <!-- opening -->
 <section class="fj-open">
   <div class="fj-frame">
@@ -395,7 +394,7 @@ ul,ol{list-style:none}
         </div>
       </div>
       <div class="fj-open-plate fj-rise">
-        <img src="https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=960&h=1280" srcset="https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=480&h=640 480w, https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=720&h=960 720w, https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=960&h=1280 960w, https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1440&h=1920 1440w" sizes="(min-width: 1240px) 480px, (min-width: 940px) 40vw, 92vw" alt="a Bamileke chieftaincy compound with carved posts and a conical thatched roof, Cameroon" decoding="async" style="object-position:50% 42%" data-illustration="/images/office-frontage.svg" data-illustration-alt="The street frontage of a small tour operator office with a hand-painted sign" data-provider="pexels">
+        <img src="https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=960&h=1280" srcset="https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=480&h=640 480w, https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=720&h=960 720w, https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=960&h=1280 960w, https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1440&h=1920 1440w" sizes="(min-width: 1240px) 480px, (min-width: 940px) 40vw, 92vw" alt="a Bamileke chieftaincy compound with carved posts and a conical thatched roof, Cameroon" decoding="async" style="object-position:50% 42%" data-illustration="/images/office-frontage.svg" data-illustration-alt="The street frontage of a small tour operator office with a hand-painted sign" data-provider="pexels" data-locked="true">
         <div class="fj-open-tag"><b>Douala &amp; Buea</b><span>Walk in, telephone, or WhatsApp</span></div>
       </div>
     </div>
@@ -420,7 +419,7 @@ ul,ol{list-style:none}
     </div>
     <div class="fj-slips">
       <article class="fj-slip fj-rise">
-        <div class="fj-slip-pic"><img src="https://images.pexels.com/photos/17290985/pexels-photo-17290985.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800" srcset="https://images.pexels.com/photos/17290985/pexels-photo-17290985.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=500&h=400 500w, https://images.pexels.com/photos/17290985/pexels-photo-17290985.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=750&h=600 750w, https://images.pexels.com/photos/17290985/pexels-photo-17290985.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800 1000w, https://images.pexels.com/photos/17290985/pexels-photo-17290985.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1500&h=1200 1500w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="a street in the Bonapriso quarter of Douala, Cameroon" loading="lazy" decoding="async" style="object-position:50% 54%" data-illustration="/images/douala-office-street.svg" data-illustration-alt="A quiet office street in the Bonapriso quarter of Douala" data-provider="pexels"></div>
+        <div class="fj-slip-pic"><img src="/images/uploads/site-contact-douala-office-street-1600w.jpg" srcset="/images/uploads/site-contact-douala-office-street-1600w.jpg 1600w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="A quiet office street in the Bonapriso quarter of Douala" loading="lazy" decoding="async" style="object-position:50% 54%" data-illustration="/images/douala-office-street.svg" data-illustration-alt="A quiet office street in the Bonapriso quarter of Douala" data-provider="upload" data-placed="true"></div>
         <div class="fj-slip-body">
           <div class="fj-slip-top">
             <span class="fj-slip-code">Douala</span>
@@ -438,7 +437,7 @@ ul,ol{list-style:none}
         </div>
       </article>
       <article class="fj-slip fj-rise">
-        <div class="fj-slip-pic"><img src="https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800" srcset="https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=500&h=400 500w, https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=750&h=600 750w, https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800 1000w, https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1500&h=1200 1500w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="a small beach hotel terrace above the sand at Kribi, Cameroon" loading="lazy" decoding="async" style="object-position:50% 50%" data-illustration="/images/buea-office-mountain.svg" data-illustration-alt="A small operations office in Buea with the mountain rising behind the town" data-provider="pexels"></div>
+        <div class="fj-slip-pic"><img src="https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800" srcset="https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=500&h=400 500w, https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=750&h=600 750w, https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800 1000w, https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1500&h=1200 1500w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="a small beach hotel terrace above the sand at Kribi, Cameroon" loading="lazy" decoding="async" style="object-position:50% 50%" data-illustration="/images/buea-office-mountain.svg" data-illustration-alt="A small operations office in Buea with the mountain rising behind the town" data-provider="pexels" data-locked="true"></div>
         <div class="fj-slip-body">
           <div class="fj-slip-top">
             <span class="fj-slip-code">Buea</span>
@@ -521,22 +520,22 @@ ul,ol{list-style:none}
     </div>
     <div class="fj-cal">
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.pexels.com/photos/36718132/pexels-photo-36718132.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=750" srcset="https://images.pexels.com/photos/36718132/pexels-photo-36718132.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=300&h=375 300w, https://images.pexels.com/photos/36718132/pexels-photo-36718132.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=450&h=562 450w, https://images.pexels.com/photos/36718132/pexels-photo-36718132.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=750 600w, https://images.pexels.com/photos/36718132/pexels-photo-36718132.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=900&h=1125 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="open dry-season slopes and ridge lines on Mount Cameroon" loading="lazy" decoding="async" style="object-position:50% 58%" data-illustration="/images/mount-dry-season.svg" data-illustration-alt="Clear dry-season conditions on the open upper mountain" data-provider="pexels">
+        <img src="/images/uploads/site-contact-mount-dry-season-1200w.jpg" srcset="/images/uploads/site-contact-mount-dry-season-1200w.jpg 1200w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Clear dry-season conditions on the open upper mountain" loading="lazy" decoding="async" style="object-position:50% 58%" data-illustration="/images/mount-dry-season.svg" data-illustration-alt="Clear dry-season conditions on the open upper mountain" data-provider="upload" data-placed="true">
         <b>Nov &ndash; Feb</b><span>Everything open</span>
         <p>Dry in both halves. Trekking, coast, highlands and north all work. Our busiest period; the mountain huts and the February Race of Hope week go first.</p>
       </div>
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="elephants and giraffe at a dry-season waterhole in Waza National Park, Cameroon" loading="lazy" decoding="async" style="object-position:48% 60%" data-illustration="/images/savanna-waterhole.svg" data-illustration-alt="Animals gathered at a shrinking dry-season waterhole" data-provider="unsplash">
+        <img src="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="elephants and giraffe at a dry-season waterhole in Waza National Park, Cameroon" loading="lazy" decoding="async" style="object-position:48% 60%" data-illustration="/images/savanna-waterhole.svg" data-illustration-alt="Animals gathered at a shrinking dry-season waterhole" data-provider="unsplash" data-locked="true">
         <b>Mar &ndash; May</b><span>North peaks, coast turns</span>
         <p>The best weeks at Waza and B&eacute;nou&eacute;, and hot with it. The south-west begins to break by late April and the mountain closes toward the end of May.</p>
       </div>
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=750" srcset="https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=300&h=375 300w, https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=450&h=562 450w, https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=750 600w, https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=900&h=1125 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="cloud and rain sitting on the rainforest above Buea, Cameroon" loading="lazy" decoding="async" style="object-position:50% 48%" data-illustration="/images/mount-wet-cloud.svg" data-illustration-alt="Low cloud and rain on the forested slopes above a coastal town" data-provider="pexels">
+        <img src="/images/uploads/site-contact-mount-wet-cloud-1200w.jpg" srcset="/images/uploads/site-contact-mount-wet-cloud-1200w.jpg 1200w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Low cloud and rain on the forested slopes above a coastal town" loading="lazy" decoding="async" style="object-position:50% 48%" data-illustration="/images/mount-wet-cloud.svg" data-illustration-alt="Low cloud and rain on the forested slopes above a coastal town" data-provider="upload" data-placed="true">
         <b>Jun &ndash; Sep</b><span>The Buea rains</span>
         <p>Serious rain in the south-west &mdash; the wettest month at Debundscha can pass two metres. No summit treks. Highlands, Foumban and Yaound&eacute; run normally and cost less.</p>
       </div>
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.unsplash.com/photo-1659947234286-213fd15f0bcc?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1659947234286-213fd15f0bcc?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1659947234286-213fd15f0bcc?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1659947234286-213fd15f0bcc?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1659947234286-213fd15f0bcc?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Nature in Cameroon" loading="lazy" decoding="async" style="object-position:50% 46%" data-illustration="/images/highlands-october.svg" data-illustration-alt="Green highland country under clearing October skies" data-provider="unsplash">
+        <img src="/images/uploads/site-contact-highlands-october-1200w.jpg" srcset="/images/uploads/site-contact-highlands-october-1200w.jpg 1200w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Green highland country under clearing October skies" loading="lazy" decoding="async" style="object-position:50% 46%" data-illustration="/images/highlands-october.svg" data-illustration-alt="Green highland country under clearing October skies" data-provider="upload" data-placed="true">
         <b>Oct</b><span>The quiet turn</span>
         <p>Rain easing, everything green, almost nobody travelling. Excellent for the Ring Road and Foumban, marginal for the mountain, too early for the north.</p>
       </div>
@@ -598,7 +597,7 @@ ul,ol{list-style:none}
           <div><dt>WhatsApp</dt><dd>+237 677 04 21 88</dd></div>
         </dl>
       </div>
-      <form class="fj-form fj-rise" data-lead-mailto="bonjour@fakojourneys.cm" data-lead-form data-lead-success="Thank you — your enquiry has reached the Douala office. We will reply within one working day, in French or English, with a suggested circuit and a realistic price per person." data-lead-error="That did not send. Please telephone +237 233 42 09 61 or write to bonjour@fakojourneys.cm and we will pick it up from there.">
+      <form class="fj-form fj-rise" data-lead-mailto="bonjour@kamerun.cm" data-lead-form data-lead-success="Thank you — your enquiry has reached the Douala office. We will reply within one working day, in French or English, with a suggested circuit and a realistic price per person." data-lead-error="That did not send. Please telephone +237 233 42 09 61 or write to bonjour@kamerun.cm and we will pick it up from there.">
         <div class="fj-row">
           <div class="fj-cell"><label for="cnm">Your name</label><input id="cnm" name="name" required></div>
           <div class="fj-cell"><label for="cph">Telephone or WhatsApp</label><input id="cph" name="phone"></div>
@@ -629,6 +628,21 @@ ul,ol{list-style:none}
     var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('seen');io.unobserve(en.target)}})},{threshold:.1});
     rise.forEach(function(el){io.observe(el)});
   }else{rise.forEach(function(el){el.classList.add('seen')})}
+  /* A journey built on /journey arrives here as ?journey=, already written out
+     as the traveller shaped it. It is dropped into the message rather than into
+     a hidden field so they can see it, cut it and argue with it before it is
+     sent — an enquiry nobody can read before sending is a form, not a letter. */
+  (function(){
+    var q=new URLSearchParams(location.search).get('journey');
+    if(!q)return;
+    var box=document.getElementById('cms');
+    if(!box)return;
+    box.value=q+(box.value?'\n\n'+box.value:'');
+    box.setAttribute('rows','12');
+    var lab=document.querySelector('label[for="cms"]');
+    if(lab)lab.textContent='Your journey, as you built it \u2014 edit anything';
+    box.closest('.fj-cell').scrollIntoView({block:'center'});
+  })();
   document.querySelectorAll('[data-lead-form]').forEach(function(fm){
     fm.addEventListener('submit',function(e){
       e.preventDefault();
@@ -647,11 +661,12 @@ ul,ol{list-style:none}
 })();
 </script>
 <!-- footer -->
+</main>
 <footer class="fj-foot">
   <div class="fj-frame">
     <div class="fj-foot-grid">
       <div>
-        <div class="fj-foot-brand">Fako<span>Tour operator &middot; Buea &amp; Douala</span></div>
+        <div class="fj-foot-brand">Kamerun<span>Discover Cameroon.</span></div>
         <p>Licensed circuits across the whole country &mdash; volcano, rainforest, highlands, coast and Sahel &mdash; run by guides who live in the regions they walk you through. Bookings taken in French and in English.</p>
       </div>
       <div class="fj-foot-col">
@@ -674,11 +689,13 @@ ul,ol{list-style:none}
         <span>Rue Njo-Njo, Bonapriso, Douala</span>
         <span>Sandpit Road, Molyko, Buea</span>
         <span>+237 233 42 09 61</span>
-        <span>bonjour@fakojourneys.cm</span>
+        <span>bonjour@kamerun.cm</span>
       </div>
     </div>
-    <div class="fj-foot-bar">&copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
+    <div class="fj-foot-bar"><a href="/" style="border-bottom:1px solid var(--c-accent)">Part of Afrinkong</a> &middot; &copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
   </div>
 </footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
 </body>
 </html>

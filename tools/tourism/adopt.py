@@ -25,6 +25,11 @@ Rules it follows:
   * the illustration is remembered in data-illustration, so a slot can be put
     back, re-pointed at a better photo later, or fall back if a photo is dropped.
   * a slot with no resolved photo keeps its drawing. Nothing is left broken.
+  * an <img data-locked="true"> is never touched, by adopt or by revert: it is
+    artwork somebody chose, not a slot for a search result. The same goes for
+    data-placed="true", which `place` sets on a generated or uploaded picture
+    somebody selected from the contact sheet — use `place --revert` to undo
+    those, so the two tools never fight over the same slot.
   * idempotent: running it twice changes nothing the second time.
 """
 
@@ -35,7 +40,10 @@ from . import cache as cache_mod
 from . import imaging
 from .model import ROOT, attach_cache, load_countries, load_taxonomy
 
-PAGES = ("index.html", "services.html", "about.html", "contact.html", "pricing.html")
+# The site root is Afrinkong, the group's continental gateway; the Kamerun
+# pages hang off cameroon.html. Only these five carry photograph slots — the
+# gateway is deliberately typographic, so it has none to manage.
+PAGES = ("cameroon.html", "services.html", "about.html", "contact.html", "pricing.html")
 
 # These are not the tourism taxonomy roles. They are the shapes the five
 # hand-written pages already impose in their own CSS:
@@ -52,18 +60,30 @@ PAGES = ("index.html", "services.html", "about.html", "contact.html", "pricing.h
 #
 # `sizes` is computed from the real layout: .fj-frame is 1240px with 44px
 # padding, so the content column is 1152px, divided by that slot's grid.
+# `focus` is what the crop must not throw away. It is printed on the review
+# sheet beside every candidate and compiled into the generation brief, so the
+# instruction a reviewer judges against and the instruction the generator was
+# given are the same sentence rather than two people's memory of one.
 SLOT_SPECS = (
     ("fj-vista-pic",  {"aspect": [16, 9], "width": 2400, "srcset": [1200, 1800, 2400, 3000],
-                       "sizes": "100vw", "quality": 82, "box": False}),
+                       "sizes": "100vw", "quality": 82, "box": False,
+                       "focus": "the horizon, and whatever makes this a place "
+                                "rather than a view"}),
     ("fj-seam-pic",   {"aspect": [16, 9], "width": 2400, "srcset": [1200, 1800, 2400, 3000],
-                       "sizes": "100vw", "quality": 82, "box": False}),
+                       "sizes": "100vw", "quality": 82, "box": False,
+                       "focus": "the full width of the thing this band is a band of"}),
     ("fj-open-plate", {"aspect": [3, 4], "width": 960, "srcset": [480, 720, 960, 1440],
                        "sizes": "(min-width: 1240px) 480px, (min-width: 940px) 40vw, 92vw",
-                       "quality": 82}),
+                       "quality": 82,
+                       "focus": "the subject standing upright in a tall frame — "
+                                "nothing important near the left or right edge"}),
     ("fj-slip-pic",   {"aspect": [5, 4], "width": 1000, "srcset": [500, 750, 1000, 1500],
                        "sizes": "(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw",
-                       "quality": 82}),
+                       "quality": 82,
+                       "focus": "the subject, and enough around it to say where "
+                                "this is"}),
     ("fj-craft-pic",  {"aspect": [4, 5], "width": 880, "srcset": [440, 660, 880, 1320],
+                       "focus": "the hands and the work, close",
                        "sizes": "(min-width: 1240px) 440px, (min-width: 900px) 38vw, 92vw",
                        "quality": 82}),
     ("fj-cal-col",    {"aspect": [4, 5], "width": 600, "srcset": [300, 450, 600, 900],
@@ -72,12 +92,19 @@ SLOT_SPECS = (
     ("fj-crew-card",  {"aspect": [1, 1], "width": 720, "srcset": [360, 540, 720, 1080],
                        "sizes": "(min-width: 1240px) 360px, (min-width: 640px) 30vw, 45vw",
                        "quality": 80}),
+    # The six climate columns. Narrow — 1152px of content over six columns is
+    # about 190px each — and easy to miss: without an entry here they fall to
+    # DEFAULT_SPEC and `optimise` sizes them for a 1600px box, which is how a
+    # 3 MB frame ends up feeding a 190px column.
+    ("fj-transect-pic", {"aspect": [4, 3], "width": 200, "srcset": [200, 300, 400, 600],
+                         "sizes": "(min-width: 900px) 190px, 33vw", "quality": 80}),
 )
 
 # Anything the classes above do not cover kept its shape from the illustration,
 # which is 3:2. Deliver 3:2 so nothing about the layout changes.
 DEFAULT_SPEC = {"aspect": [3, 2], "width": 1600, "srcset": [800, 1200, 1600, 2400],
-                "sizes": "100vw", "quality": 82}
+                "sizes": "100vw", "quality": 82,
+                "focus": "the subject, off dead centre"}
 
 IMG_RE = re.compile(r"<img\b[^>]*>", re.S)
 ATTR_RE = re.compile(r'(\w[\w-]*)\s*=\s*"([^"]*)"')
@@ -187,7 +214,8 @@ def run(country_slug="cameroon", revert=False, write=True):
         if e and e.local:
             focal_by_local.setdefault(e.local, e.focal)
 
-    report = {"adopted": 0, "kept": 0, "reverted": 0, "pages": [], "missing": set()}
+    report = {"adopted": 0, "kept": 0, "reverted": 0, "locked": 0,
+              "pages": [], "missing": set()}
 
     for page in PAGES:
         path = os.path.join(ROOT, page)
@@ -198,11 +226,20 @@ def run(country_slug="cameroon", revert=False, write=True):
             nonlocal changed
             tag = m.group(0)
             attrs = dict(ATTR_RE.findall(tag))
+            held = attrs.get("data-locked") == "true" or attrs.get("data-placed") == "true"
             if revert:
+                if held:
+                    report["locked"] += 1
+                    return tag
                 if attrs.get("data-illustration"):
                     changed += 1
                     report["reverted"] += 1
                     return revert_tag(tag)
+                return tag
+            if held:
+                # Artwork chosen by hand. A resolver result must never displace
+                # a picture somebody deliberately put there.
+                report["locked"] += 1
                 return tag
             illustration = attrs.get("data-illustration") or attrs.get("src", "")
             record = photos.get(illustration)

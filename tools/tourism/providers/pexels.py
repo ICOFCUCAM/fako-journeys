@@ -20,6 +20,7 @@ from .base import Candidate, Provider, RateLimited, Unavailable
 
 class Pexels(Provider):
     name = "pexels"
+    requires_attribution = True
     key_env = "PEXELS_API_KEY"
     image_host = "https://images.pexels.com/"
     supports_focal_crop = False

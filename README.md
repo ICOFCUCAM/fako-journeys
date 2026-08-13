@@ -1,9 +1,43 @@
-# Fako Journeys
+# Afrinkong, and Kamerun
 
-Mount Cameroon treks, the Kribi coast, Waza in the Sahel and the Bamenda highlands — a Cameroonian tour operator's website.
+Two sites in one repository, on purpose.
 
-A five-page static site: home, services, pricing, about, contact. No build step, no
-dependencies, no framework — plain HTML and CSS. Deploy the folder as-is.
+    /            Afrinkong — the group's gateway to the whole continent
+    /cameroon    Kamerun — the Cameroon operator, hand-built, with its own pages
+    /kenya /rwanda /tanzania /south-africa /zambia
+                 a standalone home page per country, generated from its dataset
+    /tourism/*   the full 27-category index for each of the seven countries
+
+Uganda and Namibia are operator sites of their own (Pearl Trails Uganda,
+Namib Skyline) in separate repositories, so the gateway links out to them
+rather than generating a second, poorer front door.
+
+`npm run tourism:homes` writes the country home pages. They are generated
+because the material already exists — every country carries 27 categories with
+a caption, a description and a subject written for that country — and five
+hand-written pages would be five copies of one structure drifting apart. Each
+is written to stand on its own: somebody landing on /kenya from a search result
+gets a complete site for Kenya without ever needing the gateway. Where a
+country has resolved photographs they are used; where it has none the page is
+typographic rather than a grid of grey boxes.
+
+The gateway sells Africa and hands the visitor to a country. The country site
+sells the country and hands them to a circuit. That is why `index.html` is
+deliberately light — a page whose only job is routing should load instantly —
+while `cameroon.html` carries the photographs, the six climates and the
+fourteen-day route.
+
+`cameroon.html` and its four pages (services, pricing, about, contact) are the
+Kamerun site; they are still at the repository root rather than under
+`/cameroon/`, which keeps their URLs and every internal link stable. Moving them
+into a folder is a later decision, not a blocker.
+
+The repository is still named `fako-journeys` — the original operator name.
+"Fako" survives in the sites themselves only as the name of the mountain the
+first circuit climbs.
+
+No build step, no dependencies, no framework — plain HTML and CSS. Deploy the
+folder as-is.
 
 ## Deploying
 
@@ -29,10 +63,10 @@ should be able to fetch. The generated `tourism/*.html` and `images/` still ship
 Two things are placeholders, and both are deliberate:
 
 **1. The contact details.** Phone numbers, addresses, opening hours, licence numbers and
-the bonjour@fakojourneys.cm address are illustrative. Search the HTML and replace them.
+the bonjour@kamerun.cm address are illustrative. Search the HTML and replace them.
 
 **2. The enquiry form.** A static site cannot receive a form submission, so the form
-composes a pre-filled email to bonjour@fakojourneys.cm and opens the visitor's mail app. It does not
+composes a pre-filled email to bonjour@kamerun.cm and opens the visitor's mail app. It does not
 post anywhere and it never claims a message was delivered when it wasn't. To take real
 submissions, point the form at a service (Formspree, Basin, a Vercel function) and
 replace the submit handler at the bottom of each page.
@@ -41,7 +75,8 @@ Prices, itineraries and figures are illustrative too. Check them before publishi
 
 ## The pictures
 
-Every image in `images/` is an original SVG illustration — twenty-seven scenes drawn in
+Apart from the two band posters, every image in `images/` is an original SVG
+illustration — twenty-seven scenes drawn in
 the site's own five colours, in a flat relief-print style: the upper slopes of Fako, the
 Lobé falls, the Waza waterholes, the Bénoué, the Mandara spires, Foumban's craft street,
 the offices in Buea and Bonapriso. Each one is drawn to match the `alt` text of the slot
@@ -69,7 +104,136 @@ were written *from* the drawings in the first place.
 extension and the `src` (grep for the name). Landscape, roughly 3:2, at least
 1600px wide for the full-bleed bands. The page crops these to 3/4, 4/5, 5/4 and
 1/1 with `object-fit: cover`, so keep the subject near the centre — the
-illustrations are composed the same way, inside the middle 800px.
+illustrations are composed the same way, inside the middle 800px. Add
+`data-locked="true"` to the `<img>` if the choice is deliberate and the resolver
+should never overwrite it.
+
+## The image generation engine
+
+Every `<img>` on the five hand-written pages is a **slot**: a shape the
+stylesheet already decided, and a sentence already written about what belongs in
+it. That sentence is the slot's alt text, written for the drawing before any
+photograph existed — so it describes intent, not a search result. The engine
+compiles it into an instruction, generates a picture from it, and puts the
+result beside the stock photograph so you can choose.
+
+    npm run tourism:placements      # every image slot, and what belongs in each
+    npm run tourism:prompts         # the instruction each one compiles to
+    npm run tourism:generate -- --dry-run    # what it would send, and the cost
+    npm run tourism:generate        # make the candidates
+    npm run tourism:intake          # match images you uploaded to slots
+    npm run tourism:compare         # contact sheet: every option, side by side
+    npm run tourism:place -- picks.json      # publish the ones you chose
+
+**A category is not a placement.** "Waterfalls" is a subject; the third picture
+down on services.html is a *place*, and generating for one is not generating for
+the other. The Lobé falls appear on two pages at two ratios, so they are two
+jobs and two pictures — a 4:5 crop of a frame composed for 5:4 is a photograph
+of the middle third of a waterfall. `placements` prints exactly where each
+duplicate lands and at what shape.
+
+**Instructions are readable before they are expensive.** `prompts` prints all 32
+without sending anything; `generate --dry-run` adds the size and the estimated
+cost per slot. Every instruction is built from `tourism/style.json` — the
+photographic look, the direction for each of the 27 categories, the composition
+phrases and the things to avoid — so changing how every generated image looks is
+one edit to a data file, not a code change. Same input, same instruction, every
+time.
+
+The avoid-list is not boilerplate. It bans text, lettering, watermarks, collage
+and travel-poster layouts, because the two band pictures on the home page
+arrived as finished posters with their own headlines baked in and the whole page
+had to be rebuilt around them. A generator will produce exactly that unless told
+not to.
+
+### Choosing
+
+Nothing generated goes near the site. Candidates land in `tourism/candidates/`,
+and `compare` writes a contact sheet — one row per slot, showing what the page
+uses now next to every generated and uploaded candidate, **all cropped to the
+shape that slot actually imposes**, because judging a 3:2 frame that will be
+delivered at 4:5 tells you nothing.
+
+Picking writes to localStorage and downloads a `picks.json`; `place` applies it.
+That round trip is deliberate — a static page cannot write to the repository,
+and a review tool that could silently change the site would be a worse tool.
+
+`place` copies the chosen file into `images/generated/` (or `images/uploads/`),
+rewrites that one `<img>`, and marks it `data-placed="true"` so `adopt` can
+never overwrite a picture a person chose. `place --revert` returns a slot to its
+illustration; run `adopt` after it to put a resolved stock photograph back,
+which together is a byte-identical round trip.
+
+### Images you upload
+
+Drop files in `incoming/` and run `npm run tourism:intake`. Each one is measured
+and matched against every slot, using three signals in ascending cost:
+
+    name         a file named exactly after a slot IS that slot's picture.
+                 Not a guess — the same identifier.
+    filename     failing that, the words in the name. "mount-cameroon-trekkers.jpg"
+                 says more about where it belongs than any pixel analysis.
+    shape        how much of the frame the slot's crop discards. A penalty,
+                 never a veto.
+    description  with --describe, the vision model is asked what the picture
+                 shows, and that sentence is scored against each slot's
+                 instruction.
+
+A filename that *is* a slot id — `waza-elephants.jpg` — is decisive: it is not a
+guess, it is the same identifier. Shape is a penalty and never a veto, because
+every slot on this site crops with `object-fit: cover` and the drawings these
+photographs replace were 3:2 frames cropped to 4:5 and 1:1 from the start; a 47%
+crop of the right subject beats a perfect fit of the wrong one.
+
+Without `--describe` it says so, so a confident-looking match is never mistaken
+for one the machine actually looked at.
+
+**Pictures a model made** go in `incoming/generated/` instead. They are matched
+identically, but they carry the generated provider, so their credit reads
+"AI-generated" rather than passing as somebody's photograph. Matches are **proposals**: they go into
+the same pool, appear on the same contact sheet, and are placed by the same
+command. An unmatched file is reported by name rather than guessed at.
+
+### Disclosure
+
+A generated picture and an uploaded photograph are two different things to a
+visitor, so they are two providers with two hosts rather than one with a flag.
+A generated image's credit line reads *"AI-generated · gpt-image-1"* — a
+synthetic photograph of a real place presented as a photograph of that place is
+a lie told to a visitor. An uploaded photograph carries its owner's credit, or
+none, and is never labelled AI.
+
+Neither has a CDN behind it, so `srcset` carries the one real width instead of
+four identical URLs with four different width descriptors — the browser believes
+descriptors, and told a 1024px file is 2400px wide it will pick it for a 2400px
+slot and scale it up.
+
+**Weight.** `place` copies files as-is, which took the site to 40 MB across 29
+images — 23 MB of it on the Cameroon home page, with 3 MB frames feeding 190px
+columns. `npm run tourism:optimise` fixed it: **40 MB down to 7.8 MB**, the
+Cameroon page from 23 MB to 3.9 MB, and the gateway to 0.4 MB. Each image is
+resized to twice the widest box its slot is ever painted at, re-encoded as JPEG
+q82 (PNG only where there is real transparency), and every `src` and `srcset`
+pointing at it is rewritten — including the width descriptor, which would
+otherwise tell the browser a 900px file is 3000px wide.
+
+Two things that matter if you run it again. It rewrites **every** HTML page at
+the repository root, not only the ones with slots: it renames files, and the
+gateway used a poster the Cameroon band also uses. And a slot whose wrapper
+class is missing from `adopt.SLOT_SPECS` falls back to a 1600px box — which is
+how the six transect pictures were first sized at 3000px for a 190px column.
+
+It needs Pillow, the one dependency here and deliberately not a runtime one: it
+prepares images, it never serves them, so it stays out of `package.json` and the
+deployed site is still static files.
+`.github/workflows/tourism-optimise.yml` runs it on a runner where Pillow is not
+installed locally.
+
+`OPENAI_API_KEY` is server-side only, on exactly the same terms as the other
+two: read from the environment by a CLI on a developer or CI machine, never
+written to the cache, never rendered into a page, never committed.
+`.github/workflows/tourism-generate.yml` runs it on a runner, defaults to a dry
+run, and fails if the key appears anywhere in the working tree.
 
 ## The tourism image system
 
@@ -245,8 +409,21 @@ block* — so **do not add `transform`, `filter`, `backdrop-filter`, `perspectiv
 with the page, nothing errors, and the effect is silently gone. `background-attachment:
 fixed` is not a substitute — iOS Safari ignores it.
 
-The scrim lives inside the picture, not on the band, and is a tint rather than a
-blackout, so the picture keeps its own light.
+**Nothing is laid over the photograph.** Both bands run a chosen poster —
+`images/band-cameroon.png` and `images/band-africa.png` — which already carries
+its own set headline, so there is no scrim, no tint and no wash: the veil spans
+are still there, but their `background` is `none`.
+
+Legibility comes from an opaque plate instead. That is not decoration. Bare type
+fails here twice over: it collides with the wording baked into the artwork, and
+the copy travels across a picture that does not move, so there is no safe corner
+to place it in — every corner passes under the copy at some scroll position. A
+plate in the site's own paper answers both, and it lightens the area it covers
+rather than darkening it.
+
+Those two `<img>` tags carry `data-locked="true"`. That is what keeps
+`tourism:adopt` from replacing hand-picked artwork with a search result; it is
+honoured in both directions, so `--revert` leaves them alone as well.
 
 ## Origin
 

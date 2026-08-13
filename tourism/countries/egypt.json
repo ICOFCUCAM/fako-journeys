@@ -1,0 +1,296 @@
+{
+ "slug": "egypt",
+ "name": "Egypt",
+ "adjective": "Egyptian",
+ "region": "North Africa",
+ "tagline": "The Nile, and five thousand years",
+ "summary": "The oldest continuous tourism in the world, and still the reason most people first think of Africa — the Giza plateau, the Valley of the Kings, Abu Simbel, and the Red Sea reefs on the other coast.",
+ "published": true,
+ "calls": [
+  "heritage",
+  "culture",
+  "coast"
+ ],
+ "months": [
+  10,
+  11,
+  12,
+  1,
+  2,
+  3,
+  4
+ ],
+ "when": "The cool half of the year. Upper Egypt in August is not a holiday.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Five Thousand Years",
+   "description": "The Nile made the country and the country has been recording it ever since.",
+   "subject": "the Giza pyramids at first light across the desert",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Nile and the Desert",
+   "description": "A green ribbon a few kilometres wide, and sand for a thousand kilometres either side of it.",
+   "subject": "the green Nile valley meeting desert on both banks",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Birds of the Delta",
+   "description": "Two million migrating birds use the Delta and the Red Sea coast as a flyway each year.",
+   "subject": "flamingos and waders on a Nile delta wetland",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "The Western Desert",
+   "description": "Not big game — desert fox, gazelle and the silence of the Great Sand Sea.",
+   "subject": "the White Desert chalk formations at dusk",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Sinai",
+   "description": "Mount Sinai and Saint Catherine's, and granite peaks over two thousand metres above the Red Sea.",
+   "subject": "the granite peaks of the Sinai above Saint Catherine's",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "The First Cataract",
+   "description": "The Nile's cataracts at Aswan — rapids rather than falls, and the reason the boats stopped here.",
+   "subject": "the Nile running over granite at the Aswan cataract",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Nile Itself",
+   "description": "Feluccas under sail at Aswan, and a river that has been the country's main road for millennia.",
+   "subject": "a felucca under sail on the Nile at Aswan",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "The Red Sea",
+   "description": "Some of the clearest reef diving on earth, an hour's flight from the pyramids.",
+   "subject": "coral reef and clear water on the Red Sea coast",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Fayoum",
+   "description": "Not forest — the Fayoum's palm and olive, and the acacia of Wadi el-Rayan.",
+   "subject": "palm groves in the Fayoum oasis",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Desert Crossings",
+   "description": "Diving the Red Sea, walking the Sinai with Bedouin guides, and crossing the sand sea by vehicle.",
+   "subject": "a vehicle crossing dunes in the Great Sand Sea",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Coptic, Islamic, Pharaonic",
+   "description": "Three layers still in daily use, sometimes in the same street in old Cairo.",
+   "subject": "the minarets and rooftops of Islamic Cairo",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Nubians and Bedouin",
+   "description": "Nubian villages above Aswan and Bedouin communities in the Sinai and the Western Desert.",
+   "subject": "a brightly painted Nubian village on the Nile at Aswan",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Ful, Koshary and Bread",
+   "description": "Breakfast is ful and bread; lunch is koshary; both are older than most cuisines.",
+   "subject": "koshary being served at a Cairo street kitchen",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Moulids and Ramadan",
+   "description": "The moulid processions, and Cairo at iftar when the whole city eats at once.",
+   "subject": "lanterns strung across a Cairo street for Ramadan",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Papyrus, Glass and Cotton",
+   "description": "Hand-blown glass in Cairo, Egyptian cotton, and papyrus made the way it always was.",
+   "subject": "a glassblower working in a Cairo workshop",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "The Valley of the Kings",
+   "description": "Sixty-odd tombs cut into a single dry valley, most of them painted floor to ceiling.",
+   "subject": "painted tomb walls in the Valley of the Kings",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Karnak, Luxor, Abu Simbel",
+   "description": "Karnak took two thousand years to build; Abu Simbel was moved sixty metres to save it.",
+   "subject": "the hypostyle hall columns at Karnak",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Cairo and Alexandria",
+   "description": "Twenty million people on the Nile, and a Mediterranean city that remembers being Greek.",
+   "subject": "the Alexandria corniche curving along the Mediterranean",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Mamluk Cairo",
+   "description": "The mosques, sabils and madrasas of the medieval city, largely still standing.",
+   "subject": "the carved stone facade of a Mamluk mosque in Cairo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Corniche at Dusk",
+   "description": "Families out along the river, tea on the pavement, and the traffic finally slowing.",
+   "subject": "families walking the Nile corniche in Cairo at dusk",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Straightforward with Children",
+   "description": "Short internal flights, boats instead of buses, and a story at every stop.",
+   "subject": "a family boarding a Nile cruise boat at Luxor",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Dive, Sail, Ride",
+   "description": "Reef diving at Marsa Alam, feluccas at Aswan, and camels in the Western Desert.",
+   "subject": "divers entering the water on the Red Sea coast",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Dahabiyas and Desert Camps",
+   "description": "Small sailing dahabiyas instead of the big cruisers, and camps in the White Desert.",
+   "subject": "a dahabiya sailing boat moored on the Nile at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Reef and Oasis",
+   "description": "Reef protection on the Red Sea, and oasis agriculture that has managed water for millennia.",
+   "subject": "a marine reserve buoy over Red Sea reef",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "The Light at Six",
+   "description": "Desert light at either end of the day is the whole reason to be up early here.",
+   "subject": "dawn light on the temple columns at Luxor",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Siwa",
+   "description": "Eight hundred kilometres west, a Berber-speaking oasis with its own language and salt lakes.",
+   "subject": "salt pools and palms at the Siwa oasis",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "The Oldest Journey",
+   "description": "People have been travelling to see this country for two and a half thousand years.",
+   "subject": "the Sphinx and the Great Pyramid at sunrise",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

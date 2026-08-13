@@ -99,7 +99,14 @@ def check_site(taxonomy):
 
 def run(taxonomy):
     problems = []
-    pages = sorted(p for p in os.listdir(TOURISM) if p.endswith(".html"))
+    # compare.html is the image contact sheet — a working document, gitignored,
+    # and written only when somebody runs `build.py compare` locally. It is not a
+    # rendered country page and checking it produces forty spurious failures
+    # about a review sheet doing exactly what a review sheet does. It never
+    # appeared on CI, where the file does not exist, which is why this went
+    # unnoticed.
+    pages = sorted(p for p in os.listdir(TOURISM)
+                   if p.endswith(".html") and p != "compare.html")
     for p in pages:
         problems += check_page(os.path.join(TOURISM, p), taxonomy,
                                expect_categories=(p != "index.html"))

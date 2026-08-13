@@ -19,7 +19,20 @@
     "lint": "python3 -m py_compile tools/build_images.py tools/tourism/*.py tools/tourism/providers/*.py && echo 'lint: ok'",
     "typecheck": "python3 -m py_compile tools/build_images.py tools/tourism/*.py tools/tourism/providers/*.py && echo 'typecheck: ok (no TypeScript in this project)'",
     "tourism:providers": "python3 tools/tourism/build.py providers",
-    "tourism:adopt": "python3 tools/tourism/build.py adopt"
+    "tourism:adopt": "python3 tools/tourism/build.py adopt",
+    "tourism:placements": "python3 tools/tourism/build.py placements",
+    "tourism:prompts": "python3 tools/tourism/build.py prompts",
+    "tourism:generate": "python3 tools/tourism/build.py generate",
+    "tourism:intake": "python3 tools/tourism/build.py intake",
+    "tourism:compare": "python3 tools/tourism/build.py compare",
+    "tourism:place": "python3 tools/tourism/build.py place",
+    "tourism:optimise": "python3 tools/tourism/build.py optimise",
+    "tourism:homes": "python3 tools/tourism/build.py homes",
+    "tourism:atlas": "python3 tools/tourism/build.py atlas",
+    "tourism:journey": "python3 tools/tourism/build.py journey",
+    "tourism:meet": "python3 tools/tourism/build.py meet",
+    "tourism:links": "python3 tools/tourism/build.py links",
+    "tourism:places": "python3 tools/tourism/build.py places"
   },
   "engines": {
     "node": ">=18"

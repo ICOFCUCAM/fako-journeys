@@ -1,0 +1,293 @@
+{
+ "slug": "nigeria",
+ "name": "Nigeria",
+ "adjective": "Nigerian",
+ "region": "West Africa",
+ "tagline": "The loudest country on the continent",
+ "summary": "One in five Africans is Nigerian. Afrobeats, Nollywood, the Benin bronzes, Yankari's elephants and the Obudu plateau — a country that exports its culture faster than anywhere else on earth.",
+ "published": true,
+ "calls": [
+  "culture",
+  "food"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "Dry season across the country, and the festival calendar sits inside it.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Loudest Country on the Continent",
+   "description": "Two hundred and twenty million people, and the music and film the rest of the continent watches.",
+   "subject": "the Lagos skyline across the lagoon at dusk",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Mangrove to Sahel",
+   "description": "Niger delta mangrove in the south, rainforest, savanna, and the Sahel at the Niger border.",
+   "subject": "mangrove creeks in the Niger delta",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Yankari and Gashaka",
+   "description": "Yankari's elephant herds, and Gashaka-Gumti's forest chimpanzees on the Cameroon border.",
+   "subject": "elephants at the Wikki warm spring in Yankari",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Yankari",
+   "description": "The country's best game reserve, with a warm spring you can swim in at the centre of it.",
+   "subject": "a game track through Yankari savanna at first light",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Obudu Plateau",
+   "description": "Sixteen hundred metres of grassland on the Cameroon border, with cattle ranches and cloud.",
+   "subject": "the green Obudu plateau under low cloud",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Erin-Ijesha and Gurara",
+   "description": "Erin-Ijesha's seven stages in Osun, and the Gurara falls on the road to Abuja.",
+   "subject": "the stepped Erin-Ijesha waterfall in forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Niger and the Benue",
+   "description": "Two great rivers meeting at Lokoja, and the delta they build a thousand kilometres downstream.",
+   "subject": "the confluence of the Niger and Benue rivers at Lokoja",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Lagos and the Atlantic",
+   "description": "Tarkwa Bay, Elegushi and the long Atlantic beaches east towards Lekki.",
+   "subject": "boats and beach umbrellas at Tarkwa Bay, Lagos",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Cross River",
+   "description": "The Cross River forest holds the last of Nigeria's gorillas and some of West Africa's tallest trees.",
+   "subject": "dense rainforest canopy in Cross River state",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Plateau and Delta",
+   "description": "Hiking the Jos plateau, the Obudu cable car, and creek trips through the delta.",
+   "subject": "the rock formations of the Jos plateau",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Five Hundred Languages",
+   "description": "Yoruba, Igbo, Hausa and around five hundred more, in one country.",
+   "subject": "a Yoruba drumming group performing at a festival",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Yoruba, Igbo, Hausa, Fulani",
+   "description": "Four large cultures and hundreds of smaller ones, each with its own courts and calendars.",
+   "subject": "a Fulani herder with cattle in northern Nigeria",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Jollof, Suya and Egusi",
+   "description": "Suya off the grill at night, egusi with pounded yam, and the jollof question again.",
+   "subject": "suya being grilled at a roadside stand at night",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Osun-Osogbo and Calabar",
+   "description": "The Osun-Osogbo grove festival in August, and the Calabar carnival through December.",
+   "subject": "dancers in costume at the Calabar carnival",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Bronze, Adire and Aso Oke",
+   "description": "Benin bronze casting still practised in Igun street, and adire resist-dyed cloth in Abeokuta.",
+   "subject": "a bronze caster at work in Igun street, Benin City",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Benin City and Sungbo's Eredo",
+   "description": "The walls of Benin, and Sungbo's Eredo — a hundred and sixty kilometres of earthworks.",
+   "subject": "the earth walls and moat of the Benin kingdom",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Bronzes",
+   "description": "The Benin bronzes are the reason half the museums of Europe have a Nigeria problem.",
+   "subject": "a display of Benin bronze plaques",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Lagos, Abuja, Kano",
+   "description": "Lagos on the lagoon, purpose-built Abuja in the middle, and Kano's thousand-year-old walls.",
+   "subject": "the old city and dye pits of Kano",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Mud Mosques and Modernism",
+   "description": "Hausa mud architecture in the north, and the 1970s modernism of Lagos and Abuja.",
+   "subject": "the Hausa mud architecture of a northern emir's palace",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Danfo and Buka",
+   "description": "The yellow buses, the roadside buka, and a city that does not stop at any hour.",
+   "subject": "a yellow danfo bus in Lagos traffic",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Loud, and Welcoming",
+   "description": "Not a quiet holiday — but there is nowhere friendlier once you are through the door.",
+   "subject": "children playing football on a Lagos beach",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Hike, Paddle, Ride",
+   "description": "The Jos plateau, the Obudu ranch trails, and creek boats through the delta.",
+   "subject": "hikers on a trail across the Obudu plateau",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Lagos Island Hotels",
+   "description": "Victoria Island and Ikoyi at one end, and Obudu's mountain resort at the other.",
+   "subject": "a hotel terrace overlooking Lagos lagoon at night",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Community Forest",
+   "description": "Afi Mountain's drill ranch and the Cross River community forests, both village-run.",
+   "subject": "drills at the Afi Mountain sanctuary in Cross River",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Colour and Crowd",
+   "description": "Markets, festivals and cloth — the hardest thing here is choosing what to leave out.",
+   "subject": "a crowded cloth market in southern Nigeria",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Idanre",
+   "description": "The Idanre hills, with an old town six hundred steps up and nobody else climbing them.",
+   "subject": "the granite Idanre hills rising above forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "The Culture Everyone Else Is Watching",
+   "description": "Afrobeats and Nollywood came from here, and it is worth seeing where.",
+   "subject": "a live Afrobeats performance in Lagos",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

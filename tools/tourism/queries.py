@@ -52,14 +52,22 @@ def keywords(subject, limit=6):
     return out
 
 
-def proper_nouns(subject, country=None):
+def proper_nouns(subject, country=None, adjective=None):
     """Capitalised runs in the subject — the named places, which is what
     Unsplash actually has tagged. 'the Lobe waterfalls near Kribi' -> ['Lobe',
-    'Kribi']."""
+    'Kribi'].
+
+    The country's own name is dropped, and so is its adjective. "Rwandan" is
+    capitalised and looks like a place to this function, so Rwanda's first three
+    slots asked Unsplash for "Rwanda Rwandan" — a query that names nothing and
+    spends a request to find out. Kenya, South Africa and Zambia each had one
+    slot doing the same.
+    """
+    skip = {w.lower() for w in (country, adjective) if w}
     found = []
     for run in re.findall(r"\b([A-Z][\w'-]*(?:\s+[A-Z][\w'-]*)*)", subject or ""):
         for part in [run] if len(run.split()) <= 3 else [run.split()[0]]:
-            if country and part.lower() == country.lower():
+            if part.lower() in skip:
                 continue
             if part not in found:
                 found.append(part)
@@ -83,7 +91,7 @@ def ladder(country, category, entry):
     subject = entry.subject or ""
     rungs = []
 
-    named = proper_nouns(subject, country.name)
+    named = proper_nouns(subject, country.name, country.adjective)
     if named:
         rungs.append(("%s %s" % (country.name, " ".join(named[:2])), "subject"))
 

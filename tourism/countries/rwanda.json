@@ -1,200 +1,295 @@
 {
-  "slug": "rwanda",
-  "name": "Rwanda",
-  "adjective": "Rwandan",
-  "region": "East Africa",
-  "tagline": "Land of a thousand hills",
-  "summary": "Mountain gorillas on the Virunga volcanoes, a canopy walk over Nyungwe, Lake Kivu, and a capital that is among the cleanest and safest in Africa.",
-  "published": true,
-  "entries": [
-    {
-      "category": "hero",
-      "caption": "Land of a Thousand Hills",
-      "description": "Terraced hills to every horizon, five volcanoes along the northern border, and gorillas on the slopes of them.",
-      "subject": "terraced green hills at sunrise in the Rwandan highlands",
-      "focal": [50, 54]
-    },
-    {
-      "category": "nature",
-      "caption": "Terraces to the Horizon",
-      "description": "Almost every hillside in Rwanda is farmed in contour terraces — the landscape is entirely made by hand.",
-      "subject": "contour-terraced farmland covering the Rwandan hillsides",
-      "focal": [50, 50]
-    },
-    {
-      "category": "wildlife",
-      "caption": "Face to Face with Gorillas",
-      "description": "Ten habituated families on the Virunga slopes, one hour with them, eight people at a time.",
-      "subject": "a mountain gorilla family on the slopes of Volcanoes National Park",
-      "focal": [50, 46]
-    },
-    {
-      "category": "safari",
-      "caption": "Akagera, Big Five Again",
-      "description": "Lion returned in 2015, rhino in 2017; the eastern savanna park now has all five, twenty years after losing them.",
-      "subject": "elephants and lakes in Akagera National Park",
-      "focal": [48, 56]
-    },
-    {
-      "category": "mountains",
-      "caption": "The Virunga Volcanoes",
-      "description": "Five cones along the border — Karisimbi, Bisoke, Muhabura — with a crater lake at the top of Bisoke.",
-      "subject": "the Virunga volcano chain rising above the farmland",
-      "focal": [50, 42]
-    },
-    {
-      "category": "waterfalls",
-      "caption": "Isumo, Under Nyungwe",
-      "description": "A steep tea-and-forest walk down to the Isumo falls on the western edge of the Nyungwe canopy.",
-      "subject": "the Isumo waterfall in the Nyungwe forest",
-      "focal": [50, 44]
-    },
-    {
-      "category": "lakes-rivers",
-      "caption": "Lake Kivu",
-      "description": "One of Africa's great lakes, with no bilharzia, no crocodiles, and the Congo Nile Trail along its shore.",
-      "subject": "fishing boats on Lake Kivu at dawn",
-      "focal": [50, 54]
-    },
-    {
-      "category": "beaches",
-      "caption": "Rubavu Lakeshore",
-      "description": "Sand, palms and calm freshwater at Gisenyi, an hour from the gorilla trailheads.",
-      "subject": "the lakeshore beach and palms at Rubavu on Lake Kivu",
-      "focal": [50, 56]
-    },
-    {
-      "category": "forests",
-      "caption": "The Nyungwe Canopy Walk",
-      "description": "A suspension walkway sixty metres above one of Africa's oldest montane rainforests, with thirteen primate species below it.",
-      "subject": "the canopy walkway suspended above Nyungwe rainforest",
-      "focal": [50, 48]
-    },
-    {
-      "category": "adventure",
-      "caption": "The Congo Nile Trail",
-      "description": "227 kilometres along Lake Kivu on foot or by bike, through coffee terraces and fishing villages.",
-      "subject": "a cyclist on the Congo Nile Trail above Lake Kivu",
-      "focal": [50, 52]
-    },
-    {
-      "category": "culture",
-      "caption": "Intore, the Dance of Heroes",
-      "description": "The Intore warriors' dance, the inanga zither, and drumming that was once the property of the king alone.",
-      "subject": "Intore dancers in grass headdresses performing in Rwanda",
-      "focal": [50, 44]
-    },
-    {
-      "category": "traditional-people",
-      "caption": "Living Memory",
-      "description": "Cultural villages near Musanze where former poachers now guide, and the beekeepers and potters of the Virunga foothills.",
-      "subject": "a traditional potter at work in a Rwandan cultural village",
-      "focal": [50, 48]
-    },
-    {
-      "category": "food",
-      "caption": "Brochettes and Isombe",
-      "description": "Grilled goat brochettes, cassava leaf isombe, tilapia from Kivu, and some of the best coffee grown anywhere.",
-      "subject": "grilled brochettes and plantain at a Kigali restaurant",
-      "focal": [50, 52]
-    },
-    {
-      "category": "festivals",
-      "caption": "Kwita Izina",
-      "description": "The annual gorilla naming ceremony at Kinigi, where every infant born that year is named in front of the whole district.",
-      "subject": "the Kwita Izina gorilla naming ceremony at Kinigi",
-      "focal": [50, 48]
-    },
-    {
-      "category": "crafts",
-      "caption": "Imigongo and Agaseke",
-      "description": "Geometric imigongo panels in black, white and ochre, and the woven agaseke peace basket that is on the coat of arms.",
-      "subject": "geometric imigongo art panels made in eastern Rwanda",
-      "focal": [50, 48]
-    },
-    {
-      "category": "historic-sites",
-      "caption": "Nyanza, the King's Palace",
-      "description": "The reconstructed royal residence at Nyanza, thatched and enormous, with the long-horned Inyambo cattle still kept.",
-      "subject": "the thatched royal palace and Inyambo cattle at Nyanza",
-      "focal": [50, 50]
-    },
-    {
-      "category": "heritage",
-      "caption": "Memory and Reconstruction",
-      "description": "The Kigali Genocide Memorial is where any honest visit to Rwanda starts, and it explains everything that came after.",
-      "subject": "the gardens of the Kigali Genocide Memorial",
-      "focal": [50, 52]
-    },
-    {
-      "category": "cities",
-      "caption": "Kigali, Across the Ridges",
-      "description": "Built along ridge lines, swept every morning, and with a monthly Umuganda when the whole city cleans it together.",
-      "subject": "the ridges and rooftops of Kigali at dusk",
-      "focal": [50, 56]
-    },
-    {
-      "category": "architecture",
-      "caption": "The Convention Centre Dome",
-      "description": "The Kigali Convention Centre dome, lit at night in the national colours, above a city of red-roofed ridges.",
-      "subject": "the illuminated dome of the Kigali Convention Centre at night",
-      "focal": [50, 44]
-    },
-    {
-      "category": "local-life",
-      "caption": "Kimironko Market",
-      "description": "Fabric, fruit and everything else under one roof, and the tailors who will make it up by tomorrow.",
-      "subject": "fabric and produce stalls inside Kimironko market in Kigali",
-      "focal": [50, 52]
-    },
-    {
-      "category": "family-community",
-      "caption": "Umuganda",
-      "description": "The last Saturday of every month, the country stops and works on something communal. Visitors are welcome to join.",
-      "subject": "residents working together during Umuganda community day in Rwanda",
-      "focal": [50, 52]
-    },
-    {
-      "category": "outdoor",
-      "caption": "Bisoke Crater Lake",
-      "description": "Three hours up through nettles and bamboo to a crater lake at 3,711 m, and three hours back down through mud.",
-      "subject": "the crater lake at the summit of Mount Bisoke",
-      "focal": [50, 48]
-    },
-    {
-      "category": "luxury",
-      "caption": "Lodges Below the Volcanoes",
-      "description": "A handful of very good lodges within sight of the park boundary, built so the trek starts after breakfast.",
-      "subject": "a luxury lodge terrace facing the Virunga volcanoes",
-      "focal": [50, 50]
-    },
-    {
-      "category": "eco-tourism",
-      "caption": "Ten Percent, Back to the Hills",
-      "description": "A share of every permit goes to the communities bordering the parks, and gorilla numbers have climbed since it started.",
-      "subject": "park rangers and trackers on patrol in Volcanoes National Park",
-      "focal": [50, 52]
-    },
-    {
-      "category": "photography",
-      "caption": "Mist on the Volcanoes",
-      "description": "The Virunga chain clears for about an hour after dawn, and the terraces below hold the light for longer.",
-      "subject": "mist clearing from the Virunga volcanoes at dawn",
-      "focal": [50, 46]
-    },
-    {
-      "category": "hidden-gems",
-      "caption": "Gishwati-Mukura",
-      "description": "Rwanda's newest national park, a recovering forest between Nyungwe and the volcanoes that almost nobody visits.",
-      "subject": "the recovering montane forest of Gishwati-Mukura National Park",
-      "focal": [50, 50]
-    },
-    {
-      "category": "why-visit",
-      "caption": "Small Country, Nothing Missing",
-      "description": "Gorillas, canopy forest, Big Five and a lake shore, all within three hours of a capital you can walk at night.",
-      "subject": "a silverback gorilla in the bamboo of Volcanoes National Park",
-      "focal": [52, 46]
-    }
-  ]
+ "slug": "rwanda",
+ "name": "Rwanda",
+ "adjective": "Rwandan",
+ "region": "East Africa",
+ "tagline": "Land of a thousand hills",
+ "summary": "Mountain gorillas on the Virunga volcanoes, a canopy walk over Nyungwe, Lake Kivu, and a capital that is among the cleanest and safest in Africa.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "culture"
+ ],
+ "months": [
+  6,
+  7,
+  8,
+  9,
+  12,
+  1,
+  2
+ ],
+ "when": "The long dry season, June to September, is the one for trekking.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Land of a Thousand Hills",
+   "description": "Terraced hills to every horizon, five volcanoes along the northern border, and gorillas on the slopes of them.",
+   "subject": "terraced green hills at sunrise in the Rwandan highlands",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Terraces to the Horizon",
+   "description": "Almost every hillside in Rwanda is farmed in contour terraces — the landscape is entirely made by hand.",
+   "subject": "contour-terraced farmland covering the Rwandan hillsides",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Face to Face with Gorillas",
+   "description": "Ten habituated families on the Virunga slopes, one hour with them, eight people at a time.",
+   "subject": "a mountain gorilla family on the slopes of Volcanoes National Park",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Akagera, Big Five Again",
+   "description": "Lion returned in 2015, rhino in 2017; the eastern savanna park now has all five, twenty years after losing them.",
+   "subject": "elephants and lakes in Akagera National Park",
+   "focal": [
+    48,
+    56
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Virunga Volcanoes",
+   "description": "Five cones along the border — Karisimbi, Bisoke, Muhabura — with a crater lake at the top of Bisoke.",
+   "subject": "the Virunga volcano chain rising above the farmland",
+   "focal": [
+    50,
+    42
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Isumo, Under Nyungwe",
+   "description": "A steep tea-and-forest walk down to the Isumo falls on the western edge of the Nyungwe canopy.",
+   "subject": "the Isumo waterfall in the Nyungwe forest",
+   "focal": [
+    50,
+    44
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Lake Kivu",
+   "description": "One of Africa's great lakes, with no bilharzia, no crocodiles, and the Congo Nile Trail along its shore.",
+   "subject": "fishing boats on Lake Kivu at dawn",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Rubavu Lakeshore",
+   "description": "Sand, palms and calm freshwater at Gisenyi, an hour from the gorilla trailheads.",
+   "subject": "the lakeshore beach and palms at Rubavu on Lake Kivu",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Nyungwe Canopy Walk",
+   "description": "A suspension walkway sixty metres above one of Africa's oldest montane rainforests, with thirteen primate species below it.",
+   "subject": "the canopy walkway suspended above Nyungwe rainforest",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "The Congo Nile Trail",
+   "description": "227 kilometres along Lake Kivu on foot or by bike, through coffee terraces and fishing villages.",
+   "subject": "a cyclist on the Congo Nile Trail above Lake Kivu",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Intore, the Dance of Heroes",
+   "description": "The Intore warriors' dance, the inanga zither, and drumming that was once the property of the king alone.",
+   "subject": "Intore dancers in grass headdresses performing in Rwanda",
+   "focal": [
+    50,
+    44
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Living Memory",
+   "description": "Cultural villages near Musanze where former poachers now guide, and the beekeepers and potters of the Virunga foothills.",
+   "subject": "a traditional potter at work in a Rwandan cultural village",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Brochettes and Isombe",
+   "description": "Grilled goat brochettes, cassava leaf isombe, tilapia from Kivu, and some of the best coffee grown anywhere.",
+   "subject": "grilled brochettes and plantain at a Kigali restaurant",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Kwita Izina",
+   "description": "The annual gorilla naming ceremony at Kinigi, where every infant born that year is named in front of the whole district.",
+   "subject": "the Kwita Izina gorilla naming ceremony at Kinigi",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Imigongo and Agaseke",
+   "description": "Geometric imigongo panels in black, white and ochre, and the woven agaseke peace basket that is on the coat of arms.",
+   "subject": "geometric imigongo art panels made in eastern Rwanda",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Nyanza, the King's Palace",
+   "description": "The reconstructed royal residence at Nyanza, thatched and enormous, with the long-horned Inyambo cattle still kept.",
+   "subject": "the thatched royal palace and Inyambo cattle at Nyanza",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Memory and Reconstruction",
+   "description": "The Kigali Genocide Memorial is where any honest visit to Rwanda starts, and it explains everything that came after.",
+   "subject": "the gardens of the Kigali Genocide Memorial",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Kigali, Across the Ridges",
+   "description": "Built along ridge lines, swept every morning, and with a monthly Umuganda when the whole city cleans it together.",
+   "subject": "the ridges and rooftops of Kigali at dusk",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "The Convention Centre Dome",
+   "description": "The Kigali Convention Centre dome, lit at night in the national colours, above a city of red-roofed ridges.",
+   "subject": "the illuminated dome of the Kigali Convention Centre at night",
+   "focal": [
+    50,
+    44
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Kimironko Market",
+   "description": "Fabric, fruit and everything else under one roof, and the tailors who will make it up by tomorrow.",
+   "subject": "fabric and produce stalls inside Kimironko market in Kigali",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Umuganda",
+   "description": "The last Saturday of every month, the country stops and works on something communal. Visitors are welcome to join.",
+   "subject": "residents working together during Umuganda community day in Rwanda",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Bisoke Crater Lake",
+   "description": "Three hours up through nettles and bamboo to a crater lake at 3,711 m, and three hours back down through mud.",
+   "subject": "the crater lake at the summit of Mount Bisoke",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Lodges Below the Volcanoes",
+   "description": "A handful of very good lodges within sight of the park boundary, built so the trek starts after breakfast.",
+   "subject": "a luxury lodge terrace facing the Virunga volcanoes",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Ten Percent, Back to the Hills",
+   "description": "A share of every permit goes to the communities bordering the parks, and gorilla numbers have climbed since it started.",
+   "subject": "park rangers and trackers on patrol in Volcanoes National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Mist on the Volcanoes",
+   "description": "The Virunga chain clears for about an hour after dawn, and the terraces below hold the light for longer.",
+   "subject": "mist clearing from the Virunga volcanoes at dawn",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Gishwati-Mukura",
+   "description": "Rwanda's newest national park, a recovering forest between Nyungwe and the volcanoes that almost nobody visits.",
+   "subject": "the recovering montane forest of Gishwati-Mukura National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Small Country, Nothing Missing",
+   "description": "Gorillas, canopy forest, Big Five and a lake shore, all within three hours of a capital you can walk at night.",
+   "subject": "a silverback gorilla in the bamboo of Volcanoes National Park",
+   "focal": [
+    52,
+    46
+   ]
+  }
+ ]
 }

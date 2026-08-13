@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Off the map &mdash; Afrinkong</title>
+<meta name="description" content="There is nothing at this address. The atlas, the twenty-two portraits and every written-up place are all one link away.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="/styles/afrinkong.css">
+<link rel="stylesheet" href="/styles/places.css">
+<link rel="stylesheet" href="/styles/story.css">
+<style>
+/* Off the map — the one page nobody arrives at on purpose.
+   -------------------------------------------------------------------------
+   The brief for a 404 is usually "be charming". The more useful brief is: say
+   plainly what happened, do not blame the visitor for typing, and then be a
+   real way in rather than a dead end with a Home button. So this page carries
+   the same three doors the rest of the site carries, plus the search — which
+   is the honest thing to offer somebody who was looking for something specific
+   and did not find it.
+
+   No illustration and no apology. The continent outline is the site's own
+   plate component doing what it always does: standing where a photograph is
+   not. */
+.nf{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7);
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+  gap:var(--sp-5) var(--sp-6);align-items:center;min-height:64svh}
+.nf-h1{font-size:clamp(46px,8vw,104px);line-height:.88;letter-spacing:-.03em;
+  margin-top:14px;text-transform:none}
+.nf-lede{margin-top:20px;font-size:19px;line-height:1.55;max-width:46ch}
+.nf-said{margin-top:16px;font-family:var(--fj-mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);word-break:break-all}
+.nf-said b{color:var(--c-ink);font-weight:400}
+.nf-find{margin-top:var(--sp-4);max-width:520px}
+.nf-find label{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted)}
+.nf-find input{width:100%;margin-top:10px;font-family:var(--fj-text);font-size:19px;
+  padding:13px 4px;background:transparent;color:var(--c-ink);border:0;
+  border-bottom:2px solid var(--c-primary);border-radius:0}
+.nf-find input:focus{outline:none;border-bottom-color:var(--c-accent)}
+.nf-doors{margin-top:var(--sp-4);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:1px}
+.nf-door{background:var(--c-bg);box-shadow:0 0 0 1px var(--c-border);padding:18px 16px;
+  display:block;transition:background var(--t-fast) var(--ease)}
+.nf-door:hover{background:var(--fj-dust)}
+.nf-door b{display:block;font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
+  line-height:1.06}
+.nf-door span{display:block;margin-top:8px;font-size:14.5px;color:var(--c-muted)}
+.nf-door:hover b{color:var(--c-accent)}
+.nf-art{min-width:0}
+.nf-art .af-plate{width:100%}
+.nf-art figcaption{margin-top:10px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+@media(max-width:900px){
+  .nf{grid-template-columns:minmax(0,1fr);padding-left:24px;padding-right:24px;
+    padding-top:var(--sp-5)}
+  .nf-art{max-width:320px;order:-1}
+}
+@media(max-width:640px){.nf{padding-left:18px;padding-right:18px}}
+</style>
+</head>
+<body>
+<a class="af-skip" href="#main">Skip to the ways back</a>
+<header class="pl-mast">
+  <a class="pl-mark" href="/"><i>Afrinkong</i><b>Off the map</b></a>
+  <nav class="pl-routes" aria-label="Primary">
+    <a href="/stories">Stories</a>
+    <a href="/atlas">The Atlas</a>
+    <a href="/journey">Build a journey</a>
+    <a href="/places">Every place</a>
+  </nav>
+  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+</header>
+
+<main class="nf" id="main">
+  <div>
+    <span class="af-stamp">Nothing here</span>
+    <h1 class="nf-h1">You have wandered off the map.</h1>
+    <p class="nf-lede">There is no page at this address. It may have been renamed
+      &mdash; every page on this site is named after its own content, so editing a
+      caption moves it &mdash; or the link that brought you here was wrong.
+      Either way it is not something you did.</p>
+    <p class="nf-said" id="nf-said"></p>
+
+    <form class="nf-find" role="search" autocomplete="off" action="/stories" method="get">
+      <label for="nf-q">Look for it instead</label>
+      <input id="nf-q" name="q" type="search"
+             placeholder="Bwindi &middot; food in Cameroon &middot; heritage in Ethiopia">
+    </form>
+
+    <div class="nf-doors">
+      <a class="nf-door" href="/atlas"><b>The Atlas</b>
+        <span>The continent, region by region, and every place on it.</span></a>
+      <a class="nf-door" href="/stories"><b>Stories</b>
+        <span>Twenty-two portraits, at reading length.</span></a>
+      <a class="nf-door" href="/places"><b>Every place</b>
+        <span>The plain list of everything written up here.</span></a>
+      <a class="nf-door" href="/journey"><b>Build a journey</b>
+        <span>Four questions, then somewhere to go.</span></a>
+    </div>
+  </div>
+
+  <figure class="nf-art">
+    <div class="af-plate" style="aspect-ratio:4/5;--plate-tone:#2F4A38" role="img"
+         aria-label="A blank plate in the shape this site gives a picture it does not have">
+      <span class="af-plate-eye">404</span>
+      <span class="af-plate-say">Not every path leads somewhere</span>
+      <span class="af-plate-where">Afrinkong</span>
+    </div>
+    <figcaption>The same plate this site draws wherever a photograph has not been
+      placed. It is standing in for a page instead.</figcaption>
+  </figure>
+</main>
+
+<script>
+/* Name the address that failed, so a visitor can see the typo rather than guess
+   at it, and carry it into the search box as a starting point. Read from
+   location only — nothing is sent anywhere and nothing is stored. */
+(function () {
+  var said = document.getElementById('nf-said');
+  var box = document.getElementById('nf-q');
+  var path = decodeURIComponent(location.pathname || '');
+  if (said && path && path !== '/404' && path !== '/404.html') {
+    said.innerHTML = 'You asked for <b></b>';
+    said.querySelector('b').textContent = path;
+  }
+  var guess = path.split('/').filter(Boolean).pop() || '';
+  if (box && guess) box.value = guess.replace(/\.html$/, '').replace(/-/g, ' ');
+}());
+</script>
+
+<footer class="pl-foot">
+  <div class="pl-foot-in">
+    <p class="pl-foot-bar"><a href="/">Afrinkong</a> &middot;
+      <a href="/atlas">the atlas</a> &middot;
+      <a href="/stories">every story</a> &middot;
+      <a href="/places">every place</a> &middot;
+      <a href="/contact">enquire</a></p>
+  </div>
+</footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
+</body>
+</html>

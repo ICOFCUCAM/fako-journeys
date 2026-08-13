@@ -1,0 +1,14 @@
+{
+ "$comment": "Local Voice: something an operator has actually said to visitors, in their own words. Empty until an operator writes one and signs it off.\n\nThis file exists so that the difference between a real note and a plausible one is a file on disk rather than a judgement call in a template. Where it holds nothing for a country, the Local Voice block still appears — but it says who the company is, what they actually run (their own sentence, from operators.json) and what the season does (Afrinkong's own note, attributed to Afrinkong and not to them). Nothing is ever put in an operator's mouth.\n\nKeyed by operator key. `country` is the country the note is about, which is not always the operator's own — a company can have something to say about a neighbour.",
+
+ "$schema": {
+  "operator": "key in operators.json (the object key)",
+  "country": "country slug the note is about",
+  "asked": "the question they were answering, e.g. 'What do visitors misunderstand?'",
+  "said": "their answer, verbatim",
+  "by": "the person at that company who said it, if they wanted to be named",
+  "verified": "the date somebody at Afrinkong confirmed the wording with them"
+ },
+
+ "voices": []
+}

@@ -11,6 +11,7 @@ Severities:
 """
 
 from . import imaging, providers
+from .model import ROOT
 
 
 class Finding:
@@ -35,6 +36,167 @@ def alt_text(country, entry):
     if country.name.lower() in subject.lower():
         return subject
     return "%s, %s" % (subject, country.name)
+
+
+# ---- the image quality gate ------------------------------------------------------
+
+
+def check_images(country, taxonomy, root=None):
+    """What a broken image record looks like, checked before it can be published.
+
+    Everything here is a failure the page cannot show you: a focal point outside
+    the frame quietly becomes a centre crop, a local asset that is not on disk
+    becomes a broken box, a record with no provider cannot build a URL at all,
+    and a photograph that requires attribution and carries no photographer is a
+    licence breach rather than a design problem.
+
+    Errors, not warnings, for anything that would publish something wrong. A
+    slot with no photograph is neither: it is the normal state of this dataset
+    and it renders a plate.
+    """
+    import os as _os
+    findings = []
+    root = root or ROOT
+
+    for cat in taxonomy.enabled:
+        entry = country.entry(cat["id"])
+        if not entry:
+            continue
+        role = taxonomy.role(cat["id"])
+
+        fx, fy = entry.focal["x"], entry.focal["y"]
+        if not (0 <= fx <= 100 and 0 <= fy <= 100):
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "focal point %s,%s is outside the frame" % (fx, fy)))
+
+        if entry.local:
+            path = _os.path.join(root, entry.local.lstrip("/"))
+            if not _os.path.exists(path):
+                findings.append(Finding("error", country.slug, cat["id"],
+                                        "local asset %s is not on disk" % entry.local))
+
+        record = entry.image or {}
+        if not record.get("imageUrl"):
+            continue
+
+        provider = providers.for_record(record)
+        if provider is None:
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "no registered provider owns %s"
+                                    % record.get("imageUrl")))
+            continue
+        if provider.requires_attribution and not record.get("photographer"):
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "%s requires attribution and this record names "
+                                    "no photographer" % provider.name))
+        if provider.synthetic and not record.get("generated"):
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "a %s record is not disclosed as generated"
+                                    % provider.name))
+        if record.get("generated") and not provider.synthetic:
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "record is flagged generated but %s is a "
+                                    "photography provider" % provider.name))
+        if record.get("country") and record["country"] != country.slug:
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "record belongs to %s" % record["country"]))
+        if record.get("category") and record["category"] != cat["id"]:
+            findings.append(Finding("error", country.slug, cat["id"],
+                                    "record was resolved for %s" % record["category"]))
+
+        width = record.get("width") or 0
+        wanted = role["srcset"][0] if role.get("srcset") else role["width"]
+        if width and width < wanted:
+            findings.append(Finding("warn", country.slug, cat["id"],
+                                    "%dpx original for a slot delivered at %dpx"
+                                    % (width, wanted)))
+
+        alt = (record.get("alt") or "").strip()
+        if alt and alt.lower() in (country.name.lower(), country.slug):
+            findings.append(Finding("warn", country.slug, cat["id"],
+                                    "alt text is only the country name"))
+    return findings
+
+
+# ---- how people are written about ------------------------------------------------
+
+# Words and phrasings that turn people into scenery. The list is short and every
+# entry earned its place: each one is a way of writing about somebody that makes
+# a visitor the subject and a resident the backdrop.
+#
+# Two kinds. `NEVER` is language that is wrong wherever it appears — "primitive",
+# "tribesman", "unspoilt by man". `GENERALISING` is a construction that is only
+# wrong at continental scale: "African culture", "the African people", "an
+# African village". Africa is fifty-four countries and roughly two thousand
+# languages, and a sentence that says "African" where it means "Bamileke" has
+# thrown away the only fact worth having.
+#
+# The check runs over every caption, description, subject, tagline and summary
+# in the dataset — every string a visitor can read — and it is a warning rather
+# than an error, because it is a prompt to a writer and not a machine's verdict
+# on their sentence. It is deliberately not a spelling of what to say.
+NEVER = (
+    "primitive", "uncivilised", "uncivilized", "backward", "savage",
+    "tribesman", "tribesmen", "tribeswoman", "native people", "the natives",
+    "witch doctor", "voodoo magic", "exotic people", "exotic tribe",
+    "untouched by civilisation", "untouched by civilization",
+    "unspoilt by man", "unspoiled by man", "third world", "dark continent",
+    "real africa", "authentic africans", "simple people", "simple life of",
+    "poverty tourism", "slum tour", "local colour", "local color",
+)
+
+GENERALISING = (
+    "african culture", "african tradition", "african traditions",
+    "african people", "the african people", "african tribes", "african tribe",
+    "african village", "african villages", "african food", "african music",
+    "african way of life", "typical african", "typically african",
+    "africans believe", "africans are",
+)
+
+# Read strings, in the order a visitor meets them.
+READABLE = ("tagline", "summary", "when")
+
+
+def _sentences(country):
+    """Every string in a country file that a visitor can read."""
+    out = []
+    for field in READABLE:
+        text = getattr(country, field, "") or ""
+        if text:
+            out.append(("", field, text))
+    for entry in country.entries:
+        for field in ("caption", "description", "subject"):
+            text = getattr(entry, field, "") or ""
+            if text:
+                out.append((entry.category or "?", field, text))
+    return out
+
+
+def check_language(country):
+    """Flag writing that turns people into scenery.
+
+    Nothing here rewrites a sentence or blocks a build. It reports, with the
+    field and the phrase, so that a human decides — which is the only way this
+    check can be right, because the same word is fine in one sentence and not in
+    the next and a program cannot tell which.
+    """
+    findings = []
+    for category, field, text in _sentences(country):
+        low = text.lower()
+        for phrase in NEVER:
+            if phrase in low:
+                findings.append(Finding(
+                    "warn", country.slug, category,
+                    "%s: %r turns people into scenery \u2014 name the community, "
+                    "the place or the practice instead" % (field, phrase)))
+        for phrase in GENERALISING:
+            if phrase in low:
+                findings.append(Finding(
+                    "warn", country.slug, category,
+                    "%s: %r generalises a continent \u2014 %s is one of "
+                    "fifty-four, say which people or which country"
+                    % (field, phrase, country.name)))
+    return findings
 
 
 def check_country(country, taxonomy, global_images, global_subjects):
@@ -149,6 +311,8 @@ def report(countries, taxonomy):
             findings.append(Finding("error", country.path, "", "country has no slug"))
             continue
         f = check_country(country, taxonomy, global_images, global_subjects)
+        f.extend(check_language(country))
+        f.extend(check_images(country, taxonomy))
         findings.extend(f)
         present = [c["id"] for c in taxonomy.enabled if country.entry(c["id"])]
         resolved = [c["id"] for c in taxonomy.enabled

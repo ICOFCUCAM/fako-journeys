@@ -1,0 +1,296 @@
+{
+ "slug": "mauritius",
+ "name": "Mauritius",
+ "adjective": "Mauritian",
+ "region": "Islands",
+ "tagline": "Reef, sugar and the volcanic interior",
+ "summary": "A volcanic island inside an almost unbroken reef, with a mountainous interior, Black River Gorges, and a culture assembled from India, Africa, France and China in the space of two centuries.",
+ "published": true,
+ "calls": [
+  "coast",
+  "food"
+ ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12
+ ],
+ "when": "The dry winter, and the cyclone season is January to March.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Reef, Sugar and the Volcanic Interior",
+   "description": "A ring of reef, a green interior of sugar and mountain, and four cultures on one island.",
+   "subject": "the mountain of Le Morne rising above the lagoon",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Lagoon and Gorge",
+   "description": "Lagoon all the way round, sugar cane across the plain, and gorges cut into the plateau.",
+   "subject": "the Black River gorges in morning cloud",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "What the Dodo Left",
+   "description": "The dodo is gone, but the pink pigeon and the kestrel were both brought back from single figures.",
+   "subject": "a Mauritius kestrel perched in native forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Reef, Not Savanna",
+   "description": "No big game — the wildlife here is the reef, the endemic birds, and the flying foxes at dusk.",
+   "subject": "fruit bats leaving a roost at dusk",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Le Morne and Pieter Both",
+   "description": "Le Morne Brabant stands 556 metres out of the lagoon, and is walked in a morning.",
+   "subject": "the summit ridge of Le Morne Brabant above the sea",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Chamarel",
+   "description": "A hundred metres in a single drop, near the seven-coloured earths.",
+   "subject": "the Chamarel waterfall dropping into forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Grand Bassin",
+   "description": "A crater lake and Hindu pilgrimage site, with half a million people walking to it at Maha Shivaratri.",
+   "subject": "the temple and statues at Grand Bassin crater lake",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "The Lagoon",
+   "description": "Inside the reef the water is flat and warm the whole way round the island.",
+   "subject": "turquoise lagoon and reef break off a Mauritian beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Black River Gorges",
+   "description": "The last of the native forest, on the plateau, with trails and endemic birds in it.",
+   "subject": "native forest in the Black River Gorges",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Kite, Dive, Hike",
+   "description": "Kitesurfing at Le Morne, diving the outer reef, and hiking the gorges and the mountains.",
+   "subject": "kitesurfers on the lagoon below Le Morne",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Four Continents",
+   "description": "Indian, African, French and Chinese, in one Creole language and one calendar.",
+   "subject": "a Hindu temple and a church on the same Mauritian street",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Creole and Bhojpuri",
+   "description": "Creole spoken by everyone, Bhojpuri in the villages, and French and English in print.",
+   "subject": "a village street in the Mauritian sugar country",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Dholl Puri and Rougaille",
+   "description": "Dholl puri off a street cart, rougaille at home, and a fish vindaye that is entirely local.",
+   "subject": "dholl puri being made at a street cart",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Maha Shivaratri and Cavadee",
+   "description": "Half a million walking to Grand Bassin in February, and Thaipoosam Cavadee in January.",
+   "subject": "pilgrims walking to Grand Bassin at Maha Shivaratri",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Model Ships and Textiles",
+   "description": "Model shipbuilding, and a textile industry that grew out of the sugar estates.",
+   "subject": "a model ship being built in a Mauritian workshop",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Aapravasi Ghat",
+   "description": "The immigration depot where half a million indentured labourers first landed.",
+   "subject": "the stone steps of the Aapravasi Ghat",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Le Morne",
+   "description": "The mountain where escaped slaves lived at the top, and a world heritage site for that reason.",
+   "subject": "Le Morne Brabant seen from the lagoon",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Port Louis",
+   "description": "A working port and capital, with a market, a waterfront and the Champ de Mars.",
+   "subject": "the Port Louis waterfront and market",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Colonial and Estate",
+   "description": "The plantation houses of the interior, and the colonial buildings of Port Louis.",
+   "subject": "a colonial plantation house with a wide veranda",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Central Market",
+   "description": "Port Louis market in the morning, for vegetables, tea and alouda.",
+   "subject": "the vegetable stalls of Port Louis central market",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Made for Families",
+   "description": "Flat warm lagoon, no dangerous surf inside the reef, and short drives from anywhere.",
+   "subject": "children playing in a calm Mauritian lagoon",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Kite, Hike, Dive",
+   "description": "Le Morne's kite lagoon, the Black River trails, and dive sites outside the reef.",
+   "subject": "hikers on the trail up Le Morne",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "The Resort Standard",
+   "description": "The island effectively invented the Indian Ocean resort, and it still does it best.",
+   "subject": "a resort beach and lagoon in the late afternoon",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Bringing Back the Birds",
+   "description": "The kestrel, the pink pigeon and the echo parakeet were each brought back from near zero.",
+   "subject": "a pink pigeon in Mauritian native forest",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Lagoon Colour",
+   "description": "The lagoon changes colour every hundred metres, and the aerial work here is the proof.",
+   "subject": "aerial view of a Mauritian lagoon and reef",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Rodrigues",
+   "description": "Six hundred kilometres east, a tenth the size, and the island Mauritius used to be.",
+   "subject": "the hills and lagoon of Rodrigues island",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Four Cultures, One Lagoon",
+   "description": "A Hindu festival, a Creole kitchen, a French road name and a Chinese shop, in one street.",
+   "subject": "a busy multicultural street scene in Port Louis",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

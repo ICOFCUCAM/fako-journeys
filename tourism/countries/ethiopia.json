@@ -1,0 +1,296 @@
+{
+ "slug": "ethiopia",
+ "name": "Ethiopia",
+ "adjective": "Ethiopian",
+ "region": "East Africa",
+ "tagline": "The roof of Africa",
+ "summary": "The only African country never colonised, with its own alphabet, calendar and church — rock-hewn churches at Lalibela, the Simien escarpment above four thousand metres, and the Danakil below sea level.",
+ "published": true,
+ "calls": [
+  "mountains",
+  "culture",
+  "heritage",
+  "food"
+ ],
+ "months": [
+  10,
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "After the rains the highlands are green and clear, October through March.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Roof of Africa",
+   "description": "Eighty per cent of Africa's land above three thousand metres is in this one country.",
+   "subject": "the Simien mountains escarpment dropping away into cloud",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Escarpment and Rift",
+   "description": "The Rift Valley cuts the whole country in half, with highlands either side of it.",
+   "subject": "the Ethiopian Rift valley lakes seen from the escarpment",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Gelada and Walia Ibex",
+   "description": "The gelada lives nowhere else on earth, and grazes the Simien escarpment in troops of hundreds.",
+   "subject": "a troop of gelada baboons grazing on the Simien escarpment",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Bale and the Ethiopian Wolf",
+   "description": "The Bale mountains hold the last five hundred Ethiopian wolves, on the Sanetti plateau.",
+   "subject": "an Ethiopian wolf on the Sanetti plateau in Bale",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Simiens",
+   "description": "Ras Dashen is 4,550 metres; the trek to it runs along the escarpment for days.",
+   "subject": "trekkers on the ridge trail in the Simien mountains",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "The Blue Nile Falls",
+   "description": "Tis Issat — the water that smokes — where the Blue Nile leaves Lake Tana.",
+   "subject": "the Blue Nile falls in full flow at Tis Issat",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Lake Tana",
+   "description": "The source of the Blue Nile, with monasteries on its islands still in use.",
+   "subject": "an island monastery on Lake Tana seen from the water",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "No Coast, and No Loss",
+   "description": "Landlocked since 1993 — the water here is the Rift lakes and the crater lakes of Bishoftu.",
+   "subject": "a crater lake at Bishoftu in the early morning",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Harenna and the Church Forests",
+   "description": "Harenna's cloud forest in Bale, and the church forests that are the last woodland of the north.",
+   "subject": "a round church surrounded by its own remnant forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Trekking Country",
+   "description": "Multi-day treks in the Simiens and Bale, and the Danakil at a hundred metres below sea level.",
+   "subject": "the sulphur springs of the Danakil depression",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Its Own Everything",
+   "description": "Its own alphabet, its own calendar with thirteen months, and its own church since the fourth century.",
+   "subject": "priests in white robes outside a rock-hewn church",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Omo Valley",
+   "description": "The lower Omo holds sixteen peoples in one valley, and the visits should be arranged carefully.",
+   "subject": "a village of the lower Omo valley at the end of the day",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Injera and Doro Wat",
+   "description": "Sourdough injera under everything, and fasting food that has made vegans of visitors.",
+   "subject": "injera with several wats served on a shared platter",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Timkat and Meskel",
+   "description": "Timkat in January at Gondar, and Meskel bonfires across the country in September.",
+   "subject": "the Timkat procession with white-robed crowds at Gondar",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Weaving and Silver",
+   "description": "Handwoven shemma cotton, and Coptic crosses in silver, each region with its own shape.",
+   "subject": "a silversmith working an Ethiopian cross",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Lalibela",
+   "description": "Eleven churches cut down into solid rock in the twelfth century, still in use every day.",
+   "subject": "the rock-hewn church of Bete Giyorgis at Lalibela",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Aksum and Gondar",
+   "description": "The Aksumite stelae, and the seventeenth-century castles of Gondar built by Fasilides.",
+   "subject": "the stone castles of Fasil Ghebbi at Gondar",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Addis Ababa",
+   "description": "Founded 1886, at 2,355 metres, and the diplomatic capital of the continent.",
+   "subject": "the Merkato district of Addis Ababa from above",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Round Houses and Rock Churches",
+   "description": "The tukul, and the rock architecture of Tigray cut into cliff faces you have to climb.",
+   "subject": "a Tigray rock church high in a cliff face",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Coffee, Properly",
+   "description": "Coffee was found here, and it is still roasted, ground and poured in front of you.",
+   "subject": "a coffee ceremony with roasting pan and jebena",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Highland Travel",
+   "description": "Cool highland air, short flights between the historic sites, and no malaria at altitude.",
+   "subject": "a family walking a highland track in northern Ethiopia",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Trek and Climb",
+   "description": "The Simien traverse, Bale's plateau, and the Tigray churches that need a rope.",
+   "subject": "a climber on the approach to a Tigray cliff church",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Lodges on the Escarpment",
+   "description": "Limalimo and Bale Mountain Lodge — small, sited well, and built by people who stayed.",
+   "subject": "a lodge terrace on the edge of the Simien escarpment",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Community Conservation",
+   "description": "Guides and scouts drawn from the villages inside the parks, which is why the wolves are still there.",
+   "subject": "a park scout looking out over the Bale plateau",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Faces and Escarpments",
+   "description": "The light at four thousand metres, and portraiture that has to be asked for properly.",
+   "subject": "cloud below the escarpment edge in the Simien mountains",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Tigray",
+   "description": "Rock churches in cliff faces reached by hand and foot, with almost nobody else there.",
+   "subject": "the climb to a rock church in the Gheralta mountains",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Nothing Else Like It",
+   "description": "No colonial period, its own script, its own calendar, and its own year that starts in September.",
+   "subject": "a priest holding a processional cross at a rock church",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

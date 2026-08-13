@@ -3,37 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Circuits & Experiences — Volcano, Coast, Highlands and Sahel | Fako Journeys</title>
-<meta name="description" content="Eleven guided circuits across Cameroon by region: the Fako Ascent of Mount Cameroon, Limbe and Kribi on the black-sand coast, Korup rainforest camping, the 367 km Ring Road, Foumban's royal palace, and the Waza and Bénoué northern loop.">
+<title>Circuits & Experiences — Volcano, Coast, Highlands and Sahel | Kamerun</title>
+<meta name="description" content="Eleven guided circuits across Cameroon by region: the Fako Ascent of Mount Cameroon, Limbe and Kribi on the black-sand coast, Korup rainforest camping, the 367 km Ring Road, Foumban's royal palace, and the Waza and Bénoué northern loop."
+<link rel="canonical" href="https://afrinkong.com/services">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Afrinkong">
+<meta property="og:title" content="Circuits & Experiences — Volcano, Coast, Highlands and Sahel | Kamerun">
+<meta property="og:description" content="Eleven guided circuits across Cameroon by region: the Fako Ascent of Mount Cameroon, Limbe and Kribi on the black-sand coast, Korup rainforest camping, the 367 km Ring Road, Foumban's royal palace, and the Waza and Bénoué northern loop.">
+<meta property="og:url" content="https://afrinkong.com/services">
+<meta name="twitter:card" content="summary">>
+<link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
+/* Tokens, reset, type scale, focus and motion behaviour are in
+   /styles/afrinkong.css. What is left here is the Kamerun operator's own
+   extension of the palette — the tokens the group system has no use for — and
+   this page's layout. */
 :root{
-  /* master tokens (rebrandable) — laterite-relief: raffia paper, basalt ink, laterite road */
-  --c-bg:#F7F2E7;
-  --c-primary:#1C2A25;
-  --c-accent:#BE5527;
-  --c-ink:#1F211C;
-  --c-muted:#6E7166;
-  --c-border:#DDD4C1;
-  /* derived surfaces */
   --fj-raffia:color-mix(in srgb,var(--c-bg) 94%,var(--c-primary));
-  --fj-dust:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-basalt:color-mix(in srgb,var(--c-primary) 95%,#000);
   --fj-canopy:color-mix(in srgb,var(--c-primary) 82%,var(--c-accent));
   --fj-ember:color-mix(in srgb,var(--c-accent) 14%,var(--c-bg));
-  --fj-onbasalt:color-mix(in srgb,var(--c-bg) 88%,var(--c-primary));
-  --fj-onbasalt-dim:color-mix(in srgb,var(--c-bg) 62%,var(--c-primary));
-  --fj-rule:1px solid var(--c-border);
-  --fj-rule-dark:1px solid color-mix(in srgb,var(--c-bg) 20%,transparent);
-  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
-  --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
-  --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
-  /* photograph-relative values: these sit ON imagery, so they are tuned to the photograph
-     rather than to the brand palette and stay legible whatever picture is dropped in */
   --fj-shade:#141310;
   --fj-onphoto:#FAF5EA;
   --fj-onphoto-soft:#F2EBDB;
   --fj-onphoto-dim:#EBE2CE;
-  color-scheme:light;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -125,11 +117,11 @@ ul,ol{list-style:none}
 .fj-transect-step.lv5{min-height:150px}
 .fj-transect-step.lv6{min-height:132px}
 .fj-transect-alt{font-family:var(--fj-display);font-size:23px;font-weight:700;line-height:1}
-.fj-transect-step.lv3 .fj-transect-alt{color:var(--c-bg)}
+.fj-transect-step.lv6 .fj-transect-alt{color:var(--c-bg)}
 .fj-transect-step b{display:block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:10px;font-weight:400;color:var(--c-accent)}
-.fj-transect-step.lv3 b{color:var(--fj-ember)}
+.fj-transect-step.lv6 b{color:var(--c-accent)}
 .fj-transect-step p{font-size:13.5px;line-height:1.45;color:var(--c-muted);margin-top:6px}
-.fj-transect-step.lv3 p{color:var(--fj-onbasalt-dim)}
+.fj-transect-step.lv6 p{color:var(--fj-onbasalt-dim)}
 .fj-transect-foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:14px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 @media(max-width:900px){.fj-transect{grid-template-columns:repeat(3,1fr)}.fj-transect-step{min-height:0 !important;padding:14px 12px}}
 @media(max-width:520px){.fj-transect{grid-template-columns:1fr 1fr}}
@@ -143,7 +135,12 @@ ul,ol{list-style:none}
    degrade to `absolute` and the effect would vanish with no error at all.
    background-attachment:fixed is not a substitute — iOS Safari ignores it.
    No script drives this. Verified by `npm run test:fixedwindow`. */
-.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center}
+.fj-vista{position:relative;clip-path:inset(0);min-height:130svh;display:flex;align-items:center;background:var(--c-primary)}
+/* The ground is the house ink, not nothing. This panel sets cream type over a
+   fixed photograph, and the photograph for it has not been placed — which left
+   a full-height section of cream on cream, measured at 1.03:1 and invisible.
+   With a ground the panel reads either way, and the photograph covers it when
+   one arrives. */
 .fj-vista-pic{position:fixed;inset:0;z-index:0}
 .fj-vista-pic img{width:100%;height:100%;object-fit:cover}
 /* Veil 1 — a directional wash off the western flank: deep across the reading column
@@ -367,11 +364,12 @@ ul,ol{list-style:none}
 </style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to the page</a>
 <!-- nav -->
 <header class="fj-mast">
   <div class="fj-frame fj-mast-in">
-    <a class="fj-mark" href="/"><b>Fako Journeys</b><span>Cameroun &middot; Circuits guid&eacute;s / Guided circuits</span></a>
-    <nav class="fj-routes">
+    <a class="fj-mark" href="/cameroon"><b>Kamerun</b><span>Discover Cameroon.</span></a>
+    <nav class="fj-routes" aria-label="Primary">
       <a href="/services">Circuits</a>
       <a href="/pricing">Rates &amp; Fees</a>
       <a href="/about">The Operator</a>
@@ -381,6 +379,7 @@ ul,ol{list-style:none}
     <a class="btn" href="#quote">Plan a circuit</a>
   </div>
 </header>
+<main id="main">
 <!-- opening -->
 <section class="fj-open">
   <div class="fj-frame">
@@ -395,7 +394,7 @@ ul,ol{list-style:none}
         </div>
       </div>
       <div class="fj-open-plate fj-rise">
-        <img src="https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=960&h=1280" srcset="https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=480&h=640 480w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=720&h=960 720w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=960&h=1280 960w, https://images.pexels.com/photos/32915203/pexels-photo-32915203.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1440&h=1920 1440w" sizes="(min-width: 1240px) 480px, (min-width: 940px) 40vw, 92vw" alt="a 4x4 on a red laterite road between rainforest and highland farmland, Cameroon" decoding="async" style="object-position:50% 56%" data-illustration="/images/laterite-road.svg" data-illustration-alt="A 4x4 on a red laterite road running between forest and highland farmland" data-provider="pexels">
+        <img src="/images/uploads/site-services-laterite-road-1600w.jpg" srcset="/images/uploads/site-services-laterite-road-1600w.jpg 1600w" sizes="(min-width: 1240px) 480px, (min-width: 940px) 40vw, 92vw" alt="A 4x4 on a red laterite road running between forest and highland farmland" decoding="async" style="object-position:50% 56%" data-illustration="/images/laterite-road.svg" data-illustration-alt="A 4x4 on a red laterite road running between forest and highland farmland" data-provider="upload" data-placed="true">
         <div class="fj-open-tag"><b>Grades 1 to 4</b><span>Day out &middot; walking &middot; trekking &middot; expedition</span></div>
       </div>
     </div>
@@ -420,7 +419,7 @@ ul,ol{list-style:none}
     </div>
     <div class="fj-slips">
       <article class="fj-slip fj-rise">
-        <div class="fj-slip-pic"><img src="https://images.unsplash.com/photo-1696541665406-a2517f84f934?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.620&w=1000&h=800&q=82" srcset="https://images.unsplash.com/photo-1696541665406-a2517f84f934?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.620&w=500&h=400&q=82 500w, https://images.unsplash.com/photo-1696541665406-a2517f84f934?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.620&w=750&h=600&q=82 750w, https://images.unsplash.com/photo-1696541665406-a2517f84f934?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.620&w=1000&h=800&q=82 1000w, https://images.unsplash.com/photo-1696541665406-a2517f84f934?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.620&w=1500&h=1200&q=82 1500w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="trekkers on the open upper slopes of Mount Cameroon above the tree line" loading="lazy" decoding="async" style="object-position:50% 62%" data-illustration="/images/mount-ascent-walkers.svg" data-illustration-alt="Trekkers on the grass slopes above the tree line on Mount Cameroon" data-provider="unsplash"></div>
+        <div class="fj-slip-pic"><img src="/images/generated/site-services-mount-ascent-walkers-1536w.jpg" srcset="/images/generated/site-services-mount-ascent-walkers-1536w.jpg 1536w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="Trekkers on the grass slopes above the tree line on Mount Cameroon" loading="lazy" decoding="async" style="object-position:50% 62%" data-illustration="/images/mount-ascent-walkers.svg" data-illustration-alt="Trekkers on the grass slopes above the tree line on Mount Cameroon" data-provider="openai" data-placed="true" data-generated="true"></div>
         <div class="fj-slip-body">
           <div class="fj-slip-top">
             <span class="fj-slip-code">CIR-01</span>
@@ -438,7 +437,7 @@ ul,ol{list-style:none}
         </div>
       </article>
       <article class="fj-slip fj-rise">
-        <div class="fj-slip-pic"><img src="https://images.pexels.com/photos/9594981/pexels-photo-9594981.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800" srcset="https://images.pexels.com/photos/9594981/pexels-photo-9594981.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=500&h=400 500w, https://images.pexels.com/photos/9594981/pexels-photo-9594981.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=750&h=600 750w, https://images.pexels.com/photos/9594981/pexels-photo-9594981.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800 1000w, https://images.pexels.com/photos/9594981/pexels-photo-9594981.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1500&h=1200 1500w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="black solidified lava flows reaching the sea on the flank of Mount Cameroon" loading="lazy" decoding="async" style="object-position:50% 62%" data-illustration="/images/mount-lava-flow.svg" data-illustration-alt="Steaming lava flow country on the lower flank of the mountain near the coast" data-provider="pexels"></div>
+        <div class="fj-slip-pic"><img src="/images/uploads/site-services-mount-lava-flow-1536w.jpg" srcset="/images/uploads/site-services-mount-lava-flow-1536w.jpg 1536w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="Steaming lava flow country on the lower flank of the mountain near the coast" loading="lazy" decoding="async" style="object-position:50% 62%" data-illustration="/images/mount-lava-flow.svg" data-illustration-alt="Steaming lava flow country on the lower flank of the mountain near the coast" data-provider="upload" data-placed="true"></div>
         <div class="fj-slip-body">
           <div class="fj-slip-top">
             <span class="fj-slip-code">CIR-02</span>
@@ -471,7 +470,7 @@ ul,ol{list-style:none}
     </div>
     <div class="fj-slips">
       <article class="fj-slip fj-rise">
-        <div class="fj-slip-pic"><img src="https://images.pexels.com/photos/4708941/pexels-photo-4708941.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800" srcset="https://images.pexels.com/photos/4708941/pexels-photo-4708941.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=500&h=400 500w, https://images.pexels.com/photos/4708941/pexels-photo-4708941.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=750&h=600 750w, https://images.pexels.com/photos/4708941/pexels-photo-4708941.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800 1000w, https://images.pexels.com/photos/4708941/pexels-photo-4708941.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1500&h=1200 1500w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="the Lobe waterfalls pouring over rock directly into the Atlantic near Kribi, Cameroon" loading="lazy" decoding="async" style="object-position:50% 44%" data-illustration="/images/coast-lobe-falls.svg" data-illustration-alt="The Lobe falls pouring over rock directly into the Atlantic near Kribi" data-provider="pexels"></div>
+        <div class="fj-slip-pic"><img src="/images/uploads/site-services-coast-lobe-falls-1536w.jpg" srcset="/images/uploads/site-services-coast-lobe-falls-1536w.jpg 1536w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="The Lobe falls pouring over rock directly into the Atlantic near Kribi" loading="lazy" decoding="async" style="object-position:50% 44%" data-illustration="/images/coast-lobe-falls.svg" data-illustration-alt="The Lobe falls pouring over rock directly into the Atlantic near Kribi" data-provider="upload" data-placed="true"></div>
         <div class="fj-slip-body">
           <div class="fj-slip-top">
             <span class="fj-slip-code">CIR-04</span>
@@ -489,7 +488,7 @@ ul,ol{list-style:none}
         </div>
       </article>
       <article class="fj-slip fj-rise">
-        <div class="fj-slip-pic"><img src="https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800" srcset="https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=500&h=400 500w, https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=750&h=600 750w, https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800 1000w, https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1500&h=1200 1500w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="a canopy suspension bridge over a river inside Korup rainforest, Cameroon" loading="lazy" decoding="async" style="object-position:50% 48%" data-illustration="/images/forest-canopy-bridge.svg" data-illustration-alt="A canopy suspension bridge crossing a river inside dense rainforest" data-provider="pexels"></div>
+        <div class="fj-slip-pic"><img src="https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800" srcset="https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=500&h=400 500w, https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=750&h=600 750w, https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800 1000w, https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1500&h=1200 1500w" sizes="(min-width: 1240px) 500px, (min-width: 900px) 45vw, 92vw" alt="a canopy suspension bridge over a river inside Korup rainforest, Cameroon" loading="lazy" decoding="async" style="object-position:50% 48%" data-illustration="/images/forest-canopy-bridge.svg" data-illustration-alt="A canopy suspension bridge crossing a river inside dense rainforest" data-provider="pexels" data-locked="true"></div>
         <div class="fj-slip-body">
           <div class="fj-slip-top">
             <span class="fj-slip-code">CIR-05</span>
@@ -514,7 +513,7 @@ ul,ol{list-style:none}
 <section class="fj-zone">
   <div class="fj-frame">
     <div class="fj-craft">
-      <div class="fj-craft-pic fj-rise"><img src="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=880&h=1100&q=82" srcset="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=440&h=550&q=82 440w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=660&h=825&q=82 660w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=880&h=1100&q=82 880w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=1320&h=1650&q=82 1320w" sizes="(min-width: 1240px) 440px, (min-width: 900px) 38vw, 92vw" alt="a carved and beaded royal throne inside a palace museum at Foumban, Cameroon" loading="lazy" decoding="async" style="object-position:50% 46%" data-illustration="/images/foumban-throne.svg" data-illustration-alt="A carved and beaded royal throne inside a palace museum in the western highlands" data-provider="unsplash"></div>
+      <div class="fj-craft-pic fj-rise"><img src="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=880&h=1100&q=82" srcset="https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=440&h=550&q=82 440w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=660&h=825&q=82 660w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=880&h=1100&q=82 880w, https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=1320&h=1650&q=82 1320w" sizes="(min-width: 1240px) 440px, (min-width: 900px) 38vw, 92vw" alt="a carved and beaded royal throne inside a palace museum at Foumban, Cameroon" loading="lazy" decoding="async" style="object-position:50% 46%" data-illustration="/images/foumban-throne.svg" data-illustration-alt="A carved and beaded royal throne inside a palace museum in the western highlands" data-provider="unsplash" data-locked="true"></div>
       <div class="fj-craft-copy fj-rise">
         <span class="fj-stamp">03 &mdash; West &amp; North-West &middot; the highlands</span>
         <h2>The Ring Road, the palaces and the <em>craft quarter</em>.</h2>
@@ -542,22 +541,22 @@ ul,ol{list-style:none}
     </div>
     <div class="fj-cal">
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.550&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.550&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.550&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.550&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1682924754698-9f0a3bcef68f?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.550&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="forest elephants among buttressed trees in Korup National Park, Cameroon" loading="lazy" decoding="async" style="object-position:50% 55%" data-illustration="/images/waza-elephants.svg" data-illustration-alt="Elephants drinking at a shrinking waterhole in dry acacia savanna" data-provider="unsplash">
+        <img src="/images/uploads/site-services-waza-elephants-1200w.jpg" srcset="/images/uploads/site-services-waza-elephants-1200w.jpg 1200w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Elephants drinking at a shrinking waterhole in dry acacia savanna" loading="lazy" decoding="async" style="object-position:50% 55%" data-illustration="/images/waza-elephants.svg" data-illustration-alt="Elephants drinking at a shrinking waterhole in dry acacia savanna" data-provider="upload" data-placed="true">
         <b>Waza</b><span>CIR-08 &middot; 1,700 km&sup2;</span>
         <p>Elephant, giraffe, kob and topi drawn onto the waterholes as the season dries. Three game drives at first and last light from the Waza camp.</p>
       </div>
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.unsplash.com/photo-1689760034504-568812d8cb01?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1689760034504-568812d8cb01?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1689760034504-568812d8cb01?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1689760034504-568812d8cb01?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1689760034504-568812d8cb01?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="the wide brown Benoue river with gallery forest along the bank, Cameroon" loading="lazy" decoding="async" style="object-position:50% 52%" data-illustration="/images/benue-river.svg" data-illustration-alt="A wide brown river with gallery forest along the bank in savanna country" data-provider="unsplash">
+        <img src="/images/uploads/site-services-benue-river-1200w.jpg" srcset="/images/uploads/site-services-benue-river-1200w.jpg 1200w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="A wide brown river with gallery forest along the bank in savanna country" loading="lazy" decoding="async" style="object-position:50% 52%" data-illustration="/images/benue-river.svg" data-illustration-alt="A wide brown river with gallery forest along the bank in savanna country" data-provider="upload" data-placed="true">
         <b>B&eacute;nou&eacute;</b><span>CIR-08 &middot; river camps</span>
         <p>Hippo pools, roan antelope and Adamawa gallery forest along the B&eacute;nou&eacute; river. Two nights in the park, walking permitted with an armed park guide.</p>
       </div>
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.pexels.com/photos/38311726/pexels-photo-38311726.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=750" srcset="https://images.pexels.com/photos/38311726/pexels-photo-38311726.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=300&h=375 300w, https://images.pexels.com/photos/38311726/pexels-photo-38311726.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=450&h=562 450w, https://images.pexels.com/photos/38311726/pexels-photo-38311726.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=750 600w, https://images.pexels.com/photos/38311726/pexels-photo-38311726.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=900&h=1125 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="volcanic rock spires rising from farmland at Rhumsiki in the Mandara mountains, Cameroon" loading="lazy" decoding="async" style="object-position:54% 50%" data-illustration="/images/mandara-spires.svg" data-illustration-alt="Volcanic rock spires rising out of dry farmland in the Mandara mountains" data-provider="pexels">
+        <img src="/images/uploads/site-services-mandara-spires-1200w.jpg" srcset="/images/uploads/site-services-mandara-spires-1200w.jpg 1200w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Volcanic rock spires rising out of dry farmland in the Mandara mountains" loading="lazy" decoding="async" style="object-position:54% 50%" data-illustration="/images/mandara-spires.svg" data-illustration-alt="Volcanic rock spires rising out of dry farmland in the Mandara mountains" data-provider="upload" data-placed="true">
         <b>Rhumsiki</b><span>CIR-09 &middot; Mandara</span>
         <p>Volcanic plugs standing out of terraced Kapsiki farmland, walks between compounds, and the market at Mokolo on rotation day.</p>
       </div>
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.unsplash.com/photo-1659947234285-ebf2826cfe15?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1659947234285-ebf2826cfe15?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1659947234285-ebf2826cfe15?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1659947234285-ebf2826cfe15?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1659947234285-ebf2826cfe15?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="grilled fish and plantain served at a beachside stall in Kribi, Cameroon" loading="lazy" decoding="async" style="object-position:50% 52%" data-illustration="/images/north-craft-stalls.svg" data-illustration-alt="Leather and craft stalls under awnings in a northern Cameroonian market" data-provider="unsplash">
+        <img src="/images/uploads/site-services-north-craft-stalls-1200w.jpg" srcset="/images/uploads/site-services-north-craft-stalls-1200w.jpg 1200w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Leather and craft stalls under awnings in a northern Cameroonian market" loading="lazy" decoding="async" style="object-position:50% 52%" data-illustration="/images/north-craft-stalls.svg" data-illustration-alt="Leather and craft stalls under awnings in a northern Cameroonian market" data-provider="upload" data-placed="true">
         <b>Maroua</b><span>Base town</span>
         <p>The leatherworkers' quarter, the artisanal centre, and the last reliable pharmacy and cash machine before the park roads.</p>
       </div>
@@ -587,10 +586,10 @@ ul,ol{list-style:none}
           <div><dt>Fixed departures</dt><dd>Published each September for the following year</dd></div>
           <div><dt>Private circuits</dt><dd>From two travellers, any date the season allows</dd></div>
           <div><dt>Telephone</dt><dd>+237 233 42 09 61</dd></div>
-          <div><dt>Written</dt><dd>bonjour@fakojourneys.cm</dd></div>
+          <div><dt>Written</dt><dd>bonjour@kamerun.cm</dd></div>
         </dl>
       </div>
-      <form class="fj-form fj-rise" data-lead-mailto="bonjour@fakojourneys.cm" data-lead-form data-lead-success="Thank you — your enquiry has reached the Douala office. We will reply within one working day with the day-by-day itinerary, the grade in plain terms and what the weather usually does on those dates." data-lead-error="That did not send. Please telephone +237 233 42 09 61 or write to bonjour@fakojourneys.cm and we will pick it up from there.">
+      <form class="fj-form fj-rise" data-lead-mailto="bonjour@kamerun.cm" data-lead-form data-lead-success="Thank you — your enquiry has reached the Douala office. We will reply within one working day with the day-by-day itinerary, the grade in plain terms and what the weather usually does on those dates." data-lead-error="That did not send. Please telephone +237 233 42 09 61 or write to bonjour@kamerun.cm and we will pick it up from there.">
         <div class="fj-row">
           <div class="fj-cell"><label for="snm">Your name</label><input id="snm" name="name" required></div>
           <div class="fj-cell"><label for="sph">Telephone or WhatsApp</label><input id="sph" name="phone"></div>
@@ -639,11 +638,12 @@ ul,ol{list-style:none}
 })();
 </script>
 <!-- footer -->
+</main>
 <footer class="fj-foot">
   <div class="fj-frame">
     <div class="fj-foot-grid">
       <div>
-        <div class="fj-foot-brand">Fako<span>Tour operator &middot; Buea &amp; Douala</span></div>
+        <div class="fj-foot-brand">Kamerun<span>Discover Cameroon.</span></div>
         <p>Licensed circuits across the whole country &mdash; volcano, rainforest, highlands, coast and Sahel &mdash; run by guides who live in the regions they walk you through. Bookings taken in French and in English.</p>
       </div>
       <div class="fj-foot-col">
@@ -666,11 +666,13 @@ ul,ol{list-style:none}
         <span>Rue Njo-Njo, Bonapriso, Douala</span>
         <span>Sandpit Road, Molyko, Buea</span>
         <span>+237 233 42 09 61</span>
-        <span>bonjour@fakojourneys.cm</span>
+        <span>bonjour@kamerun.cm</span>
       </div>
     </div>
-    <div class="fj-foot-bar">&copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
+    <div class="fj-foot-bar"><a href="/" style="border-bottom:1px solid var(--c-accent)">Part of Afrinkong</a> &middot; &copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
   </div>
 </footer>
+<script src="/scripts/story-search.js" defer></script>
+<script src="/scripts/explore.js" defer></script>
 </body>
 </html>

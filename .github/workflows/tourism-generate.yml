@@ -1,0 +1,135 @@
+name: Generate image candidates
+
+# Generate candidate images for the site's slots on a runner, with the key held
+# as a repository secret so it never touches a working copy or a commit.
+#
+# Setup, once — Settings -> Secrets and variables -> Actions -> New repository secret:
+#   OPENAI_API_KEY   from https://platform.openai.com/api-keys
+#
+# Then: Actions -> Generate image candidates -> Run workflow.
+#
+# Nothing this workflow produces goes on the site. It fills the candidate pool
+# and commits it; choosing is a separate, human step — download the contact
+# sheet from the run's artifacts, pick, and run `place` with the picks file.
+#
+# Start with dry_run to read the instructions and see the estimated cost. The
+# run prints the estimate before it sends anything either way.
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: "Which slots"
+        type: choice
+        required: false
+        default: site
+        options: [site, tourism, all]
+      only:
+        description: "One slot id, page or category (blank = everything in scope)"
+        required: false
+        default: ""
+      country:
+        description: "Country slug"
+        required: false
+        default: cameroon
+      n:
+        description: "Candidates per slot"
+        required: false
+        default: "1"
+      dry_run:
+        description: "Print the instructions and the cost; send nothing"
+        type: boolean
+        required: false
+        default: true
+      force:
+        description: "Regenerate slots that already have candidates"
+        type: boolean
+        required: false
+        default: false
+      commit:
+        description: "Commit the candidate pool back to this branch"
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tourism-generate-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check the key is configured
+        if: ${{ !inputs.dry_run }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::Generation requires OPENAI_API_KEY."
+            echo "Add it under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          echo "key present (value never printed)"
+
+      - name: The slots and what belongs in them
+        run: python3 tools/tourism/build.py placements --country ${{ inputs.country }}
+
+      - name: Generate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          ARGS="--country ${{ inputs.country }} --scope ${{ inputs.scope }} -n ${{ inputs.n }}"
+          [ -n "${{ inputs.only }}" ]      && ARGS="$ARGS --only ${{ inputs.only }}"
+          [ "${{ inputs.force }}" = "true" ]   && ARGS="$ARGS --force"
+          [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
+          echo "generate$ARGS"
+          # A partial run is a success: images already made are saved and the
+          # next run continues from there, so a rate limit costs nothing.
+          python3 tools/tourism/build.py generate $ARGS || true
+
+      - name: Build the contact sheet
+        run: python3 tools/tourism/build.py compare --country ${{ inputs.country }}
+
+      - name: Confirm no key leaked into any artifact
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -n "$OPENAI_API_KEY" ] && grep -rlF "$OPENAI_API_KEY" --exclude-dir=.git . ; then
+            echo "::error::the API key appears in a file — refusing to commit"
+            exit 1
+          fi
+          echo "no key material in the working tree"
+
+      - name: Commit the candidate pool
+        if: ${{ inputs.commit && !inputs.dry_run }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A tourism/candidates
+          if git diff --cached --quiet; then
+            echo "nothing new — every slot in scope already had its candidates"
+          else
+            git commit -m "Generate image candidates" \
+                       -m "Ran tools/tourism/build.py generate on a runner. Candidates only: no page was changed and nothing was published. Choose with build.py compare, then build.py place."
+            git push
+          fi
+
+      - name: Upload the contact sheet and the candidates
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-candidates
+          path: |
+            tourism/compare.html
+            tourism/candidates/
+            incoming/
+            images/

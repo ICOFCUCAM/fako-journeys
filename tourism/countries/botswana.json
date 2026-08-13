@@ -1,0 +1,294 @@
+{
+ "slug": "botswana",
+ "name": "Botswana",
+ "adjective": "Botswanan",
+ "region": "Southern Africa",
+ "tagline": "A delta that never reaches the sea",
+ "summary": "The Okavango empties into the Kalahari and evaporates, and the whole country is organised around that fact — low-volume, high-value safari, mokoro channels, and the salt pans of Makgadikgadi.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "culture"
+ ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "when": "The Okavango flood peaks between June and August, months after the rain that made it.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "A Delta That Never Reaches the Sea",
+   "description": "The Okavango floods into the Kalahari every year and simply disappears into it.",
+   "subject": "the channels and islands of the Okavango delta from the air",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Delta, Pan and Desert",
+   "description": "Water in the north, salt pans in the middle, and Kalahari sand for the rest of it.",
+   "subject": "the Makgadikgadi salt pans stretching to the horizon",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "The Largest Elephant Population",
+   "description": "Chobe holds more elephant than anywhere on earth, and they come to the river at four.",
+   "subject": "elephants coming down to the Chobe river in late light",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Low Volume, High Value",
+   "description": "Fewer beds, larger concessions, and game drives that do not meet another vehicle.",
+   "subject": "a game vehicle alone on a track in the Okavango",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Tsodilo",
+   "description": "No real mountains — Tsodilo's four hills hold four thousand rock paintings instead.",
+   "subject": "the Tsodilo hills rising from flat Kalahari scrub",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "No Falls, and the Zambezi Next Door",
+   "description": "The water here spreads rather than drops; Victoria Falls is ninety minutes from Kasane.",
+   "subject": "the Chobe river spreading wide at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Okavango and the Chobe",
+   "description": "A mokoro poled through papyrus channels is the correct speed for this country.",
+   "subject": "a mokoro being poled through a papyrus channel",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Landlocked",
+   "description": "The nearest sea is a thousand kilometres away, and nobody here seems to mind.",
+   "subject": "a floodplain island in the Okavango at sunrise",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Riverine and Mopane",
+   "description": "Riverine forest along the Chobe, and mopane woodland across the north.",
+   "subject": "riverine forest along the Chobe river bank",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Mokoro, Walking, Horseback",
+   "description": "Poled canoes, walking safaris on the islands, and some of the best riding safaris anywhere.",
+   "subject": "riders crossing a floodplain on a horseback safari",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Batswana and San",
+   "description": "Setswana across the country, and San communities in the Kalahari with the oldest culture on earth.",
+   "subject": "a San tracker reading spoor in the Kalahari sand",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Kalahari San",
+   "description": "Tracking with San guides, who will find in an hour what nobody else sees at all.",
+   "subject": "San guides walking a Kalahari pan in the morning",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Seswaa and Bogobe",
+   "description": "Slow-pounded beef and sorghum porridge, and braai wherever there is a fire.",
+   "subject": "seswaa and bogobe served at a Botswana lodge",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Maitisong and Dithubaruba",
+   "description": "The Maitisong festival in Gaborone, and the Kweneng cultural festival at Dithubaruba.",
+   "subject": "dancers performing at a cultural festival in Botswana",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Basketry",
+   "description": "Palm baskets woven in the delta panhandle, dyed with bark, and collected worldwide.",
+   "subject": "woven palm baskets from the Okavango panhandle",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Tsodilo Hills",
+   "description": "Four thousand paintings on four hills the San call the resting place of the gods.",
+   "subject": "rock paintings on the Tsodilo hills",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Diamonds and Democracy",
+   "description": "Independent since 1966, and the one African country that used its diamonds well.",
+   "subject": "the National Museum building in Gaborone",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Maun and Kasane",
+   "description": "Not really cities — two safari towns with airstrips, which is what the country needs.",
+   "subject": "light aircraft on the apron at Maun airport",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Tent, Deck and Sand",
+   "description": "Camps built on decks above the flood, taken down when the concession lease ends.",
+   "subject": "a tented camp on a deck above the Okavango floodplain",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Cattle Posts",
+   "description": "Away from the parks the country is cattle, and the cattle post is the centre of it.",
+   "subject": "a cattle post at the edge of the Kalahari",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Not the Cheapest, but Quiet",
+   "description": "Not a budget destination — but the children will not be sharing a sighting with ten vehicles.",
+   "subject": "a family on a mokoro in the Okavango channels",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Mokoro and Walking",
+   "description": "Poling, walking and riding — this is the country where you get out of the vehicle.",
+   "subject": "walkers following a guide across an Okavango island",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "The Concession Camps",
+   "description": "Private concessions the size of small countries, with six tents on them.",
+   "subject": "a small luxury tented camp lit at dusk in the delta",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Community Trusts",
+   "description": "Concessions leased through community trusts, so the villages hold the lease and the income.",
+   "subject": "a community conservation sign at a delta concession",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Water and Light",
+   "description": "Aerial work over the delta, and reflections that only exist for the weeks of the flood.",
+   "subject": "aerial view of flooded Okavango channels at golden hour",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Makgadikgadi",
+   "description": "Drive onto the pan at night and there is no horizon and no sound at all.",
+   "subject": "quad bikes on the Makgadikgadi salt pan at dusk",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Fewer People Than Elephants",
+   "description": "Two and a half million people, a hundred and thirty thousand elephant, and space for both.",
+   "subject": "an elephant herd crossing open Kalahari grassland",
+   "focal": [
+    50,
+    55
+   ]
+  }
+ ]
+}

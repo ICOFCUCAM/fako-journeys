@@ -1,7 +1,7 @@
 """Generate the country tourism pages.
 
 The design system is not re-implemented here. The masthead, the footer, the token
-block and the reveal script are lifted out of index.html at render time, so these
+block and the reveal script are lifted out of cameroon.html at render time, so these
 pages cannot drift from the rest of the site: change a token on the home page and
 every country page follows.
 
@@ -13,8 +13,7 @@ import html
 import os
 import re
 
-from . import imaging, validate
-from .resolve import MISSING_KEY_WARNING
+from . import imaging, plate as plate_mod, validate
 
 
 def alt_for(country, entry):
@@ -59,7 +58,8 @@ SECTIONS = [
 
 
 def esc(s):
-    return html.escape(s or "", quote=True)
+    # str() first: a year is an int, and html.escape reaches for .replace on it.
+    return html.escape(str(s) if s is not None else "", quote=True)
 
 
 # ---- design system extraction --------------------------------------------------
@@ -71,23 +71,95 @@ def _between(src, start_pat, end_pat):
 
 
 class Shell:
-    """The site's own chrome, read off index.html."""
+    """The stylesheet and the reveal script, read off cameroon.html.
+
+    It used to lift the masthead and footer too, which meant every one of these
+    pages — Kenya's, Morocco's, Nigeria's — wore Kamerun's brand, linked to
+    Kamerun's circuits and printed a Douala telephone number. That is not a
+    cosmetic mismatch: it tells somebody reading about Nigeria to call an
+    operator in Cameroon. The chrome is built per country now; only the CSS and
+    the reveal behaviour are still borrowed, because the tq- classes are written
+    against the fj- system in that block.
+    """
 
     def __init__(self, index_path=None):
-        with open(index_path or os.path.join(ROOT, "index.html")) as f:
+        with open(index_path or os.path.join(ROOT, "cameroon.html")) as f:
             src = f.read()
+        # The design system is a linked stylesheet now, not an inline block. The
+        # shell used to lift only the <style>, so when cameroon.html stopped
+        # declaring its own tokens these pages lost the entire palette and
+        # rendered on white with no rules and no accent. Carry the links too.
+        self.links = "\n".join(re.findall(r'<link rel="stylesheet"[^>]*>', src))
         self.style = _between(src, r"<style>", r"</style>")
-        self.masthead = _between(src, r'<header class="fj-mast">', r"</header>")
-        self.footer = _between(src, r'<footer class="fj-foot">', r"</footer>")
         self.script = _between(src, r"<script>", r"</script>")
-        if not (self.style and self.masthead and self.footer):
-            raise RuntimeError("could not read the shell out of index.html")
-        # the masthead CTA jumps to an on-page form that country pages do not have
-        self.masthead = self.masthead.replace('href="#quote"', 'href="/contact"')
+        if not (self.style and self.links):
+            raise RuntimeError("could not read the shell out of cameroon.html")
+
+
+def masthead(country, taxonomy):
+    """Afrinkong chrome, naming the country you are actually reading about."""
+    op = country.operator
+    tel = ('<span class="fj-mast-tel">%s &middot; %s</span>'
+           % (esc(op.name), esc(op.base))) if op else ""
+    return ('<header class="fj-mast">\n'
+            '  <div class="fj-frame fj-mast-in">\n'
+            '    <a class="fj-mark" href="%s"><i>Afrinkong</i><b>%s</b>'
+            '<span>All %d categories</span></a>\n'
+            '    <nav class="fj-routes" aria-label="Primary">\n'
+            '      %s\n'
+            '      <a href="/atlas">The Atlas</a>\n'
+            '      <a href="/journey">Build a journey</a>\n'
+            '      <a href="/meet">Meet Africa</a>\n'
+            '      <a href="/tourism/">Every country</a>\n'
+            '    </nav>\n%s'
+            '    <a class="btn" href="/contact">Plan a journey</a>\n'
+            '  </div>\n</header>'
+            % (esc(country.url), esc(country.name), len(taxonomy.enabled),
+               ('<a href="%s">%s home</a>' % (esc(country.url), esc(country.name)))
+               if country.slug else '<a href="/">Afrinkong</a>', tel))
+
+
+def footer(country):
+    op = country.operator
+    who = ('<p>%s runs %s, out of %s, since %s.</p>' %
+           (esc(op.name), esc(country.name), esc(op.base), esc(op.since))) if op else \
+          ('<p>%s is covered by a licensed company based in the country itself.</p>'
+           % esc(country.name))
+    return ('<footer class="fj-foot">\n'
+            '  <div class="fj-frame">\n'
+            '    <div class="fj-foot-grid">\n'
+            '      <div>\n'
+            '        <div class="fj-foot-brand">Afrinkong<span>Journeys across Africa</span></div>\n'
+            '        <p>A group of locally run tour operators working across Africa. Every country '
+            'is worked through the same twenty-seven categories, so two of them can be compared on '
+            'the same terms.</p>\n%s'
+            '      </div>\n'
+            '      <div class="fj-foot-col">\n        <b>%s</b>\n'
+            '        <a href="%s">Destination page</a>\n'
+            '        <a href="/#destinations">All destinations</a>\n'
+            '        <a href="/#window">The map</a>\n'
+            '      </div>\n'
+            '      <div class="fj-foot-col">\n        <b>Plan</b>\n'
+            '        <a href="/contact">Start a journey</a>\n'
+            '        <a href="/contact">Contact an operator</a>\n'
+            '        <a href="/#seasons">Travel seasons</a>\n'
+            '      </div>\n'
+            '    </div>\n'
+            '    <div class="fj-foot-bar">Afrinkong &middot; %s &middot; Every picture on this page '
+            'is credited to the photographer who took it</div>\n'
+            '  </div>\n</footer>'
+            % (who, esc(country.name), esc(country.url), esc(country.name)))
 
 
 TOURISM_CSS = """
 /* ---- tourism country pages -------------------------------------------------- */
+/* The mark names the group first and the country second, so a page reached from
+   a search result says whose site it is and what it is about, in that order. */
+.fj-mark i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:8.5px;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--c-accent)}
+.fj-mast-tel{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted);white-space:nowrap}
+@media(max-width:1100px){.fj-mast-tel{display:none}}
 .tq-hero{position:relative;background:var(--fj-basalt);color:var(--fj-onphoto)}
 .tq-hero-pic{position:absolute;inset:0;overflow:hidden}
 .tq-hero-pic img{width:100%;height:100%;object-fit:cover}
@@ -167,6 +239,20 @@ TOURISM_CSS = """
   .tq-sec{padding:56px 0}
   .tq-hero-in{padding:96px 0 40px;min-height:clamp(380px,60vh,620px)}
 }
+/* The empty frame. A slot whose photograph has not been resolved yet is a
+   finished state, not a hole: the accent wash and the caption make it read as
+   a plate awaiting its picture, which is what it is. */
+.tq-empty{position:relative;display:flex;align-items:flex-start;padding:14px 16px;overflow:hidden;
+  /* color-mix() is fine as a colour but is dropped inside a gradient by some
+     engines, which silently left this frame with no background at all. The tint
+     is a background-color; the hatch over it is neutral and needs no mixing. */
+  background-color:color-mix(in srgb,var(--c-accent) 11%,var(--c-bg));
+  background-image:repeating-linear-gradient(135deg,
+    rgba(0,0,0,.035) 0 9px, rgba(0,0,0,0) 9px 18px);
+  box-shadow:inset 0 0 0 1px var(--c-border)}
+.tq-empty span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.12em;
+  line-height:1.6;text-transform:uppercase;text-align:left;
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-accent))}
 @media(prefers-reduced-motion:reduce){.fj-rise{transition:none}}
 """
 
@@ -174,16 +260,44 @@ TOURISM_CSS = """
 # ---- image markup --------------------------------------------------------------
 
 
-def img_tag(entry, role, alt, extra_class=""):
+# Loaded once. The plate draws the country's outline behind the caption, and
+# reading twenty-nine kilobytes of paths per slot would be silly.
+_SHAPES = None
+
+
+def shapes():
+    global _SHAPES
+    if _SHAPES is None:
+        import json
+        try:
+            with open(os.path.join(ROOT, "tourism", "shapes.json")) as fh:
+                _SHAPES = json.load(fh)
+        except (IOError, ValueError):
+            _SHAPES = {}
+    return _SHAPES
+
+
+def img_tag(entry, role, alt, extra_class="", country=None, ground=False):
     d = imaging.delivery(entry, role)
     box = 'width="%d" height="%d" style="aspect-ratio:%s;object-position:%s"' % (
         d["width"], d["height"], d["aspect"], d["objectPosition"])
     if not d["src"]:
-        # No resolved photo and no local stand-in. Show an honest placeholder that
-        # names the missing prerequisite, rather than a broken <img> or a guess.
-        return ('<div class="tq-empty %s" style="aspect-ratio:%s" data-unresolved="true">'
-                '<span>%s<br><em>%s</em></span></div>'
-                % (extra_class, d["aspect"], esc(MISSING_KEY_WARNING), esc(alt[:70])))
+        # No resolved photograph and no local stand-in. This used to print the
+        # build's own diagnostic — "requires UNSPLASH_ACCESS_KEY" — into a page
+        # the gateway links to as "all twenty-seven categories". A visitor is not
+        # the audience for a missing environment variable.
+        #
+        # Nor are they the audience for a grey box: five hundred and sixty-seven
+        # of the five hundred and ninety-four slots in this dataset are in this
+        # state, so it is not an edge case, it is the site. They get the plate —
+        # the country's own outline, the category, and the caption at the size
+        # the photograph's headline would be, on that country's region tone.
+        if country is not None:
+            return plate_mod.plate(country, entry, role["aspect"], alt,
+                                   shape=shapes().get(country.slug), ground=ground)
+        return ('<div class="tq-empty %s" style="aspect-ratio:%s" data-unresolved="true" '
+                'role="img" aria-label="%s"><span>%s</span></div>'
+                % (extra_class, d["aspect"], esc(alt), esc(alt[:90])))
     attrs = ['src="%s"' % esc(d["src"]), 'alt="%s"' % esc(alt), box]
     if d["srcset"]:
         attrs.append('srcset="%s"' % esc(d["srcset"]))
@@ -196,7 +310,15 @@ def img_tag(entry, role, alt, extra_class=""):
         attrs.append('decoding="async"')
     if extra_class:
         attrs.append('class="%s"' % extra_class)
-    return "<img " + " ".join(attrs) + ">"
+    tag = "<img " + " ".join(attrs) + ">"
+    # Art direction, where the role asks for it: the same photograph cut taller
+    # for a phone, around the same focal point. The <img> stays exactly as it
+    # was, so a browser that ignores <picture> loses nothing.
+    if d.get("mobile"):
+        m = d["mobile"]
+        return ('<picture><source media="%s" srcset="%s" sizes="%s">%s</picture>'
+                % (esc(m["media"]), esc(m["srcset"]), esc(m["sizes"]), tag))
+    return tag
 
 
 def credit(entry):
@@ -236,7 +358,7 @@ def render_hero(country, entry, cat, taxonomy):
     <div class="tq-facts">%s</div>
   </div>
 </section>""" % (
-        img_tag(entry, role, alt),
+        img_tag(entry, role, alt, country=country, ground=True),
         esc(country.name.upper()),
         esc(entry.caption),
         esc(country.summary or entry.description),
@@ -255,7 +377,7 @@ def render_cards(country, items, taxonomy, cols=3):
         <h3>%s</h3>
         <p>%s</p>%s
       </article>""" % (
-            esc(cat["id"]), img_tag(entry, role, alt), esc(cat["title"]),
+            esc(cat["id"]), img_tag(entry, role, alt, country=country, ground=True), esc(cat["title"]),
             esc(entry.caption), esc(entry.description), credit(entry)))
     return '<div class="tq-grid cols-%d">%s\n    </div>' % (cols, "".join(out))
 
@@ -273,7 +395,7 @@ def render_features(country, items, taxonomy):
           <h3>%s</h3>
           <p>%s</p>%s
         </div>
-      </div>""" % (esc(cat["id"]), img_tag(entry, role, alt), esc(cat["title"]),
+      </div>""" % (esc(cat["id"]), img_tag(entry, role, alt, country=country, ground=True), esc(cat["title"]),
                    esc(entry.caption), esc(entry.description), credit(entry)))
     return "".join(out)
 
@@ -288,7 +410,7 @@ def render_band(country, cat, entry, taxonomy, role_name=None):
     <span class="fj-stamp">%s</span>
     <h3>%s</h3><p>%s</p>
   </div></div>
-</section>""" % (esc(cat["id"]), img_tag(entry, role, alt), esc(cat["title"]),
+</section>""" % (esc(cat["id"]), img_tag(entry, role, alt, country=country, ground=True), esc(cat["title"]),
                  esc(entry.caption), esc(entry.description))
 
 
@@ -332,13 +454,19 @@ PAGE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%(title)s</title>
 <meta name="description" content="%(description)s">
+<link rel="canonical" href="https://afrinkong.com%(path)s">
+%(og)s
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+%(links)s
 <style>%(style)s
 %(tourism_css)s</style>
 </head>
 <body>
+<a class="af-skip" href="#main">Skip to %(country)s</a>
 %(masthead)s
+<main id="main">
 %(body)s
+</main>
 %(footer)s
 <script>%(script)s</script>
 </body>
@@ -373,15 +501,34 @@ def render_country(country, taxonomy, shell):
 
     hero = country.entry("hero")
     return PAGE % {
-        "title": esc("%s Tourism — 27 Experiences | Fako Journeys" % country.name),
+        "title": esc("%s — all %d experiences | Afrinkong"
+                     % (country.name, len(taxonomy.enabled))),
         "description": esc(country.summary or (hero.description if hero else country.name)),
+        "links": shell.links,
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
-        "masthead": shell.masthead,
+        "country": esc(country.name),
+        "path": "/tourism/%s" % esc(country.slug),
+        "og": plate_mod.open_graph(
+            esc("%s — all %d experiences" % (country.name, len(taxonomy.enabled))),
+            esc(country.summary or country.name),
+            "/tourism/%s" % country.slug, kind="article"),
+        "masthead": masthead(country, taxonomy),
         "body": "\n".join(parts),
-        "footer": shell.footer,
+        "footer": footer(country),
         "script": shell.script.replace("<script>", "").replace("</script>", ""),
     }
+
+
+class _Everywhere(object):
+    """The index is not a country, but it needs the same chrome."""
+    slug = ""
+    name = "Every country"
+    url = "/tourism/"
+    operator = None
+
+
+_ALL = _Everywhere()
 
 
 def render_index(countries, taxonomy, shell):
@@ -395,9 +542,9 @@ def render_index(countries, taxonomy, shell):
         cards.append("""
       <a href="/tourism/%s" class="fj-rise">
         <figure>%s</figure>
-        <h3>%s</h3>
+        <h2>%s</h2>
         <p>%s</p>
-      </a>""" % (esc(c.slug), img_tag(entry, role, alt), esc(c.name), esc(c.tagline)))
+      </a>""" % (esc(c.slug), img_tag(entry, role, alt, country=c, ground=True), esc(c.name), esc(c.tagline)))
     body = """
 <section class="fj-open">
   <div class="fj-frame">
@@ -414,13 +561,21 @@ def render_index(countries, taxonomy, shell):
   </div>
 </section>""" % "".join(cards)
     return PAGE % {
-        "title": "Tourism by Country | Fako Journeys",
-        "description": "Country tourism guides, each covering the same 27 travel experiences.",
+        "title": "Every country, all %d experiences | Afrinkong" % len(taxonomy.enabled),
+        "description": "Country guides across Africa, each covering the same %d travel experiences, "
+                       "so two countries can be compared on the same terms." % len(taxonomy.enabled),
+        "links": shell.links,
         "style": shell.style.replace("<style>", "").replace("</style>", ""),
         "tourism_css": TOURISM_CSS,
-        "masthead": shell.masthead,
+        "country": esc(_ALL.name),
+        "path": "/tourism/",
+        "og": plate_mod.open_graph(
+            "Every country &mdash; Afrinkong",
+            esc("Every published country, written up the same %d ways, so two can be "
+                "compared on the same terms." % len(taxonomy.enabled)), "/tourism/"),
+        "masthead": masthead(_ALL, taxonomy),
         "body": body,
-        "footer": shell.footer,
+        "footer": footer(_ALL),
         "script": shell.script.replace("<script>", "").replace("</script>", ""),
     }
 
