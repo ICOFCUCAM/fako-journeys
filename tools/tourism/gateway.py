@@ -336,6 +336,7 @@ def block_destinations(countries):
     """The grid, grouped by region, each card carrying what it leads on and
     what it touches."""
     links = (read_json(LINKS) or {}).get("links") or {}
+    region_meta = load_regions()
     live = {c.slug for c in countries}
     by_region = {}
     for c in countries:
@@ -348,7 +349,21 @@ def block_destinations(countries):
         group = by_region.get(key) or []
         if not group:
             continue
-        rows.append('      <h3 class="wa-dest-reg" data-region="%s">%s</h3>' % (key, title))
+        # The region tier was a bare label between two grids. It carries its
+        # own sentence and its own count now, and routes into the atlas at that
+        # region — so the ladder AFRICA / REGION / COUNTRY is legible on the
+        # page rather than only in the markup. All of it out of regions.json.
+        reg = region_meta.get(key)
+        rows.append(
+            '      <div class="wa-dest-band" data-region="%s">'
+            '<h3 class="wa-dest-reg">%s</h3>'
+            '<p class="wa-dest-line">%s</p>'
+            '<p class="wa-dest-count"><a href="/atlas#/%s">%d %s in the atlas &rarr;</a></p>'
+            '</div>'
+            # `title` is already HTML in REGION_GROUPS ("Central &amp; West"),
+            # so escaping it here would print &amp;amp;.
+            % (key, title, esc(reg.line if reg else ""), esc(key), len(group),
+               "country" if len(group) == 1 else "countries"))
         for c in sorted(group, key=lambda x: (0 if x.operator else 1, x.name)):
             near = _neighbours(c.slug, links, live)
             borders = ('<p class="wa-dest-near"><span>Walk out of it into</span>%s</p>'
