@@ -1372,6 +1372,49 @@ def main():
                   expect is None or top == expect,
                   "%d on %s, dataset has %s" % (top, where, expect))
 
+        # -- whose enquiry desk /contact is ----------------------------------------
+        print("\nwhose enquiry desk /contact is")
+        con = open(os.path.join(ROOT_DIR, "contact.html")).read()
+        ours_ops = [c for c in countries if c.operator]
+        host = ([c for c in ours_ops if c.operator.url.startswith("/")]
+                or ours_ops)[0]
+        bar = re.search(r'<div class="fj-from"[^>]*>(.*?)</div>\s*</div>', con, re.S)
+        check("the primary call of the site still lands on /contact",
+              'href="/contact"' in open(os.path.join(ROOT_DIR, "index.html")).read())
+        check("/contact says whose desk it is, in the HTML, without a script",
+              bool(bar) and host.operator.name in bar.group(1),
+              (host.operator.name if bar else "no bar"))
+        if bar:
+            check("it names the country that operator runs", host.name in bar.group(1))
+            check("it names where they are", host.operator.base in bar.group(1))
+            check("it offers the rest of the continent a way out",
+                  'href="/atlas"' in bar.group(1))
+            for other in ours_ops:
+                if other.slug == host.slug:
+                    continue
+                check("it hands %s over to %s" % (other.name, other.operator.name),
+                      other.operator.url in bar.group(1))
+        # The mailto is one operator's address. That is fine — it is their page —
+        # but it must not be the only thing the visitor learns about where the
+        # letter goes, which was the state before this.
+        m = re.search(r'data-lead-mailto="([^"]+)"', con)
+        check("the form still has somewhere to send to", bool(m), m.group(1) if m else "")
+        if m and bar:
+            check("the address it sends to belongs to the operator it names",
+                  host.operator.name.split()[0].lower() in m.group(1).lower(),
+                  m.group(1))
+        boot = re.search(r'<script type="application/json" id="fj-reach">(.*?)</script>',
+                         con, re.S)
+        check("the page knows which country belongs to whom", bool(boot))
+        if boot:
+            reach = json.loads(boot.group(1))
+            check("every operator of ours is in it",
+                  set(reach["ours"]) == {c.slug for c in ours_ops})
+            check("every country without one is in it too",
+                  set(reach["rest"]) == {c.slug for c in countries if not c.operator})
+            check("the two lists do not overlap",
+                  not (set(reach["ours"]) & set(reach["rest"])))
+
         # -- where the links actually go -------------------------------------------
         print("\nwhere the links actually go")
         html_pages = sorted(p for p in glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),

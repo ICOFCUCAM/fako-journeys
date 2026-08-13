@@ -48,6 +48,29 @@ ul,ol{list-style:none}
 
 /* ---- masthead ---------------------------------------------------------------- */
 .fj-mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+/* Whose desk this is. Every "Plan a journey" on the site arrives here, and the
+   page above it is one operator's — Kamerun's masthead, Kamerun's nav, a Douala
+   number, and a form that opens a mailto to bonjour@kamerun.cm. A visitor who
+   built a journey through Kenya could not tell. This bar tells them, at the top
+   of the page, before the form. Sober rather than alarming: it is not a warning
+   that anything is broken, it is the name on the door. */
+.fj-from{background:var(--fj-raffia);border-bottom:var(--fj-rule)}
+.fj-from-in{padding:14px 0 16px}
+.fj-from p{font-size:15px;line-height:1.55;max-width:78ch}
+.fj-from b{font-weight:400;color:var(--c-primary)}
+.fj-from-else{margin-top:6px;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--c-muted)}
+.fj-from-else a,.fj-from-warn a{color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.fj-from-else a:hover,.fj-from-warn a:hover{border-bottom-color:var(--c-accent)}
+.fj-from-else a+a{margin-left:14px}
+/* The second sentence only exists when the journey names somewhere this desk
+   does not run, so it is allowed to be the loud one. */
+.fj-from-warn{margin-top:12px;padding-top:12px;border-top:var(--fj-rule);
+  font-size:15.5px}
+.fj-from-warn a{display:inline-block;margin-right:16px}
+@media(max-width:640px){.fj-from-in{padding:12px 0 13px}
+  .fj-from p{font-size:14px}}
 .fj-mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
 .fj-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
 .fj-mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:1;white-space:nowrap}
@@ -379,6 +402,13 @@ ul,ol{list-style:none}
     <a class="btn" href="#quote">Plan a circuit</a>
   </div>
 </header>
+<!-- gen:handoff -->
+<div class="fj-from" data-af-handoff>
+  <div class="fj-frame fj-from-in">
+    <p><b>You are on Kamerun&rsquo;s enquiry page.</b> Kamerun is the Afrinkong operator for Cameroon, based in Buea and Douala, and everything sent from this form is read by them.</p>
+    <p class="fj-from-else">Somewhere else in Africa? <a href="https://namib-skyline.vercel.app">Namibia &mdash; Namib Skyline</a><a href="https://pearl-trails-uganda.vercel.app">Uganda &mdash; Pearl Trails Uganda</a> or start from <a href="/atlas">the atlas</a>.</p>
+  </div>
+</div><!-- /gen:handoff -->
 <main id="main">
 <!-- opening -->
 <section class="fj-open">
@@ -695,6 +725,9 @@ ul,ol{list-style:none}
     <div class="fj-foot-bar"><a href="/" style="border-bottom:1px solid var(--c-accent)">Part of Afrinkong</a> &middot; &copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
   </div>
 </footer>
+<!-- gen:reach -->
+<script type="application/json" id="fj-reach">{"home":"cameroon","ours":{"cameroon":{"name":"Cameroon","op":"Kamerun","url":"/cameroon"},"namibia":{"name":"Namibia","op":"Namib Skyline","url":"https://namib-skyline.vercel.app"},"uganda":{"name":"Uganda","op":"Pearl Trails Uganda","url":"https://pearl-trails-uganda.vercel.app"}},"rest":{"botswana":"Botswana","cote-divoire":"Côte d'Ivoire","egypt":"Egypt","ethiopia":"Ethiopia","ghana":"Ghana","kenya":"Kenya","madagascar":"Madagascar","mauritius":"Mauritius","morocco":"Morocco","mozambique":"Mozambique","nigeria":"Nigeria","rwanda":"Rwanda","senegal":"Senegal","seychelles":"Seychelles","south-africa":"South Africa","tanzania":"Tanzania","tunisia":"Tunisia","zambia":"Zambia","zimbabwe":"Zimbabwe"}}</script><!-- /gen:reach -->
+<script src="/scripts/enquiry.js" defer></script>
 <script src="/scripts/story-search.js" defer></script>
 <script src="/scripts/explore.js" defer></script>
 </body>
