@@ -118,12 +118,24 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Every generated page, not a list of five that was true when there
-          # were five. The country pages and the gateway are both regenerated
-          # above, and naming them individually is how fourteen of them came to
-          # be silently dropped.
-          git add tourism/cache/images.json tourism/REPORT.md tourism/*.html \
-                  index.html *.html
+          # Everything the build wrote, not a list of paths that was complete on
+          # the day it was typed. The list above was: it named the cache, the
+          # report, the /tourism pages and the root pages — which was every
+          # generated file when it was written and is now about a tenth of them.
+          # Measured rather than asserted: planting three resolved slots for
+          # Kenya and running `build.py all` changes ten files, and seven of
+          # them are outside the old list — three place pages, the portrait, and
+          # data/atlas/kenya.json, data/meet.json and data/stories.json, which
+          # are what the atlas, the human layer and the reading room actually
+          # read. So a run resolving two hundred slots would have committed the
+          # cache and the country pages while leaving the atlas, the journey
+          # engine, /meet, /stories and two hundred place pages still drawing
+          # plates for photographs that had already been found and paid for.
+          #
+          # `git add -A` is safe here specifically because the step above has
+          # already grepped the whole working tree for both keys and failed the
+          # run if either appeared. .gitignore keeps the contact sheet out.
+          git add -A
           if git diff --cached --quiet; then
             echo "nothing changed — every requested slot was already cached"
           else

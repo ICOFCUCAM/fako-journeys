@@ -1511,6 +1511,28 @@ def main():
         check("no page names two images as its most urgent", not twice,
               ", ".join(twice[:4]))
 
+        # -- what a resolver run would actually commit -----------------------------
+        print("\nwhat a resolver run would actually commit")
+        wf_path = os.path.join(ROOT_DIR, ".github", "workflows", "tourism-resolve.yml")
+        wf = open(wf_path).read() if os.path.exists(wf_path) else ""
+        check("the resolve workflow is still there", bool(wf))
+        if wf:
+            check("it rebuilds every page before committing", "build.py all" in wf)
+            check("it checks the working tree for key material first",
+                  'grep -rlF "$KEY"' in wf)
+            # The commit step used to name paths. Every generated file it did
+            # not name was silently dropped, and `build.py all` writes to nine
+            # directories. Naming them is a list that goes stale; `git add -A`
+            # cannot, and is safe because the key grep above runs over the whole
+            # tree and fails the run.
+            adds = re.findall(r"^\s*git add (.+)$", wf, re.M)
+            check("it stages everything the build wrote, not a list of paths",
+                  any(a.strip() == "-A" for a in adds),
+                  "; ".join(a.strip()[:60] for a in adds) or "no git add")
+            check("it pushes what it staged", "git push" in wf)
+            check("a partial run is still a success",
+                  "build.py resolve" in wf and "|| true" in wf)
+
         # -- what a photograph is allowed to claim --------------------------------
         print("\nwhat a photograph is allowed to claim")
         from tourism.model import PROVEN, attach_cache as attach
