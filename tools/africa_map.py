@@ -324,7 +324,11 @@ def render(shapes, frame):
         cx, cy = x * k + ox, y * k + oy
         attrs = ('tabindex="-1" class="wa-map-live wa-map-mark" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
                  % (tier, slug, label, tag))
-        dot = '<circle cx="%.1f" cy="%.1f" r="9"/><title>%s &#8212; %s</title>' % (cx, cy, label, tag)
+        # Two circles: a transparent one for the pointer and a smaller one for
+        # the eye. At r=9 the visible mark was a six-pixel dot on a phone.
+        dot = ('<circle class="wa-map-hit" cx="%.1f" cy="%.1f" r="26"/>'
+               '<circle cx="%.1f" cy="%.1f" r="12"/><title>%s &#8212; %s</title>'
+               % (cx, cy, cx, cy, label, tag))
         lines.append(('<a %s href="%s">%s</a>' % (attrs, href, dot)) if href
                      else ('<g %s>%s</g>' % (attrs, dot)))
     lines.append("</svg>")
