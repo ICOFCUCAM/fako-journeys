@@ -487,7 +487,15 @@
    The dash is in user units so it scales with the map when a region is flown to,
    which keeps it looking drawn rather than rendered. */
 .wa-map-route{fill:none;stroke:var(--c-gold);stroke-width:2.2;stroke-linecap:round;
-  stroke-dasharray:9 7;opacity:.72}
+  stroke-dasharray:9 7;opacity:.72;transition:opacity .25s,stroke-width .25s}
+/* Pointing at one journey should not mean reading three. The group dims and the
+   one under the pointer comes up — the same move the region rail makes on the
+   map, so the page has one idea of what "this one" looks like. A route is
+   aria-hidden and not focusable: it is a drawing of the three itineraries that
+   section 06 lists as text, and a second keyboard route to the same three would
+   be the duplicate 082 spent a commit removing. */
+.wa-map-routes:hover .wa-map-route{opacity:.28}
+.wa-map-routes .wa-map-route:hover{opacity:1;stroke-width:3}
 /* Cities. A gold point is a place; the ring is the target. Three are named —
    the three with a photograph in the collection — because labelling eleven puts
    type across half of West Africa. */
