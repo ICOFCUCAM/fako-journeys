@@ -1583,6 +1583,21 @@ window.AF = {
   var idleCap = caps[0].innerHTML;
   var reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
+  /* A PREVIEW IS NOT A STATE CHANGE.
+     The readout is a live region, so every rewrite of it is announced. Pointing
+     at a country rewrites it — that is what preview() is for — so sweeping a
+     pointer across the map queued one announcement per country crossed, for
+     anybody running a screen reader alongside a mouse. Twenty-two of them, none
+     asked for, none reflecting a change to the page.
+
+     The region speaks for commits only: hover and un-hover write to it with
+     announcements off, and pressing a region or a country turns them back on
+     first, because that is a thing the reader did and a thing that changed. */
+  var capsBox = caps[0] && caps[0].parentNode;
+  function announce(on){
+    if (capsBox) capsBox.setAttribute('aria-live', on ? 'polite' : 'off');
+  }
+
   var at = 0, held = null, region = 'africa';
   var view = (regs[0].dataset.view || '0 0 1000 1060').split(' ').map(Number);
   var anim = null;
@@ -1637,6 +1652,7 @@ window.AF = {
   }
 
   function paint(i, exp){
+    announce(true);
     at = i; held = exp || null;
     states.forEach(function(s, n){ s.toggleAttribute('data-on', n === i); });
     caps.forEach(function(c, n){ c.toggleAttribute('data-on', n === i); });
@@ -1674,6 +1690,10 @@ window.AF = {
 
   regs.forEach(function(r){
     r.addEventListener('click', function(){
+      /* A commit, so the readout is allowed to speak. paintRegion() itself
+         cannot turn announcements back on: preview(null) calls it to restore
+         the idle readout after a hover ends, and that is not a commit. */
+      announce(true);
       if (at !== 0) paint(0, null);
       paintRegion(r.dataset.reg);
       window.AF.set({country: null, countryName: null});
@@ -1718,9 +1738,21 @@ window.AF = {
     });
   });
 
+  /* A PREVIEW IS NOT A STATE CHANGE.
+     The readout is a live region, so every rewrite of it is announced. Pointing
+     at a country rewrites it — that is what preview() is for — and sweeping a
+     pointer across the map therefore queued one announcement per country
+     crossed, for anybody running a screen reader alongside a mouse. Twenty-two
+     of them, none of which the reader asked for and none of which reflected any
+     change to the page.
+
+     So the region only speaks for commits. Hovering and un-hovering write to it
+     with announcements off; pressing a region or a country turns them back on
+     first, because that is a thing the reader did and a thing that changed. */
   /* On the map, pointing at a country reads it out and clicking enters it —
      preview on hover, commit on click, so the map stays a directory. */
   function preview(el){
+    announce(false);
     if (at !== 0) return;
     shapes.forEach(function(s){ s.classList.toggle('on', s === el); });
     if (!el) { paintRegion(region); return; }
