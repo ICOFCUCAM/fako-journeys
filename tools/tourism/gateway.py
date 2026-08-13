@@ -333,9 +333,14 @@ def block_mapunder(countries):
     Sudan. SVG has no z-index, so the only way to say that is the document.
     """
     d = _detail()
-    out = ['<g class="wa-map-grat" aria-hidden="true">']
+    out = ['<g class="wa-map-grat wa-map-grat--minor" aria-hidden="true">']
     for g in d["graticule"]:
-        out.append('<path d="%s"/>' % g["d"])
+        if g["kind"] == "minor":
+            out.append('<path d="%s"/>' % g["d"])
+    out.append('</g><g class="wa-map-grat" aria-hidden="true">')
+    for g in d["graticule"]:
+        if g["kind"] != "minor":
+            out.append('<path d="%s"/>' % g["d"])
     out.append('</g>')
     # The labels sit in the ocean where the lines leave the frame, small enough
     # that they are a texture until you look for them.
@@ -344,7 +349,7 @@ def block_mapunder(countries):
     for g in d["graticule"]:
         x, y = g["at"]
         vw, vh = d["fit"]["view"][2], d["fit"]["view"][3]
-        if not (12 < x < vw - 12 and 12 < y < vh - 12):
+        if g["kind"] == "minor" or not (12 < x < vw - 12 and 12 < y < vh - 12):
             continue
         key = (g["label"], round(x / 40), round(y / 40))
         if key in seen:

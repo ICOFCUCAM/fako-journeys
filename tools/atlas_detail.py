@@ -202,6 +202,19 @@ def graticule():
     the projection underneath it.
     """
     lines = []
+    # The minor weave: every ten degrees, unlabelled, at half the weight. Two
+    # intervals is what makes a chart read as surveyed rather than ruled — the
+    # eye finds the twenty-degree lines and the tens are texture behind them.
+    for lon in range(-30, 61, 10):
+        if lon % 20 == 0:
+            continue
+        for run in clipped_runs([(lon, lat) for lat in range(-40, 41, 2)]):
+            lines.append({"d": path(run), "label": "", "at": run[0], "kind": "minor"})
+    for lat in range(-35, 41, 10):
+        if lat % 20 == 0:
+            continue
+        for run in clipped_runs([(lon, lat) for lon in range(-30, 61, 2)]):
+            lines.append({"d": path(run), "label": "", "at": run[-1], "kind": "minor"})
     for lon in range(-20, 61, 20):
         pts = [xy(lon, lat) for lat in range(-40, 41, 2)]
         for run in clipped_runs([(lon, lat) for lat in range(-40, 41, 2)]):
