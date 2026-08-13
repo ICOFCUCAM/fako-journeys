@@ -209,6 +209,14 @@ const HERO_BAND = 200;
 const HERO_INK_MIN = 0.78;
 const HERO_INK_TOP = 12;   // px the continent's top may sit off the masthead line
 
+/* Pass ten. AFRICA is set at 213px, which is large text, so WCAG 1.4.3 asks
+   3:1 — but a headline this size carries the page and 3:1 is the floor for
+   reading a word, not for a word being the composition. 4.5 is the number the
+   rest of this site is held to and there is no reason for the largest type on
+   it to be the exception. */
+const HERO_TYPE_WIDTHS = [[1920, 1080], [1440, 900], [1366, 768]];
+const HERO_TYPE_MIN = 4.5;
+
 const out = [];
 function check(name, ok, detail) {
   out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
@@ -382,6 +390,85 @@ function serve() {
       await rm.close();
     }
 
+    /* ---- pass ten: the word over the continent --------------------------- */
+    /*
+     * 101 set AFRICA across the map instead of beside it. That is the whole
+     * composition, and it puts a charcoal headline on top of whatever the map
+     * happens to be drawing underneath — which includes the operator tier,
+     * deep forest, where charcoal measures 1.09:1 and the word simply stops
+     * existing.
+     *
+     * It does not currently happen, and the reason it does not is luck rather
+     * than design. Pressing East Africa puts Cameroon under the headline at
+     * 1440, 1920 and 1366; pressing Islands puts Uganda there. Both are legible
+     * only because 090 paints a country outside the chosen region in a
+     * lightened fill rather than dimming it with opacity, which lifts the real
+     * measured contrast to 5.95:1. Change how dimming works and the headline
+     * disappears at two of six region views, on a page where every other
+     * contrast is checked.
+     *
+     * So it is checked where it is actually decided: sample the fill of every
+     * map shape the headline's glyphs cross, in every region view, and measure
+     * the headline's ink against it.
+     */
+    for (const [w, h] of HERO_TYPE_WIDTHS) {
+      const page = await browser.newPage({viewport: {width: w, height: h}});
+      await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
+      const bad = await page.evaluate(async (need) => {
+        function lum(c) {
+          const f = c.map(v => (v /= 255) <= 0.03928 ? v / 12.92
+                                                     : Math.pow((v + 0.055) / 1.055, 2.4));
+          return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2];
+        }
+        function parse(text) {
+          let m = text.match(/color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/);
+          if (m) return [+m[1] * 255, +m[2] * 255, +m[3] * 255];
+          m = text.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)/);
+          return m ? [+m[1], +m[2], +m[3]] : null;
+        }
+        function ratio(a, b) {
+          const x = lum(a), y = lum(b);
+          return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+        }
+        const big = document.querySelector('.wa-h1-big');
+        const regs = [...document.querySelectorAll('.wa-reg')];
+        if (!big || !regs.length) return [];
+        const ink = parse(getComputedStyle(big).color);
+        const out = [];
+        for (const reg of regs) {
+          reg.click();
+          await new Promise(r => setTimeout(r, 900));
+          const range = document.createRange();
+          range.selectNodeContents(big);
+          const t = range.getBoundingClientRect();
+          document.querySelectorAll('.wa-map-live, .wa-map-rest path').forEach(el => {
+            const b = el.getBoundingClientRect();
+            if (!b.width || !b.height) return;
+            const x = Math.min(t.right, b.right) - Math.max(t.left, b.left);
+            const y = Math.min(t.bottom, b.bottom) - Math.max(t.top, b.top);
+            /* A sliver of a country clipping a serif is not the headline
+               sitting on it; this wants real overlap. */
+            if (x < 12 || y < 12) return;
+            const paint = el.tagName === 'path' ? el : el.querySelector('path');
+            if (!paint) return;
+            const fill = parse(getComputedStyle(paint).fill);
+            if (!fill) return;
+            const got = ratio(ink, fill);
+            if (got + 0.005 < need) {
+              out.push(reg.dataset.reg + ': the headline is '
+                + (Math.round(got * 100) / 100) + ':1 over '
+                + (el.dataset && el.dataset.name ? el.dataset.name : 'the map'));
+            }
+          });
+        }
+        return [...new Set(out)];
+      }, HERO_TYPE_MIN);
+      await page.close();
+      check('the headline reads wherever the map puts itself, at ' + w,
+            !bad.length,
+            bad.length ? bad.slice(0, 2).join(' | ') : 'legible in all six region views');
+    }
+
     /* ---- pass eight: the hero is one composition ------------------------- */
     /*
      * Everything the other seven passes measure is true of a page. This one is
@@ -454,11 +541,16 @@ function serve() {
             const inkH = bb.height * k;
             const mast = parseFloat(getComputedStyle(document.documentElement)
                            .getPropertyValue('--mast')) || 78;
-            const screen = window.innerHeight - mast;
-            const share = inkH / screen;
+            /* The lesser of the screen and the stage. 066 caps the stage so a
+               very tall monitor gets a composition rather than a stretched one,
+               and the continent fills the stage rather than the screen there —
+               at 2560x1440 that is 820 of an 897-pixel stage, which is right,
+               and 60% of the viewport, which would read as a fault. */
+            const room = Math.min(window.innerHeight - mast, stage0.height);
+            const share = inkH / room;
             if (share < inkMin) {
               bad.push('the continent is ' + Math.round(share * 100)
-                       + '% of the screen, wants ' + Math.round(inkMin * 100) + '%');
+                       + '% of the room it has, wants ' + Math.round(inkMin * 100) + '%');
             }
             if (Math.abs(top - mast) > inkTop) {
               bad.push('the continent starts ' + Math.round(top - mast)
