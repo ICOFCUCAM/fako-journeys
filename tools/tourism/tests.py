@@ -1468,12 +1468,34 @@ def main():
                   "%.2f:1 on ivory, so fills only" % r)
             # The map's three tones have to be three, not two and a hint.
             home = open(os.path.join(ROOT_DIR, "index.html")).read()
-            for tone, role in (("--c-sand", "the continent"),
+            for tone, role in (("--c-land", "the continent"),
                                ("--c-accent-fill", "a destination"),
                                ("--c-primary", "an operator of ours")):
                 check("the map draws %s in %s" % (role, tone),
                       re.search(r"wa-map-(rest|live)[^{]*\{[^}]*fill:var\(%s\)" % tone,
                                 home) is not None)
+            # The land is not a fourth brand colour. It is sand with enough
+            # sienna in it to have a coastline — 088 — and it has to stay
+            # derived, or the palette has grown a value nobody chose.
+            land = re.search(r"--c-land:\s*color-mix\(in srgb,\s*var\(--c-sand\)\s*"
+                             r"(\d+)%,\s*var\((--c-[a-z-]+)\)\)", home)
+            check("the land is mixed from the palette, not picked", land is not None,
+                  "%s%% sand + %s" % land.groups() if land else "not derived from --c-sand")
+            if land:
+                # Both numbers 088 balanced: a coastline the eye can find, and
+                # destinations that stay louder than it.
+                mixed = [int(land.group(1)) / 100.0 * a + (1 - int(land.group(1)) / 100.0) * b
+                         for a, b in zip(channels(TOKENS["--c-sand"]),
+                                         channels(TOKENS[land.group(2)]))]
+                page = relative(channels(TOKENS["--c-bg"]))
+                dest = relative(channels(TOKENS["--c-accent-fill"]))
+                mid = relative(mixed)
+                coast = (max(page, mid) + 0.05) / (min(page, mid) + 0.05)
+                over = (max(dest, mid) + 0.05) / (min(dest, mid) + 0.05)
+                check("the continent has a coastline against the page",
+                      coast >= 1.35, "%.2f:1" % coast)
+                check("a destination is still louder than the coastline",
+                      over > coast * 1.3, "%.2f:1 against %.2f:1" % (over, coast))
 
         regions = read_json_file(os.path.join(ROOT_DIR, "tourism", "regions.json"))
         tones = {k: v["tone"] for k, v in regions.items() if not k.startswith("$")}
