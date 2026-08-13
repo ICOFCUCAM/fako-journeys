@@ -1,6 +1,13 @@
-/* Does the page move under the reader while it loads?
+/* What the browser actually does with these pages.
  *
- *     node tools/shift-checks.js            (or: python3 tools/tourism/build.py test)
+ *     node tools/browser-checks.js          (or: python3 tools/tourism/build.py test)
+ *
+ * Two passes, both of them measuring something no amount of reading the source
+ * will tell you: does the page move under the reader while it loads, and is
+ * there anything left of it when scripting is off.
+ *
+ * ---------------------------------------------------------------------------
+ * PASS ONE — layout shift
  *
  * Layout shift is the one quality of a page that cannot be read off the source.
  * You can look at an <img> all day and not know whether its box was reserved:
@@ -54,6 +61,25 @@ const TYPES = {
   '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
   '.xml': 'application/xml', '.txt': 'text/plain'
 };
+
+/* ---------------------------------------------------------------------------
+ * PASS TWO — with scripting off
+ *
+ * Every page here is meant to be readable without a script; several say so in
+ * their own comments. Two were not. /contact and the twenty-three tourism pages
+ * reveal their content with an IntersectionObserver adding a class to elements
+ * that start at opacity 0, so with no observer the words were there in the DOM
+ * and invisible on the screen — sixteen blocks on one, twenty-five on the other.
+ * /compare builds its entire table in script into an empty div, and after the
+ * layout-shift fix reserved 3,300 pixels for it, so with no script it was a
+ * headline followed by three and a half thousand pixels of nothing.
+ *
+ * The bar is deliberately low and absolute: a page must render at least a
+ * quarter of the words it renders with scripting on, and must not leave a
+ * screenful of empty space where its main content should be. This is a check
+ * against total failure, not a demand that every feature work without a script.
+ */
+const NOJS_MIN_WORDS = 0.25;
 
 const out = [];
 function check(name, ok, detail) {
@@ -169,8 +195,55 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass two: with scripting off ---------------------------------- */
+    const off = await browser.newContext({viewport: {width: 1280, height: 900},
+                                          javaScriptEnabled: false});
+    for (const url of PAGES) {
+      const lit = await browser.newPage({viewport: {width: 1280, height: 900}});
+      await lit.goto(base + url, {waitUntil: 'networkidle'});
+      const withJs = await lit.evaluate(
+        () => (document.body.innerText || '').trim().split(/\s+/).length);
+      await lit.close();
+
+      const dark = await off.newPage();
+      await dark.goto(base + url, {waitUntil: 'domcontentloaded'});
+      await dark.waitForTimeout(200);
+      const seen = await dark.evaluate(() => {
+        const text = (document.body.innerText || '').trim();
+        /* The tallest run of nothing: an element whose box is a screen or more
+           and which paints no text at all. That is what a reserved-but-never-
+           filled container looks like, and it is invisible to word counting. */
+        let void_ = 0, culprit = '';
+        document.querySelectorAll('main *').forEach(el => {
+          const box = el.getBoundingClientRect();
+          if (box.height < 900) return;
+          if ((el.innerText || '').trim()) return;
+          /* A tall box with no words in it is fine if it is a picture. It is
+             only a hole if nothing is painted there at all. */
+          if (el.matches('img,svg,picture,video,canvas')) return;
+          if (el.closest('svg')) return;             // drawing, not layout
+          if (el.querySelector('img,svg,picture,video,canvas')) return;
+          const cs = getComputedStyle(el);
+          /* Taken out of flow, so it reserves nothing and cannot be the hole —
+             a gradient veil over a photograph is the usual case. */
+          if (cs.position === 'absolute' || cs.position === 'fixed') return;
+          if (cs.backgroundImage && cs.backgroundImage !== 'none') return;
+          if (box.height > void_) { void_ = Math.round(box.height); culprit = el.tagName + '.' + String(el.className).slice(0, 20); }
+        });
+        return {words: text ? text.split(/\s+/).length : 0, void_, culprit};
+      });
+      await dark.close();
+
+      const share = withJs ? seen.words / withJs : 1;
+      check(url + ' still reads with scripting off',
+            share >= NOJS_MIN_WORDS && seen.void_ === 0,
+            seen.words + ' of ' + withJs + ' words ('
+            + Math.round(share * 100) + '%)'
+            + (seen.void_ ? ' — ' + seen.void_ + 'px of nothing at ' + seen.culprit : ''));
+    }
+    await off.close();
   } catch (e) {
-    check('layout shift was measured', false, String(e.message).slice(0, 90));
+    check('the browser checks ran', false, String(e.message).slice(0, 90));
   } finally {
     if (browser) await browser.close();
     server.close();

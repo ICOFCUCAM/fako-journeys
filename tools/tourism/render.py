@@ -460,6 +460,13 @@ PAGE = """<!DOCTYPE html>
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 %(links)s
 <link rel="stylesheet" href="/styles/tourism.css">
+<noscript><style>
+/* The reveal is a script effect: .fj-rise starts at opacity 0 and an
+   IntersectionObserver adds .seen. With no script there is no observer and the
+   page stays at zero — twenty-five blocks of it on a country page. Motion is
+   an enhancement; the words are not. */
+.fj-rise{opacity:1;transform:none}
+</style></noscript>
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to %(country)s</a>

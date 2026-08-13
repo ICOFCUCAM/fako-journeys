@@ -173,6 +173,13 @@ TEMPLATE = """<!DOCTYPE html>
    than the table and never leaves a gap under it. */
 .cp{--cp-rows:%(rows)d}
 #cp-body{min-height:calc(var(--cp-rows) * 101px)}
+.cp-nojs{padding:34px 0 10px;max-width:60ch}
+.cp-nojs h2{font-size:clamp(24px,3vw,34px)}
+.cp-nojs p{margin-top:14px;color:var(--c-muted)}
+.cp-nojs-go{margin-top:22px;display:flex;flex-wrap:wrap;gap:20px}
+.cp-nojs-go a{font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%%,transparent)}
 @media(max-width:700px){#cp-body{min-height:calc(var(--cp-rows) * 99px)}}
 @media(max-width:700px){
   .cp-row>div,.cp-pick div{padding:14px 10px 16px 0}
@@ -183,6 +190,14 @@ TEMPLATE = """<!DOCTYPE html>
 .foot a{border-bottom:1px solid var(--c-accent)}
 .foot p{max-width:44em;color:var(--fj-onbasalt-dim)}
 </style>
+<noscript><style>
+/* After the block above, not before it: same specificity, so the later rule is
+   the one that applies. The reservation exists so the table does not shove the
+   page down when the script builds it. With no script there is no table, and
+   holding 3,300 pixels open for one that is never coming is worse than not
+   holding it at all. */
+#cp-body{min-height:0}
+</style></noscript>
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to content</a>
@@ -212,7 +227,20 @@ TEMPLATE = """<!DOCTYPE html>
     <div><label for="cp-a">First</label><select id="cp-a">%(options_a)s</select></div>
     <div><label for="cp-b">Second</label><select id="cp-b">%(options_b)s</select></div>
   </div>
-  <div id="cp-body"></div>
+  <div id="cp-body"><noscript>
+    <div class="cp-nojs">
+      <h2>This one needs a script, and there is not one running.</h2>
+      <p>The table is assembled in the browser from a payload carrying all
+        %(total)d countries, so that changing either menu is instant rather than a
+        page load. With scripting off there is nothing to assemble it.</p>
+      <p>Every country here has its own page, written through the same
+        %(count)d categories in the same order, so two of them read side by side
+        in two tabs say exactly what this table would have said.</p>
+      <p class="cp-nojs-go"><a href="/places">Every place, country by country</a>
+        <a href="/atlas">The atlas</a>
+        <a href="/stories">The portraits</a></p>
+    </div>
+  </noscript></div>
   <p class="cp-note">Captions rather than sentences, on purpose. The full description of any of these is on that country's own page.</p>
 </section>
 </main>

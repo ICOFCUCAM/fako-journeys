@@ -1857,18 +1857,18 @@ def main():
         # line each; if node is not installed they are reported as skipped and
         # counted as neither passed nor failed, because a check that did not run
         # is not a check that passed.
-        # -- does the page move under the reader -----------------------------------
-        print("\ndoes the page move under the reader")
+        # -- what the browser actually does ----------------------------------------
+        print("\nwhat the browser actually does")
         node = shutil.which("node")
-        shift = os.path.join(ROOT_DIR, "tools", "shift-checks.js")
+        shift = os.path.join(ROOT_DIR, "tools", "browser-checks.js")
         if not node:
-            print("  SKIPPED: node is not installed; layout shift was not measured")
+            print("  SKIPPED: node is not installed; nothing was measured in a browser")
         else:
             proc = subprocess.run([node, shift], capture_output=True, text=True,
                                   cwd=ROOT_DIR)
             lines = [l for l in proc.stdout.splitlines() if "\t" in l]
             if not lines:
-                check("the layout-shift checks ran", False,
+                check("the browser checks ran", False,
                       (proc.stderr or "no output").strip().splitlines()[-1][:90]
                       if (proc.stderr or "").strip() else "no output")
             for line in lines:
