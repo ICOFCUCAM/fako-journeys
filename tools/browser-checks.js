@@ -161,6 +161,27 @@ const TARGET_MIN = 24;
  */
 const TAB_STOPS = 80;
 
+/* ---------------------------------------------------------------------------
+ * PASS EIGHT — the hero is one composition
+ *
+ * The widths are chosen where the composition changes its mind rather than
+ * where devices are: 2560 and 1920 are past the frame's cap, 1440 is the width
+ * it was drawn at, 1366 is the commonest laptop, 960 and 900 are inside the
+ * band where the two columns used to sit on top of each other, and 390 and 320
+ * are the stacked layout.
+ *
+ * HERO_BLEED is how far the continent may run past the text frame. It is meant
+ * to be a constant, which is the whole point — written as right:0 it was 100 at
+ * 1440 and 660 at 2560.
+ *
+ * HERO_BAND is how much empty space the stage may open between the calls and
+ * the rail. Unbounded it reached 594px.
+ */
+const HERO_WIDTHS = [[2560, 1440], [1920, 1080], [1440, 900], [1366, 768],
+                     [1180, 820], [960, 760], [900, 700], [390, 844], [320, 700]];
+const HERO_BLEED = 140;
+const HERO_BAND = 200;
+
 const out = [];
 function check(name, ok, detail) {
   out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
@@ -275,6 +296,105 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass eight: the hero is one composition ------------------------- */
+    /*
+     * Everything the other seven passes measure is true of a page. This one is
+     * true of a picture, and a picture is what the first screen of this site
+     * is: one word set to the width of its column, a continent bled off the
+     * right edge of it, and two rails under both.
+     *
+     * Every fault it looks for was live in the file when it was written, and
+     * none of them broke anything the other passes can see. The headline ran
+     * 109% of its column at 1600 and 62% at 768. The map's overhang past the
+     * frame was 100px at 1440 and 660px at 2560, because it was written as
+     * right:0 against a frame that stops growing. The frame was 640 wide around
+     * a map that painted 425 of it, so the bleed the composition is built on
+     * was not happening at all. The destination rail crossed the map's legend
+     * at five widths between 880 and 960. The readout's box was seventeen
+     * pixels shorter than the readout, on the view the page opens in.
+     *
+     * Overflow was zero through all of it. Contrast was AA through all of it.
+     * A layout can be composed wrongly and still be, in every measurable
+     * respect the rest of this file knows about, correct.
+     */
+    for (const [w, h] of HERO_WIDTHS) {
+      const page = await browser.newPage({viewport: {width: w, height: h}});
+      const errs = [];
+      page.on('pageerror', e => errs.push(String(e.message).slice(0, 60)));
+      await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
+      const seen = await page.evaluate(([bleed, band]) => {
+        const q = s => document.querySelector(s);
+        const B = s => { const e = q(s); return e && e.getBoundingClientRect(); };
+        const bad = [];
+
+        /* AFRICA is set to the width of its column. Measured on the glyph run,
+           because the element is a block and its box is the column either way. */
+        const big = q('.wa-h1-big'), col = q('.wa-open-say');
+        if (big && col) {
+          const r = document.createRange();
+          r.selectNodeContents(big);
+          const fill = r.getBoundingClientRect().width / col.getBoundingClientRect().width;
+          if (fill < 0.94 || fill > 1.02) bad.push('headline fills ' + Math.round(fill * 100) + '% of its column');
+        }
+
+        /* The map's overhang past the text frame is a distance, not a share. */
+        const frame = B('.wa-open-stage > .wa-frame'), win = B('.wa-win-frame');
+        const stacked = win && frame && win.left < frame.left + 4;   // phone layout
+        if (frame && win && !stacked) {
+          const over = Math.round(win.right - frame.right);
+          if (over > bleed) bad.push('map overhangs the frame by ' + over);
+        }
+
+        /* The frame is the continent's box. Letterboxing inside it is the
+           bleed being eaten by empty space nobody can see. */
+        const svg = B('.wa-map-svg');
+        if (svg && svg.width && svg.height) {
+          const k = Math.min(svg.width / 1000, svg.height / 1060);
+          const slack = Math.round(Math.max(svg.width - 1000 * k, svg.height - 1060 * k));
+          if (slack > 8) bad.push(slack + 'px of letterbox around the map');
+        }
+
+        /* Nothing in the hero sits on top of anything else in it. This is the
+           one the other passes structurally cannot find: two columns can
+           occupy the same pixels without the document overflowing by one. */
+        const parts = ['.wa-ticks', '.wa-regs', '.wa-lens', '.wa-win-cap[data-on]',
+                       '.wa-win-key', '.wa-win-go', '.wa-acts'];
+        for (let i = 0; i < parts.length; i++) {
+          for (let j = i + 1; j < parts.length; j++) {
+            const a = B(parts[i]), c = B(parts[j]);
+            if (!a || !c || !a.width || !c.width) continue;
+            if (q(parts[j]).closest(parts[i]) || q(parts[i]).closest(parts[j])) continue;
+            const x = Math.min(a.right, c.right) - Math.max(a.left, c.left);
+            const y = Math.min(a.bottom, c.bottom) - Math.max(a.top, c.top);
+            if (x > 1 && y > 1) bad.push(parts[i] + ' overlaps ' + parts[j]
+              + ' by ' + Math.round(x) + 'x' + Math.round(y));
+          }
+        }
+
+        /* The stage does not grow a gap instead of a composition — but only
+           where there is a composition to grow it in. Stacked, the map and its
+           readout are between the calls and the rail, so the distance between
+           those two is content rather than nothing, and reading it as a gap
+           reported 646px at 390 on a layout that has no gap at all. */
+        const acts = B('.wa-acts'), rail = B('.wa-win-rail');
+        if (!stacked && acts && rail && rail.top > acts.bottom) {
+          const gap = Math.round(rail.top - acts.bottom);
+          if (gap > band) bad.push(gap + 'px of nothing between the calls and the rail');
+        }
+
+        /* The readout's stack stays inside the stage it belongs to. */
+        const stage = B('.wa-open-stage'), side = B('.wa-win-side');
+        if (stage && side && side.bottom > stage.bottom + 2) {
+          bad.push('the readout runs ' + Math.round(side.bottom - stage.bottom) + 'px past the stage');
+        }
+        return bad;
+      }, [HERO_BLEED, HERO_BAND]);
+      await page.close();
+      check('the hero composes at ' + w + 'x' + h, !seen.length && !errs.length,
+            errs.length ? 'script threw: ' + errs[0]
+                        : (seen.length ? seen.slice(0, 2).join(' | ') : 'composed'));
+    }
+
     /* ---- pass seven: where the keyboard can go --------------------------- */
     for (const url of PAGES) {
       const page = await browser.newPage({viewport: {width: 1280, height: 900}});
