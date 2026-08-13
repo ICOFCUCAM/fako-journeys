@@ -1625,7 +1625,12 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-end .wa-acts{justify-content:center}
 
 /* ---- footer ---------------------------------------------------------------------- */
-.wa-foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:60px 0 0}
+/* The footer is the last thing on a page whose whole argument is that Africa is
+   many places, and it was the one zone with no ground of its own — the same deep
+   forest as the hero, which made the page end where it began. It keeps the ink
+   and takes a rule at the top, so the page closes rather than loops. */
+.wa-foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:60px 0 0;
+  border-top:3px solid var(--c-accent)}
 .wa-foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1.1fr;gap:34px}
 .wa-foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
 .wa-foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
