@@ -312,7 +312,7 @@
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
 .wa-win-key span[data-tier="ours"]::before{background:var(--c-primary)}
 .wa-win-key span[data-tier="live"]::before{background:var(--c-accent-fill)}
-.wa-win-key span[data-tier="rest"]::before{background:var(--c-sand);
+.wa-win-key span[data-tier="rest"]::before{background:var(--c-land);
   box-shadow:0 0 0 1px var(--c-border)}
 .wa-win-line{min-height:22px;margin-bottom:10px;font-size:14.5px;color:var(--c-accent);max-width:60em}
 
@@ -348,7 +348,28 @@
    non-scaling-stroke takes the stroke out of the user-unit space entirely, so
    it is one CSS pixel at the continent and one CSS pixel at Rwanda, which is
    what a border on a map is. */
-.wa-win-state .wa-map-rest path{fill:var(--c-sand);
+/* THE LAND
+   --------
+   Sand is #E9DDCA and the page is #F6F1E7, which is 1.19:1. That is not a
+   colour difference, it is a rounding error: everywhere a country with no
+   destination in it meets the sea — the Mauritanian coast, the Guinea coast,
+   Liberia, the whole Atlantic edge north of Senegal — the continent simply
+   stopped existing. The destinations read at 3.31:1 and the operators at 14.28,
+   so what the map showed was twenty-two coloured shapes floating in the
+   approximate arrangement of Africa, with Africa itself invisible behind them.
+
+   Fifteen percent burnt sienna into the sand: 1.45:1 against the page, which is
+   enough to draw a silhouette, and warm rather than grey — mixing toward the
+   forest instead gets there too and turns the landmass the colour of a wet
+   pavement.
+
+   The number that had to be protected is the other one. A destination has to
+   stay the loudest thing on the map, and terracotta against this land is
+   2.28:1 — still half again the contrast the coastline has against the page,
+   so the reading order is unchanged: destinations first, then the continent,
+   then the sea. Taking the land darker than this closes that gap. */
+:root{--c-land:color-mix(in srgb, var(--c-sand) 85%, var(--c-accent))}
+.wa-win-state .wa-map-rest path{fill:var(--c-land);
   stroke:var(--c-bg);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .wa-win-state .wa-map-live path,.wa-win-state .wa-map-live circle{
   stroke:var(--c-bg);stroke-width:1;vector-effect:non-scaling-stroke;
