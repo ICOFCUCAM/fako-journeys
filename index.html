@@ -476,7 +476,31 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 /* Each block carries its region's ink as a rule at the top edge, so scrolling
    the grid is the same sweep across the continent the map makes. */
 .wa-dest{border-top:3px solid var(--reg-tone,var(--c-border))}
+/* Filtering used to swap the grid between two states in one frame, which reads
+   as the page having reloaded rather than as the same surface narrowing. The
+   blocks dim for a beat and come back. No transform and no height animation —
+   this runs on twenty-two elements and a grid reflow is the expensive part, so
+   only opacity moves. The global reduced-motion rule removes it entirely. */
+.wa-dest,.wa-dest-band{transition:opacity var(--t-mid) var(--ease)}
+.wa-dests.is-settling .wa-dest,.wa-dests.is-settling .wa-dest-band{opacity:.25;
+  transition-duration:.08s}
 @media(max-width:900px){.wa-dest[data-ours]{grid-column:span 1;padding-right:26px}}
+/* The phone composition. At 320px the twenty-two blocks ran to eight thousand
+   eight hundred pixels — a directory you scroll past rather than read. The
+   summary clamps to three lines and the block tightens; the full write-up is one
+   tap away on the country's own page, which is where a phone reader wants it.
+   Nothing is removed, so the markup a crawler and a screen reader get is the
+   same at every width. */
+@media(max-width:700px){
+  .wa-dest{padding:18px 0 16px;border-right:0}
+  .wa-dest h3,.wa-dest[data-ours] h3{font-size:22px;margin:7px 0 5px}
+  .wa-dest[data-ours] p{font-size:14.5px}
+  .wa-dest>p:not(.wa-dest-near):not(.wa-dest-when){display:-webkit-box;
+    -webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .wa-dest a{margin-top:12px}
+  .wa-dest-band{padding:26px 0 12px}
+  .wa-dest-line{font-size:14.5px}
+}
 .wa-dest b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--c-accent);min-height:17px}
 .wa-dest h3{font-size:25px;margin:9px 0 6px}
@@ -1418,7 +1442,15 @@ window.AF = {
                'July','August','September','October','November','December'];
   var want = null, month = null, region = null;
 
+  var grid = document.querySelector('.wa-dests');
+  var settle = null;
+
   function apply(){
+    if (grid) {
+      grid.classList.add('is-settling');
+      clearTimeout(settle);
+      settle = setTimeout(function () { grid.classList.remove('is-settling'); }, 90);
+    }
     wants.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
     mbtns.forEach(function(b){ b.setAttribute('aria-pressed', String(+b.dataset.month === month)); });
     var shown = 0, live = {};
