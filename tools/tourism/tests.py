@@ -1543,6 +1543,24 @@ def main():
         check("exactly the operators in the dataset are named as ours",
               len(named) == 3, ", ".join(sorted(named)))
 
+        # /tourism is not a country, but it is handed the same chrome as one, so
+        # its stand-in name ("Every country") can end up where a country name
+        # belongs — it printed "We do not run a company in Every country."
+        STANDINS = ("Every country", "Everywhere", "the countries")
+        leaked = []
+        for path in looked:
+            if not path.endswith(".html"):
+                continue
+            body = re.sub(r"<[^>]+>", " ", open(path).read())
+            for stand in STANDINS:
+                for shape in ("in %s.", "company in %s", "%s is written up",
+                              "runs %s,", "to %s.", "about %s."):
+                    if (shape % stand) in body:
+                        leaked.append("%s: %s" % (os.path.relpath(path, ROOT_DIR),
+                                                  shape % stand))
+        check("no page treats the index's stand-in name as a country",
+              not leaked, "; ".join(leaked[:3]))
+
         # -- what a page family pays twice for -------------------------------------
         print("\nwhat a page family pays twice for")
         blocks = {}

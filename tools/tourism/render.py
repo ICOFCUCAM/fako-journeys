@@ -119,24 +119,36 @@ def masthead(country, taxonomy):
                if country.slug else '<a href="/">Afrinkong</a>', tel))
 
 
-def footer(country):
+def footer(country, ours=None):
     op = country.operator
-    who = ('<p>%s runs %s, out of %s, since %s.</p>' %
-           (esc(op.name), esc(country.name), esc(op.base), esc(op.since))) if op else \
-          ('<p>We do not run a company in %s. It is written up here to the same '
-           'twenty-seven categories as the rest, and booked through someone else.</p>'
-           % esc(country.name))
+    if op:
+        who = ('<p>%s runs %s, out of %s, since %s.</p>'
+               % (esc(op.name), esc(country.name), esc(op.base), esc(op.since)))
+    elif not country.slug:
+        # The index is not a country. It used to be handed the same sentence as
+        # one and printed "We do not run a company in Every country."
+        # The paragraph above already says three; saying it again here is how
+        # the first attempt at this read. Name them instead — from the dataset,
+        # not from three strings typed into this file.
+        named = ", ".join('%s in %s' % (esc(c.operator.name), esc(c.name))
+                          for c in (ours or []))
+        who = ('<p>%s. Everywhere else you would be booking through somebody we '
+               'have not named yet.</p>' % named) if named else ''
+    else:
+        who = ('<p>We do not run a company in %s. It is written up here to the '
+               'same twenty-seven categories as the rest, and booked through '
+               'someone else.</p>' % esc(country.name))
     return ('<footer class="fj-foot">\n'
             '  <div class="fj-frame">\n'
             '    <div class="fj-foot-grid">\n'
             '      <div>\n'
             '        <div class="fj-foot-brand">Afrinkong<span>Journeys across Africa</span></div>\n'
-            '        <p>A group of locally run tour operators working across Africa. Every country '
-            'is worked through the same twenty-seven categories, so two of them can be compared on '
-            'the same terms.</p>\n%s'
+            '        <p>Tour operators of our own in three countries, and every country '
+            'here worked through the same twenty-seven categories, so two of them can be '
+            'compared on the same terms.</p>\n%s'
             '      </div>\n'
             '      <div class="fj-foot-col">\n        <b>%s</b>\n'
-            '        <a href="%s">Destination page</a>\n'
+            '        <a href="%s">%s</a>\n'
             '        <a href="/#destinations">All destinations</a>\n'
             '        <a href="/#window">The map</a>\n'
             '      </div>\n'
@@ -149,7 +161,9 @@ def footer(country):
             '    <div class="fj-foot-bar">Afrinkong &middot; %s &middot; Every picture on this page '
             'is credited to the photographer who took it</div>\n'
             '  </div>\n</footer>'
-            % (who, esc(country.name), esc(country.url), esc(country.name)))
+            % (who, esc(country.name), esc(country.url),
+               "Every country" if not country.slug else "Destination page",
+               esc(country.name)))
 
 
 TOURISM_CSS = """
@@ -570,7 +584,7 @@ def render_index(countries, taxonomy, shell):
         "description": "Country guides across Africa, each covering the same %d travel experiences, "
                        "so two countries can be compared on the same terms." % len(taxonomy.enabled),
         "links": shell.links,
-        "country": esc(_ALL.name),
+        "country": "the countries",
         "path": "/tourism/",
         "og": plate_mod.open_graph(
             "Every country &mdash; Afrinkong",
@@ -578,7 +592,7 @@ def render_index(countries, taxonomy, shell):
                 "compared on the same terms." % len(taxonomy.enabled)), "/tourism/"),
         "masthead": masthead(_ALL, taxonomy),
         "body": body,
-        "footer": footer(_ALL),
+        "footer": footer(_ALL, ours=[c for c in countries if c.operator]),
         "script": shell.script.replace("<script>", "").replace("</script>", ""),
     }
 
