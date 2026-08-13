@@ -571,7 +571,25 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-now:hover .wa-now-say b{color:var(--c-accent)}
 @media(pointer:coarse){.wa-now{min-height:44px}}
 @media(max-width:900px){.wa-nows{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.wa-nows{grid-template-columns:1fr}}
+/* The phone composition, which is not the desktop one in one column. Stacked
+   four-by-three cards ran this section to three and a half phone screens — more
+   than the argument is worth, and more than the six countries in it. The picture
+   moves beside the writing at a third of the width, which is how a card of this
+   kind is read on a phone anyway: the image identifies, the words carry it. */
+@media(max-width:560px){
+  .wa-nows{grid-template-columns:1fr}
+  .wa-now{display:grid;grid-template-columns:38% 1fr;align-items:stretch}
+  /* No aspect-ratio here: with height:100% in a grid row, an aspect ratio
+     makes the width track the height, so a tall card grew its picture wider
+     than the 38% column and painted over the first characters of every
+     line beside it. The column decides the width; the row decides the
+     height. */
+  .wa-now-art{aspect-ratio:auto;height:100%;width:100%;min-width:0}
+  .wa-now-say{padding:14px 14px 16px}
+  .wa-now-say b{font-size:17px;margin-top:7px}
+  .wa-now-say p{margin-top:6px;font-size:13.5px;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+}
 
 /* ---- experiences ---------------------------------------------------------------- */
 .wa-exps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:2px solid var(--c-primary)}
@@ -1715,6 +1733,26 @@ window.AF = {
     </div>
   </div>
 </footer>
+<script>
+/* Why the map's small countries are NOT given bigger tap targets.
+   ---------------------------------------------------------------------------
+   Eight of the twenty-two are drawn under twenty-four pixels on a phone —
+   Rwanda is seven square. The obvious fix is a transparent circle at each
+   centroid, which is what the map already does for Mauritius and Seychelles,
+   and I built it. It made things worse: a circle big enough to give Rwanda a
+   forty-four pixel target necessarily covers the countries around it, so
+   Uganda's own taps started landing on Rwanda. Solving one country's target by
+   taking its neighbour's is not solving it.
+
+   The rail of country names directly beneath the map reaches all twenty-two at
+   forty-four pixels each, which is the equivalent control WCAG 2.5.8 allows for
+   exactly this case — a map where the target size is determined by the
+   geography being represented. So the map stays honest about the size of
+   Rwanda, and the rail is how you press it.
+
+   Recorded here rather than left as a silence, so the next person to notice the
+   seven pixels knows it was measured, attempted, and decided. */
+</script>
 <script>
 /* The closing section. It says nothing until there is something to say, and
    what it says is the visitor's own words back to them, with the choices carried
