@@ -1028,6 +1028,12 @@ window.AF = {
 
   function paintRegion(key){
     region = key;
+    /* The grid of countries further down the page is the same information as
+       this map, so choosing a region here narrows it there too — otherwise the
+       homepage is two surfaces that happen to share a dataset. A custom event
+       rather than a direct call: the two scripts stay independent, and either
+       can be absent without breaking the other. */
+    document.dispatchEvent(new CustomEvent('af:region', {detail: {key: key}}));
     var btn = regs.filter(function(r){ return r.dataset.reg === key; })[0] || regs[0];
     regs.forEach(function(r){ r.setAttribute('aria-pressed', String(r === btn)); });
     var slugs = btn.dataset.slugs ? btn.dataset.slugs.split(' ') : null;
@@ -1396,7 +1402,7 @@ window.AF = {
   };
   var MONTH = ['January','February','March','April','May','June',
                'July','August','September','October','November','December'];
-  var want = null, month = null;
+  var want = null, month = null, region = null;
 
   function apply(){
     wants.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
@@ -1405,21 +1411,35 @@ window.AF = {
     [].slice.call(document.querySelectorAll('.wa-dest[data-tags]')).forEach(function(c){
       var byWant = !want || c.dataset.tags.split(' ').indexOf(want) >= 0;
       var byMonth = !month || c.dataset.months.split(',').indexOf(String(month)) >= 0;
-      c.hidden = !(byWant && byMonth);
+      var byRegion = !region || c.dataset.region === region;
+      c.hidden = !(byWant && byMonth && byRegion);
       // The season note is only true in answer to a month, so it only shows then.
       if (month) c.setAttribute('data-when', ''); else c.removeAttribute('data-when');
       if (!c.hidden) { shown++; live[c.dataset.region] = true; }
     });
-    // A region heading with nothing under it is worse than no heading.
-    [].slice.call(document.querySelectorAll('.wa-dest-reg')).forEach(function(h){
+    // A region heading with nothing under it is worse than no heading. The
+    // region's name, line and count are one band now, so the band is what
+    // hides — targeting the heading alone left a sentence and a count with the
+    // title removed from above them.
+    [].slice.call(document.querySelectorAll('.wa-dest-band')).forEach(function(h){
       h.hidden = !live[h.dataset.region];
     });
-    if (!want && !month) { say.textContent = idle; return; }
+    if (!want && !month && !region) { say.textContent = idle; return; }
     var parts = [];
     if (want) parts.push(LINE[want]);
     if (month) parts.push((want ? 'and you can travel in ' : 'If you can travel in ') + MONTH[month - 1]);
-    say.textContent = parts.join(', ') + ' — ' + shown + ' of 22.';
+    if (region) {
+      var band = document.querySelector('.wa-dest-band[data-region="' + region + '"] .wa-dest-reg');
+      if (band) parts.push((parts.length ? 'in ' : 'In ') + band.textContent.trim());
+    }
+    say.textContent = (parts.join(', ') || 'Narrowed') + ' — ' + shown + ' of 22.';
   }
+
+  document.addEventListener('af:region', function (ev) {
+    var key = ev.detail && ev.detail.key;
+    region = (!key || key === 'africa') ? null : key;
+    apply();
+  });
 
   wants.forEach(function(b){
     b.setAttribute('aria-pressed', 'false');
