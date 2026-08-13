@@ -170,9 +170,9 @@
     if (!c.operator) {
       return '<section class="mt-voice mt-voice--none">'
         + '<span class="af-stamp">Local voice</span>'
-        + '<p class="mt-voice-none">' + esc(c.name) + ' is covered by a licensed '
-        + 'company based in the country. We have not published a note from them '
-        + 'here yet, and will not write one on their behalf.</p></section>';
+        + '<p class="mt-voice-none">No operator of ours runs ' + esc(c.name)
+        + '. There is nobody here to quote, and we will not write a note on '
+        + 'behalf of a company we have not named.</p></section>';
     }
     return '<section class="mt-voice"><span class="af-stamp">Local voice</span>'
       + '<blockquote class="mt-voice-said">&ldquo;' + esc(c.operator.line)

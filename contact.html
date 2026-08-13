@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Enquire — Douala & Buea Offices, Seasons and Booking Process | Kamerun</title>
-<meta name="description" content="Write in French or English and get an answer within one working day. Douala handles bookings, Buea runs the mountain — with the season-by-season calendar, the five-step booking process, visa and vaccination notes and the enquiry form."
+<meta name="description" content="Write in French or English and get an answer within one working day. Douala handles bookings, Buea runs the mountain — with the season-by-season calendar, the five-step booking process, visa and vaccination notes and the enquiry form.">
 <link rel="canonical" href="https://afrinkong.com/contact">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Afrinkong">
 <meta property="og:title" content="Enquire — Douala & Buea Offices, Seasons and Booking Process | Kamerun">
 <meta property="og:description" content="Write in French or English and get an answer within one working day. Douala handles bookings, Buea runs the mountain — with the season-by-season calendar, the five-step booking process, visa and vaccination notes and the enquiry form.">
 <meta property="og:url" content="https://afrinkong.com/contact">
-<meta name="twitter:card" content="summary">>
+<meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
@@ -40,14 +40,46 @@ ul,ol{list-style:none}
 .fj-frame{max-width:1240px;margin:0 auto;padding:0 44px}
 .fj-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
 .fj-stamp i{font-style:normal;color:var(--c-muted)}
-.fj-lede{font-size:19px;color:var(--c-muted);max-width:40em}
+.fj-lede{font-size:19px;color:var(--c-muted);max-width:70ch}
 
 /* reveal — never applied to a fixed-window band or to any ancestor of one */
 .fj-rise{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .fj-rise.seen{opacity:1;transform:none}
+/* A control inside a block that has not been revealed yet is invisible and
+   still focusable: tabbing into the enquiry form landed the cursor in a field
+   at zero opacity, and the first characters were typed into nothing. Focus
+   anywhere inside finishes the reveal immediately. */
+.fj-rise:focus-within{opacity:1;transform:none;transition:none}
+
 
 /* ---- masthead ---------------------------------------------------------------- */
 .fj-mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+/* Whose desk this is. Every "Plan a journey" on the site arrives here, and the
+   page above it is one operator's — Kamerun's masthead, Kamerun's nav, a Douala
+   number, and a form that opens a mailto to bonjour@kamerun.cm. A visitor who
+   built a journey through Kenya could not tell. This bar tells them, at the top
+   of the page, before the form. Sober rather than alarming: it is not a warning
+   that anything is broken, it is the name on the door. */
+.fj-from{background:var(--fj-raffia);border-bottom:var(--fj-rule)}
+.fj-from-in{padding:14px 0 16px}
+.fj-from p{font-size:15px;line-height:1.5;max-width:72ch}
+.fj-from-else{max-width:none}
+.fj-from b{font-weight:400;color:var(--c-primary)}
+/* .fj-from p wins on specificity over a bare .fj-from-else, so the mono line
+   was rendering at 15px. Matched here rather than raised with !important. */
+.fj-from p.fj-from-else{margin-top:6px;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--c-muted)}
+.fj-from-else a,.fj-from-warn a{color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.fj-from-else a:hover,.fj-from-warn a:hover{border-bottom-color:var(--c-accent)}
+.fj-from-else a+a{margin-left:14px}
+/* The second sentence only exists when the journey names somewhere this desk
+   does not run, so it is allowed to be the loud one. */
+.fj-from p.fj-from-warn{margin-top:12px;padding-top:12px;border-top:var(--fj-rule);
+  font-size:15.5px}
+.fj-from-warn a{display:inline-block;margin-right:16px}
+@media(max-width:640px){.fj-from-in{padding:12px 0 13px}
+  .fj-from p{font-size:14px}}
 .fj-mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
 .fj-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
 .fj-mark b{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;letter-spacing:.01em;line-height:1;white-space:nowrap}
@@ -104,7 +136,12 @@ ul,ol{list-style:none}
 .fj-zone.basalt .fj-head-no span{color:var(--fj-onbasalt-dim)}
 .fj-head h2{font-size:clamp(30px,4vw,54px);max-width:24ch}
 .fj-head h2 em{font-style:normal;color:var(--c-accent)}
-.fj-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+/* 44em of a 17px face is 748 pixels and 96 average characters a line. The
+   comfortable range for continuous prose is 45-85; past 90 the eye loses
+   the start of the next line on the way back. 72ch measures 78 average
+   characters in this face — ch is the width of a zero, which here is 1.09
+   times the average lowercase letter, so the two are not the same number. */
+.fj-note{margin-top:16px;color:var(--c-muted);max-width:72ch}
 @media(max-width:880px){.fj-zone{padding:66px 0}.fj-head{grid-template-columns:1fr;gap:18px;margin-bottom:38px}.fj-head-no b{font-size:30px}}
 
 /* ---- transect (the coast-to-Sahel gradient bar) -------------------------------- */
@@ -302,7 +339,9 @@ ul,ol{list-style:none}
 .fj-log-row{display:grid;grid-template-columns:110px 1fr;gap:32px;padding:22px 0;border-bottom:var(--fj-rule)}
 .fj-log-row b{font-family:var(--fj-display);font-size:22px;font-weight:700;color:var(--c-accent)}
 .fj-log-row h3{font-size:19px;margin-bottom:6px}
-.fj-log-row p{color:var(--c-muted);font-size:15px;max-width:54em}
+/* 54em of a 15px face is 810 pixels and 118 average characters a line — the
+   longest measure left on the site after the notes were capped. */
+.fj-log-row p{color:var(--c-muted);font-size:15px;max-width:72ch}
 @media(max-width:640px){.fj-log-row{grid-template-columns:1fr;gap:6px}}
 
 .fj-prose{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
@@ -334,7 +373,15 @@ ul,ol{list-style:none}
 .fj-cell label{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);margin-bottom:7px}
 .fj-cell input,.fj-cell select,.fj-cell textarea{width:100%;font-family:var(--fj-text);font-size:16px;color:var(--c-ink);background:var(--c-bg);border:var(--fj-rule);padding:11px 13px;transition:border-color .2s}
 .fj-cell textarea{resize:vertical}
-.fj-cell input:focus,.fj-cell select:focus,.fj-cell textarea:focus{outline:none;border-color:var(--c-accent)}
+/* Keyboard focus keeps the design system's ring; a mouse click does not.
+   The colour-only version measured 2.57:1 between the resting border and the
+   focused one on the two search fields, under the 3:1 WCAG 2.2 asks for a focus
+   indicator, and it changed no area at all. :focus-visible is what tells the
+   two apart, and the ring it restores is the same one every other control on
+   the site uses. */
+.fj-cell input:focus:not(:focus-visible),.fj-cell select:focus:not(:focus-visible),
+.fj-cell textarea:focus:not(:focus-visible){outline:none}
+.fj-cell input:focus,.fj-cell select:focus,.fj-cell textarea:focus{border-color:var(--c-accent)}
 .fj-send{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);border:0;padding:14px 28px;cursor:pointer;transition:background .2s}
 .fj-send:hover{background:var(--c-accent)}
 .fj-fine{margin-top:14px;font-size:13px;color:var(--c-muted)}
@@ -361,7 +408,22 @@ ul,ol{list-style:none}
   *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important;animation-iteration-count:1 !important}
   .fj-rise{opacity:1;transform:none}
 }
+/* WCAG 2.5.8 asks for 24x24 CSS pixels and these are 13, 17 and 23 tall — mono
+   at 9 to 11px with a rule under them and no padding. Only where a finger is
+   the pointer; on a mouse they keep the setting they were drawn at. */
+@media(pointer:coarse){
+  .fj-mark{padding:5px 0}
+  .fj-slip-more,.fj-way a{display:inline-block;padding-top:6px;padding-bottom:8px}
+  .fj-foot-bar a{padding-block:6px;display:inline-block}
+}
 </style>
+<noscript><style>
+/* The reveal is a script effect: .fj-rise starts at opacity 0 and an
+   IntersectionObserver adds .seen. With no script there is no observer
+   and the page stays at zero — twenty-five blocks of it on a tourism
+   page, sixteen on /contact. Motion is an enhancement; the words are
+   not. */
+.fj-rise{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to the page</a>
@@ -379,6 +441,13 @@ ul,ol{list-style:none}
     <a class="btn" href="#quote">Plan a circuit</a>
   </div>
 </header>
+<!-- gen:handoff -->
+<div class="fj-from" data-af-handoff>
+  <div class="fj-frame fj-from-in">
+    <p><b>These are Kamerun&rsquo;s pages.</b> Kamerun is the Afrinkong operator for Cameroon, based in Buea and Douala &mdash; the circuits, rates and people described here are theirs, and any enquiry sent from this page is read by them.</p>
+    <p class="fj-from-else">Somewhere else in Africa? <a href="https://namib-skyline.vercel.app">Namibia &mdash; Namib Skyline</a><a href="https://pearl-trails-uganda.vercel.app">Uganda &mdash; Pearl Trails Uganda</a> or start from <a href="/atlas">the atlas</a>.</p>
+  </div>
+</div><!-- /gen:handoff -->
 <main id="main">
 <!-- opening -->
 <section class="fj-open">
@@ -525,7 +594,7 @@ ul,ol{list-style:none}
         <p>Dry in both halves. Trekking, coast, highlands and north all work. Our busiest period; the mountain huts and the February Race of Hope week go first.</p>
       </div>
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="elephants and giraffe at a dry-season waterhole in Waza National Park, Cameroon" loading="lazy" decoding="async" style="object-position:48% 60%" data-illustration="/images/savanna-waterhole.svg" data-illustration-alt="Animals gathered at a shrinking dry-season waterhole" data-provider="unsplash" data-locked="true">
+        <img src="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Safari in Cameroon" loading="lazy" decoding="async" style="object-position:48% 60%" data-illustration="/images/savanna-waterhole.svg" data-illustration-alt="Animals gathered at a shrinking dry-season waterhole" data-provider="unsplash" data-locked="true">
         <b>Mar &ndash; May</b><span>North peaks, coast turns</span>
         <p>The best weeks at Waza and B&eacute;nou&eacute;, and hot with it. The south-west begins to break by late April and the mountain closes toward the end of May.</p>
       </div>
@@ -695,6 +764,9 @@ ul,ol{list-style:none}
     <div class="fj-foot-bar"><a href="/" style="border-bottom:1px solid var(--c-accent)">Part of Afrinkong</a> &middot; &copy; 2026 &middot; MINTOUL licence 0412/AG/19 &middot; Guides certified by the Mount Cameroon Ecotourism Organisation &middot; <em>Departures every week, all year</em></div>
   </div>
 </footer>
+<!-- gen:reach -->
+<script type="application/json" id="fj-reach">{"home":"cameroon","ours":{"cameroon":{"name":"Cameroon","op":"Kamerun","url":"/cameroon"},"namibia":{"name":"Namibia","op":"Namib Skyline","url":"https://namib-skyline.vercel.app"},"uganda":{"name":"Uganda","op":"Pearl Trails Uganda","url":"https://pearl-trails-uganda.vercel.app"}},"rest":{"botswana":"Botswana","cote-divoire":"Côte d'Ivoire","egypt":"Egypt","ethiopia":"Ethiopia","ghana":"Ghana","kenya":"Kenya","madagascar":"Madagascar","mauritius":"Mauritius","morocco":"Morocco","mozambique":"Mozambique","nigeria":"Nigeria","rwanda":"Rwanda","senegal":"Senegal","seychelles":"Seychelles","south-africa":"South Africa","tanzania":"Tanzania","tunisia":"Tunisia","zambia":"Zambia","zimbabwe":"Zimbabwe"}}</script><!-- /gen:reach -->
+<script src="/scripts/enquiry.js" defer></script>
 <script src="/scripts/story-search.js" defer></script>
 <script src="/scripts/explore.js" defer></script>
 </body>

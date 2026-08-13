@@ -141,12 +141,14 @@ def operator_block(country):
     op = country.operator
     if not op:
         return ('<div class="ct-op ct-op--none"><span>Local operator</span>'
-                '<b>A licensed company based in %s</b>'
-                '<p>Every destination here is run by a company in the country itself, working '
-                'through the same twenty-seven categories, so two countries can be compared on '
-                'the same terms. Tell us the month and we will put you with the right one.</p>'
-                '<a class="af-go" href="/contact">Start a journey &rarr;</a></div>'
-                % esc(country.name))
+                '<b>None of ours in %s</b>'
+                '<p>We run companies in three countries and %s is not one of them. '
+                'It is written up here through the same twenty-seven categories as '
+                'the rest, so it can be compared with them on the same terms &mdash; '
+                'you would just be booking it through somebody else. Tell us the '
+                'month and we will say who to ask.</p>'
+                '<a class="af-go" href="/contact">Ask anyway &rarr;</a></div>'
+                % (esc(country.name), esc(country.name)))
     return ('<div class="ct-op"><span>Operated locally by</span><b>%s</b>'
             '<p class="ct-op-base">%s &middot; since %s</p><p>%s</p>'
             '<a class="af-go" href="%s">Enter %s &rarr;</a></div>'
@@ -303,31 +305,7 @@ def build(country, taxonomy, countries=()):
 # generated page would be a second, poorer front door to each. They keep their
 # datasets, because the gateway, the map and their neighbours' region strips all
 # read a country from the same place whether or not it has a page here.
-def write_all(countries, taxonomy, skip=("cameroon", "uganda", "namibia"), out_dir=None, log=print):
-    out_dir = out_dir or ROOT
-    written = []
-    for c in countries:
-        if c.slug in skip or not c.published:
-            continue
-        path = os.path.join(out_dir, "%s.html" % c.slug)
-        with open(path, "w") as f:
-            f.write(build(c, taxonomy, countries))
-        written.append(path)
-        log("  wrote %s" % os.path.relpath(path, ROOT))
-    return written
-
-
-TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>%(title)s</title>
-<meta name="description" content="%(description)s">
-%(og)s
-<link rel="stylesheet" href="/styles/afrinkong.css">
-<style>
-/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
+COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
    What follows is this page shape only. */
 .mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
 .mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
@@ -340,8 +318,29 @@ TEMPLATE = """<!DOCTYPE html>
 .routes a:hover{color:var(--c-primary);border-color:var(--c-accent)}
 .btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
 .btn:hover{background:var(--c-accent)}
-@media(max-width:1010px){.routes{display:none}}
-@media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}.btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
+/* The masthead row, measured rather than guessed. The 1010px breakpoint was set
+   before the Explore key existed; with it there the row wanted 1,271px on the
+   longest country name and pushed "Plan a journey" 179px off a 1011 screen and
+   126px off a 1024 one, on nineteen pages.
+
+   Two in-page anchors — Highlights, Why go — came out of the nav as well: a
+   masthead that scrolls with you is for leaving the page, and the page's own
+   sections are a scroll away. Four routes left, all of them somewhere else.
+
+   Below 1180 the routes go. Below 480 the mark's tagline goes with them: one
+   line of nowrap mono, and it was the whole of the 320px overflow. */
+@media(max-width:1180px){.routes{display:none}}
+@media(max-width:560px){.frame{padding:0 20px}.mark b{font-size:20px}
+  .mast-in{gap:12px}
+  .btn{padding:10px 14px;font-size:10px;letter-spacing:.12em}}
+@media(max-width:480px){.mark span{display:none}
+  .mark-up{font-size:8px;letter-spacing:.2em}}
+/* "Madagascar" and "South Africa" set at 20px are 147 and 150 pixels of nowrap
+   on their own; with the Explore key and the call beside them the row wanted
+   349 on a 320 screen. The country name is the one thing on this masthead that
+   cannot be shortened, so everything around it gives way instead. */
+@media(max-width:400px){.frame{padding:0 16px}.mast-in{gap:10px}
+  .mark b{font-size:17px}}
 
 .open{padding:calc(var(--sp-6) + 8px) 0 var(--sp-6);border-bottom:var(--fj-rule)}
 .open-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
@@ -359,7 +358,7 @@ TEMPLATE = """<!DOCTYPE html>
    whatever its proportions — Chad and Rwanda should feel like the same kind of
    object on the page. */
 .ct-window{height:min(58vh,520px)}
-.ct-window svg{height:100%%}
+.ct-window svg{height:100%}
 
 /* This country's year. Twelve cells beats a season paragraph: a visitor answers
    "can I go when I am free" in about a second. */
@@ -385,7 +384,10 @@ TEMPLATE = """<!DOCTYPE html>
   font-weight:700;text-transform:uppercase;line-height:1.04;margin-top:8px}
 .ct-op-base{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--c-accent);margin-top:8px}
-.ct-op p{color:var(--c-muted);margin-top:12px}
+/* The operator block's own width is 44em of a 17px face — 748 pixels, 96
+   average characters. Capped where the paragraph is, not where the block is,
+   so the heading above it keeps the block's full width. */
+.ct-op p{color:var(--c-muted);margin-top:12px;max-width:72ch}
 .ct-op .af-go{margin-top:16px}
 .ct-op--none b{font-size:clamp(20px,2.2vw,27px)}
 @media(max-width:640px){.ct-cal-row{grid-template-columns:repeat(6,1fr)}
@@ -407,13 +409,19 @@ TEMPLATE = """<!DOCTYPE html>
 @media(max-width:900px){.open-grid{grid-template-columns:1fr;gap:34px}
   .ct-window{height:min(46vh,360px);max-width:420px}
   .ct-near-row{gap:0 22px}}
+/* A grid item will not shrink below the widest unbreakable thing inside it, and
+   here that is the country's name set at the clamp's 46px floor: "MADAGASCAR"
+   is 328 pixels on its own, so the whole opening column stayed 328 wide inside
+   a 320 screen and took the stamp, the tagline, the lede and the calls out with
+   it. The floor comes down before the phone does. */
+@media(max-width:420px){.open h1{font-size:clamp(30px,10vw,46px)}}
 
 .highs{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 32px}
 .ct-high b{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
 .ct-high h3{font-size:22px;margin:8px 0 8px}
 .ct-high p{font-size:15px;color:var(--c-muted)}
 .ct-high .ct-shot{display:block;margin-bottom:16px}
-.ct-high .ct-shot img{width:100%%;aspect-ratio:4/3;object-fit:cover}
+.ct-high .ct-shot img{width:100%;aspect-ratio:4/3;object-fit:cover}
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
@@ -464,20 +472,69 @@ TEMPLATE = """<!DOCTYPE html>
 .foot-where [aria-current]{color:var(--c-accent)}
 .foot-next{margin-top:18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
 .foot-next>span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--fj-onbasalt-dim);width:100%%}
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);width:100%}
 .foot-next a{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
   color:var(--fj-onbasalt-dim);border-bottom:1px solid transparent}
 .foot-next a[data-border]{color:var(--c-bg)}
 .foot-next a:hover{border-color:var(--c-accent)}
 .foot-next i{font-style:normal;font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
   margin-left:7px;color:var(--fj-onbasalt-dim)}
-.foot-next p{width:100%%;margin-top:6px;font-size:12.5px;line-height:1.6;
+.foot-next p{width:100%;margin-top:6px;font-size:12.5px;line-height:1.6;
   color:var(--fj-onbasalt-dim)}
 .foot-bar{margin-top:40px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
 .foot-bar a{border-bottom:1px solid var(--c-accent)}
 @media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
-</style>
+@media(pointer:coarse){
+  .mark{padding:5px 0}
+  .foot-bar a{padding-block:6px;display:inline-block}
+}
+
+"""
+
+
+STYLE_NOTE = """/* The country landing pages — /botswana, /kenya, /ghana and sixteen more.
+ * ---------------------------------------------------------------------------
+ * GENERATED. Do not edit: `python3 tools/tourism/build.py homes` overwrites it
+ * from TEMPLATE in tools/tourism/home.py. Edit that.
+ *
+ * Nineteen pages carried this same 10 KB block inline, which is 197 KB of CSS
+ * describing one page shape. Tokens, reset and primitives are not here; they
+ * are in /styles/afrinkong.css, which these pages already link.
+ */
+
+"""
+
+STYLESHEET = os.path.join(ROOT, "styles", "country.css")
+
+
+def write_all(countries, taxonomy, skip=("cameroon", "uganda", "namibia"), out_dir=None, log=print):
+    out_dir = out_dir or ROOT
+    os.makedirs(os.path.dirname(STYLESHEET), exist_ok=True)
+    with open(STYLESHEET, "w") as f:
+        f.write(STYLE_NOTE + COUNTRY_CSS.strip() + "\n")
+    written = []
+    for c in countries:
+        if c.slug in skip or not c.published:
+            continue
+        path = os.path.join(out_dir, "%s.html" % c.slug)
+        with open(path, "w") as f:
+            f.write(build(c, taxonomy, countries))
+        written.append(path)
+        log("  wrote %s" % os.path.relpath(path, ROOT))
+    return written
+
+
+TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%(title)s</title>
+<meta name="description" content="%(description)s">
+%(og)s
+<link rel="stylesheet" href="/styles/afrinkong.css">
+<link rel="stylesheet" href="/styles/country.css">
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to content</a>
@@ -488,8 +545,6 @@ TEMPLATE = """<!DOCTYPE html>
       <a href="/atlas#/%(slug)s">The Atlas</a>
       <a href="/journey">Build a journey</a>
       <a href="/meet#/%(slug)s">Meet %(name)s</a>
-      <a href="#highlights">Highlights</a>
-      <a href="#why">Why go</a>
       <a href="/tourism/%(slug)s">All %(count)d</a>
     </nav>
     <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>

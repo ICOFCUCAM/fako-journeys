@@ -136,7 +136,10 @@ def chapter_body(place, country):
     thing on this site that can be indexed, sent, or read with JavaScript off.
     """
     return ('<div class="st-say"><h3><a href="%s">%s</a></h3><p>%s</p></div>'
-            % (esc(place.get("url") or "/places/%s" % country.slug),
+            # The fallback is for a place whose page was not written; /places/<slug>
+            # is a folder with no index and would 404, so it falls back to that
+            # country's section on the places index instead.
+            % (esc(place.get("url") or "/places#%s" % country.slug),
                esc(place["title"]), esc(place["text"])))
 
 
@@ -449,8 +452,8 @@ def trust_block(country, pack, ops, arcs_used):
                 'run a journey here. Nothing on this page is a quotation from them '
                 'or written by them.' % (esc(op.name), esc(op.base), esc(op.since)))
                if op else
-               'A licensed company registered in %s. Nothing on this page is '
-               'written by an operator.' % esc(country.name),
+               'No operator of ours runs %s. Nothing on this page is written by '
+               'an operator either way.' % esc(country.name),
                arcs_used, total))
 
 

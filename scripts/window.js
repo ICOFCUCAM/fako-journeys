@@ -44,8 +44,14 @@
       : '';
     return '<svg class="' + esc(opts.classes || 'af-window-svg') + '" viewBox="0 0 '
       + shape.w + ' ' + shape.h + '" role="img" aria-label="' + esc(label) + '">'
-      + '<defs><clipPath id="' + esc(ident) + '"><path d="' + shape.d + '"/></clipPath></defs>'
-      + '<path class="af-window-fill" d="' + shape.d + '"/>' + art + '</svg>';
+      /* The outline goes in once and is referenced twice — same as the build's
+         copy in tools/tourism/plate.py, and the pair is checked against each
+         other by the suite. A country outline is about 1.3 KB of coordinates
+         and writing it out for the clip and again for the fill doubled that
+         everywhere a window is drawn. */
+      + '<defs><path id="' + esc(ident) + '-d" d="' + shape.d + '"/>'
+      + '<clipPath id="' + esc(ident) + '"><use href="#' + esc(ident) + '-d"/></clipPath></defs>'
+      + '<use class="af-window-fill" href="#' + esc(ident) + '-d"/>' + art + '</svg>';
   }
 
   /* shapes.json, fetched at most once per page however many callers ask. Twenty-

@@ -430,9 +430,12 @@
 
   function who(c) {
     if (!c.operator) {
-      return '<div class="at-who"><span>Who takes you</span><b>A licensed local company</b>'
-        + '<p>' + esc(c.name) + ' is covered by an operator based in the country itself, '
-        + 'working through the same twenty-seven categories as everywhere else here.</p></div>';
+      /* "A licensed local company" named a company that does not exist. Three
+         operators are in the dataset and there have only ever been three. */
+      return '<div class="at-who at-who--none"><span>Who takes you</span><b>Not us</b>'
+        + '<p>We do not run a company in ' + esc(c.name) + '. It is written up here '
+        + 'through the same twenty-seven categories as everywhere else, and booked '
+        + 'through somebody else.</p></div>';
     }
     var op = c.operator;
     return '<div class="at-who"><span>Who takes you</span><b>' + esc(op.name) + '</b>'

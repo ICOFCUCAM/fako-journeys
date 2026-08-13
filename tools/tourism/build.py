@@ -44,7 +44,7 @@ def dataset(country=None):
     """Every country, with resolved images bound on from the cache."""
     tax = load_taxonomy()
     cache = cache_mod.load()
-    countries = attach_cache(load_countries(), cache)
+    countries = attach_cache(load_countries(), cache, tax)
     if country:
         countries = [c for c in countries if c.slug == country]
         if not countries:
@@ -348,6 +348,13 @@ def cmd_gateway(args):
     return 0
 
 
+def cmd_enquiry(args):
+    from tourism import enquiry
+    _tax, countries, _cache = dataset()
+    enquiry.run(countries)
+    return 0
+
+
 def cmd_report(args):
     tax, countries, cache = dataset()
     rows, findings = validate.report(countries, tax)
@@ -574,6 +581,8 @@ def cmd_all(args):
     print()
     cmd_gateway(args)
     print()
+    cmd_enquiry(args)
+    print()
     cmd_atlas(args)
     print()
     cmd_journey(args)
@@ -600,7 +609,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
-    "gateway": cmd_gateway, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,

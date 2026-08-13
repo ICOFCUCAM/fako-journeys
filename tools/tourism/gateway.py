@@ -28,7 +28,8 @@ import os
 import re
 
 from . import plate
-from .model import ROOT, load_picks, load_regions, load_views
+from .model import (CATEGORY_FILE, ROOT, load_picks, load_regions, load_views,
+                    region_of)
 
 LINKS = os.path.join(ROOT, "data", "links.json")
 
@@ -61,14 +62,19 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "regions", "months", "scale", "destinations",
-           "operators", "picks", "stories", "footer")
+MARKERS = ("window", "captions", "ticks", "regions", "claim", "months", "scale",
+           "destinations", "operators", "picks", "plannote", "plansteps",
+           "nownote", "now", "stories", "footer")
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
 VIEW_PAD = 0.34
 
 MONTHS = ("January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December")
+
+# The one category that is a country's opening picture rather than a place, and
+# so is the one entry in twenty-seven that never gets a page of its own.
+HERO = "hero"
 
 
 def esc(v):
@@ -99,7 +105,133 @@ def shapes():
 
 def operator_line(c):
     return ("Operated locally by %s" % esc(c.operator.name)) if c.operator \
-        else "Run with a licensed local operator"
+        else "Written up here, run by somebody else"
+
+
+# This page spells its numbers. A figure in the middle of a display line reads
+# as a statistic; a word reads as a sentence, and these are sentences. Above
+# ninety-nine it goes back to figures, because "five hundred and ninety-four"
+# is a different kind of sentence and not this one.
+ONES = ("zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+        "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+        "sixteen", "seventeen", "eighteen", "nineteen")
+TENS = ("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+        "eighty", "ninety")
+
+
+def _spell(n):
+    """Small numbers read as words in this typeface; the rest stay figures."""
+    n = int(n)
+    if n < 20:
+        word = ONES[n] if 0 <= n < len(ONES) else str(n)
+    elif n < 100:
+        word = TENS[n // 10] + ("-" + ONES[n % 10] if n % 10 else "")
+    else:
+        return "{:,}".format(n)
+    return word[0].upper() + word[1:]
+
+
+def block_claim(countries):
+    """What this site is, in three lines, counted from the files.
+
+    It used to open "Fifty-four countries" — the number of countries in Africa,
+    printed where a reader takes it as the number of countries here. Twenty-two
+    are written up. The map caption two screens above had it right all along
+    ("Fifty-four countries. Twenty-two of them are destinations here"), which is
+    how the overclaim survived: the honest sentence existed, just not in the
+    place that says it loudest.
+
+    Every number below is len() of something on disk, so the sentence cannot
+    drift from the dataset the way a hand-typed one did.
+    """
+    n = len(countries)
+    regions = len(REGION_GROUPS)
+    cats = len(read_json(CATEGORY_FILE, {}).get("categories", []))
+    # Not len(entries). Twenty-seven of the twenty-seven categories are written,
+    # but one of them is `hero` — the country's own opening picture, which has no
+    # page of its own. /places counts 572 for exactly that reason, and a homepage
+    # saying 594 while /places says 572 is two numbers for one thing.
+    places = sum(1 for c in countries for e in c.entries
+                 if getattr(e, "category", None) != HERO)
+    return ('      <p class="wa-claim">%s countries. %s regions.<br>'
+            '%s ways to experience each of them.<br>'
+            '<em>%s places, each written up on its own.</em></p>'
+            % (_spell(n), _spell(regions), _spell(cats), _spell(places)))
+
+
+def block_plan(countries):
+    """What actually happens after an enquiry, rather than what sells well.
+
+    This section made four claims and three of them were false:
+
+      "The person who answers your enquiry is in the country you are asking
+      about"  —  every enquiry on this site opens a mailto to one address, in
+      Douala. Ask about Kenya and a Cameroonian operator reads it. 038 put a bar
+      on /contact saying exactly that; this paragraph, two screens above the
+      button, said the opposite.
+
+      "Meet the local operator responsible for your destination"  —  there are
+      three operators for twenty-two countries.
+
+      "Licensed, local, and working in the language you booked in"  —  nothing in
+      this dataset records a licence, and nothing records a language.
+
+    The fourth, "Return home with more than photographs", is not false because
+    it does not say anything. It is gone with the rest.
+
+    What replaces them is the same shape — numbered steps, two of them links —
+    counted from operators.json, so the promise cannot outgrow the company.
+    """
+    ours = [c for c in countries if c.operator]
+    host = ([c for c in ours if c.operator.url.startswith("/")] or ours)[0]
+    rest = len(countries) - len(ours)
+    names = _and_list([c.name for c in ours])
+
+    note = ('We run tour operators in %s. The other %s are written up here to '
+            'the same twenty-seven categories, and booked through somebody else '
+            '&mdash; which we say before you write, not after.'
+            % (names, _spell(rest).lower()))
+
+    steps = [
+        ('/journey', 'Discover',
+         'Four questions, or a sentence in your own words, and the atlas opens '
+         'somewhere rather than everywhere.', 'Start with a question'),
+        ('/compare', 'Compare',
+         'Any two of the %s, through the same %s categories in the same order, '
+         'so the difference is the countries and not their marketing.'
+         % (_spell(len(countries)).lower(),
+            _spell(len(read_json(CATEGORY_FILE, {}).get("categories", []))).lower()),
+         'Put two side by side'),
+        ('/contact', 'Ask',
+         'Enquiries reach %s in %s. For %s they are the operator; for the other '
+         '%s they will tell you who is.'
+         % (esc(host.operator.name), esc(host.operator.base), esc(host.name),
+            _spell(rest).lower()),
+         'Write to them'),
+    ]
+    out = []
+    for i, (url, title, text, go) in enumerate(steps, 1):
+        out.append('      <a class="wa-step wa-step--go" href="%s"><i>%02d</i>'
+                   '<b>%s</b><p>%s</p><span class="wa-step-go">%s &rarr;</span></a>'
+                   % (esc(url), i, esc(title), text, esc(go)))
+    # The last step is the only one that is not a link, because it is the only
+    # one that happens away from this website.
+    out.append('      <div class="wa-step"><i>%02d</i><b>Travel</b><p>Where the '
+               'operator is ours, the guide on the day works for the company you '
+               'booked: %s. Where it is not, we are not going to describe a day '
+               'run by people we have not named.</p></div>'
+               % (len(steps) + 1,
+                  _and_list(['%s in %s' % (esc(c.operator.name), esc(c.name))
+                             for c in ours])))
+    return note, "\n".join(out)
+
+
+def block_plannote(countries):
+    return '        <p class="wa-note">%s</p>' % block_plan(countries)[0]
+
+
+def block_plansteps(countries):
+    return block_plan(countries)[1]
 
 
 def block_operators(countries):
@@ -120,12 +252,22 @@ def block_operators(countries):
             '<p>%s</p><span class="wa-op-go">Enter %s &rarr;</span></a>'
             % (esc(op.url), esc(c.name), esc(op.name), esc(op.base), esc(op.since),
                esc(op.line), esc(op.name)))
+    # The fourth card used to read "A licensed operator in each". There are three
+    # operators in tourism/operators.json and there have only ever been three, so
+    # that line was asserting nineteen companies that do not exist anywhere in
+    # this project. What is true about those nineteen is that they are written up
+    # on the same twenty-seven categories as the three — which is the more useful
+    # thing to say anyway, and it now goes somewhere instead of sitting there.
+    rest = len(countries) - len(ours)
     cards.append(
-        '      <div class="wa-op wa-op--rest"><span class="wa-op-where">Everywhere else</span>'
-        '<b>%d more countries</b><span class="wa-op-base">A licensed operator in each</span>'
-        '<p>Every other destination is covered by a company based in it, working through the '
-        'same twenty-seven categories, so two countries can be compared on the same terms.</p></div>'
-        % (len(countries) - len(ours)))
+        '      <a class="wa-op wa-op--rest" href="/places"><span class="wa-op-where">Everywhere else</span>'
+        '<b>%s more countries</b><span class="wa-op-base">Written up, no operator of ours yet</span>'
+        '<p>We run companies in %s. The other %s are written up to the same '
+        'twenty-seven categories by the same hands, so any two countries here can be '
+        'compared on the same terms &mdash; you are just booking them through someone else.</p>'
+        '<span class="wa-op-go">Every place, all %s countries &rarr;</span></a>'
+        % (_spell(rest), _and_list([c.name for c in ours]),
+           _spell(rest).lower(), _spell(len(countries)).lower()))
     return "\n".join(cards)
 
 
@@ -304,6 +446,11 @@ def block_scale():
             '      <div class="wa-scale-side">\n'
             '        <div class="wa-scale-btns" role="group" aria-label="Lay a country inside Africa">%s</div>\n'
             '        <p class="wa-scale-sum"><b>%s</b><span>million km&sup2;</span></p>\n'
+            # This section argues the continent is bigger than the map people
+            # carry in their heads and then stopped. The atlas is that argument
+            # continuing — same equal-area projection, and you can move in it.
+            '        <p class="wa-scale-go"><a class="af-go" href="/atlas">'
+            'See it at that size in the atlas &rarr;</a></p>\n'
             '        <p class="wa-scale-note">All four together come to %.1f million. Africa is %s. '
             'These are drawn with the same equal-area projection as the map above, each centred on '
             'itself &mdash; so this is geometry, not an illustration of a fact.</p>\n'
@@ -397,6 +544,101 @@ def block_destinations(countries):
     return "\n".join(rows)
 
 
+NOW_ARCS = ("the-table", "made-by-hand", "the-city-now")
+NOW_CARDS = 6
+
+
+def now_rows(countries):
+    """Which contemporary chapters the strip shows, in order.
+
+    Pulled out of block_now so the sentence above the strip and the strip itself
+    count the same thing. They did not: the section was cut from nine cards to
+    six and the paragraph beside it went on saying "Nine of them here" for two
+    commits, because the cards are generated and the paragraph was typed.
+    """
+    data = read_json(os.path.join(ROOT, "data", "stories.json"))
+    rows = [r for r in (data.get("stories") or []) if r.get("now")]
+    live = {c.slug: c for c in countries}
+    picked, taken = [], set()
+
+    def take(r):
+        picked.append(r)
+        taken.add(r["country"])
+
+    # One card per country, without exception. Letting the photographed ones in
+    # first put Cameroon and Uganda on this strip three times each — the two
+    # countries whose over-promotion is the reason the section they replaced was
+    # removed. So a country with a photograph gets that arc, and one card.
+    for r in rows:
+        if r.get("image") and r["country"] in live and r["country"] not in taken:
+            take(r)
+    i = 0
+    while len(picked) < NOW_CARDS and i < 200:
+        arc = NOW_ARCS[i % len(NOW_ARCS)]
+        i += 1
+        for r in rows:
+            if r["arc"] == arc and r["country"] in live and r["country"] not in taken:
+                take(r)
+                break
+    return picked[:NOW_CARDS]
+
+
+def block_nownote(countries):
+    """The sentence beside the strip, counting what the strip actually holds."""
+    data = read_json(os.path.join(ROOT, "data", "stories.json"))
+    total = len([r for r in (data.get("stories") or []) if r.get("now")])
+    shown = len(now_rows(countries))
+    if not shown:
+        return ('        <p class="wa-note">No contemporary chapters have been built '
+                'yet.</p>')
+    return ('        <p class="wa-note">%s chapters across the %s countries are about '
+            'what is cooked, made and built this decade rather than what is behind '
+            'glass. %s of them here. Not a feed and not an events calendar &mdash; '
+            'this site holds no dates and will not invent any; these are evergreen, '
+            'and they are true for longer than a week.</p>'
+            % (_spell(total), _spell(len(countries)).lower(), _spell(shown)))
+
+
+def block_now(countries):
+    """Africa now — the contemporary layer, and the argument against a museum.
+
+    Three of the eleven story arcs are marked `now` in arcs.json: the table,
+    made by hand, and the city now. Sixty-six chapters across the twenty-two,
+    all of them about what a country cooks, makes and builds this decade rather
+    than what is behind glass in it. None of that was on the homepage.
+
+    Evergreen and saying so. There is no feed behind this and no dated event in
+    the dataset, so it does not pretend to be current — it is the part of the
+    writing that is about now, which is a different and true claim.
+
+    Six of them, across six countries, with the three arcs alternating. Six
+    rather than nine because this replaced a section of 984 pixels and nine cards
+    made it 1693 — the argument does not get better for being three rows tall,
+    and this page has grown in every wave already.
+    """
+    picked = now_rows(countries)
+    if not picked:
+        return '      <p class="wa-note">No contemporary chapters built yet.</p>'
+    live = {c.slug: c for c in countries}
+    regions = load_regions()
+
+    out = []
+    for r in picked:
+        c = live[r["country"]]
+        key, _reg = region_of(c, regions)
+        art = ('<img src="%s" alt="%s" width="800" height="600" loading="lazy" '
+               'decoding="async">' % (esc(r["image"]), esc(r["text"]))) if r.get("image") else (
+              '<span class="wa-now-plate" aria-hidden="true"></span>')
+        out.append(
+            '      <a class="wa-now%s" href="%s" style="--reg-tone:%s">'
+            '<span class="wa-now-art">%s</span>'
+            '<span class="wa-now-say"><i>%s &middot; %s</i><b>%s</b><p>%s</p></span></a>'
+            % (" has-shot" if r.get("image") else "", esc(r["url"]),
+               esc((regions.get(key).tone if regions.get(key) else "")), art,
+               esc(r["countryName"]), esc(r["arcTitle"]), esc(r["title"]), esc(r["text"])))
+    return "\n".join(out)
+
+
 def block_stories(countries):
     """The reading room, as it actually is.
 
@@ -477,11 +719,16 @@ def render(countries):
         "window": block_window(with_shape, shape_by_slug),
         "captions": block_captions(with_shape),
         "ticks": block_ticks(with_shape, views),
+        "claim": block_claim(seq),
         "months": block_months(seq),
         "destinations": block_destinations(seq),
         "scale": block_scale(),
         "operators": block_operators(seq),
         "picks": block_picks(seq),
+        "plannote": block_plannote(seq),
+        "plansteps": block_plansteps(seq),
+        "nownote": block_nownote(seq),
+        "now": block_now(seq),
         "stories": block_stories(seq),
         "footer": block_footer(seq),
     }

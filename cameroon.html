@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kamerun — Guided Circuits and Experiences Across Cameroon | Coast, Volcano, Rainforest, Sahel</title>
-<meta name="description" content="Kamerun runs guided circuits across Cameroon: the 4,095 m volcano, the black-sand coast and the Lobé falls, Korup rainforest, the Bamenda highlands, Foumban, and Waza in the Sahel. Small groups, local guides, French and English."
+<meta name="description" content="Kamerun runs guided circuits across Cameroon: the 4,095 m volcano, the black-sand coast and the Lobé falls, Korup rainforest, the Bamenda highlands, Foumban, and Waza in the Sahel. Small groups, local guides, French and English.">
 <link rel="canonical" href="https://afrinkong.com/cameroon">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Afrinkong">
 <meta property="og:title" content="Kamerun — Guided Circuits and Experiences Across Cameroon | Coast, Volcano, Rainforest, Sahel">
 <meta property="og:description" content="Kamerun runs guided circuits across Cameroon: the 4,095 m volcano, the black-sand coast and the Lobé falls, Korup rainforest, the Bamenda highlands, Foumban, and Waza in the Sahel. Small groups, local guides, French and English.">
 <meta property="og:url" content="https://afrinkong.com/cameroon">
-<meta name="twitter:card" content="summary">>
+<meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* Tokens, reset, type scale, focus and motion behaviour are in
@@ -40,13 +40,37 @@ ul,ol{list-style:none}
 .fj-frame{max-width:1240px;margin:0 auto;padding:0 44px}
 .fj-stamp{display:block;font-family:var(--fj-mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--c-accent)}
 .fj-stamp i{font-style:normal;color:var(--c-muted)}
-.fj-lede{font-size:19px;color:var(--c-muted);max-width:40em}
+.fj-lede{font-size:19px;color:var(--c-muted);max-width:70ch}
 
 /* reveal — never applied to a fixed-window band or to any ancestor of one */
 .fj-rise{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
 .fj-rise.seen{opacity:1;transform:none}
+/* A control inside a block that has not been revealed yet is invisible and
+   still focusable: tabbing into the enquiry form landed the cursor in a field
+   at zero opacity, and the first characters were typed into nothing. Focus
+   anywhere inside finishes the reveal immediately. */
+.fj-rise:focus-within{opacity:1;transform:none;transition:none}
+
 
 /* ---- masthead ---------------------------------------------------------------- */
+/* Whose pages these are. This is one operator's site served from the group's
+   domain, on addresses (/about, /pricing, /services) a visitor reads as the
+   group's. The bar is the name on the door — see tools/tourism/enquiry.py. */
+.fj-from{background:var(--fj-raffia);border-bottom:var(--fj-rule)}
+.fj-from-in{padding:14px 0 16px}
+.fj-from p{font-size:15px;line-height:1.5;max-width:72ch}
+.fj-from-else{max-width:none}
+.fj-from b{font-weight:400;color:var(--c-primary)}
+/* .fj-from p wins on specificity over a bare .fj-from-else, so the mono line
+   was rendering at 15px. Matched here rather than raised with !important. */
+.fj-from p.fj-from-else{margin-top:6px;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--c-muted)}
+.fj-from-else a{color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.fj-from-else a:hover{border-bottom-color:var(--c-accent)}
+.fj-from-else a+a{margin-left:14px}
+@media(max-width:640px){.fj-from-in{padding:12px 0 13px}
+  .fj-from p{font-size:14px}}
 .fj-mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
 .fj-mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
 .fj-mark{margin-right:auto;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
@@ -78,6 +102,13 @@ ul,ol{list-style:none}
    unit for a condensed face — 20ch measured narrower than "AN EXTRAORDINARY"
    sets at 60px and broke the line it was supposed to protect. */
 .fj-open h1{font-size:clamp(32px,3.6vw,52px);margin:20px 0 0}
+/* The headline is broken by hand into four lines, so its minimum width is
+   the longest of them — "world to discover." at 393px, which held the whole
+   opening column 393 wide inside a 320 screen and took the stamp, the lede,
+   the calls and the photograph out past the edge with it. Below 480 the
+   hand breaks come out and the browser wraps it where it fits. */
+@media(max-width:480px){.fj-open h1 .fj-br{display:none}
+  .fj-open h1{font-size:clamp(26px,7.6vw,32px)}}
 @media(max-width:940px){.fj-br{display:none}}
 .fj-open h1 em{font-style:normal;color:var(--c-accent)}
 .fj-open .fj-lede{margin-top:24px}
@@ -120,7 +151,12 @@ ul,ol{list-style:none}
 .fj-zone.basalt .fj-head-no span{color:var(--fj-onbasalt-dim)}
 .fj-head h2{font-size:clamp(30px,4vw,54px);max-width:24ch}
 .fj-head h2 em{font-style:normal;color:var(--c-accent)}
-.fj-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+/* 44em of a 17px face is 748 pixels and 96 average characters a line. The
+   comfortable range for continuous prose is 45-85; past 90 the eye loses
+   the start of the next line on the way back. 72ch measures 78 average
+   characters in this face — ch is the width of a zero, which here is 1.09
+   times the average lowercase letter, so the two are not the same number. */
+.fj-note{margin-top:16px;color:var(--c-muted);max-width:72ch}
 @media(max-width:880px){.fj-zone{padding:66px 0}.fj-head{grid-template-columns:1fr;gap:18px;margin-bottom:38px}.fj-head-no b{font-size:30px}}
 
 /* ---- transect (the coast-to-Sahel gradient bar) -------------------------------- */
@@ -380,7 +416,9 @@ ul,ol{list-style:none}
 .fj-log-row{display:grid;grid-template-columns:110px 1fr;gap:32px;padding:22px 0;border-bottom:var(--fj-rule)}
 .fj-log-row b{font-family:var(--fj-display);font-size:22px;font-weight:700;color:var(--c-accent)}
 .fj-log-row h3{font-size:19px;margin-bottom:6px}
-.fj-log-row p{color:var(--c-muted);font-size:15px;max-width:54em}
+/* 54em of a 15px face is 810 pixels and 118 average characters a line — the
+   longest measure left on the site after the notes were capped. */
+.fj-log-row p{color:var(--c-muted);font-size:15px;max-width:72ch}
 @media(max-width:640px){.fj-log-row{grid-template-columns:1fr;gap:6px}}
 
 .fj-prose{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
@@ -412,7 +450,15 @@ ul,ol{list-style:none}
 .fj-cell label{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);margin-bottom:7px}
 .fj-cell input,.fj-cell select,.fj-cell textarea{width:100%;font-family:var(--fj-text);font-size:16px;color:var(--c-ink);background:var(--c-bg);border:var(--fj-rule);padding:11px 13px;transition:border-color .2s}
 .fj-cell textarea{resize:vertical}
-.fj-cell input:focus,.fj-cell select:focus,.fj-cell textarea:focus{outline:none;border-color:var(--c-accent)}
+/* Keyboard focus keeps the design system's ring; a mouse click does not.
+   The colour-only version measured 2.57:1 between the resting border and the
+   focused one on the two search fields, under the 3:1 WCAG 2.2 asks for a focus
+   indicator, and it changed no area at all. :focus-visible is what tells the
+   two apart, and the ring it restores is the same one every other control on
+   the site uses. */
+.fj-cell input:focus:not(:focus-visible),.fj-cell select:focus:not(:focus-visible),
+.fj-cell textarea:focus:not(:focus-visible){outline:none}
+.fj-cell input:focus,.fj-cell select:focus,.fj-cell textarea:focus{border-color:var(--c-accent)}
 .fj-send{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);border:0;padding:14px 28px;cursor:pointer;transition:background .2s}
 .fj-send:hover{background:var(--c-accent)}
 .fj-fine{margin-top:14px;font-size:13px;color:var(--c-muted)}
@@ -439,7 +485,23 @@ ul,ol{list-style:none}
   *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important;animation-iteration-count:1 !important}
   .fj-rise{opacity:1;transform:none}
 }
+/* WCAG 2.5.8 asks for 24x24 CSS pixels and these are 13, 17 and 23 tall — mono
+   at 9 to 11px with a rule under them and no padding. Only where a finger is
+   the pointer; on a mouse they keep the setting they were drawn at. */
+@media(pointer:coarse){
+  .fj-mark{padding:5px 0}
+  .fj-slip-more,.fj-way a{display:inline-block;padding-top:6px;padding-bottom:8px}
+  .fj-route-foot a{display:inline-block;padding:5px 0 7px}
+  .fj-foot-bar a{padding-block:6px;display:inline-block}
+}
 </style>
+<noscript><style>
+/* The reveal is a script effect: .fj-rise starts at opacity 0 and an
+   IntersectionObserver adds .seen. With no script there is no observer
+   and the page stays at zero — twenty-five blocks of it on a tourism
+   page, sixteen on /contact. Motion is an enhancement; the words are
+   not. */
+.fj-rise{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to the page</a>
@@ -457,6 +519,13 @@ ul,ol{list-style:none}
     <a class="btn" href="#quote">Plan a circuit</a>
   </div>
 </header>
+<!-- gen:handoff -->
+<div class="fj-from" data-af-handoff>
+  <div class="fj-frame fj-from-in">
+    <p><b>These are Kamerun&rsquo;s pages.</b> Kamerun is the Afrinkong operator for Cameroon, based in Buea and Douala &mdash; the circuits, rates and people described here are theirs, and any enquiry sent from this page is read by them.</p>
+    <p class="fj-from-else">Somewhere else in Africa? <a href="https://namib-skyline.vercel.app">Namibia &mdash; Namib Skyline</a><a href="https://pearl-trails-uganda.vercel.app">Uganda &mdash; Pearl Trails Uganda</a> or start from <a href="/atlas">the atlas</a>.</p>
+  </div>
+</div><!-- /gen:handoff -->
 <main id="main">
 <!-- arrival -->
 <section class="fj-open">
@@ -464,7 +533,7 @@ ul,ol{list-style:none}
     <div class="fj-open-grid">
       <div class="fj-rise seen">
         <span class="fj-stamp">Buea &middot; Douala <i>&middot; l'Afrique en miniature</i></span>
-        <h1>One country.<br class="fj-br"><em>Six climates.</em><br class="fj-br">An extraordinary<br class="fj-br">world to discover.</h1>
+        <h1>One country. <br class="fj-br"><em>Six climates.</em> <br class="fj-br">An extraordinary <br class="fj-br">world to discover.</h1>
         <p class="fj-lede">Black sand and Atlantic surf, a 4,095-metre volcano, the Korup rainforest, highland villages, the palaces at Foumban, and the savanna at Waza. Kamerun brings all of it into one journey &mdash; small groups, licensed guides, 4x4s that have already done the road once this month.</p>
         <div class="fj-acts">
           <a class="fj-act go" href="#quote">Plan your experience <i>&rarr;</i></a>
@@ -786,7 +855,7 @@ ul,ol{list-style:none}
         <p>The one window where the whole country works at once. Best trekking, best northern game viewing, harmattan haze in the north from December.</p>
       </div>
       <div class="fj-cal-col fj-rise">
-        <img src="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="elephants and giraffe at a dry-season waterhole in Waza National Park, Cameroon" loading="lazy" decoding="async" style="object-position:48% 60%" data-illustration="/images/savanna-waterhole.svg" data-illustration-alt="A waterhole in dry savanna under a hard March sun" data-provider="unsplash" data-locked="true">
+        <img src="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80" srcset="https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=300&h=375&q=80 300w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=450&h=562&q=80 450w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80 600w, https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=900&h=1125&q=80 900w" sizes="(min-width: 1240px) 264px, (min-width: 640px) 24vw, 45vw" alt="Safari in Cameroon" loading="lazy" decoding="async" style="object-position:48% 60%" data-illustration="/images/savanna-waterhole.svg" data-illustration-alt="A waterhole in dry savanna under a hard March sun" data-provider="unsplash" data-locked="true">
         <b>Mar &ndash; May</b><span>North at its best</span>
         <p>Hot &mdash; 38&deg;C at Waza &mdash; and that is the point: the waterholes concentrate everything. Coast begins to break into storms by late April.</p>
       </div>
@@ -975,5 +1044,8 @@ ul,ol{list-style:none}
 </footer>
 <script src="/scripts/story-search.js" defer></script>
 <script src="/scripts/explore.js" defer></script>
+<!-- gen:reach -->
+<script type="application/json" id="fj-reach">{"home":"cameroon","ours":{"cameroon":{"name":"Cameroon","op":"Kamerun","url":"/cameroon"},"namibia":{"name":"Namibia","op":"Namib Skyline","url":"https://namib-skyline.vercel.app"},"uganda":{"name":"Uganda","op":"Pearl Trails Uganda","url":"https://pearl-trails-uganda.vercel.app"}},"rest":{"botswana":"Botswana","cote-divoire":"Côte d'Ivoire","egypt":"Egypt","ethiopia":"Ethiopia","ghana":"Ghana","kenya":"Kenya","madagascar":"Madagascar","mauritius":"Mauritius","morocco":"Morocco","mozambique":"Mozambique","nigeria":"Nigeria","rwanda":"Rwanda","senegal":"Senegal","seychelles":"Seychelles","south-africa":"South Africa","tanzania":"Tanzania","tunisia":"Tunisia","zambia":"Zambia","zimbabwe":"Zimbabwe"}}</script><!-- /gen:reach -->
+<script src="/scripts/enquiry.js" defer></script>
 </body>
 </html>

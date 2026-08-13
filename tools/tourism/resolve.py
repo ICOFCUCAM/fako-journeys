@@ -182,6 +182,19 @@ def resolve_entry(country, category, entry, role, seen, only=None, exhausted=Non
     for query, tier in rungs:
         results = []
         for provider in list(usable):
+            # Every provider used to be asked at every rung, which is two
+            # searches a slot at best and ten at worst. Where the provider
+            # already asked has scored above relevance.UNBEATABLE, no answer
+            # from anywhere can reach CLEARLY_BETTER above it — the next request
+            # is spent to learn something already known. Skipping it is not a
+            # heuristic; it is arithmetic on the same two constants the
+            # comparison below uses.
+            if results and max(r[2] for r in results) > relevance.UNBEATABLE:
+                notes.append("%s not asked: %s already scored %.1f, which nothing "
+                             "can beat by %.1f"
+                             % (provider.name, results[0][0].name,
+                                max(r[2] for r in results), relevance.CLEARLY_BETTER))
+                break
             try:
                 record, score, why, cand = _best_from(provider, query, orient, country,
                                                       category, entry, role, seen, taken)

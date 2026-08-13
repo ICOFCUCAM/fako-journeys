@@ -26,6 +26,7 @@ import html as html_mod
 import json
 import os
 
+from . import plate
 from .model import ROOT
 
 MONTHS = ("January", "February", "March", "April", "May", "June",
@@ -73,6 +74,18 @@ def build(countries, taxonomy):
         "options_b": opts.replace('value="%s"' % esc(slugs[1]),
                                   'value="%s" selected' % esc(slugs[1]), 1),
         "count": len(taxonomy.enabled),
+        # Six rows the table always has — region, in a sentence, leads on, when
+        # to come, who runs it, read the whole thing — plus one per category.
+        "cats": len(taxonomy.enabled),
+        "rows": len(taxonomy.enabled) + 6,
+        # /compare is in the sitemap and shipped without a canonical or a single
+        # Open Graph tag, so a shared link to it had no card and search engines
+        # had no preferred address for a page that takes ?a= and ?b=.
+        "social": plate.open_graph(
+            "Compare two African destinations on the same terms | Afrinkong",
+            "Put any two Afrinkong destinations side by side across the same %d "
+            "categories, the same calendar and the same questions about who runs "
+            "them." % len(taxonomy.enabled), "/compare"),
         "total": len(slugs),
         "data": json.dumps({"countries": data, "cats": cats}, ensure_ascii=False),
     }
@@ -95,6 +108,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Compare two African destinations on the same terms | Afrinkong</title>
 <meta name="description" content="Put any two Afrinkong destinations side by side across the same %(count)d categories, the same calendar and the same questions about who runs them.">
+%(social)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 .mast{position:fixed;top:0;left:0;right:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
@@ -110,7 +124,7 @@ TEMPLATE = """<!DOCTYPE html>
 .open{padding:calc(var(--mast) + 52px) 0 30px}
 .open h1{font-size:clamp(34px,5vw,64px);max-width:18ch;margin-top:14px}
 .open h1 em{font-style:normal;color:var(--c-accent)}
-.open p{margin-top:18px;color:var(--c-muted);max-width:48em}
+.open p{margin-top:18px;color:var(--c-muted);max-width:72ch}
 
 /* Two columns are the page. Every row spans them, so the eye runs down one
    country and across to the other without needing a legend. */
@@ -145,7 +159,31 @@ TEMPLATE = """<!DOCTYPE html>
   border:1px solid var(--c-border);padding:4px 7px;color:var(--c-muted)}
 .cp-only{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent)}
-.cp-note{margin:32px 0 0;color:var(--c-muted);max-width:46em;font-size:15px}
+/* Three widths set in em, which is not the unit a reader crosses: 46em of a
+   15px face is 100 average characters, 48em of a 17px face is 105, 44em is 96.
+   72ch measures 78 in this serif, which is where the rest of the site sits. */
+.cp-note{margin:32px 0 0;color:var(--c-muted);max-width:72ch;font-size:15px}
+/* The table is built by the script, so #cp-body is empty when the page paints
+   and everything below it — the note, the footer — sat at the top of the
+   viewport and then dropped 3,500 pixels when the rows arrived. Measured at
+   CLS 0.19, which is past the point Google calls a page bad, and it happened on
+   every load rather than only on a slow one.
+
+   Reserved from the row count rather than a magic number: %(rows)d rows (six
+   fixed plus %(cats)d categories). 101px is the shortest row height measured
+   across 1440, 1280, 900, 700 and 390 pixels wide and three different pairs of
+   countries — deliberately the shortest, so the reservation is never larger
+   than the table and never leaves a gap under it. */
+.cp{--cp-rows:%(rows)d}
+#cp-body{min-height:calc(var(--cp-rows) * 101px)}
+.cp-nojs{padding:34px 0 10px;max-width:60ch}
+.cp-nojs h2{font-size:clamp(24px,3vw,34px)}
+.cp-nojs p{margin-top:14px;color:var(--c-muted)}
+.cp-nojs-go{margin-top:22px;display:flex;flex-wrap:wrap;gap:20px}
+.cp-nojs-go a{font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%%,transparent)}
+@media(max-width:700px){#cp-body{min-height:calc(var(--cp-rows) * 99px)}}
 @media(max-width:700px){
   .cp-row>div,.cp-pick div{padding:14px 10px 16px 0}
   .cp-row>div:last-child,.cp-pick div:last-child{padding-left:10px}
@@ -153,8 +191,16 @@ TEMPLATE = """<!DOCTYPE html>
 
 .foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:52px 0;margin-top:66px}
 .foot a{border-bottom:1px solid var(--c-accent)}
-.foot p{max-width:44em;color:var(--fj-onbasalt-dim)}
+.foot p{max-width:72ch;color:var(--fj-onbasalt-dim)}
 </style>
+<noscript><style>
+/* After the block above, not before it: same specificity, so the later rule is
+   the one that applies. The reservation exists so the table does not shove the
+   page down when the script builds it. With no script there is no table, and
+   holding 3,300 pixels open for one that is never coming is worse than not
+   holding it at all. */
+#cp-body{min-height:0}
+</style></noscript>
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to content</a>
@@ -184,14 +230,27 @@ TEMPLATE = """<!DOCTYPE html>
     <div><label for="cp-a">First</label><select id="cp-a">%(options_a)s</select></div>
     <div><label for="cp-b">Second</label><select id="cp-b">%(options_b)s</select></div>
   </div>
-  <div id="cp-body"></div>
+  <div id="cp-body"><noscript>
+    <div class="cp-nojs">
+      <h2>This one needs a script, and there is not one running.</h2>
+      <p>The table is assembled in the browser from a payload carrying all
+        %(total)d countries, so that changing either menu is instant rather than a
+        page load. With scripting off there is nothing to assemble it.</p>
+      <p>Every country here has its own page, written through the same
+        %(count)d categories in the same order, so two of them read side by side
+        in two tabs say exactly what this table would have said.</p>
+      <p class="cp-nojs-go"><a href="/places">Every place, country by country</a>
+        <a href="/atlas">The atlas</a>
+        <a href="/stories">The portraits</a></p>
+    </div>
+  </noscript></div>
   <p class="cp-note">Captions rather than sentences, on purpose. The full description of any of these is on that country's own page.</p>
 </section>
 </main>
 
 <footer class="foot">
   <div class="af-frame">
-    <p>Afrinkong is a group of locally run tour operators working across Africa. Every country is covered by a company based in it. <a href="/#destinations">See all destinations</a>, or <a href="/contact">tell us what you are after</a>.</p>
+    <p>Afrinkong runs tour operators of its own in three countries and writes up %(total)d, all through the same %(count)d categories. <a href="/#destinations">See all destinations</a>, or <a href="/contact">tell us what you are after</a>.</p>
   </div>
 </footer>
 
@@ -252,9 +311,9 @@ TEMPLATE = """<!DOCTYPE html>
       months(B.months) + '<p class="cp-val cp-val--muted" style="margin-top:10px">' + esc(B.when) + '</p>',
       A.months.join() !== B.months.join());
     h += row('Who runs it',
-      '<p class="cp-val cp-val--big">' + esc(A.operator || 'A licensed local company') + '</p>'
+      '<p class="cp-val cp-val--big">' + esc(A.operator || 'No operator of ours') + '</p>'
         + (A.base ? '<p class="cp-val cp-val--muted">' + esc(A.base) + '</p>' : ''),
-      '<p class="cp-val cp-val--big">' + esc(B.operator || 'A licensed local company') + '</p>'
+      '<p class="cp-val cp-val--big">' + esc(B.operator || 'No operator of ours') + '</p>'
         + (B.base ? '<p class="cp-val cp-val--muted">' + esc(B.base) + '</p>' : ''),
       (A.operator ? 1 : 0) !== (B.operator ? 1 : 0));
     /* A category one country answers and the other does not is the most useful

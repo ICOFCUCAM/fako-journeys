@@ -117,8 +117,12 @@ def page(country, place, pack, order, tax, ctx):
         % (esc(country.slug), esc(order[p["id"]]), esc(p["title"]), esc(p["group"]))
         for p in here[:12])
 
+    # /places/<slug> is a folder of place pages with no index in it, so every one
+    # of these was a 404 — four of them on each of 572 pages, in the block whose
+    # entire job is "where to go next". /places#<slug> is that country's section
+    # on the index, which is the list this link was always describing.
     near = "".join(
-        '<a href="/places/%s"%s>%s<i>%s</i></a>'
+        '<a href="/places#%s"%s>%s<i>%s</i></a>'
         % (esc(r["to"]), ' data-border="true"' if any(
             w["kind"] == "border" for w in r["why"]) else "", esc(r["name"]),
            esc("%d km" % r["km"] if r.get("km") is not None else ""))
@@ -129,11 +133,17 @@ def page(country, place, pack, order, tax, ctx):
            % (esc(op.name), esc(op.base), esc(op.line),
               ('<a class="af-go" href="%s">Open %s &rarr;</a>' % (esc(op.url), esc(op.name)))
               if op.url else "")) if op else (
-           '<div class="pl-who"><span class="af-stamp">Who would take you</span>'
-           '<b>A licensed company based in %s</b>'
-           '<p>Every destination here is run by a company in the country itself. '
-           'Tell us the month and we will put you with the right one.</p></div>'
-           % esc(country.name))
+           # "A licensed company based in <Country>" named a company that does
+           # not exist. tourism/operators.json holds three and has only ever held
+           # three; for the other nineteen there is no company here, licensed or
+           # otherwise. What is true is that nobody of ours runs it.
+           '<div class="pl-who pl-who--none"><span class="af-stamp">Who would take you</span>'
+           '<b>Not us, in %s</b>'
+           '<p>We run companies in three countries and %s is not one of them. '
+           'It is written up here to the same twenty-seven categories as the '
+           'rest &mdash; tell us the month and we will say who to ask.</p>'
+           '<a class="af-go" href="/contact">Ask anyway &rarr;</a></div>'
+           % (esc(country.name), esc(country.name)))
 
     title = "%s, %s" % (place["title"], country.name)
     return TEMPLATE % {
@@ -182,8 +192,18 @@ def index(rows, ctx):
             % (esc(country.slug), esc(plate.tone_for(country, ctx["regions"])),
                esc(country.slug), esc(order[pack["places"][0]["id"]]),
                esc(country.name), esc(country.region), len(pack["places"]), items))
+    # Eighteen screens on a desktop and thirty-eight on a phone, with twenty-two
+    # country sections in it and, until now, one in-page link. Somebody arriving
+    # at /places#zimbabwe from a place page — which every one of the 572 does —
+    # had no way to reach Zambia except to scroll back through nine countries.
+    jump = "".join(
+        '<a href="#%s">%s<i>%d</i></a>'
+        % (esc(country.slug), esc(country.name), len(pack["places"]))
+        for country, pack, _o in rows)
     total = sum(len(p["places"]) for _c, p, _o in rows)
     return INDEX % {"blocks": "\n".join(blocks), "n": total, "countries": len(rows),
+                    "jump": ('<nav class="pi-jump" aria-label="Jump to a country">%s</nav>'
+                             % jump),
                     "explore": plate.explore_block(),
                     "og": plate.open_graph("Every place — Afrinkong",
                                            "%d places across %d countries, each with its "
@@ -198,7 +218,16 @@ def sitemap(rows, ctx):
     """
     base = "https://afrinkong.com"
     urls = ["/", "/atlas", "/journey", "/meet", "/stories", "/compare", "/contact",
-            "/places"]
+            "/places",
+            # /tourism is the hub every /tourism/<country> page hangs off and it
+            # is linked from twenty-four footers; all twenty-two children were
+            # listed and the parent was not.
+            "/tourism",
+            # The operator's own pages. They are substantial — a thousand words
+            # each — they are real, and their titles say whose they are, so
+            # leaving them out only meant the operator was unfindable while
+            # their enquiry page was listed.
+            "/about", "/pricing", "/services"]
     for country, pack, order in rows:
         if country.url.startswith("/"):
             urls.append(country.url)
@@ -379,6 +408,7 @@ INDEX = """<!DOCTYPE html>
       put them in an order; this is the plain list, which is the one a search
       engine can read and the one that works with nothing switched on.</p>
   </section>
+%(jump)s
 %(blocks)s
 </main>
 %(explore)s

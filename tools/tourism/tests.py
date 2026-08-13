@@ -234,6 +234,14 @@ def resolve_all(tax, country, cache, seen=None, only=None):
     return filled, failed
 
 
+def read_json_file(path, fallback=None):
+    try:
+        with open(path) as fh:
+            return json.load(fh)
+    except (IOError, ValueError):
+        return fallback if fallback is not None else {}
+
+
 def main():
     tmp = tempfile.mkdtemp(prefix="tourism-tests-")
     os.environ["UNSPLASH_API_BASE"] = "http://localhost:%d/unsplash" % PORT
@@ -387,6 +395,29 @@ def main():
         check("--provider rejects an unknown name",
               _raises(lambda: providers.all_providers("flickr"), KeyError))
         check("Unsplash wins when both are merely adequate", rec["provider"] == "unsplash")
+
+        # -- 6b. requests that cannot change the answer ---------------------------
+        print("\n6b. a request that cannot change the answer is not made")
+        check("the ceiling is every positive term at its cap",
+              abs(relevance.CEILING - 9.5) < 1e-9, "%.2f" % relevance.CEILING)
+        check("above the ceiling less the winning margin, nothing can win",
+              relevance.UNBEATABLE == relevance.CEILING - relevance.CLEARLY_BETTER,
+              "%.1f" % relevance.UNBEATABLE)
+        # Both providers still get asked whenever the first answer leaves room.
+        CALLS[:] = []
+        resolve.resolve_entry(kenya, tax.by_id["safari"], kenya.entry("safari"),
+                              tax.role("safari"), set())
+        asked = {c.split("/")[1] for c in CALLS if c.startswith(("/search", "/u", "/p"))} \
+            if CALLS else set()
+        both = len([c for c in CALLS if "unsplash" in c or c.startswith("/u")]) > 0 \
+            and len([c for c in CALLS if "pexels" in c or c.startswith("/p")]) > 0
+        check("with an ordinary match, both providers are still consulted", both,
+              "%d calls" % len(CALLS))
+        # And the arithmetic itself: a score above UNBEATABLE cannot be displaced.
+        check("no score at or below the ceiling beats an unbeatable one",
+              not (relevance.CEILING >= (relevance.UNBEATABLE + 0.01)
+                   + relevance.CLEARLY_BETTER),
+              "ceiling %.1f, unbeatable %.1f" % (relevance.CEILING, relevance.UNBEATABLE))
 
         # -- 7. all 27 categories --------------------------------------------------
         print("\n7. all 27 categories resolve")
@@ -929,8 +960,12 @@ def main():
 
         # One window, not four.
         win = plate_mod.window_svg(shp, "Uganda", image="/i.jpg", alt="A ridge")
+        # Once, not twice: the outline is defined once and referenced by both the
+        # clipPath and the visible fill. It used to be written out twice, which
+        # is 1.3 KB of duplicate coordinates per country and 26 KB on the gateway.
         check("the window clips the photograph with the country's own path",
-              win.count(shp["d"]) == 2 and "clipPath" in win)
+              win.count(shp["d"]) == 1 and "clipPath" in win
+              and win.count("<use ") == 2)
         check("the window without a photograph is the filled outline",
               "<image" not in plate_mod.window_svg(shp, "Uganda"))
         check("the window describes itself from the photograph where there is one",
@@ -945,6 +980,10 @@ def main():
         check("the browser's window and the build's window agree",
               all(bit in js for bit in ("af-window-fill", "af-window-svg",
                                         "xMidYMid slice", "clipPath")))
+        # Including the part that is easy to change in one and forget in the
+        # other: both define the outline once and <use> it twice.
+        check("the browser's window defines its outline once too",
+              js.count('d="\' + shape.d') == 1 and js.count("<use ") == 2)
 
         # Roles: what the crop must keep, and what a phone gets instead.
         roles = [r for k, r in tax.roles.items() if not k.startswith("$")]
@@ -1269,6 +1308,691 @@ def main():
               all(("/portrait/%s<" % s) in sitemap for s in live_slugs)
               and "/stories<" in sitemap)
 
+        # -- what the homepage claims about itself ---------------------------------
+        print("\nwhat the homepage claims about itself")
+        home_src = open(os.path.join(ROOT_DIR, "index.html")).read()
+        WORD = {"three": 3, "five": 5, "six": 6, "nine": 9, "nineteen": 19,
+                "twenty-two": 22, "twenty-seven": 27, "sixty-six": 66,
+                "fifty-four": 54}
+        truth = {
+            len(countries),                                   # 22 written up
+            sum(len(c.entries) for c in countries),            # 594 written entries
+            len(glob.glob(os.path.join(ROOT_DIR, "places", "*", "*.html"))),  # 572 with a page
+            len(ids),                                          # 27 categories
+            5,                                                 # 5 region groups
+            sum(1 for c in countries if c.operator),           # 3 operators
+            len(countries) - sum(1 for c in countries if c.operator),
+        }
+        # The year an operator started is a fact about that operator, not a
+        # coverage claim, but it is printed here and reads as a figure.
+        truth |= {int(c.operator.since) for c in countries if c.operator}
+        # The brief block is the loudest sentence on the page and it used to open
+        # "Fifty-four countries", which is the size of Africa printed where a
+        # reader takes it as the size of this site. Every number in it now has to
+        # be a len() of something on disk.
+        brief = re.search(r'<section class="wa-brief".*?</section>', home_src, re.S)
+        check("the brief section is still there", bool(brief))
+        if brief:
+            said = brief.group(0).lower()
+            spelt = {w for w in WORD if re.search(r'\b%s\b' % w, said)}
+            wrong = sorted(w for w in spelt if WORD[w] not in truth)
+            check("every number spelt out in the brief is one the files have",
+                  not wrong, ", ".join(wrong))
+            figures = {int(n.replace(",", "")) for n in
+                       re.findall(r'\b(\d[\d,]{1,6})\b', re.sub(r'<[^>]+>', ' ', brief.group(0)))
+                       if int(n.replace(",", "")) > 4}
+            check("every figure printed in the brief is one the files have",
+                  figures <= truth, ", ".join(str(f) for f in sorted(figures - truth)))
+            check("the brief does not claim an operator we do not have",
+                  "operator in each" not in said and "in every" not in said)
+        check("the brief is generated rather than typed",
+              "<!-- gen:claim -->" in home_src)
+        # The journey section describes the service, so it is counted from
+        # operators.json for the same reason the brief is.
+        for mark in ("plannote", "plansteps"):
+            check("the journey section's %s is generated" % mark,
+                  "<!-- gen:%s -->" % mark in home_src)
+        plan = re.search(r'<section[^>]*id="plan".*?</section>', home_src, re.S)
+        check("the journey section is still there", bool(plan))
+        if plan:
+            steps = len(re.findall(r'class="wa-step[ "]', plan.group(0)))
+            cols = re.search(r"\.wa-steps\{[^}]*repeat\((\d+),", home_src)
+            check("the step grid has as many columns as there are steps",
+                  bool(cols) and int(cols.group(1)) == steps,
+                  "%s columns, %d steps" % (cols.group(1) if cols else "?", steps))
+
+        # The same failure twice more: a sentence typed beside a block that is
+        # generated, and the two stopped agreeing the moment the block changed.
+        note = re.search(r'<!-- gen:nownote -->(.*?)<!-- /gen:nownote -->', home_src, re.S)
+        strip = re.search(r'<!-- gen:now -->(.*?)<!-- /gen:now -->', home_src, re.S)
+        cards = len(re.findall(r'class="wa-now[ "]', strip.group(1))) if strip else 0
+        said_n = None
+        if note:
+            m = re.search(r'\b(\w+(?:-\w+)?) of them here', note.group(1))
+            said_n = WORD.get((m.group(1) or "").lower()) if m else None
+        check("the contemporary strip has cards in it", cards > 0, "%d" % cards)
+        check("the sentence beside the strip counts the cards the strip has",
+              said_n == cards, "says %r, shows %d" % (said_n, cards))
+
+        alt = re.search(r'<svg class="wa-map-svg"[^>]*aria-label="([^"]*)"', home_src)
+        check("the map has a description at all", bool(alt))
+        if alt:
+            nums = {int(n) for n in re.findall(r'\b(\d+)\b', alt.group(1))}
+            check("the map's description counts the countries the map draws",
+                  nums and nums <= truth, alt.group(1)[:70])
+            check("the map's description points at the buttons that replace it",
+                  "button" in alt.group(1).lower())
+
+        check("the destination filter counts the grid rather than a literal",
+              not re.search(r"shown \+ ' of \d", home_src))
+        check("the opening does not print the size of Africa as the size of this site",
+              "54 countries &middot;" not in home_src)
+
+        # Across the whole site, not just this page. The homepage said "594
+        # places" and /places said "572" — 594 is every entry, 572 is every entry
+        # that has a page, and the twenty-two-place gap is the `hero` category,
+        # which is a country's opening picture rather than a place. Two numbers
+        # for one thing, on two pages, both generated, from two derivations.
+        SITEWIDE = ("countries", "places", "categories", "destinations", "portraits")
+        pages = sorted(set(glob.glob(os.path.join(ROOT_DIR, "*.html"))
+                           + glob.glob(os.path.join(ROOT_DIR, "places", "index.html"))
+                           + glob.glob(os.path.join(ROOT_DIR, "tourism", "*.html"))))
+        printed = {}
+        for path in pages:
+            body = re.sub(r"<(script|style|svg)\b.*?</\1>", "",
+                          open(path).read(), flags=re.S)
+            for m in re.finditer(r"\b(\d{2,4})\s+(%s)\b" % "|".join(SITEWIDE), body):
+                # "26 places" on /places is one country's count, not the site's.
+                # Only totals — three figures or two that are not a leading zero.
+                if m.group(1).startswith("0"):
+                    continue
+                printed.setdefault(m.group(2), {}).setdefault(
+                    int(m.group(1)), set()).add(os.path.relpath(path, ROOT_DIR))
+        for noun in sorted(printed):
+            counts = printed[noun]
+            # A per-country or per-region figure is smaller than the site total,
+            # so compare only the largest, which is the one claiming to be all.
+            top = max(counts)
+            where = ", ".join(sorted(counts[top]))
+            expect = {"countries": len(countries),
+                      "categories": len(ids),
+                      "destinations": len(countries),
+                      "portraits": len(countries),
+                      "places": len(glob.glob(os.path.join(
+                          ROOT_DIR, "places", "*", "*.html")))}.get(noun)
+            check("every page that counts %s counts the same %s" % (noun, noun),
+                  expect is None or top == expect,
+                  "%d on %s, dataset has %s" % (top, where, expect))
+
+        # -- where the keyboard is ------------------------------------------------
+        print("\nwhere the keyboard is")
+        # `outline:none` on :focus is how a focus indicator disappears. Sometimes
+        # it is right — an element that replaces the ring with something at least
+        # as visible, or one nobody tabs to — and each of those is allowed by
+        # name below, with the reason written beside the rule in the stylesheet.
+        # Every other one is a control a keyboard user cannot find.
+        ALLOWED = (
+            ".wa-map-live:focus",      # the country path strokes instead
+            ".at-c:focus",             # the same, on the atlas
+            ".ex-bar input:focus",     # the only tabbable thing in its dialog
+            ".jn-h1:focus",            # a heading focused to be announced
+        )
+        killed = {}
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "styles", "*.css"))
+                           + glob.glob(os.path.join(ROOT_DIR, "*.html"))):
+            rel = os.path.relpath(path, ROOT_DIR)
+            body = re.sub(r"/\*.*?\*/", " ", open(path).read(), flags=re.S)
+            for m in re.finditer(r"([^{}\n]*:focus[^{}\n]*)\{([^}]*)\}", body):
+                sel, decl = m.group(1).strip(), m.group(2)
+                if "outline:none" not in decl.replace(" ", ""):
+                    continue
+                if ":not(:focus-visible)" in sel:
+                    continue
+                if any(a in sel for a in ALLOWED):
+                    continue
+                killed.setdefault(sel[:60], set()).add(rel)
+        check("no control hides its focus ring without saying why", not killed,
+              "; ".join("%s (%s)" % (s, ", ".join(sorted(w))[:40])
+                        for s, w in sorted(killed.items())[:3]))
+        check("the design system still defines one ring for everything",
+              re.search(r":focus-visible\{[^}]*outline:\s*2px",
+                        open(os.path.join(ROOT_DIR, "styles", "afrinkong.css")).read()))
+
+        # -- what an image costs before it arrives ---------------------------------
+        print("\nwhat an image costs before it arrives")
+        SKIP_IMG = {"tourism/compare.html"}
+        nodim, nolazy, noalt, heroes = [], [], [], []
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                     recursive=True)):
+            rel = os.path.relpath(path, ROOT_DIR)
+            if "/incoming/" in path or "/node_modules/" in path or rel in SKIP_IMG:
+                continue
+            tags = re.findall(r"<img\b[^>]*>", open(path).read())
+            for i, tag in enumerate(tags):
+                if 'width="' not in tag or 'height="' not in tag:
+                    nodim.append(rel)
+                if "alt=" not in tag:
+                    noalt.append(rel)
+                # The first draft of this check said "the first <img> in the
+                # document is the page's largest contentful paint, so it must be
+                # eager and prioritised". That is false here. On the homepage,
+                # the portraits and /tourism the hero is an inline SVG window or
+                # a drawn plate, and the first <img> is four screens down in a
+                # card — correctly lazy. Document order does not tell you what
+                # is in the first viewport, so the rule is the one that holds
+                # without knowing: an image may not be marked urgent and
+                # deferred at the same time, and only one thing on a page can
+                # be the most urgent.
+                if "fetchpriority" in tag:
+                    heroes.append(rel)
+                    if 'loading="lazy"' in tag:
+                        nolazy.append(rel + " (urgent and lazy at once)")
+                elif "loading=" not in tag and i > 0:
+                    nolazy.append(rel)
+        # Not "every image must carry width and height". That looks like the
+        # obvious rule and it is wrong here: on these five pages the CSS reserves
+        # every box with aspect-ratio, adding the attributes changed nothing on
+        # four of them, and on /contact it took layout shift from 0.002 to 0.17.
+        # Whether space is reserved is measured in tools/shift-checks.js, in a
+        # browser, with the images held back — the only place the answer is
+        # actually knowable. What is checked statically is the thing that is
+        # true regardless: an image without dimensions must at least be one the
+        # CSS is sizing, and 610 of the 612 images here already carry both.
+        loose = sorted(set(nodim))
+        check("at most a handful of images leave their size to the CSS alone",
+              len(loose) <= 6,
+              "%d images across %d files (%s)"
+              % (len(nodim), len(loose), ", ".join(loose[:4])))
+        check("every image has alternative text", not noalt,
+              "%d without alt (%s)" % (len(noalt), ", ".join(sorted(set(noalt))[:4])))
+        check("no image below the first is loaded eagerly", not nolazy,
+              "%d eager (%s)" % (len(nolazy), ", ".join(sorted(set(nolazy))[:4])))
+        twice = sorted(p for p in set(heroes) if heroes.count(p) > 1)
+        check("no page names two images as its most urgent", not twice,
+              ", ".join(twice[:4]))
+
+        # -- what a resolver run would actually commit -----------------------------
+        print("\nwhat a resolver run would actually commit")
+        wf_path = os.path.join(ROOT_DIR, ".github", "workflows", "tourism-resolve.yml")
+        wf = open(wf_path).read() if os.path.exists(wf_path) else ""
+        check("the resolve workflow is still there", bool(wf))
+        if wf:
+            check("it rebuilds every page before committing", "build.py all" in wf)
+            check("it checks the working tree for key material first",
+                  'grep -rlF "$KEY"' in wf)
+            # The commit step used to name paths. Every generated file it did
+            # not name was silently dropped, and `build.py all` writes to nine
+            # directories. Naming them is a list that goes stale; `git add -A`
+            # cannot, and is safe because the key grep above runs over the whole
+            # tree and fails the run.
+            adds = re.findall(r"^\s*git add (.+)$", wf, re.M)
+            check("it stages everything the build wrote, not a list of paths",
+                  any(a.strip() == "-A" for a in adds),
+                  "; ".join(a.strip()[:60] for a in adds) or "no git add")
+            check("it pushes what it staged", "git push" in wf)
+            check("a partial run is still a success",
+                  "build.py resolve" in wf and "|| true" in wf)
+
+        # -- what a photograph is allowed to claim --------------------------------
+        print("\nwhat a photograph is allowed to claim")
+        from tourism.model import PROVEN, attach_cache as attach
+        # The suite runs against a sandbox cache; this check is about the real
+        # one, which is the file that ships.
+        raw = cache_mod.load(os.path.join(ROOT_DIR, "tourism", "cache", "images.json"))
+        recs = list(raw.entries.items())
+        unproven = [k for k, v in recs if not any(v.get(f) for f in PROVEN)]
+        check("the cache is readable", bool(recs), "%d records" % len(recs))
+        check("records with no evidence are known about", True,
+              "%d of %d carry neither a query tier nor a score"
+              % (len(unproven), len(recs)))
+        # The point: none of those may be quoted as a description of the picture.
+        bound = attach(load_countries(), raw, tax)
+        loud = []
+        for c in bound:
+            for e in c.entries:
+                rec = e.image
+                if not rec or not rec.get("altUnproven"):
+                    continue
+                alt = (rec.get("alt") or "")
+                # It may be the country's name, or the category's title in the
+                # country, and nothing else. No place, no month, no species, no
+                # festival — those are the claims there is no evidence for.
+                cat = tax.by_id.get(e.category)
+                allowed = {c.name}
+                if cat:
+                    allowed.add("%s in %s" % (
+                        cat["title"].split("/")[0].split("&")[0].strip(), c.name))
+                if alt not in allowed:
+                    loud.append("%s/%s: %r not in %r"
+                                % (c.slug, e.category, alt, sorted(allowed)))
+        check("a photograph with no evidence describes itself in general terms",
+              not loud, "; ".join(loud[:3]))
+        # And the proven ones keep their specific alt, or the fix is a blunt one.
+        specific = [e for c in bound for e in c.entries
+                    if e.image and not e.image.get("altUnproven")
+                    and len((e.image.get("alt") or "").split()) > 6]
+        check("photographs that do have evidence keep their real description",
+              len(specific) >= 40, "%d specific alts kept" % len(specific))
+        # The hand-written pages place some of the same photographs by hand, so
+        # the generator's rule does not reach them.
+        stems = {(v.get("imageUrl") or "").rsplit("/", 1)[-1].split("?")[0]: k
+                 for k, v in recs if not any(v.get(f) for f in PROVEN)}
+        typed = []
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "*.html"))
+                           + glob.glob(os.path.join(ROOT_DIR, "tourism", "*.html"))):
+            body = open(path).read()
+            for stem, slot in stems.items():
+                if not stem:
+                    continue
+                for m in re.finditer(r"<img[^>]*" + re.escape(stem) + r"[^>]*>", body):
+                    alt = re.search(r'alt="([^"]*)"', m.group(0))
+                    if alt and len(alt.group(1).split()) > 4:
+                        typed.append("%s: %s" % (os.path.relpath(path, ROOT_DIR),
+                                                 alt.group(1)[:50]))
+        check("no hand-written page describes an unproven photograph either",
+              not typed, "; ".join(typed[:3]))
+
+        # -- numbers spelled out in the prose --------------------------------------
+        print("\nnumbers spelled out in the prose")
+        # 034 through 049 fixed a dozen counts that had been typed beside a block
+        # generated from the data. The figures are guarded already; the words are
+        # not, and "three countries" or "twenty-seven categories" reads exactly as
+        # authoritative. Every generator and every hand-written page is scanned
+        # for a spelled number followed by a noun this dataset can count, and the
+        # word has to match.
+        # Every number from one to ninety-nine, generated rather than listed. A
+        # hand-written table only catches the numbers already thought of: the
+        # first version of this had sixteen entries in it and let "thirty-one
+        # categories" through, because thirty-one had never been wrong before.
+        ONES = ("zero one two three four five six seven eight nine ten eleven "
+                "twelve thirteen fourteen fifteen sixteen seventeen eighteen "
+                "nineteen").split()
+        TENS = ("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+                "eighty", "ninety")
+        SPELLED = {}
+        for k in range(1, 100):
+            SPELLED[ONES[k] if k < 20 else
+                    TENS[k // 10] + ("-" + ONES[k % 10] if k % 10 else "")] = k
+        NUMBER_NOUN = re.compile(
+            r"(?<![-\w])(" + "|".join(sorted(SPELLED, key=len, reverse=True))
+            + r") (countries|destinations|portraits|categories|headings|"
+              r"operators|regions|strands|questions)\b")
+
+        # Not one number per noun — several are legitimate, and all of them are
+        # counts of something rather than opinions. "Nineteen countries" is the
+        # nineteen without an operator; "four countries" on a place page is that
+        # country's neighbours; "four questions" is the journey builder and
+        # "seven questions" is /meet. What is not legitimate is a number that
+        # counts nothing here, which is how "fifty-four countries" and "twenty
+        # -seven countries" would read.
+        ops = sum(1 for c in countries if c.operator)
+        strands = read_json_file(os.path.join(ROOT_DIR, "tourism", "strands.json"))
+        strand_keys = [k for k in (strands or {}) if not k.startswith("$")]
+        strand_cats = {c for k in strand_keys
+                       for c in (strands[k].get("categories") or [])}
+        links = read_json_file(os.path.join(ROOT_DIR, "data", "links.json")).get("links") or {}
+        neighbours = {len(v) for v in links.values()} | {1, 2, 3, 4, 5}
+        OK = {
+            "countries": {len(countries), len(countries) - ops, ops, 5} | neighbours,
+            "destinations": {len(countries)},
+            "portraits": {len(countries)},
+            "categories": {len(ids), len(strand_cats)},
+            "headings": {len(ids)},
+            "operators": {ops},
+            "regions": {5},
+            "strands": {len(strand_keys)},
+            "questions": {len(strand_keys), 4},
+        }
+        # Phrases where the number is deliberately about Africa, not about this
+        # site, and says so in the same sentence.
+        ALLOWED_PHRASE = ("fifty-four countries. twenty-two",
+                          "fifty-four countries. not one place")
+        wrong = {}
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                     recursive=True)):
+            rel = os.path.relpath(path, ROOT_DIR)
+            if "/incoming/" in path or rel == "tourism/compare.html":
+                continue
+            body = re.sub(r"<(script|style|svg)\b.*?</\1>", " ",
+                          open(path).read(), flags=re.S)
+            text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", body)).lower()
+            text = text.replace("&mdash;", " ").replace("&middot;", " ")
+            # One pass per page rather than 99 words x 9 nouns of them: at 650
+            # pages the nested version took minutes.
+            for found in NUMBER_NOUN.finditer(text):
+                word, noun = found.group(1), found.group(2)
+                n = SPELLED.get(word)
+                fine = OK.get(noun)
+                if n is None or fine is None or n in fine:
+                    continue
+                near = text[max(0, found.start() - 40):found.start() + 40]
+                if any(a in near for a in ALLOWED_PHRASE):
+                    continue
+                wrong.setdefault("%s %s (this dataset counts %s)"
+                                 % (word, noun,
+                                    ", ".join(str(x) for x in sorted(fine)[:4])),
+                                 set()).add(rel)
+        check("every number spelled out in the prose counts something real",
+              not wrong,
+              "; ".join("%s on %d pages e.g. %s" % (k, len(v), sorted(v)[0])
+                        for k, v in sorted(wrong.items())[:3]))
+        check("the seven strands draw on twelve categories, as /meet says",
+              len(strand_cats) == 12 and len(strand_keys) == 7,
+              "%d strands, %d categories" % (len(strand_keys), len(strand_cats)))
+        meet_page = open(os.path.join(ROOT_DIR, "meet.html")).read()
+        answers = len(strand_keys) * len(countries)
+        check("/meet counts its own answers", str(answers) in meet_page,
+              "%d expected" % answers)
+
+        # -- companies that do not exist -------------------------------------------
+        print("\ncompanies that do not exist")
+        # tourism/operators.json holds three and has only ever held three. For the
+        # other nineteen countries there is no company named anywhere in this
+        # project, so any sentence asserting one is an invention. These are the
+        # exact shapes that were on the site, kept as strings rather than a clever
+        # pattern because a clever pattern would find prose that is fine.
+        INVENTED = (
+            "a licensed company based in",
+            "a licensed local company",
+            "a licensed local operator",
+            "a licensed operator in each",
+            "covered by a licensed",
+            "covered by an operator based in the country",
+            "run by a company in the country itself",
+            # The journey section promised these about all twenty-two.
+            "the person who answers your enquiry is in the country",
+            "meet the local operator responsible for your destination",
+            "working in the language you booked in",
+            # A site that says "nothing is scored" on /compare cannot promise a
+            # ranking on the homepage.
+            "which country does it best",
+            "every operator on this site is a company registered",
+            "every country is covered by a company based in it",
+            "is covered by a company based in it",
+            "operated by a licensed company based in it",
+            "is run by a company based in it",
+        )
+        HAS_GUIDES = ("eleven licensed guides",)   # Kamerun, about Kamerun, true
+        looked = sorted(p for p in
+                        glob.glob(os.path.join(ROOT_DIR, "**", "*.html"), recursive=True)
+                        + glob.glob(os.path.join(ROOT_DIR, "scripts", "*.js"))
+                        + glob.glob(os.path.join(ROOT_DIR, "tools", "tourism", "*.py"))
+                        if "/incoming/" not in p and "/node_modules/" not in p)
+        def uncommented(path, text):
+            """Comments explaining what was removed are not the thing itself.
+
+            Without this the check fails on its own paper trail: three of these
+            files carry a comment saying "this used to read 'a licensed company
+            based in <country>' and it named a company that does not exist".
+            """
+            if path.endswith(".js"):
+                text = re.sub(r"/\*.*?\*/", " ", text, flags=re.S)
+                return re.sub(r"^\s*//.*$", " ", text, flags=re.M)
+            if path.endswith(".py"):
+                text = re.sub(r'"""[\s\S]*?"""', " ", text)
+                return re.sub(r"(?m)^\s*#.*$", " ", text)
+            return re.sub(r"<!--.*?-->", " ", text, flags=re.S)
+
+        caught = {}
+        for path in looked:
+            body = uncommented(path, open(path).read()).lower()
+            for ok in HAS_GUIDES:
+                body = body.replace(ok, "")
+            for claim in INVENTED:
+                if claim in body:
+                    # tests.py itself lists them; that is this list.
+                    if os.path.basename(path) == "tests.py":
+                        continue
+                    caught.setdefault(claim, []).append(os.path.relpath(path, ROOT_DIR))
+        check("no page claims an operator the dataset does not have", not caught,
+              "; ".join("%r on %d files (%s)" % (c, len(w), w[0])
+                        for c, w in sorted(caught.items())[:3]))
+        named = {c.operator.name for c in countries if c.operator}
+        check("exactly the operators in the dataset are named as ours",
+              len(named) == 3, ", ".join(sorted(named)))
+
+        # /tourism is not a country, but it is handed the same chrome as one, so
+        # its stand-in name ("Every country") can end up where a country name
+        # belongs — it printed "We do not run a company in Every country."
+        STANDINS = ("Every country", "Everywhere", "the countries")
+        leaked = []
+        for path in looked:
+            if not path.endswith(".html"):
+                continue
+            body = re.sub(r"<[^>]+>", " ", open(path).read())
+            for stand in STANDINS:
+                for shape in ("in %s.", "company in %s", "%s is written up",
+                              "runs %s,", "to %s.", "about %s."):
+                    if (shape % stand) in body:
+                        leaked.append("%s: %s" % (os.path.relpath(path, ROOT_DIR),
+                                                  shape % stand))
+        check("no page treats the index's stand-in name as a country",
+              not leaked, "; ".join(leaked[:3]))
+
+        # -- what a page family pays twice for -------------------------------------
+        print("\nwhat a page family pays twice for")
+        blocks = {}
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                     recursive=True)):
+            if "/incoming/" in path or "/node_modules/" in path:
+                continue
+            body = open(path).read()
+            for css in re.findall(r"<style[^>]*>(.*?)</style>", body, re.S):
+                if len(css) > 4096:
+                    blocks.setdefault(css, []).append(os.path.relpath(path, ROOT_DIR))
+        shared = sorted(((len(css) * len(where), len(where), len(css), where)
+                         for css, where in blocks.items() if len(where) > 1),
+                        reverse=True)
+        # A stylesheet inlined into one page is the right call — it is fetched
+        # once either way and costs no extra request. Inlined into a family it is
+        # paid for again on every page after the first, and the tourism pages
+        # were carrying the same 39,949 bytes twenty-three times.
+        check("no page family inlines the same stylesheet twice", not shared,
+              "; ".join("%d pages x %.1f KB (%s)" % (n, size / 1024.0, w[0])
+                        for _t, n, size, w in shared[:3]))
+        for sheet in ("tourism.css", "country.css"):
+            full = os.path.join(ROOT_DIR, "styles", sheet)
+            check("/styles/%s exists and is linked, not inlined" % sheet,
+                  os.path.isfile(full) and os.path.getsize(full) > 4096,
+                  "%.1f KB" % (os.path.getsize(full) / 1024.0)
+                  if os.path.isfile(full) else "missing")
+
+        # -- what a parser makes of every head -------------------------------------
+        print("\nwhat a parser makes of every head")
+        from html.parser import HTMLParser
+
+        class Head(HTMLParser):
+            """Only what a browser would end up with, not what was typed.
+
+            index.html, contact.html and four others carried
+            `<meta name="description" content="...">` with the closing angle
+            bracket missing. In the source the canonical link is on the very next
+            line and looks perfectly fine. A parser reads it as more attributes
+            of the unclosed meta, so the tag never exists — six pages, the
+            homepage among them, with the canonical in the file and none in the
+            document. Reading the source with a regex cannot see this. Parsing
+            can, which is why this test parses.
+            """
+            # <title>, <style> and <script> are supposed to contain text.
+            HOLDS_TEXT = ("title", "style", "script", "noscript")
+
+            def __init__(self):
+                HTMLParser.__init__(self)
+                self.links, self.metas, self.stray = [], [], []
+                self.in_head = True
+                self.inside = None
+
+            def handle_starttag(self, tag, attrs):
+                if not self.in_head:
+                    return
+                if tag in self.HOLDS_TEXT:
+                    self.inside = tag
+                elif tag == "link":
+                    self.links.append(dict(attrs))
+                elif tag == "meta":
+                    self.metas.append(dict(attrs))
+
+            def handle_endtag(self, tag):
+                if tag == "head":
+                    self.in_head = False
+                elif tag == self.inside:
+                    self.inside = None
+
+            def handle_data(self, data):
+                if self.in_head and not self.inside and data.strip():
+                    self.stray.append(data.strip()[:30])
+
+        NO_INDEX = {"404.html"}
+        # tourism/compare.html is a contact sheet regenerated in one command and
+        # gitignored, so it is on a developer's disk and never on the site.
+        LOCAL_ONLY = {"tourism/compare.html"}
+        heads = sorted(p for p in glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                            recursive=True)
+                       if "/incoming/" not in p and "/node_modules/" not in p
+                       and os.path.relpath(p, ROOT_DIR) not in LOCAL_ONLY)
+        noCanon, noOg, noDesc, junk = [], [], [], []
+        for path in heads:
+            rel = os.path.relpath(path, ROOT_DIR)
+            parser = Head()
+            parser.feed(open(path).read())
+            metas = {(m.get("name") or m.get("property") or ""): m.get("content")
+                     for m in parser.metas}
+            rels = {r for link in parser.links
+                    for r in (link.get("rel") or "").split()}
+            if not metas.get("description"):
+                noDesc.append(rel)
+            if rel in NO_INDEX:
+                continue
+            if "canonical" not in rels:
+                noCanon.append(rel)
+            if not (metas.get("og:title") and metas.get("og:url")):
+                noOg.append(rel)
+            # A stray ">" left over from a doubled bracket parses as text in the
+            # head and gets moved into the body by the browser.
+            if [s for s in parser.stray if s not in ("",)]:
+                junk.append("%s (%s)" % (rel, parser.stray[0]))
+        check("every page parses with a canonical link", not noCanon,
+              "%d without: %s" % (len(noCanon), ", ".join(noCanon[:5])))
+        check("every page parses with a description", not noDesc,
+              "%d without: %s" % (len(noDesc), ", ".join(noDesc[:5])))
+        check("every page parses with og:title and og:url", not noOg,
+              "%d without: %s" % (len(noOg), ", ".join(noOg[:5])))
+        check("no page leaves loose text in its head", not junk,
+              "; ".join(junk[:3]))
+        check("the pages that should not be indexed say so",
+              all('name="robots"' in open(os.path.join(ROOT_DIR, p)).read()
+                  and "noindex" in open(os.path.join(ROOT_DIR, p)).read()
+                  for p in NO_INDEX))
+
+        # -- whose enquiry desk /contact is ----------------------------------------
+        print("\nwhose enquiry desk /contact is")
+        con = open(os.path.join(ROOT_DIR, "contact.html")).read()
+        ours_ops = [c for c in countries if c.operator]
+        host = ([c for c in ours_ops if c.operator.url.startswith("/")]
+                or ours_ops)[0]
+        # The bar belongs on every page wearing this operator's masthead, not
+        # only the one with the form on it. /about, /pricing, /services and
+        # /cameroon sit on group addresses a visitor reads as the group's, and
+        # all four carry the same form mailing the same operator.
+        from tourism import enquiry as enq
+        wearing = enq.cluster(host.operator.name)
+        check("every page wearing the operator's masthead is known", len(wearing) >= 4,
+              ", ".join(os.path.relpath(p, ROOT_DIR) for p in wearing))
+        barless = [os.path.relpath(p, ROOT_DIR) for p in wearing
+                   if 'class="fj-from"' not in open(p).read()]
+        check("every one of them says whose pages they are", not barless,
+              ", ".join(barless))
+        unlisted = [u for u in ("/tourism", "/about", "/pricing", "/services")
+                    if "<loc>https://afrinkong.com%s</loc>" % u not in sitemap]
+        check("every real page of theirs is in the sitemap", not unlisted,
+              ", ".join(unlisted))
+
+        bar = re.search(r'<div class="fj-from"[^>]*>(.*?)</div>\s*</div>', con, re.S)
+        check("the primary call of the site still lands on /contact",
+              'href="/contact"' in open(os.path.join(ROOT_DIR, "index.html")).read())
+        check("/contact says whose desk it is, in the HTML, without a script",
+              bool(bar) and host.operator.name in bar.group(1),
+              (host.operator.name if bar else "no bar"))
+        if bar:
+            check("it names the country that operator runs", host.name in bar.group(1))
+            check("it names where they are", host.operator.base in bar.group(1))
+            check("it offers the rest of the continent a way out",
+                  'href="/atlas"' in bar.group(1))
+            for other in ours_ops:
+                if other.slug == host.slug:
+                    continue
+                check("it hands %s over to %s" % (other.name, other.operator.name),
+                      other.operator.url in bar.group(1))
+        # The mailto is one operator's address. That is fine — it is their page —
+        # but it must not be the only thing the visitor learns about where the
+        # letter goes, which was the state before this.
+        m = re.search(r'data-lead-mailto="([^"]+)"', con)
+        check("the form still has somewhere to send to", bool(m), m.group(1) if m else "")
+        if m and bar:
+            check("the address it sends to belongs to the operator it names",
+                  host.operator.name.split()[0].lower() in m.group(1).lower(),
+                  m.group(1))
+        boot = re.search(r'<script type="application/json" id="fj-reach">(.*?)</script>',
+                         con, re.S)
+        check("the page knows which country belongs to whom", bool(boot))
+        if boot:
+            reach = json.loads(boot.group(1))
+            check("every operator of ours is in it",
+                  set(reach["ours"]) == {c.slug for c in ours_ops})
+            check("every country without one is in it too",
+                  set(reach["rest"]) == {c.slug for c in countries if not c.operator})
+            check("the two lists do not overlap",
+                  not (set(reach["ours"]) & set(reach["rest"])))
+
+        # -- where the links actually go -------------------------------------------
+        print("\nwhere the links actually go")
+        html_pages = sorted(p for p in glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                                 recursive=True)
+                            if "/incoming/" not in p and "/node_modules/" not in p)
+        anchors, dead, broken = {}, {}, {}
+
+        def anchors_of(path):
+            if path not in anchors:
+                body = open(path).read()
+                anchors[path] = ({m.group(1) for m in re.finditer(r'\bid="([^"]+)"', body)}
+                                 | {m.group(1) for m in
+                                    re.finditer(r'<a[^>]*\bname="([^"]+)"', body)})
+            return anchors[path]
+
+        def as_file(base):
+            stem = base.lstrip("/")
+            for cand in (stem, stem + ".html", os.path.join(stem, "index.html")):
+                full = os.path.join(ROOT_DIR, cand)
+                if os.path.isfile(full):
+                    return full
+            return None
+
+        for path in html_pages:
+            body = re.sub(r"<(script|style)\b.*?</\1>", "", open(path).read(), flags=re.S)
+            rel = os.path.relpath(path, ROOT_DIR)
+            for m in re.finditer(r'href="([^"]+)"', body):
+                url = m.group(1)
+                if url.startswith(("http", "mailto:", "tel:", "data:", "javascript:")):
+                    continue
+                base, _, frag = url.partition("#")
+                base = base.split("?")[0]
+                # "#/kenya" and "#/j/kenya/" are hash routes read by atlas.js and
+                # journey.js, not anchors, and there is no element to find.
+                if frag.startswith("/"):
+                    continue
+                target = path if base == "" else as_file(base)
+                if base and target is None:
+                    dead.setdefault(base, set()).add(rel)
+                elif frag and target and frag not in anchors_of(target):
+                    broken.setdefault("%s#%s" % (base or rel, frag), set()).add(rel)
+
+        check("every internal link points at a page that exists", not dead,
+              "; ".join("%s (from %s)" % (u, sorted(w)[0]) for u, w in
+                        sorted(dead.items())[:4]))
+        check("every anchor link points at an element that exists", not broken,
+              "; ".join("%s (from %d pages)" % (u, len(w)) for u, w in
+                        sorted(broken.items())[:4]))
+
         # -- the story graph -------------------------------------------------------
         print("\nthe story graph")
         from tourism import graph as graph_mod
@@ -1376,8 +2100,25 @@ def main():
         # line each; if node is not installed they are reported as skipped and
         # counted as neither passed nor failed, because a check that did not run
         # is not a check that passed.
-        print("\njourney engine")
+        # -- what the browser actually does ----------------------------------------
+        print("\nwhat the browser actually does")
         node = shutil.which("node")
+        shift = os.path.join(ROOT_DIR, "tools", "browser-checks.js")
+        if not node:
+            print("  SKIPPED: node is not installed; nothing was measured in a browser")
+        else:
+            proc = subprocess.run([node, shift], capture_output=True, text=True,
+                                  cwd=ROOT_DIR)
+            lines = [l for l in proc.stdout.splitlines() if "\t" in l]
+            if not lines:
+                check("the browser checks ran", False,
+                      (proc.stderr or "no output").strip().splitlines()[-1][:90]
+                      if (proc.stderr or "").strip() else "no output")
+            for line in lines:
+                verdict, name, detail = (line.split("\t") + ["", ""])[:3]
+                check(name, verdict == "PASS", detail)
+
+        print("\njourney engine")
         script = os.path.join(ROOT_DIR, "tools", "journey-checks.js")
         if not node:
             print("  SKIPPED: node is not installed; the engine checks did not run")

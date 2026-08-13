@@ -148,7 +148,12 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
   text-transform:uppercase;color:var(--c-muted);margin-top:8px}
 .af-head h2{font-size:clamp(30px,4vw,54px);max-width:24ch}
 .af-head h2 em{font-style:normal;color:var(--c-accent)}
-.af-note{margin-top:16px;color:var(--c-muted);max-width:44em}
+/* 44em of a 17px face is 748 pixels and 96 average characters a line. The
+   comfortable range for continuous prose is 45-85; past 90 the eye loses
+   the start of the next line on the way back. 72ch measures 78 average
+   characters in this face — ch is the width of a zero, which here is 1.09
+   times the average lowercase letter, so the two are not the same number. */
+.af-note{margin-top:16px;color:var(--c-muted);max-width:72ch}
 @media(max-width:880px){.af-head{grid-template-columns:1fr;gap:18px;margin-bottom:var(--sp-4)}}
 
 /* ---- the country window -------------------------------------------------- */
@@ -276,6 +281,11 @@ html.ex-open{overflow:hidden}
   border-bottom:2px solid var(--c-primary)}
 .ex-bar input{flex:1 1 0;min-width:0;font-family:var(--fj-text);font-size:19px;
   background:transparent;color:var(--c-ink);border:0;padding:4px 0}
+/* The one field where the ring is genuinely redundant: the dialog it sits in
+   opens with this input already focused and nothing else in it is tabbable
+   until a result is highlighted, so a ring here marks the only place focus can
+   be. The bar's own 2px rule under it is the boundary, and it is drawn in
+   --c-primary against the page ground at 12:1. */
 .ex-bar input:focus{outline:none}
 .ex-esc{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--c-muted);background:none;border:1px solid var(--c-border);padding:6px 9px;
@@ -345,4 +355,19 @@ html.ex-open{overflow:hidden}
   header .btn,header .af-btn,header a[class*="btn"]{padding:9px 8px;font-size:8px}
   .pl-mast{padding:0 14px}
   .ex-key{margin-left:auto}
+}
+
+/* ---- a finger is not a mouse pointer ------------------------------------- */
+/* WCAG 2.5.8 asks for 24x24 CSS pixels. Measured on a 390px phone, twelve of
+   the eighteen page families had targets at 23, 20, 17 and 13 pixels tall — all
+   of them wide enough and none of them tall enough, because they are set in
+   mono at 9 to 11px with a rule under them and no padding.
+
+   The widths are fine, so only the block padding changes, and only where a
+   finger is the pointer: on a mouse these keep the tighter setting the design
+   was drawn at. A link sitting inside a sentence is exempt under the same
+   success criterion and is left alone. */
+@media(pointer:coarse){
+  .af-go{padding-top:6px;padding-bottom:9px}
+  .af-stamp{padding-block:2px}
 }
