@@ -255,7 +255,15 @@
 
    The rule is that the tighter tracking goes with the things you press. */
 .wa-win-region{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
-.wa-win-cap b{display:block;font-family:var(--fj-display);font-size:clamp(26px,2.9vw,38px);font-weight:700;text-transform:uppercase;line-height:1.02;margin-top:8px}
+/* The name of whatever the map is showing: the second-largest display item in
+   the hero, and the last one that was still sized off the viewport after 072.
+   Measured against the headline it held 0.178 from 1280 up, slid to 0.169 at
+   1180, and collapsed to 0.136 at 768 — where the copy column is at its widest
+   and the headline at its largest, so the map's caption was at its smallest
+   relative to it exactly where the map is at its biggest. */
+.wa-win-cap b{display:block;font-family:var(--fj-display);font-weight:700;
+  text-transform:uppercase;line-height:1.02;margin-top:8px;
+  font-size:clamp(26px, calc(var(--fj-h1, 2.9vw) * .178), 38px)}
 /* Balanced, because it is a caption of one or two lines and its second line
    was a widow: at 390 it broke 99% / 8% — one word, "here.", alone under a full
    line — and at 360 84% / 33%. A caption under a map is read as a shape before
@@ -1575,12 +1583,13 @@ window.AF = {
   var h1 = document.querySelector('.wa-open-say > .wa-h1');
   var big = h1 && h1.querySelector('.wa-h1-big');
   var col = h1 && h1.parentNode;
+  var scope = document.getElementById('window');
   if (!big || !col) return;
   var PROBE = 200, queued = false;
   function fit(){
     queued = false;
     var w = col.clientWidth;
-    if (!w) { big.style.fontSize = ''; col.style.removeProperty('--fj-h1'); return; }
+    if (!w) { big.style.fontSize = ''; (scope || col).style.removeProperty('--fj-h1'); return; }
     big.style.fontSize = PROBE + 'px';
     var range = document.createRange();
     range.selectNodeContents(big);
@@ -1591,11 +1600,14 @@ window.AF = {
     var size = w / ratio;
     big.style.fontSize = size.toFixed(2) + 'px';
     /* The two lines under it are proportions of this — see .wa-h1-rest. */
-    /* On the column, not the <h1>: .wa-find is the h1's sibling, and custom
-       properties inherit down rather than sideways. Set on the h1 it resolved
-       for the qualifying line inside it and left the promise line under it on
-       the clamp's floor — 17px where it wanted 30. */
-    col.style.setProperty('--fj-h1', size.toFixed(2) + 'px');
+    /* On the section, not on the <h1> and not on the column.
+       Custom properties inherit down rather than sideways, so the scope has to
+       contain everything that keys off the headline. Set on the <h1> it reached
+       the qualifying line inside it and left the promise line beside it on the
+       clamp's floor — 17px where it wanted 30. Set on the column it reached
+       both of those and left the map's readout, which is in the other column,
+       on its floor at 768. The section holds all three. */
+    (scope || col).style.setProperty('--fj-h1', size.toFixed(2) + 'px');
   }
 
   /* AND THE WORD STARTS WHERE THE CONTINENT STARTS.
