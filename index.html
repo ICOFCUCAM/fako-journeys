@@ -1583,11 +1583,63 @@ window.AF = {
        the clamp's floor — 17px where it wanted 30. */
     col.style.setProperty('--fj-h1', size.toFixed(2) + 'px');
   }
-  fit();
+
+  /* AND THE WORD STARTS WHERE THE CONTINENT STARTS.
+     Two objects hold the first screen and neither was aligned to the other: the
+     cap line of AFRICA sat 24px above the northern tip of the continent at 1920,
+     26px at 1440 and 27px at 1280 — close enough to read as a mistake rather
+     than as a decision, and drifting, because one is positioned from the top of
+     the stage and the other from a vh.
+
+     The target is the continent's own ink, not the frame's edge, which is a box
+     nobody can see: getBBox() on the map gives the union of the paths in user
+     units, so the line being aligned to is Cap Angela in Tunisia. And the offset
+     from the top of the <h1>'s box to the cap line is measured rather than
+     assumed, because it is half-leading plus the gap between the font's ascent
+     and its cap height, and both of those belong to whichever face the reader
+     turned out to have.
+
+     Only where the map is bled off the right. Stacked, the continent is below
+     the headline and there is nothing to align to. */
+  function capOffset(){
+    var cs = getComputedStyle(big), fs = parseFloat(cs.fontSize);
+    var c = document.createElement('canvas').getContext('2d');
+    c.font = cs.fontWeight + ' ' + fs + 'px ' + cs.fontFamily;
+    var caps = c.measureText('AFRICA'), full = c.measureText('Hg');
+    var lh = parseFloat(cs.lineHeight);
+    if (!(lh > 0)) lh = fs * 1.2;
+    var half = (lh - (full.fontBoundingBoxAscent + full.fontBoundingBoxDescent)) / 2;
+    return half + full.fontBoundingBoxAscent - caps.actualBoundingBoxAscent;
+  }
+
+  var BASE = 10;   // .wa-h1's margin-top in the stylesheet
+  function align(){
+    var frame = document.querySelector('.wa-win-frame');
+    var svg = frame && frame.querySelector('.wa-map-svg');
+    h1.style.marginTop = BASE + 'px';
+    if (!frame || !svg) return;
+    var fb = frame.getBoundingClientRect();
+    /* Stacked: the map is under the copy, not beside it. */
+    if (fb.left < col.getBoundingClientRect().right - 8) return;
+    var vb = svg.viewBox.baseVal, bbox;
+    try { bbox = svg.getBBox(); } catch (e) { return; }
+    if (!vb || !vb.height || !bbox.height) return;
+    var k = Math.min(fb.width / vb.width, fb.height / vb.height);
+    var north = fb.top + (fb.height - vb.height * k) / 2 + (bbox.y - vb.y) * k;
+    var cap = h1.getBoundingClientRect().top + capOffset();
+    var shift = Math.round(north - cap);
+    /* A guard, not a fudge: if the answer is not a small nudge then something
+       about the layout is not what this assumes, and the stylesheet's value is
+       the safer one. */
+    if (shift > -40 && shift < 120) h1.style.marginTop = (BASE + shift) + 'px';
+  }
+
+  function run(){ fit(); align(); }
+  run();
   addEventListener('resize', function(){
     if (queued) return;
     queued = true;
-    requestAnimationFrame(fit);
+    requestAnimationFrame(run);
   }, {passive: true});
 })();
 </script>
