@@ -339,7 +339,14 @@ function serve() {
 
         /* The map's overhang past the text frame is a distance, not a share. */
         const frame = B('.wa-open-stage > .wa-frame'), win = B('.wa-win-frame');
-        const stacked = win && frame && win.left < frame.left + 4;   // phone layout
+        const say = B('.wa-open-say');
+        /* Stacked means the map is under the copy rather than beside it, and
+           the test for that is whether it starts left of where the copy ends.
+           Comparing it to the text frame's own left edge does not work: the
+           frame's box is the full width and its padding is inside it, so on a
+           phone the map's left is 20 and the frame's is 0, and every stacked
+           width reported itself as a desktop. */
+        const stacked = !!(win && say && win.left < say.right - 8);
         if (frame && win && !stacked) {
           const over = Math.round(win.right - frame.right);
           if (over > bleed) bad.push('map overhangs the frame by ' + over);
