@@ -189,10 +189,19 @@
    height was capped at 450 whatever the stage had to give.
 
    aspect-ratio makes the width follow the height, margin-left:auto holds it to
-   the right edge, and the height is what the stage can actually spare: its own
-   height less the masthead clearance and the readout under the map. */
+   the right edge, and the height is what the stage can spare: the viewport less
+   the masthead clearance and the readout under the map.
+
+   With a floor, because that subtraction is against the viewport and the stage
+   is not the viewport — it has a min-height, and on a short screen its content
+   makes it taller than one. Measured on a 1440x500 window the stage was 707px
+   tall and the map was 96x102: a hundred pixels of continent with six hundred
+   pixels of room around it, because the formula had subtracted a fixed 320 from
+   a 500-pixel viewport. 1920x540 gave 134x142. Below about 300px the countries
+   stop being things a pointer can hit, so that is the floor, and the stage
+   grows to take it. */
 .wa-win-frame{position:relative;margin-left:auto;aspect-ratio:1000/1060;width:auto;
-  height:min(calc(100vh - var(--mast) - 320px), 560px)}
+  height:clamp(300px, calc(100vh - var(--mast) - 320px), 560px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}
