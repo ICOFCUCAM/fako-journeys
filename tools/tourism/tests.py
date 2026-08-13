@@ -1511,6 +1511,42 @@ def main():
         check("no page names two images as its most urgent", not twice,
               ", ".join(twice[:4]))
 
+        # -- the build has to exit zero, or the workflow throws the run away -------
+        print("\nthe build has to exit zero")
+        # `build.py all` ends in `verify`, and the workflow runs it as its own
+        # step. A non-zero exit fails the job before the commit step, so a run
+        # that resolved two hundred photographs discards all of them. That is
+        # what the runs on 13 August did, twice, and nothing in the suite noticed
+        # because every check here calls the modules rather than the command.
+        # Without the suite's overrides. They repoint both providers at the mock
+        # server, and a subprocess inherits them, so a real images.unsplash.com
+        # URL on a real page reads as "an unexpected source" — the check would
+        # be measuring the harness rather than the site.
+        plain = dict(os.environ)
+        for var in ("UNSPLASH_API_BASE", "PEXELS_API_BASE",
+                    "UNSPLASH_IMAGE_HOST_OVERRIDE", "PEXELS_IMAGE_HOST_OVERRIDE",
+                    "TOURISM_CACHE_FILE"):
+            plain.pop(var, None)
+        proc = subprocess.run([sys.executable,
+                               os.path.join(ROOT_DIR, "tools", "tourism", "build.py"),
+                               "verify"], capture_output=True, text=True,
+                              cwd=ROOT_DIR, env=plain)
+        check("build.py verify exits zero on the site as it stands",
+              proc.returncode == 0,
+              (proc.stdout or proc.stderr).strip().splitlines()[-1][:100]
+              if (proc.stdout or proc.stderr).strip() else "no output")
+        # And the specific fault, so it cannot come back by a different route:
+        # an unresolved slot is a plate, and verify has to count it as a slot.
+        vsrc = open(os.path.join(ROOT_DIR, "tools", "tourism", "verify.py")).read()
+        check("verify counts a plate as a filled slot",
+              "af-plate" in vsrc, "it only knew about tq-empty")
+        pages = glob.glob(os.path.join(ROOT_DIR, "tourism", "*.html"))
+        plated = [p for p in pages
+                  if open(p).read().count('class="af-plate ') > 20]
+        check("the pages with no photographs are the ones this protects",
+              len(plated) >= 15, "%d of %d country pages are all plates"
+              % (len(plated), len(pages)))
+
         # -- what a resolver run would actually commit -----------------------------
         print("\nwhat a resolver run would actually commit")
         wf_path = os.path.join(ROOT_DIR, ".github", "workflows", "tourism-resolve.yml")
