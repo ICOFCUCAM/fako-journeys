@@ -550,7 +550,13 @@
 .wa-map-city:hover .wa-map-city-say,.wa-map-city:focus-within .wa-map-city-say{opacity:1}
 .wa-map-city:hover .wa-map-city-dot{fill:var(--c-bg)}
 .wa-map-rose{fill:none;stroke:color-mix(in srgb,var(--c-gold) 40%, transparent);
-  stroke-width:1;vector-effect:non-scaling-stroke}
+  stroke-width:1;vector-effect:non-scaling-stroke;
+  /* The rose belongs to the sheet, not to the interface: it should grow and
+     shrink with the paper as the map flies to a region, which non-scaling-stroke
+     on its ring would prevent. The ring keeps a screen-constant hairline because
+     a compass drawn with a heavy ring is a logo; the needle scales. */
+  transition:opacity .3s}
+.wa-map-rose path{vector-effect:none}
 .wa-map-rose path{fill:color-mix(in srgb,var(--c-gold) 55%, transparent);stroke:none}
 .wa-map-rose .wa-map-rose-x{fill:none;stroke:color-mix(in srgb,var(--c-gold) 30%, transparent)}
 .wa-map-rose text{font-family:var(--fj-mono);font-size:17px;letter-spacing:.1em;
