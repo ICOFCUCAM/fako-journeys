@@ -347,7 +347,12 @@
   text-wrap:balance}
 .wa-win-op{display:block;font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin-top:14px}
 .wa-win-go{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px}
-.wa-win-key{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 16px;margin-top:12px}
+/* A key, not a caption. It sat as a loose row of three under the readout with
+   nothing tying it to the map it explains; it now carries the same hairline the
+   rails carry and sits hard against the map's own right edge, so the eye reads
+   map-then-key rather than three more words. */
+.wa-win-key{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 18px;
+  margin-top:14px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--c-bg) 22%,transparent)}
 .wa-win-key span{display:flex;align-items:center;gap:7px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
