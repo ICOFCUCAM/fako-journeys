@@ -114,7 +114,23 @@
 .wa-act.faint{border-color:var(--c-border);color:var(--c-muted)}
 .wa-act.faint:hover{border-color:var(--c-primary);color:var(--c-primary)}
 
-.wa-win{position:absolute;right:0;top:calc(var(--mast) + 1vh);width:min(50vw,640px);
+/* The bleed is a distance, not a share of the screen.
+   `right: 0` reads as "run the continent off the edge", and at 1440 it does
+   exactly that: the frame is 1240 wide and centred, so its right edge is at
+   1340 and the map's is at 1440 — a hundred pixels past. At 1920 the same
+   declaration puts the frame's edge at 1580 and the map's at 1920, and the
+   composition comes apart: three hundred and forty pixels of nothing between
+   the column the type is set in and the object that is meant to be crossing
+   behind it. Measured across thirteen widths that gap is the single largest
+   thing wrong with this hero above 1440.
+
+   So the overhang is pinned at 100px past the frame and the map stops there,
+   which resolves to right:0 at every width up to 1440 — the composition that
+   was tuned — and holds the same relationship above it. max() rather than a
+   media query because the frame's own width is already a min(). */
+.wa-win{position:absolute;top:calc(var(--mast) + 1vh);width:min(50vw,640px);
+  --fj-bleed:100px;
+  right:max(0px, calc((100vw - min(1240px, 100vw)) / 2 - var(--fj-bleed)));
   z-index:1;display:grid;grid-template-columns:1fr;gap:12px}
 .wa-win-frame{position:relative;height:min(50vh,450px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
