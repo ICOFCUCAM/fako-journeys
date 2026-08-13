@@ -5,3 +5,6 @@ __pycache__/
 
 # Regenerated in one command from the candidate pool; not worth versioning.
 tourism/compare.html
+
+# Installed on CI so the browser checks have something to drive; never here.
+node_modules/
