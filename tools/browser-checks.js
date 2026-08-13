@@ -188,6 +188,11 @@ const HERO_WIDTHS = [[2560, 1440], [1920, 1080], [1440, 900], [1366, 768],
                      [1440, 500], [1920, 540], [1280, 600], [720, 450]];
 /* The map has to stay big enough to pick a country out of, at every shape. */
 const HERO_MAP_MIN = 240;
+
+/* Pass nine walks a few pages with prefers-reduced-motion on. The gateway is
+   the one with a cross-fade in it; the others are here because a delay left
+   behind by a removed animation is not a hero-specific mistake. */
+const REDUCED_PAGES = ['/index.html', '/atlas.html', '/kenya.html', '/meet.html'];
 const HERO_BLEED = 140;
 const HERO_BAND = 200;
 
@@ -305,6 +310,65 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass nine: the same page with the motion turned off ------------ */
+    /*
+     * Reduced motion is a setting, not a rendering mode, and a page can be
+     * correct in one and wrong in the other. This one was: the hero holds a
+     * hidden caption out of the tab order with `visibility 0s linear .45s`, a
+     * delay sized to cover an opacity fade, and the reduced-motion block zeroes
+     * durations without touching delays. So the fade went away, the delay did
+     * not, and for 450ms after every selection there was an invisible,
+     * focusable link in the hero — under the one setting chosen by people who
+     * are least able to tolerate a page that misbehaves.
+     *
+     * PASS SEVEN walks the tab order and would have caught it in a second. It
+     * runs with motion on, so it never has.
+     */
+    {
+      const rm = await browser.newContext({viewport: {width: 1280, height: 900},
+                                           reducedMotion: 'reduce'});
+      for (const url of REDUCED_PAGES) {
+        const page = await rm.newPage();
+        await page.goto(base + url, {waitUntil: 'networkidle'});
+        /* Move through whatever states the page has, then look for anything
+           that is invisible and still reachable. Selecting is what triggers a
+           cross-fade, and a cross-fade is where the delays live. */
+        const ghosts = await page.evaluate(async () => {
+          const pick = [...document.querySelectorAll('.wa-tick, .wa-reg, [data-slug]')]
+            .filter(el => typeof el.click === 'function').slice(0, 3);
+          const seen = new Set();
+          const sweep = () => {
+            document.querySelectorAll('body *').forEach(el => {
+              const cs = getComputedStyle(el);
+              if (cs.visibility === 'hidden' || cs.display === 'none') return;
+              if (+cs.opacity >= 0.05) return;
+              const box = el.getBoundingClientRect();
+              if (box.width < 2 || box.height < 2) return;
+              /* Only things a keyboard can land on. */
+              const hot = el.matches('a[href],button,input,select,textarea,[tabindex]')
+                || el.querySelector('a[href],button,input,select,textarea');
+              if (hot) seen.add(el.tagName + '.' + String(el.className || '').slice(0, 22));
+            });
+          };
+          sweep();
+          for (const el of pick) {
+            el.click();
+            await new Promise(r => setTimeout(r, 120));
+            sweep();
+            await new Promise(r => setTimeout(r, 260));
+            sweep();
+          }
+          return [...seen];
+        });
+        await page.close();
+        check(url + ' hides nothing it can still focus, with motion off',
+              !ghosts.length,
+              ghosts.length ? ghosts.length + ' invisible and reachable: '
+                              + ghosts.slice(0, 2).join(', ') : 'nothing reachable is invisible');
+      }
+      await rm.close();
+    }
+
     /* ---- pass eight: the hero is one composition ------------------------- */
     /*
      * Everything the other seven passes measure is true of a page. This one is
