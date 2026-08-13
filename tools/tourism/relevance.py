@@ -148,6 +148,18 @@ def score(candidate, country, category, entry, role, taken=None):
 MIN_SCORE = 1.0            # below this, leave the slot unresolved
 CLEARLY_BETTER = 2.0       # margin a fallback must beat the primary by
 
+# The highest score any candidate can reach: every positive term at its cap and
+# no penalty. 1.5 for naming the country, 4.0 for the subject, 3.0 for the
+# category, 1.0 for being over 4000px wide. Nothing else adds.
+#
+# It exists so the resolver can know when asking another provider is provably
+# pointless. A fallback only displaces the primary at CLEARLY_BETTER above it,
+# so once the primary is above CEILING - CLEARLY_BETTER no possible answer from
+# anywhere else can win, and the request would be spent to learn nothing. On a
+# Demo key allowing fifty requests an hour that is not a rounding error.
+CEILING = 1.5 + 4.0 + 3.0 + 1.0
+UNBEATABLE = CEILING - CLEARLY_BETTER
+
 
 def rank(candidates, country, category, entry, role, seen=None, taken=None):
     """Best first, already filtered for duplicates, sameness and hopeless crops."""

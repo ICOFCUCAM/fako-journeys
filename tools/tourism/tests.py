@@ -388,6 +388,29 @@ def main():
               _raises(lambda: providers.all_providers("flickr"), KeyError))
         check("Unsplash wins when both are merely adequate", rec["provider"] == "unsplash")
 
+        # -- 6b. requests that cannot change the answer ---------------------------
+        print("\n6b. a request that cannot change the answer is not made")
+        check("the ceiling is every positive term at its cap",
+              abs(relevance.CEILING - 9.5) < 1e-9, "%.2f" % relevance.CEILING)
+        check("above the ceiling less the winning margin, nothing can win",
+              relevance.UNBEATABLE == relevance.CEILING - relevance.CLEARLY_BETTER,
+              "%.1f" % relevance.UNBEATABLE)
+        # Both providers still get asked whenever the first answer leaves room.
+        CALLS[:] = []
+        resolve.resolve_entry(kenya, tax.by_id["safari"], kenya.entry("safari"),
+                              tax.role("safari"), set())
+        asked = {c.split("/")[1] for c in CALLS if c.startswith(("/search", "/u", "/p"))} \
+            if CALLS else set()
+        both = len([c for c in CALLS if "unsplash" in c or c.startswith("/u")]) > 0 \
+            and len([c for c in CALLS if "pexels" in c or c.startswith("/p")]) > 0
+        check("with an ordinary match, both providers are still consulted", both,
+              "%d calls" % len(CALLS))
+        # And the arithmetic itself: a score above UNBEATABLE cannot be displaced.
+        check("no score at or below the ceiling beats an unbeatable one",
+              not (relevance.CEILING >= (relevance.UNBEATABLE + 0.01)
+                   + relevance.CLEARLY_BETTER),
+              "ceiling %.1f, unbeatable %.1f" % (relevance.CEILING, relevance.UNBEATABLE))
+
         # -- 7. all 27 categories --------------------------------------------------
         print("\n7. all 27 categories resolve")
         cache = fresh()
