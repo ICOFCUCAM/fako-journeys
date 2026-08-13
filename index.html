@@ -440,6 +440,27 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:680px){.wa-regions{grid-template-columns:1fr}.wa-region{border-right:0 !important;padding-right:0}}
 
 /* ---- destinations --------------------------------------------------------------- */
+/* Nothing matched. 151 of the 360 want-month-region combinations find no
+   country, which is not a fault in the filters — nowhere in North Africa leads
+   on wildlife — but an empty grid and "0 of 22" is a dead end in the middle of
+   the page. This is the way back out, and the counts on it are computed against
+   the same cards rather than guessed. */
+.wa-none{grid-column:1/-1;padding:var(--sp-5) 0 var(--sp-4);max-width:62ch}
+.wa-none-h{font-family:var(--fj-display);font-size:clamp(24px,3vw,34px);
+  text-transform:uppercase;line-height:1.04;letter-spacing:-.01em}
+.wa-none-p{margin-top:14px;font-size:16px;color:var(--c-muted)}
+.wa-none-p a{color:var(--c-accent);border-bottom:1px solid var(--c-accent)}
+.wa-none-ways{margin-top:22px;display:flex;flex-wrap:wrap;gap:1px;
+  box-shadow:0 0 0 1px var(--c-border)}
+.wa-none-way{flex:1 1 190px;background:var(--c-bg);border:0;cursor:pointer;
+  text-align:left;padding:16px 18px;box-shadow:0 0 0 1px var(--c-border);
+  transition:background var(--t-fast) var(--ease)}
+.wa-none-way:hover{background:var(--fj-dust)}
+.wa-none-way b{display:block;font-family:var(--fj-display);font-size:23px;
+  font-weight:700;text-transform:uppercase;line-height:1}
+.wa-none-way span{display:block;margin-top:7px;font-family:var(--fj-mono);
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.wa-none-way:hover b{color:var(--c-accent)}
 .wa-dests{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid var(--c-primary)}
 /* The grid is grouped by region rather than being one run of twenty-two cards.
    Grouping is what lets it hold fifty-four without becoming a wall. */
@@ -1584,6 +1605,90 @@ window.AF = {
       if (band) parts.push((parts.length ? 'in ' : 'In ') + band.textContent.trim());
     }
     say.textContent = (parts.join(', ') || 'Narrowed') + ' — ' + shown + ' of ' + all.length + '.';
+    nothing(shown, all);
+  }
+
+  /* Three filters and twenty-two countries: 151 of the 360 combinations match
+     nothing at all. That is not a bug in the filters — nowhere in North Africa
+     leads on wildlife, and saying so is the useful answer — but the section was
+     answering it with an empty grid and "0 of 22", which is a dead end in the
+     middle of the page.
+
+     So when nothing matches, work out which single filter is responsible by
+     dropping each one in turn and counting what comes back, and offer the ones
+     that would actually find something. The counts are real: they are computed
+     against the same cards, not estimated. */
+  var none = null;
+
+  function count(w, m, r) {
+    var n = 0;
+    [].slice.call(document.querySelectorAll('.wa-dest[data-tags]')).forEach(function (c) {
+      if (w && c.dataset.tags.split(' ').indexOf(w) < 0) return;
+      if (m && c.dataset.months.split(',').indexOf(String(m)) < 0) return;
+      if (r && c.dataset.region !== r) return;
+      n++;
+    });
+    return n;
+  }
+
+  function regionName(key) {
+    var band = document.querySelector('.wa-dest-band[data-region="' + key + '"] .wa-dest-reg');
+    return band ? band.textContent.trim() : key;
+  }
+
+  function nothing(shown, all) {
+    if (!grid) return;
+    if (shown > 0) {
+      if (none) { none.remove(); none = null; }
+      return;
+    }
+    var ways = [];
+    if (region) ways.push({drop: 'region', n: count(want, month, null),
+      say: 'anywhere in Africa'});
+    if (month) ways.push({drop: 'month', n: count(want, null, region),
+      say: 'in any month'});
+    if (want) ways.push({drop: 'want', n: count(null, month, region),
+      say: 'whatever they lead on'});
+    ways = ways.filter(function (w) { return w.n > 0; })
+               .sort(function (a, b) { return b.n - a.n; });
+
+    var html = '<p class="wa-none-h">Nothing here matches all three.</p>';
+    if (ways.length) {
+      html += '<p class="wa-none-p">Twenty-two countries is a small enough set '
+        + 'that a specific question can have no answer. Loosen one:</p>'
+        + '<div class="wa-none-ways">' + ways.map(function (w) {
+          return '<button type="button" class="wa-none-way" data-drop="' + w.drop + '">'
+            + '<b>' + w.n + (w.n === 1 ? ' country' : ' countries') + '</b>'
+            + '<span>' + w.say + '</span></button>';
+        }).join('') + '</div>';
+    } else {
+      html += '<p class="wa-none-p">Loosening any one of the three still finds '
+        + 'nothing, which means this combination is not in the dataset at all. '
+        + '<a href="/places">Every place</a> is the plain list.</p>';
+    }
+    if (!none) {
+      none = document.createElement('div');
+      none.className = 'wa-none';
+      grid.appendChild(none);
+    }
+    none.innerHTML = html;
+    none.querySelectorAll('.wa-none-way').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var d = b.dataset.drop;
+        /* The region is owned by the map, which broadcasts af:region; setting
+           it here alone would leave the map showing a zoomed continent that no
+           longer filters anything. Pressing the map's own Africa button is the
+           one move that puts both back in step. */
+        if (d === 'region') {
+          var whole = document.querySelector('.wa-reg[data-reg="africa"]');
+          if (whole) { whole.click(); return; }
+          region = null;
+        }
+        if (d === 'month') month = null;
+        if (d === 'want') want = null;
+        apply();
+      });
+    });
   }
 
   /* The experiences section, three screens up, offers the same six lenses these
