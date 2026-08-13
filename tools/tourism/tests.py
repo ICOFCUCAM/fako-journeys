@@ -1424,6 +1424,69 @@ def main():
                   expect is None or top == expect,
                   "%d on %s, dataset has %s" % (top, where, expect))
 
+        # -- the palette says what it is ------------------------------------------
+        print("\nthe palette says what it is")
+        css = open(os.path.join(ROOT_DIR, "styles", "afrinkong.css")).read()
+        TOKENS = dict(re.findall(r"(--c-[a-z-]+):\s*(#[0-9A-Fa-f]{6})", css))
+
+        def channels(hexcol):
+            h = hexcol.lstrip("#")
+            return [int(h[i:i + 2], 16) / 255.0 for i in (0, 2, 4)]
+
+        def relative(c):
+            f = (lambda v: v / 12.92 if v <= 0.03928
+                 else ((v + 0.055) / 1.055) ** 2.4)
+            return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2])
+
+        def contrast(a, b):
+            x, y = relative(channels(a)), relative(channels(b))
+            return (max(x, y) + 0.05) / (min(x, y) + 0.05)
+
+        need = ["--c-bg", "--c-sand", "--c-primary", "--c-ink", "--c-accent",
+                "--c-accent-fill", "--c-accent-lit", "--c-gold", "--c-muted"]
+        missing = [t for t in need if t not in TOKENS]
+        check("every token in the palette is defined", not missing, ", ".join(missing))
+        if not missing:
+            # The two grounds a light page has, and the two inks that carry 9 to
+            # 11px type on them. Both have to clear AA on both, which is why the
+            # accent and the metadata voice are darker than the palette as given:
+            # burnt sienna at #B94E2E measures 4.45 on ivory, and failing by four
+            # hundredths is failing.
+            for ink in ("--c-accent", "--c-muted", "--c-primary", "--c-ink"):
+                for ground in ("--c-bg", "--c-sand"):
+                    r = contrast(TOKENS[ink], TOKENS[ground])
+                    check("%s reads on %s" % (ink, ground), r >= 4.5, "%.2f:1" % r)
+            # And the two that only ever sit on a dark ground.
+            for ink in ("--c-accent-lit", "--c-gold"):
+                r = contrast(TOKENS[ink], TOKENS["--c-primary"])
+                check("%s reads on the dark ground" % ink, r >= 4.5, "%.2f:1" % r)
+            # Terracotta is a fill, and the check is that nothing asks it to be
+            # type on paper: it is 3.31 on ivory and would fail the moment it did.
+            r = contrast(TOKENS["--c-accent-fill"], TOKENS["--c-bg"])
+            check("the fill weight of the accent is not used as an ink",
+                  r < 4.5 and "color:var(--c-accent-fill)" not in css,
+                  "%.2f:1 on ivory, so fills only" % r)
+            # The map's three tones have to be three, not two and a hint.
+            home = open(os.path.join(ROOT_DIR, "index.html")).read()
+            for tone, role in (("--c-sand", "the continent"),
+                               ("--c-accent-fill", "a destination"),
+                               ("--c-primary", "an operator of ours")):
+                check("the map draws %s in %s" % (role, tone),
+                      re.search(r"wa-map-(rest|live)[^{]*\{[^}]*fill:var\(%s\)" % tone,
+                                home) is not None)
+
+        regions = read_json_file(os.path.join(ROOT_DIR, "tourism", "regions.json"))
+        tones = {k: v["tone"] for k, v in regions.items() if not k.startswith("$")}
+        check("every region still has a ground", len(tones) == 5, str(sorted(tones)))
+        # The plate mixes its tone two thirds with the house forest, and prints
+        # ivory on the result. That is the number that has to hold.
+        forest = channels(TOKENS.get("--c-primary", "#10251F"))
+        for key, tone in sorted(tones.items()):
+            mixed = [0.66 * t + 0.34 * f for t, f in zip(channels(tone), forest)]
+            lit = relative(channels(TOKENS.get("--c-bg", "#F6F1E7")))
+            r = (max(lit, relative(mixed)) + 0.05) / (min(lit, relative(mixed)) + 0.05)
+            check("a plate on the %s ground can be read" % key, r >= 4.5, "%.2f:1" % r)
+
         # -- where the keyboard is ------------------------------------------------
         print("\nwhere the keyboard is")
         # `outline:none` on :focus is how a focus indicator disappears. Sometimes

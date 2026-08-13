@@ -1,5 +1,5 @@
 {
- "$comment": "Five regions, and the tone each one is drawn in when there is no photograph. The tone is a design decision recorded as data rather than typed into a stylesheet, and it is the reason a country without a picture still looks like somewhere: every unresolved slot is drawn on its own region's ground, so moving from the Sahel to the Cape changes the colour of the page even before a photograph exists. All five sit inside the Afrinkong palette — they are values of the same ink, not five new brand colours — and none of them claims anything about the place beyond what its own terrain words already say.",
+ "$comment": "Five regions, and the tone each one is drawn in when there is no photograph. The tone is a design decision recorded as data rather than typed into a stylesheet, and it is the reason a country without a picture still looks like somewhere: every unresolved slot is drawn on its own region's ground, so moving from the Sahel to the Cape changes the colour of the page even before a photograph exists. All five are cut from the Afrinkong palette — deep forest, burnt sienna and muted gold, taken down to grounds dark enough to carry ivory type at 7:1 or better and the metadata voice at 4.5:1. All five sit inside the palette — they are values of the same ink, not five new brand colours — and none of them claims anything about the place beyond what its own terrain words already say.",
  "central": {
   "name": "Central & West",
   "line": "Rainforest, volcanic coast, savanna, ancient kingdoms and the cultures of the Gulf of Guinea.",
@@ -14,8 +14,8 @@
    "Central & West Africa",
    "West Africa"
   ],
-  "tone": "#2F4A38",
-  "tone_note": "Rainforest and volcanic ground: the darkest, greenest tone in the set."
+  "tone": "#1B4433",
+  "tone_note": "Rainforest and volcanic ground: deep forest opened up a step, so a plate on the dark band is still a panel and not a hole in it."
  },
  "east": {
   "name": "East Africa",
@@ -30,8 +30,8 @@
   "includes": [
    "East Africa"
   ],
-  "tone": "#3C5B45",
-  "tone_note": "The Rift and the montane forest — green, but lifted and cooler than the Congo basin."
+  "tone": "#2C6B4E",
+  "tone_note": "The Rift in open green — the lightest of the three greens, for the region with the most sky in it."
  },
  "southern": {
   "name": "Southern Africa",
@@ -46,8 +46,8 @@
   "includes": [
    "Southern Africa"
   ],
-  "tone": "#8A6A3C",
-  "tone_note": "Desert, delta and Kalahari sand: the warm ochre end."
+  "tone": "#9A5A2E",
+  "tone_note": "Burnt sienna as earth rather than as ink: the desert south, and the warmest ground in the set."
  },
  "north": {
   "name": "North Africa",
@@ -62,8 +62,8 @@
   "includes": [
    "North Africa"
   ],
-  "tone": "#A07C55",
-  "tone_note": "Atlas stone, Sahara and mud-brick — pale clay."
+  "tone": "#A87B3C",
+  "tone_note": "Muted gold as ground. The Sahara, and the only one of the five that is more yellow than red."
  },
  "islands": {
   "name": "Islands",
@@ -78,7 +78,7 @@
   "includes": [
    "Islands"
   ],
-  "tone": "#33605C",
-  "tone_note": "Reef and lagoon: the one tone in the set that leans blue."
+  "tone": "#1E6A62",
+  "tone_note": "Forest turned toward the ocean. The only one of the five you could name blind."
  }
 }
