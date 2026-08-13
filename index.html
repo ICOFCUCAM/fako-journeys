@@ -602,6 +602,18 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 /* ---- stories ---------------------------------------------------------------------- */
 .wa-stories{display:grid;grid-template-columns:2fr 1fr 1fr;gap:0;border-top:2px solid var(--c-primary)}
 .wa-story{padding:26px 28px 24px 0;border-right:var(--fj-rule);border-bottom:var(--fj-rule)}
+/* The stories are links now, not captions — the section named five pieces that
+   were "being written" and linked to none of them, while twenty-two finished
+   long reads sat on the site. */
+.wa-story{display:block;transition:background var(--t-fast) var(--ease)}
+.wa-story:hover{background:var(--fj-dust)}
+.wa-story:hover h3{color:var(--c-accent)}
+.wa-story-go{display:inline-block;margin-top:14px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);
+  border-bottom:2px solid var(--c-accent);padding-bottom:3px}
+.wa-story:hover .wa-story-go{color:var(--c-accent)}
+.wa-story--all{background:var(--fj-dust)}
+@media(pointer:coarse){.wa-story{min-height:44px}}
 .wa-story:nth-child(3),.wa-story:nth-child(5){border-right:0;padding-right:0}
 .wa-story.wide{grid-column:span 1;grid-row:span 2}
 .wa-story i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
@@ -1421,15 +1433,18 @@ window.AF = {
       <div class="wa-head-no"><b>07</b><span>Stories</span></div>
       <div>
         <h2>Africa is <em>more than a destination</em>.</h2>
-        <p class="wa-note">Long-form writing from the countries we work in, by the guides and operators who live there. The first five are being written now; each one will sit on the country page it belongs to.</p>
+        <p class="wa-note">Twenty-two long reads, one per country, each built out of what that country says about itself rather than written about it. One from each region below.</p>
       </div>
     </div>
     <div class="wa-stories">
-      <div class="wa-story wide"><i>In writing &middot; Uganda</i><h3>Into the forest</h3><p>Following the trail of Uganda&rsquo;s mountain gorillas &mdash; the permit, the walk, the hour you are given, and what the hour is actually like.</p></div>
-      <div class="wa-story"><i>In writing &middot; Cameroon</i><h3>Africa in miniature</h3><p>A journey across the landscapes of Cameroon, from black sand to the Sahel.</p></div>
-      <div class="wa-story"><i>In writing &middot; Tanzania &amp; Kenya</i><h3>Following the migration</h3><p>The great movement across the Serengeti and the Mara, month by month.</p></div>
-      <div class="wa-story"><i>In writing &middot; East Africa</i><h3>Above the clouds</h3><p>Walking the mountains of East Africa, and what altitude asks of you.</p></div>
-      <div class="wa-story"><i>In writing &middot; Across Africa</i><h3>The people who welcome you</h3><p>Stories from the communities behind African tourism.</p></div>
+      <!-- gen:stories -->
+      <a class="wa-story wide" href="/portrait/cameroon#first-light"><i>Cameroon &middot; The first thing you would see</i><h3>Everything, Within One Border</h3><p>Sea level to Sahel in nine hundred kilometres, French and English on the same road, and almost nobody else on it.</p><span class="wa-story-go">Read Cameroon &rarr;</span></a>
+      <a class="wa-story" href="/portrait/ethiopia#who-lives-here"><i>Ethiopia &middot; Who lives here</i><h3>Omo Valley</h3><p>The lower Omo holds sixteen peoples in one valley, and the visits should be arranged carefully.</p><span class="wa-story-go">Read Ethiopia &rarr;</span></a>
+      <a class="wa-story" href="/portrait/botswana#the-table"><i>Botswana &middot; The table</i><h3>Seswaa and Bogobe</h3><p>Slow-pounded beef and sorghum porridge, and braai wherever there is a fire.</p><span class="wa-story-go">Read Botswana &rarr;</span></a>
+      <a class="wa-story" href="/portrait/egypt#made-by-hand"><i>Egypt &middot; Made by hand</i><h3>Papyrus, Glass and Cotton</h3><p>Hand-blown glass in Cairo, Egyptian cotton, and papyrus made the way it always was.</p><span class="wa-story-go">Read Egypt &rarr;</span></a>
+      <a class="wa-story" href="/portrait/madagascar#what-is-kept"><i>Madagascar &middot; What is kept</i><h3>Malagasy, and Eighteen Peoples</h3><p>One language across the island, of Austronesian origin, and eighteen distinct peoples speaking it.</p><span class="wa-story-go">Read Madagascar &rarr;</span></a>
+      <a class="wa-story wa-story--all" href="/stories"><i>The reading room</i><h3>All 220, across 22 countries</h3><p>Every chapter is cut from what that country says about itself, and every paragraph in it has an address of its own.</p><span class="wa-story-go">Open the reading room &rarr;</span></a>      <!-- /gen:stories -->
+    </div>
     </div>
   </div>
 </section>

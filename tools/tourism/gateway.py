@@ -62,7 +62,7 @@ REGION_GROUPS = (
 )
 
 MARKERS = ("window", "captions", "ticks", "regions", "months", "scale", "destinations",
-           "operators", "picks", "footer")
+           "operators", "picks", "stories", "footer")
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
 VIEW_PAD = 0.34
@@ -397,6 +397,65 @@ def block_destinations(countries):
     return "\n".join(rows)
 
 
+def block_stories(countries):
+    """The reading room, as it actually is.
+
+    This section used to name five stories that were "being written now" and
+    link to none of them. Twenty-two long reads have existed since the story
+    engine shipped, so the homepage was promising work it had already done and
+    sending nobody to it — a section with no links at all.
+
+    One story per region, chosen by taking the first arc each region offers, so
+    the five are five different countries rather than five chapters of one; plus
+    the count, which is a fact rather than a promise.
+    """
+    data = read_json(os.path.join(ROOT, "data", "stories.json"))
+    rows = data.get("stories") or []
+    if not rows:
+        return ('      <p class="wa-note">The reading room has not been built yet. '
+                'Run <code>build.py story</code>.</p>')
+    regions = load_regions()
+    live = {c.slug: c for c in countries}
+    # A different arc per region, so the five read as five kinds of story rather
+    # than the same chapter five times — taking the first arc each region offers
+    # gives "The first thing you would see" five times over.
+    order = []
+    for r in rows:
+        if r["arc"] not in order:
+            order.append(r["arc"])
+    picked, seen = [], set()
+    for i, key in enumerate(regions):
+        want = [order[(i + n) % len(order)] for n in range(len(order))]
+        best = None
+        for arc in want:
+            for r in rows:
+                if r["regionKey"] == key and r["arc"] == arc \
+                        and r["country"] not in seen and r["country"] in live:
+                    best = r
+                    break
+            if best:
+                break
+        if best:
+            picked.append(best)
+            seen.add(best["country"])
+    out = []
+    for i, r in enumerate(picked):
+        out.append(
+            '      <a class="wa-story%s" href="%s"><i>%s &middot; %s</i>'
+            '<h3>%s</h3><p>%s</p><span class="wa-story-go">Read %s &rarr;</span></a>'
+            % (" wide" if i == 0 else "", esc(r["url"]), esc(r["countryName"]),
+               esc(r["arcTitle"]), esc(r["title"]), esc(r["text"]),
+               esc(r["countryName"])))
+    out.append(
+        '      <a class="wa-story wa-story--all" href="/stories">'
+        '<i>The reading room</i><h3>All %d, across %d countries</h3>'
+        '<p>Every chapter is cut from what that country says about itself, and '
+        'every paragraph in it has an address of its own.</p>'
+        '<span class="wa-story-go">Open the reading room &rarr;</span></a>'
+        % (len(rows), len({r["country"] for r in rows})))
+    return "\n".join(out)
+
+
 def block_footer(countries):
     """Two columns, split evenly, so the footer never becomes one long list."""
     half = (len(countries) + 1) // 2
@@ -423,6 +482,7 @@ def render(countries):
         "scale": block_scale(),
         "operators": block_operators(seq),
         "picks": block_picks(seq),
+        "stories": block_stories(seq),
         "footer": block_footer(seq),
     }
 
