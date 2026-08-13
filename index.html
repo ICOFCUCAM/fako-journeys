@@ -1186,8 +1186,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-zone.basalt h2,.wa-zone.basalt h3{color:var(--c-bg)}
 .wa-zone.basalt .wa-note{color:var(--fj-onbasalt-dim)}
 .wa-head{display:grid;grid-template-columns:150px 1fr;gap:40px;align-items:start;margin-bottom:48px}
+/* The section number is the page's spine — 01 through 07 — and it was set at
+   the same weight as the label beside it, so the sequence was invisible unless
+   you went looking. It is the one place a figure beats a word on this page. */
 .wa-head-no{border-top:2px solid var(--c-accent);padding-top:12px}
-.wa-head-no b{display:block;font-family:var(--fj-display);font-size:38px;font-weight:700;line-height:1;color:var(--c-accent)}
+.wa-head-no b{color:var(--c-accent);display:block;font-family:var(--fj-display);font-size:38px;font-weight:700;line-height:1;color:var(--c-accent)}
 .wa-head-no span{display:block;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);margin-top:8px}
 /* The label above a section on a dark ground is the one place gold appears on
    this page — see the note beside it in afrinkong.css. */
