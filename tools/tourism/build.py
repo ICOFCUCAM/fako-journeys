@@ -44,7 +44,7 @@ def dataset(country=None):
     """Every country, with resolved images bound on from the cache."""
     tax = load_taxonomy()
     cache = cache_mod.load()
-    countries = attach_cache(load_countries(), cache)
+    countries = attach_cache(load_countries(), cache, tax)
     if country:
         countries = [c for c in countries if c.slug == country]
         if not countries:

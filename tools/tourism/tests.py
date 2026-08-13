@@ -1511,6 +1511,65 @@ def main():
         check("no page names two images as its most urgent", not twice,
               ", ".join(twice[:4]))
 
+        # -- what a photograph is allowed to claim --------------------------------
+        print("\nwhat a photograph is allowed to claim")
+        from tourism.model import PROVEN, attach_cache as attach
+        # The suite runs against a sandbox cache; this check is about the real
+        # one, which is the file that ships.
+        raw = cache_mod.load(os.path.join(ROOT_DIR, "tourism", "cache", "images.json"))
+        recs = list(raw.entries.items())
+        unproven = [k for k, v in recs if not any(v.get(f) for f in PROVEN)]
+        check("the cache is readable", bool(recs), "%d records" % len(recs))
+        check("records with no evidence are known about", True,
+              "%d of %d carry neither a query tier nor a score"
+              % (len(unproven), len(recs)))
+        # The point: none of those may be quoted as a description of the picture.
+        bound = attach(load_countries(), raw, tax)
+        loud = []
+        for c in bound:
+            for e in c.entries:
+                rec = e.image
+                if not rec or not rec.get("altUnproven"):
+                    continue
+                alt = (rec.get("alt") or "")
+                # It may be the country's name, or the category's title in the
+                # country, and nothing else. No place, no month, no species, no
+                # festival — those are the claims there is no evidence for.
+                cat = tax.by_id.get(e.category)
+                allowed = {c.name}
+                if cat:
+                    allowed.add("%s in %s" % (
+                        cat["title"].split("/")[0].split("&")[0].strip(), c.name))
+                if alt not in allowed:
+                    loud.append("%s/%s: %r not in %r"
+                                % (c.slug, e.category, alt, sorted(allowed)))
+        check("a photograph with no evidence describes itself in general terms",
+              not loud, "; ".join(loud[:3]))
+        # And the proven ones keep their specific alt, or the fix is a blunt one.
+        specific = [e for c in bound for e in c.entries
+                    if e.image and not e.image.get("altUnproven")
+                    and len((e.image.get("alt") or "").split()) > 6]
+        check("photographs that do have evidence keep their real description",
+              len(specific) >= 40, "%d specific alts kept" % len(specific))
+        # The hand-written pages place some of the same photographs by hand, so
+        # the generator's rule does not reach them.
+        stems = {(v.get("imageUrl") or "").rsplit("/", 1)[-1].split("?")[0]: k
+                 for k, v in recs if not any(v.get(f) for f in PROVEN)}
+        typed = []
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "*.html"))
+                           + glob.glob(os.path.join(ROOT_DIR, "tourism", "*.html"))):
+            body = open(path).read()
+            for stem, slot in stems.items():
+                if not stem:
+                    continue
+                for m in re.finditer(r"<img[^>]*" + re.escape(stem) + r"[^>]*>", body):
+                    alt = re.search(r'alt="([^"]*)"', m.group(0))
+                    if alt and len(alt.group(1).split()) > 4:
+                        typed.append("%s: %s" % (os.path.relpath(path, ROOT_DIR),
+                                                 alt.group(1)[:50]))
+        check("no hand-written page describes an unproven photograph either",
+              not typed, "; ".join(typed[:3]))
+
         # -- numbers spelled out in the prose --------------------------------------
         print("\nnumbers spelled out in the prose")
         # 034 through 049 fixed a dozen counts that had been typed beside a block

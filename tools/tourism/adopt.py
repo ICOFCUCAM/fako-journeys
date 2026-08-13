@@ -201,7 +201,7 @@ def revert_tag(tag):
 def run(country_slug="cameroon", revert=False, write=True):
     taxonomy = load_taxonomy()
     cache = cache_mod.load()
-    countries = attach_cache(load_countries(), cache)
+    countries = attach_cache(load_countries(), cache, taxonomy)
     matches = [c for c in countries if c.slug == country_slug]
     if not matches:
         raise KeyError("no country %r" % country_slug)

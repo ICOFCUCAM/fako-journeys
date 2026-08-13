@@ -327,11 +327,47 @@ def load_country(path):
     return Country(raw, path)
 
 
-def attach_cache(countries, cache):
-    """Bind resolved image metadata onto the content entries."""
+# The record fields that, between them, are the evidence a photograph shows what
+# its alt text says: which rung of the query ladder matched it, and what the
+# scorer found in the provider's own description.
+PROVEN = ("queryTier", "relevance")
+
+
+def attach_cache(countries, cache, taxonomy=None):
+    """Bind resolved image metadata onto the content entries.
+
+    And, on the way, refuse to let a record assert more than it can show.
+
+    Alt text is spoken aloud as fact. The resolver is careful about this — a
+    photograph matched on a broadened query gets a generic alt, because it is a
+    waterfall in Cameroon and not the Lobe falls. But five records in the cache
+    predate both the relevance scorer and the queryTier field: no rung, no
+    score, no provider description, and alt text asserting "masked dancers and
+    horsemen at the Nguon festival in Foumban" and "elephants and giraffe at a
+    dry-season waterhole in Waza National Park".
+
+    Those sentences may well be true. Nothing in the record says so, and the
+    site's own rule is that it does not claim what it cannot support. Until such
+    a record is resolved again — which costs one request each and settles it —
+    it carries the generic alt instead. The caption and description on the page
+    are unaffected: those are this site's writing about the place, not a claim
+    about the photograph.
+    """
     for country in countries:
         for entry in country.entries:
-            entry.image = cache.get(country.slug, entry.category)
+            rec = cache.get(country.slug, entry.category)
+            if rec and not any(rec.get(k) for k in PROVEN):
+                cat = (taxonomy.by_id.get(entry.category) if taxonomy else None)
+                rec = dict(rec)
+                # "Hero in Cameroon" is not a sentence. The opening picture of a
+                # country is described by the country.
+                if entry.category == "hero" or not cat:
+                    rec["alt"] = country.name
+                else:
+                    rec["alt"] = "%s in %s" % (
+                        cat["title"].split("/")[0].split("&")[0].strip(), country.name)
+                rec["altUnproven"] = True
+            entry.image = rec
     return countries
 
 
