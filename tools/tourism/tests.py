@@ -1372,6 +1372,59 @@ def main():
                   expect is None or top == expect,
                   "%d on %s, dataset has %s" % (top, where, expect))
 
+        # -- what an image costs before it arrives ---------------------------------
+        print("\nwhat an image costs before it arrives")
+        SKIP_IMG = {"tourism/compare.html"}
+        nodim, nolazy, noalt, heroes = [], [], [], []
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                     recursive=True)):
+            rel = os.path.relpath(path, ROOT_DIR)
+            if "/incoming/" in path or "/node_modules/" in path or rel in SKIP_IMG:
+                continue
+            tags = re.findall(r"<img\b[^>]*>", open(path).read())
+            for i, tag in enumerate(tags):
+                if 'width="' not in tag or 'height="' not in tag:
+                    nodim.append(rel)
+                if "alt=" not in tag:
+                    noalt.append(rel)
+                # The first draft of this check said "the first <img> in the
+                # document is the page's largest contentful paint, so it must be
+                # eager and prioritised". That is false here. On the homepage,
+                # the portraits and /tourism the hero is an inline SVG window or
+                # a drawn plate, and the first <img> is four screens down in a
+                # card — correctly lazy. Document order does not tell you what
+                # is in the first viewport, so the rule is the one that holds
+                # without knowing: an image may not be marked urgent and
+                # deferred at the same time, and only one thing on a page can
+                # be the most urgent.
+                if "fetchpriority" in tag:
+                    heroes.append(rel)
+                    if 'loading="lazy"' in tag:
+                        nolazy.append(rel + " (urgent and lazy at once)")
+                elif "loading=" not in tag and i > 0:
+                    nolazy.append(rel)
+        # Not "every image must carry width and height". That looks like the
+        # obvious rule and it is wrong here: on these five pages the CSS reserves
+        # every box with aspect-ratio, adding the attributes changed nothing on
+        # four of them, and on /contact it took layout shift from 0.002 to 0.17.
+        # Whether space is reserved is measured in tools/shift-checks.js, in a
+        # browser, with the images held back — the only place the answer is
+        # actually knowable. What is checked statically is the thing that is
+        # true regardless: an image without dimensions must at least be one the
+        # CSS is sizing, and 610 of the 612 images here already carry both.
+        loose = sorted(set(nodim))
+        check("at most a handful of images leave their size to the CSS alone",
+              len(loose) <= 6,
+              "%d images across %d files (%s)"
+              % (len(nodim), len(loose), ", ".join(loose[:4])))
+        check("every image has alternative text", not noalt,
+              "%d without alt (%s)" % (len(noalt), ", ".join(sorted(set(noalt))[:4])))
+        check("no image below the first is loaded eagerly", not nolazy,
+              "%d eager (%s)" % (len(nolazy), ", ".join(sorted(set(nolazy))[:4])))
+        twice = sorted(p for p in set(heroes) if heroes.count(p) > 1)
+        check("no page names two images as its most urgent", not twice,
+              ", ".join(twice[:4]))
+
         # -- companies that do not exist -------------------------------------------
         print("\ncompanies that do not exist")
         # tourism/operators.json holds three and has only ever held three. For the
@@ -1387,6 +1440,8 @@ def main():
             "covered by a licensed",
             "covered by an operator based in the country",
             "run by a company in the country itself",
+            "every country is covered by a company based in it",
+            "is covered by a company based in it",
             "operated by a licensed company based in it",
             "is run by a company based in it",
         )
@@ -1760,8 +1815,25 @@ def main():
         # line each; if node is not installed they are reported as skipped and
         # counted as neither passed nor failed, because a check that did not run
         # is not a check that passed.
-        print("\njourney engine")
+        # -- does the page move under the reader -----------------------------------
+        print("\ndoes the page move under the reader")
         node = shutil.which("node")
+        shift = os.path.join(ROOT_DIR, "tools", "shift-checks.js")
+        if not node:
+            print("  SKIPPED: node is not installed; layout shift was not measured")
+        else:
+            proc = subprocess.run([node, shift], capture_output=True, text=True,
+                                  cwd=ROOT_DIR)
+            lines = [l for l in proc.stdout.splitlines() if "\t" in l]
+            if not lines:
+                check("the layout-shift checks ran", False,
+                      (proc.stderr or "no output").strip().splitlines()[-1][:90]
+                      if (proc.stderr or "").strip() else "no output")
+            for line in lines:
+                verdict, name, detail = (line.split("\t") + ["", ""])[:3]
+                check(name, verdict == "PASS", detail)
+
+        print("\njourney engine")
         script = os.path.join(ROOT_DIR, "tools", "journey-checks.js")
         if not node:
             print("  SKIPPED: node is not installed; the engine checks did not run")

@@ -74,6 +74,10 @@ def build(countries, taxonomy):
         "options_b": opts.replace('value="%s"' % esc(slugs[1]),
                                   'value="%s" selected' % esc(slugs[1]), 1),
         "count": len(taxonomy.enabled),
+        # Six rows the table always has — region, in a sentence, leads on, when
+        # to come, who runs it, read the whole thing — plus one per category.
+        "cats": len(taxonomy.enabled),
+        "rows": len(taxonomy.enabled) + 6,
         # /compare is in the sitemap and shipped without a canonical or a single
         # Open Graph tag, so a shared link to it had no card and search engines
         # had no preferred address for a page that takes ?a= and ?b=.
@@ -156,6 +160,20 @@ TEMPLATE = """<!DOCTYPE html>
 .cp-only{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent)}
 .cp-note{margin:32px 0 0;color:var(--c-muted);max-width:46em;font-size:15px}
+/* The table is built by the script, so #cp-body is empty when the page paints
+   and everything below it — the note, the footer — sat at the top of the
+   viewport and then dropped 3,500 pixels when the rows arrived. Measured at
+   CLS 0.19, which is past the point Google calls a page bad, and it happened on
+   every load rather than only on a slow one.
+
+   Reserved from the row count rather than a magic number: %(rows)d rows (six
+   fixed plus %(cats)d categories). 101px is the shortest row height measured
+   across 1440, 1280, 900, 700 and 390 pixels wide and three different pairs of
+   countries — deliberately the shortest, so the reservation is never larger
+   than the table and never leaves a gap under it. */
+.cp{--cp-rows:%(rows)d}
+#cp-body{min-height:calc(var(--cp-rows) * 101px)}
+@media(max-width:700px){#cp-body{min-height:calc(var(--cp-rows) * 99px)}}
 @media(max-width:700px){
   .cp-row>div,.cp-pick div{padding:14px 10px 16px 0}
   .cp-row>div:last-child,.cp-pick div:last-child{padding-left:10px}
@@ -201,7 +219,7 @@ TEMPLATE = """<!DOCTYPE html>
 
 <footer class="foot">
   <div class="af-frame">
-    <p>Afrinkong is a group of locally run tour operators working across Africa. Every country is covered by a company based in it. <a href="/#destinations">See all destinations</a>, or <a href="/contact">tell us what you are after</a>.</p>
+    <p>Afrinkong runs tour operators of its own in three countries and writes up %(total)d, all through the same %(count)d categories. <a href="/#destinations">See all destinations</a>, or <a href="/contact">tell us what you are after</a>.</p>
   </div>
 </footer>
 

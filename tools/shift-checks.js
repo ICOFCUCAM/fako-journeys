@@ -1,0 +1,179 @@
+/* Does the page move under the reader while it loads?
+ *
+ *     node tools/shift-checks.js            (or: python3 tools/tourism/build.py test)
+ *
+ * Layout shift is the one quality of a page that cannot be read off the source.
+ * You can look at an <img> all day and not know whether its box was reserved:
+ * the answer depends on the CSS that ends up applying to it, the srcset
+ * candidate the browser picks at that viewport, and what else is in the grid
+ * row. So this measures it, in a browser, with the images arriving late.
+ *
+ * Late is the point. On a fast connection nothing shifts because nothing is
+ * ever missing — every image is there before first paint and a page with no
+ * reserved space at all scores zero. Every image response is held back 1.2
+ * seconds here, which is roughly a phone on a bad link, and is the only
+ * condition under which reserving space does anything at all.
+ *
+ * This check exists because of what it found the first time it was run. The
+ * intention had been to add width and height to the forty images on the five
+ * hand-written pages, which is standard practice and looks obviously correct in
+ * a diff. Measured, four of the five pages were already at zero — their CSS
+ * reserves every box with aspect-ratio — and on the fifth the attributes took
+ * layout shift from 0.002 to 0.17, past the threshold where Google calls a page
+ * bad. The change was reverted. Without a measurement it would have shipped,
+ * and the commit message would have claimed an improvement.
+ *
+ * The budget is 0.1, which is the boundary of "good" in Core Web Vitals.
+ */
+'use strict';
+
+const fs = require('fs');
+const http = require('http');
+const path = require('path');
+
+const ROOT = path.join(__dirname, '..');
+const BUDGET = 0.1;
+const HOLD = 1200;          // ms every image is held back
+const SETTLE = 2600;        // ms to watch after the HTML lands
+
+/* The pages worth watching: one of each kind, not all 650. A place page and a
+   portrait stand for their 571 and 21 siblings, which are built by the same
+   generator from the same template and cannot differ in layout. */
+const PAGES = [
+  '/index.html', '/atlas.html', '/journey.html', '/stories.html',
+  '/places/index.html', '/compare.html', '/meet.html', '/404.html',
+  '/portrait/kenya.html', '/places/kenya/balloon-over-the-mara.html',
+  '/tourism/kenya.html', '/tourism/index.html', '/kenya.html',
+  '/cameroon.html', '/contact.html', '/about.html', '/pricing.html',
+  '/services.html'
+];
+
+const TYPES = {
+  '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
+  '.json': 'application/json', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
+  '.xml': 'application/xml', '.txt': 'text/plain'
+};
+
+const out = [];
+function check(name, ok, detail) {
+  out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
+}
+
+function done(code) {
+  process.stdout.write(out.join('\n') + '\n');
+  process.exit(code);
+}
+
+function chromium() {
+  /* playwright-core is installed globally in this image and not in the repo, so
+     it is found rather than depended on. No browser, no check — the same way
+     the journey checks skip when node is missing, because a test that cannot
+     run must say so rather than pass. */
+  const roots = [
+    '/opt/node22/lib/node_modules/playwright/node_modules/playwright-core',
+    'playwright-core', 'playwright'
+  ];
+  for (const r of roots) {
+    try { return require(r).chromium; } catch (e) { /* next */ }
+  }
+  return null;
+}
+
+function browserPath() {
+  const base = process.env.PLAYWRIGHT_BROWSERS_PATH || '/opt/pw-browsers';
+  let names = [];
+  try { names = fs.readdirSync(base); } catch (e) { return null; }
+  const dirs = names.filter(n => n.indexOf('chromium') === 0).sort().reverse();
+  for (const d of dirs) {
+    for (const rel of ['chrome-linux/headless_shell', 'chrome-linux/chrome']) {
+      const full = path.join(base, d, rel);
+      if (fs.existsSync(full)) return full;
+    }
+  }
+  return fs.existsSync(path.join(base, 'chromium')) ? path.join(base, 'chromium') : null;
+}
+
+function serve() {
+  return new Promise(resolve => {
+    const server = http.createServer((req, res) => {
+      let rel = decodeURIComponent(req.url.split('?')[0]);
+      let file = path.join(ROOT, rel);
+      try {
+        if (fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
+      } catch (e) { /* fall through to the 404 */ }
+      fs.readFile(file, (err, body) => {
+        if (err) { res.writeHead(404); res.end('no'); return; }
+        res.writeHead(200, {'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream'});
+        res.end(body);
+      });
+    });
+    server.listen(0, '127.0.0.1', () => resolve(server));
+  });
+}
+
+(async function () {
+  const launcher = chromium();
+  const exe = browserPath();
+  if (!launcher || !exe) {
+    check('layout shift was measured', false,
+          'no headless browser available; nothing was measured');
+    done(1);
+  }
+
+  const server = await serve();
+  const base = 'http://127.0.0.1:' + server.address().port;
+  let browser;
+  try {
+    browser = await launcher.launch({executablePath: exe});
+    for (const url of PAGES) {
+      const page = await browser.newPage({viewport: {width: 1280, height: 900}});
+      await page.route(/\.(jpe?g|png|webp|avif)(\?|$)|images\.(unsplash|pexels)\.com/i,
+        async route => {
+          await new Promise(go => setTimeout(go, HOLD));
+          try { await route.continue(); } catch (e) { /* page closed */ }
+        });
+      await page.addInitScript(() => {
+        window.__cls = 0;
+        window.__worst = null;
+        new PerformanceObserver(list => {
+          for (const e of list.getEntries()) {
+            if (e.hadRecentInput) continue;
+            window.__cls += e.value;
+            if (!window.__worst || e.value > window.__worst.v) {
+              const s = (e.sources || [])[0];
+              window.__worst = {
+                v: e.value,
+                what: s && s.node
+                  ? (s.node.nodeName + '.' + String(s.node.className || '').slice(0, 24))
+                  : 'unknown'
+              };
+            }
+          }
+        }).observe({type: 'layout-shift', buffered: true});
+      });
+      let failed = null;
+      try {
+        await page.goto(base + url, {waitUntil: 'domcontentloaded'});
+        await page.waitForTimeout(SETTLE);
+      } catch (e) { failed = e.message.split('\n')[0]; }
+      const seen = failed ? null : await page.evaluate(
+        () => ({cls: window.__cls, worst: window.__worst}));
+      await page.close();
+      if (failed) {
+        check(url + ' could be measured', false, failed.slice(0, 70));
+        continue;
+      }
+      const cls = Math.round(seen.cls * 10000) / 10000;
+      check(url + ' holds still while its images arrive', cls <= BUDGET,
+            'CLS ' + cls.toFixed(4)
+            + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
+    }
+  } catch (e) {
+    check('layout shift was measured', false, String(e.message).slice(0, 90));
+  } finally {
+    if (browser) await browser.close();
+    server.close();
+  }
+  done(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);
+}());
