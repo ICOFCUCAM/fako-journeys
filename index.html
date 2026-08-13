@@ -549,9 +549,31 @@
    Three rows would be needed, and at 1440 there are 56 pixels of slack. */
 .wa-ticks{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0;
   gap:0;border-top:2px solid var(--c-primary);
-  /* fade the right edge, so a rail that runs past the frame looks like it does */
-  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 46px),transparent);
-  mask-image:linear-gradient(to right,#000 calc(100% - 46px),transparent)}
+  /* The fade says which way there is more.
+     It used to fade the right edge and only the right edge, always — so a rail
+     scrolled to its end still promised more to the right, and a rail scrolled
+     away from its start gave no sign there was anything to the left. Twenty-two
+     destinations in a 760px window: the reader is looking at ten of them and
+     the affordance was lying about both ends.
+
+     Driven by the rail's own scroll position, so the left edge fades in as you
+     leave the start and the right edge fades out as you reach the end. No
+     script, no scroll listener — a scroll-driven animation is a timeline, and
+     the browser runs it on the compositor. Where it is not supported the two
+     custom properties keep their initial values and the mask is exactly the
+     static one it replaces. */
+  --fj-fade-l:0px; --fj-fade-r:46px;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 var(--fj-fade-l),
+    #000 calc(100% - var(--fj-fade-r)),transparent);
+  mask-image:linear-gradient(to right,transparent,#000 var(--fj-fade-l),
+    #000 calc(100% - var(--fj-fade-r)),transparent);
+  animation:wa-rail-fade linear both;
+  animation-timeline:scroll(self inline)}
+@property --fj-fade-l{syntax:"<length>";inherits:false;initial-value:0px}
+@property --fj-fade-r{syntax:"<length>";inherits:false;initial-value:46px}
+@keyframes wa-rail-fade{
+  from{--fj-fade-l:0px;   --fj-fade-r:46px}
+  to  {--fj-fade-l:46px;  --fj-fade-r:0px}}
 .wa-ticks::-webkit-scrollbar{display:none}
 /* The rail of twenty-two names under the map, which is the keyboard and
    touch equivalent of pressing a country on it. Forest at rest so it reads as
