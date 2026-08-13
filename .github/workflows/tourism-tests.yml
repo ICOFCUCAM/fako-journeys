@@ -22,12 +22,40 @@ jobs:
         with:
           python-version: "3.11"
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # The suite runs tools/browser-checks.js, which measures the things that
+      # can only be measured in a browser: layout shift with the images held
+      # back, contrast as computed, overflow at twelve widths, the tab order,
+      # the hero's composition at thirteen window shapes, and the same pages
+      # again with the motion turned off. A hundred and forty-three checks.
+      #
+      # With no browser on the runner that script reports one failure — "no
+      # headless browser available; nothing was measured" — and exits 1, which
+      # is the right thing for it to do and had made this workflow red on every
+      # run since the browser checks were added. Red for a reason nobody was
+      # reading is the same as no signal at all.
+      #
+      # playwright-core is installed rather than playwright because the script
+      # only ever calls chromium.launch(); the full package is here solely to
+      # fetch the browser binary, and only chromium is fetched.
+      - name: Give the runner a browser
+        run: |
+          npm install --no-save playwright-core@1.56.1
+          npx --yes playwright@1.56.1 install --with-deps chromium
+
       - name: Typecheck / lint
         run: |
           python3 -m py_compile tools/build_images.py tools/tourism/*.py tools/tourism/providers/*.py
           echo "ok"
 
       - name: Resolver test suite (against local mocks of both providers)
+        env:
+          # Where `playwright install` puts it on a runner. browser-checks.js
+          # defaults to /opt/pw-browsers, which is this image, not that one.
+          PLAYWRIGHT_BROWSERS_PATH: /home/runner/.cache/ms-playwright
         run: python3 tools/tourism/build.py test
 
       - name: Validate every country

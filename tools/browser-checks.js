@@ -161,6 +161,41 @@ const TARGET_MIN = 24;
  */
 const TAB_STOPS = 80;
 
+/* ---------------------------------------------------------------------------
+ * PASS EIGHT — the hero is one composition
+ *
+ * The widths are chosen where the composition changes its mind rather than
+ * where devices are: 2560 and 1920 are past the frame's cap, 1440 is the width
+ * it was drawn at, 1366 is the commonest laptop, 960 and 900 are inside the
+ * band where the two columns used to sit on top of each other, and 390 and 320
+ * are the stacked layout.
+ *
+ * HERO_BLEED is how far the continent may run past the text frame. It is meant
+ * to be a constant, which is the whole point — written as right:0 it was 100 at
+ * 1440 and 660 at 2560.
+ *
+ * HERO_BAND is how much empty space the stage may open between the calls and
+ * the rail. Unbounded it reached 594px.
+ */
+const HERO_WIDTHS = [[2560, 1440], [1920, 1080], [1440, 900], [1366, 768],
+                     [1180, 820], [960, 760], [900, 700], [390, 844], [320, 700],
+                     /* Short windows, which are a different axis and were not
+                        covered by any of the above. A browser at half a screen,
+                        a laptop carrying two toolbars, and 1440x900 at 200%
+                        zoom — which is 720x450 CSS pixels and is the shape WCAG
+                        1.4.4 asks a page to survive. At 1440x500 the map was
+                        96x102 inside a 707-pixel stage before 080. */
+                     [1440, 500], [1920, 540], [1280, 600], [720, 450]];
+/* The map has to stay big enough to pick a country out of, at every shape. */
+const HERO_MAP_MIN = 240;
+
+/* Pass nine walks a few pages with prefers-reduced-motion on. The gateway is
+   the one with a cross-fade in it; the others are here because a delay left
+   behind by a removed animation is not a hero-specific mistake. */
+const REDUCED_PAGES = ['/index.html', '/atlas.html', '/kenya.html', '/meet.html'];
+const HERO_BLEED = 140;
+const HERO_BAND = 200;
+
 const out = [];
 function check(name, ok, detail) {
   out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
@@ -275,6 +310,263 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass nine: the same page with the motion turned off ------------ */
+    /*
+     * Reduced motion is a setting, not a rendering mode, and a page can be
+     * correct in one and wrong in the other. This one was: the hero holds a
+     * hidden caption out of the tab order with `visibility 0s linear .45s`, a
+     * delay sized to cover an opacity fade, and the reduced-motion block zeroes
+     * durations without touching delays. So the fade went away, the delay did
+     * not, and for 450ms after every selection there was an invisible,
+     * focusable link in the hero — under the one setting chosen by people who
+     * are least able to tolerate a page that misbehaves.
+     *
+     * PASS SEVEN walks the tab order and would have caught it in a second. It
+     * runs with motion on, so it never has.
+     */
+    {
+      const rm = await browser.newContext({viewport: {width: 1280, height: 900},
+                                           reducedMotion: 'reduce'});
+      for (const url of REDUCED_PAGES) {
+        const page = await rm.newPage();
+        await page.goto(base + url, {waitUntil: 'networkidle'});
+        /* Move through whatever states the page has, then look for anything
+           that is invisible and still reachable. Selecting is what triggers a
+           cross-fade, and a cross-fade is where the delays live. */
+        const ghosts = await page.evaluate(async () => {
+          const pick = [...document.querySelectorAll('.wa-tick, .wa-reg, [data-slug]')]
+            .filter(el => typeof el.click === 'function').slice(0, 3);
+          const seen = new Set();
+          const sweep = () => {
+            document.querySelectorAll('body *').forEach(el => {
+              const cs = getComputedStyle(el);
+              if (cs.visibility === 'hidden' || cs.display === 'none') return;
+              if (+cs.opacity >= 0.05) return;
+              const box = el.getBoundingClientRect();
+              if (box.width < 2 || box.height < 2) return;
+              /* Only things a keyboard can land on. */
+              const hot = el.matches('a[href],button,input,select,textarea,[tabindex]')
+                || el.querySelector('a[href],button,input,select,textarea');
+              if (hot) seen.add(el.tagName + '.' + String(el.className || '').slice(0, 22));
+            });
+          };
+          sweep();
+          for (const el of pick) {
+            el.click();
+            await new Promise(r => setTimeout(r, 120));
+            sweep();
+            await new Promise(r => setTimeout(r, 260));
+            sweep();
+          }
+          return [...seen];
+        });
+        await page.close();
+        check(url + ' hides nothing it can still focus, with motion off',
+              !ghosts.length,
+              ghosts.length ? ghosts.length + ' invisible and reachable: '
+                              + ghosts.slice(0, 2).join(', ') : 'nothing reachable is invisible');
+      }
+      await rm.close();
+    }
+
+    /* ---- pass eight: the hero is one composition ------------------------- */
+    /*
+     * Everything the other seven passes measure is true of a page. This one is
+     * true of a picture, and a picture is what the first screen of this site
+     * is: one word set to the width of its column, a continent bled off the
+     * right edge of it, and two rails under both.
+     *
+     * Every fault it looks for was live in the file when it was written, and
+     * none of them broke anything the other passes can see. The headline ran
+     * 109% of its column at 1600 and 62% at 768. The map's overhang past the
+     * frame was 100px at 1440 and 660px at 2560, because it was written as
+     * right:0 against a frame that stops growing. The frame was 640 wide around
+     * a map that painted 425 of it, so the bleed the composition is built on
+     * was not happening at all. The destination rail crossed the map's legend
+     * at five widths between 880 and 960. The readout's box was seventeen
+     * pixels shorter than the readout, on the view the page opens in.
+     *
+     * Overflow was zero through all of it. Contrast was AA through all of it.
+     * A layout can be composed wrongly and still be, in every measurable
+     * respect the rest of this file knows about, correct.
+     */
+    for (const [w, h] of HERO_WIDTHS) {
+      const page = await browser.newPage({viewport: {width: w, height: h}});
+      const errs = [];
+      page.on('pageerror', e => errs.push(String(e.message).slice(0, 60)));
+      await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
+      const seen = await page.evaluate(([bleed, band, mapMin]) => {
+        const q = s => document.querySelector(s);
+        const B = s => { const e = q(s); return e && e.getBoundingClientRect(); };
+        const bad = [];
+
+        /* AFRICA is set to the width of its column. Measured on the glyph run,
+           because the element is a block and its box is the column either way. */
+        const big = q('.wa-h1-big'), col = q('.wa-open-say');
+        if (big && col) {
+          const r = document.createRange();
+          r.selectNodeContents(big);
+          const fill = r.getBoundingClientRect().width / col.getBoundingClientRect().width;
+          if (fill < 0.94 || fill > 1.02) bad.push('headline fills ' + Math.round(fill * 100) + '% of its column');
+        }
+
+        /* The map's overhang past the text frame is a distance, not a share. */
+        const frame = B('.wa-open-stage > .wa-frame'), win = B('.wa-win-frame');
+        const say = B('.wa-open-say');
+        /* Stacked means the map is under the copy rather than beside it, and
+           the test for that is whether it starts left of where the copy ends.
+           Comparing it to the text frame's own left edge does not work: the
+           frame's box is the full width and its padding is inside it, so on a
+           phone the map's left is 20 and the frame's is 0, and every stacked
+           width reported itself as a desktop. */
+        const stacked = !!(win && say && win.left < say.right - 8);
+        if (frame && win && !stacked) {
+          const over = Math.round(win.right - frame.right);
+          if (over > bleed) bad.push('map overhangs the frame by ' + over);
+        }
+
+        /* The frame is the continent's box. Letterboxing inside it is the
+           bleed being eaten by empty space nobody can see. */
+        const svg = B('.wa-map-svg');
+        if (svg && svg.width && svg.height) {
+          const k = Math.min(svg.width / 1000, svg.height / 1060);
+          const slack = Math.round(Math.max(svg.width - 1000 * k, svg.height - 1060 * k));
+          if (slack > 8) bad.push(slack + 'px of letterbox around the map');
+          /* And it is still a map. Sized off the viewport while the stage sizes
+             off its own content, it collapsed to 102px tall inside a 707px
+             stage on a short window — small enough that the countries stop
+             being things a pointer can hit. */
+          if (svg.height < mapMin) {
+            bad.push('the map is ' + Math.round(svg.width) + 'x' + Math.round(svg.height)
+              + ' in a ' + Math.round(B('.wa-open-stage').height) + 'px stage');
+          }
+        }
+
+        /* Nothing in the hero sits on top of anything else in it. This is the
+           one the other passes structurally cannot find: two columns can
+           occupy the same pixels without the document overflowing by one. */
+        const parts = ['.wa-ticks', '.wa-regs', '.wa-lens', '.wa-win-cap[data-on]',
+                       '.wa-win-key', '.wa-win-go', '.wa-acts'];
+        for (let i = 0; i < parts.length; i++) {
+          for (let j = i + 1; j < parts.length; j++) {
+            const a = B(parts[i]), c = B(parts[j]);
+            if (!a || !c || !a.width || !c.width) continue;
+            if (q(parts[j]).closest(parts[i]) || q(parts[i]).closest(parts[j])) continue;
+            const x = Math.min(a.right, c.right) - Math.max(a.left, c.left);
+            const y = Math.min(a.bottom, c.bottom) - Math.max(a.top, c.top);
+            if (x > 1 && y > 1) bad.push(parts[i] + ' overlaps ' + parts[j]
+              + ' by ' + Math.round(x) + 'x' + Math.round(y));
+          }
+        }
+
+        /* The stage does not grow a gap instead of a composition — but only
+           where there is a composition to grow it in. Stacked, the map and its
+           readout are between the calls and the rail, so the distance between
+           those two is content rather than nothing, and reading it as a gap
+           reported 646px at 390 on a layout that has no gap at all. */
+        const acts = B('.wa-acts'), rail = B('.wa-win-rail');
+        if (!stacked && acts && rail && rail.top > acts.bottom) {
+          const gap = Math.round(rail.top - acts.bottom);
+          if (gap > band) bad.push(gap + 'px of nothing between the calls and the rail');
+        }
+
+        /* The hero's type is one scale, and every step in it is a proportion
+           of the headline rather than of the window. Three of these were
+           independently clamped on vw before 072 and 079, and the ratios they
+           produced drifted with the viewport: the qualifying line ran 0.243 at
+           1440 and 0.253 at 1920, and the map's caption collapsed to 0.136 at
+           768 where the headline is at its largest. Checked only above the
+           phone floors, which deliberately break the ratio to keep small type
+           readable. */
+        const fs = s => { const e = q(s); return e ? parseFloat(getComputedStyle(e).fontSize) : 0; };
+        const head = fs('.wa-h1-big');
+        /* Above the width at which the last of the three floors stops binding.
+           They are 26, 17 and 26 against ratios of .244, .141 and .178, so the
+           map's caption is the last to come off its floor, at a headline of
+           146px. Below that the clamps are deliberately breaking the ratio to
+           keep small type readable and there is nothing here to assert. */
+        if (head > 150) {
+          const steps = [['.wa-h1-rest', 0.244], ['.wa-find', 0.141],
+                         ['.wa-win-cap[data-on] b', 0.178]];
+          for (const [sel, want] of steps) {
+            const got = fs(sel) / head;
+            if (!got) continue;
+            if (Math.abs(got - want) > 0.006) {
+              bad.push(sel + ' is ' + got.toFixed(3) + ' of the headline, wants ' + want);
+            }
+          }
+        }
+
+        /* The map argues three things with three colours, and it has to go on
+           doing that in every state it has. Two ways it stopped: the land was
+           1.19:1 against the page, so the continent itself was not one of the
+           three; and hover filled every tier the same sienna, so pointing at an
+           operator produced a destination. Both were invisible in a screenshot
+           of the default view, which is the only view anything else checks. */
+        const L = c => {
+          const n = (c.match(/[\d.]+/g) || []).map(Number);
+          if (n.length < 3) return null;
+          const f = v => { v = v > 1 ? v / 255 : v;
+            return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+          return 0.2126 * f(n[0]) + 0.7152 * f(n[1]) + 0.0722 * f(n[2]);
+        };
+        const CR = (a, b) => { const x = L(a), y = L(b);
+          return (x == null || y == null) ? null : (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+        const land = q('.wa-map-rest path');
+        if (land) {
+          const lf = getComputedStyle(land).fill;
+          const page = getComputedStyle(document.body).backgroundColor;
+          const r = CR(lf, page);
+          /* The coastline has to be a coastline. */
+          if (r != null && r < 1.35) bad.push('the land is ' + r.toFixed(2) + ':1 against the page');
+          /* And a destination has to stay louder than the coast is. */
+          const dest = q('.wa-map-live[data-tier="live"] path');
+          if (dest) {
+            const dr = CR(getComputedStyle(dest).fill, lf);
+            if (dr != null && dr < r) bad.push('a destination is ' + dr.toFixed(2)
+              + ':1 against the land, under the land\'s ' + r.toFixed(2) + ' against the page');
+          }
+        }
+        /* The three tiers are three colours, in every state. */
+        const tiers = ['rest', 'live', 'ours'];
+        const fills = {};
+        for (const t of tiers) {
+          const el = t === 'rest' ? q('.wa-map-rest path')
+                                  : q('.wa-map-live[data-tier="' + t + '"] path');
+          if (el) fills[t] = getComputedStyle(el).fill;
+        }
+        if (Object.keys(fills).length === 3 && new Set(Object.values(fills)).size < 3) {
+          bad.push('the map draws its three tiers in ' + new Set(Object.values(fills)).size + ' colours');
+        }
+
+        /* And the monospace voice is three settings, not seven. Counted over
+           every element in the hero that holds its own words. */
+        const mono = new Set();
+        document.querySelectorAll('#window *').forEach(el => {
+          const own = [...el.childNodes].filter(n => n.nodeType === 3)
+            .map(n => n.textContent).join('').trim();
+          if (!own) return;
+          const cs = getComputedStyle(el);
+          if (cs.fontFamily.indexOf('mono') < 0 && cs.fontFamily.indexOf('Mono') < 0) return;
+          if (cs.visibility === 'hidden' || !el.getBoundingClientRect().width) return;
+          mono.add(cs.fontSize + '/' + cs.letterSpacing);
+        });
+        if (mono.size > 3) bad.push('the mono voice has ' + mono.size
+          + ' settings: ' + [...mono].sort().join(' '));
+
+        /* The readout's stack stays inside the stage it belongs to. */
+        const stage = B('.wa-open-stage'), side = B('.wa-win-side');
+        if (stage && side && side.bottom > stage.bottom + 2) {
+          bad.push('the readout runs ' + Math.round(side.bottom - stage.bottom) + 'px past the stage');
+        }
+        return bad;
+      }, [HERO_BLEED, HERO_BAND, HERO_MAP_MIN]);
+      await page.close();
+      check('the hero composes at ' + w + 'x' + h, !seen.length && !errs.length,
+            errs.length ? 'script threw: ' + errs[0]
+                        : (seen.length ? seen.slice(0, 2).join(' | ') : 'composed'));
+    }
+
     /* ---- pass seven: where the keyboard can go --------------------------- */
     for (const url of PAGES) {
       const page = await browser.newPage({viewport: {width: 1280, height: 900}});

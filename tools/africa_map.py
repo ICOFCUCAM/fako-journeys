@@ -82,6 +82,12 @@ ISLAND_MARKS = {
 LON0, LAT0 = math.radians(19.0), math.radians(2.0)
 VIEW_W, VIEW_H = 1000.0, 1060.0
 PAD = 14.0
+
+# A country smaller than this in either direction, in map units, cannot be hit
+# with a finger and is given a transparent disc to hit instead. HIT_R is sized
+# so that disc lands at roughly 24 CSS pixels on a 390px phone.
+SMALL_COUNTRY = 60.0
+HIT_R = 34.0
 PRECISION = 1          # tenths of a viewBox unit; the map is ~600px wide in use
 MIN_RING_AREA = 4.0    # drop specks: unclickable, and they cost bytes
 TOLERANCE = 1.2        # continental map: ~1px of slack at the size it is drawn
@@ -304,21 +310,47 @@ def render(shapes, frame):
             continue
         slug, label, tag, href, tier = ROSTER[code]
         title = "%s &#8212; %s" % (label, tag)
-        attrs = ('class="wa-map-live" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
+        # tabindex -1: the shape is a pointer target, not a tab stop. The rail of
+        # twenty-two names below the map is the keyboard route to the same
+        # twenty-two places, and the svg's own label says so. Left in the tab
+        # order it put twenty-two stops on shapes inside a role="img" — which a
+        # screen reader does not expose in the first place — between the
+        # masthead and this page's own calls to action.
+        attrs = ('tabindex="-1" class="wa-map-live" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
                  % (tier, slug, label, tag))
+        # A country whose own shape is smaller than SMALL map units in either
+        # direction is not a pointer target — Rwanda draws 7.8 by 7.8 CSS pixels
+        # on a 390px phone — so it gets a transparent disc at its label anchor
+        # to hit instead. Sized to reach roughly 24px at that width. It is
+        # allowed to spill into its neighbours: where it overlaps another
+        # roster country that country's own path is later in the document and
+        # wins, so the only ground it actually takes is the unlisted continent
+        # around it, which was not a target to begin with.
+        hit = ""
+        nums = [float(t) for t in re.findall(r"-?\d+\.?\d*", d)]
+        xs, ys = nums[0::2], nums[1::2]
+        if xs and min(max(xs) - min(xs), max(ys) - min(ys)) < SMALL_COUNTRY:
+            at = anchor(d)
+            if at:
+                hit = '<circle class="wa-map-hit" cx="%.1f" cy="%.1f" r="%.1f"/>' % (
+                    at[0], at[1], HIT_R)
         if href:
-            lines.append('<a %s href="%s"><path d="%s"/><title>%s</title></a>' % (attrs, href, d, title))
+            lines.append('<a %s href="%s">%s<path d="%s"/><title>%s</title></a>' % (attrs, href, hit, d, title))
         else:
-            lines.append('<g %s><path d="%s"/><title>%s</title></g>' % (attrs, d, title))
+            lines.append('<g %s>%s<path d="%s"/><title>%s</title></g>' % (attrs, hit, d, title))
     for code, (lon, lat) in sorted(ISLAND_MARKS.items()):
         if code not in ROSTER:
             continue
         slug, label, tag, href, tier = ROSTER[code]
         x, y = project(lon, lat)
         cx, cy = x * k + ox, y * k + oy
-        attrs = ('class="wa-map-live wa-map-mark" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
+        attrs = ('tabindex="-1" class="wa-map-live wa-map-mark" data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"'
                  % (tier, slug, label, tag))
-        dot = '<circle cx="%.1f" cy="%.1f" r="9"/><title>%s &#8212; %s</title>' % (cx, cy, label, tag)
+        # Two circles: a transparent one for the pointer and a smaller one for
+        # the eye. At r=9 the visible mark was a six-pixel dot on a phone.
+        dot = ('<circle class="wa-map-hit" cx="%.1f" cy="%.1f" r="36"/>'
+               '<circle cx="%.1f" cy="%.1f" r="12"/><title>%s &#8212; %s</title>'
+               % (cx, cy, cx, cy, label, tag))
         lines.append(('<a %s href="%s">%s</a>' % (attrs, href, dot)) if href
                      else ('<g %s>%s</g>' % (attrs, dot)))
     lines.append("</svg>")

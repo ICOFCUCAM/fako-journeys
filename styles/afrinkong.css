@@ -141,9 +141,25 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 
 /* Motion is decoration here, never information: every transition can be removed
    without losing meaning, so reduced-motion removes all of it. */
+/* Delays go with the durations they were covering.
+   Zeroing only the durations leaves every transition-delay in the file timing
+   an animation that is no longer happening, and one of them is load-bearing.
+   The hero stacks twenty-three captions and shows one; the hidden ones are held
+   out of the tab order with `visibility`, transitioned as
+   `visibility 0s linear .45s` so the element stays reachable for exactly as
+   long as its opacity takes to fade. Under reduced motion the opacity snapped
+   to zero and the delay ran its full course anyway, so for 450 milliseconds
+   after every selection a caption was invisible, focusable, and had a link in
+   it — measured: still there at 300ms, gone by 500ms.
+
+   Which is to say the setting that exists to help people who are disorientated
+   by movement was the only setting under which the hero put the focus ring on
+   something nobody could see. PASS SEVEN never caught it because PASS SEVEN
+   does not ask for reduced motion. */
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important}
+  *,*::before,*::after{transition-duration:.001ms !important;animation-duration:.001ms !important;
+    transition-delay:0s !important;animation-delay:0s !important}
 }
 
 /* ---- primitives ---------------------------------------------------------- */
