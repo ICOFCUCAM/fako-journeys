@@ -451,8 +451,25 @@
 .wa-reg:hover{color:var(--c-primary)}
 .wa-reg[aria-pressed="true"]{background:var(--c-accent);color:var(--c-bg)}
 /* A country outside the region in view is still drawn — the continent does not
-   stop existing — but it steps back rather than disappearing. */
-.wa-map-live[data-dim]{opacity:.28}
+   stop existing — but it steps back rather than disappearing.
+
+   It stepped back toward the page, not toward the continent, and that is the
+   difference between dimming a thing and turning it into a different thing.
+   opacity .28 composites terracotta to a pale warm pink, which still reads as a
+   destination; it composites forest to a pale grey-green, which reads as a
+   fourth category nobody defined. Namibia and Cameroon, dimmed, were the only
+   cold colour on the map.
+
+   Mixing toward the land instead keeps both tiers on the continent they are
+   part of: a dimmed destination is a destination the region does not include,
+   and a dimmed operator still looks like an operator. One step, the same size
+   for both, and the map keeps three colours instead of growing a fifth. */
+.wa-map-live[data-dim][data-tier="live"] path,
+.wa-map-live[data-dim][data-tier="live"] circle{
+  fill:color-mix(in srgb, var(--c-accent-fill) 34%, var(--c-land))}
+.wa-map-live[data-dim][data-tier="ours"] path,
+.wa-map-live[data-dim][data-tier="ours"] circle{
+  fill:color-mix(in srgb, var(--c-primary) 30%, var(--c-land))}
 .wa-map-live path,.wa-map-live circle{transition:fill var(--t-fast) var(--ease)}
 .wa-win-state .wa-map-svg{transition:none}
 .wa-terrain{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px 6px;margin-top:2px}
