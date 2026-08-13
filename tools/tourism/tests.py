@@ -1372,6 +1372,93 @@ def main():
                   expect is None or top == expect,
                   "%d on %s, dataset has %s" % (top, where, expect))
 
+        # -- what a parser makes of every head -------------------------------------
+        print("\nwhat a parser makes of every head")
+        from html.parser import HTMLParser
+
+        class Head(HTMLParser):
+            """Only what a browser would end up with, not what was typed.
+
+            index.html, contact.html and four others carried
+            `<meta name="description" content="...">` with the closing angle
+            bracket missing. In the source the canonical link is on the very next
+            line and looks perfectly fine. A parser reads it as more attributes
+            of the unclosed meta, so the tag never exists — six pages, the
+            homepage among them, with the canonical in the file and none in the
+            document. Reading the source with a regex cannot see this. Parsing
+            can, which is why this test parses.
+            """
+            # <title>, <style> and <script> are supposed to contain text.
+            HOLDS_TEXT = ("title", "style", "script", "noscript")
+
+            def __init__(self):
+                HTMLParser.__init__(self)
+                self.links, self.metas, self.stray = [], [], []
+                self.in_head = True
+                self.inside = None
+
+            def handle_starttag(self, tag, attrs):
+                if not self.in_head:
+                    return
+                if tag in self.HOLDS_TEXT:
+                    self.inside = tag
+                elif tag == "link":
+                    self.links.append(dict(attrs))
+                elif tag == "meta":
+                    self.metas.append(dict(attrs))
+
+            def handle_endtag(self, tag):
+                if tag == "head":
+                    self.in_head = False
+                elif tag == self.inside:
+                    self.inside = None
+
+            def handle_data(self, data):
+                if self.in_head and not self.inside and data.strip():
+                    self.stray.append(data.strip()[:30])
+
+        NO_INDEX = {"404.html"}
+        # tourism/compare.html is a contact sheet regenerated in one command and
+        # gitignored, so it is on a developer's disk and never on the site.
+        LOCAL_ONLY = {"tourism/compare.html"}
+        heads = sorted(p for p in glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                            recursive=True)
+                       if "/incoming/" not in p and "/node_modules/" not in p
+                       and os.path.relpath(p, ROOT_DIR) not in LOCAL_ONLY)
+        noCanon, noOg, noDesc, junk = [], [], [], []
+        for path in heads:
+            rel = os.path.relpath(path, ROOT_DIR)
+            parser = Head()
+            parser.feed(open(path).read())
+            metas = {(m.get("name") or m.get("property") or ""): m.get("content")
+                     for m in parser.metas}
+            rels = {r for link in parser.links
+                    for r in (link.get("rel") or "").split()}
+            if not metas.get("description"):
+                noDesc.append(rel)
+            if rel in NO_INDEX:
+                continue
+            if "canonical" not in rels:
+                noCanon.append(rel)
+            if not (metas.get("og:title") and metas.get("og:url")):
+                noOg.append(rel)
+            # A stray ">" left over from a doubled bracket parses as text in the
+            # head and gets moved into the body by the browser.
+            if [s for s in parser.stray if s not in ("",)]:
+                junk.append("%s (%s)" % (rel, parser.stray[0]))
+        check("every page parses with a canonical link", not noCanon,
+              "%d without: %s" % (len(noCanon), ", ".join(noCanon[:5])))
+        check("every page parses with a description", not noDesc,
+              "%d without: %s" % (len(noDesc), ", ".join(noDesc[:5])))
+        check("every page parses with og:title and og:url", not noOg,
+              "%d without: %s" % (len(noOg), ", ".join(noOg[:5])))
+        check("no page leaves loose text in its head", not junk,
+              "; ".join(junk[:3]))
+        check("the pages that should not be indexed say so",
+              all('name="robots"' in open(os.path.join(ROOT_DIR, p)).read()
+                  and "noindex" in open(os.path.join(ROOT_DIR, p)).read()
+                  for p in NO_INDEX))
+
         # -- whose enquiry desk /contact is ----------------------------------------
         print("\nwhose enquiry desk /contact is")
         con = open(os.path.join(ROOT_DIR, "contact.html")).read()

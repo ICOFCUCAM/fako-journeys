@@ -26,6 +26,7 @@ import html as html_mod
 import json
 import os
 
+from . import plate
 from .model import ROOT
 
 MONTHS = ("January", "February", "March", "April", "May", "June",
@@ -73,6 +74,14 @@ def build(countries, taxonomy):
         "options_b": opts.replace('value="%s"' % esc(slugs[1]),
                                   'value="%s" selected' % esc(slugs[1]), 1),
         "count": len(taxonomy.enabled),
+        # /compare is in the sitemap and shipped without a canonical or a single
+        # Open Graph tag, so a shared link to it had no card and search engines
+        # had no preferred address for a page that takes ?a= and ?b=.
+        "social": plate.open_graph(
+            "Compare two African destinations on the same terms | Afrinkong",
+            "Put any two Afrinkong destinations side by side across the same %d "
+            "categories, the same calendar and the same questions about who runs "
+            "them." % len(taxonomy.enabled), "/compare"),
         "total": len(slugs),
         "data": json.dumps({"countries": data, "cats": cats}, ensure_ascii=False),
     }
@@ -95,6 +104,7 @@ TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Compare two African destinations on the same terms | Afrinkong</title>
 <meta name="description" content="Put any two Afrinkong destinations side by side across the same %(count)d categories, the same calendar and the same questions about who runs them.">
+%(social)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 .mast{position:fixed;top:0;left:0;right:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
