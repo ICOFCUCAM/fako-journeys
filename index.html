@@ -1406,6 +1406,9 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 
 /* ---- experiences ---------------------------------------------------------------- */
 .wa-exps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--c-primary)}
+/* Eight cards that filter the grid two sections down, and nothing about them
+   said they were pressable until you pressed one. A card that acts is a card
+   that answers the pointer. */
 .wa-exp{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start;padding:22px 24px 20px 0;border-bottom:var(--fj-rule)}
 .wa-exp b{display:block;font-family:var(--fj-display);font-size:18px;font-weight:700;text-transform:uppercase;line-height:1.05}
 .wa-exp span{display:block;font-size:13px;color:var(--c-muted);margin-top:5px}
@@ -1426,6 +1429,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   font-size:8.5px;letter-spacing:.16em;line-height:1.7;text-transform:uppercase;
   color:var(--c-muted)}
 .wa-exp[aria-pressed="true"] .wa-exp-n{color:var(--c-accent)}
+.wa-exp{transition:background .18s,box-shadow .18s}
 .wa-exp:hover{background:color-mix(in srgb,var(--c-bg) 96%,var(--c-primary))}
 @media(max-width:1050px){.wa-exps{grid-template-columns:1fr 1fr 1fr}}
 @media(max-width:760px){.wa-exps{grid-template-columns:1fr 1fr}}
