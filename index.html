@@ -201,7 +201,18 @@
    stop being things a pointer can hit, so that is the floor, and the stage
    grows to take it. */
 .wa-win-frame{position:relative;margin-left:auto;aspect-ratio:1000/1060;width:auto;
-  height:clamp(300px, calc(100vh - var(--mast) - 320px), 560px)}
+  /* The readout beneath the map is measured rather than assumed. This was a
+     flat 320px, which is what the readout comes to at 487 wide with its caption
+     on two lines. 083 narrowed it to clear the calls on short windows, the
+     caption went to three lines, and at 464 wide it is 266px tall — so the
+     readout ran 4px past the foot of the stage at 1366 and 26px at 1180, across
+     the rule that ends the section. It cannot push back: the whole column is
+     positioned absolutely and contributes nothing to the stage's height.
+     The fitter publishes --fj-readout so the map takes exactly what is left;
+     the fallback is the 487-wide case, which is right wherever it applies. */
+  height:clamp(300px,
+    calc(100vh - var(--mast) - var(--mast) - 1vh - 14px - var(--fj-readout, 215px)),
+    560px)}
 .wa-win-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   opacity:0;transform:scale(.965);transition:opacity .6s ease,transform .8s ease;pointer-events:none}
 .wa-win-state[data-on]{opacity:1;transform:none;pointer-events:auto}
@@ -1723,7 +1734,16 @@ window.AF = {
     if (shift > -40 && shift < 120) h1.style.marginTop = (BASE + shift) + 'px';
   }
 
-  function run(){ fit(); align(); }
+  /* The map's height is the stage less the readout beneath it, and the readout
+     is however tall its own content came out — see the note on .wa-win-frame. */
+  function reserve(){
+    var side = document.querySelector('.wa-win-side');
+    if (!side || !scope) return;
+    var h = Math.round(side.getBoundingClientRect().height);
+    if (h > 80 && h < 600) scope.style.setProperty('--fj-readout', h + 'px');
+  }
+
+  function run(){ fit(); align(); reserve(); }
   run();
   addEventListener('resize', function(){
     if (queued) return;
