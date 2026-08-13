@@ -1048,7 +1048,15 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-city-say b{font-size:24px}
   .wa-city-note{display:block}
 }
-.wa-city:focus-visible{outline:3px solid var(--c-accent);outline-offset:-3px}
+/* One focus ring for the page. Several components had grown their own — an
+   outline here, a background swap there, and on the map a ring that grows — and
+   a reader tabbing through met a different answer in every section. The shape is
+   the same everywhere it can be; only the map differs, because a rectangle round
+   a country is not where the country is. */
+.wa-city:focus-visible,.wa-dest a:focus-visible,.wa-exp:focus-visible,
+.wa-want:focus-visible,.wa-tag:focus-visible,.wa-tick:focus-visible,
+.wa-reg:focus-visible,.wa-seam-go:focus-visible{
+  outline:3px solid var(--c-accent);outline-offset:-3px}
 /* The closing card has no photograph by design — it is the one card that is not
    a place — so it fills its cell with type and takes whatever the grid has left
    over. The span is computed, not chosen: a twelfth city would make it 2. */
