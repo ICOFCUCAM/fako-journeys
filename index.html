@@ -325,10 +325,30 @@
 /* The rungs stay inside the type column and drop to the foot of the stage. Run
    full width they cut straight across the continent, which is bled off the right
    edge and is not in the flow to push them out of the way. */
+/* The rail was min(52%, 640px) under copy set to min(66%, 820px) — 161px
+   narrower than everything above it, for no reason either number records, and
+   two destinations short in the visible run.
+
+   It can take the type's measure, but only where there is room for it. The rail
+   and the map's readout share the lower half of the stage, and measured at nine
+   widths the readout's left edge is where the ceiling is:
+
+     1440 and up   67px of clearance at the wider measure
+     1366          30px
+     1280         -13px   the rail crosses the readout
+     1024        -107px
+      900        -130px
+
+   So the wider measure is taken from 1360 up, where the map is bled off the
+   right edge and the readout has gone with it, and below that the rail keeps
+   the narrow one. A min-width query rather than a max-width one because this is
+   an enhancement at large sizes, not a repair at small ones. */
 .wa-win-rail{margin-top:auto;padding:var(--sp-4) 0 26px;min-width:0;position:relative;z-index:2;
   max-width:min(52%,640px)}
-/* Fourteen destinations do not fit across 1152px, so the rail scrolls
-   rather than wrapping into a second row that shifts the whole stage. */
+@media(min-width:1360px){.wa-win-rail{max-width:min(66%,820px)}}
+/* Twenty-two destinations do not fit across 1152px — they measure 1615px — so
+   the rail scrolls rather than wrapping into rows that shift the whole stage.
+   Three rows would be needed, and at 1440 there are 56 pixels of slack. */
 .wa-ticks{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;min-width:0;
   gap:0;border-top:2px solid var(--c-primary);
   /* fade the right edge, so a rail that runs past the frame looks like it does */
