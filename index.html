@@ -746,8 +746,20 @@
 .wa-tick:hover{background:var(--c-sand)}
 .wa-tick[aria-pressed="true"],.wa-tick.on{background:var(--c-accent);color:var(--c-bg)}
 .wa-tick[aria-current]{color:var(--c-bg);background:var(--c-primary)}
+/* The eight experiences do not fit the type column at any width this page has,
+   so the rail scrolls — and it scrolled with a hard edge, which reads as a row
+   that has been cut off rather than one that continues. The country rail above
+   it already solved this: a mask that fades whichever end has more behind it,
+   driven by the rail's own scroll position, no listener. Same fade, same reason,
+   so the two rails behave like one idea. */
 .wa-tags-in{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;min-width:0;margin-top:14px;
-  border-top:var(--fj-rule);border-bottom:var(--fj-rule)}
+  border-top:var(--fj-rule);border-bottom:var(--fj-rule);
+  --fj-fade-l:0px; --fj-fade-r:40px;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 var(--fj-fade-l),
+    #000 calc(100% - var(--fj-fade-r)),transparent);
+  mask-image:linear-gradient(to right,transparent,#000 var(--fj-fade-l),
+    #000 calc(100% - var(--fj-fade-r)),transparent);
+  animation:wa-rail-fade linear both;animation-timeline:scroll(self inline)}
 .wa-tags-in::-webkit-scrollbar{display:none}
 .wa-tag{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:9px;background:none;
   border:0;border-left:var(--fj-rule);cursor:pointer;padding:14px 16px;font-family:var(--fj-mono);
