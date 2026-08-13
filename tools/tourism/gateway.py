@@ -63,7 +63,7 @@ REGION_GROUPS = (
 )
 
 MARKERS = ("window", "captions", "ticks", "regions", "claim", "months", "scale",
-           "destinations", "operators", "picks", "now", "stories", "footer")
+           "destinations", "operators", "picks", "nownote", "now", "stories", "footer")
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
 VIEW_PAD = 0.34
@@ -103,12 +103,27 @@ def operator_line(c):
         else "Run with a licensed local operator"
 
 
-WORDS = {3: "Three", 5: "Five", 19: "Nineteen", 22: "Twenty-two", 27: "Twenty-seven"}
+# This page spells its numbers. A figure in the middle of a display line reads
+# as a statistic; a word reads as a sentence, and these are sentences. Above
+# ninety-nine it goes back to figures, because "five hundred and ninety-four"
+# is a different kind of sentence and not this one.
+ONES = ("zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+        "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+        "sixteen", "seventeen", "eighteen", "nineteen")
+TENS = ("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+        "eighty", "ninety")
 
 
 def _spell(n):
     """Small numbers read as words in this typeface; the rest stay figures."""
-    return WORDS.get(n, str(n))
+    n = int(n)
+    if n < 20:
+        word = ONES[n] if 0 <= n < len(ONES) else str(n)
+    elif n < 100:
+        word = TENS[n // 10] + ("-" + ONES[n % 10] if n % 10 else "")
+    else:
+        return "{:,}".format(n)
+    return word[0].upper() + word[1:]
 
 
 def block_claim(countries):
@@ -131,7 +146,7 @@ def block_claim(countries):
     return ('      <p class="wa-claim">%s countries. %s regions.<br>'
             '%s ways to experience each of them.<br>'
             '<em>%s places, each written up on its own.</em></p>'
-            % (_spell(n), _spell(regions), _spell(cats), "{:,}".format(places)))
+            % (_spell(n), _spell(regions), _spell(cats), _spell(places)))
 
 
 def block_operators(countries):
@@ -444,6 +459,61 @@ def block_destinations(countries):
     return "\n".join(rows)
 
 
+NOW_ARCS = ("the-table", "made-by-hand", "the-city-now")
+NOW_CARDS = 6
+
+
+def now_rows(countries):
+    """Which contemporary chapters the strip shows, in order.
+
+    Pulled out of block_now so the sentence above the strip and the strip itself
+    count the same thing. They did not: the section was cut from nine cards to
+    six and the paragraph beside it went on saying "Nine of them here" for two
+    commits, because the cards are generated and the paragraph was typed.
+    """
+    data = read_json(os.path.join(ROOT, "data", "stories.json"))
+    rows = [r for r in (data.get("stories") or []) if r.get("now")]
+    live = {c.slug: c for c in countries}
+    picked, taken = [], set()
+
+    def take(r):
+        picked.append(r)
+        taken.add(r["country"])
+
+    # One card per country, without exception. Letting the photographed ones in
+    # first put Cameroon and Uganda on this strip three times each — the two
+    # countries whose over-promotion is the reason the section they replaced was
+    # removed. So a country with a photograph gets that arc, and one card.
+    for r in rows:
+        if r.get("image") and r["country"] in live and r["country"] not in taken:
+            take(r)
+    i = 0
+    while len(picked) < NOW_CARDS and i < 200:
+        arc = NOW_ARCS[i % len(NOW_ARCS)]
+        i += 1
+        for r in rows:
+            if r["arc"] == arc and r["country"] in live and r["country"] not in taken:
+                take(r)
+                break
+    return picked[:NOW_CARDS]
+
+
+def block_nownote(countries):
+    """The sentence beside the strip, counting what the strip actually holds."""
+    data = read_json(os.path.join(ROOT, "data", "stories.json"))
+    total = len([r for r in (data.get("stories") or []) if r.get("now")])
+    shown = len(now_rows(countries))
+    if not shown:
+        return ('        <p class="wa-note">No contemporary chapters have been built '
+                'yet.</p>')
+    return ('        <p class="wa-note">%s chapters across the %s countries are about '
+            'what is cooked, made and built this decade rather than what is behind '
+            'glass. %s of them here. Not a feed and not an events calendar &mdash; '
+            'this site holds no dates and will not invent any; these are evergreen, '
+            'and they are true for longer than a week.</p>'
+            % (_spell(total), _spell(len(countries)).lower(), _spell(shown)))
+
+
 def block_now(countries):
     """Africa now — the contemporary layer, and the argument against a museum.
 
@@ -461,41 +531,14 @@ def block_now(countries):
     made it 1693 — the argument does not get better for being three rows tall,
     and this page has grown in every wave already.
     """
-    data = read_json(os.path.join(ROOT, "data", "stories.json"))
-    rows = [r for r in (data.get("stories") or []) if r.get("now")]
-    if not rows:
+    picked = now_rows(countries)
+    if not picked:
         return '      <p class="wa-note">No contemporary chapters built yet.</p>'
     live = {c.slug: c for c in countries}
     regions = load_regions()
 
-    # A photograph earns a place first — six of them exist and they are the only
-    # colour this section has. Then fill by rotating the three arcs so the strip
-    # reads cooked / made / built rather than nine of one.
-    arcs, picked = ["the-table", "made-by-hand", "the-city-now"], []
-    taken = set()
-
-    def take(r):
-        picked.append(r)
-        taken.add(r["country"])
-
-    # One card per country, without exception. Letting the photographed ones in
-    # first put Cameroon and Uganda on this strip three times each — the two
-    # countries whose over-promotion is the reason the section they replaced was
-    # removed. So a country with a photograph gets that arc, and one card.
-    for r in rows:
-        if r.get("image") and r["country"] in live and r["country"] not in taken:
-            take(r)
-    i = 0
-    while len(picked) < 6 and i < 200:
-        arc = arcs[i % len(arcs)]
-        i += 1
-        for r in rows:
-            if r["arc"] == arc and r["country"] in live and r["country"] not in taken:
-                take(r)
-                break
-
     out = []
-    for r in picked[:6]:
+    for r in picked:
         c = live[r["country"]]
         key, _reg = region_of(c, regions)
         art = ('<img src="%s" alt="%s" width="800" height="600" loading="lazy" '
@@ -597,6 +640,7 @@ def render(countries):
         "scale": block_scale(),
         "operators": block_operators(seq),
         "picks": block_picks(seq),
+        "nownote": block_nownote(seq),
         "now": block_now(seq),
         "stories": block_stories(seq),
         "footer": block_footer(seq),

@@ -1272,8 +1272,9 @@ def main():
         # -- what the homepage claims about itself ---------------------------------
         print("\nwhat the homepage claims about itself")
         home_src = open(os.path.join(ROOT_DIR, "index.html")).read()
-        WORD = {"three": 3, "five": 5, "nineteen": 19, "twenty-two": 22,
-                "twenty-seven": 27, "fifty-four": 54}
+        WORD = {"three": 3, "five": 5, "six": 6, "nine": 9, "nineteen": 19,
+                "twenty-two": 22, "twenty-seven": 27, "sixty-six": 66,
+                "fifty-four": 54}
         truth = {
             len(countries),                                   # 22 written up
             sum(len(c.entries) for c in countries),            # 594 places
@@ -1306,6 +1307,33 @@ def main():
                   "operator in each" not in said and "in every" not in said)
         check("the brief is generated rather than typed",
               "<!-- gen:claim -->" in home_src)
+
+        # The same failure twice more: a sentence typed beside a block that is
+        # generated, and the two stopped agreeing the moment the block changed.
+        note = re.search(r'<!-- gen:nownote -->(.*?)<!-- /gen:nownote -->', home_src, re.S)
+        strip = re.search(r'<!-- gen:now -->(.*?)<!-- /gen:now -->', home_src, re.S)
+        cards = len(re.findall(r'class="wa-now[ "]', strip.group(1))) if strip else 0
+        said_n = None
+        if note:
+            m = re.search(r'\b(\w+(?:-\w+)?) of them here', note.group(1))
+            said_n = WORD.get((m.group(1) or "").lower()) if m else None
+        check("the contemporary strip has cards in it", cards > 0, "%d" % cards)
+        check("the sentence beside the strip counts the cards the strip has",
+              said_n == cards, "says %r, shows %d" % (said_n, cards))
+
+        alt = re.search(r'<svg class="wa-map-svg"[^>]*aria-label="([^"]*)"', home_src)
+        check("the map has a description at all", bool(alt))
+        if alt:
+            nums = {int(n) for n in re.findall(r'\b(\d+)\b', alt.group(1))}
+            check("the map's description counts the countries the map draws",
+                  nums and nums <= truth, alt.group(1)[:70])
+            check("the map's description points at the buttons that replace it",
+                  "button" in alt.group(1).lower())
+
+        check("the destination filter counts the grid rather than a literal",
+              not re.search(r"shown \+ ' of \d", home_src))
+        check("the opening does not print the size of Africa as the size of this site",
+              "54 countries &middot;" not in home_src)
 
         # -- the story graph -------------------------------------------------------
         print("\nthe story graph")

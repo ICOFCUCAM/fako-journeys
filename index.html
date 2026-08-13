@@ -369,7 +369,6 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
      country names overflowing their own box. It goes back into the flow. */
   .wa-win{position:static;width:auto;max-width:none;top:auto;right:auto}
   .wa-open-say,.wa-open-tail{max-width:none}
-  .wa-open .wa-stamp{font-size:9.5px;letter-spacing:.2em}
   .wa-hair{margin-top:18px}
   .wa-find{margin-top:14px}
   .wa-open .wa-lede{margin-top:0;font-size:17px}
@@ -819,14 +818,13 @@ window.AF = {
   <div class="wa-open-stage">
     <div class="wa-frame wa-open-grid">
       <div class="wa-open-say">
-        <span class="wa-stamp">54 countries &middot; one continent &middot; countless ways to begin</span>
         <h1 class="wa-h1"><span class="wa-h1-big">Africa</span><span class="wa-h1-rest">isn&rsquo;t one place.</span></h1>
         <p class="wa-find">Find your Africa.</p>
       </div>
       <div class="wa-win">
         <div class="wa-win-frame">
       <figure class="wa-win-state" data-slug="africa" data-on="true">
-        <svg class="wa-map-svg" viewBox="0 0 1000 1060" role="img" aria-label="Map of Africa. 22 countries are marked; 22 have a destination page." xmlns="http://www.w3.org/2000/svg">
+        <svg class="wa-map-svg" viewBox="0 0 1000 1060" role="img" aria-label="Map of Africa. The 22 countries written up on this site are filled in; the rest of the continent is drawn as outline only. The same 22 are listed as buttons directly below this map." xmlns="http://www.w3.org/2000/svg">
         <g class="wa-map-rest" aria-hidden="true">
         <path d="M416.5 85.3L412.1 90.2L413.4 92.1L411.6 98.9L412.5 106.2L410.4 111.9L402.3 119L401.4 122.6L403.2 129.6L407.2 132.3L409 138.6L416.4 144.7L420 167.4L417.6 168.7L422.4 180.4L422.6 197.6L420.3 203.2L421.3 211.9L415.7 217.8L421.8 228L424.3 237.3L438.7 241L443.7 251L389 282.9L367.2 300.5L337.8 305.2L335.4 303.1L337.4 299.9L336.3 294.3L319.7 287.1L314 281.3L314.1 277.7L211.6 193.5L215 175.8L233.8 165.5L239.4 166.5L241.7 163.5L253.3 162.6L259.7 156.7L275 151.5L273.7 148.5L275.4 142.4L283.8 141.2L286 138.3L303.9 139.1L306.3 134.7L302.8 130.6L301.4 123.8L303.2 106.2L299.5 101.5L305.4 101L319.9 93.6L323.9 94.2L328.3 90.4L338.9 86.7L353.1 86.5L366 83.6L376.3 84.1L381.5 87.4L394.7 82.6L399.1 84.8L402.4 84.4L402.2 82.9L409.3 86L416.5 85.3Z"><title>Algeria</title></path>
         <path d="M451.9 605.9L444.1 611.4L444.8 619.3L441.1 620.1L438.6 610.6L448.4 603.3L451.9 605.9ZM588.7 684.5L588.3 711.1L563.7 711.2L564 752L565.3 756.2L580.2 769.3L548 773.9L526.1 771.2L519.6 766.2L465.3 766.4L459 761.8L454.4 760.9L447.7 764L437.8 764.6L437.5 746.8L440.6 742.9L446.7 716.8L451.9 708.5L457.2 705.3L460.5 700.3L462.3 686.8L451.4 661.6L455.9 657L456.1 653L449 635.2L442.3 624.3L453.4 621.3L494.3 621.9L497.7 625.2L501.3 639L508.8 649.6L530.9 647.9L533.3 637.6L537.7 635.6L546.7 634.7L546.9 639.3L561.7 639.7L563.1 657.1L561.9 666.8L567.6 676.8L566.9 687.6L587 686.3L588.7 684.5Z"><title>Angola</title></path>
@@ -1439,11 +1437,9 @@ window.AF = {
       <div class="wa-head-no"><b>04</b><span>Africa now</span></div>
       <div>
         <h2>Not a <em>museum</em>.</h2>
-        <p class="wa-note">Sixty-six chapters across the twenty-two countries are
-          about what is cooked, made and built this decade rather than what is
-          behind glass. Nine of them here. Not a feed and not an events calendar
-          &mdash; this site holds no dates and will not invent any; these are
-          evergreen, and they are true for longer than a week.</p>
+        <!-- gen:nownote -->
+        <p class="wa-note">Sixty-six chapters across the twenty-two countries are about what is cooked, made and built this decade rather than what is behind glass. Six of them here. Not a feed and not an events calendar &mdash; this site holds no dates and will not invent any; these are evergreen, and they are true for longer than a week.</p>
+        <!-- /gen:nownote -->
       </div>
     </div>
     <div class="wa-nows">
@@ -1551,7 +1547,11 @@ window.AF = {
     exps.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.want === want)); });
     mbtns.forEach(function(b){ b.setAttribute('aria-pressed', String(+b.dataset.month === month)); });
     var shown = 0, live = {};
-    [].slice.call(document.querySelectorAll('.wa-dest[data-tags]')).forEach(function(c){
+    // Counted from the grid, not typed. "of 22" was a literal in this line while
+    // the cards above it were generated from the dataset, so a twenty-third
+    // country would have been drawn and then not counted.
+    var all = [].slice.call(document.querySelectorAll('.wa-dest[data-tags]'));
+    all.forEach(function(c){
       var byWant = !want || c.dataset.tags.split(' ').indexOf(want) >= 0;
       var byMonth = !month || c.dataset.months.split(',').indexOf(String(month)) >= 0;
       var byRegion = !region || c.dataset.region === region;
@@ -1575,7 +1575,7 @@ window.AF = {
       var band = document.querySelector('.wa-dest-band[data-region="' + region + '"] .wa-dest-reg');
       if (band) parts.push((parts.length ? 'in ' : 'In ') + band.textContent.trim());
     }
-    say.textContent = (parts.join(', ') || 'Narrowed') + ' — ' + shown + ' of 22.';
+    say.textContent = (parts.join(', ') || 'Narrowed') + ' — ' + shown + ' of ' + all.length + '.';
   }
 
   /* The experiences section, three screens up, offers the same six lenses these
