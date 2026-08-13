@@ -533,6 +533,18 @@
 .wa-win-state .wa-map-live[data-tier="ours"].on path{
   fill:color-mix(in srgb, var(--c-primary) 66%, var(--c-accent))}
 .wa-win-state .wa-map-live{cursor:pointer}
+/* HOVER IS AN ELEVATION, NOT A REPAINT.
+   Pointing at a country repainted its fill, which on a three-tier map means the
+   tier changes under the pointer — 091 fixed the worst of that by keeping each
+   tier inside its own hue, but a fill change is still the wrong verb. What the
+   reader is doing is picking a sheet off the pile. So the country keeps its
+   colour and gains a keel and a shadow: gold at full weight, and a drop shadow
+   at the angle the whole sheet is already lit from. */
+.wa-map-live path,.wa-map-live circle{transition:filter .18s ease}
+.wa-map-live:hover path,.wa-map-live:focus-visible path,.wa-map-live.on path,
+.wa-map-live:hover circle,.wa-map-live.on circle{
+  stroke:var(--c-gold);stroke-width:2.2;
+  filter:drop-shadow(0 3px 6px rgba(6,18,14,.55))}
 
 /* ---- the scale ---------------------------------------------------------------------
    The one place on the page where the interface is allowed to make an argument
