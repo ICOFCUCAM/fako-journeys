@@ -1,14 +1,18 @@
 """Turn Natural Earth boundaries into the inline SVG map on the gateway home page.
 
-    npm pack world-atlas@2 && tar xzf world-atlas-2.0.2.tgz
-    python3 tools/africa_map.py package/countries-110m.json > map.svg
+    curl -sSLO https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson
+    python3 tools/africa_map.py ne_50m_admin_0_countries.geojson > map.svg
+
+(TopoJSON in the world-atlas layout is still accepted; a FeatureCollection is
+detected and converted.)
 
 The map on the home page is meant to become the way people navigate the whole
 platform, which rules out a drawn approximation of the continent: a country you
 can click has to be the shape of that country. So the paths come from Natural
-Earth's 110m boundaries by way of the `world-atlas` package, decoded here and
-projected once, at build time. Nothing ships to the browser but the finished
-path data — no map library, no tiles, no requests.
+Earth — public domain, and the survey world-atlas is itself derived from —
+read here, projected once, at build time. Nothing ships to the browser but the
+finished path data: no map library, no tiles, no requests, and a map that is
+still there with scripting off.
 
 The data file is not vendored. It is 2 MB to carry for something that changes
 when borders change, which is to say almost never; the twenty lines above
@@ -22,6 +26,7 @@ proportion to each other — the point of the thing is comparison.
 
 import json
 import math
+import re
 import sys
 
 # ISO 3166-1 numeric, which is what the world-atlas ids are. Listing them beats
@@ -90,12 +95,84 @@ SMALL_COUNTRY = 60.0
 HIT_R = 34.0
 PRECISION = 1          # tenths of a viewBox unit; the map is ~600px wide in use
 MIN_RING_AREA = 4.0    # drop specks: unclickable, and they cost bytes
-TOLERANCE = 1.2        # continental map: ~1px of slack at the size it is drawn
+# Measured rather than chosen. At continent scale the map is about 500 CSS px
+# wide for a 1000-unit viewBox, so a map unit is half a pixel and 1.2 was
+# invisible — but the hero flies to a country, and a country view is ~200 units
+# in the same 500px, where one unit is 2.5px and 1.2 was three pixels of error
+# on every coastline. Source resolution was never the constraint: 110m and 50m
+# simplify to the same thing at tolerance 1.2. The tolerance was.
+#
+#   tol    vertices   path bytes   error at country zoom
+#   1.20      2,192       25 KB         3.0 px
+#   0.80      2,844       32 KB         2.0 px
+#   0.50      3,825       43 KB         1.3 px
+#   0.35      4,711       53 KB         0.9 px      <- sub-pixel, and this
+#   0.25      5,717       65 KB         0.6 px
+#
+# 10m would add nothing here: at country zoom one map unit is 2.5px and 10m
+# resolves detail far below a unit, so the tolerance would still be what binds,
+# against a 25 MB source instead of a 3 MB one.
+TOLERANCE = 0.35       # sub-pixel at the deepest zoom the hero uses
 SOLO_TOLERANCE = 2.0   # a silhouette is drawn large, but from a 1000-unit box
+# The true-size comparison draws a country inside Africa at a few hundred pixels
+# and never zooms. Sharing the hero's tolerance took that block from 31 KB to
+# 105 KB of path data inlined on the home page for detail nothing renders: one
+# tolerance for artefacts drawn at different sizes is one tolerance too few.
+SCALE_TOLERANCE = 2.0
+
+
+def topology(gj):
+    """Natural Earth GeoJSON -> the shape the rest of this module expects.
+
+    The module was written against world-atlas, which is TopoJSON: shared arcs,
+    quantised deltas, a transform. Natural Earth publishes GeoJSON, and it is
+    the authoritative source world-atlas is itself derived from — so reading it
+    directly removes an intermediary and a version to keep in step. It also
+    removes a dependency that cannot currently be fetched from here at all.
+
+    No arcs are shared, which costs nothing: the arcs exist so a border drawn
+    twice is stored once, and every ring is decoded to absolute coordinates
+    immediately afterwards regardless. Each ring becomes its own arc.
+
+    ISO_N3_EH rather than ISO_N3: the `_EH` variants are Natural Earth's own
+    "as most maps show it" codes, and plain ISO_N3 is -99 for several African
+    entities, which would silently drop them from a continent map.
+    """
+    arcs, geoms = [], []
+    for f in gj["features"]:
+        props = f.get("properties") or {}
+        raw = props.get("ISO_N3_EH") or props.get("ISO_N3")
+        try:
+            code = int(raw)
+        except (TypeError, ValueError):
+            continue
+        geom = f.get("geometry") or {}
+        coords = geom.get("coordinates")
+        if not coords:
+            continue
+        polys = [coords] if geom.get("type") == "Polygon" else coords
+        out = []
+        for poly in polys:
+            rings = []
+            for r in poly:
+                arcs.append([(float(pt[0]), float(pt[1])) for pt in r])
+                rings.append([len(arcs) - 1])
+            if rings:
+                out.append(rings)
+        if out:
+            geoms.append({"id": str(code), "type": "MultiPolygon", "arcs": out,
+                          "properties": {"name": props.get("NAME") or props.get("ADMIN") or ""}})
+    return {"objects": {"countries": {"geometries": geoms}}, "arcs": arcs}
 
 
 def decode(topo):
-    """TopoJSON arcs -> absolute lon/lat rings. Deltas are quantised integers."""
+    """TopoJSON arcs -> absolute lon/lat rings. Deltas are quantised integers.
+
+    A topology built by topology() above carries no transform and its arcs are
+    already absolute, so there is nothing to undo.
+    """
+    if "transform" not in topo:
+        return topo["arcs"]
     sx, sy = topo["transform"]["scale"]
     tx, ty = topo["transform"]["translate"]
     arcs = []
@@ -233,7 +310,15 @@ def prune_outliers(rings, share=6.0):
     return keep or [main]
 
 
-def build(topo):
+def build(topo, tol=None):
+    """tol lets a caller drawn at a different size ask for a different fidelity.
+
+    It was a module global, which meant the hero's sub-pixel tolerance also
+    applied to the true-size comparison — a silhouette a few hundred pixels
+    wide that never zooms — and put 52 KB of invisible coastline on the home
+    page.
+    """
+    tol = TOLERANCE if tol is None else tol
     arcs = decode(topo)
     shapes = []
     for geom in topo["objects"]["countries"]["geometries"]:
@@ -267,7 +352,7 @@ def build(topo):
         parts = []
         for r in rings:
             scaled = [(round(p[0] * k + ox, PRECISION), round(p[1] * k + oy, PRECISION)) for p in r]
-            scaled = thin(scaled, TOLERANCE)
+            scaled = thin(scaled, tol)
             if area(scaled) < MIN_RING_AREA:
                 continue
             # Drop a vertex that rounded onto its neighbour rather than emitting it.
@@ -562,7 +647,7 @@ def land_path(topo):
     The comparison is about the whole continent, and a country grid inside it
     invites the eye to read borders instead of area.
     """
-    shapes, _frame = build(topo)
+    shapes, _frame = build(topo, SCALE_TOLERANCE)
     return "".join(d for _code, _name, d in shapes)
 
 
@@ -574,7 +659,7 @@ def scale_shapes(topo):
     itself avoids the shear that would make the comparison look rigged.
     """
     global LON0, LAT0
-    _shapes, (k, _ox, _oy) = build(topo)
+    _shapes, (k, _ox, _oy) = build(topo, SCALE_TOLERANCE)
     arcs = decode(topo)
     keep = LON0, LAT0
     by_code = {}
@@ -608,7 +693,7 @@ def scale_shapes(topo):
         parts = []
         for r in rings:
             pts = [(round((p[0] - x0) * k, PRECISION), round((p[1] - y0) * k, PRECISION)) for p in r]
-            pts = thin(pts, TOLERANCE)
+            pts = thin(pts, SCALE_TOLERANCE)
             if area(pts) < MIN_RING_AREA * 4:
                 continue
             trimmed = [pts[0]]
@@ -711,6 +796,8 @@ if __name__ == "__main__":
         sys.exit(__doc__.strip().splitlines()[2].strip())
     with open(sys.argv[1]) as fh:
         topo = json.load(fh)
+    if topo.get("type") == "FeatureCollection":
+        topo = topology(topo)
     if len(sys.argv) == 3 and sys.argv[2] == "--scale":
         data = {"africa": "30.4", "land": land_path(topo), "shapes": scale_shapes(topo)}
         text = json.dumps(data, indent=1)

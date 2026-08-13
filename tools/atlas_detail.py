@@ -43,11 +43,33 @@ OUT = os.path.join(ROOT, "tourism", "atlas-detail.json")
 # SVG positions are in index.html. Two points fix a uniform scale and offset, so
 # the fit is derived from the map that exists rather than recomputed from source
 # data this script would then have to download and agree with.
-FIT_FROM = ((690, 979.6, 604.7), (480, 982.5, 812.8))     # Seychelles, Mauritius
+#
+# Read from the page rather than written down here. The fit is a function of the
+# geometry, so it moves whenever the map is regenerated — at a finer tolerance,
+# or from a different Natural Earth resolution — and a constant that was right
+# when it was typed would put every layer a few units out with nothing to say so.
+FIT_MARKS = (690, 480)                                    # Seychelles, Mauritius
+PAGE = os.path.join(ROOT, "index.html")
+
+
+def marks_on_page():
+    import re
+    src = open(PAGE).read()
+    out = {}
+    for m in re.finditer(r'data-slug="([a-z-]+)"[^>]*>\s*<circle[^>]*cx="([-\d.]+)" cy="([-\d.]+)"', src):
+        out[m.group(1)] = (float(m.group(2)), float(m.group(3)))
+    return out
 
 
 def fit():
-    (ca, ax, ay), (cb, bx, by) = FIT_FROM
+    found = marks_on_page()
+    pts = []
+    for code in FIT_MARKS:
+        slug = am.ROSTER[code][0]
+        if slug not in found:
+            raise SystemExit("no island mark for %s in index.html — the fit cannot be solved" % slug)
+        pts.append((code,) + found[slug])
+    (ca, ax, ay), (cb, bx, by) = pts
     pa, pb = am.project(*am.ISLAND_MARKS[ca]), am.project(*am.ISLAND_MARKS[cb])
     k = (by - ay) / (pb[1] - pa[1])
     ox, oy = ax - k * pa[0], ay - k * pa[1]
