@@ -378,9 +378,29 @@
 .wa-win-state .wa-map-live[data-tier="live"] circle{fill:var(--c-accent-fill)}
 .wa-win-state .wa-map-live[data-tier="ours"] path,
 .wa-win-state .wa-map-live[data-tier="ours"] circle{fill:var(--c-primary)}
+/* HOVER SAYS "THIS ONE". IT DOES NOT SAY "AND ALSO IT IS SOMETHING ELSE NOW".
+   Every hovered country was filled burnt sienna, whatever it had been. On a
+   destination that is a step within the same hue and reads as emphasis. On one
+   of our own operators it replaced deep forest with sienna outright — so
+   pointing at Cameroon made Cameroon look like Kenya, and the map's entire
+   three-tone argument (the continent, a destination here, an operator of ours)
+   collapsed to two under the pointer.
+
+   Both tiers now move within themselves — the destination to burnt sienna as
+   before, the operator to a forest warmed a third of the way toward it — and
+   the thing that actually says "this one" is the stroke, which goes from the
+   page's ivory to the accent at two pixels and is the same signal on all three
+   tiers, including on a country with no fill of its own. */
 .wa-win-state .wa-map-live:hover path,.wa-win-state .wa-map-live:focus path,
 .wa-win-state .wa-map-live.on path,.wa-win-state .wa-map-live:hover circle,
-.wa-win-state .wa-map-live.on circle{fill:var(--c-accent)}
+.wa-win-state .wa-map-live.on circle{stroke:var(--c-accent);stroke-width:2}
+.wa-win-state .wa-map-live[data-tier="live"]:hover path,
+.wa-win-state .wa-map-live[data-tier="live"].on path,
+.wa-win-state .wa-map-live[data-tier="live"]:hover circle,
+.wa-win-state .wa-map-live[data-tier="live"].on circle{fill:var(--c-accent)}
+.wa-win-state .wa-map-live[data-tier="ours"]:hover path,
+.wa-win-state .wa-map-live[data-tier="ours"].on path{
+  fill:color-mix(in srgb, var(--c-primary) 66%, var(--c-accent))}
 .wa-win-state .wa-map-live{cursor:pointer}
 
 /* ---- the scale ---------------------------------------------------------------------
@@ -1090,6 +1110,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    with the real mark drawn on top of it, which is a bullseye, not an island. */
 .wa-win-state .wa-map-live circle.wa-map-hit,
 .wa-win-state .wa-map-live:hover circle.wa-map-hit,
+.wa-win-state .wa-map-live:focus circle.wa-map-hit,
 .wa-win-state .wa-map-live.on circle.wa-map-hit{fill:transparent;stroke:none}
 .wa-win-state .wa-map-mark circle{stroke-width:1.5}
 
