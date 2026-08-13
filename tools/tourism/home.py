@@ -303,31 +303,7 @@ def build(country, taxonomy, countries=()):
 # generated page would be a second, poorer front door to each. They keep their
 # datasets, because the gateway, the map and their neighbours' region strips all
 # read a country from the same place whether or not it has a page here.
-def write_all(countries, taxonomy, skip=("cameroon", "uganda", "namibia"), out_dir=None, log=print):
-    out_dir = out_dir or ROOT
-    written = []
-    for c in countries:
-        if c.slug in skip or not c.published:
-            continue
-        path = os.path.join(out_dir, "%s.html" % c.slug)
-        with open(path, "w") as f:
-            f.write(build(c, taxonomy, countries))
-        written.append(path)
-        log("  wrote %s" % os.path.relpath(path, ROOT))
-    return written
-
-
-TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>%(title)s</title>
-<meta name="description" content="%(description)s">
-%(og)s
-<link rel="stylesheet" href="/styles/afrinkong.css">
-<style>
-/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
+COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afrinkong.css.
    What follows is this page shape only. */
 .mast{position:sticky;top:0;z-index:70;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
 .mast-in{display:flex;align-items:center;gap:34px;padding:14px 0}
@@ -359,7 +335,7 @@ TEMPLATE = """<!DOCTYPE html>
    whatever its proportions — Chad and Rwanda should feel like the same kind of
    object on the page. */
 .ct-window{height:min(58vh,520px)}
-.ct-window svg{height:100%%}
+.ct-window svg{height:100%}
 
 /* This country's year. Twelve cells beats a season paragraph: a visitor answers
    "can I go when I am free" in about a second. */
@@ -413,7 +389,7 @@ TEMPLATE = """<!DOCTYPE html>
 .ct-high h3{font-size:22px;margin:8px 0 8px}
 .ct-high p{font-size:15px;color:var(--c-muted)}
 .ct-high .ct-shot{display:block;margin-bottom:16px}
-.ct-high .ct-shot img{width:100%%;aspect-ratio:4/3;object-fit:cover}
+.ct-high .ct-shot img{width:100%;aspect-ratio:4/3;object-fit:cover}
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 
@@ -464,20 +440,64 @@ TEMPLATE = """<!DOCTYPE html>
 .foot-where [aria-current]{color:var(--c-accent)}
 .foot-next{margin-top:18px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
 .foot-next>span{font-family:var(--fj-mono);font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--fj-onbasalt-dim);width:100%%}
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);width:100%}
 .foot-next a{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
   color:var(--fj-onbasalt-dim);border-bottom:1px solid transparent}
 .foot-next a[data-border]{color:var(--c-bg)}
 .foot-next a:hover{border-color:var(--c-accent)}
 .foot-next i{font-style:normal;font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
   margin-left:7px;color:var(--fj-onbasalt-dim)}
-.foot-next p{width:100%%;margin-top:6px;font-size:12.5px;line-height:1.6;
+.foot-next p{width:100%;margin-top:6px;font-size:12.5px;line-height:1.6;
   color:var(--fj-onbasalt-dim)}
 .foot-bar{margin-top:40px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
 .foot-bar a{border-bottom:1px solid var(--c-accent)}
 @media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
-</style>
+"""
+
+
+STYLE_NOTE = """/* The country landing pages — /botswana, /kenya, /ghana and sixteen more.
+ * ---------------------------------------------------------------------------
+ * GENERATED. Do not edit: `python3 tools/tourism/build.py homes` overwrites it
+ * from TEMPLATE in tools/tourism/home.py. Edit that.
+ *
+ * Nineteen pages carried this same 10 KB block inline, which is 197 KB of CSS
+ * describing one page shape. Tokens, reset and primitives are not here; they
+ * are in /styles/afrinkong.css, which these pages already link.
+ */
+
+"""
+
+STYLESHEET = os.path.join(ROOT, "styles", "country.css")
+
+
+def write_all(countries, taxonomy, skip=("cameroon", "uganda", "namibia"), out_dir=None, log=print):
+    out_dir = out_dir or ROOT
+    os.makedirs(os.path.dirname(STYLESHEET), exist_ok=True)
+    with open(STYLESHEET, "w") as f:
+        f.write(STYLE_NOTE + COUNTRY_CSS.strip() + "\n")
+    written = []
+    for c in countries:
+        if c.slug in skip or not c.published:
+            continue
+        path = os.path.join(out_dir, "%s.html" % c.slug)
+        with open(path, "w") as f:
+            f.write(build(c, taxonomy, countries))
+        written.append(path)
+        log("  wrote %s" % os.path.relpath(path, ROOT))
+    return written
+
+
+TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%(title)s</title>
+<meta name="description" content="%(description)s">
+%(og)s
+<link rel="stylesheet" href="/styles/afrinkong.css">
+<link rel="stylesheet" href="/styles/country.css">
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to content</a>

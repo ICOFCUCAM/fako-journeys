@@ -1372,6 +1372,34 @@ def main():
                   expect is None or top == expect,
                   "%d on %s, dataset has %s" % (top, where, expect))
 
+        # -- what a page family pays twice for -------------------------------------
+        print("\nwhat a page family pays twice for")
+        blocks = {}
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
+                                     recursive=True)):
+            if "/incoming/" in path or "/node_modules/" in path:
+                continue
+            body = open(path).read()
+            for css in re.findall(r"<style[^>]*>(.*?)</style>", body, re.S):
+                if len(css) > 4096:
+                    blocks.setdefault(css, []).append(os.path.relpath(path, ROOT_DIR))
+        shared = sorted(((len(css) * len(where), len(where), len(css), where)
+                         for css, where in blocks.items() if len(where) > 1),
+                        reverse=True)
+        # A stylesheet inlined into one page is the right call — it is fetched
+        # once either way and costs no extra request. Inlined into a family it is
+        # paid for again on every page after the first, and the tourism pages
+        # were carrying the same 39,949 bytes twenty-three times.
+        check("no page family inlines the same stylesheet twice", not shared,
+              "; ".join("%d pages x %.1f KB (%s)" % (n, size / 1024.0, w[0])
+                        for _t, n, size, w in shared[:3]))
+        for sheet in ("tourism.css", "country.css"):
+            full = os.path.join(ROOT_DIR, "styles", sheet)
+            check("/styles/%s exists and is linked, not inlined" % sheet,
+                  os.path.isfile(full) and os.path.getsize(full) > 4096,
+                  "%.1f KB" % (os.path.getsize(full) / 1024.0)
+                  if os.path.isfile(full) else "missing")
+
         # -- what a parser makes of every head -------------------------------------
         print("\nwhat a parser makes of every head")
         from html.parser import HTMLParser

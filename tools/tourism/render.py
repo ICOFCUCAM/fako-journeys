@@ -458,8 +458,7 @@ PAGE = """<!DOCTYPE html>
 %(og)s
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 %(links)s
-<style>%(style)s
-%(tourism_css)s</style>
+<link rel="stylesheet" href="/styles/tourism.css">
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to %(country)s</a>
@@ -505,8 +504,6 @@ def render_country(country, taxonomy, shell):
                      % (country.name, len(taxonomy.enabled))),
         "description": esc(country.summary or (hero.description if hero else country.name)),
         "links": shell.links,
-        "style": shell.style.replace("<style>", "").replace("</style>", ""),
-        "tourism_css": TOURISM_CSS,
         "country": esc(country.name),
         "path": "/tourism/%s" % esc(country.slug),
         "og": plate_mod.open_graph(
@@ -565,8 +562,6 @@ def render_index(countries, taxonomy, shell):
         "description": "Country guides across Africa, each covering the same %d travel experiences, "
                        "so two countries can be compared on the same terms." % len(taxonomy.enabled),
         "links": shell.links,
-        "style": shell.style.replace("<style>", "").replace("</style>", ""),
-        "tourism_css": TOURISM_CSS,
         "country": esc(_ALL.name),
         "path": "/tourism/",
         "og": plate_mod.open_graph(
@@ -580,12 +575,44 @@ def render_index(countries, taxonomy, shell):
     }
 
 
+STYLESHEET = os.path.join(ROOT, "styles", "tourism.css")
+
+STYLE_NOTE = """/* The tourism country pages — /tourism and /tourism/<country>.
+ * ---------------------------------------------------------------------------
+ * GENERATED. Do not edit: `python3 tools/tourism/build.py render` overwrites
+ * this file from tools/tourism/render.py and the shell it reads out of
+ * cameroon.html. Edit those.
+ *
+ * This used to be inlined into every page. Byte for byte the same 39,949 bytes,
+ * twenty-three times, because the block is a page-family stylesheet and none of
+ * it varies by country — 900 KB of CSS to describe one design. Inlining is the
+ * right call for a single page whose CSS is only ever loaded once; it is the
+ * wrong call for a family, where the second page onward pays again for bytes
+ * the browser already has. Linked, the first tourism page costs the same and
+ * every one after it costs nothing.
+ *
+ * The tokens, reset, focus rules and motion behaviour are NOT here — they are
+ * in /styles/afrinkong.css, which every page on the site already links.
+ */
+
+"""
+
+
+def stylesheet(shell):
+    """The whole of what used to sit in each page's <style>, as one file."""
+    own = shell.style.replace("<style>", "").replace("</style>", "")
+    return STYLE_NOTE + own.strip() + "\n" + TOURISM_CSS
+
+
 def write_all(countries, taxonomy, publishable=None, out_dir=None):
     """Write a page per country plus the index. Countries that failed validation
     are skipped — incomplete tourism data does not get published."""
     shell = Shell()
     out = out_dir or OUT_DIR
     os.makedirs(out, exist_ok=True)
+    os.makedirs(os.path.dirname(STYLESHEET), exist_ok=True)
+    with open(STYLESHEET, "w") as f:
+        f.write(stylesheet(shell))
     written = []
     ok = [c for c in countries if c.published and (publishable is None or c.slug in publishable)]
     for c in ok:
