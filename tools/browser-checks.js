@@ -81,6 +81,24 @@ const TYPES = {
  */
 const NOJS_MIN_WORDS = 0.25;
 
+/* ---------------------------------------------------------------------------
+ * PASS THREE — text you can actually read
+ *
+ * Contrast has been measured by hand half a dozen times in this project and
+ * every time it found something: a plate whose caption sat at 2.5:1 on two of
+ * five region tones, a panel at 1.03:1 because its photograph was never placed,
+ * two tokens at 4.16 and 4.46 against a 4.5 requirement. Measuring it by hand
+ * means measuring it once; this measures it on every page, every run.
+ *
+ * WCAG 1.4.3 AA: 4.5:1 for text under 24px (or under 18.66px bold), 3:1 above.
+ * Colours are read from getComputedStyle, which returns color(srgb r g b) with
+ * floats — not rgb() with 0-255 — wherever color-mix() computed the value. A
+ * probe that assumed 0-255 once reported this site failing at 1.0:1 everywhere,
+ * so the parser handles both and the ratio is checked against known pairs.
+ */
+const AA_SMALL = 4.5;
+const AA_LARGE = 3.0;
+
 const out = [];
 function check(name, ok, detail) {
   out.push((ok ? 'PASS' : 'FAIL') + '\t' + name + '\t' + (detail || ''));
@@ -195,6 +213,77 @@ function serve() {
             'CLS ' + cls.toFixed(4)
             + (seen.worst ? ' — worst mover ' + seen.worst.what : ''));
     }
+    /* ---- pass three: contrast ------------------------------------------- */
+    for (const url of PAGES) {
+      const page = await browser.newPage({viewport: {width: 1280, height: 900}});
+      await page.goto(base + url, {waitUntil: 'networkidle'});
+      const bad = await page.evaluate(([small, large]) => {
+        function rgb(text) {
+          let m = String(text).match(/^color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/);
+          if (m) return [+m[1], +m[2], +m[3]];
+          m = String(text).match(/^rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?/);
+          if (!m) return null;
+          if (m[4] !== undefined && +m[4] < 0.95) return null;   // translucent: skip
+          return [m[1] / 255, m[2] / 255, m[3] / 255];
+        }
+        function lum(c) {
+          const f = v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+          return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+        }
+        function ratio(a, b) {
+          const x = lum(a), y = lum(b);
+          return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+        }
+        /* The ground a piece of text is actually painted on: the nearest
+           ancestor with an opaque background. Walking up is the only way —
+           an element with no background of its own inherits nothing, it just
+           shows whatever is behind it. */
+        function ground(el) {
+          for (let n = el; n; n = n.parentElement) {
+            const c = rgb(getComputedStyle(n).backgroundColor);
+            if (c) return c;
+          }
+          return [1, 1, 1];
+        }
+        const out = [];
+        document.querySelectorAll('body *').forEach(el => {
+          /* Only elements that hold their own words. A wrapper's colour is not
+             what the reader sees, and exempting inline tags from this rule —
+             which the first version did, on the theory that a <span> is always
+             text — produced two false failures immediately: a month cell whose
+             <b> is recoloured on the accent ground, and a pressed door whose
+             <b> is recoloured on the dark one. Both wrappers inherit the page
+             ink and neither paints a pixel with it. */
+          const text = [...el.childNodes]
+            .filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim();
+          if (!text) return;
+          const box = el.getBoundingClientRect();
+          if (!box.width || !box.height) return;
+          const cs = getComputedStyle(el);
+          if (cs.visibility === 'hidden' || +cs.opacity < 0.95) return;
+          /* Text over a photograph is measured against the veil, which this
+             cannot see; those components carry their own ground and are
+             excluded by having an image between them and the page. */
+          if (el.closest('[data-photo],.wa-now-art,.af-window-svg,picture')) return;
+          const fg = rgb(cs.color);
+          if (!fg) return;
+          const size = parseFloat(cs.fontSize);
+          const bold = (parseInt(cs.fontWeight, 10) || 400) >= 700;
+          const need = (size >= 24 || (bold && size >= 18.66)) ? large : small;
+          const got = ratio(fg, ground(el));
+          if (got + 0.005 < need) {
+            out.push(Math.round(got * 100) / 100 + ':1 needs ' + need + ' — '
+              + el.tagName + '.' + String(el.className).slice(0, 20)
+              + ' [' + text.slice(0, 24) + ']');
+          }
+        });
+        return [...new Set(out)];
+      }, [AA_SMALL, AA_LARGE]);
+      await page.close();
+      check(url + ' has no text under the contrast it needs', !bad.length,
+            bad.length ? bad.length + ' below AA: ' + bad.slice(0, 2).join(' | ') : 'all AA');
+    }
+
     /* ---- pass two: with scripting off ---------------------------------- */
     const off = await browser.newContext({viewport: {width: 1280, height: 900},
                                           javaScriptEnabled: false});
