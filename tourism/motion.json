@@ -1,0 +1,214 @@
+{
+ "$comment": [
+  "Three tracks of shots for the window under the hero, and the one place on the",
+  "site designed around footage that does not exist yet.",
+  "",
+  "Every shot has a `clip` and every clip is null. When one is filled with a real",
+  "video file the frame plays it instead of the photograph, one shot at a time —",
+  "the same arrangement as a city plate becoming a photograph in cities.json, and",
+  "for the same reason: a slot that is empty should be a treatment rather than a",
+  "gap, and should upgrade with no other change.",
+  "",
+  "Until then the window cross-fades photographs. That is honestly a slideshow",
+  "and it is not dressed up as film: there is no play triangle, because a play",
+  "triangle is a promise of video. The control it does have is a pause, which",
+  "moving content needs anyway once it runs longer than five seconds.",
+  "",
+  "A shot names what is in it and nothing else. `say` is the caption under the",
+  "frame and has to be true of that frame alone — not of the country, not of the",
+  "track, and not of Africa."
+ ],
+ "$clip_note": [
+  "Clips cannot be fetched from this machine: the agent proxy refuses",
+  "api.pexels.com and videos.pexels.com outright, which is why the image resolver",
+  "runs in GitHub Actions rather than locally. Filling these is a job for the same",
+  "place, or for footage from the operators, which is better than stock anyway.",
+  "",
+  "A clip must be of the thing its shot claims. Generic African street footage",
+  "captioned Kampala is the same fault as a generated photograph of a real city,",
+  "and this file is the one most likely to tempt somebody into it."
+ ],
+ "tracks": [
+  {
+   "slug": "city",
+   "label": "City life",
+   "line": "Cities wake.",
+   "shots": [
+    {
+     "photo": "/images/uploads/city-cape-town-1080w.jpg",
+     "photo_w": 1080,
+     "photo_h": 650,
+     "alt": "The V&A Waterfront in Cape Town at midday, yachts and quaysides in the foreground and Table Mountain and Devil's Peak rising directly behind the city centre",
+     "say": "Cape Town",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/city-marrakech-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 800,
+     "alt": "Jemaa el-Fna square in Marrakech at dusk, crowds moving between rows of covered food stalls, the pink walls of the medina and a minaret behind, with the sky going orange",
+     "say": "Marrakech",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/city-lagos-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 630,
+     "alt": "The Lagos Marina waterfront seen from above, the lagoon on the left and the towers and traffic of Lagos Island running along the shoreline",
+     "say": "Lagos",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/city-nairobi-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 800,
+     "alt": "Central Nairobi from the air on a clear day, towers and older colonial-era rooftops in the foreground and the city spreading to the horizon under cumulus cloud",
+     "say": "Nairobi",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/city-accra-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 800,
+     "alt": "Accra from above on an overcast afternoon, a tall office block among low-rise streets, heavy tree cover through the middle of the city and stacked shipping containers on the right",
+     "say": "Accra",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/city-addis-ababa-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 1800,
+     "alt": "Bole Road in Addis Ababa at dusk, glass towers and lit shopfronts along a wide avenue with evening traffic and people crossing",
+     "say": "Addis Ababa",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/city-abidjan-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 900,
+     "alt": "The Boulevard Valery Giscard d'Estaing interchange in Abidjan from the air, traffic looping through a raised roundabout with the Plateau towers and the Ebrie lagoon behind it",
+     "say": "Abidjan",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/city-yaounde-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 675,
+     "alt": "Yaoundé from the air, the government quarter and its formal gardens in the foreground and the city spreading over wooded hills to a rocky ridge on the horizon",
+     "say": "Yaoundé",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/city-durban-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 785,
+     "alt": "Durban's city centre from above, high-rise blocks and older warehouses running down to the Indian Ocean, with the China Mall and beachfront hotels among them",
+     "say": "Durban",
+     "clip": null
+    }
+   ]
+  },
+  {
+   "slug": "wild",
+   "label": "Wild places",
+   "line": "Forests breathe.",
+   "shots": [
+    {
+     "photo": "/images/uploads/gorilla-trekkers-768w.jpg",
+     "photo_w": 768,
+     "photo_h": 543,
+     "alt": "A silverback mountain gorilla sitting in dense green undergrowth on a forested slope while a line of trekkers and guides photograph it from a few metres away",
+     "say": "Mountain gorilla",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/site-index-waza-elephants-1600w.jpg",
+     "photo_w": 1600,
+     "photo_h": 1067,
+     "alt": "Elephants at a dry-season waterhole in flat acacia savanna at Waza",
+     "say": "Waza",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/desert-camp-sunrise-1440w.jpg",
+     "photo_w": 1440,
+     "photo_h": 958,
+     "alt": "A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them",
+     "say": "The dunes at first light",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/site-services-mandara-spires-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 800,
+     "alt": "Volcanic rock spires rising out of dry farmland in the Mandara mountains",
+     "say": "The Mandara spires",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/site-index-coast-lobe-falls-1536w.jpg",
+     "photo_w": 1536,
+     "photo_h": 1024,
+     "alt": "A waterfall dropping over rock straight into the sea on the Cameroon coast",
+     "say": "Where the falls meet the sea",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/site-index-mount-wet-cloud-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 800,
+     "alt": "Heavy cloud sitting on the rainforest above Buea in the wet season",
+     "say": "Cloud on the mountain",
+     "clip": null
+    }
+   ]
+  },
+  {
+   "slug": "culture",
+   "label": "Living culture",
+   "line": "Hands are already working.",
+   "shots": [
+    {
+     "photo": "/images/uploads/site-index-foumban-bronze-caster-1600w.jpg",
+     "photo_w": 1600,
+     "photo_h": 1067,
+     "alt": "A bronze caster at work on the craft street at Foumban",
+     "say": "A bronze caster at Foumban",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/site-about-north-market-street-1440w.jpg",
+     "photo_w": 1440,
+     "photo_h": 960,
+     "alt": "A guide talking with a market trader beside a vehicle in a northern town",
+     "say": "Market talk",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/site-services-north-craft-stalls-1200w.jpg",
+     "photo_w": 1200,
+     "photo_h": 800,
+     "alt": "Leather and craft stalls under awnings in a northern Cameroonian market",
+     "say": "Leather and craft",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/site-about-forest-guide-tree-1440w.jpg",
+     "photo_w": 1440,
+     "photo_h": 960,
+     "alt": "A forest guide pointing out a tree species inside dense rainforest",
+     "say": "A guide, and a tree worth stopping for",
+     "clip": null
+    },
+    {
+     "photo": "/images/uploads/site-about-mount-trailhead-dawn-1600w.jpg",
+     "photo_w": 1600,
+     "photo_h": 1067,
+     "alt": "Climbers and guides gathered with packs on volcanic ground at the Mount Cameroon National Park registration hut in Buea before dawn, the forest canopy behind them already lit by the sun while the ground is still in shadow",
+     "say": "Before six at the trailhead",
+     "clip": null
+    }
+   ]
+  }
+ ]
+}

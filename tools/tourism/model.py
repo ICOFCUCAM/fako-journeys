@@ -211,6 +211,22 @@ def load_moments(path=None):
         return []
 
 
+def load_motion(path=None):
+    """The three tracks of shots for the window under the hero.
+
+    Curated like the cities and the moments. Every shot carries a `clip` and
+    every clip is null until real footage exists; motion.json says at length why
+    that is a treatment rather than a gap, and why a clip has to be of the thing
+    its shot claims.
+    """
+    path = path or os.path.join(ROOT, "tourism", "motion.json")
+    try:
+        with open(path) as fh:
+            return json.load(fh).get("tracks") or []
+    except (IOError, ValueError):
+        return []
+
+
 def load_picks(path=None):
     """What we would actually say if somebody told us what they wanted.
 

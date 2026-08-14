@@ -29,7 +29,7 @@ import re
 
 from . import plate
 from .model import (CATEGORY_FILE, ROOT, load_cities, load_lenses, load_moments,
-                    load_picks, load_regions, load_views, region_of)
+                    load_motion, load_picks, load_regions, load_views, region_of)
 
 LINKS = os.path.join(ROOT, "data", "links.json")
 
@@ -66,7 +66,7 @@ MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer", "regiontone", "feel",
-           "moments", "momentsay", "seasons", "seasonsay")
+           "moments", "momentsay", "seasons", "seasonsay", "motion")
 
 # Markers that live inside <style> rather than in the document. An HTML comment
 # there is not a comment: `<!--` and `-->` are CDO/CDC tokens the CSS parser
@@ -372,6 +372,65 @@ def block_moments():
                esc(m.get("alt") or ""), esc(m.get("line") or ""),
                esc(m.get("label") or lens["label"])))
     return "\n".join(out)
+
+
+def block_motion():
+    """The window under the hero: three tracks, and a frame that advances.
+
+    Built for footage that does not exist yet. Every shot carries a clip and
+    every clip is null, so today the frame cross-fades photographs; the moment a
+    clip is filled in that shot plays instead, with no other change. It is the
+    same arrangement as a city plate becoming a photograph, and for the same
+    reason — an empty slot should be a treatment rather than a gap.
+
+    What it deliberately does not have is a play triangle. A play triangle is a
+    promise of video, and there is none here yet. The control is a pause, which
+    content that moves for longer than five seconds needs regardless.
+
+    The first shot of the first track is eager: this sits directly under the
+    hero and is the first picture after it. Everything else is lazy, because
+    twenty photographs on load is the cost of a video without any of the
+    benefit.
+    """
+    tracks = load_motion()
+    if not tracks:
+        return "      "
+    rails, frames = [], []
+    for ti, t in enumerate(tracks):
+        shots = [s for s in t.get("shots") or [] if s.get("photo") or s.get("clip")]
+        if not shots:
+            continue                # a track with nothing to show is not offered
+        rails.append(
+            '<button class="wa-mo-pick" type="button" data-track="%s" aria-pressed="%s">'
+            '<b>%s</b><i>%s</i></button>'
+            % (esc(t["slug"]), "true" if not ti else "false",
+               esc(t.get("label") or t["slug"]), esc(t.get("line") or "")))
+        for si, s in enumerate(shots):
+            first = not ti and not si
+            if s.get("clip"):
+                media = ('<video src="%s" poster="%s" muted playsinline loop '
+                         'preload="%s" aria-label="%s"></video>'
+                         % (esc(s["clip"]), esc(s.get("photo") or ""),
+                            "auto" if first else "none", esc(s.get("alt") or "")))
+            else:
+                media = ('<img src="%s" width="%d" height="%d" alt="%s" '
+                         'loading="%s" decoding="async" data-provider="upload">'
+                         % (esc(s["photo"]), int(s.get("photo_w") or 0),
+                            int(s.get("photo_h") or 0), esc(s.get("alt") or ""),
+                            "eager" if first else "lazy"))
+            frames.append(
+                '      <figure class="wa-mo-shot" data-track="%s"%s>%s'
+                '<figcaption>%s</figcaption></figure>'
+                % (esc(t["slug"]), ' data-on="true"' if first else "",
+                   media, esc(s.get("say") or "")))
+    # The window and the rail are siblings, not nested. The rail was inside the
+    # frame at first and sat on top of the caption, so every shot's name was
+    # underneath the controls that changed it.
+    return ('      <div class="wa-mo-window">\n' + "\n".join(frames)
+            + '\n      </div>\n'
+            + '      <div class="wa-mo-rail" role="group" '
+              'aria-label="Choose what the window shows">'
+            + "".join(rails) + "</div>")
 
 
 def block_momentsay():
@@ -1374,6 +1433,7 @@ def render(countries):
         "feel": block_feel(seq),
         "moments": block_moments(),
         "momentsay": block_momentsay(),
+        "motion": block_motion(),
         "seasons": block_seasons(seq),
         "seasonsay": block_seasonsay(seq),
         "regiontone": block_regiontone(),

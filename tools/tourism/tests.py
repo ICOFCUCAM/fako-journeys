@@ -1360,7 +1360,7 @@ def main():
         # It was not in that order. The picker whose copy says "the grid below
         # narrows" sat three thousand pixels below that grid, so the promise was
         # false and clicking it scrolled the reader backwards.
-        WANT_ORDER = ["window", "feel", "moments", "scale", "experiences",
+        WANT_ORDER = ["window", "motion", "feel", "moments", "scale", "experiences",
                       "destinations", "cities", "year", "now", "plan",
                       "stories", "begin"]
         got = re.findall(r'<section[^>]*id="([a-z]+)"', home_src)
@@ -1451,6 +1451,55 @@ def main():
                   and all(gateway.MONTHS[i - 1] in text
                           for i, n in live.items() if n == hi),
                   "%d in the busiest" % hi)
+
+        # -- the window built for footage that does not exist yet -------------------
+        # Every shot in motion.json carries a clip and every clip is null, so
+        # what this does today is cross-fade photographs. That is the point of
+        # the checks: the section has to be honest about being a slideshow now,
+        # and correct about being a film later.
+        motion_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "motion.json"))
+        tracks = motion_src.get("tracks") or []
+        moblock = re.search(r'<!-- gen:motion -->(.*?)<!-- /gen:motion -->',
+                            home_src, re.S)
+        check("the window under the hero is generated", bool(moblock))
+        if moblock:
+            body = moblock.group(1)
+            drawn = re.findall(r'<figure class="wa-mo-shot" data-track="([a-z]+)"', body)
+            have = [t for t in tracks if [x for x in (t.get("shots") or [])
+                                          if x.get("photo") or x.get("clip")]]
+            check("every track with something to show is offered",
+                  len(set(drawn)) == len(have), "%d tracks" % len(set(drawn)))
+            check("one shot is showing and only one",
+                  body.count('data-on="true"') == 1,
+                  "%d marked" % body.count('data-on="true"'))
+            # A slideshow that runs longer than five seconds has to be stoppable.
+            # This one runs at 5.2s, so the control is the reason it is allowed
+            # to move at all rather than a nicety.
+            check("the window can be stopped by hand",
+                  'class="wa-mo-hold"' in home_src and 'aria-pressed' in home_src)
+            imgs = re.findall(r'<img src="([^"]+)"[^>]*width="(\d+)" height="(\d+)"'
+                              r'[^>]*alt="([^"]*)"', body)
+            bad = [u for u, _w, _h, _a in imgs if "/images/uploads/" not in u]
+            check("no shot is a picture of somewhere that does not exist",
+                  not bad, ", ".join(bad) or "all %d from uploads" % len(imgs))
+            gone = [u for u, _w, _h, _a in imgs
+                    if not os.path.exists(os.path.join(ROOT_DIR, u.lstrip("/")))]
+            check("every shot's photograph is on disk", not gone,
+                  ", ".join(gone) or "all %d" % len(imgs))
+            thin = [u for u, _w, _h, a in imgs if len(a) < 40]
+            check("every shot says what is in it", not thin,
+                  ", ".join(thin) or "all %d described" % len(imgs))
+            check("every shot reserves its space",
+                  all(int(w) and int(h) for _u, w, h, _a in imgs),
+                  "%d sized" % len(imgs))
+            # Not yet true, and the check is here so that it stays true when it
+            # becomes possible: a clip has to be a file this repo actually has.
+            clips = [s2.get("clip") for t in tracks for s2 in (t.get("shots") or [])
+                     if s2.get("clip")]
+            missing = [c for c in clips
+                       if not os.path.exists(os.path.join(ROOT_DIR, c.lstrip("/")))]
+            check("every clip named is a clip that exists", not missing,
+                  ", ".join(missing) or "%d clips" % len(clips))
 
         # -- the four photographs that are the argument -----------------------------
         # Everywhere else on this site a photograph illustrates a country that has
