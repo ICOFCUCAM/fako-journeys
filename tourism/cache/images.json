@@ -13657,6 +13657,38 @@
         ]
       }
     },
+    "south-africa/architecture": {
+      "country": "south-africa",
+      "category": "architecture",
+      "caption": "Bo-Kaap and Cape Dutch",
+      "description": "Painted Bo-Kaap terraces on the slope of Signal Hill, and gabled Cape Dutch homesteads out in the winelands.",
+      "provider": "pexels",
+      "photoId": "36492380",
+      "imageUrl": "https://images.pexels.com/photos/36492380/pexels-photo-36492380.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36492380/pexels-photo-36492380.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-urban-scene-in-bo-kaap-cape-town-36492380/",
+      "photographer": "Ndumiso  Zimu",
+      "photographerUrl": "https://www.pexels.com/@ndumiso-zimu-282936158",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "the painted houses of the Bo-Kaap below Signal Hill, South Africa",
+      "query": "South Africa Bo-Kaap Signal Hill",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T08:37:10Z",
+      "verifiedAt": "2026-08-14T08:37:10Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: and,cape,kaap",
+          "category: architecture"
+        ]
+      }
+    },
     "south-africa/beaches": {
       "country": "south-africa",
       "category": "beaches",
@@ -13687,6 +13719,38 @@
           "names the country",
           "subject: bay,beach,camps",
           "category: beach,ocean"
+        ]
+      }
+    },
+    "south-africa/cities": {
+      "country": "south-africa",
+      "category": "cities",
+      "caption": "Cape Town and Johannesburg",
+      "description": "One built around a mountain and a harbour, the other on a gold reef, and nothing about them is alike.",
+      "provider": "unsplash",
+      "photoId": "ybjhQsdXxzY",
+      "imageUrl": "https://images.unsplash.com/photo-1602578984228-c98a9b995f3e",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1602578984228-c98a9b995f3e?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/city-skyline-under-blue-and-white-cloudy-sky-during-daytime-ybjhQsdXxzY",
+      "photographer": "tebogo losaba",
+      "photographerUrl": "https://unsplash.com/@tebophotos",
+      "width": 4000,
+      "height": 2667,
+      "aspectRatio": 1.4998,
+      "alt": "the Johannesburg skyline seen across the city at dusk, South Africa",
+      "query": "South Africa Johannesburg",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:37:06Z",
+      "verifiedAt": "2026-08-14T08:37:07Z",
+      "relevance": {
+        "score": 6.93,
+        "reasons": [
+          "subject: and,city,johannesburg",
+          "category: city,skyline"
         ]
       }
     },
@@ -13751,6 +13815,70 @@
         "reasons": [
           "names the country",
           "subject: kwazulu,natal"
+        ]
+      }
+    },
+    "south-africa/eco-tourism": {
+      "country": "south-africa",
+      "category": "eco-tourism",
+      "caption": "Marine and Rhino Work",
+      "description": "Whale watching at Hermanus, penguins at Boulders, and rhino monitoring in the reserves that fund it.",
+      "provider": "unsplash",
+      "photoId": "i1el7Rtl-UY",
+      "imageUrl": "https://images.unsplash.com/photo-1730234350694-1f8716098f8a",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1730234350694-1f8716098f8a?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-view-of-a-beach-with-mountains-in-the-background-i1el7Rtl-UY",
+      "photographer": "Martijn Vonk",
+      "photographerUrl": "https://unsplash.com/@vonkm737",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "African penguins on the boulders at Simon's Town, South Africa",
+      "query": "South Africa African Simon's Town",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:37:20Z",
+      "verifiedAt": "2026-08-14T08:37:21Z",
+      "relevance": {
+        "score": 5.37,
+        "reasons": [
+          "names the country",
+          "subject: and,boulders,town",
+          "looks like 70% of a slot already filled here"
+        ]
+      }
+    },
+    "south-africa/family-community": {
+      "country": "south-africa",
+      "category": "family-community",
+      "caption": "Township Tourism, Done Right",
+      "description": "Guided by residents, spending in the neighbourhood, and honest about what apartheid planning actually built.",
+      "provider": "unsplash",
+      "photoId": "7mb8JrsE0Do",
+      "imageUrl": "https://images.unsplash.com/photo-1667909547154-85b04eb47a8d",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1667909547154-85b04eb47a8d?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-group-of-banners-7mb8JrsE0Do",
+      "photographer": "Robin Kutesa",
+      "photographerUrl": "https://unsplash.com/@kutesir",
+      "width": 5346,
+      "height": 4000,
+      "aspectRatio": 1.3365,
+      "alt": "a resident guide leading a walking tour in Soweto, South Africa",
+      "query": "South Africa Soweto",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:37:13Z",
+      "verifiedAt": "2026-08-14T08:37:14Z",
+      "relevance": {
+        "score": 2.99,
+        "reasons": [
+          "subject: soweto"
         ]
       }
     },
@@ -13913,6 +14041,39 @@
         ]
       }
     },
+    "south-africa/hidden-gems": {
+      "country": "south-africa",
+      "category": "hidden-gems",
+      "caption": "The Wild Coast and Karoo",
+      "description": "Hole in the Wall and the Transkei green hills, and the Karoo's enormous silence in the other direction.",
+      "provider": "unsplash",
+      "photoId": "wrL5RrDyUPw",
+      "imageUrl": "https://images.unsplash.com/photo-1572702624247-ba99bd76043c",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1572702624247-ba99bd76043c?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/view-photography-of-seashore-wrL5RrDyUPw",
+      "photographer": "Joshua Gaunt",
+      "photographerUrl": "https://unsplash.com/@ndingujosh",
+      "width": 3808,
+      "height": 2856,
+      "aspectRatio": 1.3333,
+      "alt": "the Hole in the Wall rock arch on the Wild Coast, South Africa",
+      "query": "South Africa Hole Wall",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:37:25Z",
+      "verifiedAt": "2026-08-14T08:37:26Z",
+      "relevance": {
+        "score": 7.5,
+        "reasons": [
+          "names the country",
+          "subject: coast,the,wild",
+          "category: the"
+        ]
+      }
+    },
     "south-africa/historic-sites": {
       "country": "south-africa",
       "category": "historic-sites",
@@ -13973,6 +14134,69 @@
         "reasons": [
           "subject: blyde,canyon,river",
           "category: river"
+        ]
+      }
+    },
+    "south-africa/local-life": {
+      "country": "south-africa",
+      "category": "local-life",
+      "caption": "Soweto, Sunday",
+      "description": "Vilakazi Street, the shisa nyama grills, and a township of a million people that runs at its own pace.",
+      "provider": "unsplash",
+      "photoId": "ySW0RtDJNh4",
+      "imageUrl": "https://images.unsplash.com/photo-1704826413546-5805fd26c94f",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1704826413546-5805fd26c94f?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-street-filled-with-lots-of-parked-cars-next-to-tall-buildings-ySW0RtDJNh4",
+      "photographer": "Sheila C",
+      "photographerUrl": "https://unsplash.com/@qld_traveller",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a shisa nyama street grill in Soweto on a Sunday, South Africa",
+      "query": "South Africa Soweto Sunday",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:37:10Z",
+      "verifiedAt": "2026-08-14T08:37:11Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: street",
+          "category: street"
+        ]
+      }
+    },
+    "south-africa/luxury": {
+      "country": "south-africa",
+      "category": "luxury",
+      "caption": "The Winelands",
+      "description": "Franschhoek and Stellenbosch: Cape Dutch estates, serious kitchens, and a wine tram that means nobody drives.",
+      "provider": "unsplash",
+      "photoId": "ONDJD7_mvTY",
+      "imageUrl": "https://images.unsplash.com/photo-1662309376204-8d6bef792ade",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1662309376204-8d6bef792ade?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-white-house-with-a-lawn-in-front-of-it-ONDJD7_mvTY",
+      "photographer": "Tanya Paquet",
+      "photographerUrl": "https://unsplash.com/@tanyapaquet",
+      "width": 5568,
+      "height": 3712,
+      "aspectRatio": 1.5,
+      "alt": "a Cape Dutch wine estate among vineyards in Franschhoek, South Africa",
+      "query": "South Africa Cape Dutch Franschhoek",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:37:17Z",
+      "verifiedAt": "2026-08-14T08:37:18Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: cape,dutch"
         ]
       }
     },
@@ -14038,6 +14262,69 @@
         "reasons": [
           "names the country",
           "subject: and,the"
+        ]
+      }
+    },
+    "south-africa/outdoor": {
+      "country": "south-africa",
+      "category": "outdoor",
+      "caption": "Lion's Head at Dawn",
+      "description": "Ninety minutes up a spiral path with chains near the top, for the whole peninsula at sunrise.",
+      "provider": "unsplash",
+      "photoId": "d6QlQivhZWA",
+      "imageUrl": "https://images.unsplash.com/photo-1519941459598-a1588781b56e",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1519941459598-a1588781b56e?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/rock-formations-with-body-of-water-d6QlQivhZWA",
+      "photographer": "Finding Dan | Dan Grinwis",
+      "photographerUrl": "https://unsplash.com/@finding_dan",
+      "width": 3758,
+      "height": 2756,
+      "aspectRatio": 1.3636,
+      "alt": "walkers on the spiral path up Lion's Head above Cape Town, South Africa",
+      "query": "South Africa Lion's Head Cape Town",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:37:16Z",
+      "verifiedAt": "2026-08-14T08:37:16Z",
+      "relevance": {
+        "score": 5.3,
+        "reasons": [
+          "names the country",
+          "subject: cape,town"
+        ]
+      }
+    },
+    "south-africa/photography": {
+      "country": "south-africa",
+      "category": "photography",
+      "caption": "Chapman's Peak Drive",
+      "description": "Nine kilometres cut into the cliff between Hout Bay and Noordhoek, and every turnout is a photograph.",
+      "provider": "pexels",
+      "photoId": "36597763",
+      "imageUrl": "https://images.pexels.com/photos/36597763/pexels-photo-36597763.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36597763/pexels-photo-36597763.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-coastal-view-from-chapman-s-peak-cape-town-36597763/",
+      "photographer": "Adrien Olichon",
+      "photographerUrl": "https://www.pexels.com/@adrien-olichon-1257089",
+      "width": 8675,
+      "height": 5774,
+      "aspectRatio": 1.5024,
+      "alt": "Chapman's Peak Drive cut into the cliffs above the Atlantic, South Africa",
+      "query": "South Africa Chapman's Peak Drive Atlantic",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 46,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T08:37:24Z",
+      "verifiedAt": "2026-08-14T08:37:25Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: chapman's,drive,peak"
         ]
       }
     },
@@ -14138,6 +14425,39 @@
         ]
       }
     },
+    "south-africa/why-visit": {
+      "country": "south-africa",
+      "category": "why-visit",
+      "caption": "Two Weeks, Four Countries' Worth",
+      "description": "Mountain, desert, reef, bush and two of Africa's most interesting cities, on roads you can drive yourself.",
+      "provider": "unsplash",
+      "photoId": "VEn6PDbUhME",
+      "imageUrl": "https://images.unsplash.com/photo-1671769940434-3a0b85595e4a",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1671769940434-3a0b85595e4a?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-rock-formation-in-the-middle-of-a-field-VEn6PDbUhME",
+      "photographer": "Riëtte Fourie",
+      "photographerUrl": "https://unsplash.com/@riettef",
+      "width": 4032,
+      "height": 1816,
+      "aspectRatio": 2.2203,
+      "alt": "Cape Point where the two oceans meet at the tip of the peninsula, South Africa",
+      "query": "South Africa Cape Point",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:37:28Z",
+      "verifiedAt": "2026-08-14T08:37:28Z",
+      "relevance": {
+        "score": 6.07,
+        "reasons": [
+          "names the country",
+          "subject: cape,point",
+          "looks like 57% of a slot already filled here"
+        ]
+      }
+    },
     "south-africa/wildlife": {
       "country": "south-africa",
       "category": "wildlife",
@@ -14168,6 +14488,1731 @@
           "names the country",
           "subject: the",
           "category: wildlife"
+        ]
+      }
+    },
+    "tanzania/adventure": {
+      "country": "tanzania",
+      "category": "adventure",
+      "caption": "Uhuru Peak by Machame",
+      "description": "Six days up the Machame route, one very long night to the summit, and a sunrise you have to earn.",
+      "provider": "unsplash",
+      "photoId": "MTkNBoP3Bpk",
+      "imageUrl": "https://images.unsplash.com/photo-1766401744148-0d6b442c57e8",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1766401744148-0d6b442c57e8?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/snow-capped-mountain-peak-under-a-blue-sky-MTkNBoP3Bpk",
+      "photographer": "Twende Africa Tours",
+      "photographerUrl": "https://unsplash.com/@twendeafricatours",
+      "width": 5184,
+      "height": 3456,
+      "aspectRatio": 1.5,
+      "alt": "trekkers on the Machame route high on Kilimanjaro, Tanzania",
+      "query": "Tanzania Machame Kilimanjaro",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T08:37:44Z",
+      "verifiedAt": "2026-08-14T08:37:45Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: kilimanjaro,peak"
+        ]
+      }
+    },
+    "tanzania/architecture": {
+      "country": "tanzania",
+      "category": "architecture",
+      "caption": "The Doors of Stone Town",
+      "description": "Brass-studded Indian doors and carved Omani frames, on coral-rag houses in alleys too narrow to drive.",
+      "provider": "pexels",
+      "photoId": "37087428",
+      "imageUrl": "https://images.pexels.com/photos/37087428/pexels-photo-37087428.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37087428/pexels-photo-37087428.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/historic-architecture-in-stone-town-zanzibar-37087428/",
+      "photographer": "Laura  Meinhardt",
+      "photographerUrl": "https://www.pexels.com/@leefinvrede",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a brass-studded carved door in a Stone Town alley, Zanzibar, Tanzania",
+      "query": "Tanzania Stone Town Zanzibar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T08:38:02Z",
+      "verifiedAt": "2026-08-14T08:38:02Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "subject: stone,town,zanzibar",
+          "category: architecture,building"
+        ]
+      }
+    },
+    "tanzania/beaches": {
+      "country": "tanzania",
+      "category": "beaches",
+      "caption": "Zanzibar, Nungwi to Paje",
+      "description": "White sand, warm shallow water and dhows still built by hand on the beach at Nungwi.",
+      "provider": "unsplash",
+      "photoId": "T2yp6TjdOCg",
+      "imageUrl": "https://images.unsplash.com/photo-1645043222006-c6b3f4c60ce6",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1645043222006-c6b3f4c60ce6?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-woman-standing-on-a-beach-next-to-a-house-T2yp6TjdOCg",
+      "photographer": "Sasha Matveeva",
+      "photographerUrl": "https://unsplash.com/@sashamatveeva",
+      "width": 3130,
+      "height": 2075,
+      "aspectRatio": 1.5084,
+      "alt": "white sand and traditional dhows on the beach at Nungwi, Zanzibar, Tanzania",
+      "query": "Tanzania Nungwi Zanzibar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 58
+      },
+      "createdAt": "2026-08-14T08:37:40Z",
+      "verifiedAt": "2026-08-14T08:37:41Z",
+      "relevance": {
+        "score": 8.55,
+        "reasons": [
+          "names the country",
+          "subject: beach,zanzibar",
+          "category: beach,ocean"
+        ]
+      }
+    },
+    "tanzania/cities": {
+      "country": "tanzania",
+      "category": "cities",
+      "caption": "Dar es Salaam",
+      "description": "Harbour of peace: the ferry terminal, the fish market at Kivukoni, and the dhows still working the channel.",
+      "provider": "unsplash",
+      "photoId": "Q1eR47UNFDQ",
+      "imageUrl": "https://images.unsplash.com/photo-1694860950053-3e996b73ac12",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1694860950053-3e996b73ac12?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-large-boat-filled-with-people-on-a-body-of-water-Q1eR47UNFDQ",
+      "photographer": "Aron Marinelli",
+      "photographerUrl": "https://unsplash.com/@aronmarinelli",
+      "width": 5800,
+      "height": 3867,
+      "aspectRatio": 1.4999,
+      "alt": "the harbour and skyline of Dar es Salaam from the water, Tanzania",
+      "query": "Tanzania Dar Salaam",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:37:59Z",
+      "verifiedAt": "2026-08-14T08:38:00Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: dar,salaam,water"
+        ]
+      }
+    },
+    "tanzania/crafts": {
+      "country": "tanzania",
+      "category": "crafts",
+      "caption": "Tingatinga and Makonde",
+      "description": "Enamel-bright Tingatinga painting from Dar es Salaam, and Makonde ebony carving from the southern plateau.",
+      "provider": "unsplash",
+      "photoId": "iWEu1h9jRkI",
+      "imageUrl": "https://images.unsplash.com/photo-1598975314523-9afadd6316c8",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1598975314523-9afadd6316c8?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/herd-of-black-and-brown-animal-on-brown-grass-field-during-daytime-iWEu1h9jRkI",
+      "photographer": "Martin Sanchez",
+      "photographerUrl": "https://unsplash.com/@martinsanchez",
+      "width": 5908,
+      "height": 3939,
+      "aspectRatio": 1.4999,
+      "alt": "a Makonde carver working ebony wood, Tanzania",
+      "query": "Tanzania Makonde",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 48,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:37:52Z",
+      "verifiedAt": "2026-08-14T08:37:53Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "tanzania/culture": {
+      "country": "tanzania",
+      "category": "culture",
+      "caption": "Maasai, Chagga, Swahili",
+      "description": "Cattle-keepers on the northern plains, coffee farmers on the mountain, and a coast that has always faced east.",
+      "provider": "unsplash",
+      "photoId": "LMkvk7zChEo",
+      "imageUrl": "https://images.unsplash.com/photo-1580688967149-1c842af3177b",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1580688967149-1c842af3177b?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/woman-in-red-and-white-dress-wearing-black-leather-boots-LMkvk7zChEo",
+      "photographer": "Magdalena Kula Manchee",
+      "photographerUrl": "https://unsplash.com/@magdalenakulamanchee",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "Maasai men in ceremonial dress on the northern Tanzanian plains",
+      "query": "Tanzania Maasai",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 44
+      },
+      "createdAt": "2026-08-14T08:37:46Z",
+      "verifiedAt": "2026-08-14T08:37:46Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: dress,maasai"
+        ]
+      }
+    },
+    "tanzania/eco-tourism": {
+      "country": "tanzania",
+      "category": "eco-tourism",
+      "caption": "Ngorongoro, Shared Ground",
+      "description": "The conservation area is the rare model where Maasai pastoralists and wildlife legally use the same land.",
+      "provider": "pexels",
+      "photoId": "11679893",
+      "imageUrl": "https://images.pexels.com/photos/11679893/pexels-photo-11679893.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/11679893/pexels-photo-11679893.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/women-of-massai-tribe-11679893/",
+      "photographer": "Valerie Sutton",
+      "photographerUrl": "https://www.pexels.com/@valerie-sutton-34163824",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "Maasai herders and cattle on the Ngorongoro conservation area highlands, Tanzania",
+      "query": "Tanzania Maasai Ngorongoro",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:06Z",
+      "verifiedAt": "2026-08-14T08:38:06Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: maasai"
+        ]
+      }
+    },
+    "tanzania/family-community": {
+      "country": "tanzania",
+      "category": "family-community",
+      "caption": "Boma and Coffee Farm",
+      "description": "Maasai boma visits on the crater rim road, and Chagga coffee walks on the lower slopes of Kilimanjaro.",
+      "provider": "pexels",
+      "photoId": "15994021",
+      "imageUrl": "https://images.pexels.com/photos/15994021/pexels-photo-15994021.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/15994021/pexels-photo-15994021.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/landscape-with-the-mount-kilimanjaro-15994021/",
+      "photographer": "Balazs Simon",
+      "photographerUrl": "https://www.pexels.com/@balazsimon",
+      "width": 8192,
+      "height": 5464,
+      "aspectRatio": 1.4993,
+      "alt": "a Chagga family roasting coffee on a farm below Kilimanjaro, Tanzania",
+      "query": "Tanzania Chagga Kilimanjaro",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:03Z",
+      "verifiedAt": "2026-08-14T08:38:04Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: and,kilimanjaro"
+        ]
+      }
+    },
+    "tanzania/festivals": {
+      "country": "tanzania",
+      "category": "festivals",
+      "caption": "Sauti za Busara",
+      "description": "Four days of live music from across the continent inside the old Arab fort in Stone Town, every February.",
+      "provider": "pexels",
+      "photoId": "33115374",
+      "imageUrl": "https://images.pexels.com/photos/33115374/pexels-photo-33115374.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33115374/pexels-photo-33115374.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-street-musicians-playing-percussion-instruments-33115374/",
+      "photographer": "Zeal Creative Studios",
+      "photographerUrl": "https://www.pexels.com/@zeal-creative-studios-58866141",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "musicians performing at the Sauti za Busara festival in Stone Town, Tanzania",
+      "query": "Tanzania Sauti Busara",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T08:37:51Z",
+      "verifiedAt": "2026-08-14T08:37:52Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: musicians,performing"
+        ]
+      }
+    },
+    "tanzania/food": {
+      "country": "tanzania",
+      "category": "food",
+      "caption": "Spice, Ugali, Urojo",
+      "description": "Cloves and cardamom from the Zanzibar plantations, grilled seafood at Forodhani, and ugali everywhere else.",
+      "provider": "pexels",
+      "photoId": "13675824",
+      "imageUrl": "https://images.pexels.com/photos/13675824/pexels-photo-13675824.png",
+      "thumbnailUrl": "https://images.pexels.com/photos/13675824/pexels-photo-13675824.png?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/tower-of-the-saint-joseph-church-in-stone-town-zanzibar-13675824/",
+      "photographer": "Ahmed Bates",
+      "photographerUrl": "https://www.pexels.com/@meddybates",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "grilled seafood stalls at Forodhani Gardens in Stone Town, Tanzania",
+      "query": "Tanzania Forodhani Gardens Stone Town",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:37:50Z",
+      "verifiedAt": "2026-08-14T08:37:51Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: stone,town"
+        ]
+      }
+    },
+    "tanzania/forests": {
+      "country": "tanzania",
+      "category": "forests",
+      "caption": "Udzungwa and Jozani",
+      "description": "The Udzungwa scarp holds species found nowhere else; Jozani holds the red colobus, also found nowhere else.",
+      "provider": "unsplash",
+      "photoId": "u0EyU5NzmIM",
+      "imageUrl": "https://images.unsplash.com/photo-1694960679817-f471fb7d49dc",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1694960679817-f471fb7d49dc?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-couple-of-monkeys-sitting-on-top-of-a-tree-branch-u0EyU5NzmIM",
+      "photographer": "Aron Marinelli",
+      "photographerUrl": "https://unsplash.com/@aronmarinelli",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a Zanzibar red colobus monkey in Jozani Forest, Tanzania",
+      "query": "Tanzania Zanzibar Jozani Forest",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 52,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T08:37:41Z",
+      "verifiedAt": "2026-08-14T08:37:42Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: colobus,forest,jozani",
+          "category: forest"
+        ]
+      }
+    },
+    "tanzania/heritage": {
+      "country": "tanzania",
+      "category": "heritage",
+      "caption": "Olduvai and the Coast",
+      "description": "Olduvai Gorge holds the earliest human record; the coast holds a thousand years of Indian Ocean trade.",
+      "provider": "unsplash",
+      "photoId": "wYEBXWMqEdc",
+      "imageUrl": "https://images.unsplash.com/photo-1739097108468-9364ea62383d",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1739097108468-9364ea62383d?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/two-zebras-are-standing-on-a-grassy-hill-wYEBXWMqEdc",
+      "photographer": "Mustafa Masetic",
+      "photographerUrl": "https://unsplash.com/@mmvisualstories",
+      "width": 5892,
+      "height": 3928,
+      "aspectRatio": 1.5,
+      "alt": "the layered walls of Olduvai Gorge in the Ngorongoro conservation area, Tanzania",
+      "query": "Tanzania Olduvai Gorge Ngorongoro",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:37:57Z",
+      "verifiedAt": "2026-08-14T08:37:58Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: and,ngorongoro,the"
+        ]
+      }
+    },
+    "tanzania/hero": {
+      "country": "tanzania",
+      "category": "hero",
+      "caption": "Into the Wild",
+      "description": "The Serengeti runs unbroken to the horizon, and the migration has been circling it far longer than anyone has watched.",
+      "provider": "unsplash",
+      "photoId": "8XuOyTucsaI",
+      "imageUrl": "https://images.unsplash.com/photo-1616094729710-0969aae40cc0",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1616094729710-0969aae40cc0?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/green-tree-on-green-grass-field-during-daytime-8XuOyTucsaI",
+      "photographer": "Dmitrii Zhodzishskii",
+      "photographerUrl": "https://unsplash.com/@dmitrii_zhodzishskii",
+      "width": 4169,
+      "height": 2779,
+      "aspectRatio": 1.5002,
+      "alt": "the endless short-grass plains of the Serengeti at sunrise, Tanzania",
+      "query": "Tanzania Serengeti",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 60
+      },
+      "createdAt": "2026-08-14T08:37:30Z",
+      "verifiedAt": "2026-08-14T08:37:30Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: grass,serengeti"
+        ]
+      }
+    },
+    "tanzania/hidden-gems": {
+      "country": "tanzania",
+      "category": "hidden-gems",
+      "caption": "Ruaha and Katavi",
+      "description": "The south and west: huge elephant populations, hippo crowded into shrinking pools, and no other vehicles.",
+      "provider": "pexels",
+      "photoId": "15268861",
+      "imageUrl": "https://images.pexels.com/photos/15268861/pexels-photo-15268861.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/15268861/pexels-photo-15268861.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/elephants-in-the-wild-15268861/",
+      "photographer": "Alex Levis",
+      "photographerUrl": "https://www.pexels.com/@droneafrica",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "elephants beneath baobabs in Ruaha National Park, Tanzania",
+      "query": "Tanzania Ruaha National Park",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T08:38:07Z",
+      "verifiedAt": "2026-08-14T08:38:07Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: and,elephants",
+          "category: the"
+        ]
+      }
+    },
+    "tanzania/historic-sites": {
+      "country": "tanzania",
+      "category": "historic-sites",
+      "caption": "Stone Town and Kilwa",
+      "description": "Stone Town is UNESCO-listed; Kilwa Kisiwani was the richest port on the Swahili coast six centuries ago.",
+      "provider": "unsplash",
+      "photoId": "wRp2Sh1Uzck",
+      "imageUrl": "https://images.unsplash.com/photo-1594044071561-a14920b38a90",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1594044071561-a14920b38a90?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/woman-in-yellow-and-green-sari-sitting-on-brown-wooden-chair-wRp2Sh1Uzck",
+      "photographer": "David Cashbaugh",
+      "photographerUrl": "https://unsplash.com/@dcashbaugh",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the ruins of the great mosque at Kilwa Kisiwani, Tanzania",
+      "query": "Tanzania Kilwa Kisiwani",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:37:54Z",
+      "verifiedAt": "2026-08-14T08:37:55Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "tanzania/lakes-rivers": {
+      "country": "tanzania",
+      "category": "lakes-rivers",
+      "caption": "Manyara and the Rufiji",
+      "description": "Flamingo and tree-climbing lions at Manyara; the Rufiji braiding through Nyerere, the largest park in Africa.",
+      "provider": "unsplash",
+      "photoId": "bGJK-uwOpbQ",
+      "imageUrl": "https://images.unsplash.com/photo-1695304693615-1b93195c57ac",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1695304693615-1b93195c57ac?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/three-elephants-are-standing-in-a-grassy-field-bGJK-uwOpbQ",
+      "photographer": "Aron Marinelli",
+      "photographerUrl": "https://unsplash.com/@aronmarinelli",
+      "width": 4800,
+      "height": 3200,
+      "aspectRatio": 1.5,
+      "alt": "the Rufiji river braiding through Nyerere National Park, Tanzania",
+      "query": "Tanzania Rufiji Nyerere National Park",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:37:38Z",
+      "verifiedAt": "2026-08-14T08:37:39Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: national,nyerere,park"
+        ]
+      }
+    },
+    "tanzania/local-life": {
+      "country": "tanzania",
+      "category": "local-life",
+      "caption": "Dala Dalas and Dhows",
+      "description": "Minibuses inland, dhows on the water, and a fish auction at Kivukoni that starts before it is light.",
+      "provider": "pexels",
+      "photoId": "8637299",
+      "imageUrl": "https://images.pexels.com/photos/8637299/pexels-photo-8637299.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/8637299/pexels-photo-8637299.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/woman-in-blue-and-yellow-floral-shirt-standing-beside-the-green-banana-fruits-8637299/",
+      "photographer": "Rangy Tarimu",
+      "photographerUrl": "https://www.pexels.com/@rangy-tarimu-3638640",
+      "width": 6016,
+      "height": 4016,
+      "aspectRatio": 1.498,
+      "alt": "the early morning fish market at Kivukoni in Dar es Salaam, Tanzania",
+      "query": "Tanzania Kivukoni Dar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:03Z",
+      "verifiedAt": "2026-08-14T08:38:03Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: and,dar,market",
+          "category: market"
+        ]
+      }
+    },
+    "tanzania/luxury": {
+      "country": "tanzania",
+      "category": "luxury",
+      "caption": "Camps and Spice Islands",
+      "description": "Mobile camps that follow the migration, and beach houses on the Zanzibar east coast with nothing either side.",
+      "provider": "pexels",
+      "photoId": "9185432",
+      "imageUrl": "https://images.pexels.com/photos/9185432/pexels-photo-9185432.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/9185432/pexels-photo-9185432.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/zebras-and-elephants-on-grass-field-9185432/",
+      "photographer": "Ákos Helgert",
+      "photographerUrl": "https://www.pexels.com/@akos-helgert-82252426",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a luxury tented camp on the Serengeti plains at dusk, Tanzania",
+      "query": "Tanzania Serengeti",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:05Z",
+      "verifiedAt": "2026-08-14T08:38:06Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: and,serengeti"
+        ]
+      }
+    },
+    "tanzania/mountains": {
+      "country": "tanzania",
+      "category": "mountains",
+      "caption": "Kilimanjaro, 5,895 m",
+      "description": "The highest free-standing mountain on earth: rainforest, moorland, alpine desert and glacier in five days of walking.",
+      "provider": "unsplash",
+      "photoId": "xev2kb8paN4",
+      "imageUrl": "https://images.unsplash.com/photo-1677519917377-118338dd2ed1",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1677519917377-118338dd2ed1?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-view-of-a-snow-covered-mountain-from-a-building-xev2kb8paN4",
+      "photographer": "Nichika Sakurai",
+      "photographerUrl": "https://unsplash.com/@nichiyoshi",
+      "width": 4440,
+      "height": 2960,
+      "aspectRatio": 1.5,
+      "alt": "the snow-capped summit of Kilimanjaro above the cloud line, Tanzania",
+      "query": "Tanzania Kilimanjaro",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 38
+      },
+      "createdAt": "2026-08-14T08:37:35Z",
+      "verifiedAt": "2026-08-14T08:37:36Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "subject: kilimanjaro,snow",
+          "category: mountain"
+        ]
+      }
+    },
+    "tanzania/nature": {
+      "country": "tanzania",
+      "category": "nature",
+      "caption": "The Ngorongoro Crater",
+      "description": "A collapsed caldera twenty kilometres across with its own permanent population of thirty thousand animals.",
+      "provider": "unsplash",
+      "photoId": "UTbshy4gwBs",
+      "imageUrl": "https://images.unsplash.com/photo-1619022916752-63f61593556f",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1619022916752-63f61593556f?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/brown-rabbit-on-green-grass-field-during-daytime-UTbshy4gwBs",
+      "photographer": "Dmitrii Zhodzishskii",
+      "photographerUrl": "https://unsplash.com/@dmitrii_zhodzishskii",
+      "width": 4255,
+      "height": 2836,
+      "aspectRatio": 1.5004,
+      "alt": "the floor of the Ngorongoro Crater seen from the rim, Tanzania",
+      "query": "Tanzania Ngorongoro Crater",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:37:32Z",
+      "verifiedAt": "2026-08-14T08:37:32Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: crater,ngorongoro"
+        ]
+      }
+    },
+    "tanzania/outdoor": {
+      "country": "tanzania",
+      "category": "outdoor",
+      "caption": "Snorkelling Mnemba",
+      "description": "The atoll off the northeast tip of Zanzibar, plus kite surfing at Paje and diving at Pemba.",
+      "provider": "pexels",
+      "photoId": "14672897",
+      "imageUrl": "https://images.pexels.com/photos/14672897/pexels-photo-14672897.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/14672897/pexels-photo-14672897.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/sailboat-on-the-seashore-14672897/",
+      "photographer": "Kenneth Otoo",
+      "photographerUrl": "https://www.pexels.com/@kenneth-otoo-384729322",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "snorkelling over coral reef at Mnemba atoll, Zanzibar, Tanzania",
+      "query": "Tanzania Mnemba Zanzibar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:05Z",
+      "verifiedAt": "2026-08-14T08:38:05Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: zanzibar"
+        ]
+      }
+    },
+    "tanzania/photography": {
+      "country": "tanzania",
+      "category": "photography",
+      "caption": "Acacia, Kopje, Sunset",
+      "description": "The Serengeti kopjes at the end of the day, and the migration column stretching past the edge of the frame.",
+      "provider": "pexels",
+      "photoId": "36469138",
+      "imageUrl": "https://images.pexels.com/photos/36469138/pexels-photo-36469138.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36469138/pexels-photo-36469138.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-dirt-road-in-serengeti-tanzania-36469138/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "an acacia silhouetted against the Serengeti sunset, Tanzania",
+      "query": "Tanzania Serengeti",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 56,
+        "y": 44
+      },
+      "createdAt": "2026-08-14T08:38:06Z",
+      "verifiedAt": "2026-08-14T08:38:07Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: acacia,serengeti"
+        ]
+      }
+    },
+    "tanzania/safari": {
+      "country": "tanzania",
+      "category": "safari",
+      "caption": "Following the Migration",
+      "description": "Calving on the southern plains in February, the Grumeti in June, the Mara river in August — the circuit never stops.",
+      "provider": "unsplash",
+      "photoId": "EgbLppsj3L4",
+      "imageUrl": "https://images.unsplash.com/photo-1580687774199-51c183723dd8",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1580687774199-51c183723dd8?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/2-zebra-on-brown-grass-field-during-daytime-EgbLppsj3L4",
+      "photographer": "Magdalena Kula Manchee",
+      "photographerUrl": "https://unsplash.com/@magdalenakulamanchee",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "wildebeest herds streaming across the Serengeti plains, Tanzania",
+      "query": "Tanzania Serengeti",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T08:37:34Z",
+      "verifiedAt": "2026-08-14T08:37:34Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: serengeti,the",
+          "category: safari"
+        ]
+      }
+    },
+    "tanzania/traditional-people": {
+      "country": "tanzania",
+      "category": "traditional-people",
+      "caption": "The Hadzabe of Lake Eyasi",
+      "description": "One of the last hunter-gatherer peoples in Africa, speaking a click language unrelated to anything nearby.",
+      "provider": "pexels",
+      "photoId": "7637395",
+      "imageUrl": "https://images.pexels.com/photos/7637395/pexels-photo-7637395.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/7637395/pexels-photo-7637395.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/women-wearing-traditional-clothes-7637395/",
+      "photographer": "Kureng Workx",
+      "photographerUrl": "https://www.pexels.com/@kureng-workx-2546437",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a Hadzabe hunter with a bow near Lake Eyasi, Tanzania",
+      "query": "Tanzania Hadzabe Lake Eyasi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 40
+      },
+      "createdAt": "2026-08-14T08:37:48Z",
+      "verifiedAt": "2026-08-14T08:37:48Z",
+      "relevance": {
+        "score": 7.17,
+        "reasons": [
+          "names the country",
+          "subject: the",
+          "category: dress,traditional"
+        ]
+      }
+    },
+    "tanzania/waterfalls": {
+      "country": "tanzania",
+      "category": "waterfalls",
+      "caption": "Materuni, Under Kilimanjaro",
+      "description": "Eighty metres of cold water through Chagga coffee farms on the lower slopes, an easy walk from Moshi.",
+      "provider": "pexels",
+      "photoId": "38773757",
+      "imageUrl": "https://images.pexels.com/photos/38773757/pexels-photo-38773757.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38773757/pexels-photo-38773757.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/men-enjoying-a-waterfall-in-lush-jungle-38773757/",
+      "photographer": "Hakim Katamba",
+      "photographerUrl": "https://www.pexels.com/@hakim-katamba-2160724317",
+      "width": 4284,
+      "height": 5712,
+      "aspectRatio": 0.75,
+      "alt": "the Materuni waterfall in the forest below Kilimanjaro, Tanzania",
+      "query": "Tanzania Materuni Kilimanjaro",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 42
+      },
+      "createdAt": "2026-08-14T08:37:38Z",
+      "verifiedAt": "2026-08-14T08:37:38Z",
+      "relevance": {
+        "score": 8.0,
+        "reasons": [
+          "names the country",
+          "subject: kilimanjaro,waterfall",
+          "category: waterfall"
+        ]
+      }
+    },
+    "tanzania/why-visit": {
+      "country": "tanzania",
+      "category": "why-visit",
+      "caption": "Mountain, Plain and Reef",
+      "description": "Summit Africa's highest mountain, cross the Serengeti and sleep on the Indian Ocean, in the same fortnight.",
+      "provider": "pexels",
+      "photoId": "37808717",
+      "imageUrl": "https://images.pexels.com/photos/37808717/pexels-photo-37808717.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37808717/pexels-photo-37808717.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/misty-landscape-of-kilimanjaro-national-park-37808717/",
+      "photographer": "Penfran Tanzania",
+      "photographerUrl": "https://www.pexels.com/@penfran",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "Kilimanjaro rising above the acacia plains at sunrise, Tanzania",
+      "query": "Tanzania Kilimanjaro",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T08:38:07Z",
+      "verifiedAt": "2026-08-14T08:38:08Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: and,kilimanjaro"
+        ]
+      }
+    },
+    "tanzania/wildlife": {
+      "country": "tanzania",
+      "category": "wildlife",
+      "caption": "The Big Five, and Then Some",
+      "description": "Lion, leopard, elephant, buffalo and rhino, plus the largest elephant herds left in East Africa.",
+      "provider": "pexels",
+      "photoId": "9909939",
+      "imageUrl": "https://images.pexels.com/photos/9909939/pexels-photo-9909939.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/9909939/pexels-photo-9909939.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/zebras-standing-on-a-green-grass-field-9909939/",
+      "photographer": "Carlos",
+      "photographerUrl": "https://www.pexels.com/@carlos-112540507",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a lion pride resting on a kopje in the Serengeti, Tanzania",
+      "query": "Tanzania Serengeti",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:37:33Z",
+      "verifiedAt": "2026-08-14T08:37:34Z",
+      "relevance": {
+        "score": 7.53,
+        "reasons": [
+          "names the country",
+          "subject: serengeti,the",
+          "category: wildlife"
+        ]
+      }
+    },
+    "tunisia/adventure": {
+      "country": "tunisia",
+      "category": "adventure",
+      "caption": "Desert, Diving, Dunes",
+      "description": "Camel treks from Douz, dune camps on the erg, and diving off Tabarka.",
+      "provider": "pexels",
+      "photoId": "11042654",
+      "imageUrl": "https://images.pexels.com/photos/11042654/pexels-photo-11042654.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/11042654/pexels-photo-11042654.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-dunes-11042654/",
+      "photographer": "Elias Strale",
+      "photographerUrl": "https://www.pexels.com/@eliasstrale",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "camels crossing dunes on the Grand Erg oriental, Tunisia",
+      "query": "Tunisia Grand Erg",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:17Z",
+      "verifiedAt": "2026-08-14T08:38:17Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: desert,dunes"
+        ]
+      }
+    },
+    "tunisia/architecture": {
+      "country": "tunisia",
+      "category": "architecture",
+      "caption": "Whitewash and Blue",
+      "description": "Sidi Bou Said's blue and white, and the vaulted ksour of the desert south.",
+      "provider": "pexels",
+      "photoId": "32448841",
+      "imageUrl": "https://images.pexels.com/photos/32448841/pexels-photo-32448841.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32448841/pexels-photo-32448841.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-carthage-architecture-and-sea-32448841/",
+      "photographer": "Louizi Ayoub",
+      "photographerUrl": "https://www.pexels.com/@louizi-ayoub-976641",
+      "width": 5888,
+      "height": 7851,
+      "aspectRatio": 0.75,
+      "alt": "the blue doors and white walls of Sidi Bou Said, Tunisia",
+      "query": "Tunisia Sidi Bou Said",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:25Z",
+      "verifiedAt": "2026-08-14T08:38:25Z",
+      "relevance": {
+        "score": 8.0,
+        "reasons": [
+          "names the country",
+          "subject: and,blue,white",
+          "category: architecture"
+        ]
+      }
+    },
+    "tunisia/beaches": {
+      "country": "tunisia",
+      "category": "beaches",
+      "caption": "The Mediterranean",
+      "description": "Hammamet, Djerba and Cap Bon — twelve hundred kilometres of it, and warm from May.",
+      "provider": "pexels",
+      "photoId": "35663125",
+      "imageUrl": "https://images.pexels.com/photos/35663125/pexels-photo-35663125.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35663125/pexels-photo-35663125.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-sidi-bou-said-architecture-by-lake-35663125/",
+      "photographer": "Elijah Cobb",
+      "photographerUrl": "https://www.pexels.com/@elijahjcobb",
+      "width": 8212,
+      "height": 5475,
+      "aspectRatio": 1.4999,
+      "alt": "the whitewashed seafront at Sidi Bou Said, Tunisia",
+      "query": "Tunisia Sidi Bou Said",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:14Z",
+      "verifiedAt": "2026-08-14T08:38:15Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: bou,said,sidi"
+        ]
+      }
+    },
+    "tunisia/cities": {
+      "country": "tunisia",
+      "category": "cities",
+      "caption": "Tunis and Sfax",
+      "description": "Tunis at the head of its lake, and Sfax's walled medina working as a medina still.",
+      "provider": "pexels",
+      "photoId": "38002205",
+      "imageUrl": "https://images.pexels.com/photos/38002205/pexels-photo-38002205.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38002205/pexels-photo-38002205.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-tunisian-architecture-with-green-shutters-38002205/",
+      "photographer": "Chermiti Mohamed",
+      "photographerUrl": "https://www.pexels.com/@chermitove",
+      "width": 7893,
+      "height": 5920,
+      "aspectRatio": 1.3333,
+      "alt": "the medina rooftops of Tunis at dusk, Tunisia",
+      "query": "Tunisia Tunis",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:23Z",
+      "verifiedAt": "2026-08-14T08:38:25Z",
+      "relevance": {
+        "score": 3.71,
+        "reasons": [
+          "subject: and,tunis"
+        ]
+      }
+    },
+    "tunisia/crafts": {
+      "country": "tunisia",
+      "category": "crafts",
+      "caption": "Mosaic, Ceramic and Silver",
+      "description": "Roman mosaic technique still taught, Nabeul ceramic, and Berber silver from the south.",
+      "provider": "pexels",
+      "photoId": "27863647",
+      "imageUrl": "https://images.pexels.com/photos/27863647/pexels-photo-27863647.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27863647/pexels-photo-27863647.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/the-sun-sets-over-the-ocean-and-buildings-27863647/",
+      "photographer": "Pedro Dias",
+      "photographerUrl": "https://www.pexels.com/@pete79",
+      "width": 8064,
+      "height": 6048,
+      "aspectRatio": 1.3333,
+      "alt": "hand-painted Nabeul ceramics on a market stall, Tunisia",
+      "query": "Tunisia Nabeul",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:21Z",
+      "verifiedAt": "2026-08-14T08:38:22Z",
+      "relevance": {
+        "score": 4.5,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "tunisia/culture": {
+      "country": "tunisia",
+      "category": "culture",
+      "caption": "Punic, Roman, Arab, Berber",
+      "description": "Four layers, all of them still visible, and often in the same town.",
+      "provider": "pexels",
+      "photoId": "38254052",
+      "imageUrl": "https://images.pexels.com/photos/38254052/pexels-photo-38254052.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38254052/pexels-photo-38254052.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-roman-ruins-with-mosaic-in-tunisia-38254052/",
+      "photographer": "Eleanore Stohner",
+      "photographerUrl": "https://www.pexels.com/@elliestone",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "a Roman mosaic floor in a Tunisian museum",
+      "query": "Tunisia Roman",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:18Z",
+      "verifiedAt": "2026-08-14T08:38:18Z",
+      "relevance": {
+        "score": 5.53,
+        "reasons": [
+          "names the country",
+          "subject: roman",
+          "category: culture"
+        ]
+      }
+    },
+    "tunisia/eco-tourism": {
+      "country": "tunisia",
+      "category": "eco-tourism",
+      "caption": "Oasis Water",
+      "description": "The oasis irrigation of Tozeur and Nefta, managing water in the driest place in the country.",
+      "provider": "pexels",
+      "photoId": "11012604",
+      "imageUrl": "https://images.pexels.com/photos/11012604/pexels-photo-11012604.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/11012604/pexels-photo-11012604.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/flowing-water-on-bamboo-stalks-11012604/",
+      "photographer": "Wijs (Wise)",
+      "photographerUrl": "https://www.pexels.com/@wijs-wise-136435282",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "traditional irrigation channels in the Tozeur oasis, Tunisia",
+      "query": "Tunisia traditional irrigation channels",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:30Z",
+      "verifiedAt": "2026-08-14T08:38:30Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: irrigation,traditional,water"
+        ]
+      }
+    },
+    "tunisia/family-community": {
+      "country": "tunisia",
+      "category": "family-community",
+      "caption": "Two Hours from Europe",
+      "description": "Short flights, shallow warm sea, and resorts that have been doing families for decades.",
+      "provider": "pexels",
+      "photoId": "18962455",
+      "imageUrl": "https://images.pexels.com/photos/18962455/pexels-photo-18962455.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/18962455/pexels-photo-18962455.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/people-on-a-beach-at-sunset-18962455/",
+      "photographer": "Ayyeee Ayyeee",
+      "photographerUrl": "https://www.pexels.com/@ayyeee-ayyeee-434363205",
+      "width": 7728,
+      "height": 5152,
+      "aspectRatio": 1.5,
+      "alt": "a shallow beach with families on the Tunisian coast",
+      "query": "Tunisia shallow beach families",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T08:38:27Z",
+      "verifiedAt": "2026-08-14T08:38:27Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: beach,shallow",
+          "category: people"
+        ]
+      }
+    },
+    "tunisia/festivals": {
+      "country": "tunisia",
+      "category": "festivals",
+      "caption": "Carthage and the Sahara Festival",
+      "description": "The Carthage film and music festival in summer, and the Douz Sahara festival in December.",
+      "provider": "pexels",
+      "photoId": "11042678",
+      "imageUrl": "https://images.pexels.com/photos/11042678/pexels-photo-11042678.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/11042678/pexels-photo-11042678.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/couple-sitting-on-sand-dune-11042678/",
+      "photographer": "Elias Strale",
+      "photographerUrl": "https://www.pexels.com/@eliasstrale",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "riders at the Sahara festival at Douz, Tunisia",
+      "query": "Tunisia Sahara Douz",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:38:20Z",
+      "verifiedAt": "2026-08-14T08:38:21Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: and,the"
+        ]
+      }
+    },
+    "tunisia/food": {
+      "country": "tunisia",
+      "category": "food",
+      "caption": "Couscous, Brik and Harissa",
+      "description": "Friday couscous, brik straight out of the pan, and harissa on everything.",
+      "provider": "pexels",
+      "photoId": "8178662",
+      "imageUrl": "https://images.pexels.com/photos/8178662/pexels-photo-8178662.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/8178662/pexels-photo-8178662.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-person-cooking-egg-and-meat-on-pan-8178662/",
+      "photographer": "Nguyen Huy",
+      "photographerUrl": "https://www.pexels.com/@ngochuy",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a brik being fried at a Tunisian market stall",
+      "query": "Tunisia brik being fried",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T08:38:20Z",
+      "verifiedAt": "2026-08-14T08:38:20Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: and,being"
+        ]
+      }
+    },
+    "tunisia/forests": {
+      "country": "tunisia",
+      "category": "forests",
+      "caption": "Cork Oak in the North",
+      "description": "The Kroumirie forest of cork oak in the north-west, which surprises everyone.",
+      "provider": "pexels",
+      "photoId": "38254029",
+      "imageUrl": "https://images.pexels.com/photos/38254029/pexels-photo-38254029.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38254029/pexels-photo-38254029.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-berber-village-landscape-in-tunisia-38254029/",
+      "photographer": "Eleanore Stohner",
+      "photographerUrl": "https://www.pexels.com/@elliestone",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "cork oak forest in the Kroumirie hills, Tunisia",
+      "query": "Tunisia Kroumirie",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:38:16Z",
+      "verifiedAt": "2026-08-14T08:38:16Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: hills,the"
+        ]
+      }
+    },
+    "tunisia/heritage": {
+      "country": "tunisia",
+      "category": "heritage",
+      "caption": "The Medinas",
+      "description": "Tunis, Sousse and Kairouan — Kairouan's mosque is among the oldest in the Maghreb.",
+      "provider": "pexels",
+      "photoId": "38254013",
+      "imageUrl": "https://images.pexels.com/photos/38254013/pexels-photo-38254013.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38254013/pexels-photo-38254013.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-berber-granaries-and-mosque-tower-in-tunisia-38254013/",
+      "photographer": "Eleanore Stohner",
+      "photographerUrl": "https://www.pexels.com/@elliestone",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "the great mosque of Kairouan from its courtyard, Tunisia",
+      "query": "Tunisia Kairouan",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:23Z",
+      "verifiedAt": "2026-08-14T08:38:23Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: mosque,the"
+        ]
+      }
+    },
+    "tunisia/hero": {
+      "country": "tunisia",
+      "category": "hero",
+      "caption": "Carthage, the Sahel and the Desert",
+      "description": "Mediterranean at the top, olive plains through the middle, and the Sahara at the bottom.",
+      "provider": "pexels",
+      "photoId": "35644773",
+      "imageUrl": "https://images.pexels.com/photos/35644773/pexels-photo-35644773.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35644773/pexels-photo-35644773.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-ruins-and-palm-trees-in-tunisia-35644773/",
+      "photographer": "Elijah Cobb",
+      "photographerUrl": "https://www.pexels.com/@elijahjcobb",
+      "width": 8256,
+      "height": 5504,
+      "aspectRatio": 1.5,
+      "alt": "the ruins of Carthage above the bay of Tunis, Tunisia",
+      "query": "Tunisia Carthage Tunis",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:08Z",
+      "verifiedAt": "2026-08-14T08:38:09Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: and,ruins,the"
+        ]
+      }
+    },
+    "tunisia/hidden-gems": {
+      "country": "tunisia",
+      "category": "hidden-gems",
+      "caption": "Ksar Ouled Soltane",
+      "description": "Vaulted grain stores stacked four storeys high, and almost nobody there.",
+      "provider": "pexels",
+      "photoId": "28438444",
+      "imageUrl": "https://images.pexels.com/photos/28438444/pexels-photo-28438444.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28438444/pexels-photo-28438444.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/zahra-palace-tataouine-28438444/",
+      "photographer": "Mahmoud Yahyaoui",
+      "photographerUrl": "https://www.pexels.com/@mahmoud-yahyaoui",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the stacked vaulted ksar at Ksar Ouled Soltane, Tunisia",
+      "query": "Tunisia Ksar Ouled Soltane",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:31Z",
+      "verifiedAt": "2026-08-14T08:38:32Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: ksar"
+        ]
+      }
+    },
+    "tunisia/historic-sites": {
+      "country": "tunisia",
+      "category": "historic-sites",
+      "caption": "Carthage, Dougga, El Jem",
+      "description": "El Jem's amphitheatre seats thirty-five thousand and is standing almost complete.",
+      "provider": "pexels",
+      "photoId": "38254061",
+      "imageUrl": "https://images.pexels.com/photos/38254061/pexels-photo-38254061.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38254061/pexels-photo-38254061.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-roman-ruins-in-dougga-tunisia-38254061/",
+      "photographer": "Eleanore Stohner",
+      "photographerUrl": "https://www.pexels.com/@elliestone",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "the Roman amphitheatre at El Jem, Tunisia",
+      "query": "Tunisia Roman El Jem",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:22Z",
+      "verifiedAt": "2026-08-14T08:38:22Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: dougga,roman",
+          "category: ruins"
+        ]
+      }
+    },
+    "tunisia/lakes-rivers": {
+      "country": "tunisia",
+      "category": "lakes-rivers",
+      "caption": "The Medjerda",
+      "description": "The only permanent river, running out of Algeria and across the northern plain.",
+      "provider": "pexels",
+      "photoId": "38254051",
+      "imageUrl": "https://images.pexels.com/photos/38254051/pexels-photo-38254051.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38254051/pexels-photo-38254051.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-roman-ruins-in-tunisia-under-cloudy-sky-38254051/",
+      "photographer": "Eleanore Stohner",
+      "photographerUrl": "https://www.pexels.com/@elliestone",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "the Medjerda river crossing the northern plain, Tunisia",
+      "query": "Tunisia Medjerda",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:13Z",
+      "verifiedAt": "2026-08-14T08:38:14Z",
+      "relevance": {
+        "score": 3.43,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "tunisia/local-life": {
+      "country": "tunisia",
+      "category": "local-life",
+      "caption": "The Souk and the Café",
+      "description": "Mint tea with pine nuts, and a souk that still mostly sells to the people who live there.",
+      "provider": "pexels",
+      "photoId": "30906051",
+      "imageUrl": "https://images.pexels.com/photos/30906051/pexels-photo-30906051.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30906051/pexels-photo-30906051.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-moroccan-mint-tea-set-on-ornate-carpet-30906051/",
+      "photographer": "Moussa Idrissi",
+      "photographerUrl": "https://www.pexels.com/@mographe",
+      "width": 6041,
+      "height": 4426,
+      "aspectRatio": 1.3649,
+      "alt": "mint tea with pine nuts at a Tunisian café",
+      "query": "Tunisia mint tea pine",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T08:38:26Z",
+      "verifiedAt": "2026-08-14T08:38:26Z",
+      "relevance": {
+        "score": 4.93,
+        "reasons": [
+          "subject: and,mint"
+        ]
+      }
+    },
+    "tunisia/luxury": {
+      "country": "tunisia",
+      "category": "luxury",
+      "caption": "Riad, Dar and Dune Camp",
+      "description": "Restored dar houses in the medinas, and desert camps beyond the last palm.",
+      "provider": "pexels",
+      "photoId": "38203209",
+      "imageUrl": "https://images.pexels.com/photos/38203209/pexels-photo-38203209.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38203209/pexels-photo-38203209.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/charming-tunisian-street-scene-with-cafe-38203209/",
+      "photographer": "Chermiti Mohamed",
+      "photographerUrl": "https://www.pexels.com/@chermitove",
+      "width": 7180,
+      "height": 5385,
+      "aspectRatio": 1.3333,
+      "alt": "the courtyard of a restored dar in the Tunis medina, Tunisia",
+      "query": "Tunisia Tunis",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:28Z",
+      "verifiedAt": "2026-08-14T08:38:29Z",
+      "relevance": {
+        "score": 3.75,
+        "reasons": [
+          "names the country",
+          "subject: tunis"
+        ]
+      }
+    },
+    "tunisia/mountains": {
+      "country": "tunisia",
+      "category": "mountains",
+      "caption": "The Dorsale",
+      "description": "The Atlas tail crosses the north — Jebel Chambi is 1,544 metres and the highest point.",
+      "provider": "pexels",
+      "photoId": "38254034",
+      "imageUrl": "https://images.pexels.com/photos/38254034/pexels-photo-38254034.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38254034/pexels-photo-38254034.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-berber-village-in-the-mountains-of-tunisia-38254034/",
+      "photographer": "Eleanore Stohner",
+      "photographerUrl": "https://www.pexels.com/@elliestone",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "the ridge of the Tunisian Dorsale in winter light",
+      "query": "Tunisia Tunisian Dorsale",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:38:12Z",
+      "verifiedAt": "2026-08-14T08:38:12Z",
+      "relevance": {
+        "score": 5.53,
+        "reasons": [
+          "names the country",
+          "subject: the",
+          "category: mountain"
+        ]
+      }
+    },
+    "tunisia/nature": {
+      "country": "tunisia",
+      "category": "nature",
+      "caption": "Coast to Chott",
+      "description": "The Cap Bon coast, the olive Sahel, and the salt flats of the Chott el Djerid.",
+      "provider": "pexels",
+      "photoId": "38610869",
+      "imageUrl": "https://images.pexels.com/photos/38610869/pexels-photo-38610869.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38610869/pexels-photo-38610869.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/serene-fishing-boats-at-sunset-in-tunisia-38610869/",
+      "photographer": "Samer Bououd",
+      "photographerUrl": "https://www.pexels.com/@apollostudio",
+      "width": 7952,
+      "height": 5304,
+      "aspectRatio": 1.4992,
+      "alt": "the salt crust of the Chott el Djerid, Tunisia",
+      "query": "Tunisia Chott Djerid",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T08:38:10Z",
+      "verifiedAt": "2026-08-14T08:38:10Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: coast"
+        ]
+      }
+    },
+    "tunisia/outdoor": {
+      "country": "tunisia",
+      "category": "outdoor",
+      "caption": "Desert and Dive",
+      "description": "Dune trekking from Douz, quad routes on the chott, and diving at Tabarka.",
+      "provider": "pexels",
+      "photoId": "17887555",
+      "imageUrl": "https://images.pexels.com/photos/17887555/pexels-photo-17887555.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/17887555/pexels-photo-17887555.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/dune-on-desert-17887555/",
+      "photographer": "Mo Eid",
+      "photographerUrl": "https://www.pexels.com/@mo-eid-1268975",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "a trekking party on the edge of the Grand Erg, Tunisia",
+      "query": "Tunisia Grand Erg",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:28Z",
+      "verifiedAt": "2026-08-14T08:38:28Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: desert"
+        ]
+      }
+    },
+    "tunisia/photography": {
+      "country": "tunisia",
+      "category": "photography",
+      "caption": "Light on White",
+      "description": "Whitewash, blue, and desert light — the reason the film crews keep coming back.",
+      "provider": "pexels",
+      "photoId": "32465895",
+      "imageUrl": "https://images.pexels.com/photos/32465895/pexels-photo-32465895.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32465895/pexels-photo-32465895.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-white-and-blue-architecture-in-tunisia-32465895/",
+      "photographer": "Reyyan",
+      "photographerUrl": "https://www.pexels.com/@reyyan-505450018",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "white and blue architecture in strong Mediterranean light, Tunisia",
+      "query": "Tunisia Mediterranean",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:31Z",
+      "verifiedAt": "2026-08-14T08:38:31Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: blue,white"
+        ]
+      }
+    },
+    "tunisia/safari": {
+      "country": "tunisia",
+      "category": "safari",
+      "caption": "Not a Safari Country",
+      "description": "The wildlife here is birds and desert species, and Ichkeul is the reason to bring binoculars.",
+      "provider": "pexels",
+      "photoId": "35771611",
+      "imageUrl": "https://images.pexels.com/photos/35771611/pexels-photo-35771611.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35771611/pexels-photo-35771611.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/shorebird-foraging-in-coastal-wetlands-at-sunrise-35771611/",
+      "photographer": "Dmytro Koplyk",
+      "photographerUrl": "https://www.pexels.com/@dmytkopl",
+      "width": 5598,
+      "height": 4478,
+      "aspectRatio": 1.2501,
+      "alt": "waders feeding on a Tunisian coastal wetland",
+      "query": "Tunisia waders feeding tunisian",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:11Z",
+      "verifiedAt": "2026-08-14T08:38:11Z",
+      "relevance": {
+        "score": 4.81,
+        "reasons": [
+          "subject: coastal,wetland"
+        ]
+      }
+    },
+    "tunisia/traditional-people": {
+      "country": "tunisia",
+      "category": "traditional-people",
+      "caption": "The Berber South",
+      "description": "The ksour of Tataouine, and the underground houses of Matmata.",
+      "provider": "pexels",
+      "photoId": "32403086",
+      "imageUrl": "https://images.pexels.com/photos/32403086/pexels-photo-32403086.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32403086/pexels-photo-32403086.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-architectural-window-in-tataouine-32403086/",
+      "photographer": "Filip Velichkovski",
+      "photographerUrl": "https://www.pexels.com/@filipvelickovski2002",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "an underground Berber courtyard house at Matmata, Tunisia",
+      "query": "Tunisia Berber Matmata",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:19Z",
+      "verifiedAt": "2026-08-14T08:38:19Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "tunisia/waterfalls": {
+      "country": "tunisia",
+      "category": "waterfalls",
+      "caption": "The Oasis Cascades",
+      "description": "Chebika, Tamerza and Mides — the mountain oases of the west, with water in a dry country.",
+      "provider": "pexels",
+      "photoId": "14714755",
+      "imageUrl": "https://images.pexels.com/photos/14714755/pexels-photo-14714755.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/14714755/pexels-photo-14714755.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/palm-trees-in-village-14714755/",
+      "photographer": "Radwan Menzer",
+      "photographerUrl": "https://www.pexels.com/@radwanmenzer",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "the palm oasis and waterfall at Chebika, Tunisia",
+      "query": "Tunisia Chebika",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:13Z",
+      "verifiedAt": "2026-08-14T08:38:13Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: palm,the"
+        ]
+      }
+    },
+    "tunisia/why-visit": {
+      "country": "tunisia",
+      "category": "why-visit",
+      "caption": "Rome, and the Sahara, in One Week",
+      "description": "An amphitheatre on Monday and a dune camp on Thursday, in a country the size of England.",
+      "provider": "pexels",
+      "photoId": "38254012",
+      "imageUrl": "https://images.pexels.com/photos/38254012/pexels-photo-38254012.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38254012/pexels-photo-38254012.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-ksour-architecture-in-tunisia-38254012/",
+      "photographer": "Eleanore Stohner",
+      "photographerUrl": "https://www.pexels.com/@elliestone",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "a desert road running south towards the Sahara, Tunisia",
+      "query": "Tunisia Sahara",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:32Z",
+      "verifiedAt": "2026-08-14T08:38:32Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: and,desert,the"
+        ]
+      }
+    },
+    "tunisia/wildlife": {
+      "country": "tunisia",
+      "category": "wildlife",
+      "caption": "Ichkeul and the Desert",
+      "description": "Ichkeul's wintering waterfowl, and the desert fox and gazelle of the south.",
+      "provider": "pexels",
+      "photoId": "38254016",
+      "imageUrl": "https://images.pexels.com/photos/38254016/pexels-photo-38254016.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38254016/pexels-photo-38254016.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ancient-desert-ruins-in-tunisia-38254016/",
+      "photographer": "Eleanore Stohner",
+      "photographerUrl": "https://www.pexels.com/@elliestone",
+      "width": 6192,
+      "height": 4128,
+      "aspectRatio": 1.5,
+      "alt": "flamingos on the lake at Ichkeul, Tunisia",
+      "query": "Tunisia Ichkeul",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:11Z",
+      "verifiedAt": "2026-08-14T08:38:11Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: desert,the"
         ]
       }
     },
@@ -15032,6 +17077,1700 @@
         "reasons": [
           "names the country",
           "subject: bwindi,forest,gorilla"
+        ]
+      }
+    },
+    "zambia/adventure": {
+      "country": "zambia",
+      "category": "adventure",
+      "caption": "Devil's Pool and the Gorge",
+      "description": "Swim to the lip of Victoria Falls in low water, then raft the grade five rapids in the Batoka gorge below it.",
+      "provider": "pexels",
+      "photoId": "30172599",
+      "imageUrl": "https://images.pexels.com/photos/30172599/pexels-photo-30172599.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30172599/pexels-photo-30172599.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-victoria-falls-bridge-with-rainbow-30172599/",
+      "photographer": "Kabwe Kabwe",
+      "photographerUrl": "https://www.pexels.com/@kabwe-kabwe-2148456407",
+      "width": 6016,
+      "height": 4016,
+      "aspectRatio": 1.498,
+      "alt": "rafting the grade five rapids in the Batoka gorge below Victoria Falls, Zambia",
+      "query": "Zambia Batoka Victoria Falls",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:40Z",
+      "verifiedAt": "2026-08-14T08:38:40Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: and,falls,victoria"
+        ]
+      }
+    },
+    "zambia/architecture": {
+      "country": "zambia",
+      "category": "architecture",
+      "caption": "Livingstone's Verandas",
+      "description": "Corrugated iron and deep colonial verandas along Mosi-oa-Tunya Road, built for heat and never modernised.",
+      "provider": "pexels",
+      "photoId": "18132617",
+      "imageUrl": "https://images.pexels.com/photos/18132617/pexels-photo-18132617.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/18132617/pexels-photo-18132617.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/david-livingstone-statue-in-edinburgh-18132617/",
+      "photographer": "Frederick Adegoke Snr.",
+      "photographerUrl": "https://www.pexels.com/@thelionics",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a colonial veranda building on Mosi-oa-Tunya Road in Livingstone, Zambia",
+      "query": "Zambia Mosi-oa-Tunya Road Livingstone",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T08:38:49Z",
+      "verifiedAt": "2026-08-14T08:38:50Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: livingstone"
+        ]
+      }
+    },
+    "zambia/beaches": {
+      "country": "zambia",
+      "category": "beaches",
+      "caption": "Lake Tanganyika Shore",
+      "description": "Clear freshwater, sand and forested hills at Nsumbu, about as far from anywhere as Zambia gets.",
+      "provider": "pexels",
+      "photoId": "26382557",
+      "imageUrl": "https://images.pexels.com/photos/26382557/pexels-photo-26382557.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/26382557/pexels-photo-26382557.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/boats-on-beach-26382557/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "the clear freshwater shore of Lake Tanganyika at Nsumbu, Zambia",
+      "query": "Zambia Lake Tanganyika Nsumbu",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T08:38:38Z",
+      "verifiedAt": "2026-08-14T08:38:38Z",
+      "relevance": {
+        "score": 5.54,
+        "reasons": [
+          "subject: clear",
+          "category: beach,ocean"
+        ]
+      }
+    },
+    "zambia/cities": {
+      "country": "zambia",
+      "category": "cities",
+      "caption": "Lusaka",
+      "description": "The centre of everything: Kabwata market, the Great East Road, and the flights that get you to the parks.",
+      "provider": "pexels",
+      "photoId": "38799930",
+      "imageUrl": "https://images.pexels.com/photos/38799930/pexels-photo-38799930.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38799930/pexels-photo-38799930.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/busy-street-scene-in-manzini-eswatini-38799930/",
+      "photographer": "Khaya Motsa",
+      "photographerUrl": "https://www.pexels.com/@proudlyswazi",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a busy market street in Lusaka, Zambia",
+      "query": "Zambia Lusaka",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:49Z",
+      "verifiedAt": "2026-08-14T08:38:49Z",
+      "relevance": {
+        "score": 4.93,
+        "reasons": [
+          "subject: street",
+          "category: city,urban"
+        ]
+      }
+    },
+    "zambia/crafts": {
+      "country": "zambia",
+      "category": "crafts",
+      "caption": "Basketry and Copper",
+      "description": "Tight coiled baskets from the Western Province, and copper worked on the belt that built the economy.",
+      "provider": "pexels",
+      "photoId": "36467798",
+      "imageUrl": "https://images.pexels.com/photos/36467798/pexels-photo-36467798.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36467798/pexels-photo-36467798.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-rural-hut-in-zambian-village-36467798/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "coiled baskets woven in Zambia's Western Province",
+      "query": "Zambia Zambia's Western Province",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:46Z",
+      "verifiedAt": "2026-08-14T08:38:46Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "zambia/culture": {
+      "country": "zambia",
+      "category": "culture",
+      "caption": "Lozi, Bemba, Tonga",
+      "description": "Seventy-three ethnic groups, seven official languages, and a royal barge ceremony older than the country.",
+      "provider": "pexels",
+      "photoId": "18807623",
+      "imageUrl": "https://images.pexels.com/photos/18807623/pexels-photo-18807623.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/18807623/pexels-photo-18807623.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/music-band-during-traditional-festival-18807623/",
+      "photographer": "Audy of  Course",
+      "photographerUrl": "https://www.pexels.com/@audy-of-course-306413796",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "Lozi paddlers and drummers on the Zambezi floodplain, Zambia",
+      "query": "Zambia lozi paddlers drummers",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:41Z",
+      "verifiedAt": "2026-08-14T08:38:41Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "subject: drummers",
+          "category: traditional"
+        ]
+      }
+    },
+    "zambia/eco-tourism": {
+      "country": "zambia",
+      "category": "eco-tourism",
+      "caption": "Kafue and the Carnivores",
+      "description": "Kafue is the size of Wales; the conservation programmes there fund anti-poaching across the whole Greater Kafue system.",
+      "provider": "pexels",
+      "photoId": "750537",
+      "imageUrl": "https://images.pexels.com/photos/750537/pexels-photo-750537.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/750537/pexels-photo-750537.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/close-up-photo-of-deer-750537/",
+      "photographer": "Adriaan Greyling",
+      "photographerUrl": "https://www.pexels.com/@monkeytactics",
+      "width": 6031,
+      "height": 4026,
+      "aspectRatio": 1.498,
+      "alt": "wild dogs on the Busanga plains in Kafue National Park, Zambia",
+      "query": "Zambia Busanga Kafue National Park",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T08:38:53Z",
+      "verifiedAt": "2026-08-14T08:38:54Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: the,wild"
+        ]
+      }
+    },
+    "zambia/family-community": {
+      "country": "zambia",
+      "category": "family-community",
+      "caption": "Village Around the Park",
+      "description": "Community campsites and craft cooperatives on the Luangwa boundary, funded by the same beds that fill the lodges.",
+      "provider": "pexels",
+      "photoId": "35447813",
+      "imageUrl": "https://images.pexels.com/photos/35447813/pexels-photo-35447813.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35447813/pexels-photo-35447813.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/wild-giraffes-at-watering-hole-in-africa-35447813/",
+      "photographer": "Derek Keats",
+      "photographerUrl": "https://www.pexels.com/@dkeats",
+      "width": 9068,
+      "height": 6138,
+      "aspectRatio": 1.4774,
+      "alt": "a community craft cooperative near the South Luangwa park boundary, Zambia",
+      "query": "Zambia South Luangwa",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:51Z",
+      "verifiedAt": "2026-08-14T08:38:51Z",
+      "relevance": {
+        "score": 2.71,
+        "reasons": [
+          "subject: south"
+        ]
+      }
+    },
+    "zambia/festivals": {
+      "country": "zambia",
+      "category": "festivals",
+      "caption": "Kuomboka",
+      "description": "When the floodplain fills, the Litunga is paddled to high ground on the Nalikwanda barge, drummed the whole way.",
+      "provider": "pexels",
+      "photoId": "38668057",
+      "imageUrl": "https://images.pexels.com/photos/38668057/pexels-photo-38668057.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38668057/pexels-photo-38668057.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/barge-on-mississippi-river-at-sunset-in-reads-landing-38668057/",
+      "photographer": "Tom Fisk",
+      "photographerUrl": "https://www.pexels.com/@tomfisk",
+      "width": 8192,
+      "height": 6144,
+      "aspectRatio": 1.3333,
+      "alt": "the Nalikwanda royal barge during the Kuomboka ceremony, Zambia",
+      "query": "Zambia nalikwanda royal barge",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:38:44Z",
+      "verifiedAt": "2026-08-14T08:38:46Z",
+      "relevance": {
+        "score": 4.25,
+        "reasons": [
+          "subject: barge,during"
+        ]
+      }
+    },
+    "zambia/food": {
+      "country": "zambia",
+      "category": "food",
+      "caption": "Nshima and Kapenta",
+      "description": "Maize nshima with relish, dried kapenta from the lakes, and fresh bream out of the Zambezi.",
+      "provider": "pexels",
+      "photoId": "38347620",
+      "imageUrl": "https://images.pexels.com/photos/38347620/pexels-photo-38347620.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38347620/pexels-photo-38347620.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/delicious-ecuadorian-seafood-dish-on-wooden-table-38347620/",
+      "photographer": "DΛVΞ GΛRCIΛ",
+      "photographerUrl": "https://www.pexels.com/@davegarcia",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "nshima with relish served at a Zambian table",
+      "query": "Zambia nshima relish served",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:43Z",
+      "verifiedAt": "2026-08-14T08:38:43Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: and,served,table",
+          "category: dish"
+        ]
+      }
+    },
+    "zambia/forests": {
+      "country": "zambia",
+      "category": "forests",
+      "caption": "Miombo and Winterthorn",
+      "description": "Miombo woodland turning red at the start of the rains, and the winterthorn groves the elephants feed under.",
+      "provider": "pexels",
+      "photoId": "32415783",
+      "imageUrl": "https://images.pexels.com/photos/32415783/pexels-photo-32415783.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32415783/pexels-photo-32415783.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-river-view-with-mist-and-greenery-32415783/",
+      "photographer": "Kabwe Kabwe",
+      "photographerUrl": "https://www.pexels.com/@kabwe-kabwe-2148456407",
+      "width": 6016,
+      "height": 4016,
+      "aspectRatio": 1.498,
+      "alt": "elephants under winterthorn trees in the Lower Zambezi, Zambia",
+      "query": "Zambia Lower Zambezi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:39Z",
+      "verifiedAt": "2026-08-14T08:38:39Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "zambia/heritage": {
+      "country": "zambia",
+      "category": "heritage",
+      "caption": "Mosi-oa-Tunya, UNESCO",
+      "description": "World Heritage since 1989, shared with Zimbabwe, and named by the Kololo long before anyone renamed it.",
+      "provider": "pexels",
+      "photoId": "16241865",
+      "imageUrl": "https://images.pexels.com/photos/16241865/pexels-photo-16241865.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16241865/pexels-photo-16241865.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/view-of-a-waterfall-16241865/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "the knife-edge bridge and gorge at Mosi-oa-Tunya, Victoria Falls, Zambia",
+      "query": "Zambia Mosi-oa-Tunya Victoria Falls",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:38:48Z",
+      "verifiedAt": "2026-08-14T08:38:48Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: falls,victoria"
+        ]
+      }
+    },
+    "zambia/hero": {
+      "country": "zambia",
+      "category": "hero",
+      "caption": "The Smoke That Thunders",
+      "description": "Mosi-oa-Tunya: a kilometre and a half of the Zambezi falling into a basalt gorge, and spray you can see from thirty kilometres away.",
+      "provider": "pexels",
+      "photoId": "27878405",
+      "imageUrl": "https://images.pexels.com/photos/27878405/pexels-photo-27878405.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27878405/pexels-photo-27878405.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/an-aerial-view-of-the-victoria-falls-in-zimbabwe-27878405/",
+      "photographer": "BabijaPhoto JB",
+      "photographerUrl": "https://www.pexels.com/@babijaphoto",
+      "width": 7008,
+      "height": 3944,
+      "aspectRatio": 1.7769,
+      "alt": "Victoria Falls in full flood with spray rising from the gorge, Zambia",
+      "query": "Zambia Victoria Falls",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:38:33Z",
+      "verifiedAt": "2026-08-14T08:38:33Z",
+      "relevance": {
+        "score": 5.0,
+        "reasons": [
+          "subject: falls,victoria"
+        ]
+      }
+    },
+    "zambia/hidden-gems": {
+      "country": "zambia",
+      "category": "hidden-gems",
+      "caption": "Liuwa Plain",
+      "description": "The second largest wildebeest migration in Africa, on a plain almost nobody has heard of, reachable only in the dry.",
+      "provider": "pexels",
+      "photoId": "32382771",
+      "imageUrl": "https://images.pexels.com/photos/32382771/pexels-photo-32382771.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32382771/pexels-photo-32382771.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/wildebeest-in-golden-savannah-at-daytime-32382771/",
+      "photographer": "Charmain Jansen van Rensburg",
+      "photographerUrl": "https://www.pexels.com/@charmain",
+      "width": 6960,
+      "height": 4640,
+      "aspectRatio": 1.5,
+      "alt": "wildebeest massed on the open grass of Liuwa Plain, Zambia",
+      "query": "Zambia Liuwa Plain",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 58
+      },
+      "createdAt": "2026-08-14T08:38:55Z",
+      "verifiedAt": "2026-08-14T08:38:55Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: grass,wildebeest"
+        ]
+      }
+    },
+    "zambia/historic-sites": {
+      "country": "zambia",
+      "category": "historic-sites",
+      "caption": "Livingstone",
+      "description": "The old colonial capital above the falls, its museum, and the tree where the man himself is said to have camped.",
+      "provider": "pexels",
+      "photoId": "2846216",
+      "imageUrl": "https://images.pexels.com/photos/2846216/pexels-photo-2846216.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/2846216/pexels-photo-2846216.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/white-building-2846216/",
+      "photographer": "Rahul Pandit",
+      "photographerUrl": "https://www.pexels.com/@rahulp9800",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the colonial-era museum building in Livingstone, Zambia",
+      "query": "Zambia colonial era museum",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:47Z",
+      "verifiedAt": "2026-08-14T08:38:48Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: colonial,museum",
+          "category: historic"
+        ]
+      }
+    },
+    "zambia/lakes-rivers": {
+      "country": "zambia",
+      "category": "lakes-rivers",
+      "caption": "Zambezi, Kafue, Tanganyika",
+      "description": "Three great river systems and the southern tip of Lake Tanganyika, the second deepest lake on earth.",
+      "provider": "pexels",
+      "photoId": "28717717",
+      "imageUrl": "https://images.pexels.com/photos/28717717/pexels-photo-28717717.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28717717/pexels-photo-28717717.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/serene-river-sunset-over-calm-waters-28717717/",
+      "photographer": "Hannah Barata",
+      "photographerUrl": "https://www.pexels.com/@hannah-barata-776560167",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "sunset over the Zambezi river with hippo in the shallows, Zambia",
+      "query": "Zambia Zambezi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:37Z",
+      "verifiedAt": "2026-08-14T08:38:37Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "subject: river,sunset",
+          "category: river"
+        ]
+      }
+    },
+    "zambia/local-life": {
+      "country": "zambia",
+      "category": "local-life",
+      "caption": "Markets and the Great North Road",
+      "description": "Roadside charcoal and tomatoes, long-haul trucks to the copperbelt, and a bus that leaves when it fills.",
+      "provider": "pexels",
+      "photoId": "36467840",
+      "imageUrl": "https://images.pexels.com/photos/36467840/pexels-photo-36467840.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36467840/pexels-photo-36467840.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/tranquil-rural-landscape-in-zambia-36467840/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a roadside produce market on the Great North Road in Zambia",
+      "query": "Zambia Great North Road",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:50Z",
+      "verifiedAt": "2026-08-14T08:38:51Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: and,zambia"
+        ]
+      }
+    },
+    "zambia/luxury": {
+      "country": "zambia",
+      "category": "luxury",
+      "caption": "Bush Camps, Six Beds",
+      "description": "Seasonal bush camps in the Luangwa that take six guests, close at the rains, and are walked between.",
+      "provider": "pexels",
+      "photoId": "36916911",
+      "imageUrl": "https://images.pexels.com/photos/36916911/pexels-photo-36916911.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36916911/pexels-photo-36916911.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-rural-huts-in-zambian-countryside-36916911/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a small thatched bush camp overlooking the Luangwa river, Zambia",
+      "query": "Zambia Luangwa",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:52Z",
+      "verifiedAt": "2026-08-14T08:38:53Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: thatched"
+        ]
+      }
+    },
+    "zambia/mountains": {
+      "country": "zambia",
+      "category": "mountains",
+      "caption": "The Nyika Plateau",
+      "description": "Two thousand metres of rolling montane grassland on the Malawi border, with roan antelope and no heat.",
+      "provider": "pexels",
+      "photoId": "31215327",
+      "imageUrl": "https://images.pexels.com/photos/31215327/pexels-photo-31215327.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31215327/pexels-photo-31215327.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/lush-green-landscape-of-piet-retief-31215327/",
+      "photographer": "Lukas  Faust",
+      "photographerUrl": "https://www.pexels.com/@lukasfst",
+      "width": 8064,
+      "height": 4536,
+      "aspectRatio": 1.7778,
+      "alt": "rolling montane grassland on the Nyika plateau, Zambia",
+      "query": "Zambia Nyika",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:36Z",
+      "verifiedAt": "2026-08-14T08:38:36Z",
+      "relevance": {
+        "score": 3.0,
+        "reasons": [
+          "subject: rolling"
+        ]
+      }
+    },
+    "zambia/nature": {
+      "country": "zambia",
+      "category": "nature",
+      "caption": "The Zambezi Valley",
+      "description": "Escarpment, floodplain and winterthorn forest, with the river braiding through the middle of all of it.",
+      "provider": "pexels",
+      "photoId": "28180872",
+      "imageUrl": "https://images.pexels.com/photos/28180872/pexels-photo-28180872.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28180872/pexels-photo-28180872.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/buffalo-in-the-water-at-sunset-28180872/",
+      "photographer": "Zeynep Sude  Emek",
+      "photographerUrl": "https://www.pexels.com/@zeynep-sude-emek-193601188",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "the Zambezi river and escarpment in the Lower Zambezi valley, Zambia",
+      "query": "Zambia Zambezi Lower Zambezi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:34Z",
+      "verifiedAt": "2026-08-14T08:38:34Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: river,the"
+        ]
+      }
+    },
+    "zambia/outdoor": {
+      "country": "zambia",
+      "category": "outdoor",
+      "caption": "Canoeing the Lower Zambezi",
+      "description": "Three days downstream past hippo pods and elephant crossings, camping on islands, no engine at any point.",
+      "provider": "pexels",
+      "photoId": "11760864",
+      "imageUrl": "https://images.pexels.com/photos/11760864/pexels-photo-11760864.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/11760864/pexels-photo-11760864.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/elephants-on-brown-field-11760864/",
+      "photographer": "ROMAN ODINTSOV",
+      "photographerUrl": "https://www.pexels.com/@roman-odintsov",
+      "width": 7832,
+      "height": 5224,
+      "aspectRatio": 1.4992,
+      "alt": "canoeing past elephants on the Lower Zambezi river, Zambia",
+      "query": "Zambia Lower Zambezi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:51Z",
+      "verifiedAt": "2026-08-14T08:38:52Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: elephants,the"
+        ]
+      }
+    },
+    "zambia/photography": {
+      "country": "zambia",
+      "category": "photography",
+      "caption": "Luangwa at Last Light",
+      "description": "The river bends, the hippo surface and the dust goes gold about forty minutes before the drive has to end.",
+      "provider": "pexels",
+      "photoId": "36916888",
+      "imageUrl": "https://images.pexels.com/photos/36916888/pexels-photo-36916888.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36916888/pexels-photo-36916888.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-thatched-huts-in-rural-zambia-landscape-36916888/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "hippos in the Luangwa river at last light, Zambia",
+      "query": "Zambia Luangwa",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T08:38:54Z",
+      "verifiedAt": "2026-08-14T08:38:54Z",
+      "relevance": {
+        "score": 2.93,
+        "reasons": [
+          "names the country",
+          "category: scenic"
+        ]
+      }
+    },
+    "zambia/safari": {
+      "country": "zambia",
+      "category": "safari",
+      "caption": "The Walking Safari",
+      "description": "Invented in the Luangwa in the 1950s: no vehicle, an armed scout, and everything at eye level.",
+      "provider": "pexels",
+      "photoId": "16907733",
+      "imageUrl": "https://images.pexels.com/photos/16907733/pexels-photo-16907733.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16907733/pexels-photo-16907733.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/elephant-bathing-in-mud-16907733/",
+      "photographer": "Diego F. Parra",
+      "photographerUrl": "https://www.pexels.com/@diego-f-parra-33199",
+      "width": 6597,
+      "height": 4403,
+      "aspectRatio": 1.4983,
+      "alt": "a walking safari group and guide in the South Luangwa bush, Zambia",
+      "query": "Zambia South Luangwa",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T08:38:35Z",
+      "verifiedAt": "2026-08-14T08:38:35Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: the,walking"
+        ]
+      }
+    },
+    "zambia/traditional-people": {
+      "country": "zambia",
+      "category": "traditional-people",
+      "caption": "The Barotse Floodplain",
+      "description": "The Lozi live with the flood — moving cattle, homes and the king himself when the Zambezi rises.",
+      "provider": "pexels",
+      "photoId": "32106844",
+      "imageUrl": "https://images.pexels.com/photos/32106844/pexels-photo-32106844.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32106844/pexels-photo-32106844.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-traditional-attire-portrait-at-sunset-32106844/",
+      "photographer": "Khaliifah  hussein",
+      "photographerUrl": "https://www.pexels.com/@khaliifah-hussein-1904370898",
+      "width": 4672,
+      "height": 7008,
+      "aspectRatio": 0.6667,
+      "alt": "a Lozi fisherman poling a dugout on the Barotse floodplain, Zambia",
+      "query": "Zambia Lozi Barotse",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:42Z",
+      "verifiedAt": "2026-08-14T08:38:42Z",
+      "relevance": {
+        "score": 5.67,
+        "reasons": [
+          "subject: the",
+          "category: portrait,traditional"
+        ]
+      }
+    },
+    "zambia/waterfalls": {
+      "country": "zambia",
+      "category": "waterfalls",
+      "caption": "Victoria and Kalambo",
+      "description": "Victoria Falls needs no introduction; Kalambo, on the Tanzanian border, drops 235 metres in a single uninterrupted fall.",
+      "provider": "pexels",
+      "photoId": "21631113",
+      "imageUrl": "https://images.pexels.com/photos/21631113/pexels-photo-21631113.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/21631113/pexels-photo-21631113.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/waterfalls-flowing-into-the-canyon-21631113/",
+      "photographer": "zhou shen",
+      "photographerUrl": "https://www.pexels.com/@fatinmark",
+      "width": 5304,
+      "height": 7952,
+      "aspectRatio": 0.667,
+      "alt": "the single 235 metre drop of Kalambo Falls, Zambia",
+      "query": "Zambia Kalambo Falls",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 40
+      },
+      "createdAt": "2026-08-14T08:38:37Z",
+      "verifiedAt": "2026-08-14T08:38:37Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: and,falls,victoria"
+        ]
+      }
+    },
+    "zambia/why-visit": {
+      "country": "zambia",
+      "category": "why-visit",
+      "caption": "Wilderness, Still Unmanaged",
+      "description": "Zambia kept the walking safari, the small camp and the empty park while its neighbours scaled up.",
+      "provider": "pexels",
+      "photoId": "16444269",
+      "imageUrl": "https://images.pexels.com/photos/16444269/pexels-photo-16444269.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16444269/pexels-photo-16444269.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-safari-vehicle-riding-through-a-field-16444269/",
+      "photographer": "Keegan Checks",
+      "photographerUrl": "https://www.pexels.com/@keeganjchecks",
+      "width": 7008,
+      "height": 4672,
+      "aspectRatio": 1.5,
+      "alt": "a lone safari vehicle on an empty track in the South Luangwa, Zambia",
+      "query": "Zambia lone safari vehicle",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T08:38:55Z",
+      "verifiedAt": "2026-08-14T08:38:56Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: safari,vehicle"
+        ]
+      }
+    },
+    "zambia/wildlife": {
+      "country": "zambia",
+      "category": "wildlife",
+      "caption": "Leopard Country",
+      "description": "The South Luangwa has one of the densest leopard populations in Africa, and the best chance of seeing one hunting.",
+      "provider": "pexels",
+      "photoId": "36467687",
+      "imageUrl": "https://images.pexels.com/photos/36467687/pexels-photo-36467687.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36467687/pexels-photo-36467687.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-village-and-landscape-in-zambia-36467687/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a leopard in a sausage tree in the South Luangwa valley, Zambia",
+      "query": "Zambia South Luangwa",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 52,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T08:38:34Z",
+      "verifiedAt": "2026-08-14T08:38:35Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: tree"
+        ]
+      }
+    },
+    "zimbabwe/adventure": {
+      "country": "zimbabwe",
+      "category": "adventure",
+      "caption": "Walking, Canoeing, Rafting",
+      "description": "Canoe the Zambezi past hippo, raft the gorge below the falls, and walk Mana with a guide.",
+      "provider": "pexels",
+      "photoId": "13746782",
+      "imageUrl": "https://images.pexels.com/photos/13746782/pexels-photo-13746782.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/13746782/pexels-photo-13746782.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/boats-on-body-of-water-during-sunset-13746782/",
+      "photographer": "Quang Nguyen Vinh",
+      "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+      "width": 7807,
+      "height": 5207,
+      "aspectRatio": 1.4993,
+      "alt": "canoes on the Zambezi below Mana Pools, Zimbabwe",
+      "query": "Zimbabwe canoes zambezi mana",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:04Z",
+      "verifiedAt": "2026-08-14T08:39:05Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: canoes"
+        ]
+      }
+    },
+    "zimbabwe/architecture": {
+      "country": "zimbabwe",
+      "category": "architecture",
+      "caption": "Dry Stone",
+      "description": "Great Zimbabwe's coursed granite is the architecture, and nothing since has matched it.",
+      "provider": "pexels",
+      "photoId": "34572555",
+      "imageUrl": "https://images.pexels.com/photos/34572555/pexels-photo-34572555.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34572555/pexels-photo-34572555.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/boulder-chat-bird-in-natural-zimbabwe-habitat-34572555/",
+      "photographer": "Derek Keats",
+      "photographerUrl": "https://www.pexels.com/@dkeats",
+      "width": 4418,
+      "height": 6146,
+      "aspectRatio": 0.7188,
+      "alt": "coursed dry stone walling at Great Zimbabwe",
+      "query": "Zimbabwe Great Zimbabwe",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:39:14Z",
+      "verifiedAt": "2026-08-14T08:39:14Z",
+      "relevance": {
+        "score": 4.38,
+        "reasons": [
+          "names the country",
+          "subject: zimbabwe"
+        ]
+      }
+    },
+    "zimbabwe/beaches": {
+      "country": "zimbabwe",
+      "category": "beaches",
+      "caption": "Landlocked",
+      "description": "No coast — the water here is the Zambezi, Kariba, and the pools of the Mana floodplain.",
+      "provider": "pexels",
+      "photoId": "36451593",
+      "imageUrl": "https://images.pexels.com/photos/36451593/pexels-photo-36451593.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36451593/pexels-photo-36451593.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-gorge-river-flowing-through-rocky-landscape-36451593/",
+      "photographer": "Kabwe Kabwe",
+      "photographerUrl": "https://www.pexels.com/@kabwe-kabwe-2148456407",
+      "width": 6016,
+      "height": 4016,
+      "aspectRatio": 1.498,
+      "alt": "the Zambezi river wide and slow above the falls, Zimbabwe",
+      "query": "Zimbabwe Zambezi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:02Z",
+      "verifiedAt": "2026-08-14T08:39:03Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: river"
+        ]
+      }
+    },
+    "zimbabwe/cities": {
+      "country": "zimbabwe",
+      "category": "cities",
+      "caption": "Harare and Bulawayo",
+      "description": "Harare on the highveld, and Bulawayo's wide colonial grid built for turning an ox wagon.",
+      "provider": "pexels",
+      "photoId": "5504171",
+      "imageUrl": "https://images.pexels.com/photos/5504171/pexels-photo-5504171.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/5504171/pexels-photo-5504171.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-statue-in-a-city-5504171/",
+      "photographer": "Mike van Schoonderwalt",
+      "photographerUrl": "https://www.pexels.com/@mike-van-schoonderwalt-1884800",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the wide colonial streets of Bulawayo, Zimbabwe",
+      "query": "Zimbabwe Bulawayo",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:13Z",
+      "verifiedAt": "2026-08-14T08:39:14Z",
+      "relevance": {
+        "score": 3.43,
+        "reasons": [
+          "subject: and",
+          "category: skyline"
+        ]
+      }
+    },
+    "zimbabwe/crafts": {
+      "country": "zimbabwe",
+      "category": "crafts",
+      "caption": "Stone, Basket and Wire",
+      "description": "Serpentine carving, Binga basketry, and wire sculpture sold on every roadside.",
+      "provider": "pexels",
+      "photoId": "28104930",
+      "imageUrl": "https://images.pexels.com/photos/28104930/pexels-photo-28104930.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28104930/pexels-photo-28104930.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-sunset-over-a-lake-with-a-small-island-in-the-middle-28104930/",
+      "photographer": "Tom Fisk",
+      "photographerUrl": "https://www.pexels.com/@tomfisk",
+      "width": 5772,
+      "height": 4625,
+      "aspectRatio": 1.248,
+      "alt": "woven Binga baskets from the Zambezi valley, Zimbabwe",
+      "query": "Zimbabwe Binga Zambezi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:10Z",
+      "verifiedAt": "2026-08-14T08:39:11Z",
+      "relevance": {
+        "score": 2.81,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "zimbabwe/culture": {
+      "country": "zimbabwe",
+      "category": "culture",
+      "caption": "Shona and Ndebele",
+      "description": "Shona across the centre and east, Ndebele in the west, and stone sculpture from both.",
+      "provider": "pexels",
+      "photoId": "37693588",
+      "imageUrl": "https://images.pexels.com/photos/37693588/pexels-photo-37693588.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37693588/pexels-photo-37693588.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-straw-hat-worn-by-seated-man-37693588/",
+      "photographer": "Magda Ehlers",
+      "photographerUrl": "https://www.pexels.com/@magda-ehlers-pexels",
+      "width": 8192,
+      "height": 5464,
+      "aspectRatio": 1.4993,
+      "alt": "a Shona stone sculptor at work, Zimbabwe",
+      "query": "Zimbabwe Shona",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:05Z",
+      "verifiedAt": "2026-08-14T08:39:06Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "subject: and,stone",
+          "category: traditional"
+        ]
+      }
+    },
+    "zimbabwe/eco-tourism": {
+      "country": "zimbabwe",
+      "category": "eco-tourism",
+      "caption": "CAMPFIRE",
+      "description": "The community wildlife programme that much of the region's conservation policy was built on.",
+      "provider": "pexels",
+      "photoId": "37578893",
+      "imageUrl": "https://images.pexels.com/photos/37578893/pexels-photo-37578893.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37578893/pexels-photo-37578893.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/herd-of-african-impalas-grazing-in-the-savannah-37578893/",
+      "photographer": "Magda Ehlers",
+      "photographerUrl": "https://www.pexels.com/@magda-ehlers-pexels",
+      "width": 7289,
+      "height": 4862,
+      "aspectRatio": 1.4992,
+      "alt": "a community conservation meeting beside a wildlife area, Zimbabwe",
+      "query": "Zimbabwe community conservation meeting",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:19Z",
+      "verifiedAt": "2026-08-14T08:39:19Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: wildlife"
+        ]
+      }
+    },
+    "zimbabwe/family-community": {
+      "country": "zimbabwe",
+      "category": "family-community",
+      "caption": "Falls and Elephant",
+      "description": "Victoria Falls, a steam train, and elephant at a waterhole — a good week for children.",
+      "provider": "pexels",
+      "photoId": "750540",
+      "imageUrl": "https://images.pexels.com/photos/750540/pexels-photo-750540.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/750540/pexels-photo-750540.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/three-zebras-standing-on-green-grass-field-750540/",
+      "photographer": "Adriaan Greyling",
+      "photographerUrl": "https://www.pexels.com/@monkeytactics",
+      "width": 7360,
+      "height": 4912,
+      "aspectRatio": 1.4984,
+      "alt": "a family watching elephants from a Hwange hide, Zimbabwe",
+      "query": "Zimbabwe Hwange",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:15Z",
+      "verifiedAt": "2026-08-14T08:39:16Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "zimbabwe/festivals": {
+      "country": "zimbabwe",
+      "category": "festivals",
+      "caption": "HIFA and the Harvest",
+      "description": "The Harare arts festival, and the harvest ceremonies that still open the season.",
+      "provider": "pexels",
+      "photoId": "33622130",
+      "imageUrl": "https://images.pexels.com/photos/33622130/pexels-photo-33622130.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33622130/pexels-photo-33622130.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-sandton-skyline-in-gauteng-south-africa-33622130/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 12288,
+      "height": 6912,
+      "aspectRatio": 1.7778,
+      "alt": "a performance at an arts festival in Harare, Zimbabwe",
+      "query": "Zimbabwe Harare",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:39:08Z",
+      "verifiedAt": "2026-08-14T08:39:10Z",
+      "relevance": {
+        "score": 5.0,
+        "reasons": [
+          "subject: and,the"
+        ]
+      }
+    },
+    "zimbabwe/food": {
+      "country": "zimbabwe",
+      "category": "food",
+      "caption": "Sadza and Braai",
+      "description": "Sadza with relish, and meat over coals wherever there is a fire and company.",
+      "provider": "pexels",
+      "photoId": "38330332",
+      "imageUrl": "https://images.pexels.com/photos/38330332/pexels-photo-38330332.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38330332/pexels-photo-38330332.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/delicious-ecuadorian-meal-on-wooden-table-38330332/",
+      "photographer": "DΛVΞ GΛRCIΛ",
+      "photographerUrl": "https://www.pexels.com/@davegarcia",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "sadza and relish served at a Zimbabwean table",
+      "query": "Zimbabwe sadza relish served",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T08:39:07Z",
+      "verifiedAt": "2026-08-14T08:39:08Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: and,table",
+          "category: dish"
+        ]
+      }
+    },
+    "zimbabwe/forests": {
+      "country": "zimbabwe",
+      "category": "forests",
+      "caption": "Msasa and Miombo",
+      "description": "Miombo woodland across the country, and msasa that comes into red leaf in September.",
+      "provider": "pexels",
+      "photoId": "34191802",
+      "imageUrl": "https://images.pexels.com/photos/34191802/pexels-photo-34191802.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34191802/pexels-photo-34191802.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-impala-in-natural-habitat-forest-34191802/",
+      "photographer": "Andrea Gambirasio",
+      "photographerUrl": "https://www.pexels.com/@andrea-gambirasio-2152990668",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "msasa trees in red new leaf in September, Zimbabwe",
+      "query": "Zimbabwe September",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:39:03Z",
+      "verifiedAt": "2026-08-14T08:39:04Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: and,trees",
+          "category: forest"
+        ]
+      }
+    },
+    "zimbabwe/heritage": {
+      "country": "zimbabwe",
+      "category": "heritage",
+      "caption": "Khami and Matobo",
+      "description": "Khami's terraces, and the Matobo hills where Mzilikazi and Rhodes are both buried.",
+      "provider": "pexels",
+      "photoId": "28717726",
+      "imageUrl": "https://images.pexels.com/photos/28717726/pexels-photo-28717726.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28717726/pexels-photo-28717726.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/sunlit-desert-landscape-with-sparse-vegetation-28717726/",
+      "photographer": "Hannah Barata",
+      "photographerUrl": "https://www.pexels.com/@hannah-barata-776560167",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "balancing rocks and rock art in the Matobo hills, Zimbabwe",
+      "query": "Zimbabwe Matobo",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:39:12Z",
+      "verifiedAt": "2026-08-14T08:39:13Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: and,rocks"
+        ]
+      }
+    },
+    "zimbabwe/hero": {
+      "country": "zimbabwe",
+      "category": "hero",
+      "caption": "Great Zimbabwe and the Zambezi",
+      "description": "A stone city built without mortar, and the largest sheet of falling water on earth.",
+      "provider": "pexels",
+      "photoId": "22938560",
+      "imageUrl": "https://images.pexels.com/photos/22938560/pexels-photo-22938560.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/22938560/pexels-photo-22938560.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/village-des-bories-in-black-and-white-22938560/",
+      "photographer": "Jean-Paul Wettstein",
+      "photographerUrl": "https://www.pexels.com/@jean-paul-wettstein-677916508",
+      "width": 6064,
+      "height": 4040,
+      "aspectRatio": 1.501,
+      "alt": "the stone walls of Great Zimbabwe",
+      "query": "Zimbabwe Great Zimbabwe",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:56Z",
+      "verifiedAt": "2026-08-14T08:38:57Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: and,stone"
+        ]
+      }
+    },
+    "zimbabwe/hidden-gems": {
+      "country": "zimbabwe",
+      "category": "hidden-gems",
+      "caption": "Chimanimani",
+      "description": "A mountain range on the Mozambique border that you walk into and camp in.",
+      "provider": "pexels",
+      "photoId": "16832175",
+      "imageUrl": "https://images.pexels.com/photos/16832175/pexels-photo-16832175.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16832175/pexels-photo-16832175.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/clouds-over-forested-cliffs-16832175/",
+      "photographer": "Rodrigo Menezes",
+      "photographerUrl": "https://www.pexels.com/@rodrigo-menezes-363900771",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the Chimanimani mountains on the Mozambique border, Zimbabwe",
+      "query": "Zimbabwe Chimanimani Mozambique",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:39:20Z",
+      "verifiedAt": "2026-08-14T08:39:21Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: mountains"
+        ]
+      }
+    },
+    "zimbabwe/historic-sites": {
+      "country": "zimbabwe",
+      "category": "historic-sites",
+      "caption": "Great Zimbabwe",
+      "description": "Eight hundred years old, mortarless, and the largest stone structure south of the Sahara.",
+      "provider": "pexels",
+      "photoId": "37123147",
+      "imageUrl": "https://images.pexels.com/photos/37123147/pexels-photo-37123147.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37123147/pexels-photo-37123147.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/chimpanzee-resting-on-metal-structure-at-zoo-37123147/",
+      "photographer": "Magda Ehlers",
+      "photographerUrl": "https://www.pexels.com/@magda-ehlers-pexels",
+      "width": 8151,
+      "height": 5437,
+      "aspectRatio": 1.4992,
+      "alt": "the conical tower inside the Great Enclosure, Zimbabwe",
+      "query": "Zimbabwe Great Enclosure",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:39:12Z",
+      "verifiedAt": "2026-08-14T08:39:12Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: enclosure"
+        ]
+      }
+    },
+    "zimbabwe/lakes-rivers": {
+      "country": "zimbabwe",
+      "category": "lakes-rivers",
+      "caption": "The Zambezi and Kariba",
+      "description": "The Zambezi above the falls, and Kariba's drowned forest downstream of them.",
+      "provider": "pexels",
+      "photoId": "15839393",
+      "imageUrl": "https://images.pexels.com/photos/15839393/pexels-photo-15839393.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/15839393/pexels-photo-15839393.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/lake-at-golden-sunrise-15839393/",
+      "photographer": "Santiago Sauceda González",
+      "photographerUrl": "https://www.pexels.com/@santiago-sauceda-gonzalez-3426899",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "dead trees standing in Lake Kariba at sunset, Zimbabwe",
+      "query": "Zimbabwe Lake Kariba",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:01Z",
+      "verifiedAt": "2026-08-14T08:39:02Z",
+      "relevance": {
+        "score": 6.93,
+        "reasons": [
+          "subject: lake,the",
+          "category: lake,water"
+        ]
+      }
+    },
+    "zimbabwe/local-life": {
+      "country": "zimbabwe",
+      "category": "local-life",
+      "caption": "Kombis and Musika",
+      "description": "The country runs on kombis and market days, both of which are worth an afternoon.",
+      "provider": "pexels",
+      "photoId": "11171034",
+      "imageUrl": "https://images.pexels.com/photos/11171034/pexels-photo-11171034.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/11171034/pexels-photo-11171034.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vegetables-on-street-market-at-night-11171034/",
+      "photographer": "Abdul Basit",
+      "photographerUrl": "https://www.pexels.com/@abdul-basit-25735240",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a busy produce market in a Zimbabwean town",
+      "query": "Zimbabwe busy produce market",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:15Z",
+      "verifiedAt": "2026-08-14T08:39:15Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "subject: and,market",
+          "category: market,street"
+        ]
+      }
+    },
+    "zimbabwe/luxury": {
+      "country": "zimbabwe",
+      "category": "luxury",
+      "caption": "The Old Safari Standard",
+      "description": "Small owner-run camps in Mana and Hwange, run by guides with the country's toughest licence.",
+      "provider": "pexels",
+      "photoId": "27132552",
+      "imageUrl": "https://images.pexels.com/photos/27132552/pexels-photo-27132552.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27132552/pexels-photo-27132552.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/drone-shot-of-the-coastline-27132552/",
+      "photographer": "Abdallah Egbareia",
+      "photographerUrl": "https://www.pexels.com/@abdallah-egbareia-380091788",
+      "width": 8000,
+      "height": 6000,
+      "aspectRatio": 1.3333,
+      "alt": "a tented camp on the Zambezi floodplain at dusk, Zimbabwe",
+      "query": "Zimbabwe tented camp zambezi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:18Z",
+      "verifiedAt": "2026-08-14T08:39:18Z",
+      "relevance": {
+        "score": 2.25,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "zimbabwe/mountains": {
+      "country": "zimbabwe",
+      "category": "mountains",
+      "caption": "The Eastern Highlands",
+      "description": "Nyanga, Vumba and Chimanimani along the Mozambique border, up to 2,592 metres.",
+      "provider": "pexels",
+      "photoId": "34166926",
+      "imageUrl": "https://images.pexels.com/photos/34166926/pexels-photo-34166926.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34166926/pexels-photo-34166926.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/dramatic-mountain-peak-in-lush-green-valley-34166926/",
+      "photographer": "Andrea Gambirasio",
+      "photographerUrl": "https://www.pexels.com/@andrea-gambirasio-2152990668",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the green Eastern Highlands at Nyanga, Zimbabwe",
+      "query": "Zimbabwe Eastern Highlands Nyanga",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T08:39:00Z",
+      "verifiedAt": "2026-08-14T08:39:00Z",
+      "relevance": {
+        "score": 5.53,
+        "reasons": [
+          "subject: green",
+          "category: mountain,peak"
+        ]
+      }
+    },
+    "zimbabwe/nature": {
+      "country": "zimbabwe",
+      "category": "nature",
+      "caption": "Highveld and Escarpment",
+      "description": "Granite kopjes across the highveld, and the Zambezi escarpment dropping into the valley.",
+      "provider": "pexels",
+      "photoId": "38278239",
+      "imageUrl": "https://images.pexels.com/photos/38278239/pexels-photo-38278239.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38278239/pexels-photo-38278239.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-orange-granite-boulders-in-bicheno-38278239/",
+      "photographer": "Anh Thu Le",
+      "photographerUrl": "https://www.pexels.com/@anh-thu-le-2161532235",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "balancing granite boulders on the Zimbabwean highveld",
+      "query": "Zimbabwe balancing granite boulders",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:38:57Z",
+      "verifiedAt": "2026-08-14T08:38:58Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: boulders,granite"
+        ]
+      }
+    },
+    "zimbabwe/outdoor": {
+      "country": "zimbabwe",
+      "category": "outdoor",
+      "caption": "Raft, Canoe, Walk",
+      "description": "Grade five rafting below the falls, multi-day canoe trails, and walking safaris in Mana.",
+      "provider": "pexels",
+      "photoId": "36468006",
+      "imageUrl": "https://images.pexels.com/photos/36468006/pexels-photo-36468006.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36468006/pexels-photo-36468006.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/stunning-view-of-victoria-falls-gorge-36468006/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "rafts in the Batoka gorge below Victoria Falls, Zimbabwe",
+      "query": "Zimbabwe Batoka Victoria Falls",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:17Z",
+      "verifiedAt": "2026-08-14T08:39:18Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: falls,gorge,victoria"
+        ]
+      }
+    },
+    "zimbabwe/photography": {
+      "country": "zimbabwe",
+      "category": "photography",
+      "caption": "Albida Light",
+      "description": "The winterthorn cathedrals of Mana Pools, in dust and low sun, are photographed everywhere.",
+      "provider": "pexels",
+      "photoId": "18217150",
+      "imageUrl": "https://images.pexels.com/photos/18217150/pexels-photo-18217150.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/18217150/pexels-photo-18217150.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/cattle-near-water-and-trees-18217150/",
+      "photographer": "Zeynep Sude  Emek",
+      "photographerUrl": "https://www.pexels.com/@zeynep-sude-emek-193601188",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "dust and low sun through winterthorn trees at Mana Pools, Zimbabwe",
+      "query": "Zimbabwe Mana Pools",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:19Z",
+      "verifiedAt": "2026-08-14T08:39:20Z",
+      "relevance": {
+        "score": 1.93,
+        "reasons": [
+          "subject: dust"
+        ]
+      }
+    },
+    "zimbabwe/safari": {
+      "country": "zimbabwe",
+      "category": "safari",
+      "caption": "Mana Pools on Foot",
+      "description": "The park where you may walk unguided, and where the elephant stand on their hind legs.",
+      "provider": "pexels",
+      "photoId": "33290131",
+      "imageUrl": "https://images.pexels.com/photos/33290131/pexels-photo-33290131.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33290131/pexels-photo-33290131.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/african-lion-resting-under-a-tree-in-tanzania-33290131/",
+      "photographer": "ubeyonroad",
+      "photographerUrl": "https://www.pexels.com/@ubeyonroad-926249862",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "an elephant reaching into an albida tree at Mana Pools, Zimbabwe",
+      "query": "Zimbabwe Mana Pools",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:38:59Z",
+      "verifiedAt": "2026-08-14T08:38:59Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: tree"
+        ]
+      }
+    },
+    "zimbabwe/traditional-people": {
+      "country": "zimbabwe",
+      "category": "traditional-people",
+      "caption": "The Stone Sculptors",
+      "description": "Zimbabwean stone sculpture is the country's clearest contemporary export.",
+      "provider": "pexels",
+      "photoId": "33753648",
+      "imageUrl": "https://images.pexels.com/photos/33753648/pexels-photo-33753648.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33753648/pexels-photo-33753648.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/skilled-artisan-sculpting-stone-buddha-statues-33753648/",
+      "photographer": "GOWTHAM AGM",
+      "photographerUrl": "https://www.pexels.com/@gowtham-agm-609630353",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "finished stone sculptures in a Zimbabwean workshop",
+      "query": "Zimbabwe finished stone sculptures",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:39:06Z",
+      "verifiedAt": "2026-08-14T08:39:07Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: sculptures,stone"
+        ]
+      }
+    },
+    "zimbabwe/waterfalls": {
+      "country": "zimbabwe",
+      "category": "waterfalls",
+      "caption": "Victoria Falls",
+      "description": "Mosi-oa-Tunya — a mile and a half wide, and a hundred metres down, in full flood.",
+      "provider": "pexels",
+      "photoId": "16241868",
+      "imageUrl": "https://images.pexels.com/photos/16241868/pexels-photo-16241868.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16241868/pexels-photo-16241868.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/rainbow-by-waterfall-16241868/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 4160,
+      "height": 6240,
+      "aspectRatio": 0.6667,
+      "alt": "Victoria Falls in full flood with spray rising, Zimbabwe",
+      "query": "Zimbabwe Victoria Falls",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T08:39:00Z",
+      "verifiedAt": "2026-08-14T08:39:01Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: falls,victoria"
+        ]
+      }
+    },
+    "zimbabwe/why-visit": {
+      "country": "zimbabwe",
+      "category": "why-visit",
+      "caption": "Guides, and Great Ruins",
+      "description": "The hardest guiding exam in Africa, and a stone city most visitors have never heard of.",
+      "provider": "pexels",
+      "photoId": "13954242",
+      "imageUrl": "https://images.pexels.com/photos/13954242/pexels-photo-13954242.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/13954242/pexels-photo-13954242.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/zebras-cooling-in-the-savanna-river-13954242/",
+      "photographer": "Alex Levis",
+      "photographerUrl": "https://www.pexels.com/@droneafrica",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a professional guide leading walkers through Mana Pools, Zimbabwe",
+      "query": "Zimbabwe Mana Pools",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T08:39:21Z",
+      "verifiedAt": "2026-08-14T08:39:21Z",
+      "relevance": {
+        "score": 1.93,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "zimbabwe/wildlife": {
+      "country": "zimbabwe",
+      "category": "wildlife",
+      "caption": "Hwange's Elephant",
+      "description": "Forty thousand elephant in Hwange, drinking at pumped pans through the dry season.",
+      "provider": "pexels",
+      "photoId": "8944070",
+      "imageUrl": "https://images.pexels.com/photos/8944070/pexels-photo-8944070.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/8944070/pexels-photo-8944070.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/herd-of-elephants-standing-on-a-ground-8944070/",
+      "photographer": "Dorota Semla",
+      "photographerUrl": "https://www.pexels.com/@dorota-semla-1929451",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "elephants crowding a pumped waterhole in Hwange, Zimbabwe",
+      "query": "Zimbabwe Hwange",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T08:38:58Z",
+      "verifiedAt": "2026-08-14T08:38:58Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: elephants,waterhole"
         ]
       }
     }
