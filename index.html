@@ -1453,6 +1453,42 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-feel-close{max-width:none}
 }
 
+/* COME FOR THE MOMENT — four photographs at the size a photograph needs.
+
+   Two up rather than four. Four across puts each frame at about 280px on a
+   1440 screen, which is a thumbnail, and a thumbnail cannot carry the argument
+   this section exists to make. Two up gives each one 570px and the section
+   costs one more screen of scroll, which is the trade this page should make
+   here and does not make in the destinations grid below.
+
+   The caption sits under the picture rather than over it. Type on a photograph
+   is what the band two sections up already does, at full bleed, with a graded
+   wash measured against the frame — doing it again in a card, four times, on
+   four photographs with four different exposures, is four more washes to
+   measure and a weaker version of something the page has already said. */
+.wa-moment-grid{display:grid;grid-template-columns:repeat(2,1fr);
+  gap:var(--sp-5);margin-top:var(--sp-5)}
+.wa-moment{display:block;text-decoration:none;position:relative}
+.wa-moment-art{display:block;position:relative;aspect-ratio:3/2;overflow:hidden;
+  background:var(--c-primary)}
+.wa-moment-art img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s cubic-bezier(.2,.6,.2,1)}
+.wa-moment:hover .wa-moment-art img{transform:scale(1.04)}
+.wa-moment-say{display:block;padding:18px 0 0}
+.wa-moment-say b{display:block;font-family:var(--fj-display);
+  font-size:clamp(19px,1.9vw,26px);font-weight:700;line-height:1.22;
+  letter-spacing:-.01em;color:var(--c-ink);text-wrap:balance}
+.wa-moment-say i{display:block;margin-top:9px;font-style:normal;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-accent)}
+/* The whole card is the target, picture included. */
+.wa-moment::after{content:"";position:absolute;inset:0}
+.wa-moment:hover .wa-moment-say b{color:var(--c-accent)}
+@media(max-width:760px){
+  .wa-moment-grid{grid-template-columns:1fr;gap:var(--sp-4)}
+  .wa-moment-say{padding-top:14px}
+}
+
 /* The rest of a region, as an index rather than as more write-ups.
 
    The grid grew with the dataset: 22 countries made this section 29% of the
@@ -2672,6 +2708,40 @@ window.AF = {
   </div>
 </section>
 
+<!-- COME FOR THE MOMENT YOU'LL NEVER FORGET.
+     Four photographs, and the third thing on the page that is not information.
+
+     01 answers "what do you want to feel" in type, eight ways, so that a reader
+     who does not yet have the word can find it. The band answers it once, at
+     length, on one morning. This answers four of them in pictures — because the
+     argument this whole site makes, that Africa is not one place, cannot be made
+     in prose to somebody who has only ever seen one Africa on television.
+
+     Every card hands the builder its want, the same as the feel cards, so a
+     photograph is a way in rather than decoration. None of them names a country:
+     three of the four frames cannot be placed with certainty and moments.json
+     says why the fourth is not named either. -->
+<section class="wa-zone wa-moments" id="moments">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>02</b><span>The moment</span></div>
+      <div>
+        <h2>Come for the moment you&rsquo;ll <em>never forget</em>.</h2>
+        <p class="wa-note">Some places you visit. Some places change you. Four mornings, and not one
+          of them looks like another &mdash; which is the whole argument this site makes, in the
+          one form it cannot be made in prose.</p>
+      </div>
+    </div>
+    <div class="wa-moment-grid">
+      <!-- gen:moments -->
+      <a class="wa-moment" href="/journey#/?w=wildlife" data-lens="wildlife"><span class="wa-moment-art"><img src="/images/uploads/gorilla-trekkers-768w.jpg" width="768" height="543" alt="A silverback mountain gorilla sitting in dense green undergrowth on a forested slope while a line of trekkers and guides photograph it from a few metres away" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Hear the forest before you see it.</b><i>Rainforest</i></span></a>
+      <a class="wa-moment" href="/journey#/?w=adventure" data-lens="adventure"><span class="wa-moment-art"><img src="/images/uploads/desert-camp-sunrise-1440w.jpg" width="1440" height="958" alt="A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Walk into a landscape that looks impossible.</b><i>Desert</i></span></a>
+      <a class="wa-moment" href="/journey#/?w=coast" data-lens="coast"><span class="wa-moment-art"><img src="/images/uploads/swahili-coast-ngalawa-1200w.jpg" width="1200" height="1804" alt="A woman walking along the tideline at sunrise, silhouetted against the water, with an outrigger fishing canoe moored a short way offshore" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Walk out at sunrise, where the boats already are.</b><i>Coast</i></span></a>
+      <a class="wa-moment" href="/journey#/?w=nature" data-lens="nature"><span class="wa-moment-art"><img src="/images/uploads/table-mountain-from-the-bay-1920w.jpg" width="1920" height="1080" alt="A flat-topped mountain and its two flanking peaks seen across a bay at sunset from rocks in the foreground, with surf breaking and a container ship at anchor" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Climb the one that rises straight out of the sea.</b><i>Mountain</i></span></a>      <!-- /gen:moments -->
+    </div>
+  </div>
+</section>
+
 <!-- what Afrinkong is -->
 <!-- AFRICA, IN CITIES.
      Directly under the hero, because it is the hero's own claim being proved.
@@ -2684,7 +2754,7 @@ window.AF = {
 <section class="wa-zone dust wa-cities" id="cities">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>02</b><span>Cities</span></div>
+      <div class="wa-head-no"><b>03</b><span>Cities</span></div>
       <div>
         <h2>Africa, in <em>cities</em>.</h2>
         <p class="wa-note">The continent is not only wilderness. Eleven cities here, each one a
@@ -2735,7 +2805,7 @@ window.AF = {
 <section class="wa-zone" id="scale">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>03</b><span>The scale</span></div>
+      <div class="wa-head-no"><b>04</b><span>The scale</span></div>
       <div>
         <h2>Africa is bigger than the map <em>in your head</em>.</h2>
         <p class="wa-note">Every world map most people have ever looked at is Mercator, which inflates everything away from the equator and shrinks everything on it. Lay the countries you already have a sense of inside the real outline and the argument for starting with a region rather than a continent makes itself.</p>
@@ -2763,7 +2833,7 @@ window.AF = {
 <section class="wa-zone dust" id="destinations">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>04</b><span>The countries</span></div>
+      <div class="wa-head-no"><b>05</b><span>The countries</span></div>
       <div>
         <h2>Twenty-two countries, <em>all of them live</em>.</h2>
         <p class="wa-note">Every country has a different Africa to show you, and every one of them has a page. Three run as operators of our own &mdash; Kamerun in Cameroon, Pearl Trails Uganda, Namib Skyline in Namibia. The rest are covered by our country pages, each working through the same twenty-seven categories, so you can compare two countries on the same terms instead of on the strength of their marketing. <a class="wa-note-go" href="/compare">Put two side by side &rarr;</a></p>
@@ -2816,7 +2886,7 @@ window.AF = {
 <section class="wa-zone" id="experiences">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>05</b><span>What you can do</span></div>
+      <div class="wa-head-no"><b>06</b><span>What you can do</span></div>
       <div>
         <h2>Start with what you <em>want to do</em>.</h2>
         <p class="wa-note">You don&rsquo;t always know the country first. Sometimes you know the experience. Pick one and the grid below narrows to the countries that lead on it &mdash; and if you add a month, to the ones that lead on it then. Nothing is ranked; the countries declare what they lead on and this asks against that.</p>
@@ -2855,7 +2925,7 @@ window.AF = {
 <section class="wa-zone basalt" id="now">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>06</b><span>Africa now</span></div>
+      <div class="wa-head-no"><b>07</b><span>Africa now</span></div>
       <div>
         <h2>Not a <em>museum</em>.</h2>
         <!-- gen:nownote -->
@@ -2890,7 +2960,7 @@ window.AF = {
 <section class="wa-zone dust" id="plan">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>07</b><span>The journey</span></div>
+      <div class="wa-head-no"><b>08</b><span>The journey</span></div>
       <div>
         <h2>What happens after you <em>choose Africa</em>?</h2>
         <!-- gen:plannote -->
@@ -2937,7 +3007,7 @@ window.AF = {
 <section class="wa-zone" id="stories">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>08</b><span>Stories</span></div>
+      <div class="wa-head-no"><b>09</b><span>Stories</span></div>
       <div>
         <h2>Africa is <em>more than a destination</em>.</h2>
         <p class="wa-note">Twenty-two long reads, one per country, each built out of what that country says about itself rather than written about it. One from each region below.</p>

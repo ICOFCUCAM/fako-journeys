@@ -1349,6 +1349,56 @@ def main():
         check("the brief is generated rather than typed",
               "<!-- gen:claim -->" in home_src)
 
+        # -- the four photographs that are the argument -----------------------------
+        # Everywhere else on this site a photograph illustrates a country that has
+        # a dataset behind it. Here the picture is the point and the words are
+        # written to the frame, which inverts the risk: the danger is not a
+        # missing picture but a picture that promises what the frame does not
+        # hold.
+        from tourism import gateway
+        lenses_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "lenses.json"))
+        lens_keys = {k: v for k, v in lenses_src.items()
+                     if not k.startswith("$") and isinstance(v, dict)}
+        moments_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "moments.json"))
+        moments = moments_src.get("moments") or []
+        mblock = re.search(r'<!-- gen:moments -->(.*?)<!-- /gen:moments -->',
+                           home_src, re.S)
+        check("the moments section is generated", bool(mblock))
+        if mblock:
+            cards = re.findall(
+                r'<a class="wa-moment" href="([^"]+)" data-lens="([a-z]+)">.*?'
+                r'<img src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>', mblock.group(1), re.S)
+            check("every moment with a picture and a way in is drawn",
+                  len(cards) == len([m for m in moments
+                                     if m.get("photo") and m.get("lens") in lens_keys]),
+                  "%d cards" % len(cards))
+            # The worst possible place on the site for a generated image: a
+            # full-bleed promise of one specific morning, a few screens above a
+            # button that says begin a journey.
+            gen = [u for _h, _k, u, _a in cards if "/images/uploads/" not in u]
+            check("no moment is a picture of somewhere that does not exist",
+                  not gen, ", ".join(gen) or "all %d from uploads" % len(cards))
+            missing = [u for _h, _k, u, _a in cards
+                       if not os.path.exists(os.path.join(ROOT_DIR, u.lstrip("/")))]
+            check("every moment's photograph is actually on disk",
+                  not missing, ", ".join(missing) or "all %d" % len(cards))
+            thin = [u for _h, _k, u, a in cards if len(a) < 60]
+            check("every moment says what is in its frame",
+                  not thin, ", ".join(thin) or "all %d described" % len(cards))
+            badl = [k for _h, k, _u, _a in cards if k not in lens_keys]
+            check("every moment leads somewhere a visitor can filter on",
+                  not badl, ", ".join(badl) or "all %d" % len(cards))
+            badh = [h for h, k, _u, _a in cards if h != "/journey#/?w=%s" % k]
+            check("every moment hands the builder a want it will read",
+                  not badh, ", ".join(badh) or "all %d" % len(cards))
+            # Three of the four frames cannot be placed, so none of them claims a
+            # place. A country name appearing in this block later would be one
+            # frame carrying a claim the other three are silent about.
+            names = sorted({c.name for c in countries
+                            if re.search(r'\b%s\b' % re.escape(c.name), mblock.group(1))})
+            check("no moment claims a country the frame cannot prove",
+                  not names, ", ".join(names) or "none named")
+
         # -- the bands that put a reader inside a morning ---------------------------
         # The band technique fails silently: one `filter` anywhere between the
         # section and the picture turns fixed into absolute and the whole effect
@@ -1383,10 +1433,6 @@ def main():
         # "why would I go", and it is the only section whose sentences are
         # written rather than counted — so it is the one that can most easily
         # start promising something the dataset cannot supply.
-        from tourism import gateway
-        lenses_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "lenses.json"))
-        lens_keys = {k: v for k, v in lenses_src.items()
-                     if not k.startswith("$") and isinstance(v, dict)}
         called = {}
         for c in countries:
             for call in c.calls:

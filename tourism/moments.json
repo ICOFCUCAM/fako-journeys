@@ -1,0 +1,71 @@
+{
+ "$comment": [
+  "Four moments, and four photographs that are actually of them.",
+  "",
+  "This file exists because the section it feeds is the one place on the site",
+  "where a picture is the argument. Everywhere else a photograph illustrates a",
+  "country that has a dataset behind it; here the photograph is the point, and",
+  "the words are written to what is in the frame rather than the other way",
+  "round. That inverts the usual risk: the danger is not a missing picture, it",
+  "is a picture that promises something the frame does not contain.",
+  "",
+  "So a moment has a `lens`, which is a real category a visitor can filter on,",
+  "and it does not have a country. Three of these four frames cannot be placed",
+  "with certainty — a desert camp is a desert camp, and naming it Merzouga",
+  "because it looks like Merzouga is the kind of small invention this site does",
+  "not make. Table Mountain can be named because it is unmistakable and the",
+  "photograph contains Devil's Peak, Lion's Head and Table Bay. It still is not",
+  "named in the copy, because then one of the four would carry a place and the",
+  "other three would look as though they were hiding one.",
+  "",
+  "`alt` describes what is visible and nothing else. No moods, no adjectives",
+  "about the people in the frame, and no claim about who they are: the same rule",
+  "people.json sets out at greater length.",
+  "",
+  "`photo` must be under /images/uploads/. A generated picture here would be the",
+  "worst possible place for one — it is a full-bleed promise of a specific",
+  "morning, three screens above a button that says begin a journey."
+ ],
+ "moments": [
+  {
+   "slug": "rainforest",
+   "label": "Rainforest",
+   "line": "Hear the forest before you see it.",
+   "lens": "wildlife",
+   "photo": "/images/uploads/gorilla-trekkers-768w.jpg",
+   "photo_w": 768,
+   "photo_h": 543,
+   "alt": "A silverback mountain gorilla sitting in dense green undergrowth on a forested slope while a line of trekkers and guides photograph it from a few metres away"
+  },
+  {
+   "slug": "desert",
+   "label": "Desert",
+   "line": "Walk into a landscape that looks impossible.",
+   "lens": "adventure",
+   "photo": "/images/uploads/desert-camp-sunrise-1440w.jpg",
+   "photo_w": 1440,
+   "photo_h": 958,
+   "alt": "A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them"
+  },
+  {
+   "slug": "coast",
+   "label": "Coast",
+   "line": "Walk out at sunrise, where the boats already are.",
+   "lens": "coast",
+   "photo": "/images/uploads/swahili-coast-ngalawa-1200w.jpg",
+   "photo_w": 1200,
+   "photo_h": 1804,
+   "alt": "A woman walking along the tideline at sunrise, silhouetted against the water, with an outrigger fishing canoe moored a short way offshore"
+  },
+  {
+   "slug": "mountain",
+   "label": "Mountain",
+   "line": "Climb the one that rises straight out of the sea.",
+   "lens": "nature",
+   "photo": "/images/uploads/table-mountain-from-the-bay-1920w.jpg",
+   "photo_w": 1920,
+   "photo_h": 1080,
+   "alt": "A flat-topped mountain and its two flanking peaks seen across a bay at sunset from rocks in the foreground, with surf breaking and a container ship at anchor"
+  }
+ ]
+}

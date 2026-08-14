@@ -193,6 +193,24 @@ def load_cities(path=None):
         return []
 
 
+def load_moments(path=None):
+    """The four photographs the homepage argues with.
+
+    Curated for the same reason the cities are, and one step further: here the
+    picture is the argument and the words are written to what is in the frame.
+    A moment names a lens, which is real and filterable, and does not name a
+    country, because three of the four frames cannot be placed with certainty
+    and naming the fourth would make the others look as though they were hiding
+    one. moments.json says all of this at greater length.
+    """
+    path = path or os.path.join(ROOT, "tourism", "moments.json")
+    try:
+        with open(path) as fh:
+            return json.load(fh).get("moments") or []
+    except (IOError, ValueError):
+        return []
+
+
 def load_picks(path=None):
     """What we would actually say if somebody told us what they wanted.
 

@@ -28,8 +28,8 @@ import os
 import re
 
 from . import plate
-from .model import (CATEGORY_FILE, ROOT, load_cities, load_lenses, load_picks,
-                    load_regions, load_views, region_of)
+from .model import (CATEGORY_FILE, ROOT, load_cities, load_lenses, load_moments,
+                    load_picks, load_regions, load_views, region_of)
 
 LINKS = os.path.join(ROOT, "data", "links.json")
 
@@ -65,7 +65,8 @@ REGION_GROUPS = (
 MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
-           "nownote", "now", "stories", "footer", "regiontone", "feel")
+           "nownote", "now", "stories", "footer", "regiontone", "feel",
+           "moments")
 
 # Markers that live inside <style> rather than in the document. An HTML comment
 # there is not a comment: `<!--` and `-->` are CDO/CDC tokens the CSS parser
@@ -333,6 +334,43 @@ def block_feel(countries):
                lens["label"],
                _spell(len(names)).lower() if len(names) < 20 else len(names),
                "country leads on this" if len(names) == 1 else "countries lead on this"))
+    return "\n".join(out)
+
+
+def block_moments():
+    """Four photographs, at the size a photograph has to be to do any work.
+
+    Section 01 asks what you want to feel and answers in type, eight ways, so
+    that a reader who does not yet know can find the word for it. This answers
+    four of the same question in pictures, because past a certain point the
+    argument "Africa is not one place" cannot be made in prose to somebody who
+    has only ever seen one Africa on television.
+
+    Each card carries the lens it belongs to and hands the journey builder that
+    want, exactly as the feel cards do — so the picture is a way in rather than
+    decoration, and there is no card here you cannot act on.
+
+    The alt text describes the frame and stops. Nothing here says who anybody in
+    a photograph is, and nothing names a country: three of the four cannot be
+    placed with certainty, and moments.json sets out why the fourth is not named
+    either.
+    """
+    lenses = load_lenses()
+    out = []
+    for m in load_moments():
+        lens = lenses.get(m.get("lens"))
+        if not lens or not m.get("photo"):
+            continue          # a picture with no way in is decoration
+        out.append(
+            '      <a class="wa-moment" href="/journey#/?w=%s" data-lens="%s">'
+            '<span class="wa-moment-art">'
+            '<img src="%s" width="%d" height="%d" alt="%s" loading="lazy" '
+            'decoding="async" data-provider="upload"></span>'
+            '<span class="wa-moment-say"><b>%s</b><i>%s</i></span></a>'
+            % (esc(m["lens"]), esc(m["lens"]), esc(m["photo"]),
+               int(m.get("photo_w") or 0), int(m.get("photo_h") or 0),
+               esc(m.get("alt") or ""), esc(m.get("line") or ""),
+               esc(m.get("label") or lens["label"])))
     return "\n".join(out)
 
 
@@ -1260,6 +1298,7 @@ def render(countries):
         "stories": block_stories(seq),
         "footer": block_footer(seq),
         "feel": block_feel(seq),
+        "moments": block_moments(),
         "regiontone": block_regiontone(),
     }
 
