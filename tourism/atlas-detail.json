@@ -448,6 +448,20 @@
    "country": "cameroon",
    "x": 410.4,
    "y": 495.8
+  },
+  {
+   "slug": "yaounde",
+   "name": "Yaound\u00e9",
+   "country": "cameroon",
+   "x": 432.2,
+   "y": 498.5
+  },
+  {
+   "slug": "durban",
+   "name": "Durban",
+   "country": "south-africa",
+   "x": 663.4,
+   "y": 921.2
   }
  ],
  "routes": [

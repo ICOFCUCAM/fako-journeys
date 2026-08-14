@@ -169,6 +169,36 @@
     9.7679,
     4.0511
    ]
+  },
+  {
+   "slug": "yaounde",
+   "name": "Yaoundé",
+   "country": "cameroon",
+   "line": "Hills · Forest · Capital",
+   "say": "Cameroon's capital, spread over seven hills with rainforest at the edge of most of them — a completely different city from the port two hundred kilometres south of it, in the same country.",
+   "photo": "/images/uploads/city-yaounde-1200w.jpg",
+   "photo_w": 1200,
+   "photo_h": 675,
+   "alt": "Yaoundé from the air, the government quarter and its formal gardens in the foreground and the city spreading over wooded hills to a rocky ridge on the horizon",
+   "lonlat": [
+    11.5021,
+    3.848
+   ]
+  },
+  {
+   "slug": "durban",
+   "name": "Durban",
+   "country": "south-africa",
+   "line": "Indian Ocean · Surf · Curry",
+   "say": "The busiest port in Africa, warm Indian Ocean surf at the end of most streets, and the largest Indian population outside India — which is why the food here is what it is.",
+   "photo": "/images/uploads/city-durban-1200w.jpg",
+   "photo_w": 1200,
+   "photo_h": 785,
+   "alt": "Durban's city centre from above, high-rise blocks and older warehouses running down to the Indian Ocean, with the China Mall and beachfront hotels among them",
+   "lonlat": [
+    31.0218,
+    -29.8587
+   ]
   }
  ],
  "_routes_note": [
