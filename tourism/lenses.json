@@ -31,7 +31,8 @@
   "verb": "I want to be in",
   "label": "Cities",
   "examples": "Lagos, Cape Town, Marrakech, Nairobi, Dakar, Accra",
-  "filterline": "If the cities are what brought you here"
+  "filterline": "If the cities are what brought you here",
+  "feel": "Hear a city come alive after dark, and realise it was waiting all day."
  },
  "wildlife": {
   "title": "Wildlife",
@@ -59,7 +60,8 @@
   "verb": "I want to see",
   "label": "Wildlife",
   "examples": "Gorillas, elephants, lions, giraffes, chimpanzees, the great migration",
-  "filterline": "If wildlife is what brought you here"
+  "filterline": "If wildlife is what brought you here",
+  "feel": "Look across a savanna and see nothing between you and the horizon."
  },
  "culture": {
   "title": "Culture",
@@ -89,7 +91,8 @@
   "verb": "I want to meet",
   "label": "People &amp; culture",
   "examples": "Kingdoms, markets, music, dance, craft, living traditions",
-  "filterline": "If you came to meet people"
+  "filterline": "If you came to meet people",
+  "feel": "Sit down somewhere a kingdom still holds court, and it is not a museum."
  },
  "coast": {
   "title": "Coast",
@@ -122,7 +125,8 @@
   "verb": "I want to escape",
   "label": "Coast &amp; islands",
   "examples": "Zanzibar, Kribi, Lamu, Seychelles, Mauritius",
-  "filterline": "If you came for the water"
+  "filterline": "If you came for the water",
+  "feel": "Swim in water clear enough to lose the horizon in."
  },
  "nature": {
   "title": "Nature",
@@ -165,7 +169,8 @@
   "verb": "I want to walk",
   "label": "Nature",
   "examples": "Kilimanjaro, Korup, the Rwenzori, the Atlas, the Namib",
-  "filterline": "If you came for the country itself"
+  "filterline": "If you came for the country itself",
+  "feel": "Wake up above the clouds, on a mountain that rises out of the sea."
  },
  "food": {
   "title": "Food",
@@ -187,7 +192,8 @@
   "verb": "I want to taste",
   "label": "African food",
   "examples": "Street food, markets, coastal cuisine, home cooking, coffee",
-  "filterline": "If you came to eat"
+  "filterline": "If you came to eat",
+  "feel": "Eat what a country actually eats, at the hour it actually eats it."
  },
  "history": {
   "title": "History",
@@ -210,7 +216,8 @@
   "verb": "I want to discover",
   "label": "History",
   "examples": "Forts, palaces, ancient cities, rock churches, sacred places",
-  "filterline": "If you came for what was here before you"
+  "filterline": "If you came for what was here before you",
+  "feel": "Stand on ground that remembers, and has done for four thousand years."
  },
  "adventure": {
   "title": "Adventure",
@@ -242,6 +249,23 @@
   "verb": "I want to go",
   "label": "Adventure",
   "examples": "Gravel roads, the Nile at Jinja, the falls from both sides, the long traverse",
-  "filterline": "If you came to go a long way"
- }
+  "filterline": "If you came to go a long way",
+  "feel": "Cross a desert before sunrise, because by ten it will not let you."
+ },
+ "$feel_note": [
+  "`feel` is the one field in this file that is written rather than derived, and",
+  "it is the only place on the homepage where that is true of a whole section.",
+  "",
+  "The page had an answer to `what is Africa` — twenty-two countries, twenty-seven",
+  "categories, five regions, all of it counted off disk — and no answer at all to",
+  "`why would I go`. A visitor who does not yet want to travel has no use for a",
+  "comparison engine. So the section under the hero asks what you want to feel",
+  "before it offers anything to browse, and these are the eight answers.",
+  "",
+  "The sentence is authored. What sits under it is not: the count and the",
+  "countries come from which countries actually call this lens in their own",
+  "`calls`, so a line that promises something is printed next to the places it is",
+  "true of. A lens no country calls is not offered — a feeling with nowhere to",
+  "have it is the one kind of copy this site cannot print."
+ ]
 }

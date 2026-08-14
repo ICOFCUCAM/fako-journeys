@@ -65,7 +65,7 @@ REGION_GROUPS = (
 MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
-           "nownote", "now", "stories", "footer", "regiontone")
+           "nownote", "now", "stories", "footer", "regiontone", "feel")
 
 # Markers that live inside <style> rather than in the document. An HTML comment
 # there is not a comment: `<!--` and `-->` are CDO/CDC tokens the CSS parser
@@ -288,6 +288,52 @@ def block_wants(countries):
         '<i>%s</i><b>%s</b></button>'
         % (esc(key), esc(lens["filterline"]), esc(lens["verb"]), lens["label"])
         for key, lens in lenses.items())
+
+
+def block_feel(countries):
+    """What do you want to feel — the eight lenses as desire rather than filter.
+
+    The page could tell you what Africa is and could not tell you why to go. It
+    opened on "Africa isn't one place", and then asked a visitor who did not yet
+    want to travel to browse a comparison engine. Twenty-two countries written up
+    on the same twenty-seven categories is the right answer to the second
+    question a traveller has. This section is the first one.
+
+    The sentence under each heading is authored — it is the one field in
+    lenses.json that is written rather than derived, and the note there says so.
+    Everything beside it is counted: how many countries lead on that lens, and
+    which, out of their own `calls`. So the line that promises a feeling is
+    printed next to the places it is true of, and a lens no country calls is not
+    offered at all, because a feeling with nowhere to have it is the one kind of
+    copy this site cannot print.
+    """
+    lenses = load_lenses()
+    leads = {}
+    for c in countries:
+        for call in c.calls:
+            leads.setdefault(call, []).append(c)
+    out = []
+    for key, lens in lenses.items():
+        who = leads.get(key) or []
+        if not who:
+            continue                      # nowhere to have it, so it is not offered
+        names = sorted(x.name for x in who)
+        out.append(
+            # The builder's own decoder reads `w=` out of the hash query, so
+            # this hands it a want and it opens on "When?" instead of on the
+            # question this card has already answered. `#/<lens>` was the first
+            # form tried and the decoder ignores it silently — the page loaded
+            # on question one as though the card had never been clicked, which
+            # is a link that looks like it carries a choice and does not.
+            '      <a class="wa-feel" href="/journey#/?w=%s" data-lens="%s">'
+            '<span class="wa-feel-say">%s</span>'
+            '<span class="wa-feel-what">%s</span>'
+            '<span class="wa-feel-n">%s %s</span></a>'
+            % (esc(key), esc(key), esc(lens.get("feel") or lens["line"]),
+               lens["label"],
+               _spell(len(names)).lower() if len(names) < 20 else len(names),
+               "country leads on this" if len(names) == 1 else "countries lead on this"))
+    return "\n".join(out)
 
 
 def block_expcards(countries):
@@ -1213,6 +1259,7 @@ def render(countries):
         "now": block_now(seq),
         "stories": block_stories(seq),
         "footer": block_footer(seq),
+        "feel": block_feel(seq),
         "regiontone": block_regiontone(),
     }
 

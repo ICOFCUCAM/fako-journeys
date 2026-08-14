@@ -1349,6 +1349,60 @@ def main():
         check("the brief is generated rather than typed",
               "<!-- gen:claim -->" in home_src)
 
+        # -- the section that asks before it offers ---------------------------------
+        # Everything else on this page answers "what is Africa". This one answers
+        # "why would I go", and it is the only section whose sentences are
+        # written rather than counted — so it is the one that can most easily
+        # start promising something the dataset cannot supply.
+        from tourism import gateway
+        lenses_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "lenses.json"))
+        lens_keys = {k: v for k, v in lenses_src.items()
+                     if not k.startswith("$") and isinstance(v, dict)}
+        called = {}
+        for c in countries:
+            for call in c.calls:
+                called[call] = called.get(call, 0) + 1
+        feel_block = re.search(r'<!-- gen:feel -->(.*?)<!-- /gen:feel -->', home_src, re.S)
+        check("the section under the hero is generated", bool(feel_block))
+        if feel_block:
+            body = feel_block.group(1)
+            cards = re.findall(
+                r'<a class="wa-feel" href="([^"]+)" data-lens="([a-z]+)">'
+                r'<span class="wa-feel-say">([^<]+)</span>'
+                r'<span class="wa-feel-what">[^<]*</span>'
+                r'<span class="wa-feel-n">([^<]+)</span></a>', body)
+            check("every lens with somewhere to go is offered a feeling",
+                  len(cards) == len([k for k in lens_keys if called.get(k)]),
+                  "%d cards" % len(cards))
+            missing = sorted(k for k in lens_keys if not lens_keys[k].get("feel"))
+            check("every lens has a sentence written for it",
+                  not missing, ", ".join(missing) or "all %d" % len(lens_keys))
+            # A feeling with nowhere to have it is the one kind of copy this
+            # site cannot print, so the promise and its evidence are checked
+            # against each other rather than against the template.
+            nowhere = sorted(k for _u, k, _s, _n in cards if not called.get(k))
+            check("no card promises something no country leads on",
+                  not nowhere, ", ".join(nowhere) or "all backed")
+            wrong = []
+            for _url, key, _say, count in cards:
+                said = count.split(" ")[0].lower()
+                want = gateway._spell(called.get(key, 0)).lower()
+                if said != want:
+                    wrong.append("%s says %s, files say %s" % (key, said, want))
+            check("the count on a card is the count in the files",
+                  not wrong, "; ".join(wrong) or "all %d agree" % len(cards))
+            # The builder decodes `w=` out of the hash query. `#/<lens>` was the
+            # first form here and it decodes to nothing at all — the page opened
+            # on question one as though the card had never been clicked. A link
+            # that looks like it carries a choice and does not is worse than one
+            # that plainly carries none.
+            engine = open(os.path.join(ROOT_DIR, "scripts", "journey-engine.js")).read()
+            check("the builder still reads a want out of the hash",
+                  "wants: list(q.w)" in engine, "decode() -> wants: list(q.w)")
+            bad = [u for u, k, _s, _n in cards if u != "/journey#/?w=%s" % k]
+            check("every card hands the builder a want it will read",
+                  not bad, ", ".join(bad) or "all %d" % len(cards))
+
         # -- section 03 has to stop growing with the atlas -------------------------
         # It was a straight function of the country count: every published
         # country got the same 275px write-up, so 22 of them made the section
@@ -2101,8 +2155,19 @@ def main():
                        for c in (strands[k].get("categories") or [])}
         links = read_json_file(os.path.join(ROOT_DIR, "data", "links.json")).get("links") or {}
         neighbours = {len(v) for v in links.values()} | {1, 2, 3, 4, 5}
+        # "eleven countries lead on this", under a lens, on the section below the
+        # hero. That is a len() of the countries whose own `calls` include the
+        # lens — the same kind of number as every other one this check permits,
+        # and it has to be here or the section cannot say how many places its
+        # promise is true of without tripping the guard that exists to stop it
+        # saying anything else.
+        leads = {}
+        for c in countries:
+            for call in c.calls:
+                leads[call] = leads.get(call, 0) + 1
         OK = {
-            "countries": {len(countries), len(countries) - ops, ops, 5} | neighbours,
+            "countries": ({len(countries), len(countries) - ops, ops, 5}
+                          | neighbours | set(leads.values())),
             "destinations": {len(countries)},
             "portraits": {len(countries)},
             "categories": {len(ids), len(strand_cats)},

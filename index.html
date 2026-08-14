@@ -1383,6 +1383,49 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-dests.is-settling .wa-dest,.wa-dests.is-settling .wa-dest-band,
 .wa-dests.is-settling .wa-dest-more{opacity:.25;transition-duration:.08s}
 
+/* WHAT DO YOU WANT TO FEEL — the first block under the hero.
+
+   Eight cards, and the sentence is the card. Everything else on this page sets
+   a name first and explains underneath; this one inverts that, because the
+   thing being sold here is the morning and not the country. The label and the
+   count sit at the foot in the metadata voice, doing the job the site always
+   does — saying how many places this is true of, so a promise arrives attached
+   to its evidence.
+
+   Four across at full width, because eight in two rows reads as a set and eight
+   in a line reads as a menu. */
+.wa-feel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--fj-rule-w,1px);
+  background:var(--c-border);border:1px solid var(--c-border);margin-top:var(--sp-5)}
+.wa-feel{position:relative;display:flex;flex-direction:column;gap:12px;
+  background:var(--c-bg);padding:26px 24px 20px;text-decoration:none;
+  transition:background var(--t-fast) var(--ease)}
+.wa-feel:hover{background:var(--fj-dust)}
+.wa-feel-say{font-family:var(--fj-display);font-size:clamp(17px,1.5vw,21px);
+  font-weight:700;line-height:1.24;letter-spacing:-.01em;color:var(--c-ink);
+  text-wrap:balance}
+/* The lens name is the smallest thing on the card on purpose. A visitor who
+   already knows they want "wildlife" is served by the filters further down;
+   this section is for the one who does not, and leading with the taxonomy
+   would put them straight back into the browsing the section exists to delay. */
+.wa-feel-what{margin-top:auto;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
+.wa-feel-n{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-muted)}
+.wa-feel-close{margin-top:var(--sp-5);font-family:var(--fj-display);
+  font-size:clamp(21px,2.3vw,30px);line-height:1.28;max-width:30ch;
+  text-wrap:balance}
+.wa-feel-close em{font-style:normal;color:var(--c-accent)}
+.wa-feel-go{display:inline-block;margin-top:16px;font-family:var(--fj-mono);
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  border-bottom:2px solid var(--c-accent);padding-bottom:5px;transition:color .2s}
+.wa-feel-go:hover{color:var(--c-accent)}
+@media(max-width:1099px){.wa-feel-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){
+  .wa-feel-grid{grid-template-columns:1fr}
+  .wa-feel{padding:20px 18px 16px;gap:9px}
+  .wa-feel-close{max-width:none}
+}
+
 /* The rest of a region, as an index rather than as more write-ups.
 
    The grid grew with the dataset: 22 countries made this section 29% of the
@@ -2518,6 +2561,48 @@ window.AF = {
 })();
 </script>
 
+<!-- WHAT DO YOU WANT TO FEEL?
+     The first thing under the hero, and the first thing on this page that is
+     not information.
+
+     Everything below this section answers "what is Africa": twenty-two
+     countries on twenty-seven categories, five regions, a map, a comparison
+     engine — all of it counted off disk and none of it any use to somebody who
+     does not yet want to go. The page opened on "Africa isn't one place" and
+     then asked a stranger to browse. That is the second question a traveller
+     has, arriving before the first.
+
+     So: eight things you might want to feel, and under each one the places it
+     is actually true of. The sentence is written — it is the only authored
+     field in lenses.json and the note there says so — and the count beside it
+     is not. A lens no country calls is not printed, because a feeling with
+     nowhere to have it is the one kind of copy this site cannot carry. -->
+<section class="wa-zone wa-feels" id="feel">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>01</b><span>The reason</span></div>
+      <div>
+        <h2>What do you want to <em>feel</em>?</h2>
+        <p class="wa-note">Not where you want to go &mdash; that comes later, and this site has
+          more of it than anywhere else. Start with the morning you want to wake up to.</p>
+      </div>
+    </div>
+    <div class="wa-feel-grid">
+      <!-- gen:feel -->
+      <a class="wa-feel" href="/journey#/?w=cities" data-lens="cities"><span class="wa-feel-say">Hear a city come alive after dark, and realise it was waiting all day.</span><span class="wa-feel-what">Cities</span><span class="wa-feel-n">eleven countries lead on this</span></a>
+      <a class="wa-feel" href="/journey#/?w=wildlife" data-lens="wildlife"><span class="wa-feel-say">Look across a savanna and see nothing between you and the horizon.</span><span class="wa-feel-what">Wildlife</span><span class="wa-feel-n">eleven countries lead on this</span></a>
+      <a class="wa-feel" href="/journey#/?w=culture" data-lens="culture"><span class="wa-feel-say">Sit down somewhere a kingdom still holds court, and it is not a museum.</span><span class="wa-feel-what">People &amp; culture</span><span class="wa-feel-n">fourteen countries lead on this</span></a>
+      <a class="wa-feel" href="/journey#/?w=coast" data-lens="coast"><span class="wa-feel-say">Swim in water clear enough to lose the horizon in.</span><span class="wa-feel-what">Coast &amp; islands</span><span class="wa-feel-n">thirteen countries lead on this</span></a>
+      <a class="wa-feel" href="/journey#/?w=nature" data-lens="nature"><span class="wa-feel-say">Wake up above the clouds, on a mountain that rises out of the sea.</span><span class="wa-feel-what">Nature</span><span class="wa-feel-n">four countries lead on this</span></a>
+      <a class="wa-feel" href="/journey#/?w=food" data-lens="food"><span class="wa-feel-say">Eat what a country actually eats, at the hour it actually eats it.</span><span class="wa-feel-what">African food</span><span class="wa-feel-n">seven countries lead on this</span></a>
+      <a class="wa-feel" href="/journey#/?w=history" data-lens="history"><span class="wa-feel-say">Stand on ground that remembers, and has done for four thousand years.</span><span class="wa-feel-what">History</span><span class="wa-feel-n">ten countries lead on this</span></a>
+      <a class="wa-feel" href="/journey#/?w=adventure" data-lens="adventure"><span class="wa-feel-say">Cross a desert before sunrise, because by ten it will not let you.</span><span class="wa-feel-what">Adventure</span><span class="wa-feel-n">eight countries lead on this</span></a>      <!-- /gen:feel -->
+    </div>
+    <p class="wa-feel-close">Africa is not something you see. It is something you
+      <em>experience</em>. <a class="wa-feel-go" href="/journey">Find the journey that feels like yours &rarr;</a></p>
+  </div>
+</section>
+
 <!-- what Afrinkong is -->
 <!-- AFRICA, IN CITIES.
      Directly under the hero, because it is the hero's own claim being proved.
@@ -2530,7 +2615,7 @@ window.AF = {
 <section class="wa-zone dust wa-cities" id="cities">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>01</b><span>Cities</span></div>
+      <div class="wa-head-no"><b>02</b><span>Cities</span></div>
       <div>
         <h2>Africa, in <em>cities</em>.</h2>
         <p class="wa-note">The continent is not only wilderness. Eleven cities here, each one a
@@ -2581,7 +2666,7 @@ window.AF = {
 <section class="wa-zone" id="scale">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>02</b><span>The scale</span></div>
+      <div class="wa-head-no"><b>03</b><span>The scale</span></div>
       <div>
         <h2>Africa is bigger than the map <em>in your head</em>.</h2>
         <p class="wa-note">Every world map most people have ever looked at is Mercator, which inflates everything away from the equator and shrinks everything on it. Lay the countries you already have a sense of inside the real outline and the argument for starting with a region rather than a continent makes itself.</p>
@@ -2609,7 +2694,7 @@ window.AF = {
 <section class="wa-zone dust" id="destinations">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>03</b><span>The countries</span></div>
+      <div class="wa-head-no"><b>04</b><span>The countries</span></div>
       <div>
         <h2>Twenty-two countries, <em>all of them live</em>.</h2>
         <p class="wa-note">Every country has a different Africa to show you, and every one of them has a page. Three run as operators of our own &mdash; Kamerun in Cameroon, Pearl Trails Uganda, Namib Skyline in Namibia. The rest are covered by our country pages, each working through the same twenty-seven categories, so you can compare two countries on the same terms instead of on the strength of their marketing. <a class="wa-note-go" href="/compare">Put two side by side &rarr;</a></p>
@@ -2662,7 +2747,7 @@ window.AF = {
 <section class="wa-zone" id="experiences">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>04</b><span>What you can do</span></div>
+      <div class="wa-head-no"><b>05</b><span>What you can do</span></div>
       <div>
         <h2>Start with what you <em>want to do</em>.</h2>
         <p class="wa-note">You don&rsquo;t always know the country first. Sometimes you know the experience. Pick one and the grid below narrows to the countries that lead on it &mdash; and if you add a month, to the ones that lead on it then. Nothing is ranked; the countries declare what they lead on and this asks against that.</p>
@@ -2701,7 +2786,7 @@ window.AF = {
 <section class="wa-zone basalt" id="now">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>05</b><span>Africa now</span></div>
+      <div class="wa-head-no"><b>06</b><span>Africa now</span></div>
       <div>
         <h2>Not a <em>museum</em>.</h2>
         <!-- gen:nownote -->
@@ -2736,7 +2821,7 @@ window.AF = {
 <section class="wa-zone dust" id="plan">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>06</b><span>The journey</span></div>
+      <div class="wa-head-no"><b>07</b><span>The journey</span></div>
       <div>
         <h2>What happens after you <em>choose Africa</em>?</h2>
         <!-- gen:plannote -->
@@ -2783,7 +2868,7 @@ window.AF = {
 <section class="wa-zone" id="stories">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>07</b><span>Stories</span></div>
+      <div class="wa-head-no"><b>08</b><span>Stories</span></div>
       <div>
         <h2>Africa is <em>more than a destination</em>.</h2>
         <p class="wa-note">Twenty-two long reads, one per country, each built out of what that country says about itself rather than written about it. One from each region below.</p>
