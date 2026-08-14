@@ -86,11 +86,14 @@
    "country": "ghana",
    "line": "Contemporary · Music · Coast",
    "say": "Where a great deal of contemporary African design and music is actually being made, on an Atlantic coast with the forts of the slave trade a couple of hours west of it.",
-   "photo": null,
+   "photo": "/images/uploads/city-accra-1200w.jpg",
    "lonlat": [
     -0.187,
     5.6037
-   ]
+   ],
+   "photo_w": 1200,
+   "photo_h": 800,
+   "alt": "Accra from above on an overcast afternoon, a tall office block among low-rise streets, heavy tree cover through the middle of the city and stacked shipping containers on the right"
   },
   {
    "slug": "addis-ababa",
