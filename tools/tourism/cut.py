@@ -61,6 +61,14 @@ MB = 2.0
 CAP_KBPS = 2600                   # at WIDTH; scaled by area for other widths
 # H.264 in an mp4 that starts playing before it has finished arriving.
 FAAST = ["-movflags", "+faststart", "-pix_fmt", "yuv420p"]
+# And the same picture as VP9 in a WebM. Two reasons, and the second is the one
+# that made it worth the extra file. VP9 is roughly a third smaller than H.264
+# at the same quality, so most visitors fetch less; and H.264 is patent-encumbered,
+# so the open-source Chromium the checks drive cannot decode it at all. Without a
+# WebM the one behaviour that matters here — the clip plays through and hands the
+# rail on — could not be tested in any browser available to this repository.
+# Every browser that can play one of these can play the other.
+VP9_KBPS = 0.72                   # of the H.264 rate, for about the same picture
 
 
 def ffmpeg():
@@ -113,7 +121,24 @@ def fetch(url, into):
     return into
 
 
-def cut(src, name, seconds=SECONDS, start=0.0, width=WIDTH, mb=MB, log=print):
+def cut(src, name, seconds=SECONDS, start=0.0, width=WIDTH, mb=MB,
+        keep_audio=False, log=print):
+    """Cut one piece. `keep_audio` is off because the window plays muted.
+
+    IF A NARRATED MASTER TURNS UP LATER
+
+    Nothing here has to be rebuilt for it. Hand this the narrated file with
+    keep_audio=True and the same boundaries produce the same pieces with the
+    voice in them, because the boundaries live in film.py as timecodes rather
+    than being discovered from whatever file is passed in.
+
+    What it cannot do is make a voice run unbroken across sixteen separate
+    files. A browser gives no guarantee about the gap between one media element
+    ending and the next starting — it is a few tens of milliseconds on a fast
+    connection and can be a second on a slow one — and a sentence split across
+    that boundary is audibly cut in half. Narration that has to flow belongs in
+    one file. See images/VIDEO.md.
+    """
     # The name becomes a path and a URL, so it is held to what both can carry.
     if not re.match(r"^[a-z0-9][a-z0-9-]*$", name or ""):
         raise SystemExit(
@@ -135,8 +160,13 @@ def cut(src, name, seconds=SECONDS, start=0.0, width=WIDTH, mb=MB, log=print):
         % (os.path.basename(src), w, h, had or 0,
            os.path.getsize(src) / 1048576.0))
 
-    # The whole budget goes to the picture: there is no audio track to pay for.
+    # Audio, if it is being kept, is paid for out of the same budget rather than
+    # on top of it — the ceiling is what a visitor downloads, not what the video
+    # stream costs. 96 kbps AAC is transparent enough for a spoken voice.
+    AAC = 96
     budget_bits = mb * 1024 * 1024 * 8
+    if keep_audio:
+        budget_bits -= AAC * 1000 * seconds
     # Leave a tenth for container overhead — mp4 headers and the faststart index
     # are not free, and landing just over the ceiling means doing it again.
     kbps = max(200, int((budget_bits * 0.9) / seconds / 1000))
@@ -144,10 +174,12 @@ def cut(src, name, seconds=SECONDS, start=0.0, width=WIDTH, mb=MB, log=print):
     capped = kbps > cap
     kbps = min(kbps, cap)
 
+    sound = (["-c:a", "aac", "-b:a", "%dk" % AAC, "-ac", "2"]
+             if keep_audio else ["-an"])
     common = ["-ss", "%.3f" % start, "-i", src, "-t", "%.3f" % seconds,
-              "-an", "-vf", "scale=%d:-2:flags=lanczos" % width,
+              "-vf", "scale=%d:-2:flags=lanczos" % width,
               "-c:v", "libx264", "-b:v", "%dk" % kbps,
-              "-preset", "slow", "-profile:v", "high", "-level", "4.0"]
+              "-preset", "slow", "-profile:v", "high", "-level", "4.0"] + sound
     log("out: %s  %dpx wide  %.1fs  %s %g MB at %d kbps"
         % (name + ".mp4", width, seconds,
            "under" if capped else "target", mb, kbps))
@@ -155,27 +187,92 @@ def cut(src, name, seconds=SECONDS, start=0.0, width=WIDTH, mb=MB, log=print):
         log("     the %g MB budget would have bought more bitrate than %dpx can "
             "use; capped at %d kbps." % (mb, width, cap))
     passlog = os.path.join(OUT_DIR, ".passlog-" + name)
-    for p in (1, 2):
-        cmd = [exe, "-hide_banner", "-loglevel", "error", "-y"] + common + [
-            "-pass", str(p), "-passlogfile", passlog]
-        cmd += ["-f", "mp4", os.devnull] if p == 1 else FAAST + [dst]
+
+    def run_pass(cmd, what, p):
         r = subprocess.run(cmd, capture_output=True, text=True)
         if r.returncode:
-            raise SystemExit("ffmpeg pass %d failed:\n%s" % (p, r.stderr[-800:]))
+            raise SystemExit("%s pass %d failed:\n%s" % (what, p, r.stderr[-800:]))
+
+    ceiling = mb * 1024 * 1024
+
+    # H.264. Pass one drops the audio whatever the setting: encoding a track to
+    # /dev/null twice is time spent for no reason.
+    run_pass([exe, "-hide_banner", "-loglevel", "error", "-y"]
+             + common[:-len(sound)] + ["-an", "-pass", "1",
+                                       "-passlogfile", passlog, "-f", "mp4",
+                                       os.devnull], "h264", 1)
+
+    def h264(rate):
+        run_pass([exe, "-hide_banner", "-loglevel", "error", "-y"]
+                 + [a if a != "%dk" % kbps else "%dk" % rate for a in common]
+                 + ["-pass", "2", "-passlogfile", passlog] + FAAST + [dst],
+                 "h264", 2)
+        return os.path.getsize(dst)
+
+    # VP9.
+    vp9 = ["-c:v", "libvpx-vp9", "-b:v", "%dk" % int(kbps * VP9_KBPS),
+           "-row-mt", "1", "-deadline", "good", "-cpu-used", "2"]
+    # Opus rather than AAC: it is what WebM carries, and it is better than AAC
+    # at this bitrate, which matters more for a voice than for anything else.
+    wsound = (["-c:a", "libopus", "-b:a", "%dk" % AAC] if keep_audio else ["-an"])
+    web = os.path.join(OUT_DIR, name + ".webm")
+    vbase = ["-ss", "%.3f" % start, "-i", src, "-t", "%.3f" % seconds,
+             "-vf", "scale=%d:-2:flags=lanczos" % width]
+    run_pass([exe, "-hide_banner", "-loglevel", "error", "-y"] + vbase
+             + ["-c:v", "libvpx-vp9", "-b:v", "%dk" % int(kbps * VP9_KBPS),
+                "-row-mt", "1", "-deadline", "good", "-cpu-used", "2", "-an",
+                "-pass", "1", "-passlogfile", passlog + "-vp9", "-f", "webm",
+                os.devnull], "vp9", 1)
+
+    def vp9enc(rate):
+        run_pass([exe, "-hide_banner", "-loglevel", "error", "-y"] + vbase
+                 + ["-c:v", "libvpx-vp9", "-b:v", "%dk" % rate, "-row-mt", "1",
+                    "-deadline", "good", "-cpu-used", "2"] + wsound
+                 + ["-pass", "2", "-passlogfile", passlog + "-vp9", web],
+                 "vp9", 2)
+        return os.path.getsize(web)
+
+    # A two-pass encoder aims at the bitrate it was given and lands near it, not
+    # on it — a short piece of a busy scene overshoots by a few per cent, which
+    # is enough to fail a ceiling. Rather than padding the constant until it is
+    # loose enough for the worst case (and slack for every other piece), miss and
+    # correct: the overshoot ratio says exactly what rate would have fitted.
+    def fit(enc, rate, what):
+        for attempt in range(3):
+            got = enc(rate)
+            if got <= ceiling:
+                if attempt:
+                    log("     %s fitted on attempt %d at %d kbps"
+                        % (what, attempt + 1, rate))
+                return got
+            rate = max(200, int(rate * (ceiling / float(got)) * 0.97))
+        return got
+
+    got_mp4 = fit(h264, kbps, "mp4")
+    got_web = fit(vp9enc, int(kbps * VP9_KBPS), "webm")
+
     for junk in os.listdir(OUT_DIR):
         if junk.startswith(".passlog-" + name):
             os.remove(os.path.join(OUT_DIR, junk))
 
-    got = os.path.getsize(dst)
-    gs, gw, gh = probe(dst)
-    log("     %.2f MB  %sx%s  %.1fs" % (got / 1048576.0, gw, gh, gs or 0))
-    if got > mb * 1024 * 1024:
-        os.remove(dst)
+    over = []
+    for f in (dst, web):
+        n = os.path.getsize(f)
+        gs, gw, gh = probe(f)
+        log("     %-34s %.2f MB  %sx%s  %.1fs"
+            % (os.path.basename(f), n / 1048576.0, gw, gh, gs or 0))
+        if n > ceiling:
+            over.append(f)
+    if over:
+        for f in (dst, web):
+            if os.path.exists(f):
+                os.remove(f)
         raise SystemExit(
-            "%s came out at %.2f MB against a %g MB ceiling and was not kept. "
-            "Try a shorter --seconds, or --width 960."
-            % (name, got / 1048576.0, mb))
+            "%s would not come under the %g MB ceiling in three attempts and "
+            "neither file was kept. Try a shorter --seconds, or --width 960."
+            % (", ".join(os.path.basename(f) for f in over), mb))
     log("set \"clip\": \"/videos/%s.mp4\" on the shot it belongs to in "
-        "tourism/motion.json — and only on one whose caption you can stand "
-        "behind." % name)
+        "tourism/motion.json — the .webm beside it is found from that, and is "
+        "what most browsers will actually fetch. Only put it on a shot whose "
+        "caption you can stand behind." % name)
     return dst

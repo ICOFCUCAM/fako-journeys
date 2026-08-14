@@ -1489,12 +1489,13 @@ def main():
         # in the history of every clone and every deploy from then on. So the
         # cutter's job is as much about what does not get written as what does.
         cutsrc = open(os.path.join(ROOT_DIR, "tools", "tourism", "cut.py")).read()
+        gwsrc = open(os.path.join(ROOT_DIR, "tools", "tourism", "gateway.py")).read()
         build_src = open(os.path.join(ROOT_DIR, "tools", "tourism", "build.py")).read()
         check("`cut` is a command and not just a module",
               '"cut": cmd_cut' in build_src and "def cmd_cut" in build_src)
         check("the cutter strips the audio track",
               '"-an"' in cutsrc,
-              "the player is muted and looping; audio is weight nobody can hear")
+              "the player is muted; audio is weight with no way to hear it")
         # The two directories it writes to, and no third one.
         cutpaths = re.findall(r"os\.path\.join\(ROOT[^)]*\)", cutsrc)
         check("the cutter writes only to videos/ and the masters floor",
@@ -1506,15 +1507,60 @@ def main():
               "incoming/video/masters/" in ignored
               and 'MASTERS = ' in cutsrc,
               "gitignored, so `git add .` cannot commit 60 MB by accident")
-        # Over budget means no file, not a file plus a warning nobody reads.
-        overrun = cutsrc[cutsrc.index("got = os.path.getsize(dst)"):]
-        check("an over-budget cut is deleted rather than shipped",
-              "os.remove(dst)" in overrun
-              and overrun.index("os.remove(dst)") < overrun.index("raise SystemExit"),
+        # Over budget means no file, not a file plus a warning nobody reads —
+        # and not one of the pair either, or the page offers a source that is
+        # not there. Anchored on the branch rather than on a line, so rewriting
+        # the encode does not quietly turn the check off (it did once).
+        assert "if over:" in cutsrc, "the over-budget branch was renamed"
+        overrun = cutsrc[cutsrc.index("if over:"):]
+        check("an over-budget cut takes both files with it",
+              "os.remove(f)" in overrun
+              and overrun.index("os.remove(f)") < overrun.index("raise SystemExit"),
               "removed before it raises, so nothing survives the failure")
+        check("the window is offered both a WebM and an mp4",
+              "libvpx-vp9" in cutsrc and 'name + ".webm"' in cutsrc
+              and 'type="video/webm"' in gwsrc and 'type="video/mp4"' in gwsrc,
+              "VP9 first, H.264 as the fallback older Safari needs")
+        # The bug this is here for: a looping video never fires `ended`, so the
+        # clip played for ever and the cities behind it stopped changing.
+        check("a clip in the window does not loop",
+              "loop" not in re.search(r"media = \('<video.*?\)\)",
+                                      gwsrc, re.S).group(0),
+              "the rail moves on when the clip ends, which needs `ended` to fire")
         check("the byte budget is a ceiling and not a target",
               "CAP_KBPS" in cutsrc and "min(kbps, cap)" in cutsrc,
               "a 2s trim must not be handed 5 Mbps to spend on grain")
+        # -- the film, cut into the pieces the window can carry ---------------------
+        # The one property that makes sixteen files a film rather than sixteen
+        # clips: they join. Each piece ends exactly where the next begins, so
+        # nothing is dropped and nothing plays twice — and if a voice is ever
+        # laid over it, that is the only arrangement it can survive.
+        from tourism import film as film_mod
+        gaps = film_mod.covers()
+        check("the film's pieces join end to end", not gaps,
+              "; ".join(gaps) or "%d pieces, %.2fs, no gap and no overlap"
+              % (len(film_mod.PIECES),
+                 film_mod.PIECES[-1][1] - film_mod.PIECES[0][0]))
+        starts = [a for a, _b, _s, _c, _al in film_mod.PIECES]
+        check("and they are in order", starts == sorted(starts))
+        # A caption may name a place only where the piece is that place. These
+        # are the places the film can be held to; anything else naming a country
+        # or a city has to be argued for in film.py, not typed in.
+        NAMEABLE = ("Lagos", "Lekki", "Giza", "Nairobi", "Victoria Falls")
+        loose = [c for _a, _b, _s, c, _al in film_mod.PIECES
+                 if any(w[0].isupper() and w.strip(",.") not in
+                        ("A", "The", "In", "Out", "On", "Market", "Elephants",
+                         "Lions", "Zebra", "Mountain", "Dusk", "Traffic")
+                        and not any(n.split()[0] in c for n in NAMEABLE)
+                        for w in c.split())]
+        check("no piece is captioned with a place it cannot prove", not loose,
+              "; ".join(loose) or "%d captions" % len(film_mod.PIECES))
+        # And the audio switch exists, so a narrated master needs no rebuild.
+        check("a narrated master could be cut without changing anything",
+              "keep_audio" in cutsrc and "keep_audio" in
+              open(os.path.join(ROOT_DIR, "tools", "tourism", "film.py")).read(),
+              "same boundaries, same captions, one flag")
+
         # A clip that exists is checked further down. This is the other half of
         # it: the cutter's ceiling only binds files that went through the cutter,
         # and nothing stops a 25 MB master being dropped into videos/ by hand.

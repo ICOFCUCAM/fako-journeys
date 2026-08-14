@@ -59,6 +59,69 @@ If it refuses, take less: `--seconds` first, then `--width`. Ten seconds of a
 still-ish landscape fits in two megabytes comfortably; ten seconds of a crowded
 market at dusk may not, because there is more moving in every frame.
 
+## About a voiceover
+
+**Short answer: the window does not want one, and adding one here would not
+work the way it sounds like it should.**
+
+Three things stand in the way, and none of them is about effort.
+
+**A browser will not play sound you did not ask for.** Chrome, Safari and
+Firefox all block audible autoplay. A video may autoplay *muted*, which is what
+this one does, and the moment it carries a voice the browser keeps it muted
+anyway until the visitor clicks something. So a narrated window is a silent
+window for almost everyone who sees it — the narration would be paid for in
+bytes by every visitor and heard by the few who go looking for an unmute button.
+
+**The window is scenery, not a programme.** It sits directly under the hero
+while a visitor is still deciding whether to stay, and they are reading the
+headline next to it. A voice competes with the words it was put there to
+support. That is also why it loops silently and why every shot carries a
+caption: the caption is the narration, and it works with the sound off.
+
+**And the film is sixteen files.** A voice that runs across a cut has to be one
+continuous stream. Between one `<video>` ending and the next starting there is a
+gap the browser makes no promise about — tens of milliseconds on a fast
+connection, up to a second on a slow one — so a sentence spanning a boundary
+would be audibly chopped. Sixteen pieces and one flowing narration cannot both
+be true.
+
+### If you want a narrated film anyway — and there is a good case for one
+
+Give it its own place rather than putting it under the hero. A documentary piece
+is something a visitor *chooses*: a still frame, a play button, and then two
+minutes with sound, full width, nothing competing. That is a different thing
+from the window and a good thing to have.
+
+It needs to be **one continuous file**, not the sixteen pieces, because of the
+gap problem above. Everything for it already exists:
+
+    python3 tools/tourism/build.py cut incoming/video/masters/narrated.mp4 \
+      --name the-film --seconds 120 --mb 12 --keep-audio
+
+`--keep-audio` keeps the voice (AAC in the mp4, Opus in the WebM) and pays for
+it out of the same byte ceiling rather than on top of it.
+
+### What has been organised so the voice does not break anything
+
+- **The cut is regenerable, not hand-made.** The sixteen boundaries live as
+  timecodes in `tools/tourism/film.py`, not in whatever file happened to be
+  passed in. Hand a *narrated* master to `build.py film` and the same sixteen
+  pieces come out with the voice in them, same boundaries, same captions, one
+  command. Nothing is re-cut by hand and no caption moves.
+- **Boundaries are the film's own cuts**, and consecutive pieces join exactly —
+  each one ends where the next begins, with no gap and no overlap. That is
+  checked (`build.py film --list` reports it, and the suite fails if they stop
+  joining). It is the condition that makes a continuous narration survive as
+  well as it possibly can across separate files, if you ever do want to try.
+- **Audio is a switch, not a rebuild.** `--keep-audio` on `cut` and `film`.
+- **The master never enters git**, so re-cutting from a narrated version later
+  costs nothing that has already been spent.
+
+If you would rather the voice go in the window regardless, say so — it is a
+one-line change to the generator. It will be muted for most visitors, and that
+is the trade you would be making.
+
 ## What the page needs from a file
 
 - **MP4, H.264, AAC or no audio track.** The player is muted and looping, so

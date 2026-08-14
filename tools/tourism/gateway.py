@@ -409,10 +409,37 @@ def block_motion():
         for si, s in enumerate(shots):
             first = not ti and not si
             if s.get("clip"):
-                media = ('<video src="%s" poster="%s" muted playsinline loop '
-                         'preload="%s" aria-label="%s"></video>'
-                         % (esc(s["clip"]), esc(s.get("photo") or ""),
-                            "auto" if first else "none", esc(s.get("alt") or "")))
+                # No `loop`. The rail moves on when the clip ends, and a looping
+                # video never fires `ended` — with it set, the film played for
+                # ever and the cities behind it stopped changing.
+                #
+                # VP9 first: every browser that takes the mp4 takes the WebM too,
+                # and the WebM is about a third smaller. The mp4 is the fallback
+                # for older Safari. The .webm is found from the .mp4's name rather
+                # than stored, so the data keeps naming one clip.
+                web = s["clip"].rsplit(".", 1)[0] + ".webm"
+                # `none`, for every piece including the first. The load event
+                # waits on media the page has asked for, and this track is a
+                # sixteen-piece film: at "auto" the first piece put a megabyte in
+                # front of the load event, and at "metadata" all sixteen fetched
+                # their headers at once. Both timed out a 30s navigation, which is
+                # how each was found. So the markup asks for nothing, the poster
+                # holds the frame, and show() promotes the current piece and the
+                # one after it as the band is actually watched.
+                # The poster is deferred with the same care as the video, and
+                # for the same reason. `poster` has no lazy equivalent — the
+                # browser fetches it whether the shot is visible or not — and
+                # fifteen invisible posters is four megabytes on the page load
+                # of every visitor. Only the first carries one in the markup;
+                # show() hands the rest theirs as they come round.
+                media = ('<video %s="%s" muted playsinline preload="none" '
+                         'aria-label="%s">'
+                         '<source src="%s" type="video/webm">'
+                         '<source src="%s" type="video/mp4">'
+                         '</video>'
+                         % ("poster" if first else "data-poster",
+                            esc(s.get("photo") or ""), esc(s.get("alt") or ""),
+                            esc(web), esc(s["clip"])))
             else:
                 media = ('<img src="%s" width="%d" height="%d" alt="%s" '
                          'loading="%s" decoding="async" data-provider="upload">'

@@ -18,6 +18,7 @@
     build.py optimise            resize and re-encode the placed images
     build.py homes               a standalone home page per country
     build.py cut <file|url>      cut one raw clip down to what the window can carry
+    build.py film <file|url>     cut a whole film into the window's pieces
     build.py scaffold            create a new country with 27 empty slots
     build.py gateway             rewrite the gateway's country lists from the dataset
     build.py sidebyside          write /compare.html — two countries, same questions
@@ -668,7 +669,44 @@ def cmd_cut(args):
         print("no such file: %s" % src)
         return 2
     cut_mod.cut(src, args.name, seconds=args.seconds, start=args.start,
-                width=args.width, mb=args.mb)
+                width=args.width, mb=args.mb, keep_audio=args.keep_audio)
+    return 0
+
+
+def cmd_film(args):
+    """Cut one supplied film into the pieces the window can carry, and place them.
+
+    `cut` takes one excerpt. This takes the whole thing: sixteen consecutive
+    pieces on the film's own scene boundaries, covering it end to end with
+    nothing dropped and nothing repeated. See tools/tourism/film.py for why the
+    boundaries are a table rather than an eight-second stride.
+    """
+    from tourism import film
+    if args.list_only:
+        print("%-3s %-7s %-7s %-6s %s" % ("#", "FROM", "TO", "LEN", "CAPTION"))
+        for i, (a, b, _slug, say, _alt) in enumerate(film.PIECES):
+            print("%-3d %-7.2f %-7.2f %-6.2f %s" % (i + 1, a, b, b - a, say))
+        gaps = film.covers()
+        print("\n%d pieces, %.2fs in total%s"
+              % (len(film.PIECES), film.PIECES[-1][1] - film.PIECES[0][0],
+                 "" if not gaps else " — BUT THEY DO NOT JOIN: " + "; ".join(gaps)))
+        return 1 if gaps else 0
+    src = args.picks
+    if not src:
+        print("film needs the master: a path, or a URL to fetch it from.")
+        return 2
+    if src.startswith("http://") or src.startswith("https://"):
+        into = os.path.join(cut_mod.MASTERS,
+                            os.path.basename(src.split("?")[0]) or "master.mp4")
+        print("fetching the master to %s — gitignored, so it never enters the "
+              "history" % os.path.relpath(into, ROOT))
+        src = cut_mod.fetch(src, into)
+    if not os.path.exists(src):
+        print("no such file: %s" % src)
+        return 2
+    film.place(film.run(src, mb=args.mb if args.mb != cut_mod.MB else film.MB,
+                        keep_audio=args.keep_audio))
+    print("now run: python3 tools/tourism/build.py gateway")
     return 0
 
 
@@ -683,7 +721,7 @@ COMMANDS = {
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,
     "optimise": cmd_optimise, "homes": cmd_homes,
-    "footage": cmd_footage, "cut": cmd_cut,
+    "footage": cmd_footage, "cut": cmd_cut, "film": cmd_film,
 }
 
 
@@ -723,6 +761,9 @@ def main():
                    help="cut: where in the master to start, in seconds")
     p.add_argument("--width", type=int, default=cut_mod.WIDTH,
                    help="cut: output width in pixels (default %d)" % cut_mod.WIDTH)
+    p.add_argument("--keep-audio", dest="keep_audio", action="store_true",
+                   help="cut/film: keep the audio track. Off by default — the "
+                        "window plays muted. See images/VIDEO.md on narration")
     p.add_argument("--mb", type=float, default=cut_mod.MB,
                    help="cut: the ceiling the result has to come in under "
                         "(default %g)" % cut_mod.MB)
