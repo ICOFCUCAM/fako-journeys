@@ -1495,6 +1495,20 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
    wash measured against the frame — doing it again in a card, four times, on
    four photographs with four different exposures, is four more washes to
    measure and a weaker version of something the page has already said. */
+/* Two voices above the grid, and they are not the same size. "Some places you
+   visit. Some places change you." is the claim and is set as one; the sentence
+   under it is the evidence, in the metadata voice the rest of the page uses for
+   evidence. Running both at note size made the claim disappear into it. */
+.wa-moment-lede{font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(21px,2.4vw,32px);line-height:1.2;letter-spacing:-.015em;
+  margin:0 0 18px;text-wrap:balance}
+.wa-moment-lede em{font-style:normal;color:var(--c-accent)}
+.wa-moment-say{max-width:62ch}
+/* The turn. It is the one sentence in this section that asks for something, so
+   it steps out of the paragraph rather than ending it. */
+.wa-moment-turn{display:block;margin-top:14px;font-family:var(--fj-display);
+  font-size:clamp(16px,1.5vw,20px);font-weight:700;line-height:1.35;
+  color:var(--c-ink);letter-spacing:-.01em}
 .wa-moment-grid{display:grid;grid-template-columns:repeat(2,1fr);
   gap:var(--sp-5);margin-top:var(--sp-5)}
 .wa-moment{display:block;text-decoration:none;position:relative}
@@ -2762,16 +2776,18 @@ window.AF = {
       <div class="wa-head-no"><b>02</b><span>The moment</span></div>
       <div>
         <h2>Come for the moment you&rsquo;ll <em>never forget</em>.</h2>
-        <p class="wa-note">Some places you visit. Some places change you. Four mornings, and not one
-          of them looks like another &mdash; which is the whole argument this site makes, in the
-          one form it cannot be made in prose.</p>
+        <p class="wa-moment-lede">Some places you visit.<br>Some places <em>change you</em>.</p>
+        <p class="wa-note wa-moment-say">
+          <!-- gen:momentsay -->
+      In Africa, the moment you remember for the rest of your life might be a gorilla looking back at you through the undergrowth, first light reaching a line of dunes, a boat already waiting offshore or an ocean opening under a mountain.
+      <span class="wa-moment-turn">You don&rsquo;t know your moment yet. That is why you have to come.</span>      <!-- /gen:momentsay --></p>
       </div>
     </div>
     <div class="wa-moment-grid">
       <!-- gen:moments -->
       <a class="wa-moment" href="/journey#/?w=wildlife" data-lens="wildlife"><span class="wa-moment-art"><img src="/images/uploads/gorilla-trekkers-768w.jpg" width="768" height="543" alt="A silverback mountain gorilla sitting in dense green undergrowth on a forested slope while a line of trekkers and guides photograph it from a few metres away" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Hear the forest before you see it.</b><i>Rainforest</i></span></a>
       <a class="wa-moment" href="/journey#/?w=adventure" data-lens="adventure"><span class="wa-moment-art"><img src="/images/uploads/desert-camp-sunrise-1440w.jpg" width="1440" height="958" alt="A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Walk into a landscape that looks impossible.</b><i>Desert</i></span></a>
-      <a class="wa-moment" href="/journey#/?w=coast" data-lens="coast"><span class="wa-moment-art"><img src="/images/uploads/swahili-coast-ngalawa-1200w.jpg" width="1200" height="1804" alt="A woman walking along the tideline at sunrise, silhouetted against the water, with an outrigger fishing canoe moored a short way offshore" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Walk out at sunrise, where the boats already are.</b><i>Coast</i></span></a>
+      <a class="wa-moment" href="/journey#/?w=coast" data-lens="coast"><span class="wa-moment-art"><img src="/images/uploads/swahili-coast-ngalawa-1200w.jpg" width="1200" height="1804" alt="A woman walking along the tideline at sunrise, silhouetted against the water, with an outrigger fishing canoe moored a short way offshore" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Walk out at sunrise. The boat is already waiting.</b><i>Coast</i></span></a>
       <a class="wa-moment" href="/journey#/?w=nature" data-lens="nature"><span class="wa-moment-art"><img src="/images/uploads/table-mountain-from-the-bay-1920w.jpg" width="1920" height="1080" alt="A flat-topped mountain and its two flanking peaks seen across a bay at sunset from rocks in the foreground, with surf breaking and a container ship at anchor" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Climb the one that rises straight out of the sea.</b><i>Mountain</i></span></a>      <!-- /gen:moments -->
     </div>
   </div>

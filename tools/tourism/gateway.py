@@ -66,7 +66,7 @@ MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer", "regiontone", "feel",
-           "moments", "seasons", "seasonsay")
+           "moments", "momentsay", "seasons", "seasonsay")
 
 # Markers that live inside <style> rather than in the document. An HTML comment
 # there is not a comment: `<!--` and `-->` are CDO/CDC tokens the CSS parser
@@ -372,6 +372,29 @@ def block_moments():
                esc(m.get("alt") or ""), esc(m.get("line") or ""),
                esc(m.get("label") or lens["label"])))
     return "\n".join(out)
+
+
+def block_momentsay():
+    """The sentence over the four photographs, enumerating them.
+
+    A sentence that lists what is below it is a sentence that goes stale the
+    moment the list changes, and this page has removed several of those. The
+    poetry is authored — each clause is written to its own frame and lives in
+    moments.json beside the photograph it describes — and the enumeration is
+    not, so a fifth moment rewrites the prose as well as the grid.
+    """
+    clauses = [m.get("clause") for m in load_moments()
+               if m.get("clause") and m.get("photo")]
+    if not clauses:
+        return "      "
+    # "or", not "and": these are four things one of which will be yours, not
+    # four things you are promised. _and_list joins the other way.
+    parts = [esc(c) for c in clauses]
+    listed = parts[0] if len(parts) == 1 else \
+        ", ".join(parts[:-1]) + " or " + parts[-1]
+    return ("      In Africa, the moment you remember for the rest of your life "
+            "might be %s.\n      <span class=\"wa-moment-turn\">You don&rsquo;t know "
+            "your moment yet. That is why you have to come.</span>" % listed)
 
 
 def block_seasons(countries):
@@ -1350,6 +1373,7 @@ def render(countries):
         "footer": block_footer(seq),
         "feel": block_feel(seq),
         "moments": block_moments(),
+        "momentsay": block_momentsay(),
         "seasons": block_seasons(seq),
         "seasonsay": block_seasonsay(seq),
         "regiontone": block_regiontone(),

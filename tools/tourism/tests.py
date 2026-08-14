@@ -1500,6 +1500,25 @@ def main():
                             if re.search(r'\b%s\b' % re.escape(c.name), mblock.group(1))})
             check("no moment claims a country the frame cannot prove",
                   not names, ", ".join(names) or "none named")
+        # The sentence above the grid enumerates the four photographs, and a
+        # sentence that enumerates something goes stale the moment the something
+        # changes. It is generated from the same file, so a fifth moment rewrites
+        # the prose as well as the grid — and this is the check that it did.
+        msay = re.search(r'<!-- gen:momentsay -->(.*?)<!-- /gen:momentsay -->',
+                         home_src, re.S)
+        check("the sentence over the moments is generated too", bool(msay))
+        if msay:
+            said = html_mod.unescape(msay.group(1))
+            drawn = [m for m in moments if m.get("photo") and m.get("lens") in lens_keys]
+            absent = [m["slug"] for m in drawn
+                      if html_mod.unescape(m.get("clause") or "\x00") not in said]
+            check("the sentence names every moment the grid shows",
+                  not absent and len(drawn) == len(moments),
+                  ", ".join(absent) or "all %d" % len(drawn))
+            # Four things one of which will be yours, not four you are promised.
+            check("the moments are offered as alternatives, not as a list",
+                  " or " in said and " and " not in said.split("might be")[-1],
+                  "or")
 
         # -- the bands that put a reader inside a morning ---------------------------
         # The band technique fails silently: one `filter` anywhere between the

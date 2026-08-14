@@ -35,7 +35,8 @@
    "photo": "/images/uploads/gorilla-trekkers-768w.jpg",
    "photo_w": 768,
    "photo_h": 543,
-   "alt": "A silverback mountain gorilla sitting in dense green undergrowth on a forested slope while a line of trekkers and guides photograph it from a few metres away"
+   "alt": "A silverback mountain gorilla sitting in dense green undergrowth on a forested slope while a line of trekkers and guides photograph it from a few metres away",
+   "clause": "a gorilla looking back at you through the undergrowth"
   },
   {
    "slug": "desert",
@@ -45,17 +46,19 @@
    "photo": "/images/uploads/desert-camp-sunrise-1440w.jpg",
    "photo_w": 1440,
    "photo_h": 958,
-   "alt": "A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them"
+   "alt": "A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them",
+   "clause": "first light reaching a line of dunes"
   },
   {
    "slug": "coast",
    "label": "Coast",
-   "line": "Walk out at sunrise, where the boats already are.",
+   "line": "Walk out at sunrise. The boat is already waiting.",
    "lens": "coast",
    "photo": "/images/uploads/swahili-coast-ngalawa-1200w.jpg",
    "photo_w": 1200,
    "photo_h": 1804,
-   "alt": "A woman walking along the tideline at sunrise, silhouetted against the water, with an outrigger fishing canoe moored a short way offshore"
+   "alt": "A woman walking along the tideline at sunrise, silhouetted against the water, with an outrigger fishing canoe moored a short way offshore",
+   "clause": "a boat already waiting offshore"
   },
   {
    "slug": "mountain",
@@ -65,7 +68,24 @@
    "photo": "/images/uploads/table-mountain-from-the-bay-1920w.jpg",
    "photo_w": 1920,
    "photo_h": 1080,
-   "alt": "A flat-topped mountain and its two flanking peaks seen across a bay at sunset from rocks in the foreground, with surf breaking and a container ship at anchor"
+   "alt": "A flat-topped mountain and its two flanking peaks seen across a bay at sunset from rocks in the foreground, with surf breaking and a container ship at anchor",
+   "clause": "an ocean opening under a mountain"
   }
+ ],
+ "$clause_note": [
+  "`clause` is the same moment said a second way, for the sentence above the",
+  "grid: 'the moment you remember for the rest of your life might be a gorilla",
+  "looking back at you through the undergrowth, first light reaching a line of",
+  "dunes, a boat already waiting offshore, or an ocean opening under a mountain.'",
+  "",
+  "It lives here rather than in the page because that sentence enumerates the",
+  "four photographs, and a sentence that enumerates something is a sentence that",
+  "goes stale the moment the something changes. Adding a fifth moment or dropping",
+  "one now rewrites the prose as well as the grid.",
+  "",
+  "Each clause has to be true of its own frame and nothing more. The first draft",
+  "of this sentence said 'a boat waiting on an empty shore'; the shore in that",
+  "photograph has a woman walking along it, which is the point of the picture, so",
+  "the clause says offshore and does not say empty."
  ]
 }
