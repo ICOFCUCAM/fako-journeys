@@ -17,6 +17,7 @@ import base64
 import glob
 import html as html_mod
 import http.server
+import itertools
 import json
 import struct
 import zlib
@@ -1347,6 +1348,46 @@ def main():
                   "operator in each" not in said and "in every" not in said)
         check("the brief is generated rather than typed",
               "<!-- gen:claim -->" in home_src)
+
+        # -- section 03 has to stop growing with the atlas -------------------------
+        # It was a straight function of the country count: every published
+        # country got the same 275px write-up, so 22 of them made the section
+        # 29% of the homepage and the 54 we sell into would have made it 40%.
+        # A region now leads with one row of cards and indexes the rest, which
+        # makes the lead block a constant. These are the two things that have to
+        # stay true for that to keep working.
+        dest_block = re.search(r'<!-- gen:destinations -->(.*?)<!-- /gen:destinations -->',
+                               home_src, re.S)
+        check("the destinations grid is still generated", bool(dest_block))
+        if dest_block:
+            body = dest_block.group(1)
+            # Nobody is dropped. An index entry is a lesser treatment, not a
+            # lesser existence: it carries the same data-tags and data-months,
+            # so the filters and the "n of 22" count still find it.
+            hrefs = set(re.findall(r'<a href="(/[a-z-]+|https?://[^"]+)"[^>]*>Explore', body))
+            hrefs |= set(re.findall(r'wa-dest--brief"[^>]*><a href="([^"]+)"', body))
+            want = {c.url for c in countries}
+            check("every published country is still on the homepage",
+                  want <= hrefs, ", ".join(sorted(want - hrefs)) or "all %d" % len(want))
+            briefs = re.findall(r'class="wa-dest wa-dest--brief"[^>]*'
+                                r'data-tags="([^"]*)" data-months="([^"]*)"', body)
+            check("an indexed country still carries what the filters read",
+                  all(t.strip() and m.strip() for t, m in briefs),
+                  "%d indexed" % len(briefs))
+            # One row of leads per region, counted in grid slots because an
+            # operator's card is two columns wide. Three cards was the first
+            # rule and it left a card alone in a second row with two empty
+            # columns beside it.
+            over = []
+            for chunk in body.split('<div class="wa-dest-band"')[1:]:
+                chunk = chunk.split('<div class="wa-dest-more"')[0]
+                leads = re.findall(r'<div class="wa-dest"( data-ours="true")?', chunk)
+                slots = sum(2 if ours else 1 for ours in leads)
+                if slots > 3:
+                    reg = re.search(r'data-region="([a-z]+)"', chunk)
+                    over.append("%s=%d" % (reg.group(1) if reg else "?", slots))
+            check("no region leads with more than one row of cards",
+                  not over, ", ".join(over) or "every region fills exactly one row")
         # The journey section describes the service, so it is counted from
         # operators.json for the same reason the brief is.
         for mark in ("plannote", "plansteps"):
@@ -1733,6 +1774,84 @@ def main():
             lit = relative(channels(TOKENS.get("--c-bg", "#F6F1E7")))
             r = (max(lit, relative(mixed)) + 0.05) / (min(lit, relative(mixed)) + 0.05)
             check("a plate on the %s ground can be read" % key, r >= 4.5, "%.2f:1" % r)
+
+        # The three bars regions.json calls its $contract, checked here so the
+        # file cannot go on asserting them after they stop being true. It did
+        # exactly that: the header claimed all five tones carried ivory at 7:1,
+        # four of them never had, and north sat at 2.47 against the ground it is
+        # printed on for as long as nothing measured it.
+        dust = re.search(r"--fj-dust:\s*(#[0-9A-Fa-f]{6})", css)
+        check("the sand ground the region rules print on is defined", bool(dust))
+        if dust and len(tones) == 5:
+            ground = dust.group(1)
+            ivory = channels(TOKENS.get("--c-bg", "#F6F1E7"))
+            worst_rule = min((contrast(t, ground), k) for k, t in tones.items())
+            check("every region rule is visible on the sand ground",
+                  worst_rule[0] >= 3.0, "worst is %s at %.2f:1" % (worst_rule[1], worst_rule[0]))
+            # The plate letters are a 17% wash of --c-bg over the tone, and are
+            # aria-hidden — a printer's proof, not text, so no WCAG bar applies.
+            # What does apply is that they stay legible as letters, which makes
+            # this a floor on how light the tone underneath may go.
+            for key, tone in sorted(tones.items()):
+                wash = [0.17 * i + 0.83 * t for i, t in zip(ivory, channels(tone))]
+                lw, lt = relative(wash), relative(channels(tone))
+                d = (max(lw, lt) + 0.05) / (min(lw, lt) + 0.05)
+                check("the proof letters read on the %s plate" % key, d > 1.30, "%.2f:1" % d)
+            # The one place the tone is type rather than ground. A portrait page
+            # sets the same value as --tone, and .st-cross.is-border prints its
+            # label in it on a ground of 90% ivory and 10% tone. This is the
+            # tightest of the four bars and the one that sets the ceiling on how
+            # light a tone may go — and it was missed on the first re-cut,
+            # because that went looking for --reg-tone and this use is spelt
+            # --tone. Measured on the old set, southern was 4.24 and north 3.03;
+            # nothing caught it because /portrait/kenya.html is the only portrait
+            # the browser checks visit, and Kenya is in the east.
+            for key, tone in sorted(tones.items()):
+                t = channels(tone)
+                tint = [0.9 * b + 0.1 * f for b, f in zip(ivory, t)]
+                lt, lg = relative(t), relative(tint)
+                r = (max(lt, lg) + 0.05) / (min(lt, lg) + 0.05)
+                check("the %s tone reads as type on its own tint" % key,
+                      r >= 4.5, "%.2f:1" % r)
+            # Two families, forest and burnt sienna. Within one, two tones that
+            # are too close read as the same colour printed twice — which is what
+            # central and east were at three degrees apart.
+            FAMILY = {"central": "forest", "east": "forest", "islands": "forest",
+                      "southern": "earth", "north": "earth"}
+            for a, b in itertools.combinations(sorted(tones), 2):
+                if FAMILY.get(a) != FAMILY.get(b):
+                    continue
+                r = contrast(tones[a], tones[b])
+                check("%s and %s are two colours, not one" % (a, b), r > 1.35, "%.2f:1" % r)
+
+        # The hero window's fill is the fifth place that draws a region, and the
+        # only one written into a stylesheet. It carried a comment saying it came
+        # from regions.json while being typed by hand, so it kept printing the
+        # previous set after the tones were re-cut. It is generated now, and this
+        # is the check that says so.
+        home = open(os.path.join(ROOT_DIR, "index.html")).read()
+        fills = dict(re.findall(
+            r'\.wa-win-state\[data-region="([a-z]+)"\] \.af-window-fill\{fill:(#[0-9A-Fa-f]{6})\}',
+            home))
+        check("the hero window draws every region",
+              set(fills) == set(tones), "%d of %d" % (len(fills), len(tones)))
+        drifted = sorted(k for k, v in fills.items()
+                         if v.upper() != tones.get(k, "").upper())
+        check("the hero window draws them in the dataset's own tones",
+              not drifted, ", ".join(drifted) or "all five match regions.json")
+        # And that the selector has something to select. Those five rules sat in
+        # the stylesheet matching no element at all, because nothing emitted the
+        # attribute they key off — so every unphotographed country in the hero
+        # was drawn in the same house accent, which is the fault the rules exist
+        # to fix. Correct colours in a rule that never fires is not a fix.
+        states = re.findall(r'<figure class="wa-win-state"[^>]*>', home)
+        borne = sorted({m.group(1) for s in states
+                        for m in [re.search(r'data-region="([a-z]+)"', s)] if m})
+        check("the figures the hero window rules select actually carry a region",
+              set(borne) == set(fills) and len(states) > 5,
+              "%d of %d figures, regions %s" % (
+                  sum(1 for s in states if "data-region=" in s), len(states),
+                  ", ".join(borne) or "none"))
 
         # -- where the keyboard is ------------------------------------------------
         print("\nwhere the keyboard is")

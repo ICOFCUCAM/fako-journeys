@@ -65,7 +65,14 @@ REGION_GROUPS = (
 MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
-           "nownote", "now", "stories", "footer")
+           "nownote", "now", "stories", "footer", "regiontone")
+
+# Markers that live inside <style> rather than in the document. An HTML comment
+# there is not a comment: `<!--` and `-->` are CDO/CDC tokens the CSS parser
+# skips, but the words between them are parsed as CSS, and the error recovery
+# for a qualified rule with no block runs forward to the next `{` and eats the
+# first real rule with it. So these are written as CSS comments instead.
+CSS_MARKERS = ("regiontone",)
 
 # How much air to leave round a zoomed view, as a fraction of its long side.
 VIEW_PAD = 0.34
@@ -634,6 +641,24 @@ def block_regions(countries, views):
     return "      " + "".join(out)
 
 
+def block_regiontone():
+    """The hero window's fill, one rule per region, out of regions.json.
+
+    These five rules carried a comment saying they were generated from the
+    dataset. They were not — they were typed once, by hand, from the values that
+    were current that day, and when the tones were re-cut they were the last
+    place on the site still printing the old set. The comment was right about
+    what should happen and wrong about what did, which is the worst of the two
+    ways for a comment to be wrong: it stops anyone checking.
+
+    Now it is true. This is the only block that writes into <style>, so it is
+    fenced with CSS comments rather than HTML ones — see CSS_MARKERS.
+    """
+    out = ['.wa-win-state[data-region="%s"] .af-window-fill{fill:%s}' % (key, reg.tone)
+           for key, reg in load_regions().items()]
+    return "\n".join(out)
+
+
 def block_window(countries, shape_by_slug, views):
     """The hero's window states — one per country, from the shared component.
 
@@ -658,9 +683,18 @@ def block_window(countries, shape_by_slug, views):
             continue
         box = boxes.get(c.slug)
         view = (' data-view="%s"' % " ".join(str(v) for v in pad_box(box, 0.9))) if box else ""
+        # The region this country is in, so the window can be drawn on its
+        # region's ground when there is no photograph. Five CSS rules keyed off
+        # this attribute have been in the stylesheet for some time, under a
+        # comment saying the figures carry it. They did not — nothing has ever
+        # emitted it, so the rules matched no element and every unphotographed
+        # country was drawn in the same house accent, which is the exact fault
+        # the rules were written to fix.
+        rkey, _reg = region_of(c)
         out.append(
-            '      <figure class="wa-win-state" data-slug="%s"%s>\n        %s\n      </figure>'
-            % (esc(c.slug), view,
+            '      <figure class="wa-win-state" data-slug="%s" data-region="%s"%s>\n'
+            '        %s\n      </figure>'
+            % (esc(c.slug), esc(rkey or ""), view,
                plate.window_svg(s, c.name, image=c.window or None,
                                 alt=c.window_alt or None,
                                 ident="wc-%s" % c.slug,
@@ -831,9 +865,87 @@ def _and_list(parts):
     return ", ".join(parts[:-1]) + " and " + parts[-1]
 
 
+# The grid is three columns wide, and an operator's card takes two of them.
+LEAD_SLOTS = 3
+
+
+def _leads(ranked):
+    """How many of a region's countries get the full write-up: exactly one row.
+
+    Counted in grid slots rather than in cards, because an operator's card is
+    two columns wide. Three cards was the first rule and it was the wrong unit:
+    in a region with an operator that is 2 + 1 + 1 = four slots, so the third
+    card sat alone in a second row with two empty columns beside it — 275px of
+    whitespace in each of the three regions that have an operator, which was
+    most of what the restructure was meant to save.
+
+    One row per region also means the lead block is the same height whether the
+    region has five countries in it or fifteen, which is the property that stops
+    this section growing with the atlas.
+    """
+    used, n = 0, 0
+    for c in ranked:
+        cost = 2 if c.operator else 1
+        if used + cost > LEAD_SLOTS:
+            break
+        used += cost
+        n += 1
+    return n
+
+
+def _season(months):
+    """The good months as a compact range: "Nov-Apr", or "Jan-Mar, Jun-Oct".
+
+    An index line has room for a season, not for a sentence about one. `when`
+    is that sentence and stays on the card for the filtered view; this is the
+    same fact at the width the line has.
+
+    The runs are read off the calendar as a circle, so a dry season that crosses
+    December is one range rather than two — which is most of them here.
+    """
+    have = sorted(set(int(m) for m in months if 1 <= int(m) <= 12))
+    if not have:
+        return ""
+    if len(have) == 12:
+        return "All year"
+    runs, run = [], [have[0]]
+    for m in have[1:]:
+        if m == run[-1] + 1:
+            run.append(m)
+        else:
+            runs.append(run)
+            run = [m]
+    runs.append(run)
+    # December into January is one season, not the last run and the first.
+    if len(runs) > 1 and runs[0][0] == 1 and runs[-1][-1] == 12:
+        runs[0] = runs.pop() + runs[0]
+    short = lambda m: MONTHS[m - 1][:3]
+    return ", ".join(short(r[0]) if len(r) == 1 else "%s-%s" % (short(r[0]), short(r[-1]))
+                     for r in runs)
+
+
 def block_destinations(countries):
     """The grid, grouped by region, each card carrying what it leads on and
-    what it touches."""
+    what it touches.
+
+    This section used to grow without limit. Every published country got the
+    same 275px write-up, so the grid was a straight function of how many
+    countries exist: 22 of them made it 3,470px, which is 29% of the homepage,
+    and the 54 we sell into would have made it about 6,200px and 40%. A homepage
+    where two fifths of the scroll is one uniformly-weighted list is an index,
+    not a front page.
+
+    So a region leads with LEADS_PER_REGION write-ups and prints the rest as an
+    index. The order is the one the site already uses and already justifies —
+    our own operators first, then by name — so leading is a stated order rather
+    than a quality ranking invented here.
+
+    The tail is not a different kind of thing. Each entry is the same .wa-dest
+    with the same data-tags, data-months and data-region, because that is what
+    the filters read: a country that answered "wildlife" would otherwise vanish
+    from the answer by virtue of being fourth alphabetically. It carries less
+    prose, not less existence.
+    """
     links = (read_json(LINKS) or {}).get("links") or {}
     region_meta = load_regions()
     live = {c.slug for c in countries}
@@ -863,9 +975,10 @@ def block_destinations(countries):
             # so escaping it here would print &amp;amp;.
             % (key, title, esc(reg.line if reg else ""), esc(key), len(group),
                "country" if len(group) == 1 else "countries"))
-        for c in sorted(group, key=lambda x: (0 if x.operator else 1, x.name)):
-            reg = region_meta.get(key)
-            tone = reg.tone if reg else ''
+        ranked = sorted(group, key=lambda x: (0 if x.operator else 1, x.name))
+        tone = esc(reg.tone if reg else '')
+        lead = _leads(ranked)
+        for c in ranked[:lead]:
             near = _neighbours(c.slug, links, live)
             # One sentence, not a stack of links. Tanzania borders five of the
             # published countries; five underlined blocks under every write-up
@@ -882,9 +995,28 @@ def block_destinations(countries):
                 '<a href="%s">Explore %s &rarr;</a></div>'
                 % (' data-ours="true"' if c.operator else '',
                    key, esc(" ".join(c.calls)), esc(",".join(str(m) for m in c.months)),
-                   esc(tone),
+                   tone,
                    esc(c.operator.name if c.operator else ''), esc(c.name), esc(c.summary), esc(c.when),
                    borders, esc(c.url), esc(c.name)))
+        tail = ranked[lead:]
+        if not tail:
+            continue
+        # The tail sits in its own container rather than in the main grid,
+        # because .wa-dest:nth-child(3n) is what clears the right-hand rule and
+        # an index line is not on that three-column rhythm. Its own grid, its
+        # own count, and the outer one stays arithmetic.
+        entries = "".join(
+            '<div class="wa-dest wa-dest--brief" data-region="%s" data-tags="%s"'
+            ' data-months="%s" style="--reg-tone:%s">'
+            '<a href="%s">%s</a><span class="wa-dest-brief-when">%s</span>'
+            '<p class="wa-dest-when">%s</p></div>'
+            % (key, esc(" ".join(c.calls)), esc(",".join(str(m) for m in c.months)),
+               tone, esc(c.url), esc(c.name), esc(_season(c.months)), esc(c.when))
+            for c in tail)
+        rows.append(
+            '      <div class="wa-dest-more" data-region="%s">'
+            '<p class="wa-dest-more-head">Also in %s</p>%s</div>'
+            % (key, title, entries))
     return "\n".join(rows)
 
 
@@ -1081,18 +1213,29 @@ def render(countries):
         "now": block_now(seq),
         "stories": block_stories(seq),
         "footer": block_footer(seq),
+        "regiontone": block_regiontone(),
     }
+
+
+def marker(name, close=False):
+    """The opening or closing marker for a region, in the comment syntax that is
+    legal where that region lives."""
+    slash = "/" if close else ""
+    if name in CSS_MARKERS:
+        return "/* %sgen:%s */" % (slash, name)
+    return "<!-- %sgen:%s -->" % (slash, name)
 
 
 def splice(src, blocks):
     """Replace between each pair of markers. Missing markers are an error, not a
     silent no-op: a marker that got lost in an edit would otherwise mean a
     section quietly stopped tracking the dataset."""
-    missing = [name for name in MARKERS if ("<!-- gen:%s -->" % name) not in src]
+    missing = [name for name in MARKERS if marker(name) not in src]
     if missing:
         raise ValueError("index.html is missing markers: %s" % ", ".join(missing))
     for name, body in blocks.items():
-        pattern = re.compile(r"(<!-- gen:%s -->\n).*?(\s*<!-- /gen:%s -->)" % (name, name), re.S)
+        pattern = re.compile(r"(%s\n).*?(\s*%s)"
+                             % (re.escape(marker(name)), re.escape(marker(name, True))), re.S)
         src = pattern.sub(lambda m: m.group(1) + body + m.group(2), src, count=1)
     return src
 
