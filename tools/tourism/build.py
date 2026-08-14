@@ -609,6 +609,34 @@ def cmd_all(args):
     return rc
 
 
+def cmd_footage(args):
+    """Stage candidate clips from Pexels in incoming/video/. Places none of them.
+
+    `footage` rather than `resolve` on purpose. The image resolver picks a
+    photograph and files it against a slot; this one cannot, because keyword
+    search knows what a clip was tagged with and not where it was shot, and the
+    window under the hero captions its shots with places. Somebody looks at the
+    file and decides. See tools/tourism/footage.py.
+    """
+    from tourism import footage
+    qs = [q.strip() for q in (args.query or "").split(",") if q.strip()]
+    if args.list_only or not qs:
+        led = footage.ledger()
+        if not led["clips"]:
+            print("nothing staged. Try: build.py footage --query \"aerial lagos\"")
+            return 0
+        print("%-34s %-26s %-11s %s" % ("QUERY", "FILE", "SIZE", "WHERE"))
+        for c in led["clips"]:
+            print("%-34s %-26s %-11s %s"
+                  % (c.get("query", "")[:34],
+                     (c.get("file") or "").rsplit("/", 1)[-1][:26],
+                     "%dx%d %ds" % (c.get("width") or 0, c.get("height") or 0,
+                                    c.get("seconds") or 0),
+                     c.get("where") or "unknown — not placeable until known"))
+        return 0
+    return 0 if footage.run(qs, want=max(1, args.n)) >= 0 else 1
+
+
 COMMANDS = {
     "validate": cmd_validate, "status": cmd_status, "queries": cmd_queries,
     "providers": cmd_providers,
@@ -620,6 +648,7 @@ COMMANDS = {
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
     "compare": cmd_compare, "place": cmd_place, "intake": cmd_intake,
     "optimise": cmd_optimise, "homes": cmd_homes,
+    "footage": cmd_footage,
 }
 
 
@@ -647,6 +676,9 @@ def main():
                    help="intake: the folder of uploaded images (default incoming/)")
     p.add_argument("--describe", action="store_true",
                    help="intake: ask the vision model what each upload shows")
+    p.add_argument("--query", help="footage: comma-separated search terms")
+    p.add_argument("--list", dest="list_only", action="store_true",
+                   help="footage: show what is already staged")
     p.add_argument("picks", nargs="?", help="place: the picks.json to apply")
     args = p.parse_args()
     return COMMANDS[args.command](args)

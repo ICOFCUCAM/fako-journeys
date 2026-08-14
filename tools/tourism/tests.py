@@ -1452,6 +1452,37 @@ def main():
                           for i, n in live.items() if n == hi),
                   "%d in the busiest" % hi)
 
+        # -- what the footage fetcher is and is not allowed to do -------------------
+        # It stages clips and places none of them, because keyword search knows
+        # what a clip was tagged with and not where it was shot, and the window
+        # captions its shots with places. These are the two properties that make
+        # that true rather than intended.
+        foot = open(os.path.join(ROOT_DIR, "tools", "tourism", "footage.py")).read()
+        # The invariant is about what it can write, not about which words it
+        # uses: the docstring and the ledger's own note both say "motion.json"
+        # while explaining why it never opens it. So check the paths it builds
+        # and what it imports.
+        paths = re.findall(r"os\.path\.join\(ROOT[^)]*\)", foot)
+        check("the fetcher can only write into the staging floor",
+              all("incoming" in p for p in paths) and "load_motion" not in foot,
+              " | ".join(paths) or "no paths built")
+        # The same rule every image provider inherits: the API is the authority
+        # for URLs, and nothing assembles one from an id.
+        built = re.findall(r'["\']https?://(?:www\.)?pexels[^"\']*["\']\s*[%+]', foot)
+        check("the fetcher builds no clip URL of its own",
+              not built and 'cand["url"]' in foot,
+              ", ".join(built) or "every URL comes from the payload")
+        wf = os.path.join(ROOT_DIR, ".github", "workflows", "tourism-footage.yml")
+        check("the staging workflow exists", os.path.exists(wf))
+        if os.path.exists(wf):
+            y = open(wf).read()
+            check("the staging workflow refuses to place a clip",
+                  "This job placed a clip against a shot" in y
+                  and "git diff --quiet -- tourism/motion.json" in y)
+            check("and its own exit decides the job",
+                  "FETCH_EXIT" in y and y.rindex("FETCH_EXIT") > y.index("git push"),
+                  "the gate is the last step")
+
         # -- the window built for footage that does not exist yet -------------------
         # Every shot in motion.json carries a clip and every clip is null, so
         # what this does today is cross-fade photographs. That is the point of

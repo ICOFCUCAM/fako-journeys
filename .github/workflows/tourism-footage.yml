@@ -1,0 +1,112 @@
+name: Stage candidate footage
+
+# Fetch candidate clips from the Pexels video API into incoming/video/.
+#
+# This runs here rather than on a developer machine for the same reason the
+# image resolver does: api.pexels.com and videos.pexels.com are refused by the
+# agent proxy's egress policy, and the key is a secret that belongs in Actions
+# rather than in a shell history.
+#
+# It stages and it does not place. Nothing in this job writes to
+# tourism/motion.json, because keyword search knows what a clip was tagged with
+# and not where it was shot, and the window under the hero captions its shots
+# with places. Somebody looks at the file and decides — see
+# tools/tourism/footage.py for the argument at length.
+#
+# Secrets used:
+#   PEXELS_API_KEY        your Pexels API key, free from pexels.com/api
+
+on:
+  workflow_dispatch:
+    inputs:
+      query:
+        description: "Comma-separated search terms, e.g. 'aerial lagos, kampala street, gorilla forest'"
+        required: true
+      per_query:
+        description: "How many clips to keep per term"
+        required: false
+        default: "2"
+      commit:
+        description: "Commit the staged clips back to this branch"
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  footage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: The key has to be here, or there is nothing to do
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: |
+          if [ -z "$PEXELS_API_KEY" ]; then
+            echo "::error::Staging footage requires PEXELS_API_KEY. Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          echo "pexels key present (value never printed)"
+
+      - name: Fetch
+        id: fetch
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: |
+          set +e
+          python3 tools/tourism/build.py footage \
+            --query "${{ github.event.inputs.query }}" \
+            -n "${{ github.event.inputs.per_query }}"
+          echo "FETCH_EXIT=$?" >> "$GITHUB_ENV"
+          set -e
+
+      - name: What was staged
+        run: python3 tools/tourism/build.py footage --list
+
+      # Nothing here writes to motion.json, so the site is byte-identical and
+      # there is nothing to rebuild. The only new files are in incoming/video/.
+      - name: Nothing was placed, and that is checked
+        run: |
+          if ! git diff --quiet -- tourism/motion.json index.html; then
+            echo "::error::This job placed a clip against a shot. It is not allowed to."
+            git --no-pager diff --stat -- tourism/motion.json index.html
+            exit 1
+          fi
+          echo "motion.json and index.html untouched, as intended"
+
+      - name: Commit
+        if: ${{ github.event.inputs.commit == 'true' }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add incoming/video
+          if git diff --cached --quiet; then
+            echo "nothing new to commit"
+          else
+            git commit -m "Stage candidate footage for: ${{ github.event.inputs.query }}
+
+          Fetched by .github/workflows/tourism-footage.yml. Staged only —
+          nothing is placed against a shot in motion.json, because Pexels can
+          say what a clip was tagged with and not where it was shot. Each clip's
+          query, id, author and licence are in incoming/video/candidates.json,
+          with 'where' null until somebody can fill it in."
+            git push
+          fi
+
+      # Last, so a failure to fetch is reported after everything that could be
+      # salvaged has been. Same shape as the resolve workflow, and for the same
+      # reason: an earlier version of that one failed at the fetch step and threw
+      # away four minutes of successful work.
+      - name: The fetch's own exit decides the job
+        run: |
+          if [ "${FETCH_EXIT:-1}" != "0" ]; then
+            echo "::error::Fetching footage failed (exit $FETCH_EXIT)."
+            exit "$FETCH_EXIT"
+          fi
