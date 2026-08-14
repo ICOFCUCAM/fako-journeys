@@ -1663,7 +1663,10 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    and takes a rule at the top, so the page closes rather than loops. */
 .wa-foot{background:var(--fj-basalt);color:var(--fj-onbasalt);padding:60px 0 0;
   border-top:3px solid var(--c-accent)}
-.wa-foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1.1fr;gap:34px}
+/* Five columns at 34px on a 1240 frame is 226px each, which is wider than
+   any link in them and narrower than the brand block wants. The gap does the
+   separating and the columns stop being a table. */
+.wa-foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr 1.1fr;gap:48px}
 .wa-foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
 .wa-foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
 .wa-foot-grid p{margin-top:16px;font-size:14.5px;max-width:32em;color:var(--fj-onbasalt-dim)}
