@@ -1303,6 +1303,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 /* A region band is a heading, a sentence and a count, and it sat on the page
    ground with nothing to separate it from the cards under it. The accent rule
    the section heads use, at the top, so the grid reads as five groups. */
+.wa-dest:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(6,18,14,.14)}
 .wa-dest-band{border-top:2px solid var(--c-accent);grid-column:1/-1;padding:34px 0 18px;border-top:2px solid var(--c-primary);
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 32px;align-items:baseline}
 .wa-dest-band .wa-dest-reg{margin:0;font-family:var(--fj-display);font-size:clamp(21px,2.4vw,30px);
@@ -1319,7 +1320,10 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 /* An operator of ours is the strongest thing on this page and the grid said so
    in a line of small caps at the top of the card. The map spends three tiers and
    a gold keel making the same point; the grid can spend a rule. */
-.wa-dest{padding:24px 26px 22px 0;border-bottom:var(--fj-rule);border-right:var(--fj-rule)}
+/* The page has three collections — cities, destinations, stories — and after
+   143 two of them lifted on hover and this one did not. A card that acts should
+   act the same way wherever it is. */
+.wa-dest{transition:transform .3s cubic-bezier(.2,.6,.2,1),box-shadow .3s;padding:24px 26px 22px 0;border-bottom:var(--fj-rule);border-right:var(--fj-rule)}
 
 .wa-dest:nth-child(3n){border-right:0;padding-right:0}
 /* Twenty-two identical blocks is a directory. This grid varies on the one real
