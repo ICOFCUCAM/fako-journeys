@@ -313,7 +313,7 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
    surface they landed on. Any new dark panel joins this list. */
 .af-zone--basalt,.af-dark,.st--now,.st-nowcard,.sx-nowsec,.sx-now,
 .wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
-.tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark,.wa-open{
+.tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark,.wa-open,.wa-motion{
   --c-accent:var(--c-accent-lit);
   /* Muted gold is where the restraint in this palette lives. It is unusable on
      paper — 2.37:1 — and excellent on forest at 6.02:1, so it appears only

@@ -1456,143 +1456,130 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
    100vw: on a desktop with a classic scrollbar 100vw is wider than the section
    by the scrollbar, and the difference becomes horizontal overflow on the one
    page the whole site is judged by. */
-/* The picture takes the container's whole width and the copy sits above it, in
-   the same head block every other section on this page uses. It was beside the
-   copy in a 1.5fr column and then bled off the screen edge; across the frame is
-   where a photograph this section is built around belongs, and it means the
-   window lines up with the grids and rails below rather than starting somewhere
-   of its own.
+/* AFRICA, IN MOTION — a band with a window cut into it.
 
-   The hero above is the same dark green as this section, so the two ran into
-   each other with no boundary at all. The rule is where one ends. */
-.wa-motion{border-top:1px solid color-mix(in srgb,var(--c-bg) 13%,transparent);
-  padding-top:76px}
-.wa-mo-lay{margin-top:var(--sp-5)}
-/* The window, then one control bar under it: the rail on the left and the
-   pause at its right end. They used to be a strip and a floating box on top of
-   the picture — two kinds of chrome doing one job, one of them sitting over the
-   photograph it was there to control. DOM order is window, rail, button, and
-   the areas put the last two on the same row without touching the markup. */
-.wa-mo-stage{position:relative;min-width:0;display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  grid-template-areas:"win win" "rail hold"}
-.wa-mo-window{grid-area:win}
-.wa-mo-rail{grid-area:rail}
-.wa-mo-hold{grid-area:hold}
-/* One box, every shot stacked inside it, one visible. The aspect ratio is on
-   the box and not on the pictures, so nothing moves when a shot changes and
-   nothing moves when the first one arrives — this is the section directly under
-   the hero and it is the last place that can afford a layout shift. */
-/* No backing of its own. It used to carry a ground 40% darker than the section
-   it sits in, which was invisible while a photograph covered it and became a
-   dark rectangle the moment the edges were allowed to dissolve — the exact
-   shape the blend exists to get rid of. What shows through the soft edge now is
-   the section's own basalt, so there is nothing to mismatch. */
-.wa-mo-window{position:relative;aspect-ratio:16/9;overflow:hidden;
-  background:transparent}
+   Three builds got here. Beside the copy in a column it was a card; bled to the
+   left edge of the screen it read as falling off the page; inset across the
+   frame with all four edges feathered it was still a rectangle, because
+   softening the edges of a rectangle does not stop it being one.
+
+   What makes a picture belong to a page is being CROPPED by it. So the window
+   is flush to the top, the right and the bottom of the band — three edges the
+   band itself ends, with nothing to blend because there is no page beside them
+   — and only the fourth needs a gradient. That one runs a long way, and the
+   copy sits on top of where it lands rather than in a column beside it. No
+   gutter, no seam, no boundary anywhere a reader can point at.
+
+   The band is a single grid cell with both children in it, so the stage and the
+   copy overlap by construction rather than by absolute positioning against a
+   height somebody has to keep in step. */
+/* A dark panel, but not a .wa-zone: the band has to reach the section's own top
+   and bottom edges and .wa-zone would put 88px of padding between them. So it
+   takes the ground and the type colours itself, and it is in the token list in
+   afrinkong.css that repoints --c-accent and --c-muted for dark grounds — the
+   comment above that list says any new dark panel joins it, and the first build
+   of this section did not, which put "01" at 2.31:1 on its own background. */
+.wa-motion{position:relative;border-top:1px solid color-mix(in srgb,var(--c-bg) 13%,transparent);
+  background:var(--fj-basalt);color:var(--fj-onbasalt)}
+.wa-motion h2{color:var(--c-bg)}
+.wa-motion .wa-note{color:var(--fj-onbasalt-dim)}
+.wa-mo-band{display:grid;min-height:clamp(480px,62vh,680px);isolation:isolate}
+.wa-mo-band > *{grid-area:1 / 1}
+.wa-mo-stage{position:relative}
+/* Cropped by the band on three sides. The 34% is where the picture starts, not
+   where it becomes visible: the gradient carries it a long way further left. */
+.wa-mo-window{position:absolute;inset:0 0 0 34%;overflow:hidden;background:transparent}
+.wa-mo-copy{position:relative;z-index:2;align-self:center;padding:56px 0}
+/* Everything in the copy stops well before the picture starts. The rule over
+   the number and the one over the controls ran the full width of the frame and
+   drew two lines straight across the photograph — the only hard edges left in
+   the section, and both of them mine. The measure is a fraction of the band so
+   it tracks the window's 34% rather than being a number to keep in step. */
+.wa-mo-copy h2{margin-top:16px;max-width:15ch}
+.wa-mo-copy .wa-note{max-width:40ch}
+.wa-mo-copy .wa-head-no,
+.wa-mo-copy .wa-mo-controls{max-width:min(42%,500px)}
+.wa-mo-copy .wa-frame{padding-right:0}
+
 .wa-mo-shot{position:absolute;inset:0;margin:0;opacity:0;
   transition:opacity 1.1s var(--ease);pointer-events:none}
 .wa-mo-shot[data-on]{opacity:1;pointer-events:auto}
-/* The edge blend. Four masks intersected, weighted to where the page actually
-   is. The picture sits a gutter in from the edge of the screen, so all four
-   edges face the section and all four dissolve — hardest on the right, at 26%
-   of the width, because that is the edge the copy sits against and the one a
-   reader looks across. The left is 12%: there is only a gutter of green beside
-   it, and a fade wider than the thing it fades into looks like a fault.
-
-   The mask is on the media and not on the figure, so the caption inside it is
-   not faded with the picture it names.
-
-   Intersect rather than a single gradient: one left-to-right fade is a curtain
-   across the frame, and it reads as an effect. Four soft edges read as a
-   photograph printed into the page.
-
-   mask-composite defaults to `add`, so where it is unsupported the four layers
-   union to fully opaque and the picture simply has hard edges again. That is
-   the right way for this to fail. */
+/* One gradient, on the one edge that faces the page. It reaches 44% of the
+   window's width, which is most of the way across the copy — the picture is
+   already gone by the time the type starts, and there is no line where it
+   went. */
 .wa-mo-shot img,.wa-mo-shot video{width:100%;height:100%;object-fit:cover;display:block;
-  -webkit-mask-image:
-    linear-gradient(to left, transparent 0%, rgba(0,0,0,.16) 5%, rgba(0,0,0,.66) 14%, #000 26%),
-    linear-gradient(to right, transparent 0%, rgba(0,0,0,.34) 3%, rgba(0,0,0,.82) 7%, #000 12%),
-    linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.22) 4%, rgba(0,0,0,.72) 10%, #000 18%),
-    linear-gradient(to top, transparent 0%, rgba(0,0,0,.25) 4%, rgba(0,0,0,.75) 9%, #000 16%);
-  mask-image:
-    linear-gradient(to left, transparent 0%, rgba(0,0,0,.16) 5%, rgba(0,0,0,.66) 14%, #000 26%),
-    linear-gradient(to right, transparent 0%, rgba(0,0,0,.34) 3%, rgba(0,0,0,.82) 7%, #000 12%),
-    linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.22) 4%, rgba(0,0,0,.72) 10%, #000 18%),
-    linear-gradient(to top, transparent 0%, rgba(0,0,0,.25) 4%, rgba(0,0,0,.75) 9%, #000 16%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect}
-.wa-mo-shot figcaption{position:absolute;left:0;right:0;bottom:0;
-  padding:34px 20px 18px;font-family:var(--fj-mono);font-size:10px;
+  -webkit-mask-image:linear-gradient(to right,
+    transparent 0%, rgba(0,0,0,.06) 12%, rgba(0,0,0,.28) 24%,
+    rgba(0,0,0,.66) 34%, #000 46%);
+  mask-image:linear-gradient(to right,
+    transparent 0%, rgba(0,0,0,.06) 12%, rgba(0,0,0,.28) 24%,
+    rgba(0,0,0,.66) 34%, #000 46%)}
+.wa-mo-shot figcaption{position:absolute;right:0;bottom:0;
+  padding:34px 32px 20px;font-family:var(--fj-mono);font-size:10px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-bg);
-  background:linear-gradient(to top,rgba(6,18,14,.72),rgba(6,18,14,0))}
-/* The rail sits under the frame rather than beside the copy: it changes what is
-   in the window, so it belongs to the window. */
-/* Hairlines rather than boxes. Three filled chips with borders read as a form,
-   and a solid accent block for the selected one was the loudest thing in a
-   section whose subject is a photograph. The mark of selection is a rule in the
-   accent along the top edge and the ink coming up to full ivory — carried for
-   assistive technology by aria-pressed, which the script already sets, so the
-   state is never colour alone. */
-.wa-mo-rail{display:flex;border-top:1px solid color-mix(in srgb,var(--c-bg) 14%,transparent)}
-.wa-mo-pick{flex:1;padding:15px 18px;text-align:left;background:transparent;
+  background:linear-gradient(to top,rgba(6,18,14,.66),rgba(6,18,14,0))}
+
+/* The controls live with the copy, on the dark side, because that is the side
+   a reader is reading from and the side with nothing in the way. */
+.wa-mo-controls{display:flex;margin-top:var(--sp-5);
+  border-top:1px solid color-mix(in srgb,var(--c-bg) 16%,transparent)}
+.wa-mo-rail{display:contents}
+.wa-mo-pick{padding:14px 20px 14px 0;text-align:left;background:transparent;
   border-top:2px solid transparent;margin-top:-1px;
-  transition:border-color var(--t-fast) var(--ease),opacity var(--t-fast) var(--ease)}
-/* The bar bleeds off the page with the picture, so the first item would set its
-   type against the edge of the screen. It takes the page's own gutter instead. */
-.wa-mo-pick:first-child{padding-left:44px}
-.wa-mo-pick + .wa-mo-pick{
-  border-left:1px solid color-mix(in srgb,var(--c-bg) 14%,transparent)}
-.wa-mo-pick b{display:block;font-family:var(--fj-mono);font-size:10px;
+  transition:border-color var(--t-fast) var(--ease)}
+.wa-mo-pick + .wa-mo-pick{padding-left:20px;
+  border-left:1px solid color-mix(in srgb,var(--c-bg) 16%,transparent)}
+.wa-mo-pick b{display:block;font-family:var(--fj-mono);font-size:9.5px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onbasalt-dim);
   transition:color var(--t-fast) var(--ease)}
-.wa-mo-pick i{display:block;margin-top:5px;font-style:normal;font-size:13.5px;
+.wa-mo-pick i{display:block;margin-top:5px;font-style:normal;font-size:13px;
   font-family:var(--fj-display);color:var(--fj-onbasalt-dim);
   transition:color var(--t-fast) var(--ease)}
 .wa-mo-pick:hover b,.wa-mo-pick:hover i{color:var(--c-bg)}
 .wa-mo-pick[aria-pressed="true"]{border-top-color:var(--c-accent)}
 .wa-mo-pick[aria-pressed="true"] b{color:var(--c-accent)}
 .wa-mo-pick[aria-pressed="true"] i{color:var(--c-bg)}
-/* At the end of the same bar, in the same voice. It was a bordered box over the
-   top-right of the photograph, which is the one place on this page where a
-   control had been put on top of the thing it controls. */
-.wa-mo-hold{padding:15px 18px;font-family:var(--fj-mono);font-size:9.5px;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--fj-onbasalt-dim);
-  background:transparent;align-self:stretch;
-  border-top:2px solid transparent;margin-top:-1px;
-  border-left:1px solid color-mix(in srgb,var(--c-bg) 14%,transparent);
+.wa-mo-hold{margin-left:auto;padding:14px 0 14px 20px;font-family:var(--fj-mono);
+  font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--fj-onbasalt-dim);background:transparent;border-top:2px solid transparent;
+  margin-top:-1px;border-left:1px solid color-mix(in srgb,var(--c-bg) 16%,transparent);
   transition:color var(--t-fast) var(--ease)}
 .wa-mo-hold:hover{color:var(--c-bg)}
 .wa-mo-hold .wa-mo-hold-off{display:none}
 .wa-mo-hold[aria-pressed="true"] .wa-mo-hold-on{display:none}
 .wa-mo-hold[aria-pressed="true"] .wa-mo-hold-off{display:inline}
-.wa-mo-foot{margin-top:16px;font-family:var(--fj-mono);font-size:9.5px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
-@media(max-width:880px){
-  .wa-motion{padding-top:56px}
+
+/* Below 900 the picture cannot be half the band and still be a picture, so it
+   stops overlapping: full width above, copy under it on the section's ground.
+   The gradient turns to face up rather than left, for the same reason it faced
+   left before — it is the edge the type is on. */
+@media(max-width:900px){
+  .wa-mo-band{display:block;min-height:0}
+  .wa-mo-stage{height:clamp(280px,52vw,420px)}
+  .wa-mo-window{position:absolute;inset:0}
+  .wa-mo-copy{padding:var(--sp-5) 0 56px}
+  .wa-mo-copy h2{max-width:none}
+  /* The measure that keeps the rules off the picture is a desktop problem: here
+     the picture is above the copy rather than behind it. */
+  .wa-mo-copy .wa-head-no,
+  .wa-mo-copy .wa-mo-controls{max-width:none}
+  .wa-mo-shot img,.wa-mo-shot video{
+    -webkit-mask-image:linear-gradient(to top,
+      transparent 0%, rgba(0,0,0,.3) 10%, #000 30%);
+    mask-image:linear-gradient(to top,
+      transparent 0%, rgba(0,0,0,.3) 10%, #000 30%)}
+  .wa-mo-shot figcaption{left:0;right:auto;padding:34px 20px 20px}
 }
 @media(max-width:560px){
-  /* The bar stacks, so the pause goes under the three rather than standing as a
-     tall column beside them. */
-  .wa-mo-stage{grid-template-columns:minmax(0,1fr);
-    grid-template-areas:"win" "rail" "hold"}
-  .wa-mo-hold{text-align:left;border-left:0;
-    border-top:1px solid color-mix(in srgb,var(--c-bg) 14%,transparent);
-    padding-left:20px}
+  .wa-mo-controls{flex-wrap:wrap}
+  .wa-mo-pick{flex:1 1 100%;padding:12px 0}
+  .wa-mo-pick + .wa-mo-pick{padding-left:0;border-left:0;
+    border-top:1px solid color-mix(in srgb,var(--c-bg) 16%,transparent)}
+  .wa-mo-hold{flex:1 1 100%;margin-left:0;padding:12px 0;border-left:0;
+    border-top:1px solid color-mix(in srgb,var(--c-bg) 16%,transparent)}
 }
-@media(max-width:560px){
-  .wa-mo-rail{flex-direction:column}
-  .wa-mo-pick:first-child{padding-left:20px}
-  .wa-mo-pick + .wa-mo-pick{border-left:0;
-    border-top:1px solid color-mix(in srgb,var(--c-bg) 14%,transparent)}
-  .wa-mo-window{aspect-ratio:4/3}
-}
-/* The frame advances on its own, so it stops on request — and it never starts
-   for a reader who has asked the machine not to move things. */
-@media(prefers-reduced-motion:reduce){
-  .wa-mo-shot{transition:none}
-}
+@media(prefers-reduced-motion:reduce){.wa-mo-shot{transition:none}}
 
 /* WHAT DO YOU WANT TO FEEL — the first block under the hero.
 
@@ -2872,19 +2859,10 @@ window.AF = {
      prefers-reduced-motion the frame does not advance at all and the rail
      becomes the only way to change it, which is the behaviour the whole site
      already has. -->
-<section class="wa-zone basalt wa-motion" id="motion">
-  <div class="wa-frame">
-    <div class="wa-head">
-      <div class="wa-head-no"><b>01</b><span>The continent</span></div>
-      <div>
-        <h2>Africa doesn&rsquo;t <em>stand still</em>.</h2>
-        <p class="wa-note">Cities wake. Forests breathe. Hands are already working. You do not see a
-          place from outside it &mdash; you walk through it, eat in it, and wake up inside it.</p>
-      </div>
-    </div>
-    <div class="wa-mo-lay">
-      <div class="wa-mo-stage">
-        <!-- gen:motion -->
+<section class="wa-motion" id="motion">
+  <div class="wa-mo-band">
+    <div class="wa-mo-stage">
+      <!-- gen:motion -->
       <div class="wa-mo-window">
       <figure class="wa-mo-shot" data-track="city" data-on="true"><img src="/images/uploads/city-cape-town-1080w.jpg" width="1080" height="650" alt="The V&amp;A Waterfront in Cape Town at midday, yachts and quaysides in the foreground and Table Mountain and Devil&#x27;s Peak rising directly behind the city centre" loading="eager" decoding="async" data-provider="upload"><figcaption>Cape Town</figcaption></figure>
       <figure class="wa-mo-shot" data-track="city"><img src="/images/uploads/city-marrakech-1200w.jpg" width="1200" height="800" alt="Jemaa el-Fna square in Marrakech at dusk, crowds moving between rows of covered food stalls, the pink walls of the medina and a minaret behind, with the sky going orange" loading="lazy" decoding="async" data-provider="upload"><figcaption>Marrakech</figcaption></figure>
@@ -2906,13 +2884,22 @@ window.AF = {
       <figure class="wa-mo-shot" data-track="culture"><img src="/images/uploads/site-services-north-craft-stalls-1200w.jpg" width="1200" height="800" alt="Leather and craft stalls under awnings in a northern Cameroonian market" loading="lazy" decoding="async" data-provider="upload"><figcaption>Leather and craft</figcaption></figure>
       <figure class="wa-mo-shot" data-track="culture"><img src="/images/uploads/site-about-forest-guide-tree-1440w.jpg" width="1440" height="960" alt="A forest guide pointing out a tree species inside dense rainforest" loading="lazy" decoding="async" data-provider="upload"><figcaption>A guide, and a tree worth stopping for</figcaption></figure>
       <figure class="wa-mo-shot" data-track="culture"><img src="/images/uploads/site-about-mount-trailhead-dawn-1600w.jpg" width="1600" height="1067" alt="Climbers and guides gathered with packs on volcanic ground at the Mount Cameroon National Park registration hut in Buea before dawn, the forest canopy behind them already lit by the sun while the ground is still in shadow" loading="lazy" decoding="async" data-provider="upload"><figcaption>Before six at the trailhead</figcaption></figure>
+      </div>      <!-- /gen:motion -->
+    </div>
+    <div class="wa-mo-copy">
+      <div class="wa-frame">
+        <div class="wa-head-no"><b>01</b><span>The continent</span></div>
+        <h2>Africa doesn&rsquo;t <em>stand still</em>.</h2>
+        <p class="wa-note">Cities wake. Forests breathe. Hands are already working. You do not see a
+          place from outside it &mdash; you walk through it, eat in it, and wake up inside it.</p>
+        <div class="wa-mo-controls">
+          <!-- gen:motiontracks -->
+      <div class="wa-mo-rail" role="group" aria-label="Choose what the window shows"><button class="wa-mo-pick" type="button" data-track="city" aria-pressed="true"><b>City life</b><i>Cities wake.</i></button><button class="wa-mo-pick" type="button" data-track="wild" aria-pressed="false"><b>Wild places</b><i>Forests breathe.</i></button><button class="wa-mo-pick" type="button" data-track="culture" aria-pressed="false"><b>Living culture</b><i>Hands are already working.</i></button></div>      <!-- /gen:motiontracks -->
+          <button class="wa-mo-hold" type="button" aria-pressed="false">
+            <span class="wa-mo-hold-on">Pause</span><span class="wa-mo-hold-off">Play</span>
+          </button>
+        </div>
       </div>
-      <div class="wa-mo-rail" role="group" aria-label="Choose what the window shows"><button class="wa-mo-pick" type="button" data-track="city" aria-pressed="true"><b>City life</b><i>Cities wake.</i></button><button class="wa-mo-pick" type="button" data-track="wild" aria-pressed="false"><b>Wild places</b><i>Forests breathe.</i></button><button class="wa-mo-pick" type="button" data-track="culture" aria-pressed="false"><b>Living culture</b><i>Hands are already working.</i></button></div>      <!-- /gen:motion -->
-        <button class="wa-mo-hold" type="button" aria-pressed="false">
-          <span class="wa-mo-hold-on">Pause</span><span class="wa-mo-hold-off">Play</span>
-        </button>
-      </div>
-      <p class="wa-mo-foot">Three ways to look at one continent. The window changes with you.</p>
     </div>
   </div>
 </section>
@@ -3555,14 +3542,14 @@ window.AF = {
      moves for longer than five seconds has to be stoppable — the pause is not a
      nicety, it is the reason this is allowed to move at all. */
   (function () {
-    var stage = document.querySelector('.wa-mo-stage');
-    var win = stage && stage.querySelector('.wa-mo-window');
-    var hold = stage && stage.querySelector('.wa-mo-hold');
-    if (!stage || !win || !hold) return;
-    /* The rail is a sibling of the window, not a child of it — it sat inside
-       and covered every shot's caption. Both are looked up from the stage. */
+    var band = document.getElementById('motion');
+    var win = band && band.querySelector('.wa-mo-window');
+    var hold = band && band.querySelector('.wa-mo-hold');
+    if (!band || !win || !hold) return;
+    /* The rail is not inside the stage any more — it sits with the copy, on the
+       dark side of the band — so everything is looked up from the section. */
     var shots = [].slice.call(win.querySelectorAll('.wa-mo-shot'));
-    var picks = [].slice.call(stage.querySelectorAll('.wa-mo-pick'));
+    var picks = [].slice.call(band.querySelectorAll('.wa-mo-pick'));
     if (!shots.length) return;
     var still = matchMedia('(prefers-reduced-motion: reduce)');
     var track = (picks[0] && picks[0].dataset.track) || shots[0].dataset.track;

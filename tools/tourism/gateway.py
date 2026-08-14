@@ -66,7 +66,8 @@ MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer", "regiontone", "feel",
-           "moments", "momentsay", "seasons", "seasonsay", "motion")
+           "moments", "momentsay", "seasons", "seasonsay", "motion",
+           "motiontracks")
 
 # Markers that live inside <style> rather than in the document. An HTML comment
 # there is not a comment: `<!--` and `-->` are CDO/CDC tokens the CSS parser
@@ -426,10 +427,13 @@ def block_motion():
     # The window and the rail are siblings, not nested. The rail was inside the
     # frame at first and sat on top of the caption, so every shot's name was
     # underneath the controls that changed it.
+    # Two blocks, not one. The rail belongs with the copy on the dark side of the
+    # band and the window is cropped by the band on three edges, so they cannot
+    # be siblings in one container any more.
     return ('      <div class="wa-mo-window">\n' + "\n".join(frames)
-            + '\n      </div>\n'
-            + '      <div class="wa-mo-rail" role="group" '
-              'aria-label="Choose what the window shows">'
+            + '\n      </div>', 
+            '      <div class="wa-mo-rail" role="group" '
+            'aria-label="Choose what the window shows">'
             + "".join(rails) + "</div>")
 
 
@@ -1433,7 +1437,8 @@ def render(countries):
         "feel": block_feel(seq),
         "moments": block_moments(),
         "momentsay": block_momentsay(),
-        "motion": block_motion(),
+        "motion": block_motion()[0],
+        "motiontracks": block_motion()[1],
         "seasons": block_seasons(seq),
         "seasonsay": block_seasonsay(seq),
         "regiontone": block_regiontone(),
