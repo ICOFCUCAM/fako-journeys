@@ -1068,7 +1068,12 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(min-width:1100px){
   .wa-city:not([data-wide]) .wa-city-note{display:none}
 }
+/* On a phone every card is full width, so the lead pair stops being a lead —
+   eleven identical cards in a column is the catalogue the wide layout avoids.
+   The two with the largest photographs keep a taller frame, which is the only
+   part of "a collection has a lead in it" that survives one column. */
 @media(max-width:640px){
+  .wa-city[data-wide] .wa-city-art{aspect-ratio:4/3}
   .wa-city-grid{grid-template-columns:1fr}
   .wa-city,.wa-city[data-wide]{grid-column:span 1}
   .wa-city-say b{font-size:24px}
