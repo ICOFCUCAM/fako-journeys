@@ -66,7 +66,7 @@ MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer", "regiontone", "feel",
-           "moments")
+           "moments", "seasons", "seasonsay")
 
 # Markers that live inside <style> rather than in the document. An HTML comment
 # there is not a comment: `<!--` and `-->` are CDO/CDC tokens the CSS parser
@@ -372,6 +372,57 @@ def block_moments():
                esc(m.get("alt") or ""), esc(m.get("line") or ""),
                esc(m.get("label") or lens["label"])))
     return "\n".join(out)
+
+
+def block_seasons(countries):
+    """Twelve months, and who is at their best in each.
+
+    The destinations grid already carries a month filter, and it shows a count
+    per month and nothing else. That is a control. This is the argument the
+    control implies and the page never made: there is no month in which Africa
+    has nothing to offer, and a reader whose leave is fixed in April is not out
+    of luck.
+
+    Nothing here is typed. The count is the countries whose own `months` include
+    that month, and the names are the ones for which that month matters most —
+    ordered by how few good months the country has altogether, so a place with a
+    five-month window is named ahead of one that is good all year. That is a
+    real distinction rather than an alphabetical cut: April belongs to the
+    Seychelles in a way that October, when fifteen countries are open, belongs
+    to nobody in particular.
+    """
+    rows = []
+    for i, name in enumerate(MONTHS, 1):
+        who = sorted((len(c.months), c.name, c.url) for c in countries if i in c.months)
+        if not who:
+            continue      # a month with nowhere to go is not offered
+        lead = who[:3]
+        rest = len(who) - len(lead)
+        names = _and_list('<a href="%s">%s</a>' % (esc(u), esc(n)) for _l, n, u in lead)
+        rows.append(
+            '      <div class="wa-season" data-month="%d">'
+            '<b>%s</b><span class="wa-season-n">%s</span>'
+            '<p class="wa-season-who">%s%s</p></div>'
+            % (i, esc(name[:3]), esc(_spell(len(who))),
+               names,
+               (", and %s more" % _spell(rest).lower()) if rest else ""))
+    return "\n".join(rows)
+
+
+def block_seasonsay(countries):
+    """The one sentence the twelve months add up to, counted rather than typed."""
+    per = {i: sum(1 for c in countries if i in c.months) for i in range(1, 13)}
+    live = {i: n for i, n in per.items() if n}
+    if not live:
+        return "      "
+    lo = min(live.values())
+    quiet = [MONTHS[i - 1] for i, n in sorted(live.items()) if n == lo]
+    return ("      No month is a bad month everywhere. The quietest is %s, and %s "
+            "countries are at their best in it; the busiest is %s, with %s."
+            % (_and_list(quiet), _spell(lo).lower(),
+               _and_list([MONTHS[i - 1] for i, n in sorted(live.items())
+                          if n == max(live.values())]),
+               _spell(max(live.values())).lower()))
 
 
 def block_expcards(countries):
@@ -1299,6 +1350,8 @@ def render(countries):
         "footer": block_footer(seq),
         "feel": block_feel(seq),
         "moments": block_moments(),
+        "seasons": block_seasons(seq),
+        "seasonsay": block_seasonsay(seq),
         "regiontone": block_regiontone(),
     }
 

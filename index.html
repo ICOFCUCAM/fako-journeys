@@ -1453,6 +1453,35 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-feel-close{max-width:none}
 }
 
+/* WHEN CAN YOU TRAVEL — twelve months as evidence rather than as controls.
+
+   Four across at full width. Twelve in a row is the filter strip in the grid
+   above, which is the right shape for a control and the wrong one for a
+   paragraph: each month here carries three country names and a count, and that
+   does not fit in an eighth of the frame. Three rows of four reads as a year. */
+.wa-season-grid{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:var(--fj-rule-w,1px);background:var(--c-border);
+  border:1px solid var(--c-border);margin-top:var(--sp-5)}
+.wa-season{background:var(--fj-dust);padding:18px 20px 20px;
+  display:flex;flex-direction:column;gap:6px}
+.wa-season b{font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-muted)}
+/* The count is the loudest thing in the cell, because the claim this section
+   makes is arithmetic: no month is empty, and here is how full each one is. */
+.wa-season-n{font-family:var(--fj-display);font-size:clamp(22px,2.2vw,30px);
+  font-weight:700;line-height:1;letter-spacing:-.02em;color:var(--c-ink)}
+.wa-season-who{margin:2px 0 0;font-size:13.5px;line-height:1.5;color:var(--c-muted)}
+.wa-season-who a{border-bottom:1px solid var(--c-border);transition:border-color .2s,color .2s}
+.wa-season-who a:hover{color:var(--c-accent);border-bottom-color:var(--c-accent)}
+@media(max-width:900px){.wa-season-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){
+  .wa-season-grid{grid-template-columns:1fr}
+  .wa-season{flex-direction:row;align-items:baseline;gap:12px;padding:14px 16px}
+  .wa-season b{min-width:34px}
+  .wa-season-n{font-size:20px}
+  .wa-season-who{flex-basis:100%}
+}
+
 /* COME FOR THE MOMENT — four photographs at the size a photograph needs.
 
    Two up rather than four. Four across puts each frame at about 280px on a
@@ -1721,14 +1750,13 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 @media(max-width:640px){.wa-steps{grid-template-columns:1fr}.wa-step{padding-top:26px;border-bottom:var(--fj-rule)}}
 
 /* ---- seasons ---------------------------------------------------------------------- */
-.wa-seasons{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--c-accent)}
-.wa-season{padding:28px 26px 26px 0;border-right:var(--fj-rule-dark)}
-.wa-season:last-child{border-right:0;padding-right:0}
-.wa-season b{display:block;font-family:var(--fj-display);font-size:clamp(20px,2.2vw,28px);font-weight:700;text-transform:uppercase;color:var(--c-bg)}
-.wa-season ul{margin-top:16px}
-.wa-season li{font-family:var(--fj-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fj-onbasalt-dim);padding:6px 0;border-bottom:var(--fj-rule-dark)}
-@media(max-width:840px){.wa-seasons{grid-template-columns:1fr 1fr}.wa-season:nth-child(2n){border-right:0;padding-right:0}}
-@media(max-width:480px){.wa-seasons{grid-template-columns:1fr}.wa-season{border-right:0 !important;padding-right:0 !important}}
+/* The rules that used to be here styled a .wa-seasons grid of .wa-season cells
+   with a <ul> of months inside each. No markup on the site had that shape any
+   more — the section they belonged to was removed and the CSS was not — so they
+   sat here meaning nothing until a new section reused the same two class names
+   and silently inherited a display:grid that shrink-wrapped its frame to 627px
+   of a 1440 screen. Dead CSS is not inert; it is a trap with a name on it.
+   The section that needs these names now defines them itself, above. */
 
 /* ---- stories ---------------------------------------------------------------------- */
 .wa-stories{display:grid;grid-template-columns:2fr 1fr 1fr;gap:0;border-top:2px solid var(--c-primary)}
@@ -2922,6 +2950,54 @@ window.AF = {
   </div>
 </section>
 
+<!-- WHEN CAN YOU TRAVEL?
+     The destinations grid above already has a month filter, and it shows a
+     count per month and nothing else. That is a control. This is the argument
+     the control implies and the page never made: there is no month in which
+     this continent has nothing to offer, so a reader whose leave is fixed in
+     April is not out of luck.
+
+     Every figure here is counted. The number beside a month is the countries
+     whose own dataset says that month is one of their best; the names are the
+     ones for which the month matters most, ordered by how few good months the
+     country has altogether. That is a real distinction rather than an
+     alphabetical cut — April belongs to the Seychelles in a way that October,
+     when fifteen countries are open, belongs to nobody in particular.
+
+     No month links anywhere. The obvious thing would be to hand each one to the
+     journey builder, but the builder opens on what you want rather than when
+     you can go, so a month on its own does not move it off the first question:
+     the link would look as though it carried a choice and would not. The filter
+     that does take a month is in the grid above, where a reader has already
+     passed it. -->
+<section class="wa-zone dust wa-seasons" id="year">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>07</b><span>The year</span></div>
+      <div>
+        <h2>When can you <em>travel</em>?</h2>
+        <p class="wa-note"><!-- gen:seasonsay -->
+      No month is a bad month everywhere. The quietest is April, and eight countries are at their best in it; the busiest is October, with fifteen.      <!-- /gen:seasonsay --></p>
+      </div>
+    </div>
+    <div class="wa-season-grid">
+      <!-- gen:seasons -->
+      <div class="wa-season" data-month="1"><b>Jan</b><span class="wa-season-n">Twelve</span><p class="wa-season-who"><a href="/cameroon">Cameroon</a>, <a href="/cote-divoire">Côte d&#x27;Ivoire</a> and <a href="/ghana">Ghana</a>, and nine more</p></div>
+      <div class="wa-season" data-month="2"><b>Feb</b><span class="wa-season-n">Twelve</span><p class="wa-season-who"><a href="/cameroon">Cameroon</a>, <a href="/cote-divoire">Côte d&#x27;Ivoire</a> and <a href="/ghana">Ghana</a>, and nine more</p></div>
+      <div class="wa-season" data-month="3"><b>Mar</b><span class="wa-season-n">Eleven</span><p class="wa-season-who"><a href="/cameroon">Cameroon</a>, <a href="/cote-divoire">Côte d&#x27;Ivoire</a> and <a href="/ghana">Ghana</a>, and eight more</p></div>
+      <div class="wa-season" data-month="4"><b>Apr</b><span class="wa-season-n">Eight</span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/tunisia">Tunisia</a> and <a href="/morocco">Morocco</a>, and five more</p></div>
+      <div class="wa-season" data-month="5"><b>May</b><span class="wa-season-n">Eleven</span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/tunisia">Tunisia</a> and <a href="/botswana">Botswana</a>, and eight more</p></div>
+      <div class="wa-season" data-month="6"><b>Jun</b><span class="wa-season-n">Thirteen</span><p class="wa-season-who"><a href="/tunisia">Tunisia</a>, <a href="/zambia">Zambia</a> and <a href="/botswana">Botswana</a>, and ten more</p></div>
+      <div class="wa-season" data-month="7"><b>Jul</b><span class="wa-season-n">Twelve</span><p class="wa-season-who"><a href="/zambia">Zambia</a>, <a href="/botswana">Botswana</a> and <a href="https://namib-skyline.vercel.app">Namibia</a>, and nine more</p></div>
+      <div class="wa-season" data-month="8"><b>Aug</b><span class="wa-season-n">Twelve</span><p class="wa-season-who"><a href="/zambia">Zambia</a>, <a href="/botswana">Botswana</a> and <a href="https://namib-skyline.vercel.app">Namibia</a>, and nine more</p></div>
+      <div class="wa-season" data-month="9"><b>Sep</b><span class="wa-season-n">Fourteen</span><p class="wa-season-who"><a href="/tunisia">Tunisia</a>, <a href="/zambia">Zambia</a> and <a href="/botswana">Botswana</a>, and eleven more</p></div>
+      <div class="wa-season" data-month="10"><b>Oct</b><span class="wa-season-n">Fifteen</span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/tunisia">Tunisia</a> and <a href="/zambia">Zambia</a>, and twelve more</p></div>
+      <div class="wa-season" data-month="11"><b>Nov</b><span class="wa-season-n">Twelve</span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/cameroon">Cameroon</a> and <a href="/cote-divoire">Côte d&#x27;Ivoire</a>, and nine more</p></div>
+      <div class="wa-season" data-month="12"><b>Dec</b><span class="wa-season-n">Eleven</span><p class="wa-season-who"><a href="/cameroon">Cameroon</a>, <a href="/cote-divoire">Côte d&#x27;Ivoire</a> and <a href="/ghana">Ghana</a>, and eight more</p></div>      <!-- /gen:seasons -->
+    </div>
+  </div>
+</section>
+
 <!-- The two flagships that used to sit here are gone; see the note below. -->
 <!-- 05 africa now -->
 <!-- Replaced "Two places to start", which promoted Cameroon and Uganda for the
@@ -2933,7 +3009,7 @@ window.AF = {
 <section class="wa-zone basalt" id="now">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>07</b><span>Africa now</span></div>
+      <div class="wa-head-no"><b>08</b><span>Africa now</span></div>
       <div>
         <h2>Not a <em>museum</em>.</h2>
         <!-- gen:nownote -->
@@ -2968,7 +3044,7 @@ window.AF = {
 <section class="wa-zone dust" id="plan">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>08</b><span>The journey</span></div>
+      <div class="wa-head-no"><b>09</b><span>The journey</span></div>
       <div>
         <h2>What happens after you <em>choose Africa</em>?</h2>
         <!-- gen:plannote -->
@@ -3015,7 +3091,7 @@ window.AF = {
 <section class="wa-zone" id="stories">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>09</b><span>Stories</span></div>
+      <div class="wa-head-no"><b>10</b><span>Stories</span></div>
       <div>
         <h2>Africa is <em>more than a destination</em>.</h2>
         <p class="wa-note">Twenty-two long reads, one per country, each built out of what that country says about itself rather than written about it. One from each region below.</p>

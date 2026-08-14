@@ -253,6 +253,7 @@ def main():
     no_keys()
 
     from tourism import cache as cache_mod
+    from tourism import gateway
     from tourism import imaging, providers, queries, relevance, resolve, validate
     from tourism.model import (attach_cache, load_countries, load_country,
                                load_taxonomy)
@@ -1360,7 +1361,8 @@ def main():
         # narrows" sat three thousand pixels below that grid, so the promise was
         # false and clicking it scrolled the reader backwards.
         WANT_ORDER = ["window", "feel", "moments", "scale", "experiences",
-                      "destinations", "cities", "now", "plan", "stories", "begin"]
+                      "destinations", "cities", "year", "now", "plan",
+                      "stories", "begin"]
         got = re.findall(r'<section[^>]*id="([a-z]+)"', home_src)
         check("the homepage still argues in the order it was built to",
               got == WANT_ORDER,
@@ -1380,13 +1382,82 @@ def main():
             check("every section of the page is inside the main landmark",
                   inside == got, "%d of %d" % (len(inside), len(got)))
 
+        # An id is an address. Two elements answering to one is a link that lands
+        # on whichever the parser saw first, and it is invisible until something
+        # points at it — twenty-three pages link "Travel seasons" to #seasons on
+        # this page, and a second #seasons would have quietly taken them all to
+        # the wrong element.
+        dupes = {}
+        for path in sorted(glob.glob(os.path.join(ROOT_DIR, "*.html"))):
+            # Not `ids`: that name already holds the twenty-seven category ids
+            # for every check below this one, and rebinding it here quietly made
+            # three of them fail against a taxonomy of six.
+            addrs = re.findall(r'\sid="([^"]+)"', open(path).read())
+            same = sorted({i for i in addrs if addrs.count(i) > 1})
+            if same:
+                dupes[os.path.relpath(path, ROOT_DIR)] = same
+        check("no page answers to the same address twice",
+              not dupes,
+              "; ".join("%s: %s" % (k, ", ".join(v)) for k, v in dupes.items())
+              or "%d pages" % len(glob.glob(os.path.join(ROOT_DIR, "*.html"))))
+
+        # -- there is a month for everybody, and it is counted ----------------------
+        # The grid above carries a month filter that shows a count and nothing
+        # else. That is a control; this is the argument it implies, which the
+        # page had never made. Every figure in it is a len() of something on
+        # disk, so the checks are that the arithmetic on the page is the
+        # arithmetic in the files, and that no month is offered with nowhere to
+        # go in it.
+        per_month = {i: [c for c in countries if i in c.months] for i in range(1, 13)}
+        sblock = re.search(r'<!-- gen:seasons -->(.*?)<!-- /gen:seasons -->',
+                           home_src, re.S)
+        check("the year is generated rather than typed", bool(sblock))
+        if sblock:
+            cells = re.findall(r'<div class="wa-season" data-month="(\d+)">'
+                               r'<b>([A-Za-z]+)</b><span class="wa-season-n">([A-Za-z-]+)</span>',
+                               sblock.group(1))
+            check("every month with somewhere to go is drawn",
+                  len(cells) == len([i for i, w in per_month.items() if w]),
+                  "%d months" % len(cells))
+            wrong = []
+            for num, mon, said in cells:
+                want = gateway._spell(len(per_month[int(num)]))
+                if said != want:
+                    wrong.append("%s says %s, files say %s" % (mon, said, want))
+            check("the count on a month is the count in the files",
+                  not wrong, "; ".join(wrong) or "all %d agree" % len(cells))
+            check("no month is offered with nothing in it",
+                  all(per_month[int(n)] for n, _m, _s in cells),
+                  "%d months, smallest %d"
+                  % (len(cells), min(len(w) for w in per_month.values() if w)))
+            urls = set(re.findall(r'<a href="([^"]+)">', sblock.group(1)))
+            known = {c.url for c in countries}
+            check("every country named in the year is one of ours",
+                  urls <= known, ", ".join(sorted(urls - known)) or "%d links" % len(urls))
+        say = re.search(r'<!-- gen:seasonsay -->(.*?)<!-- /gen:seasonsay -->',
+                        home_src, re.S)
+        check("the sentence over the year is generated too", bool(say))
+        if say and per_month:
+            live = {i: len(w) for i, w in per_month.items() if w}
+            lo, hi = min(live.values()), max(live.values())
+            text = say.group(1)
+            check("the quietest month named is the quietest month there is",
+                  gateway._spell(lo).lower() in text
+                  and all(gateway.MONTHS[i - 1] in text
+                          for i, n in live.items() if n == lo),
+                  "%d in the quietest" % lo)
+            check("and the busiest is the busiest",
+                  gateway._spell(hi).lower() in text
+                  and all(gateway.MONTHS[i - 1] in text
+                          for i, n in live.items() if n == hi),
+                  "%d in the busiest" % hi)
+
         # -- the four photographs that are the argument -----------------------------
         # Everywhere else on this site a photograph illustrates a country that has
         # a dataset behind it. Here the picture is the point and the words are
         # written to the frame, which inverts the risk: the danger is not a
         # missing picture but a picture that promises what the frame does not
         # hold.
-        from tourism import gateway
         lenses_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "lenses.json"))
         lens_keys = {k: v for k, v in lenses_src.items()
                      if not k.startswith("$") and isinstance(v, dict)}
