@@ -12323,6 +12323,38 @@
         ]
       }
     },
+    "senegal/hidden-gems": {
+      "country": "senegal",
+      "category": "hidden-gems",
+      "caption": "Bassari Country",
+      "description": "The Bassari and Bedik villages of the south-east, up in the hills, and rarely visited.",
+      "provider": "pexels",
+      "photoId": "36598100",
+      "imageUrl": "https://images.pexels.com/photos/36598100/pexels-photo-36598100.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36598100/pexels-photo-36598100.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/capturing-cultural-celebration-in-senegal-street-36598100/",
+      "photographer": "Felipe Esono Nguema",
+      "photographerUrl": "https://www.pexels.com/@felipe-esono-nguema-2149130540",
+      "width": 6960,
+      "height": 4640,
+      "aspectRatio": 1.5,
+      "alt": "a Bedik village on a hillside in south-east Senegal",
+      "query": "Senegal Bedik",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:30:43Z",
+      "verifiedAt": "2026-08-14T07:30:43Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: senegal"
+        ]
+      }
+    },
     "senegal/historic-sites": {
       "country": "senegal",
       "category": "historic-sites",
@@ -12545,6 +12577,38 @@
         ]
       }
     },
+    "senegal/photography": {
+      "country": "senegal",
+      "category": "photography",
+      "caption": "Light on Water",
+      "description": "Delta light at either end of the day, and pink water at the Lac Rose.",
+      "provider": "pexels",
+      "photoId": "35594681",
+      "imageUrl": "https://images.pexels.com/photos/35594681/pexels-photo-35594681.png",
+      "thumbnailUrl": "https://images.pexels.com/photos/35594681/pexels-photo-35594681.png?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-fishing-boats-on-lac-rose-senegal-35594681/",
+      "photographer": "Christopher Junior",
+      "photographerUrl": "https://www.pexels.com/@oneshootpictures",
+      "width": 7107,
+      "height": 3998,
+      "aspectRatio": 1.7776,
+      "alt": "pink water and salt at the Lac Rose near Dakar, Senegal",
+      "query": "Senegal Lac Rose Dakar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:30:41Z",
+      "verifiedAt": "2026-08-14T07:30:42Z",
+      "relevance": {
+        "score": 5.79,
+        "reasons": [
+          "names the country",
+          "subject: lac,rose"
+        ]
+      }
+    },
     "senegal/safari": {
       "country": "senegal",
       "category": "safari",
@@ -12640,6 +12704,37 @@
         ]
       }
     },
+    "senegal/why-visit": {
+      "country": "senegal",
+      "category": "why-visit",
+      "caption": "The Easy Door to West Africa",
+      "description": "Stable, straightforward, six hours from Europe, and the friendliest reputation on the coast.",
+      "provider": "pexels",
+      "photoId": "36847238",
+      "imageUrl": "https://images.pexels.com/photos/36847238/pexels-photo-36847238.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36847238/pexels-photo-36847238.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-fishing-boats-on-pacasmayo-beach-36847238/",
+      "photographer": "Joshuan Barboza",
+      "photographerUrl": "https://www.pexels.com/@jbarbozameca",
+      "width": 9520,
+      "height": 6336,
+      "aspectRatio": 1.5025,
+      "alt": "the Atlantic coast road north of Dakar, Senegal",
+      "query": "Senegal Atlantic Dakar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:30:43Z",
+      "verifiedAt": "2026-08-14T07:30:45Z",
+      "relevance": {
+        "score": 1.93,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
     "senegal/wildlife": {
       "country": "senegal",
       "category": "wildlife",
@@ -12668,6 +12763,1411 @@
         "score": 2.53,
         "reasons": [
           "subject: pelicans"
+        ]
+      }
+    },
+    "seychelles/adventure": {
+      "country": "seychelles",
+      "category": "adventure",
+      "caption": "Dive, Sail, Walk",
+      "description": "Diving the granite drop-offs, sailing the inner islands, and walking Mahé's ridge trails.",
+      "provider": "pexels",
+      "photoId": "13549341",
+      "imageUrl": "https://images.pexels.com/photos/13549341/pexels-photo-13549341.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/13549341/pexels-photo-13549341.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-a-beach-in-seychelles-13549341/",
+      "photographer": "Adrien Daurenjou",
+      "photographerUrl": "https://www.pexels.com/@adriendrj",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a yacht anchored between granite islands, Seychelles",
+      "query": "Seychelles yacht anchored granite",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:30:57Z",
+      "verifiedAt": "2026-08-14T07:30:58Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: granite"
+        ]
+      }
+    },
+    "seychelles/architecture": {
+      "country": "seychelles",
+      "category": "architecture",
+      "caption": "Creole Houses",
+      "description": "Steep roofs, wide verandas and louvres — built for heat before anyone had a choice.",
+      "provider": "pexels",
+      "photoId": "37270091",
+      "imageUrl": "https://images.pexels.com/photos/37270091/pexels-photo-37270091.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37270091/pexels-photo-37270091.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/charming-wooden-house-facade-against-blue-sky-37270091/",
+      "photographer": "Wesley  Novais",
+      "photographerUrl": "https://www.pexels.com/@wesley-novais-2150620479",
+      "width": 4573,
+      "height": 6860,
+      "aspectRatio": 0.6666,
+      "alt": "a traditional Creole house with louvred shutters, Seychelles",
+      "query": "Seychelles traditional creole house",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:31:10Z",
+      "verifiedAt": "2026-08-14T07:31:10Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: house,shutters"
+        ]
+      }
+    },
+    "seychelles/beaches": {
+      "country": "seychelles",
+      "category": "beaches",
+      "caption": "Anse Source d'Argent",
+      "description": "The most photographed beach in the world, and the granite is the reason why.",
+      "provider": "pexels",
+      "photoId": "32544311",
+      "imageUrl": "https://images.pexels.com/photos/32544311/pexels-photo-32544311.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32544311/pexels-photo-32544311.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/sunny-beach-day-at-anse-source-d-argent-32544311/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "granite boulders and shallow water at Anse Source d'Argent, Seychelles",
+      "query": "Seychelles Anse Source Argent",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:30:55Z",
+      "verifiedAt": "2026-08-14T07:30:55Z",
+      "relevance": {
+        "score": 6.04,
+        "reasons": [
+          "names the country",
+          "subject: anse,d'argent,source"
+        ]
+      }
+    },
+    "seychelles/cities": {
+      "country": "seychelles",
+      "category": "cities",
+      "caption": "Victoria",
+      "description": "One of the smallest capitals in the world, with a clock tower and a market.",
+      "provider": "pexels",
+      "photoId": "32371915",
+      "imageUrl": "https://images.pexels.com/photos/32371915/pexels-photo-32371915.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32371915/pexels-photo-32371915.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ben-thanh-market-in-ho-chi-minh-city-in-daylight-32371915/",
+      "photographer": "Thien Phuoc Phuong",
+      "photographerUrl": "https://www.pexels.com/@thien-phuoc-phuong-250460081",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the market and clock tower in Victoria, Mahé, Seychelles",
+      "query": "Seychelles market clock tower",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:09Z",
+      "verifiedAt": "2026-08-14T07:31:09Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "subject: market,tower",
+          "category: city"
+        ]
+      }
+    },
+    "seychelles/crafts": {
+      "country": "seychelles",
+      "category": "crafts",
+      "caption": "Boatbuilding and Weaving",
+      "description": "Pirogue building on La Digue, and coconut palm weaving still done by hand.",
+      "provider": "pexels",
+      "photoId": "32974350",
+      "imageUrl": "https://images.pexels.com/photos/32974350/pexels-photo-32974350.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32974350/pexels-photo-32974350.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/beach-relaxation-with-woman-in-black-swimsuit-32974350/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "a wooden pirogue being built on a beach, Seychelles",
+      "query": "Seychelles wooden pirogue being",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:04Z",
+      "verifiedAt": "2026-08-14T07:31:05Z",
+      "relevance": {
+        "score": 4.66,
+        "reasons": [
+          "subject: and,beach"
+        ]
+      }
+    },
+    "seychelles/culture": {
+      "country": "seychelles",
+      "category": "culture",
+      "caption": "Creole",
+      "description": "African, French, Indian and Chinese, in one Creole language and one kitchen.",
+      "provider": "pexels",
+      "photoId": "14025856",
+      "imageUrl": "https://images.pexels.com/photos/14025856/pexels-photo-14025856.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/14025856/pexels-photo-14025856.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/wooden-porch-with-steps-14025856/",
+      "photographer": "Quang Nguyen Vinh",
+      "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+      "width": 7517,
+      "height": 5014,
+      "aspectRatio": 1.4992,
+      "alt": "a Creole house with a wide veranda on Mahé, Seychelles",
+      "query": "Seychelles creole house veranda",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:30:59Z",
+      "verifiedAt": "2026-08-14T07:31:00Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "subject: house",
+          "category: traditional"
+        ]
+      }
+    },
+    "seychelles/eco-tourism": {
+      "country": "seychelles",
+      "category": "eco-tourism",
+      "caption": "Half the Country Is Protected",
+      "description": "Forty-two per cent of the land is national park, and the marine parks now match it.",
+      "provider": "pexels",
+      "photoId": "32962627",
+      "imageUrl": "https://images.pexels.com/photos/32962627/pexels-photo-32962627.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32962627/pexels-photo-32962627.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-orange-buoy-floating-in-blue-ocean-waters-32962627/",
+      "photographer": "Boris Hamer",
+      "photographerUrl": "https://www.pexels.com/@borishamer",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "a marine park marker buoy over Seychelles reef",
+      "query": "Seychelles marine park marker",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:15Z",
+      "verifiedAt": "2026-08-14T07:31:16Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: buoy,the"
+        ]
+      }
+    },
+    "seychelles/family-community": {
+      "country": "seychelles",
+      "category": "family-community",
+      "caption": "Shallow, Warm, Safe",
+      "description": "Lagoons inside the reef, no dangerous surf on most beaches, and short boat rides.",
+      "provider": "pexels",
+      "photoId": "5785074",
+      "imageUrl": "https://images.pexels.com/photos/5785074/pexels-photo-5785074.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/5785074/pexels-photo-5785074.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/back-view-of-boy-and-girl-holding-hands-looking-at-turquoise-sea-5785074/",
+      "photographer": "Asad Photo Maldives",
+      "photographerUrl": "https://www.pexels.com/@asadphoto",
+      "width": 6016,
+      "height": 4016,
+      "aspectRatio": 1.498,
+      "alt": "children in a shallow turquoise lagoon, Seychelles",
+      "query": "Seychelles children shallow turquoise",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:31:12Z",
+      "verifiedAt": "2026-08-14T07:31:13Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: children,turquoise"
+        ]
+      }
+    },
+    "seychelles/festivals": {
+      "country": "seychelles",
+      "category": "festivals",
+      "caption": "Festival Kreol",
+      "description": "Festival Kreol in October, and the sega and moutya danced through it.",
+      "provider": "pexels",
+      "photoId": "20380277",
+      "imageUrl": "https://images.pexels.com/photos/20380277/pexels-photo-20380277.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/20380277/pexels-photo-20380277.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/woman-dancing-in-traditional-costume-on-parade-20380277/",
+      "photographer": "Kim Villanueva",
+      "photographerUrl": "https://www.pexels.com/@kim-villanueva-1028870460",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "dancers at the Festival Kreol on Mahé, Seychelles",
+      "query": "Seychelles dancers festival kreol",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:31:03Z",
+      "verifiedAt": "2026-08-14T07:31:04Z",
+      "relevance": {
+        "score": 7.53,
+        "reasons": [
+          "subject: dancers,festival",
+          "category: celebration,festival"
+        ]
+      }
+    },
+    "seychelles/food": {
+      "country": "seychelles",
+      "category": "food",
+      "caption": "Fish, Coconut and Chilli",
+      "description": "Grilled fish, coconut curry, breadfruit, and a chilli sauce that is not a suggestion.",
+      "provider": "pexels",
+      "photoId": "29796600",
+      "imageUrl": "https://images.pexels.com/photos/29796600/pexels-photo-29796600.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/29796600/pexels-photo-29796600.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/outdoor-barbecue-grilling-sausages-and-fish-29796600/",
+      "photographer": "Michał Robak",
+      "photographerUrl": "https://www.pexels.com/@michalrobak",
+      "width": 7008,
+      "height": 4672,
+      "aspectRatio": 1.5,
+      "alt": "grilled fish with coconut curry and rice, Seychelles",
+      "query": "Seychelles grilled fish coconut",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:31:02Z",
+      "verifiedAt": "2026-08-14T07:31:02Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: and,fish,grilled",
+          "category: food"
+        ]
+      }
+    },
+    "seychelles/forests": {
+      "country": "seychelles",
+      "category": "forests",
+      "caption": "The Vallée de Mai",
+      "description": "Coco de mer palms in a valley on Praslin, and the largest seed of any plant on earth.",
+      "provider": "pexels",
+      "photoId": "32974319",
+      "imageUrl": "https://images.pexels.com/photos/32974319/pexels-photo-32974319.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32974319/pexels-photo-32974319.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/woman-standing-on-rock-overlooking-ocean-32974319/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "coco de mer palms in the Vallée de Mai, Seychelles",
+      "query": "Seychelles Vallée Mai",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:30:56Z",
+      "verifiedAt": "2026-08-14T07:30:57Z",
+      "relevance": {
+        "score": 2.66,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "seychelles/heritage": {
+      "country": "seychelles",
+      "category": "heritage",
+      "caption": "Aldabra",
+      "description": "A thousand kilometres out, with a hundred thousand giant tortoises and almost no people.",
+      "provider": "pexels",
+      "photoId": "32544066",
+      "imageUrl": "https://images.pexels.com/photos/32544066/pexels-photo-32544066.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32544066/pexels-photo-32544066.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aldabra-tortoise-resting-on-sunlit-sand-32544066/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "the raised coral rim of the Aldabra atoll, Seychelles",
+      "query": "Seychelles Aldabra",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:07Z",
+      "verifiedAt": "2026-08-14T07:31:08Z",
+      "relevance": {
+        "score": 2.54,
+        "reasons": [
+          "subject: aldabra"
+        ]
+      }
+    },
+    "seychelles/hero": {
+      "country": "seychelles",
+      "category": "hero",
+      "caption": "Granite Islands in the Indian Ocean",
+      "description": "Ancient granite, not coral or volcano — these islands are a fragment of a broken continent.",
+      "provider": "pexels",
+      "photoId": "32544178",
+      "imageUrl": "https://images.pexels.com/photos/32544178/pexels-photo-32544178.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32544178/pexels-photo-32544178.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/stunning-granite-boulders-on-la-digue-beach-32544178/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "granite boulders on a white beach at La Digue, Seychelles",
+      "query": "Seychelles La Digue",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:30:45Z",
+      "verifiedAt": "2026-08-14T07:30:46Z",
+      "relevance": {
+        "score": 6.04,
+        "reasons": [
+          "names the country",
+          "subject: boulders,digue,granite"
+        ]
+      }
+    },
+    "seychelles/hidden-gems": {
+      "country": "seychelles",
+      "category": "hidden-gems",
+      "caption": "La Digue by Bicycle",
+      "description": "No real roads and few cars — an island best measured in bicycle hours.",
+      "provider": "pexels",
+      "photoId": "32974408",
+      "imageUrl": "https://images.pexels.com/photos/32974408/pexels-photo-32974408.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32974408/pexels-photo-32974408.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/woman-enjoying-a-tropical-beach-in-seychelles-32974408/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "a sandy lane and bicycles under palms on La Digue, Seychelles",
+      "query": "Seychelles La Digue",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:17Z",
+      "verifiedAt": "2026-08-14T07:31:18Z",
+      "relevance": {
+        "score": 3.66,
+        "reasons": [
+          "names the country",
+          "category: the"
+        ]
+      }
+    },
+    "seychelles/historic-sites": {
+      "country": "seychelles",
+      "category": "historic-sites",
+      "caption": "The Plantations",
+      "description": "L'Union Estate on La Digue, with its vanilla, copra mill and colonial house.",
+      "provider": "pexels",
+      "photoId": "33326585",
+      "imageUrl": "https://images.pexels.com/photos/33326585/pexels-photo-33326585.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33326585/pexels-photo-33326585.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/tropical-pathway-to-vibrant-beach-cottages-33326585/",
+      "photographer": "Quang Nguyen Vinh",
+      "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+      "width": 7008,
+      "height": 4672,
+      "aspectRatio": 1.5,
+      "alt": "the copra mill and plantation house at L'Union Estate, Seychelles",
+      "query": "Seychelles L'Union Estate",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:31:06Z",
+      "verifiedAt": "2026-08-14T07:31:07Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "seychelles/lakes-rivers": {
+      "country": "seychelles",
+      "category": "lakes-rivers",
+      "caption": "No Rivers, All Sea",
+      "description": "The water here is the Indian Ocean, and the lagoons inside the reef.",
+      "provider": "pexels",
+      "photoId": "24713347",
+      "imageUrl": "https://images.pexels.com/photos/24713347/pexels-photo-24713347.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/24713347/pexels-photo-24713347.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/canoe-on-sea-near-rocks-at-anse-source-argent-in-seychelles-24713347/",
+      "photographer": "Logan Hamm",
+      "photographerUrl": "https://www.pexels.com/@logan-hamm-1302102667",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the shallow lagoon inside a Seychelles reef",
+      "query": "Seychelles shallow lagoon inside",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:30:54Z",
+      "verifiedAt": "2026-08-14T07:30:54Z",
+      "relevance": {
+        "score": 4.93,
+        "reasons": [
+          "names the country",
+          "subject: seychelles",
+          "category: water"
+        ]
+      }
+    },
+    "seychelles/local-life": {
+      "country": "seychelles",
+      "category": "local-life",
+      "caption": "The Fish Market",
+      "description": "Victoria's market at eight in the morning is the most useful hour on the island.",
+      "provider": "pexels",
+      "photoId": "7946518",
+      "imageUrl": "https://images.pexels.com/photos/7946518/pexels-photo-7946518.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/7946518/pexels-photo-7946518.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-crashing-waves-on-rock-formations-7946518/",
+      "photographer": "murielfiona",
+      "photographerUrl": "https://www.pexels.com/@murielfiona-58865367",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the fish market in Victoria early in the morning, Seychelles",
+      "query": "Seychelles Victoria",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:11Z",
+      "verifiedAt": "2026-08-14T07:31:11Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "seychelles/luxury": {
+      "country": "seychelles",
+      "category": "luxury",
+      "caption": "The Private Islands",
+      "description": "North Island, Frégate and Denis — private islands with a dozen villas on each.",
+      "provider": "pexels",
+      "photoId": "2956432",
+      "imageUrl": "https://images.pexels.com/photos/2956432/pexels-photo-2956432.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/2956432/pexels-photo-2956432.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/green-palm-trees-along-wooden-fence-2956432/",
+      "photographer": "Rajesh  Chetty",
+      "photographerUrl": "https://www.pexels.com/@bouyonalmighty",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "a villa above a beach on a private Seychelles island",
+      "query": "Seychelles villa beach private",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:14Z",
+      "verifiedAt": "2026-08-14T07:31:15Z",
+      "relevance": {
+        "score": 6.04,
+        "reasons": [
+          "names the country",
+          "subject: beach,seychelles,the"
+        ]
+      }
+    },
+    "seychelles/mountains": {
+      "country": "seychelles",
+      "category": "mountains",
+      "caption": "Morne Seychellois",
+      "description": "Nine hundred metres of forested granite above Victoria, with trails through the mist forest.",
+      "provider": "pexels",
+      "photoId": "13840452",
+      "imageUrl": "https://images.pexels.com/photos/13840452/pexels-photo-13840452.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/13840452/pexels-photo-13840452.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-pair-of-mountains-covered-with-mist-13840452/",
+      "photographer": "Vishnu  Panday",
+      "photographerUrl": "https://www.pexels.com/@vishnu-panday-94089132",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the forested ridge of Morne Seychellois, Seychelles",
+      "query": "Seychelles forested ridge morne",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:30:52Z",
+      "verifiedAt": "2026-08-14T07:30:53Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "subject: forested",
+          "category: mountain"
+        ]
+      }
+    },
+    "seychelles/nature": {
+      "country": "seychelles",
+      "category": "nature",
+      "caption": "Forty-Three Granite Islands",
+      "description": "Granite in the inner islands, coral atolls in the outer, and a thousand kilometres between.",
+      "provider": "pexels",
+      "photoId": "32974384",
+      "imageUrl": "https://images.pexels.com/photos/32974384/pexels-photo-32974384.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32974384/pexels-photo-32974384.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/seychelles-beach-scene-with-woman-in-vibrant-bikini-32974384/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "the granite peaks of Mahé above the sea, Seychelles",
+      "query": "Seychelles Mahé",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:30:46Z",
+      "verifiedAt": "2026-08-14T07:30:47Z",
+      "relevance": {
+        "score": 4.04,
+        "reasons": [
+          "names the country",
+          "subject: granite"
+        ]
+      }
+    },
+    "seychelles/outdoor": {
+      "country": "seychelles",
+      "category": "outdoor",
+      "caption": "Dive, Kayak, Cycle",
+      "description": "Granite dive sites, kayaks in the lagoons, and La Digue where the bicycle is the transport.",
+      "provider": "pexels",
+      "photoId": "14029101",
+      "imageUrl": "https://images.pexels.com/photos/14029101/pexels-photo-14029101.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/14029101/pexels-photo-14029101.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/big-rocks-on-the-sandy-shore-under-blue-sky-14029101/",
+      "photographer": "Adrien Daurenjou",
+      "photographerUrl": "https://www.pexels.com/@adriendrj",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "bicycles on a sandy track on La Digue, Seychelles",
+      "query": "Seychelles La Digue",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:13Z",
+      "verifiedAt": "2026-08-14T07:31:14Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: digue"
+        ]
+      }
+    },
+    "seychelles/photography": {
+      "country": "seychelles",
+      "category": "photography",
+      "caption": "Granite and Turquoise",
+      "description": "Grey granite, white sand and three shades of blue — the reason every camera comes here.",
+      "provider": "pexels",
+      "photoId": "32974406",
+      "imageUrl": "https://images.pexels.com/photos/32974406/pexels-photo-32974406.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32974406/pexels-photo-32974406.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/woman-enjoying-tropical-beach-in-seychelles-32974406/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "granite boulders and turquoise water at sunset, Seychelles",
+      "query": "Seychelles granite boulders turquoise",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:16Z",
+      "verifiedAt": "2026-08-14T07:31:17Z",
+      "relevance": {
+        "score": 5.21,
+        "reasons": [
+          "names the country",
+          "subject: and,boulders,granite",
+          "looks like 56% of a slot already filled here"
+        ]
+      }
+    },
+    "seychelles/safari": {
+      "country": "seychelles",
+      "category": "safari",
+      "caption": "Not a Safari, a Reef",
+      "description": "The game here is under the water — reef fish, turtle, and whale shark off Mahé in season.",
+      "provider": "pexels",
+      "photoId": "5008467",
+      "imageUrl": "https://images.pexels.com/photos/5008467/pexels-photo-5008467.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/5008467/pexels-photo-5008467.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/turtle-swimming-in-blue-water-5008467/",
+      "photographer": "Jess Loiterton",
+      "photographerUrl": "https://www.pexels.com/@jess-vide",
+      "width": 9000,
+      "height": 7200,
+      "aspectRatio": 1.25,
+      "alt": "a green turtle over reef in clear water, Seychelles",
+      "query": "Seychelles green turtle reef",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:30:50Z",
+      "verifiedAt": "2026-08-14T07:30:51Z",
+      "relevance": {
+        "score": 4.81,
+        "reasons": [
+          "subject: clear,green,turtle"
+        ]
+      }
+    },
+    "seychelles/traditional-people": {
+      "country": "seychelles",
+      "category": "traditional-people",
+      "caption": "Island Life",
+      "description": "A hundred thousand people across a hundred and fifteen islands, most on three of them.",
+      "provider": "pexels",
+      "photoId": "32796821",
+      "imageUrl": "https://images.pexels.com/photos/32796821/pexels-photo-32796821.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32796821/pexels-photo-32796821.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/elegant-woman-in-floral-dress-on-rocky-beach-32796821/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 4000,
+      "height": 6016,
+      "aspectRatio": 0.6649,
+      "alt": "fishermen bringing in a catch at a Mahé jetty, Seychelles",
+      "query": "Seychelles Mahé",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:00Z",
+      "verifiedAt": "2026-08-14T07:31:01Z",
+      "relevance": {
+        "score": 2.16,
+        "reasons": [
+          "category: dress"
+        ]
+      }
+    },
+    "seychelles/waterfalls": {
+      "country": "seychelles",
+      "category": "waterfalls",
+      "caption": "Sauzier and the Streams",
+      "description": "Short granite streams off the ridges, and the Sauzier falls in the west of Mahé.",
+      "provider": "pexels",
+      "photoId": "32544312",
+      "imageUrl": "https://images.pexels.com/photos/32544312/pexels-photo-32544312.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32544312/pexels-photo-32544312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-granite-rocks-on-la-digue-island-beach-32544312/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 4000,
+      "height": 6016,
+      "aspectRatio": 0.6649,
+      "alt": "a stream falling over granite through forest on Mahé, Seychelles",
+      "query": "Seychelles Mahé",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:30:53Z",
+      "verifiedAt": "2026-08-14T07:30:53Z",
+      "relevance": {
+        "score": 5.49,
+        "reasons": [
+          "names the country",
+          "subject: and,granite",
+          "looks like 67% of a slot already filled here"
+        ]
+      }
+    },
+    "seychelles/why-visit": {
+      "country": "seychelles",
+      "category": "why-visit",
+      "caption": "Nowhere Else Is Built Like This",
+      "description": "Granite in mid-ocean, a palm that grows nowhere else, and tortoises older than the state.",
+      "provider": "pexels",
+      "photoId": "33428172",
+      "imageUrl": "https://images.pexels.com/photos/33428172/pexels-photo-33428172.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33428172/pexels-photo-33428172.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/fashionable-woman-posing-on-seychelles-beach-33428172/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "granite peaks and palms above a Seychelles beach",
+      "query": "Seychelles granite peaks palms",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:31:19Z",
+      "verifiedAt": "2026-08-14T07:31:20Z",
+      "relevance": {
+        "score": 4.77,
+        "reasons": [
+          "names the country",
+          "subject: beach,granite,seychelles",
+          "looks like 67% of a slot already filled here"
+        ]
+      }
+    },
+    "seychelles/wildlife": {
+      "country": "seychelles",
+      "category": "wildlife",
+      "caption": "Endemic Everywhere",
+      "description": "The black parrot, the magpie robin, and giant tortoises that live free on Curieuse.",
+      "provider": "pexels",
+      "photoId": "33428146",
+      "imageUrl": "https://images.pexels.com/photos/33428146/pexels-photo-33428146.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33428146/pexels-photo-33428146.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/woman-relaxing-on-rocky-beach-in-seychelles-33428146/",
+      "photographer": "Vika Glitter",
+      "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "a giant tortoise walking a beach on Curieuse, Seychelles",
+      "query": "Seychelles Curieuse",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:30:48Z",
+      "verifiedAt": "2026-08-14T07:30:49Z",
+      "relevance": {
+        "score": 4.04,
+        "reasons": [
+          "names the country",
+          "subject: beach"
+        ]
+      }
+    },
+    "south-africa/adventure": {
+      "country": "south-africa",
+      "category": "adventure",
+      "caption": "Bloukrans and the Cage",
+      "description": "The highest commercial bridge bungee in the world, and great white cage diving out of Gansbaai.",
+      "provider": "pexels",
+      "photoId": "31215328",
+      "imageUrl": "https://images.pexels.com/photos/31215328/pexels-photo-31215328.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31215328/pexels-photo-31215328.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vast-green-landscape-in-piet-retief-south-africa-31215328/",
+      "photographer": "Lukas  Faust",
+      "photographerUrl": "https://www.pexels.com/@lukasfst",
+      "width": 8064,
+      "height": 4536,
+      "aspectRatio": 1.7778,
+      "alt": "the Bloukrans bridge bungee jump on the Garden Route, South Africa",
+      "query": "South Africa Bloukrans Garden Route",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:31:30Z",
+      "verifiedAt": "2026-08-14T07:31:30Z",
+      "relevance": {
+        "score": 3.75,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "south-africa/beaches": {
+      "country": "south-africa",
+      "category": "beaches",
+      "caption": "Two Oceans",
+      "description": "Cold Atlantic on one side of the Cape peninsula, warm Indian on the other, forty minutes apart.",
+      "provider": "pexels",
+      "photoId": "36822941",
+      "imageUrl": "https://images.pexels.com/photos/36822941/pexels-photo-36822941.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36822941/pexels-photo-36822941.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-camps-bay-beach-cape-town-36822941/",
+      "photographer": "Israel Luvhimbi",
+      "photographerUrl": "https://www.pexels.com/@iluvhimbi",
+      "width": 8256,
+      "height": 6192,
+      "aspectRatio": 1.3333,
+      "alt": "Camps Bay beach beneath the Twelve Apostles in Cape Town, South Africa",
+      "query": "South Africa Camps Bay Twelve Apostles",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T07:31:27Z",
+      "verifiedAt": "2026-08-14T07:31:28Z",
+      "relevance": {
+        "score": 8.75,
+        "reasons": [
+          "names the country",
+          "subject: bay,beach,camps",
+          "category: beach,ocean"
+        ]
+      }
+    },
+    "south-africa/crafts": {
+      "country": "south-africa",
+      "category": "crafts",
+      "caption": "Ndebele Beadwork",
+      "description": "Beadwork, wire sculpture and telephone-wire baskets, sold everywhere and made properly in very few places.",
+      "provider": "pexels",
+      "photoId": "5831735",
+      "imageUrl": "https://images.pexels.com/photos/5831735/pexels-photo-5831735.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/5831735/pexels-photo-5831735.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-woman-wearing-colorful-beaded-headband-and-necklace-smiling-to-the-camera-5831735/",
+      "photographer": "Studio Pilot Photography",
+      "photographerUrl": "https://www.pexels.com/@studio-pilot-photography-1208566",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "Ndebele beadwork and geometric wall painting, South Africa",
+      "query": "South Africa Ndebele",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:31:34Z",
+      "verifiedAt": "2026-08-14T07:31:35Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: beadwork"
+        ]
+      }
+    },
+    "south-africa/culture": {
+      "country": "south-africa",
+      "category": "culture",
+      "caption": "Eleven Languages",
+      "description": "Zulu, Xhosa, Afrikaans and eight more, plus the Cape Malay cooking that came with the slave trade.",
+      "provider": "pexels",
+      "photoId": "32721025",
+      "imageUrl": "https://images.pexels.com/photos/32721025/pexels-photo-32721025.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32721025/pexels-photo-32721025.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/nguni-cattle-grazing-in-scenic-kwazulu-natal-landscape-32721025/",
+      "photographer": "Ryan Lansdown",
+      "photographerUrl": "https://www.pexels.com/@ryanlans",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "Zulu dancers in traditional dress in KwaZulu-Natal, South Africa",
+      "query": "South Africa Zulu KwaZulu-Natal",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 44
+      },
+      "createdAt": "2026-08-14T07:31:31Z",
+      "verifiedAt": "2026-08-14T07:31:31Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: kwazulu,natal"
+        ]
+      }
+    },
+    "south-africa/festivals": {
+      "country": "south-africa",
+      "category": "festivals",
+      "caption": "Carnival and AfrikaBurn",
+      "description": "The Cape Town Carnival in March, the Kaapse Klopse minstrels in January, and AfrikaBurn out in the Karoo.",
+      "provider": "pexels",
+      "photoId": "10010546",
+      "imageUrl": "https://images.pexels.com/photos/10010546/pexels-photo-10010546.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/10010546/pexels-photo-10010546.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/beach-near-mountain-under-blue-sky-10010546/",
+      "photographer": "Stephan Louis",
+      "photographerUrl": "https://www.pexels.com/@stephanlouis",
+      "width": 6563,
+      "height": 3692,
+      "aspectRatio": 1.7776,
+      "alt": "performers in costume at the Cape Town Carnival, South Africa",
+      "query": "South Africa Cape Town Carnival",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T07:31:33Z",
+      "verifiedAt": "2026-08-14T07:31:34Z",
+      "relevance": {
+        "score": 6.5,
+        "reasons": [
+          "names the country",
+          "subject: and,cape,town"
+        ]
+      }
+    },
+    "south-africa/food": {
+      "country": "south-africa",
+      "category": "food",
+      "caption": "Braai, Bunny Chow, Curry",
+      "description": "Fire is a national institution; Durban curry and Cape Malay bobotie came from two very different arrivals.",
+      "provider": "pexels",
+      "photoId": "29132447",
+      "imageUrl": "https://images.pexels.com/photos/29132447/pexels-photo-29132447.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/29132447/pexels-photo-29132447.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/authentic-turkish-grilled-kebabs-in-diyarbakir-29132447/",
+      "photographer": "Cemrecan Yurtman",
+      "photographerUrl": "https://www.pexels.com/@cmrcn",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "meat over the coals at a South African braai",
+      "query": "South Africa meat coals south",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T07:31:32Z",
+      "verifiedAt": "2026-08-14T07:31:33Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: coals",
+          "category: cuisine"
+        ]
+      }
+    },
+    "south-africa/forests": {
+      "country": "south-africa",
+      "category": "forests",
+      "caption": "Tsitsikamma",
+      "description": "Old yellowwood forest running down to a rocky coast, with the Storms River mouth cut through the middle.",
+      "provider": "pexels",
+      "photoId": "13448548",
+      "imageUrl": "https://images.pexels.com/photos/13448548/pexels-photo-13448548.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/13448548/pexels-photo-13448548.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/water-falls-under-blue-sky-and-white-clouds-13448548/",
+      "photographer": "Piat Van Zyl",
+      "photographerUrl": "https://www.pexels.com/@piat",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the Storms River mouth suspension bridge in Tsitsikamma, South Africa",
+      "query": "South Africa Storms River Tsitsikamma",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:31:29Z",
+      "verifiedAt": "2026-08-14T07:31:29Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: river"
+        ]
+      }
+    },
+    "south-africa/heritage": {
+      "country": "south-africa",
+      "category": "heritage",
+      "caption": "The Cradle of Humankind",
+      "description": "The Sterkfontein caves have produced more early hominin fossils than any other site on the planet.",
+      "provider": "pexels",
+      "photoId": "38235268",
+      "imageUrl": "https://images.pexels.com/photos/38235268/pexels-photo-38235268.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38235268/pexels-photo-38235268.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-cape-of-good-hope-landmark-38235268/",
+      "photographer": "Magda Ehlers",
+      "photographerUrl": "https://www.pexels.com/@magda-ehlers-pexels",
+      "width": 6811,
+      "height": 5062,
+      "aspectRatio": 1.3455,
+      "alt": "the limestone caves of the Cradle of Humankind at Sterkfontein, South Africa",
+      "query": "South Africa Cradle Humankind",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:31:37Z",
+      "verifiedAt": "2026-08-14T07:31:38Z",
+      "relevance": {
+        "score": 3.77,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "south-africa/hero": {
+      "country": "south-africa",
+      "category": "hero",
+      "caption": "A World in One Country",
+      "description": "Table Mountain above a working harbour, wine farms an hour inland, and the Big Five a short flight north.",
+      "provider": "pexels",
+      "photoId": "36597753",
+      "imageUrl": "https://images.pexels.com/photos/36597753/pexels-photo-36597753.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36597753/pexels-photo-36597753.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-view-of-table-mountain-from-the-highway-36597753/",
+      "photographer": "Adrien Olichon",
+      "photographerUrl": "https://www.pexels.com/@adrien-olichon-1257089",
+      "width": 9366,
+      "height": 6234,
+      "aspectRatio": 1.5024,
+      "alt": "Table Mountain above Cape Town and the harbour at sunrise, South Africa",
+      "query": "South Africa Table Mountain Cape Town",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T07:31:20Z",
+      "verifiedAt": "2026-08-14T07:31:21Z",
+      "relevance": {
+        "score": 6.04,
+        "reasons": [
+          "subject: cape,mountain,table",
+          "category: iconic"
+        ]
+      }
+    },
+    "south-africa/historic-sites": {
+      "country": "south-africa",
+      "category": "historic-sites",
+      "caption": "Robben Island",
+      "description": "Twelve kilometres off Cape Town, a political prison for three decades, now guided by the men who were held there.",
+      "provider": "pexels",
+      "photoId": "38251359",
+      "imageUrl": "https://images.pexels.com/photos/38251359/pexels-photo-38251359.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38251359/pexels-photo-38251359.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/cape-town-skyline-with-table-mountain-view-38251359/",
+      "photographer": "Magda Ehlers",
+      "photographerUrl": "https://www.pexels.com/@magda-ehlers-pexels",
+      "width": 7860,
+      "height": 5243,
+      "aspectRatio": 1.4991,
+      "alt": "the prison buildings on Robben Island with Table Mountain behind, South Africa",
+      "query": "South Africa Robben Island Table Mountain",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:31:35Z",
+      "verifiedAt": "2026-08-14T07:31:36Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: mountain,table"
+        ]
+      }
+    },
+    "south-africa/lakes-rivers": {
+      "country": "south-africa",
+      "category": "lakes-rivers",
+      "caption": "Blyde River Canyon",
+      "description": "The third largest canyon in the world and the greenest, with the Three Rondavels standing in the middle of it.",
+      "provider": "pexels",
+      "photoId": "5504216",
+      "imageUrl": "https://images.pexels.com/photos/5504216/pexels-photo-5504216.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/5504216/pexels-photo-5504216.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-river-flowing-through-rocky-canyons-5504216/",
+      "photographer": "Mike van Schoonderwalt",
+      "photographerUrl": "https://www.pexels.com/@mike-van-schoonderwalt-1884800",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the Three Rondavels above the Blyde River Canyon, South Africa",
+      "query": "South Africa Three Rondavels Blyde River Canyon",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 52,
+        "y": 44
+      },
+      "createdAt": "2026-08-14T07:31:26Z",
+      "verifiedAt": "2026-08-14T07:31:27Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "subject: blyde,canyon,river",
+          "category: river"
+        ]
+      }
+    },
+    "south-africa/mountains": {
+      "country": "south-africa",
+      "category": "mountains",
+      "caption": "The Drakensberg",
+      "description": "The Amphitheatre wall runs five kilometres and drops a kilometre, with San rock art in the caves beneath it.",
+      "provider": "pexels",
+      "photoId": "38071580",
+      "imageUrl": "https://images.pexels.com/photos/38071580/pexels-photo-38071580.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38071580/pexels-photo-38071580.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-drakensberg-mountains-in-south-africa-38071580/",
+      "photographer": "RAIHAAN Kamdar",
+      "photographerUrl": "https://www.pexels.com/@raihaan-kamdar-143458559",
+      "width": 8192,
+      "height": 4608,
+      "aspectRatio": 1.7778,
+      "alt": "the Amphitheatre wall of the Drakensberg escarpment, South Africa",
+      "query": "South Africa Amphitheatre Drakensberg",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 44
+      },
+      "createdAt": "2026-08-14T07:31:24Z",
+      "verifiedAt": "2026-08-14T07:31:25Z",
+      "relevance": {
+        "score": 8.0,
+        "reasons": [
+          "names the country",
+          "subject: drakensberg,the",
+          "category: mountain"
+        ]
+      }
+    },
+    "south-africa/nature": {
+      "country": "south-africa",
+      "category": "nature",
+      "caption": "Fynbos and the Garden Route",
+      "description": "The Cape Floral Kingdom is the smallest and richest of the six on earth, and most of it grows nowhere else.",
+      "provider": "pexels",
+      "photoId": "38189358",
+      "imageUrl": "https://images.pexels.com/photos/38189358/pexels-photo-38189358.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38189358/pexels-photo-38189358.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-road-trip-through-south-african-countryside-38189358/",
+      "photographer": "Dale  Mohagan",
+      "photographerUrl": "https://www.pexels.com/@dale",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "fynbos and coastline along the Garden Route, South Africa",
+      "query": "South Africa Garden Route",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:31:21Z",
+      "verifiedAt": "2026-08-14T07:31:22Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: and,the"
+        ]
+      }
+    },
+    "south-africa/safari": {
+      "country": "south-africa",
+      "category": "safari",
+      "caption": "Sabi Sands, Off-Road",
+      "description": "Private traverse means the vehicle can leave the road, which is why the sightings are what they are.",
+      "provider": "pexels",
+      "photoId": "28884379",
+      "imageUrl": "https://images.pexels.com/photos/28884379/pexels-photo-28884379.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28884379/pexels-photo-28884379.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/leopard-in-tree-observing-its-surroundings-28884379/",
+      "photographer": "Marlin Clark",
+      "photographerUrl": "https://www.pexels.com/@marlinclark",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "a safari vehicle beside lions in the Sabi Sands at dusk, South Africa",
+      "query": "South Africa Sabi Sands",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T07:31:23Z",
+      "verifiedAt": "2026-08-14T07:31:24Z",
+      "relevance": {
+        "score": 5.67,
+        "reasons": [
+          "names the country",
+          "subject: safari",
+          "category: safari"
+        ]
+      }
+    },
+    "south-africa/traditional-people": {
+      "country": "south-africa",
+      "category": "traditional-people",
+      "caption": "Zulu, Xhosa, Ndebele",
+      "description": "Ndebele wall painting, Zulu beadwork with its own grammar, and Xhosa initiation still practised in the Eastern Cape.",
+      "provider": "pexels",
+      "photoId": "30333078",
+      "imageUrl": "https://images.pexels.com/photos/30333078/pexels-photo-30333078.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30333078/pexels-photo-30333078.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/young-woman-in-traditional-zulu-attire-outdoors-30333078/",
+      "photographer": "claytons gallary",
+      "photographerUrl": "https://www.pexels.com/@claytonsgallary",
+      "width": 4912,
+      "height": 7360,
+      "aspectRatio": 0.6674,
+      "alt": "an Ndebele woman in beaded dress before a painted house wall, South Africa",
+      "query": "South Africa Ndebele",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 42
+      },
+      "createdAt": "2026-08-14T07:31:32Z",
+      "verifiedAt": "2026-08-14T07:31:32Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "subject: dress,woman,zulu",
+          "category: dress,portrait"
+        ]
+      }
+    },
+    "south-africa/waterfalls": {
+      "country": "south-africa",
+      "category": "waterfalls",
+      "caption": "Tugela, Off the Amphitheatre",
+      "description": "Nearly a thousand metres in five leaps off the Drakensberg escarpment — among the highest falls on earth.",
+      "provider": "pexels",
+      "photoId": "32632122",
+      "imageUrl": "https://images.pexels.com/photos/32632122/pexels-photo-32632122.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32632122/pexels-photo-32632122.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/breathtaking-tugela-falls-in-drakensberg-mountains-32632122/",
+      "photographer": "Emma Jane Seymour",
+      "photographerUrl": "https://www.pexels.com/@eikenaar",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "the Tugela Falls dropping off the Drakensberg Amphitheatre, South Africa",
+      "query": "South Africa Tugela Falls Drakensberg Amphitheatre",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 40
+      },
+      "createdAt": "2026-08-14T07:31:25Z",
+      "verifiedAt": "2026-08-14T07:31:26Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: drakensberg,falls,the"
+        ]
+      }
+    },
+    "south-africa/wildlife": {
+      "country": "south-africa",
+      "category": "wildlife",
+      "caption": "The Big Five, Close",
+      "description": "Kruger and the private Sabi Sands reserves beside it, where the leopards have been watched for generations.",
+      "provider": "pexels",
+      "photoId": "33621914",
+      "imageUrl": "https://images.pexels.com/photos/33621914/pexels-photo-33621914.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33621914/pexels-photo-33621914.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/elephant-roaming-the-savanna-in-south-africa-33621914/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 8184,
+      "height": 4600,
+      "aspectRatio": 1.7791,
+      "alt": "a leopard on a termite mound in the Sabi Sands reserve, South Africa",
+      "query": "South Africa Sabi Sands",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 52,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:31:22Z",
+      "verifiedAt": "2026-08-14T07:31:23Z",
+      "relevance": {
+        "score": 6.0,
+        "reasons": [
+          "names the country",
+          "subject: the",
+          "category: wildlife"
         ]
       }
     },
