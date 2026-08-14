@@ -7125,6 +7125,38 @@
         ]
       }
     },
+    "mauritius/heritage": {
+      "country": "mauritius",
+      "category": "heritage",
+      "caption": "Le Morne",
+      "description": "The mountain where escaped slaves lived at the top, and a world heritage site for that reason.",
+      "provider": "unsplash",
+      "photoId": "-5UEyBFp-fE",
+      "imageUrl": "https://images.unsplash.com/photo-1540966531224-dfb02d2f5967",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1540966531224-dfb02d2f5967?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/green-trees-near-beach-overlooking-horizon-at-daytime--5UEyBFp-fE",
+      "photographer": "Colours of Mauritius",
+      "photographerUrl": "https://unsplash.com/@coloursofmauritius",
+      "width": 3968,
+      "height": 2976,
+      "aspectRatio": 1.3333,
+      "alt": "Le Morne Brabant seen from the lagoon, Mauritius",
+      "query": "Mauritius Le Morne Brabant",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:15:28Z",
+      "verifiedAt": "2026-08-14T07:15:29Z",
+      "relevance": {
+        "score": 3.25,
+        "reasons": [
+          "names the country",
+          "subject: morne"
+        ]
+      }
+    },
     "mauritius/hero": {
       "country": "mauritius",
       "category": "hero",
@@ -9310,6 +9342,388 @@
         ]
       }
     },
+    "namibia/adventure": {
+      "country": "namibia",
+      "category": "adventure",
+      "caption": "Self-Drive Country",
+      "description": "The best self-drive country in Africa: gravel roads, long distances and nobody on them.",
+      "provider": "unsplash",
+      "photoId": "MlCHlQtFKhg",
+      "imageUrl": "https://images.unsplash.com/photo-1565204630921-bbafec59a229",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1565204630921-bbafec59a229?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/brown-road-MlCHlQtFKhg",
+      "photographer": "Vicky Sim",
+      "photographerUrl": "https://unsplash.com/@vicky49",
+      "width": 2816,
+      "height": 2112,
+      "aspectRatio": 1.3333,
+      "alt": "a gravel road running straight to the horizon, Namibia",
+      "query": "Namibia gravel road running",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:15:41Z",
+      "verifiedAt": "2026-08-14T07:15:42Z",
+      "relevance": {
+        "score": 4.0,
+        "reasons": [
+          "names the country",
+          "subject: road"
+        ]
+      }
+    },
+    "namibia/architecture": {
+      "country": "namibia",
+      "category": "architecture",
+      "caption": "Colonial and Desert Vernacular",
+      "description": "German colonial in the towns, and camps built to disappear into the gravel plains.",
+      "provider": "unsplash",
+      "photoId": "kK1qcO5z7nQ",
+      "imageUrl": "https://images.unsplash.com/photo-1727880283608-57880fa4edcc",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1727880283608-57880fa4edcc?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-lone-antelope-walking-across-a-desert-plain-kK1qcO5z7nQ",
+      "photographer": "Arthur Souquet",
+      "photographerUrl": "https://unsplash.com/@arthursouquet",
+      "width": 2861,
+      "height": 4291,
+      "aspectRatio": 0.6667,
+      "alt": "a desert lodge built low into the gravel plain, Namibia",
+      "query": "Namibia desert lodge built",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:15:57Z",
+      "verifiedAt": "2026-08-14T07:15:57Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: desert,plain"
+        ]
+      }
+    },
+    "namibia/beaches": {
+      "country": "namibia",
+      "category": "beaches",
+      "caption": "The Skeleton Coast",
+      "description": "Fifteen hundred kilometres of Atlantic, fog, shipwrecks and seal colonies.",
+      "provider": "unsplash",
+      "photoId": "N1VxHAZNIrI",
+      "imageUrl": "https://images.unsplash.com/photo-1545925677-8473d1249eaf",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1545925677-8473d1249eaf?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/sea-waves-near-desert-N1VxHAZNIrI",
+      "photographer": "JP Desvigne",
+      "photographerUrl": "https://unsplash.com/@jpdvg",
+      "width": 4000,
+      "height": 2667,
+      "aspectRatio": 1.4998,
+      "alt": "a shipwreck half-buried on the Skeleton Coast, Namibia",
+      "query": "Namibia Skeleton Coast",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:15:39Z",
+      "verifiedAt": "2026-08-14T07:15:39Z",
+      "relevance": {
+        "score": 7.53,
+        "reasons": [
+          "names the country",
+          "subject: coast,the",
+          "category: coast"
+        ]
+      }
+    },
+    "namibia/cities": {
+      "country": "namibia",
+      "category": "cities",
+      "caption": "Windhoek and Swakopmund",
+      "description": "Windhoek on the highveld, and Swakopmund where German architecture meets Atlantic fog.",
+      "provider": "unsplash",
+      "photoId": "ycrX020cRcU",
+      "imageUrl": "https://images.unsplash.com/photo-1504053587917-5f214fde5be2",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1504053587917-5f214fde5be2?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/pink-concrete-bar-ycrX020cRcU",
+      "photographer": "Anqi Lu",
+      "photographerUrl": "https://unsplash.com/@anqilu",
+      "width": 4681,
+      "height": 2724,
+      "aspectRatio": 1.7184,
+      "alt": "the seafront and pier at Swakopmund in fog, Namibia",
+      "query": "Namibia Swakopmund",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:15:55Z",
+      "verifiedAt": "2026-08-14T07:15:55Z",
+      "relevance": {
+        "score": 5.21,
+        "reasons": [
+          "names the country",
+          "subject: swakopmund",
+          "category: city"
+        ]
+      }
+    },
+    "namibia/crafts": {
+      "country": "namibia",
+      "category": "crafts",
+      "caption": "Basketry and Ostrich Shell",
+      "description": "Kavango wood carving, San ostrich-eggshell beadwork, and Herero doll making.",
+      "provider": "unsplash",
+      "photoId": "0Xy2YVhhT9g",
+      "imageUrl": "https://images.unsplash.com/photo-1589798798923-fd59f00c50d7",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1589798798923-fd59f00c50d7?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/elephant-and-elephant-walking-on-road-during-daytime-0Xy2YVhhT9g",
+      "photographer": "S Gensicke",
+      "photographerUrl": "https://unsplash.com/@dickulu",
+      "width": 5184,
+      "height": 3456,
+      "aspectRatio": 1.5,
+      "alt": "San ostrich eggshell beads being strung, Namibia",
+      "query": "Namibia San",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:15:49Z",
+      "verifiedAt": "2026-08-14T07:15:49Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "namibia/culture": {
+      "country": "namibia",
+      "category": "culture",
+      "caption": "Eleven Peoples",
+      "description": "Owambo, Herero, Damara, Nama, San and more, and German still on half the street signs.",
+      "provider": "pexels",
+      "photoId": "35274058",
+      "imageUrl": "https://images.pexels.com/photos/35274058/pexels-photo-35274058.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35274058/pexels-photo-35274058.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-african-attire-couple-portrait-35274058/",
+      "photographer": "Khulani Faniso",
+      "photographerUrl": "https://www.pexels.com/@khulani",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a Herero woman in traditional dress, Namibia",
+      "query": "Namibia Herero",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:15:43Z",
+      "verifiedAt": "2026-08-14T07:15:44Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "subject: traditional",
+          "category: traditional"
+        ]
+      }
+    },
+    "namibia/eco-tourism": {
+      "country": "namibia",
+      "category": "eco-tourism",
+      "caption": "Conservancies",
+      "description": "Communal conservancies cover a fifth of the country and are why the black rhino survived.",
+      "provider": "pexels",
+      "photoId": "33638908",
+      "imageUrl": "https://images.pexels.com/photos/33638908/pexels-photo-33638908.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33638908/pexels-photo-33638908.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/young-adults-playing-outdoor-foosball-game-33638908/",
+      "photographer": "Faniry Raoilison",
+      "photographerUrl": "https://www.pexels.com/@faniry-raoilison-2155065394",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "a community game guard on patrol in a conservancy, Namibia",
+      "query": "Namibia community game",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:07Z",
+      "verifiedAt": "2026-08-14T07:16:07Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: game"
+        ]
+      }
+    },
+    "namibia/family-community": {
+      "country": "namibia",
+      "category": "family-community",
+      "caption": "Easy and Safe to Drive",
+      "description": "Good roads, no malaria in most of it, and children who will remember the dunes.",
+      "provider": "unsplash",
+      "photoId": "ZdWhZTpd_Uw",
+      "imageUrl": "https://images.unsplash.com/photo-1506710507565-203b9f24669b",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1506710507565-203b9f24669b?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/white-and-brown-animal-with-antler-on-brown-sand-ZdWhZTpd_Uw",
+      "photographer": "Joe McDaniel",
+      "photographerUrl": "https://unsplash.com/@bookcrafters",
+      "width": 5775,
+      "height": 3763,
+      "aspectRatio": 1.5347,
+      "alt": "a family climbing a dune at Sossusvlei, Namibia",
+      "query": "Namibia Sossusvlei",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:16:00Z",
+      "verifiedAt": "2026-08-14T07:16:01Z",
+      "relevance": {
+        "score": 4.61,
+        "reasons": [
+          "subject: and,drive"
+        ]
+      }
+    },
+    "namibia/festivals": {
+      "country": "namibia",
+      "category": "festivals",
+      "caption": "Windhoek Karnival and Maherero Day",
+      "description": "The Windhoek carnival in April, and Maherero Day at Okahandja in August.",
+      "provider": "pexels",
+      "photoId": "28770427",
+      "imageUrl": "https://images.pexels.com/photos/28770427/pexels-photo-28770427.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28770427/pexels-photo-28770427.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/quiver-tree-forest-in-namibia-under-blue-sky-28770427/",
+      "photographer": "Francesco Ungaro",
+      "photographerUrl": "https://www.pexels.com/@francesco-ungaro",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "a Maherero Day procession at Okahandja, Namibia",
+      "query": "Namibia Maherero Day Okahandja",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:15:48Z",
+      "verifiedAt": "2026-08-14T07:15:48Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "namibia/food": {
+      "country": "namibia",
+      "category": "food",
+      "caption": "Braai and Biltong",
+      "description": "Game meat over coals, biltong on every counter, and German bread that is actually German.",
+      "provider": "unsplash",
+      "photoId": "U1kjLf5ssZk",
+      "imageUrl": "https://images.unsplash.com/photo-1693921148355-1aa9512c7b20",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1693921148355-1aa9512c7b20?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-man-in-a-chefs-outfit-cooking-food-on-a-grill-U1kjLf5ssZk",
+      "photographer": "Ultimate Safaris Namibia",
+      "photographerUrl": "https://unsplash.com/@ultimate_safaris_namibia",
+      "width": 4000,
+      "height": 2667,
+      "aspectRatio": 1.4998,
+      "alt": "game meat grilling over coals at a Namibian braai",
+      "query": "Namibia game meat grilling",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:15:46Z",
+      "verifiedAt": "2026-08-14T07:15:46Z",
+      "relevance": {
+        "score": 3.67,
+        "reasons": [
+          "names the country",
+          "category: food"
+        ]
+      }
+    },
+    "namibia/forests": {
+      "country": "namibia",
+      "category": "forests",
+      "caption": "The Caprivi Woodland",
+      "description": "No rainforest — the green is in the Zambezi region, riverine and full of elephant.",
+      "provider": "pexels",
+      "photoId": "16639840",
+      "imageUrl": "https://images.pexels.com/photos/16639840/pexels-photo-16639840.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16639840/pexels-photo-16639840.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-person-standing-by-a-lake-16639840/",
+      "photographer": "joao Guerreiro",
+      "photographerUrl": "https://www.pexels.com/@gunas4life",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "riverine woodland along the Zambezi in the Caprivi, Namibia",
+      "query": "Namibia Zambezi Caprivi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:15:40Z",
+      "verifiedAt": "2026-08-14T07:15:41Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "namibia/heritage": {
+      "country": "namibia",
+      "category": "heritage",
+      "caption": "Kolmanskop and the Coast",
+      "description": "A diamond town the desert has taken back, and the German colonial coast at Lüderitz.",
+      "provider": "unsplash",
+      "photoId": "nG_m3m3ncWg",
+      "imageUrl": "https://images.unsplash.com/photo-1696894134220-cfc38c3bf7a1",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1696894134220-cfc38c3bf7a1?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-large-sand-dune-in-the-middle-of-a-desert-nG_m3m3ncWg",
+      "photographer": "Taylor Wright",
+      "photographerUrl": "https://unsplash.com/@taylorwright22",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "sand filling a room in the ghost town of Kolmanskop, Namibia",
+      "query": "Namibia Kolmanskop",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:15:53Z",
+      "verifiedAt": "2026-08-14T07:15:54Z",
+      "relevance": {
+        "score": 5.75,
+        "reasons": [
+          "names the country",
+          "subject: sand,the",
+          "looks like 57% of a slot already filled here"
+        ]
+      }
+    },
     "namibia/hero": {
       "country": "namibia",
       "category": "hero",
@@ -9340,6 +9754,197 @@
           "names the country",
           "subject: desert,dunes,the",
           "category: iconic"
+        ]
+      }
+    },
+    "namibia/hidden-gems": {
+      "country": "namibia",
+      "category": "hidden-gems",
+      "caption": "The Kunene",
+      "description": "The far north-west: Epupa, the Himba, and roads that need two vehicles.",
+      "provider": "unsplash",
+      "photoId": "Dakbfhj51eE",
+      "imageUrl": "https://images.unsplash.com/photo-1637336659714-50c42464957a",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1637336659714-50c42464957a?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-dirt-road-with-mountains-in-the-background-Dakbfhj51eE",
+      "photographer": "katsuma tanaka",
+      "photographerUrl": "https://unsplash.com/@kt2080",
+      "width": 3776,
+      "height": 2832,
+      "aspectRatio": 1.3333,
+      "alt": "a track through the mountains of the Kunene region, Namibia",
+      "query": "Namibia Kunene",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:09Z",
+      "verifiedAt": "2026-08-14T07:16:10Z",
+      "relevance": {
+        "score": 7.5,
+        "reasons": [
+          "names the country",
+          "subject: mountains,the",
+          "category: the"
+        ]
+      }
+    },
+    "namibia/historic-sites": {
+      "country": "namibia",
+      "category": "historic-sites",
+      "caption": "Twyfelfontein",
+      "description": "Two thousand rock engravings on one hillside, cut into sandstone six thousand years ago.",
+      "provider": "unsplash",
+      "photoId": "9SHCL7WCDuc",
+      "imageUrl": "https://images.unsplash.com/photo-1730744465455-d1b63a2a9132",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1730744465455-d1b63a2a9132?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-large-rock-with-some-writing-on-it-9SHCL7WCDuc",
+      "photographer": "Markus Kammermann",
+      "photographerUrl": "https://unsplash.com/@makabera",
+      "width": 4282,
+      "height": 2855,
+      "aspectRatio": 1.4998,
+      "alt": "rock engravings on sandstone at Twyfelfontein, Namibia",
+      "query": "Namibia Twyfelfontein",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:15:51Z",
+      "verifiedAt": "2026-08-14T07:15:52Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: rock"
+        ]
+      }
+    },
+    "namibia/lakes-rivers": {
+      "country": "namibia",
+      "category": "lakes-rivers",
+      "caption": "The Kunene and the Zambezi",
+      "description": "Two permanent rivers, one on each border, and dry riverbeds for everything in between.",
+      "provider": "unsplash",
+      "photoId": "kaD9-g6hLLs",
+      "imageUrl": "https://images.unsplash.com/photo-1595584745013-f1fa257cf19a",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1595584745013-f1fa257cf19a?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/green-tree-on-brown-field-during-daytime-kaD9-g6hLLs",
+      "photographer": "Eelco Böhtlingk",
+      "photographerUrl": "https://unsplash.com/@eelco_bohtlingk",
+      "width": 5951,
+      "height": 3478,
+      "aspectRatio": 1.711,
+      "alt": "a dry riverbed cutting through Damaraland, Namibia",
+      "query": "Namibia Damaraland",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:15:37Z",
+      "verifiedAt": "2026-08-14T07:15:38Z",
+      "relevance": {
+        "score": 5.7,
+        "reasons": [
+          "names the country",
+          "subject: dry,the"
+        ]
+      }
+    },
+    "namibia/local-life": {
+      "country": "namibia",
+      "category": "local-life",
+      "caption": "The Long Road",
+      "description": "Fuel, biltong and a farm stall every two hundred kilometres, and that is the day.",
+      "provider": "pexels",
+      "photoId": "1363798",
+      "imageUrl": "https://images.pexels.com/photos/1363798/pexels-photo-1363798.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/1363798/pexels-photo-1363798.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/pineapples-and-bananas-1363798/",
+      "photographer": "Shane Kell",
+      "photographerUrl": "https://www.pexels.com/@shanekell",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a roadside farm stall on a Namibian highway",
+      "query": "Namibia roadside farm stall",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:15:59Z",
+      "verifiedAt": "2026-08-14T07:15:59Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "subject: roadside,stall",
+          "category: market,street"
+        ]
+      }
+    },
+    "namibia/luxury": {
+      "country": "namibia",
+      "category": "luxury",
+      "caption": "Desert Camps",
+      "description": "Small camps in private concessions the size of counties, and almost no light pollution.",
+      "provider": "unsplash",
+      "photoId": "bc52HVKjde4",
+      "imageUrl": "https://images.unsplash.com/photo-1688988816492-f71727a11149",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1688988816492-f71727a11149?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-tent-set-up-in-the-middle-of-a-desert-bc52HVKjde4",
+      "photographer": "Ultimate Safaris Namibia",
+      "photographerUrl": "https://unsplash.com/@ultimate_safaris_namibia",
+      "width": 8235,
+      "height": 5490,
+      "aspectRatio": 1.5,
+      "alt": "a desert camp lit under a full sky of stars, Namibia",
+      "query": "Namibia desert camp lit",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:03Z",
+      "verifiedAt": "2026-08-14T07:16:04Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: camp,desert"
+        ]
+      }
+    },
+    "namibia/mountains": {
+      "country": "namibia",
+      "category": "mountains",
+      "caption": "The Brandberg and the Escarpment",
+      "description": "The Brandberg is 2,573 metres and holds the White Lady, one of Africa's known rock paintings.",
+      "provider": "unsplash",
+      "photoId": "_2Dof1cRH0c",
+      "imageUrl": "https://images.unsplash.com/photo-1650529392954-3f25f61970d5",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1650529392954-3f25f61970d5?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/the-sun-is-setting-over-the-mountains-in-the-desert-_2Dof1cRH0c",
+      "photographer": "Rico Meier",
+      "photographerUrl": "https://unsplash.com/@ricofotografie",
+      "width": 4648,
+      "height": 2280,
+      "aspectRatio": 2.0386,
+      "alt": "the granite mass of the Brandberg above the plain, Namibia",
+      "query": "Namibia Brandberg",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:15:30Z",
+      "verifiedAt": "2026-08-14T07:15:30Z",
+      "relevance": {
+        "score": 2.62,
+        "reasons": [
+          "subject: the"
         ]
       }
     },
@@ -9374,6 +9979,68 @@
         ]
       }
     },
+    "namibia/outdoor": {
+      "country": "namibia",
+      "category": "outdoor",
+      "caption": "Dune, Quad, Balloon",
+      "description": "Climbing Big Daddy, quad biking at Swakopmund, and balloons over the Namib at dawn.",
+      "provider": "pexels",
+      "photoId": "25975001",
+      "imageUrl": "https://images.pexels.com/photos/25975001/pexels-photo-25975001.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/25975001/pexels-photo-25975001.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/single-tree-on-desert-25975001/",
+      "photographer": "zhou shen",
+      "photographerUrl": "https://www.pexels.com/@fatinmark",
+      "width": 7629,
+      "height": 5088,
+      "aspectRatio": 1.4994,
+      "alt": "a balloon over the Namib at sunrise, Namibia",
+      "query": "Namibia Namib",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:02Z",
+      "verifiedAt": "2026-08-14T07:16:02Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: namib,sunrise"
+        ]
+      }
+    },
+    "namibia/photography": {
+      "country": "namibia",
+      "category": "photography",
+      "caption": "The Cleanest Light in Africa",
+      "description": "Dry air, no haze, and one of the darkest night skies measured anywhere.",
+      "provider": "pexels",
+      "photoId": "37682339",
+      "imageUrl": "https://images.pexels.com/photos/37682339/pexels-photo-37682339.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37682339/pexels-photo-37682339.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/silhouette-under-milky-way-night-sky-37682339/",
+      "photographer": "Sahil Raut",
+      "photographerUrl": "https://www.pexels.com/@sahil-raut-221100705",
+      "width": 7728,
+      "height": 4344,
+      "aspectRatio": 1.779,
+      "alt": "the Milky Way over a Namibian desert landscape",
+      "query": "Namibia Milky Way",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:08Z",
+      "verifiedAt": "2026-08-14T07:16:09Z",
+      "relevance": {
+        "score": 4.29,
+        "reasons": [
+          "subject: milky,the,way"
+        ]
+      }
+    },
     "namibia/safari": {
       "country": "namibia",
       "category": "safari",
@@ -9402,6 +10069,100 @@
         "score": 4.67,
         "reasons": [
           "subject: elephants,waterhole"
+        ]
+      }
+    },
+    "namibia/traditional-people": {
+      "country": "namibia",
+      "category": "traditional-people",
+      "caption": "The Himba",
+      "description": "The Himba of the Kunene, whose way of life is genuinely intact and should be visited carefully.",
+      "provider": "pexels",
+      "photoId": "35301768",
+      "imageUrl": "https://images.pexels.com/photos/35301768/pexels-photo-35301768.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35301768/pexels-photo-35301768.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/abandoned-rusty-car-in-namibian-landscape-35301768/",
+      "photographer": "Hub JACQU",
+      "photographerUrl": "https://www.pexels.com/@hub-jacqu-750015482",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a Himba homestead in the Kunene region, Namibia",
+      "query": "Namibia Himba Kunene",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:15:45Z",
+      "verifiedAt": "2026-08-14T07:15:45Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "namibia/waterfalls": {
+      "country": "namibia",
+      "category": "waterfalls",
+      "caption": "Epupa",
+      "description": "The Kunene drops through a gorge on the Angolan border, with baobabs on the rim.",
+      "provider": "unsplash",
+      "photoId": "xV4gvqvS5rs",
+      "imageUrl": "https://images.unsplash.com/photo-1784621556701-4974bcffaf47",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1784621556701-4974bcffaf47?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-powerful-river-flows-through-a-rugged-rocky-canyon-xV4gvqvS5rs",
+      "photographer": "Arno Smit",
+      "photographerUrl": "https://unsplash.com/@_entreprenerd",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "Waterfalls in Namibia",
+      "query": "Namibia waterfall",
+      "queryTier": "category",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:15:35Z",
+      "verifiedAt": "2026-08-14T07:15:35Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: river"
+        ]
+      }
+    },
+    "namibia/why-visit": {
+      "country": "namibia",
+      "category": "why-visit",
+      "caption": "Space, and the Silence in It",
+      "description": "Two and a half million people in a country twice the size of Germany.",
+      "provider": "unsplash",
+      "photoId": "j3YAJH78dcc",
+      "imageUrl": "https://images.unsplash.com/photo-1730444289940-6146460a05e4",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1730444289940-6146460a05e4?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-dirt-road-with-mountains-in-the-background-j3YAJH78dcc",
+      "photographer": "Markus Kammermann",
+      "photographerUrl": "https://unsplash.com/@makabera",
+      "width": 4500,
+      "height": 3000,
+      "aspectRatio": 1.5,
+      "alt": "an empty gravel plain stretching to distant mountains, Namibia",
+      "query": "Namibia empty gravel plain",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:11Z",
+      "verifiedAt": "2026-08-14T07:16:12Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: mountains,the"
         ]
       }
     },
@@ -9435,6 +10196,2478 @@
           "names the country",
           "subject: wildlife",
           "category: wildlife"
+        ]
+      }
+    },
+    "nigeria/adventure": {
+      "country": "nigeria",
+      "category": "adventure",
+      "caption": "Plateau and Delta",
+      "description": "Hiking the Jos plateau, the Obudu cable car, and creek trips through the delta.",
+      "provider": "pexels",
+      "photoId": "37562262",
+      "imageUrl": "https://images.pexels.com/photos/37562262/pexels-photo-37562262.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37562262/pexels-photo-37562262.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-market-scene-with-auto-rickshaws-in-jos-nigeria-37562262/",
+      "photographer": "Jagaba Denis",
+      "photographerUrl": "https://www.pexels.com/@jagaba",
+      "width": 6016,
+      "height": 4016,
+      "aspectRatio": 1.498,
+      "alt": "the rock formations of the Jos plateau, Nigeria",
+      "query": "Nigeria Jos",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:24Z",
+      "verifiedAt": "2026-08-14T07:16:24Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: and,jos"
+        ]
+      }
+    },
+    "nigeria/architecture": {
+      "country": "nigeria",
+      "category": "architecture",
+      "caption": "Mud Mosques and Modernism",
+      "description": "Hausa mud architecture in the north, and the 1970s modernism of Lagos and Abuja.",
+      "provider": "pexels",
+      "photoId": "31856861",
+      "imageUrl": "https://images.pexels.com/photos/31856861/pexels-photo-31856861.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31856861/pexels-photo-31856861.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/hausa-men-in-traditional-attire-nigeria-31856861/",
+      "photographer": "Gpop NL",
+      "photographerUrl": "https://www.pexels.com/@gpop-nl-451536741",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "the Hausa mud architecture of a northern emir's palace, Nigeria",
+      "query": "Nigeria Hausa",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:31Z",
+      "verifiedAt": "2026-08-14T07:16:31Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: and,hausa"
+        ]
+      }
+    },
+    "nigeria/beaches": {
+      "country": "nigeria",
+      "category": "beaches",
+      "caption": "Lagos and the Atlantic",
+      "description": "Tarkwa Bay, Elegushi and the long Atlantic beaches east towards Lekki.",
+      "provider": "pexels",
+      "photoId": "5727646",
+      "imageUrl": "https://images.pexels.com/photos/5727646/pexels-photo-5727646.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/5727646/pexels-photo-5727646.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/tropical-landscape-with-beach-and-palm-trees-5727646/",
+      "photographer": "Tosin James",
+      "photographerUrl": "https://www.pexels.com/@tosinjames",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "boats and beach umbrellas at Tarkwa Bay, Lagos, Nigeria",
+      "query": "Nigeria Tarkwa Bay Lagos",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:16:22Z",
+      "verifiedAt": "2026-08-14T07:16:22Z",
+      "relevance": {
+        "score": 7.53,
+        "reasons": [
+          "names the country",
+          "subject: beach,lagos,the",
+          "category: beach"
+        ]
+      }
+    },
+    "nigeria/cities": {
+      "country": "nigeria",
+      "category": "cities",
+      "caption": "Lagos, Abuja, Kano",
+      "description": "Lagos on the lagoon, purpose-built Abuja in the middle, and Kano's thousand-year-old walls.",
+      "provider": "pexels",
+      "photoId": "31729398",
+      "imageUrl": "https://images.pexels.com/photos/31729398/pexels-photo-31729398.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31729398/pexels-photo-31729398.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/muhammad-buhari-road-interchange-in-kano-31729398/",
+      "photographer": "alameen .ng",
+      "photographerUrl": "https://www.pexels.com/@alameenng",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "the old city and dye pits of Kano, Nigeria",
+      "query": "Nigeria Kano",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:30Z",
+      "verifiedAt": "2026-08-14T07:16:31Z",
+      "relevance": {
+        "score": 3.43,
+        "reasons": [
+          "names the country",
+          "subject: kano"
+        ]
+      }
+    },
+    "nigeria/crafts": {
+      "country": "nigeria",
+      "category": "crafts",
+      "caption": "Bronze, Adire and Aso Oke",
+      "description": "Benin bronze casting still practised in Igun street, and adire resist-dyed cloth in Abeokuta.",
+      "provider": "pexels",
+      "photoId": "16456302",
+      "imageUrl": "https://images.pexels.com/photos/16456302/pexels-photo-16456302.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16456302/pexels-photo-16456302.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/in-cruce-salus-16456302/",
+      "photographer": "David Iloba",
+      "photographerUrl": "https://www.pexels.com/@david-iloba-28486424",
+      "width": 7334,
+      "height": 4895,
+      "aspectRatio": 1.4983,
+      "alt": "a bronze caster at work in Igun street, Benin City, Nigeria",
+      "query": "Nigeria Igun Benin City",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:28Z",
+      "verifiedAt": "2026-08-14T07:16:29Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: and,benin,city"
+        ]
+      }
+    },
+    "nigeria/culture": {
+      "country": "nigeria",
+      "category": "culture",
+      "caption": "Five Hundred Languages",
+      "description": "Yoruba, Igbo, Hausa and around five hundred more, in one country.",
+      "provider": "pexels",
+      "photoId": "34309307",
+      "imageUrl": "https://images.pexels.com/photos/34309307/pexels-photo-34309307.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34309307/pexels-photo-34309307.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/colorful-nigerian-festival-with-vibrant-attire-34309307/",
+      "photographer": "Anchau",
+      "photographerUrl": "https://www.pexels.com/@anchau-1663967297",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a Yoruba drumming group performing at a festival, Nigeria",
+      "query": "Nigeria Yoruba",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:24Z",
+      "verifiedAt": "2026-08-14T07:16:25Z",
+      "relevance": {
+        "score": 5.53,
+        "reasons": [
+          "names the country",
+          "subject: festival",
+          "category: traditional"
+        ]
+      }
+    },
+    "nigeria/eco-tourism": {
+      "country": "nigeria",
+      "category": "eco-tourism",
+      "caption": "Community Forest",
+      "description": "Afi Mountain's drill ranch and the Cross River community forests, both village-run.",
+      "provider": "pexels",
+      "photoId": "14010957",
+      "imageUrl": "https://images.pexels.com/photos/14010957/pexels-photo-14010957.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/14010957/pexels-photo-14010957.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/man-with-camera-near-river-in-mountains-landscape-14010957/",
+      "photographer": "Quang Nguyen Vinh",
+      "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+      "width": 7249,
+      "height": 4835,
+      "aspectRatio": 1.4993,
+      "alt": "drills at the Afi Mountain sanctuary in Cross River, Nigeria",
+      "query": "Nigeria Afi Mountain Cross River",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:34Z",
+      "verifiedAt": "2026-08-14T07:16:35Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: mountain,river"
+        ]
+      }
+    },
+    "nigeria/family-community": {
+      "country": "nigeria",
+      "category": "family-community",
+      "caption": "Loud, and Welcoming",
+      "description": "Not a quiet holiday — but there is nowhere friendlier once you are through the door.",
+      "provider": "pexels",
+      "photoId": "36703363",
+      "imageUrl": "https://images.pexels.com/photos/36703363/pexels-photo-36703363.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36703363/pexels-photo-36703363.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/street-scene-captured-in-lagos-nigeria-36703363/",
+      "photographer": "Ademola Adeola",
+      "photographerUrl": "https://www.pexels.com/@ademola-adeola-2148696501",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "children playing football on a Lagos beach, Nigeria",
+      "query": "Nigeria Lagos",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:32Z",
+      "verifiedAt": "2026-08-14T07:16:33Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: and,lagos",
+          "category: people"
+        ]
+      }
+    },
+    "nigeria/festivals": {
+      "country": "nigeria",
+      "category": "festivals",
+      "caption": "Osun-Osogbo and Calabar",
+      "description": "The Osun-Osogbo grove festival in August, and the Calabar carnival through December.",
+      "provider": "pexels",
+      "photoId": "27541482",
+      "imageUrl": "https://images.pexels.com/photos/27541482/pexels-photo-27541482.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27541482/pexels-photo-27541482.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-close-up-of-a-red-hat-with-feathers-27541482/",
+      "photographer": "Ben Iwara",
+      "photographerUrl": "https://www.pexels.com/@ben-iwara-1033992193",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "dancers in costume at the Calabar carnival, Nigeria",
+      "query": "Nigeria Calabar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:16:27Z",
+      "verifiedAt": "2026-08-14T07:16:27Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: and,costume"
+        ]
+      }
+    },
+    "nigeria/food": {
+      "country": "nigeria",
+      "category": "food",
+      "caption": "Jollof, Suya and Egusi",
+      "description": "Suya off the grill at night, egusi with pounded yam, and the jollof question again.",
+      "provider": "pexels",
+      "photoId": "37030067",
+      "imageUrl": "https://images.pexels.com/photos/37030067/pexels-photo-37030067.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37030067/pexels-photo-37030067.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/grilled-meat-and-vegetables-on-barbecue-37030067/",
+      "photographer": "Canary Vista ES",
+      "photographerUrl": "https://www.pexels.com/@canary-vista-es-2156886427",
+      "width": 6960,
+      "height": 4640,
+      "aspectRatio": 1.5,
+      "alt": "suya being grilled at a roadside stand at night, Nigeria",
+      "query": "Nigeria suya being grilled",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:16:26Z",
+      "verifiedAt": "2026-08-14T07:16:26Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: and,being,grilled"
+        ]
+      }
+    },
+    "nigeria/forests": {
+      "country": "nigeria",
+      "category": "forests",
+      "caption": "Cross River",
+      "description": "The Cross River forest holds the last of Nigeria's gorillas and some of West Africa's tallest trees.",
+      "provider": "pexels",
+      "photoId": "32187359",
+      "imageUrl": "https://images.pexels.com/photos/32187359/pexels-photo-32187359.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32187359/pexels-photo-32187359.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-canoeing-on-muddy-river-in-nigeria-32187359/",
+      "photographer": "Abdulrahman Abubakar",
+      "photographerUrl": "https://www.pexels.com/@abdulrahman-abubakar-501847670",
+      "width": 8064,
+      "height": 6048,
+      "aspectRatio": 1.3333,
+      "alt": "dense rainforest canopy in Cross River state, Nigeria",
+      "query": "Nigeria Cross River",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:16:23Z",
+      "verifiedAt": "2026-08-14T07:16:23Z",
+      "relevance": {
+        "score": 4.5,
+        "reasons": [
+          "names the country",
+          "subject: river"
+        ]
+      }
+    },
+    "nigeria/heritage": {
+      "country": "nigeria",
+      "category": "heritage",
+      "caption": "The Bronzes",
+      "description": "The Benin bronzes are the reason half the museums of Europe have a Nigeria problem.",
+      "provider": "pexels",
+      "photoId": "6729745",
+      "imageUrl": "https://images.pexels.com/photos/6729745/pexels-photo-6729745.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/6729745/pexels-photo-6729745.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/boy-rowing-a-boat-6729745/",
+      "photographer": "Kenza Loussouarn",
+      "photographerUrl": "https://www.pexels.com/@kenza-loussouarn-24828091",
+      "width": 6016,
+      "height": 4000,
+      "aspectRatio": 1.504,
+      "alt": "a display of Benin bronze plaques, Nigeria",
+      "query": "Nigeria Benin",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:30Z",
+      "verifiedAt": "2026-08-14T07:16:30Z",
+      "relevance": {
+        "score": 4.54,
+        "reasons": [
+          "subject: benin,the"
+        ]
+      }
+    },
+    "nigeria/hero": {
+      "country": "nigeria",
+      "category": "hero",
+      "caption": "The Loudest Country on the Continent",
+      "description": "Two hundred and twenty million people, and the music and film the rest of the continent watches.",
+      "provider": "unsplash",
+      "photoId": "W39f1D5hKes",
+      "imageUrl": "https://images.unsplash.com/photo-1708674282655-3637d492dc74",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1708674282655-3637d492dc74?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/an-aerial-view-of-a-stadium-with-a-bus-on-the-road-W39f1D5hKes",
+      "photographer": "Vitalis Nwenyi",
+      "photographerUrl": "https://unsplash.com/@vitalis_nwenyi",
+      "width": 4000,
+      "height": 2250,
+      "aspectRatio": 1.7778,
+      "alt": "the Lagos skyline across the lagoon at dusk, Nigeria",
+      "query": "Nigeria Lagos",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:13Z",
+      "verifiedAt": "2026-08-14T07:16:14Z",
+      "relevance": {
+        "score": 6.5,
+        "reasons": [
+          "names the country",
+          "subject: lagos,the"
+        ]
+      }
+    },
+    "nigeria/hidden-gems": {
+      "country": "nigeria",
+      "category": "hidden-gems",
+      "caption": "Idanre",
+      "description": "The Idanre hills, with an old town six hundred steps up and nobody else climbing them.",
+      "provider": "pexels",
+      "photoId": "38694328",
+      "imageUrl": "https://images.pexels.com/photos/38694328/pexels-photo-38694328.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38694328/pexels-photo-38694328.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/man-relaxing-on-rock-by-idanre-hills-38694328/",
+      "photographer": "Hiếu Lê",
+      "photographerUrl": "https://www.pexels.com/@hi-u-le-921253873",
+      "width": 6536,
+      "height": 3882,
+      "aspectRatio": 1.6837,
+      "alt": "the granite Idanre hills rising above forest, Nigeria",
+      "query": "Nigeria Idanre",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:36Z",
+      "verifiedAt": "2026-08-14T07:16:37Z",
+      "relevance": {
+        "score": 5.88,
+        "reasons": [
+          "subject: hills,idanre",
+          "category: the"
+        ]
+      }
+    },
+    "nigeria/historic-sites": {
+      "country": "nigeria",
+      "category": "historic-sites",
+      "caption": "Benin City and Sungbo's Eredo",
+      "description": "The walls of Benin, and Sungbo's Eredo — a hundred and sixty kilometres of earthworks.",
+      "provider": "pexels",
+      "photoId": "16274227",
+      "imageUrl": "https://images.pexels.com/photos/16274227/pexels-photo-16274227.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16274227/pexels-photo-16274227.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/people-wearing-traditional-clothes-16274227/",
+      "photographer": "David Iloba",
+      "photographerUrl": "https://www.pexels.com/@david-iloba-28486424",
+      "width": 7360,
+      "height": 4912,
+      "aspectRatio": 1.4984,
+      "alt": "the earth walls and moat of the Benin kingdom, Nigeria",
+      "query": "Nigeria Benin",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:29Z",
+      "verifiedAt": "2026-08-14T07:16:30Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: benin,city"
+        ]
+      }
+    },
+    "nigeria/lakes-rivers": {
+      "country": "nigeria",
+      "category": "lakes-rivers",
+      "caption": "The Niger and the Benue",
+      "description": "Two great rivers meeting at Lokoja, and the delta they build a thousand kilometres downstream.",
+      "provider": "pexels",
+      "photoId": "31580556",
+      "imageUrl": "https://images.pexels.com/photos/31580556/pexels-photo-31580556.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31580556/pexels-photo-31580556.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/stunning-rock-formation-in-bauchi-nigeria-31580556/",
+      "photographer": "Ahbee Photography",
+      "photographerUrl": "https://www.pexels.com/@ahbee-photography-463652994",
+      "width": 7728,
+      "height": 5152,
+      "aspectRatio": 1.5,
+      "alt": "the confluence of the Niger and Benue rivers at Lokoja, Nigeria",
+      "query": "Nigeria Niger Benue",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:21Z",
+      "verifiedAt": "2026-08-14T07:16:21Z",
+      "relevance": {
+        "score": 4.93,
+        "reasons": [
+          "names the country",
+          "subject: and",
+          "category: water"
+        ]
+      }
+    },
+    "nigeria/local-life": {
+      "country": "nigeria",
+      "category": "local-life",
+      "caption": "Danfo and Buka",
+      "description": "The yellow buses, the roadside buka, and a city that does not stop at any hour.",
+      "provider": "pexels",
+      "photoId": "16155217",
+      "imageUrl": "https://images.pexels.com/photos/16155217/pexels-photo-16155217.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16155217/pexels-photo-16155217.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/crowded-city-street-16155217/",
+      "photographer": "David Iloba",
+      "photographerUrl": "https://www.pexels.com/@david-iloba-28486424",
+      "width": 7360,
+      "height": 4912,
+      "aspectRatio": 1.4984,
+      "alt": "a yellow danfo bus in Lagos traffic, Nigeria",
+      "query": "Nigeria Lagos",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:31Z",
+      "verifiedAt": "2026-08-14T07:16:32Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: and,lagos",
+          "category: market"
+        ]
+      }
+    },
+    "nigeria/luxury": {
+      "country": "nigeria",
+      "category": "luxury",
+      "caption": "Lagos Island Hotels",
+      "description": "Victoria Island and Ikoyi at one end, and Obudu's mountain resort at the other.",
+      "provider": "pexels",
+      "photoId": "38459107",
+      "imageUrl": "https://images.pexels.com/photos/38459107/pexels-photo-38459107.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38459107/pexels-photo-38459107.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/lagos-firefighting-operation-amidst-local-crowd-38459107/",
+      "photographer": "David Iloba",
+      "photographerUrl": "https://www.pexels.com/@david-iloba-28486424",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "a hotel terrace overlooking Lagos lagoon at night, Nigeria",
+      "query": "Nigeria Lagos",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:33Z",
+      "verifiedAt": "2026-08-14T07:16:34Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: lagos"
+        ]
+      }
+    },
+    "nigeria/mountains": {
+      "country": "nigeria",
+      "category": "mountains",
+      "caption": "The Obudu Plateau",
+      "description": "Sixteen hundred metres of grassland on the Cameroon border, with cattle ranches and cloud.",
+      "provider": "pexels",
+      "photoId": "35857785",
+      "imageUrl": "https://images.pexels.com/photos/35857785/pexels-photo-35857785.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35857785/pexels-photo-35857785.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-misty-hills-of-obudu-ranch-in-nigeria-35857785/",
+      "photographer": "Prince Rufus",
+      "photographerUrl": "https://www.pexels.com/@prince-rufus-1736180321",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the green Obudu plateau under low cloud, Nigeria",
+      "query": "Nigeria Obudu",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:16:19Z",
+      "verifiedAt": "2026-08-14T07:16:19Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: green,obudu"
+        ]
+      }
+    },
+    "nigeria/nature": {
+      "country": "nigeria",
+      "category": "nature",
+      "caption": "Mangrove to Sahel",
+      "description": "Niger delta mangrove in the south, rainforest, savanna, and the Sahel at the Niger border.",
+      "provider": "pexels",
+      "photoId": "34263949",
+      "imageUrl": "https://images.pexels.com/photos/34263949/pexels-photo-34263949.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34263949/pexels-photo-34263949.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-lush-green-mangrove-island-34263949/",
+      "photographer": "Chris  The Island",
+      "photographerUrl": "https://www.pexels.com/@chris-the-island-3570397",
+      "width": 8192,
+      "height": 4608,
+      "aspectRatio": 1.7778,
+      "alt": "mangrove creeks in the Niger delta, Nigeria",
+      "query": "Nigeria mangrove creeks niger",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:16Z",
+      "verifiedAt": "2026-08-14T07:16:17Z",
+      "relevance": {
+        "score": 3.0,
+        "reasons": [
+          "subject: mangrove"
+        ]
+      }
+    },
+    "nigeria/outdoor": {
+      "country": "nigeria",
+      "category": "outdoor",
+      "caption": "Hike, Paddle, Ride",
+      "description": "The Jos plateau, the Obudu ranch trails, and creek boats through the delta.",
+      "provider": "pexels",
+      "photoId": "31182122",
+      "imageUrl": "https://images.pexels.com/photos/31182122/pexels-photo-31182122.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31182122/pexels-photo-31182122.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/group-hiking-on-rocky-trail-overlooking-cityscape-31182122/",
+      "photographer": "Zedou Njankouo",
+      "photographerUrl": "https://www.pexels.com/@zedou-njankouo-682282687",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "hikers on a trail across the Obudu plateau, Nigeria",
+      "query": "Nigeria hikers trail obudu",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:33Z",
+      "verifiedAt": "2026-08-14T07:16:33Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: hikers,trail"
+        ]
+      }
+    },
+    "nigeria/photography": {
+      "country": "nigeria",
+      "category": "photography",
+      "caption": "Colour and Crowd",
+      "description": "Markets, festivals and cloth — the hardest thing here is choosing what to leave out.",
+      "provider": "pexels",
+      "photoId": "37988925",
+      "imageUrl": "https://images.pexels.com/photos/37988925/pexels-photo-37988925.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37988925/pexels-photo-37988925.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/crowded-urban-market-scene-in-nigeria-37988925/",
+      "photographer": "DETTY  IMAGES",
+      "photographerUrl": "https://www.pexels.com/@detty-images-2148597567",
+      "width": 6140,
+      "height": 4093,
+      "aspectRatio": 1.5001,
+      "alt": "a crowded cloth market in southern Nigeria",
+      "query": "Nigeria crowded cloth market",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:35Z",
+      "verifiedAt": "2026-08-14T07:16:36Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: crowd,market,nigeria"
+        ]
+      }
+    },
+    "nigeria/safari": {
+      "country": "nigeria",
+      "category": "safari",
+      "caption": "Yankari",
+      "description": "The country's best game reserve, with a warm spring you can swim in at the centre of it.",
+      "provider": "pexels",
+      "photoId": "38977140",
+      "imageUrl": "https://images.pexels.com/photos/38977140/pexels-photo-38977140.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38977140/pexels-photo-38977140.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/group-of-female-athletes-in-track-suits-posing-outdoors-38977140/",
+      "photographer": "Ansey Photography",
+      "photographerUrl": "https://www.pexels.com/@ansey",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a game track through Yankari savanna at first light, Nigeria",
+      "query": "Nigeria Yankari",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:18Z",
+      "verifiedAt": "2026-08-14T07:16:18Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: track"
+        ]
+      }
+    },
+    "nigeria/traditional-people": {
+      "country": "nigeria",
+      "category": "traditional-people",
+      "caption": "Yoruba, Igbo, Hausa, Fulani",
+      "description": "Four large cultures and hundreds of smaller ones, each with its own courts and calendars.",
+      "provider": "pexels",
+      "photoId": "38003149",
+      "imageUrl": "https://images.pexels.com/photos/38003149/pexels-photo-38003149.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38003149/pexels-photo-38003149.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-horseman-at-nigerian-festival-38003149/",
+      "photographer": "bobest Imagery",
+      "photographerUrl": "https://www.pexels.com/@beelal01",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a Fulani herder with cattle in northern Nigeria",
+      "query": "Nigeria Fulani",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:25Z",
+      "verifiedAt": "2026-08-14T07:16:25Z",
+      "relevance": {
+        "score": 5.67,
+        "reasons": [
+          "names the country",
+          "subject: nigeria",
+          "category: traditional"
+        ]
+      }
+    },
+    "nigeria/waterfalls": {
+      "country": "nigeria",
+      "category": "waterfalls",
+      "caption": "Erin-Ijesha and Gurara",
+      "description": "Erin-Ijesha's seven stages in Osun, and the Gurara falls on the road to Abuja.",
+      "provider": "pexels",
+      "photoId": "18978036",
+      "imageUrl": "https://images.pexels.com/photos/18978036/pexels-photo-18978036.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/18978036/pexels-photo-18978036.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/portrait-of-woman-by-waterfall-in-forest-18978036/",
+      "photographer": "Og",
+      "photographerUrl": "https://www.pexels.com/@og-776567171",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "the stepped Erin-Ijesha waterfall in forest, Nigeria",
+      "query": "Nigeria Erin-Ijesha",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:20Z",
+      "verifiedAt": "2026-08-14T07:16:20Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: erin,waterfall",
+          "category: waterfall"
+        ]
+      }
+    },
+    "nigeria/why-visit": {
+      "country": "nigeria",
+      "category": "why-visit",
+      "caption": "The Culture Everyone Else Is Watching",
+      "description": "Afrobeats and Nollywood came from here, and it is worth seeing where.",
+      "provider": "pexels",
+      "photoId": "16155218",
+      "imageUrl": "https://images.pexels.com/photos/16155218/pexels-photo-16155218.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16155218/pexels-photo-16155218.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/people-and-cars-on-city-street-16155218/",
+      "photographer": "David Iloba",
+      "photographerUrl": "https://www.pexels.com/@david-iloba-28486424",
+      "width": 7360,
+      "height": 4912,
+      "aspectRatio": 1.4984,
+      "alt": "a live Afrobeats performance in Lagos, Nigeria",
+      "query": "Nigeria Afrobeats Lagos",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:37Z",
+      "verifiedAt": "2026-08-14T07:16:38Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: lagos,the"
+        ]
+      }
+    },
+    "nigeria/wildlife": {
+      "country": "nigeria",
+      "category": "wildlife",
+      "caption": "Yankari and Gashaka",
+      "description": "Yankari's elephant herds, and Gashaka-Gumti's forest chimpanzees on the Cameroon border.",
+      "provider": "pexels",
+      "photoId": "29804437",
+      "imageUrl": "https://images.pexels.com/photos/29804437/pexels-photo-29804437.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/29804437/pexels-photo-29804437.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/nigerian-football-fans-display-passion-and-culture-29804437/",
+      "photographer": "Jonathan Shembere",
+      "photographerUrl": "https://www.pexels.com/@gwejeofafrica",
+      "width": 7008,
+      "height": 4672,
+      "aspectRatio": 1.5,
+      "alt": "elephants at the Wikki warm spring in Yankari, Nigeria",
+      "query": "Nigeria Wikki Yankari",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:16:17Z",
+      "verifiedAt": "2026-08-14T07:16:17Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "rwanda/adventure": {
+      "country": "rwanda",
+      "category": "adventure",
+      "caption": "The Congo Nile Trail",
+      "description": "227 kilometres along Lake Kivu on foot or by bike, through coffee terraces and fishing villages.",
+      "provider": "pexels",
+      "photoId": "32806081",
+      "imageUrl": "https://images.pexels.com/photos/32806081/pexels-photo-32806081.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32806081/pexels-photo-32806081.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/group-of-men-rowing-a-wooden-boat-on-calm-lake-32806081/",
+      "photographer": "Edouard MIHIGO",
+      "photographerUrl": "https://www.pexels.com/@edouard-mihigo-129683048",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "a cyclist on the Congo Nile Trail above Lake Kivu, Rwanda",
+      "query": "Rwanda Congo Nile Trail Lake Kivu",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:47Z",
+      "verifiedAt": "2026-08-14T07:16:47Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: lake,the"
+        ]
+      }
+    },
+    "rwanda/architecture": {
+      "country": "rwanda",
+      "category": "architecture",
+      "caption": "The Convention Centre Dome",
+      "description": "The Kigali Convention Centre dome, lit at night in the national colours, above a city of red-roofed ridges.",
+      "provider": "pexels",
+      "photoId": "31466702",
+      "imageUrl": "https://images.pexels.com/photos/31466702/pexels-photo-31466702.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31466702/pexels-photo-31466702.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-kigali-s-modern-skyline-31466702/",
+      "photographer": "Faustin NKURUNZIZA",
+      "photographerUrl": "https://www.pexels.com/@faustin-nkurunziza-2151028521",
+      "width": 5504,
+      "height": 7664,
+      "aspectRatio": 0.7182,
+      "alt": "the illuminated dome of the Kigali Convention Centre at night, Rwanda",
+      "query": "Rwanda Kigali Convention Centre",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 44
+      },
+      "createdAt": "2026-08-14T07:16:55Z",
+      "verifiedAt": "2026-08-14T07:16:55Z",
+      "relevance": {
+        "score": 7.59,
+        "reasons": [
+          "names the country",
+          "subject: kigali,the",
+          "category: architecture",
+          "looks like 57% of a slot already filled here"
+        ]
+      }
+    },
+    "rwanda/beaches": {
+      "country": "rwanda",
+      "category": "beaches",
+      "caption": "Rubavu Lakeshore",
+      "description": "Sand, palms and calm freshwater at Gisenyi, an hour from the gorilla trailheads.",
+      "provider": "pexels",
+      "photoId": "30487817",
+      "imageUrl": "https://images.pexels.com/photos/30487817/pexels-photo-30487817.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30487817/pexels-photo-30487817.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-landscape-of-lake-surroundings-with-islands-30487817/",
+      "photographer": "Mad Knoxx Deluxe",
+      "photographerUrl": "https://www.pexels.com/@madknoxxdeluxe",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the lakeshore beach and palms at Rubavu on Lake Kivu, Rwanda",
+      "query": "Rwanda Rubavu Lake Kivu",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T07:16:45Z",
+      "verifiedAt": "2026-08-14T07:16:46Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: lake"
+        ]
+      }
+    },
+    "rwanda/cities": {
+      "country": "rwanda",
+      "category": "cities",
+      "caption": "Kigali, Across the Ridges",
+      "description": "Built along ridge lines, swept every morning, and with a monthly Umuganda when the whole city cleans it together.",
+      "provider": "pexels",
+      "photoId": "31464449",
+      "imageUrl": "https://images.pexels.com/photos/31464449/pexels-photo-31464449.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31464449/pexels-photo-31464449.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-kigali-city-rooftops-in-rwanda-31464449/",
+      "photographer": "Faustin NKURUNZIZA",
+      "photographerUrl": "https://www.pexels.com/@faustin-nkurunziza-2151028521",
+      "width": 8256,
+      "height": 5504,
+      "aspectRatio": 1.5,
+      "alt": "the ridges and rooftops of Kigali at dusk, Rwanda",
+      "query": "Rwanda Kigali",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T07:16:53Z",
+      "verifiedAt": "2026-08-14T07:16:55Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: kigali,rooftops"
+        ]
+      }
+    },
+    "rwanda/crafts": {
+      "country": "rwanda",
+      "category": "crafts",
+      "caption": "Imigongo and Agaseke",
+      "description": "Geometric imigongo panels in black, white and ochre, and the woven agaseke peace basket that is on the coat of arms.",
+      "provider": "pexels",
+      "photoId": "25070525",
+      "imageUrl": "https://images.pexels.com/photos/25070525/pexels-photo-25070525.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/25070525/pexels-photo-25070525.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/colorful-artistic-wall-decorations-25070525/",
+      "photographer": "Diego F. Parra",
+      "photographerUrl": "https://www.pexels.com/@diego-f-parra-33199",
+      "width": 7360,
+      "height": 4912,
+      "aspectRatio": 1.4984,
+      "alt": "geometric imigongo art panels made in eastern Rwanda",
+      "query": "Rwanda geometric imigongo art",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:16:51Z",
+      "verifiedAt": "2026-08-14T07:16:51Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: and,art",
+          "category: handmade"
+        ]
+      }
+    },
+    "rwanda/culture": {
+      "country": "rwanda",
+      "category": "culture",
+      "caption": "Intore, the Dance of Heroes",
+      "description": "The Intore warriors' dance, the inanga zither, and drumming that was once the property of the king alone.",
+      "provider": "pexels",
+      "photoId": "36470601",
+      "imageUrl": "https://images.pexels.com/photos/36470601/pexels-photo-36470601.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36470601/pexels-photo-36470601.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-kigali-city-landscape-rwanda-36470601/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "Intore dancers in grass headdresses performing in Rwanda",
+      "query": "Rwanda Intore",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 44
+      },
+      "createdAt": "2026-08-14T07:16:48Z",
+      "verifiedAt": "2026-08-14T07:16:48Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: rwanda"
+        ]
+      }
+    },
+    "rwanda/eco-tourism": {
+      "country": "rwanda",
+      "category": "eco-tourism",
+      "caption": "Ten Percent, Back to the Hills",
+      "description": "A share of every permit goes to the communities bordering the parks, and gorilla numbers have climbed since it started.",
+      "provider": "pexels",
+      "photoId": "36478037",
+      "imageUrl": "https://images.pexels.com/photos/36478037/pexels-photo-36478037.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36478037/pexels-photo-36478037.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-silverback-gorilla-in-rwandan-wilderness-36478037/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "park rangers and trackers on patrol in Volcanoes National Park, Rwanda",
+      "query": "Rwanda Volcanoes National Park",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:00Z",
+      "verifiedAt": "2026-08-14T07:17:00Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "rwanda/family-community": {
+      "country": "rwanda",
+      "category": "family-community",
+      "caption": "Umuganda",
+      "description": "The last Saturday of every month, the country stops and works on something communal. Visitors are welcome to join.",
+      "provider": "pexels",
+      "photoId": "38833763",
+      "imageUrl": "https://images.pexels.com/photos/38833763/pexels-photo-38833763.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38833763/pexels-photo-38833763.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/portrait-of-two-young-men-in-western-rwanda-38833763/",
+      "photographer": "Bullet Honore",
+      "photographerUrl": "https://www.pexels.com/@bullet-honore-2154563791",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "residents working together during Umuganda community day in Rwanda",
+      "query": "Rwanda Umuganda",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:57Z",
+      "verifiedAt": "2026-08-14T07:16:57Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: rwanda"
+        ]
+      }
+    },
+    "rwanda/festivals": {
+      "country": "rwanda",
+      "category": "festivals",
+      "caption": "Kwita Izina",
+      "description": "The annual gorilla naming ceremony at Kinigi, where every infant born that year is named in front of the whole district.",
+      "provider": "pexels",
+      "photoId": "36477999",
+      "imageUrl": "https://images.pexels.com/photos/36477999/pexels-photo-36477999.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36477999/pexels-photo-36477999.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/mountain-gorilla-relaxing-in-rwandan-jungle-36477999/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the Kwita Izina gorilla naming ceremony at Kinigi, Rwanda",
+      "query": "Rwanda Kwita Izina Kinigi",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:16:50Z",
+      "verifiedAt": "2026-08-14T07:16:51Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: gorilla,kinigi"
+        ]
+      }
+    },
+    "rwanda/food": {
+      "country": "rwanda",
+      "category": "food",
+      "caption": "Brochettes and Isombe",
+      "description": "Grilled goat brochettes, cassava leaf isombe, tilapia from Kivu, and some of the best coffee grown anywhere.",
+      "provider": "pexels",
+      "photoId": "36470715",
+      "imageUrl": "https://images.pexels.com/photos/36470715/pexels-photo-36470715.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36470715/pexels-photo-36470715.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/panoramic-view-of-kigali-cityscape-and-landscape-36470715/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "grilled brochettes and plantain at a Kigali restaurant, Rwanda",
+      "query": "Rwanda Kigali",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:49Z",
+      "verifiedAt": "2026-08-14T07:16:50Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: and,kigali"
+        ]
+      }
+    },
+    "rwanda/forests": {
+      "country": "rwanda",
+      "category": "forests",
+      "caption": "The Nyungwe Canopy Walk",
+      "description": "A suspension walkway sixty metres above one of Africa's oldest montane rainforests, with thirteen primate species below it.",
+      "provider": "pexels",
+      "photoId": "28154528",
+      "imageUrl": "https://images.pexels.com/photos/28154528/pexels-photo-28154528.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28154528/pexels-photo-28154528.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/bosque-y-montana-28154528/",
+      "photographer": "Juan Felipe Ramírez",
+      "photographerUrl": "https://www.pexels.com/@juan-felipe-ramirez-312591454",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the canopy walkway suspended above Nyungwe rainforest, Rwanda",
+      "query": "Rwanda Nyungwe",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:16:46Z",
+      "verifiedAt": "2026-08-14T07:16:47Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: canopy,the",
+          "category: forest"
+        ]
+      }
+    },
+    "rwanda/heritage": {
+      "country": "rwanda",
+      "category": "heritage",
+      "caption": "Memory and Reconstruction",
+      "description": "The Kigali Genocide Memorial is where any honest visit to Rwanda starts, and it explains everything that came after.",
+      "provider": "pexels",
+      "photoId": "36470696",
+      "imageUrl": "https://images.pexels.com/photos/36470696/pexels-photo-36470696.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36470696/pexels-photo-36470696.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/colorful-street-view-in-nyamirambo-kigali-city-36470696/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the gardens of the Kigali Genocide Memorial, Rwanda",
+      "query": "Rwanda Kigali Genocide Memorial",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:53Z",
+      "verifiedAt": "2026-08-14T07:16:53Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: and,kigali"
+        ]
+      }
+    },
+    "rwanda/hero": {
+      "country": "rwanda",
+      "category": "hero",
+      "caption": "Land of a Thousand Hills",
+      "description": "Terraced hills to every horizon, five volcanoes along the northern border, and gorillas on the slopes of them.",
+      "provider": "pexels",
+      "photoId": "36477481",
+      "imageUrl": "https://images.pexels.com/photos/36477481/pexels-photo-36477481.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36477481/pexels-photo-36477481.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-rural-landscape-in-kigali-rwanda-36477481/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "terraced green hills at sunrise in the Rwandan highlands",
+      "query": "Rwanda terraced green hills",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T07:16:38Z",
+      "verifiedAt": "2026-08-14T07:16:39Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: green,hills"
+        ]
+      }
+    },
+    "rwanda/hidden-gems": {
+      "country": "rwanda",
+      "category": "hidden-gems",
+      "caption": "Gishwati-Mukura",
+      "description": "Rwanda's newest national park, a recovering forest between Nyungwe and the volcanoes that almost nobody visits.",
+      "provider": "pexels",
+      "photoId": "37461139",
+      "imageUrl": "https://images.pexels.com/photos/37461139/pexels-photo-37461139.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37461139/pexels-photo-37461139.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/golden-monkey-walking-in-natural-habitat-37461139/",
+      "photographer": "Mad Knoxx Deluxe",
+      "photographerUrl": "https://www.pexels.com/@madknoxxdeluxe",
+      "width": 6630,
+      "height": 5304,
+      "aspectRatio": 1.25,
+      "alt": "the recovering montane forest of Gishwati-Mukura National Park, Rwanda",
+      "query": "Rwanda Gishwati-Mukura National Park",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:01Z",
+      "verifiedAt": "2026-08-14T07:17:01Z",
+      "relevance": {
+        "score": 2.81,
+        "reasons": [
+          "subject: forest"
+        ]
+      }
+    },
+    "rwanda/historic-sites": {
+      "country": "rwanda",
+      "category": "historic-sites",
+      "caption": "Nyanza, the King's Palace",
+      "description": "The reconstructed royal residence at Nyanza, thatched and enormous, with the long-horned Inyambo cattle still kept.",
+      "provider": "pexels",
+      "photoId": "38917959",
+      "imageUrl": "https://images.pexels.com/photos/38917959/pexels-photo-38917959.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38917959/pexels-photo-38917959.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/exquisite-view-of-mysore-palace-under-clear-sky-38917959/",
+      "photographer": "vasu dev",
+      "photographerUrl": "https://www.pexels.com/@vasu-dev-1837537262",
+      "width": 5712,
+      "height": 4284,
+      "aspectRatio": 1.3333,
+      "alt": "the thatched royal palace and Inyambo cattle at Nyanza, Rwanda",
+      "query": "Rwanda thatched royal palace",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:52Z",
+      "verifiedAt": "2026-08-14T07:16:53Z",
+      "relevance": {
+        "score": 6.5,
+        "reasons": [
+          "subject: palace,the",
+          "category: historic"
+        ]
+      }
+    },
+    "rwanda/lakes-rivers": {
+      "country": "rwanda",
+      "category": "lakes-rivers",
+      "caption": "Lake Kivu",
+      "description": "One of Africa's great lakes, with no bilharzia, no crocodiles, and the Congo Nile Trail along its shore.",
+      "provider": "pexels",
+      "photoId": "30184933",
+      "imageUrl": "https://images.pexels.com/photos/30184933/pexels-photo-30184933.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30184933/pexels-photo-30184933.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/luxury-yacht-on-lake-kivu-in-congo-30184933/",
+      "photographer": "Edouard MIHIGO",
+      "photographerUrl": "https://www.pexels.com/@edouard-mihigo-129683048",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "fishing boats on Lake Kivu at dawn, Rwanda",
+      "query": "Rwanda Lake Kivu",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-14T07:16:44Z",
+      "verifiedAt": "2026-08-14T07:16:45Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "subject: kivu,lake",
+          "category: lake"
+        ]
+      }
+    },
+    "rwanda/local-life": {
+      "country": "rwanda",
+      "category": "local-life",
+      "caption": "Kimironko Market",
+      "description": "Fabric, fruit and everything else under one roof, and the tailors who will make it up by tomorrow.",
+      "provider": "pexels",
+      "photoId": "36477487",
+      "imageUrl": "https://images.pexels.com/photos/36477487/pexels-photo-36477487.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36477487/pexels-photo-36477487.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-kigali-neighborhood-with-lush-greens-36477487/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "fabric and produce stalls inside Kimironko market in Kigali, Rwanda",
+      "query": "Rwanda Kimironko Kigali",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:16:56Z",
+      "verifiedAt": "2026-08-14T07:16:57Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: kigali",
+          "category: life"
+        ]
+      }
+    },
+    "rwanda/luxury": {
+      "country": "rwanda",
+      "category": "luxury",
+      "caption": "Lodges Below the Volcanoes",
+      "description": "A handful of very good lodges within sight of the park boundary, built so the trek starts after breakfast.",
+      "provider": "pexels",
+      "photoId": "19199135",
+      "imageUrl": "https://images.pexels.com/photos/19199135/pexels-photo-19199135.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/19199135/pexels-photo-19199135.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/table-and-sofas-on-a-terrace-19199135/",
+      "photographer": "Keegan Checks",
+      "photographerUrl": "https://www.pexels.com/@keeganjchecks",
+      "width": 9504,
+      "height": 6336,
+      "aspectRatio": 1.5,
+      "alt": "a luxury lodge terrace facing the Virunga volcanoes, Rwanda",
+      "query": "Rwanda luxury lodge terrace",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:59Z",
+      "verifiedAt": "2026-08-14T07:17:00Z",
+      "relevance": {
+        "score": 7.53,
+        "reasons": [
+          "subject: luxury,terrace",
+          "category: luxury,resort"
+        ]
+      }
+    },
+    "rwanda/mountains": {
+      "country": "rwanda",
+      "category": "mountains",
+      "caption": "The Virunga Volcanoes",
+      "description": "Five cones along the border — Karisimbi, Bisoke, Muhabura — with a crater lake at the top of Bisoke.",
+      "provider": "pexels",
+      "photoId": "32716005",
+      "imageUrl": "https://images.pexels.com/photos/32716005/pexels-photo-32716005.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32716005/pexels-photo-32716005.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/young-farmer-carrying-crops-in-scenic-valley-32716005/",
+      "photographer": "shutter click",
+      "photographerUrl": "https://www.pexels.com/@shutter-click-1079538113",
+      "width": 6048,
+      "height": 4024,
+      "aspectRatio": 1.503,
+      "alt": "the Virunga volcano chain rising above the farmland, Rwanda",
+      "query": "Rwanda Virunga",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 42
+      },
+      "createdAt": "2026-08-14T07:16:43Z",
+      "verifiedAt": "2026-08-14T07:16:43Z",
+      "relevance": {
+        "score": 2.54,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "rwanda/nature": {
+      "country": "rwanda",
+      "category": "nature",
+      "caption": "Terraces to the Horizon",
+      "description": "Almost every hillside in Rwanda is farmed in contour terraces — the landscape is entirely made by hand.",
+      "provider": "pexels",
+      "photoId": "6713725",
+      "imageUrl": "https://images.pexels.com/photos/6713725/pexels-photo-6713725.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/6713725/pexels-photo-6713725.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-rice-paddies-6713725/",
+      "photographer": "Quang Nguyen Vinh",
+      "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+      "width": 9504,
+      "height": 6336,
+      "aspectRatio": 1.5,
+      "alt": "contour-terraced farmland covering the Rwandan hillsides",
+      "query": "Rwanda contour terraced farmland",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:16:39Z",
+      "verifiedAt": "2026-08-14T07:16:40Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: terraces,the"
+        ]
+      }
+    },
+    "rwanda/outdoor": {
+      "country": "rwanda",
+      "category": "outdoor",
+      "caption": "Bisoke Crater Lake",
+      "description": "Three hours up through nettles and bamboo to a crater lake at 3,711 m, and three hours back down through mud.",
+      "provider": "pexels",
+      "photoId": "35904237",
+      "imageUrl": "https://images.pexels.com/photos/35904237/pexels-photo-35904237.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35904237/pexels-photo-35904237.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/panoramic-view-of-mount-sindoro-in-central-java-35904237/",
+      "photographer": "kevin yung",
+      "photographerUrl": "https://www.pexels.com/@kevin-yung-2152346613",
+      "width": 6048,
+      "height": 4032,
+      "aspectRatio": 1.5,
+      "alt": "the crater lake at the summit of Mount Bisoke, Rwanda",
+      "query": "Rwanda Mount Bisoke",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:16:58Z",
+      "verifiedAt": "2026-08-14T07:16:59Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: lake,mount"
+        ]
+      }
+    },
+    "rwanda/photography": {
+      "country": "rwanda",
+      "category": "photography",
+      "caption": "Mist on the Volcanoes",
+      "description": "The Virunga chain clears for about an hour after dawn, and the terraces below hold the light for longer.",
+      "provider": "pexels",
+      "photoId": "10590310",
+      "imageUrl": "https://images.pexels.com/photos/10590310/pexels-photo-10590310.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/10590310/pexels-photo-10590310.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-silhouette-of-a-mountain-range-10590310/",
+      "photographer": "Rajesh Raj",
+      "photographerUrl": "https://www.pexels.com/@rajeshx8",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "mist clearing from the Virunga volcanoes at dawn, Rwanda",
+      "query": "Rwanda Virunga",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T07:17:00Z",
+      "verifiedAt": "2026-08-14T07:17:01Z",
+      "relevance": {
+        "score": 1.93,
+        "reasons": [
+          "subject: mist"
+        ]
+      }
+    },
+    "rwanda/safari": {
+      "country": "rwanda",
+      "category": "safari",
+      "caption": "Akagera, Big Five Again",
+      "description": "Lion returned in 2015, rhino in 2017; the eastern savanna park now has all five, twenty years after losing them.",
+      "provider": "pexels",
+      "photoId": "35311351",
+      "imageUrl": "https://images.pexels.com/photos/35311351/pexels-photo-35311351.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35311351/pexels-photo-35311351.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/close-up-of-african-bush-elephants-by-waterhole-35311351/",
+      "photographer": "Derek Keats",
+      "photographerUrl": "https://www.pexels.com/@dkeats",
+      "width": 8640,
+      "height": 6068,
+      "aspectRatio": 1.4239,
+      "alt": "elephants and lakes in Akagera National Park, Rwanda",
+      "query": "Rwanda elephants lakes akagera",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 48,
+        "y": 56
+      },
+      "createdAt": "2026-08-14T07:16:42Z",
+      "verifiedAt": "2026-08-14T07:16:43Z",
+      "relevance": {
+        "score": 2.81,
+        "reasons": [
+          "subject: elephants"
+        ]
+      }
+    },
+    "rwanda/traditional-people": {
+      "country": "rwanda",
+      "category": "traditional-people",
+      "caption": "Living Memory",
+      "description": "Cultural villages near Musanze where former poachers now guide, and the beekeepers and potters of the Virunga foothills.",
+      "provider": "pexels",
+      "photoId": "33760868",
+      "imageUrl": "https://images.pexels.com/photos/33760868/pexels-photo-33760868.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33760868/pexels-photo-33760868.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-pottery-craftsmanship-in-warm-lighting-33760868/",
+      "photographer": "From Salih",
+      "photographerUrl": "https://www.pexels.com/@fromsalih",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "a traditional potter at work in a Rwandan cultural village",
+      "query": "Rwanda traditional potter work",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:16:49Z",
+      "verifiedAt": "2026-08-14T07:16:49Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: potter,traditional",
+          "category: traditional"
+        ]
+      }
+    },
+    "rwanda/waterfalls": {
+      "country": "rwanda",
+      "category": "waterfalls",
+      "caption": "Isumo, Under Nyungwe",
+      "description": "A steep tea-and-forest walk down to the Isumo falls on the western edge of the Nyungwe canopy.",
+      "provider": "pexels",
+      "photoId": "13981875",
+      "imageUrl": "https://images.pexels.com/photos/13981875/pexels-photo-13981875.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/13981875/pexels-photo-13981875.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/view-of-a-mountain-with-trees-13981875/",
+      "photographer": "Valentina Restrepo Ríos",
+      "photographerUrl": "https://www.pexels.com/@valentina-restrepo-rios-337634008",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "the Isumo waterfall in the Nyungwe forest, Rwanda",
+      "query": "Rwanda Isumo Nyungwe",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 44
+      },
+      "createdAt": "2026-08-14T07:16:44Z",
+      "verifiedAt": "2026-08-14T07:16:44Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: forest,under"
+        ]
+      }
+    },
+    "rwanda/why-visit": {
+      "country": "rwanda",
+      "category": "why-visit",
+      "caption": "Small Country, Nothing Missing",
+      "description": "Gorillas, canopy forest, Big Five and a lake shore, all within three hours of a capital you can walk at night.",
+      "provider": "pexels",
+      "photoId": "27257405",
+      "imageUrl": "https://images.pexels.com/photos/27257405/pexels-photo-27257405.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27257405/pexels-photo-27257405.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-gorilla-walking-on-grass-in-a-zoo-27257405/",
+      "photographer": "Nick",
+      "photographerUrl": "https://www.pexels.com/@knick",
+      "width": 6239,
+      "height": 4159,
+      "aspectRatio": 1.5001,
+      "alt": "a silverback gorilla in the bamboo of Volcanoes National Park, Rwanda",
+      "query": "Rwanda silverback gorilla bamboo",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 52,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T07:17:02Z",
+      "verifiedAt": "2026-08-14T07:17:02Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: gorilla,silverback"
+        ]
+      }
+    },
+    "rwanda/wildlife": {
+      "country": "rwanda",
+      "category": "wildlife",
+      "caption": "Face to Face with Gorillas",
+      "description": "Ten habituated families on the Virunga slopes, one hour with them, eight people at a time.",
+      "provider": "pexels",
+      "photoId": "35613489",
+      "imageUrl": "https://images.pexels.com/photos/35613489/pexels-photo-35613489.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35613489/pexels-photo-35613489.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/explosive-eruption-at-hawaii-volcanoes-national-park-35613489/",
+      "photographer": "James Lee",
+      "photographerUrl": "https://www.pexels.com/@james-lee-932763",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a mountain gorilla family on the slopes of Volcanoes National Park, Rwanda",
+      "query": "Rwanda Volcanoes National Park",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-14T07:16:41Z",
+      "verifiedAt": "2026-08-14T07:16:41Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: national,park,volcanoes"
+        ]
+      }
+    },
+    "senegal/adventure": {
+      "country": "senegal",
+      "category": "adventure",
+      "caption": "Surf, Sail, Paddle",
+      "description": "Dakar's surf breaks, pirogues in the delta, and the Paris-Dakar's original finish line.",
+      "provider": "pexels",
+      "photoId": "12014943",
+      "imageUrl": "https://images.pexels.com/photos/12014943/pexels-photo-12014943.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/12014943/pexels-photo-12014943.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/women-in-blue-and-white-dress-and-brown-cone-hats-standing-on-the-shore-12014943/",
+      "photographer": "William Adams",
+      "photographerUrl": "https://www.pexels.com/@covantnyc",
+      "width": 7036,
+      "height": 4696,
+      "aspectRatio": 1.4983,
+      "alt": "surfers at Ngor island off Dakar, Senegal",
+      "query": "Senegal Ngor Dakar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:17:12Z",
+      "verifiedAt": "2026-08-14T07:17:13Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: dakar"
+        ]
+      }
+    },
+    "senegal/architecture": {
+      "country": "senegal",
+      "category": "architecture",
+      "caption": "Colonial and Sudano-Sahelian",
+      "description": "The balconies of Saint-Louis, and the mud-and-timber mosques of the interior.",
+      "provider": "pexels",
+      "photoId": "17436061",
+      "imageUrl": "https://images.pexels.com/photos/17436061/pexels-photo-17436061.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/17436061/pexels-photo-17436061.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/man-in-turban-and-traditional-clothing-17436061/",
+      "photographer": "Tahir Osman",
+      "photographerUrl": "https://www.pexels.com/@tahir-osman-109306362",
+      "width": 4672,
+      "height": 7008,
+      "aspectRatio": 0.6667,
+      "alt": "a Sudano-Sahelian mosque in the Senegalese interior",
+      "query": "Senegal Sudano-Sahelian",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:21Z",
+      "verifiedAt": "2026-08-14T07:17:22Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "senegal/beaches": {
+      "country": "senegal",
+      "category": "beaches",
+      "caption": "The Petite Côte",
+      "description": "Saly, Somone and Cap Skirring — Atlantic sand from the peninsula down to Casamance.",
+      "provider": "pexels",
+      "photoId": "16563167",
+      "imageUrl": "https://images.pexels.com/photos/16563167/pexels-photo-16563167.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16563167/pexels-photo-16563167.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/ocean-crashing-on-rocks-at-the-coast-16563167/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 8192,
+      "height": 5464,
+      "aspectRatio": 1.4993,
+      "alt": "the long Atlantic beach at Cap Skirring, Senegal",
+      "query": "Senegal Atlantic Cap Skirring",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:17:10Z",
+      "verifiedAt": "2026-08-14T07:17:11Z",
+      "relevance": {
+        "score": 7.53,
+        "reasons": [
+          "subject: beach,the",
+          "category: beach,ocean"
+        ]
+      }
+    },
+    "senegal/cities": {
+      "country": "senegal",
+      "category": "cities",
+      "caption": "Dakar",
+      "description": "The most westerly city in Africa, on a peninsula, with the ocean on three sides.",
+      "provider": "pexels",
+      "photoId": "12179672",
+      "imageUrl": "https://images.pexels.com/photos/12179672/pexels-photo-12179672.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/12179672/pexels-photo-12179672.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/businessmen-talking-to-each-other-12179672/",
+      "photographer": "Libasse El Arbi Ndoye",
+      "photographerUrl": "https://www.pexels.com/@libasse-el-arbi-ndoye-235374276",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "the Dakar coastline seen from the Corniche, Senegal",
+      "query": "Senegal Dakar Corniche",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:20Z",
+      "verifiedAt": "2026-08-14T07:17:21Z",
+      "relevance": {
+        "score": 4.93,
+        "reasons": [
+          "names the country",
+          "subject: dakar",
+          "category: city"
+        ]
+      }
+    },
+    "senegal/crafts": {
+      "country": "senegal",
+      "category": "crafts",
+      "caption": "Glass Painting and Weaving",
+      "description": "Sous-verre glass painting, and the strip-woven cloth of the Manjak weavers.",
+      "provider": "pexels",
+      "photoId": "10482146",
+      "imageUrl": "https://images.pexels.com/photos/10482146/pexels-photo-10482146.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/10482146/pexels-photo-10482146.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/clear-shot-glass-with-liquid-10482146/",
+      "photographer": "Alexey Demidov",
+      "photographerUrl": "https://www.pexels.com/@alexeydemidov",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a sous-verre glass painting being finished, Senegal",
+      "query": "Senegal sous verre glass",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:17Z",
+      "verifiedAt": "2026-08-14T07:17:17Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: and,glass"
+        ]
+      }
+    },
+    "senegal/culture": {
+      "country": "senegal",
+      "category": "culture",
+      "caption": "Teranga",
+      "description": "The word means hospitality, and it is the thing the country most wants you to notice.",
+      "provider": "pexels",
+      "photoId": "4544171",
+      "imageUrl": "https://images.pexels.com/photos/4544171/pexels-photo-4544171.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/4544171/pexels-photo-4544171.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/faceless-farmers-in-straw-hats-picking-tea-leaves-on-plantation-4544171/",
+      "photographer": "Quang Nguyen Vinh",
+      "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+      "width": 7952,
+      "height": 5304,
+      "aspectRatio": 1.4992,
+      "alt": "a family gathering for tea in a Senegalese courtyard",
+      "query": "Senegal family gathering tea",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:13Z",
+      "verifiedAt": "2026-08-14T07:17:14Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: gathering,tea"
+        ]
+      }
+    },
+    "senegal/eco-tourism": {
+      "country": "senegal",
+      "category": "eco-tourism",
+      "caption": "Community Campements",
+      "description": "The Casamance campements villageois — village-owned, village-run, and thirty years old.",
+      "provider": "pexels",
+      "photoId": "37904491",
+      "imageUrl": "https://images.pexels.com/photos/37904491/pexels-photo-37904491.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37904491/pexels-photo-37904491.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/colorful-fishing-boats-by-coastal-village-waters-37904491/",
+      "photographer": "Lom Doudou",
+      "photographerUrl": "https://www.pexels.com/@lom-doudou-351893580",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "a village-run campement in Casamance, Senegal",
+      "query": "Senegal Casamance",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:25Z",
+      "verifiedAt": "2026-08-14T07:17:26Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: village"
+        ]
+      }
+    },
+    "senegal/family-community": {
+      "country": "senegal",
+      "category": "family-community",
+      "caption": "Short Flights, Long Beaches",
+      "description": "Six hours from Europe, and beaches with a shallow warm Atlantic in front of them.",
+      "provider": "pexels",
+      "photoId": "31175298",
+      "imageUrl": "https://images.pexels.com/photos/31175298/pexels-photo-31175298.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31175298/pexels-photo-31175298.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-sunset-over-a-tranquil-lake-in-saly-31175298/",
+      "photographer": "Uğur Hamzayev",
+      "photographerUrl": "https://www.pexels.com/@ugur-hamzayev-1669656455",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "children on the beach at Saly on the Petite Côte, Senegal",
+      "query": "Senegal Saly Petite Côte",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:23Z",
+      "verifiedAt": "2026-08-14T07:17:24Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: saly"
+        ]
+      }
+    },
+    "senegal/festivals": {
+      "country": "senegal",
+      "category": "festivals",
+      "caption": "Dak'Art and the Magal",
+      "description": "The Dakar art biennale, and the Grand Magal of Touba, which moves millions of people.",
+      "provider": "pexels",
+      "photoId": "37904482",
+      "imageUrl": "https://images.pexels.com/photos/37904482/pexels-photo-37904482.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37904482/pexels-photo-37904482.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-minibus-on-dakar-street-next-to-historic-church-37904482/",
+      "photographer": "Lom Doudou",
+      "photographerUrl": "https://www.pexels.com/@lom-doudou-351893580",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "crowds gathering at the great mosque of Touba, Senegal",
+      "query": "Senegal Touba",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-14T07:17:16Z",
+      "verifiedAt": "2026-08-14T07:17:16Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "senegal/food": {
+      "country": "senegal",
+      "category": "food",
+      "caption": "Thieboudienne",
+      "description": "Rice and fish, cooked in one pot, and the national dish by common consent.",
+      "provider": "pexels",
+      "photoId": "19141534",
+      "imageUrl": "https://images.pexels.com/photos/19141534/pexels-photo-19141534.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/19141534/pexels-photo-19141534.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/person-eating-fish-soup-19141534/",
+      "photographer": "Thu Huynh",
+      "photographerUrl": "https://www.pexels.com/@thu-huynh-639083784",
+      "width": 6199,
+      "height": 4133,
+      "aspectRatio": 1.4999,
+      "alt": "thieboudienne served on a shared platter, Senegal",
+      "query": "Senegal thieboudienne served shared",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:17:15Z",
+      "verifiedAt": "2026-08-14T07:17:15Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: served",
+          "category: cuisine"
+        ]
+      }
+    },
+    "senegal/forests": {
+      "country": "senegal",
+      "category": "forests",
+      "caption": "Casamance",
+      "description": "Palm and rice country south of the Gambia, greener than the rest and quite different.",
+      "provider": "pexels",
+      "photoId": "32954654",
+      "imageUrl": "https://images.pexels.com/photos/32954654/pexels-photo-32954654.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32954654/pexels-photo-32954654.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/serene-landscape-of-farmers-working-in-rice-paddy-32954654/",
+      "photographer": "HONG SON",
+      "photographerUrl": "https://www.pexels.com/@hson",
+      "width": 6499,
+      "height": 4333,
+      "aspectRatio": 1.4999,
+      "alt": "rice paddies and palms in Casamance, Senegal",
+      "query": "Senegal rice paddies palms",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:11Z",
+      "verifiedAt": "2026-08-14T07:17:12Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: paddies,rice"
+        ]
+      }
+    },
+    "senegal/heritage": {
+      "country": "senegal",
+      "category": "heritage",
+      "caption": "Saint-Louis",
+      "description": "The old colonial capital on its island in the river mouth, with the Faidherbe bridge.",
+      "provider": "pexels",
+      "photoId": "18482508",
+      "imageUrl": "https://images.pexels.com/photos/18482508/pexels-photo-18482508.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/18482508/pexels-photo-18482508.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/facade-of-sofitel-legend-casco-viejo-in-panama-city-panama-18482508/",
+      "photographer": "Luis Quintero",
+      "photographerUrl": "https://www.pexels.com/@jibarofoto",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the colonial waterfront of Saint-Louis at dusk, Senegal",
+      "query": "Senegal colonial waterfront saint",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:19Z",
+      "verifiedAt": "2026-08-14T07:17:20Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: waterfront"
+        ]
+      }
+    },
+    "senegal/hero": {
+      "country": "senegal",
+      "category": "hero",
+      "caption": "Where the Sahel Meets the Atlantic",
+      "description": "Desert to the north, delta to the south, and Dakar on a peninsula between them.",
+      "provider": "pexels",
+      "photoId": "28281030",
+      "imageUrl": "https://images.pexels.com/photos/28281030/pexels-photo-28281030.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28281030/pexels-photo-28281030.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-man-playing-a-trumpet-on-the-beach-28281030/",
+      "photographer": "William Adams",
+      "photographerUrl": "https://www.pexels.com/@covantnyc",
+      "width": 7360,
+      "height": 4912,
+      "aspectRatio": 1.4984,
+      "alt": "the Atlantic breaking below the cliffs at Dakar, Senegal",
+      "query": "Senegal Atlantic Dakar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:03Z",
+      "verifiedAt": "2026-08-14T07:17:03Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: dakar,the"
+        ]
+      }
+    },
+    "senegal/historic-sites": {
+      "country": "senegal",
+      "category": "historic-sites",
+      "caption": "Gorée",
+      "description": "The island off Dakar, and the house of slaves that stands on it.",
+      "provider": "pexels",
+      "photoId": "32020062",
+      "imageUrl": "https://images.pexels.com/photos/32020062/pexels-photo-32020062.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32020062/pexels-photo-32020062.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/charming-purple-brick-house-with-blooming-bougainvillea-32020062/",
+      "photographer": "quang vinh",
+      "photographerUrl": "https://www.pexels.com/@vietnamcows",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the pink house of slaves on Gorée island, Senegal",
+      "query": "Senegal pink house slaves",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:18Z",
+      "verifiedAt": "2026-08-14T07:17:19Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: house,pink"
+        ]
+      }
+    },
+    "senegal/lakes-rivers": {
+      "country": "senegal",
+      "category": "lakes-rivers",
+      "caption": "The Senegal and the Saloum",
+      "description": "The Senegal river along the Mauritanian border, and the Saloum spreading into the sea.",
+      "provider": "pexels",
+      "photoId": "35594683",
+      "imageUrl": "https://images.pexels.com/photos/35594683/pexels-photo-35594683.png",
+      "thumbnailUrl": "https://images.pexels.com/photos/35594683/pexels-photo-35594683.png?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-canoe-on-lake-retba-in-senegal-35594683/",
+      "photographer": "Christopher Junior",
+      "photographerUrl": "https://www.pexels.com/@oneshootpictures",
+      "width": 7096,
+      "height": 3992,
+      "aspectRatio": 1.7776,
+      "alt": "a pirogue on the Saloum delta at sunset, Senegal",
+      "query": "Senegal Saloum",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:09Z",
+      "verifiedAt": "2026-08-14T07:17:10Z",
+      "relevance": {
+        "score": 7.29,
+        "reasons": [
+          "names the country",
+          "subject: senegal,the",
+          "category: lake"
+        ]
+      }
+    },
+    "senegal/local-life": {
+      "country": "senegal",
+      "category": "local-life",
+      "caption": "Ataya and the Market",
+      "description": "Three glasses of tea, poured from height, and each one stronger than the last.",
+      "provider": "pexels",
+      "photoId": "36598099",
+      "imageUrl": "https://images.pexels.com/photos/36598099/pexels-photo-36598099.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36598099/pexels-photo-36598099.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vibrant-street-celebration-in-senegal-s-capital-36598099/",
+      "photographer": "Felipe Esono Nguema",
+      "photographerUrl": "https://www.pexels.com/@felipe-esono-nguema-2149130540",
+      "width": 6960,
+      "height": 4640,
+      "aspectRatio": 1.5,
+      "alt": "tea being poured from height at a Dakar stall, Senegal",
+      "query": "Senegal Dakar",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:17:22Z",
+      "verifiedAt": "2026-08-14T07:17:22Z",
+      "relevance": {
+        "score": 7.67,
+        "reasons": [
+          "names the country",
+          "subject: and,dakar",
+          "category: street"
+        ]
+      }
+    },
+    "senegal/luxury": {
+      "country": "senegal",
+      "category": "luxury",
+      "caption": "Delta Lodges",
+      "description": "Small lodges on the Saloum islands, reached only by boat, with birds outside.",
+      "provider": "pexels",
+      "photoId": "26673387",
+      "imageUrl": "https://images.pexels.com/photos/26673387/pexels-photo-26673387.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/26673387/pexels-photo-26673387.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/rocks-on-a-beach-26673387/",
+      "photographer": "Ferdous  Hasan",
+      "photographerUrl": "https://www.pexels.com/@ferdous",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a lodge deck over the water in the Saloum delta, Senegal",
+      "query": "Senegal Saloum",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:25Z",
+      "verifiedAt": "2026-08-14T07:17:25Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: water"
+        ]
+      }
+    },
+    "senegal/mountains": {
+      "country": "senegal",
+      "category": "mountains",
+      "caption": "Fouta Djallon Foothills",
+      "description": "No high peaks — the ground rises to the Fouta Djallon foothills in the far south-east.",
+      "provider": "pexels",
+      "photoId": "38071581",
+      "imageUrl": "https://images.pexels.com/photos/38071581/pexels-photo-38071581.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38071581/pexels-photo-38071581.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/misty-morning-landscape-in-south-african-highlands-38071581/",
+      "photographer": "RAIHAAN Kamdar",
+      "photographerUrl": "https://www.pexels.com/@raihaan-kamdar-143458559",
+      "width": 8192,
+      "height": 4608,
+      "aspectRatio": 1.7778,
+      "alt": "rolling hills in the south-east of Senegal",
+      "query": "Senegal rolling hills south",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:07Z",
+      "verifiedAt": "2026-08-14T07:17:07Z",
+      "relevance": {
+        "score": 5.0,
+        "reasons": [
+          "subject: hills,south"
+        ]
+      }
+    },
+    "senegal/nature": {
+      "country": "senegal",
+      "category": "nature",
+      "caption": "Delta and Dune",
+      "description": "The Sine-Saloum mangrove delta, the Casamance forest, and Sahel sand in the north.",
+      "provider": "pexels",
+      "photoId": "14434228",
+      "imageUrl": "https://images.pexels.com/photos/14434228/pexels-photo-14434228.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/14434228/pexels-photo-14434228.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/flag-on-a-boat-deck-14434228/",
+      "photographer": "Papa birame  Faye",
+      "photographerUrl": "https://www.pexels.com/@pabifaye",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "mangrove channels in the Sine-Saloum delta, Senegal",
+      "query": "Senegal Sine-Saloum",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:04Z",
+      "verifiedAt": "2026-08-14T07:17:04Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "senegal/outdoor": {
+      "country": "senegal",
+      "category": "outdoor",
+      "caption": "Surf and Sail",
+      "description": "Dakar's breaks, kite-surfing on the Petite Côte, and pirogue trips through the mangrove.",
+      "provider": "pexels",
+      "photoId": "37461627",
+      "imageUrl": "https://images.pexels.com/photos/37461627/pexels-photo-37461627.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37461627/pexels-photo-37461627.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-waterfront-view-with-boats-and-buildings-37461627/",
+      "photographer": "Lom Doudou",
+      "photographerUrl": "https://www.pexels.com/@lom-doudou-351893580",
+      "width": 6720,
+      "height": 4480,
+      "aspectRatio": 1.5,
+      "alt": "kitesurfers off the Petite Côte, Senegal",
+      "query": "Senegal Petite Côte",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-14T07:17:24Z",
+      "verifiedAt": "2026-08-14T07:17:25Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "senegal/safari": {
+      "country": "senegal",
+      "category": "safari",
+      "caption": "Niokolo-Koba",
+      "description": "Lion, hippo and Derby eland in the south-east, in a park that is slowly recovering.",
+      "provider": "pexels",
+      "photoId": "16444276",
+      "imageUrl": "https://images.pexels.com/photos/16444276/pexels-photo-16444276.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/16444276/pexels-photo-16444276.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-road-on-safari-seen-from-a-safari-vehicle-16444276/",
+      "photographer": "Keegan Checks",
+      "photographerUrl": "https://www.pexels.com/@keeganjchecks",
+      "width": 7008,
+      "height": 4672,
+      "aspectRatio": 1.5,
+      "alt": "a game track through Niokolo-Koba woodland, Senegal",
+      "query": "Senegal game track niokolo",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:06Z",
+      "verifiedAt": "2026-08-14T07:17:06Z",
+      "relevance": {
+        "score": 2.17,
+        "reasons": [
+          "category: safari"
+        ]
+      }
+    },
+    "senegal/traditional-people": {
+      "country": "senegal",
+      "category": "traditional-people",
+      "caption": "Wolof, Serer and Diola",
+      "description": "Wolof across the country, Serer in the delta, and the Diola of Casamance.",
+      "provider": "pexels",
+      "photoId": "27914945",
+      "imageUrl": "https://images.pexels.com/photos/27914945/pexels-photo-27914945.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27914945/pexels-photo-27914945.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/cultural-carnival-27914945/",
+      "photographer": "Deji Prince",
+      "photographerUrl": "https://www.pexels.com/@dejiprince",
+      "width": 4016,
+      "height": 6016,
+      "aspectRatio": 0.6676,
+      "alt": "a Serer village in the Sine-Saloum, Senegal",
+      "query": "Senegal Serer Sine-Saloum",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:14Z",
+      "verifiedAt": "2026-08-14T07:17:15Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: and",
+          "category: traditional"
+        ]
+      }
+    },
+    "senegal/waterfalls": {
+      "country": "senegal",
+      "category": "waterfalls",
+      "caption": "Dindefelo",
+      "description": "A hundred metres of water off the Fouta escarpment, near the Guinea border.",
+      "provider": "pexels",
+      "photoId": "31882645",
+      "imageUrl": "https://images.pexels.com/photos/31882645/pexels-photo-31882645.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/31882645/pexels-photo-31882645.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-waterfall-flowing-in-lush-forest-31882645/",
+      "photographer": "Kevyn Costa",
+      "photographerUrl": "https://www.pexels.com/@kevynlourencofotografia",
+      "width": 4000,
+      "height": 6000,
+      "aspectRatio": 0.6667,
+      "alt": "the Dindefelo waterfall dropping into forest, Senegal",
+      "query": "Senegal dindefelo waterfall dropping",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-14T07:17:08Z",
+      "verifiedAt": "2026-08-14T07:17:08Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "subject: forest,waterfall",
+          "category: waterfall"
+        ]
+      }
+    },
+    "senegal/wildlife": {
+      "country": "senegal",
+      "category": "wildlife",
+      "caption": "Djoudj",
+      "description": "Three million migrating birds winter in the Djoudj — one of the great bird sites on earth.",
+      "provider": "pexels",
+      "photoId": "6216083",
+      "imageUrl": "https://images.pexels.com/photos/6216083/pexels-photo-6216083.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/6216083/pexels-photo-6216083.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/white-pelicans-swimming-on-the-lake-6216083/",
+      "photographer": "Andrei Prodan",
+      "photographerUrl": "https://www.pexels.com/@andrei-prodan-10235249",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "pelicans massed on the water at Djoudj, Senegal",
+      "query": "Senegal Djoudj",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-14T07:17:04Z",
+      "verifiedAt": "2026-08-14T07:17:05Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: pelicans"
         ]
       }
     },
