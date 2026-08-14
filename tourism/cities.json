@@ -98,11 +98,14 @@
    "country": "ethiopia",
    "line": "Highland · Coffee · History",
    "say": "Two and a half thousand metres up, in the one African country never colonised — which is why the national museum, the cuisine and the calendar are all their own.",
-   "photo": null,
+   "photo": "/images/uploads/city-addis-ababa-1200w.jpg",
    "lonlat": [
     38.74,
     9.03
-   ]
+   ],
+   "photo_w": 1200,
+   "photo_h": 1800,
+   "alt": "Bole Road in Addis Ababa at dusk, glass towers and lit shopfronts along a wide avenue with evening traffic and people crossing"
   },
   {
    "slug": "kigali",
@@ -134,11 +137,14 @@
    "country": "cote-divoire",
    "line": "Lagoon · Design · Nightlife",
    "say": "Built around a lagoon and out of it — the economic engine of francophone West Africa, with the architecture, the food and the nights that come with that.",
-   "photo": null,
+   "photo": "/images/uploads/city-abidjan-1200w.jpg",
    "lonlat": [
     -4.0083,
     5.36
-   ]
+   ],
+   "photo_w": 1200,
+   "photo_h": 900,
+   "alt": "The Boulevard Valery Giscard d'Estaing interchange in Abidjan from the air, traffic looping through a raised roundabout with the Plateau towers and the Ebrie lagoon behind it"
   },
   {
    "slug": "maputo",
