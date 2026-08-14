@@ -1456,9 +1456,18 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
    100vw: on a desktop with a classic scrollbar 100vw is wider than the section
    by the scrollbar, and the difference becomes horizontal overflow on the one
    page the whole site is judged by. */
-.wa-mo-full{padding-right:max(44px, calc((100% - 1240px) / 2 + 44px))}
-.wa-mo-lay{display:grid;grid-template-columns:minmax(0,1.72fr) minmax(0,1fr);
-  gap:clamp(28px,3.4vw,64px);align-items:center}
+/* The picture takes the container's whole width and the copy sits above it, in
+   the same head block every other section on this page uses. It was beside the
+   copy in a 1.5fr column and then bled off the screen edge; across the frame is
+   where a photograph this section is built around belongs, and it means the
+   window lines up with the grids and rails below rather than starting somewhere
+   of its own.
+
+   The hero above is the same dark green as this section, so the two ran into
+   each other with no boundary at all. The rule is where one ends. */
+.wa-motion{border-top:1px solid color-mix(in srgb,var(--c-bg) 13%,transparent);
+  padding-top:76px}
+.wa-mo-lay{margin-top:var(--sp-5)}
 /* The window, then one control bar under it: the rail on the left and the
    pause at its right end. They used to be a strip and a floating box on top of
    the picture — two kinds of chrome doing one job, one of them sitting over the
@@ -1485,11 +1494,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   transition:opacity 1.1s var(--ease);pointer-events:none}
 .wa-mo-shot[data-on]{opacity:1;pointer-events:auto}
 /* The edge blend. Four masks intersected, weighted to where the page actually
-   is. The picture bleeds off the left edge of the page, so there is no green
-   beside it there and no fade on that side: it is cropped by the browser, which
-   reads as a bleed rather than as a boundary. The dissolving happens on the
-   three edges that do face the section — hardest on the right, which is the one
-   the copy sits against.
+   is. The picture sits a gutter in from the edge of the screen, so all four
+   edges face the section and all four dissolve — hardest on the right, at 26%
+   of the width, because that is the edge the copy sits against and the one a
+   reader looks across. The left is 12%: there is only a gutter of green beside
+   it, and a fade wider than the thing it fades into looks like a fault.
 
    The mask is on the media and not on the figure, so the caption inside it is
    not faded with the picture it names.
@@ -1504,10 +1513,12 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-mo-shot img,.wa-mo-shot video{width:100%;height:100%;object-fit:cover;display:block;
   -webkit-mask-image:
     linear-gradient(to left, transparent 0%, rgba(0,0,0,.16) 5%, rgba(0,0,0,.66) 14%, #000 26%),
+    linear-gradient(to right, transparent 0%, rgba(0,0,0,.34) 3%, rgba(0,0,0,.82) 7%, #000 12%),
     linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.22) 4%, rgba(0,0,0,.72) 10%, #000 18%),
     linear-gradient(to top, transparent 0%, rgba(0,0,0,.25) 4%, rgba(0,0,0,.75) 9%, #000 16%);
   mask-image:
     linear-gradient(to left, transparent 0%, rgba(0,0,0,.16) 5%, rgba(0,0,0,.66) 14%, #000 26%),
+    linear-gradient(to right, transparent 0%, rgba(0,0,0,.34) 3%, rgba(0,0,0,.82) 7%, #000 12%),
     linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.22) 4%, rgba(0,0,0,.72) 10%, #000 18%),
     linear-gradient(to top, transparent 0%, rgba(0,0,0,.25) 4%, rgba(0,0,0,.75) 9%, #000 16%);
   -webkit-mask-composite: source-in;
@@ -1556,18 +1567,12 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-mo-hold .wa-mo-hold-off{display:none}
 .wa-mo-hold[aria-pressed="true"] .wa-mo-hold-on{display:none}
 .wa-mo-hold[aria-pressed="true"] .wa-mo-hold-off{display:inline}
-.wa-mo-say h2{margin-top:14px}
-.wa-mo-foot{margin-top:18px;font-family:var(--fj-mono);font-size:9.5px;
+.wa-mo-foot{margin-top:16px;font-family:var(--fj-mono);font-size:9.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
-@media(max-width:900px){
-  .wa-mo-lay{grid-template-columns:1fr;gap:var(--sp-4)}
-  /* One column, so the copy is no longer held off the edge by the grid and
-     needs the page's own gutter of its own. The picture keeps its bleed. */
-  .wa-mo-say{order:-1;padding:0 44px}
-  .wa-mo-full{padding-right:0}
+@media(max-width:880px){
+  .wa-motion{padding-top:56px}
 }
 @media(max-width:560px){
-  .wa-mo-say{padding:0 20px}
   /* The bar stacks, so the pause goes under the three rather than standing as a
      tall column beside them. */
   .wa-mo-stage{grid-template-columns:minmax(0,1fr);
@@ -2868,7 +2873,15 @@ window.AF = {
      becomes the only way to change it, which is the behaviour the whole site
      already has. -->
 <section class="wa-zone basalt wa-motion" id="motion">
-  <div class="wa-mo-full">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>01</b><span>The continent</span></div>
+      <div>
+        <h2>Africa doesn&rsquo;t <em>stand still</em>.</h2>
+        <p class="wa-note">Cities wake. Forests breathe. Hands are already working. You do not see a
+          place from outside it &mdash; you walk through it, eat in it, and wake up inside it.</p>
+      </div>
+    </div>
     <div class="wa-mo-lay">
       <div class="wa-mo-stage">
         <!-- gen:motion -->
@@ -2899,13 +2912,7 @@ window.AF = {
           <span class="wa-mo-hold-on">Pause</span><span class="wa-mo-hold-off">Play</span>
         </button>
       </div>
-      <div class="wa-mo-say">
-        <div class="wa-head-no"><b>01</b><span>The continent</span></div>
-        <h2>Africa doesn&rsquo;t <em>stand still</em>.</h2>
-        <p class="wa-note">Cities wake. Forests breathe. Hands are already working. You do not see a
-          place from outside it &mdash; you walk through it, eat in it, and wake up inside it.</p>
-        <p class="wa-mo-foot">Three ways to look at one continent. The window changes with you.</p>
-      </div>
+      <p class="wa-mo-foot">Three ways to look at one continent. The window changes with you.</p>
     </div>
   </div>
 </section>
