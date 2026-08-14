@@ -80,9 +80,27 @@ jobs:
           [ -n "${{ inputs.provider }}" ] && ARGS="$ARGS --provider ${{ inputs.provider }}"
           [ "${{ inputs.force }}" = "true" ] && ARGS="$ARGS --force"
           echo "resolve$ARGS"
-          # A partial run is a success: failed slots keep their placeholder and the
-          # cache still holds everything that did resolve, so a re-run continues.
-          python3 tools/tourism/build.py resolve $ARGS || true
+          # A PARTIAL RUN IS A SUCCESS. A CRASHED RUN IS NOT.
+          #
+          # This was `|| true`, and the reasoning was sound for the case it was
+          # written for: a slot whose search returns nothing keeps its
+          # placeholder, the cache keeps what did resolve, and a re-run
+          # continues. That is a partial success and should not fail the job.
+          #
+          # But `|| true` cannot tell a slot failure from the resolver dying.
+          # An ImportError on the first uncached slot exited non-zero, was
+          # swallowed here, and every step after it ran on a cache that had not
+          # been touched — so the job rebuilt pages, printed
+          # "OK: 54 · UNRESOLVED: 540", committed, and reported green. A green
+          # check on a run that resolved nothing is worse than a red one,
+          # because nobody goes looking.
+          #
+          # The resolver handles per-slot failure itself and exits 0 when it
+          # finishes with slots unfilled. Anything non-zero from here is the
+          # process failing, and it stops the job.
+          CACHED_BEFORE=$(python3 -c "import json;print(len(json.load(open('tourism/cache/images.json'))['entries']))" 2>/dev/null || echo 0)
+          echo "CACHED_BEFORE=$CACHED_BEFORE" >> "$GITHUB_ENV"
+          python3 tools/tourism/build.py resolve $ARGS
 
       - name: Rebuild pages and validate
         run: |
@@ -91,6 +109,10 @@ jobs:
           # the resolver just filled, so both have to be rewritten here or the
           # run fills the cache and every page still shows what it showed before.
           python3 tools/tourism/build.py all
+
+      - name: Verify the resolution actually happened
+        run: |
+          python3 tools/verify_resolution.py "${CACHED_BEFORE:-0}"
 
       - name: Per-slot status
         run: |

@@ -157,7 +157,12 @@ def cmd_resolve(args):
     # What each country has already been given, one word-bag per filled slot, so
     # the ranker can score down a sixth photograph of the same animal. Seeded
     # from the cache, because a resumed run has to know what the first run took.
-    from . import relevance as _rel
+    # `from tourism import`, not `from . import`. This file is executed as a
+    # script — sys.path gets the parent directory at line 36 and every other
+    # import in it is absolute — so a relative import here has no parent package
+    # and raises ImportError at the moment the resolver starts filling slots.
+    # It ran to 54 of 594 on cached entries and threw on the first uncached one.
+    from tourism import relevance as _rel
     taken = {}
     for c in countries:
         bags = []
