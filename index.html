@@ -682,7 +682,10 @@
 .wa-pick-body b{display:block;font-family:var(--fj-display);font-size:26px;font-weight:700;
   text-transform:uppercase;color:var(--c-accent);margin:6px 0 8px}
 .wa-pick-body p{font-size:14.5px;color:var(--c-muted)}
-.wa-pick-why{margin-top:8px;font-style:italic}
+/* The reason, which is the half of the recommendation that earns it. Italic
+   alone made it read as an aside to the summary above; it is the argument. */
+.wa-pick-why{margin-top:12px;font-style:italic;color:var(--c-ink);
+  border-left:2px solid var(--c-accent);padding-left:14px}
 .wa-pick-go{display:inline-block;margin-top:14px;font-family:var(--fj-mono);font-size:10px;
   letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px}
 @media(max-width:820px){.wa-pick{grid-template-columns:1fr;gap:16px}}
