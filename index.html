@@ -1203,6 +1203,28 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
     color-mix(in srgb,var(--c-primary) 62%,transparent) 50%,
     color-mix(in srgb,var(--c-primary) 24%,transparent) 72%,
     color-mix(in srgb,var(--c-primary) 6%,transparent) 100%)}
+/* The dawn band, graded for its own photograph rather than inheriting the one
+   above. The gradient above was measured against Waza: a herd lit from the
+   front under a pale sky, which needs 82% on the left to carry ivory. This
+   frame is pre-sunrise — the ground under the copy is forest in shadow and the
+   only bright thing in it is the canopy along the top — so the same wash was
+   spending twenty points it did not need and taking the photograph down with
+   it. Measured on the default it ran 4.96 to 7.58 against a 4.5 bar.
+
+   That headroom was less than it looked. The first attempt gave back twenty
+   points to 62/56/40/14/2 and put the worst line at 2.93 — the relationship
+   between wash and measured contrast over this frame is much steeper than the
+   spare margin suggests, because most of the copy sits over forest that is
+   already close to the tint's own colour. Six points was what there was to
+   give. Worst line now 4.37 for the headline against a 3.0 bar and 5.79 for
+   16px body against 4.5, across thirteen scroll positions at four widths. */
+.wa-seam--dawn .wa-seam-tint{background:
+  linear-gradient(100deg,
+    color-mix(in srgb,var(--c-primary) 76%,transparent) 0%,
+    color-mix(in srgb,var(--c-primary) 72%,transparent) 34%,
+    color-mix(in srgb,var(--c-primary) 54%,transparent) 50%,
+    color-mix(in srgb,var(--c-primary) 18%,transparent) 72%,
+    color-mix(in srgb,var(--c-primary) 3%,transparent) 100%)}
 .wa-seam-copy{position:relative;z-index:1;width:100%;max-width:1240px;
   margin:0 auto;padding:0 44px}
 .wa-seam-inner{max-width:560px}
@@ -1251,6 +1273,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
      fully luminous; that is a design decision rather than a defect, so it is
      recorded here rather than taken quietly. */
   .wa-seam-tint{background:color-mix(in srgb,var(--c-primary) 68%,transparent)}
+  /* Same reasoning, different photograph. The dawn band crops to the middle of
+     a frame that is pre-sunrise all the way across — the brightest pixel the
+     copy crosses on a phone is lit canopy rather than lit dust — so the flat
+     wash the worst pixel demands here is lower. Measured, not assumed. */
+  .wa-seam--dawn .wa-seam-tint{background:color-mix(in srgb,var(--c-primary) 66%,transparent)}
   .wa-seam-copy h2{font-size:clamp(26px,5vw,38px)}
   .wa-seam-say{font-size:16px}
 }
@@ -2600,6 +2627,48 @@ window.AF = {
     </div>
     <p class="wa-feel-close">Africa is not something you see. It is something you
       <em>experience</em>. <a class="wa-feel-go" href="/journey">Find the journey that feels like yours &rarr;</a></p>
+  </div>
+</section>
+
+<!-- IMAGINE TOMORROW MORNING.
+     The second thing under the hero, and the first one that is a picture.
+
+     Section 01 asks what you want to feel in the abstract, eight ways. This one
+     answers it once, concretely, in the second person, on a photograph that is
+     locked to the viewport while the words travel through it — the band
+     technique, used a second time and now measured twice.
+
+     The copy is written to this photograph rather than the photograph found for
+     the copy, and that is the whole reason it is this photograph. The brief for
+     this section sketched a lodge at dawn: a fire still glowing, a guide beside
+     the vehicle, coffee already warm. None of that is in the repo and all of it
+     is somebody else's Africa. What is in the repo is a 4am at the Mount
+     Cameroon registration hut in Buea — guides who live in that town, packs on
+     the volcanic grit, the canopy above already in sun while the ground is
+     still blue — which is both truer and a better argument, because it is a
+     morning that actually happened somewhere you can buy a ticket to.
+
+     Nothing here says who these people are or who they work for. people.json is
+     empty and says why: this site does not name a guide it has not asked. -->
+<section class="wa-seam wa-seam--dawn">
+  <div class="wa-seam-pic">
+    <img src="/images/uploads/site-about-mount-trailhead-dawn-1600w.jpg" width="1600" height="1067"
+         alt="Climbers and guides gathered with packs on volcanic ground at the Mount Cameroon National Park registration hut in Buea before dawn, the forest canopy behind them already lit by the sun while the ground is still in shadow"
+         loading="lazy" decoding="async" data-provider="upload">
+    <span class="wa-seam-tint" aria-hidden="true"></span>
+  </div>
+  <div class="wa-seam-copy">
+    <div class="wa-seam-inner">
+      <p class="wa-seam-stamp">Buea &middot; the trailhead, before six</p>
+      <h2>Imagine tomorrow morning.</h2>
+      <span class="wa-seam-hr" aria-hidden="true"></span>
+      <p class="wa-seam-say">You wake before it is light. No alarm, no traffic, no office &mdash; just voices
+        outside and somebody checking a pack. You step out into air cold enough to see. The canopy
+        above you has already caught the sun; down here it is still blue. Somebody writes your name
+        in a book, and points at a mountain drawn in chalk. Then you start walking, and four
+        thousand and ninety-five metres of active volcano begins.</p>
+      <a class="wa-seam-go" href="/journey">Start building your journey &rarr;</a>
+    </div>
   </div>
 </section>
 

@@ -532,7 +532,8 @@ function serve() {
     for (const [w, h] of BAND_WIDTHS) {
       const page = await browser.newPage({viewport: {width: w, height: h}});
       await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
-      if (!await page.$('.wa-seam-pic')) { await page.close(); continue; }
+      const bands = await page.$$eval('.wa-seam-pic', els => els.length);
+      if (!bands) { await page.close(); continue; }
       /* Every image eager, then wait for the document to stop growing. Without
          this a scroll target computed now lands on a different section by the
          time the scroll happens, and the sampler reads the ivory of whatever
@@ -545,9 +546,14 @@ function serve() {
         if (tall === last) same++; else { same = 0; last = tall; }
       }
 
-      const hazards = await page.evaluate(KILL => {
+      /* Once there were two of these on the homepage, `querySelector` meant the
+         second one was never measured — and the technique's whole point is that
+         it fails silently, so an untested band is an unheld one. Every lookup
+         below is indexed. */
+      for (let bi = 0; bi < bands; bi++) {
+      const hazards = await page.evaluate(([KILL, bi]) => {
         const bad = [];
-        for (let e = document.querySelector('.wa-seam-pic'); e; e = e.parentElement) {
+        for (let e = document.querySelectorAll('.wa-seam-pic')[bi]; e; e = e.parentElement) {
           const cs = getComputedStyle(e);
           for (const k of KILL) {
             const v = cs[k];
@@ -556,16 +562,16 @@ function serve() {
           }
         }
         return bad;
-      }, KILLERS);
+      }, [KILLERS, bi]);
 
       /* Park the copy `off` px from the viewport's centre, re-reading its live
          position each time rather than trusting an offset computed earlier. */
       const park = async off => {
         for (let i = 0; i < 4; i++) {
-          const c = await page.evaluate(() => {
-            const r = document.querySelector('.wa-seam-copy').getBoundingClientRect();
+          const c = await page.evaluate(bi => {
+            const r = document.querySelectorAll('.wa-seam-copy')[bi].getBoundingClientRect();
             return {abs: scrollY + r.top, h: r.height};
-          });
+          }, bi);
           const want = Math.max(0, Math.round(c.abs + c.h / 2 - h / 2 + off));
           await page.evaluate(v => scrollTo(0, v), want);
           await page.waitForTimeout(110);
@@ -574,7 +580,7 @@ function serve() {
       };
 
       let anchor = null, drifted = '', mastRide = '', worstText = '';
-      let low = {};
+      const low = {};
       BAND_TEXT.forEach(s => { low[s] = 99; });
       const stops = [];
       for (let i = -6; i <= 6; i++) stops.push(Math.round(i * h / 12));
@@ -584,17 +590,18 @@ function serve() {
           const m = document.querySelector('.wa-mast');
           return m ? m.getBoundingClientRect().bottom : 0;
         });
-        const rect = await page.evaluate(() => {
-          const r = document.querySelector('.wa-seam-pic').getBoundingClientRect();
+        const rect = await page.evaluate(bi => {
+          const r = document.querySelectorAll('.wa-seam-pic')[bi].getBoundingClientRect();
           return [r.x, r.y, r.width, r.height].map(v => Math.round(v * 100) / 100).join(',');
-        });
+        }, bi);
         if (anchor === null) anchor = rect;
         else if (rect !== anchor && !drifted) drifted = rect + ' vs ' + anchor;
 
-        const lines = await page.evaluate(SEL => {
+        const lines = await page.evaluate(([SEL, bi]) => {
+          const band = document.querySelectorAll('.wa-seam')[bi];
           const o = {};
           SEL.forEach(s => {
-            const e = document.querySelector(s); if (!e) return;
+            const e = band.querySelector(s); if (!e) return;
             const rg = document.createRange(); rg.selectNodeContents(e);
             o[s] = {rects: [...rg.getClientRects()].map(r => ({x: r.x, y: r.y, w: r.width, h: r.height})),
                     color: getComputedStyle(e).color,
@@ -602,7 +609,7 @@ function serve() {
                     weight: getComputedStyle(e).fontWeight};
           });
           return o;
-        }, BAND_TEXT);
+        }, [BAND_TEXT, bi]);
 
         if (off === 0 && !mastRide) {
           for (const k in lines) {
@@ -610,9 +617,9 @@ function serve() {
           }
         }
 
-        await page.evaluate(() => { document.querySelector('.wa-seam-copy').style.visibility = 'hidden'; });
+        await page.evaluate(bi => { document.querySelectorAll('.wa-seam-copy')[bi].style.visibility = 'hidden'; }, bi);
         const shot = await page.screenshot();
-        await page.evaluate(() => { document.querySelector('.wa-seam-copy').style.visibility = ''; });
+        await page.evaluate(bi => { document.querySelectorAll('.wa-seam-copy')[bi].style.visibility = ''; }, bi);
 
         const ground = await page.evaluate(async ([b64, lines, vh, mastB]) => {
           const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
@@ -655,16 +662,18 @@ function serve() {
           if (r < need && !worstText) worstText = k + ' ' + r.toFixed(2) + ':1, needs ' + need;
         }
       }
-      await page.close();
       const faults = [];
       if (hazards.length) faults.push('containing block: ' + hazards[0]);
       if (drifted) faults.push('the picture moved: ' + drifted);
       if (mastRide) faults.push(mastRide + ' sits under the masthead at rest');
       if (worstText) faults.push(worstText);
-      check('the window band holds at ' + w + 'x' + h, !faults.length,
+      check('window band ' + (bi + 1) + ' of ' + bands + ' holds at ' + w + 'x' + h,
+            !faults.length,
             faults.length ? faults.join(' | ')
               : 'fixed, ' + stops.length + ' positions, worst text '
                 + Math.min(...BAND_TEXT.map(s => low[s])).toFixed(2) + ':1');
+      }
+      await page.close();
     }
 
     /* ---- pass eight: the hero is one composition ------------------------- */

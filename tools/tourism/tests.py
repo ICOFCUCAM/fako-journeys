@@ -1349,6 +1349,35 @@ def main():
         check("the brief is generated rather than typed",
               "<!-- gen:claim -->" in home_src)
 
+        # -- the bands that put a reader inside a morning ---------------------------
+        # The band technique fails silently: one `filter` anywhere between the
+        # section and the picture turns fixed into absolute and the whole effect
+        # disappears with nothing to see in the markup. The browser pass measures
+        # that, and measures every band rather than the first, which is what it
+        # did while there was only one. What is checked here is what a browser
+        # cannot tell you — that the photograph is a real one of a real place.
+        seams = re.findall(r'<section class="wa-seam[^"]*">(.*?)</section>',
+                           home_src, re.S)
+        check("the homepage still carries its bands", len(seams) >= 2,
+              "%d bands" % len(seams))
+        for i, band in enumerate(seams, 1):
+            img = re.search(r'<img([^>]*)>', band)
+            attrs = img.group(1) if img else ""
+            stamp = re.search(r'class="wa-seam-stamp">([^<]*)<', band)
+            where = html_mod.unescape(
+                stamp.group(1) if stamp else "band %d" % i).split("\u00b7")[0].strip()[:22]
+            # A band is one photograph filling a screen, and the copy on it says
+            # "imagine" — which is exactly the place a generated picture would do
+            # the most damage, because a reader has no way to tell and the whole
+            # section is an invitation to believe it.
+            check("the %s band is a photograph, not a generation" % where,
+                  'data-provider="upload"' in attrs and "/images/generated/" not in attrs)
+            check("the %s band says what is in its picture" % where,
+                  len(re.search(r'alt="([^"]*)"', attrs).group(1)) > 60
+                  if re.search(r'alt="([^"]*)"', attrs) else False)
+            check("the %s band reserves its space" % where,
+                  'width="' in attrs and 'height="' in attrs)
+
         # -- the section that asks before it offers ---------------------------------
         # Everything else on this page answers "what is Africa". This one answers
         # "why would I go", and it is the only section whose sentences are
