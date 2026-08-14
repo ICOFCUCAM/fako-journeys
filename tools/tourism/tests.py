@@ -1349,6 +1349,37 @@ def main():
         check("the brief is generated rather than typed",
               "<!-- gen:claim -->" in home_src)
 
+        # -- the order is the argument ---------------------------------------------
+        # This page makes a case, and a case has an order. Desire first — what you
+        # might want to feel, one morning at length, four mornings in pictures —
+        # then the scale that says you have only seen fragments, then what we are,
+        # then the machinery that answers: pick a thing, see the countries, see
+        # the cities, see what is on now, see what happens after you write.
+        #
+        # It was not in that order. The picker whose copy says "the grid below
+        # narrows" sat three thousand pixels below that grid, so the promise was
+        # false and clicking it scrolled the reader backwards.
+        WANT_ORDER = ["window", "feel", "moments", "scale", "experiences",
+                      "destinations", "cities", "now", "plan", "stories", "begin"]
+        got = re.findall(r'<section[^>]*id="([a-z]+)"', home_src)
+        check("the homepage still argues in the order it was built to",
+              got == WANT_ORDER,
+              " -> ".join(got) if got != WANT_ORDER else "%d sections" % len(got))
+        # The one ordering that is a promise in the copy rather than a preference.
+        if "experiences" in got and "destinations" in got:
+            check("the picker is above the grid its own copy calls \"below\"",
+                  got.index("experiences") < got.index("destinations"),
+                  "experiences %d, destinations %d"
+                  % (got.index("experiences"), got.index("destinations")))
+        # <main> opened two thirds down this page, so "Skip to content" landed
+        # past the hero and everything under it, on a comparison of land areas.
+        main = re.search(r'<main id="main">(.*?)</main>', home_src, re.S)
+        check("skip-to-content reaches the content", bool(main))
+        if main:
+            inside = re.findall(r'<section[^>]*id="([a-z]+)"', main.group(1))
+            check("every section of the page is inside the main landmark",
+                  inside == got, "%d of %d" % (len(inside), len(got)))
+
         # -- the four photographs that are the argument -----------------------------
         # Everywhere else on this site a photograph illustrates a country that has
         # a dataset behind it. Here the picture is the point and the words are

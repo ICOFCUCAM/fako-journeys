@@ -1945,6 +1945,13 @@ window.AF = {
 </header>
 
 <!-- hero: the Africa window -->
+
+<!-- <main> used to open two thirds of the way down this page, immediately
+     before the scale section, so "Skip to content" landed past the hero, past
+     everything under it, and on a comparison of land areas. Everything a reader
+     came for was outside the element named as the main content, and #begin was
+     outside it too. It opens here now and closes after the last section. -->
+<main id="main">
 <section class="wa-open" id="window">
   <div class="wa-open-stage">
     <div class="wa-frame wa-open-grid">
@@ -2742,70 +2749,11 @@ window.AF = {
   </div>
 </section>
 
-<!-- what Afrinkong is -->
-<!-- AFRICA, IN CITIES.
-     Directly under the hero, because it is the hero's own claim being proved.
-     "Africa isn't one place" was followed by wildlife, mountains, rainforest,
-     coast, culture and food — a complete account of the landscape and a
-     stereotype of the continent. The cities were one word in a list of
-     twenty-seven categories. They are the reason a great many people come.
-     Photography first: twelve places that look nothing like each other is an
-     argument you have to see rather than read. -->
-<section class="wa-zone dust wa-cities" id="cities">
-  <div class="wa-frame">
-    <div class="wa-head">
-      <div class="wa-head-no"><b>03</b><span>Cities</span></div>
-      <div>
-        <h2>Africa, in <em>cities</em>.</h2>
-        <p class="wa-note">The continent is not only wilderness. Eleven cities here, each one a
-          reason to come rather than a place to sleep before the drive out &mdash; and a first
-          collection rather than a closed list.</p>
-      </div>
-    </div>
-    <div class="wa-city-grid">
-      <!-- gen:cities -->
-      <a class="wa-city" href="/south-africa" data-wide="true" data-region="southern" data-photo="true" style="--reg-tone:#672E1D"><span class="wa-city-art"><img src="/images/uploads/city-cape-town-1080w.jpg" width="1080" height="650" alt="The V&amp;A Waterfront in Cape Town at midday, yachts and quaysides in the foreground and Table Mountain and Devil&#x27;s Peak rising directly behind the city centre" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Cape Town</b><span class="wa-city-where">South Africa</span><span class="wa-city-line">Ocean · Mountain · Design</span><span class="wa-city-note">The only city on earth with a national park through the middle of it. The mountain is inside the municipal boundary, there is an ocean on either side, and the winelands start forty minutes from the centre.</span></span></a>
-      <a class="wa-city" href="/morocco" data-wide="true" data-region="north" data-photo="true" style="--reg-tone:#865A28"><span class="wa-city-art"><img src="/images/uploads/city-marrakech-1200w.jpg" width="1200" height="800" alt="Jemaa el-Fna square in Marrakech at dusk, crowds moving between rows of covered food stalls, the pink walls of the medina and a minaret behind, with the sky going orange" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Marrakech</b><span class="wa-city-where">Morocco</span><span class="wa-city-line">Medina · Markets · Heritage</span><span class="wa-city-note">Eleven centuries inside one set of walls. Jemaa el-Fna empties and refills twice a day — orange carts and storytellers in the afternoon, a hundred food stalls after dark, and the Atlas on the skyline behind it.</span></span></a>
-      <a class="wa-city" href="/nigeria" data-region="central" data-photo="true" style="--reg-tone:#113222"><span class="wa-city-art"><img src="/images/uploads/city-lagos-1200w.jpg" width="1200" height="630" alt="The Lagos Marina waterfront seen from above, the lagoon on the left and the towers and traffic of Lagos Island running along the shoreline" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Lagos</b><span class="wa-city-where">Nigeria</span><span class="wa-city-line">Music · Fashion · Energy</span><span class="wa-city-note">The loudest cultural output on the continent, and most of it made in the last twenty years: Afrobeats, Nollywood, a gallery and fashion scene exporting worldwide, across a city of twenty million on a lagoon.</span></span></a>
-      <a class="wa-city" href="/kenya" data-region="east" data-photo="true" style="--reg-tone:#2B6E5E"><span class="wa-city-art"><img src="/images/uploads/city-nairobi-1200w.jpg" width="1200" height="800" alt="Central Nairobi from the air on a clear day, towers and older colonial-era rooftops in the foreground and the city spreading to the horizon under cumulus cloud" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Nairobi</b><span class="wa-city-where">Kenya</span><span class="wa-city-line">Innovation · Food · Wildlife</span><span class="wa-city-note">The only capital with a national park on its boundary — lion and rhino within sight of the towers — and the tech corridor that got the country called Silicon Savannah.</span></span></a>
-      <a class="wa-city" href="/ghana" data-region="central" data-photo="true" style="--reg-tone:#113222"><span class="wa-city-art"><img src="/images/uploads/city-accra-1200w.jpg" width="1200" height="800" alt="Accra from above on an overcast afternoon, a tall office block among low-rise streets, heavy tree cover through the middle of the city and stacked shipping containers on the right" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Accra</b><span class="wa-city-where">Ghana</span><span class="wa-city-line">Contemporary · Music · Coast</span><span class="wa-city-note">Where a great deal of contemporary African design and music is actually being made, on an Atlantic coast with the forts of the slave trade a couple of hours west of it.</span></span></a>
-      <a class="wa-city" href="/ethiopia" data-region="east" data-photo="true" style="--reg-tone:#2B6E5E"><span class="wa-city-art"><img src="/images/uploads/city-addis-ababa-1200w.jpg" width="1200" height="1800" alt="Bole Road in Addis Ababa at dusk, glass towers and lit shopfronts along a wide avenue with evening traffic and people crossing" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Addis Ababa</b><span class="wa-city-where">Ethiopia</span><span class="wa-city-line">Highland · Coffee · History</span><span class="wa-city-note">Two and a half thousand metres up, in the one African country never colonised — which is why the national museum, the cuisine and the calendar are all their own.</span></span></a>
-      <a class="wa-city" href="/rwanda" data-region="east" data-photo="false" style="--reg-tone:#2B6E5E"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>KI</b></span></span><span class="wa-city-say"><b>Kigali</b><span class="wa-city-where">Rwanda</span><span class="wa-city-line">Hills · Coffee · Calm</span><span class="wa-city-note">Built across a set of ridges and quiet in a way no city this size has any right to be. The coffee is grown within sight of it and the memorial is not optional.</span></span></a>
-      <a class="wa-city" href="/senegal" data-region="central" data-photo="false" style="--reg-tone:#113222"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>DA</b></span></span><span class="wa-city-say"><b>Dakar</b><span class="wa-city-where">Senegal</span><span class="wa-city-line">Atlantic · Art · Music</span><span class="wa-city-note">The westernmost city on the continent, and the one that exported mbalax and a contemporary art biennale. Gorée is twenty minutes offshore.</span></span></a>
-      <a class="wa-city" href="/cote-divoire" data-region="central" data-photo="true" style="--reg-tone:#113222"><span class="wa-city-art"><img src="/images/uploads/city-abidjan-1200w.jpg" width="1200" height="900" alt="The Boulevard Valery Giscard d&#x27;Estaing interchange in Abidjan from the air, traffic looping through a raised roundabout with the Plateau towers and the Ebrie lagoon behind it" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Abidjan</b><span class="wa-city-where">Côte d&#x27;Ivoire</span><span class="wa-city-line">Lagoon · Design · Nightlife</span><span class="wa-city-note">Built around a lagoon and out of it — the economic engine of francophone West Africa, with the architecture, the food and the nights that come with that.</span></span></a>
-      <a class="wa-city" href="/mozambique" data-region="southern" data-photo="false" style="--reg-tone:#672E1D"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>MA</b></span></span><span class="wa-city-say"><b>Maputo</b><span class="wa-city-where">Mozambique</span><span class="wa-city-line">Indian Ocean · Architecture · Food</span><span class="wa-city-note">Acacia avenues, Portuguese modernism and an Indian Ocean seafood culture, on a bay at the southern end of two thousand kilometres of coast.</span></span></a>
-      <a class="wa-city" href="/cameroon" data-region="central" data-photo="false" style="--reg-tone:#113222"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>DO</b></span></span><span class="wa-city-say"><b>Douala</b><span class="wa-city-where">Cameroon</span><span class="wa-city-line">River · Commerce · Music</span><span class="wa-city-note">The Wouri estuary, the port that most of central Africa&#x27;s freight goes through, makossa, and the city half this site&#x27;s enquiries are answered from.</span></span></a>
-      <a class="wa-city" href="/cameroon" data-region="central" data-photo="true" style="--reg-tone:#113222"><span class="wa-city-art"><img src="/images/uploads/city-yaounde-1200w.jpg" width="1200" height="675" alt="Yaoundé from the air, the government quarter and its formal gardens in the foreground and the city spreading over wooded hills to a rocky ridge on the horizon" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Yaoundé</b><span class="wa-city-where">Cameroon</span><span class="wa-city-line">Hills · Forest · Capital</span><span class="wa-city-note">Cameroon&#x27;s capital, spread over seven hills with rainforest at the edge of most of them — a completely different city from the port two hundred kilometres south of it, in the same country.</span></span></a>
-      <a class="wa-city" href="/south-africa" data-region="southern" data-photo="true" style="--reg-tone:#672E1D"><span class="wa-city-art"><img src="/images/uploads/city-durban-1200w.jpg" width="1200" height="785" alt="Durban&#x27;s city centre from above, high-rise blocks and older warehouses running down to the Indian Ocean, with the China Mall and beachfront hotels among them" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Durban</b><span class="wa-city-where">South Africa</span><span class="wa-city-line">Indian Ocean · Surf · Curry</span><span class="wa-city-note">The busiest port in Africa, warm Indian Ocean surf at the end of most streets, and the largest Indian population outside India — which is why the food here is what it is.</span></span></a>
-      <a class="wa-city wa-city--rest" href="/places" data-span="1"><span class="wa-city-say"><b>And every other place</b><span class="wa-city-where">The atlas</span><span class="wa-city-line">A first collection, not a closed list</span><span class="wa-city-note">These thirteen are a choice, and the choice is ours. The atlas holds every place written up on this site, in all twenty-two countries, with no editor standing in front of it.</span></span></a>      <!-- /gen:cities -->
-    </div>
-  </div>
-</section>
-
-<section class="wa-brief">
-  <div class="wa-frame">
-    <!-- gen:claim -->
-      <p class="wa-claim">Twenty-two countries. Five regions.<br>Twenty-seven ways to experience each of them.<br><em>572 places, each written up on its own.</em></p>
-    <!-- /gen:claim -->
-    <div class="wa-ops">
-      <!-- gen:operators -->
-      <a class="wa-op" href="/cameroon"><span class="wa-op-where">Cameroon</span><b>Kamerun</b><span class="wa-op-base">Buea and Douala &middot; since 2011</span><p>Runs the Mount Cameroon rotation with eleven licensed guides, and the fourteen-day transect from the Atlantic to the Sahel.</p><span class="wa-op-go">Enter Kamerun &rarr;</span></a>
-      <a class="wa-op" href="https://pearl-trails-uganda.vercel.app"><span class="wa-op-where">Uganda</span><b>Pearl Trails Uganda</b><span class="wa-op-base">Kampala &middot; since 2016</span><p>Gorilla and chimpanzee permits, the Rwenzori traverse, and the savanna parks, out of Kampala.</p><span class="wa-op-go">Enter Pearl Trails Uganda &rarr;</span></a>
-      <a class="wa-op" href="https://namib-skyline.vercel.app"><span class="wa-op-where">Namibia</span><b>Namib Skyline</b><span class="wa-op-base">Windhoek and Swakopmund &middot; since 2018</span><p>Self-drive circuits with the gravel already driven, or guided if you would rather someone else did it.</p><span class="wa-op-go">Enter Namib Skyline &rarr;</span></a>
-      <a class="wa-op wa-op--rest" href="/places"><span class="wa-op-where">Everywhere else</span><b>Nineteen more countries</b><span class="wa-op-base">Written up, no operator of ours yet</span><p>We run companies in Cameroon, Uganda and Namibia. The other nineteen are written up to the same twenty-seven categories by the same hands, so any two countries here can be compared on the same terms &mdash; you are just booking them through someone else.</p><span class="wa-op-go">Every place, all twenty-two countries &rarr;</span></a>      <!-- /gen:operators -->
-    </div>
-  </div>
-</section>
-
-
-
-<main id="main">
-
 <!-- 02 the scale -->
 <section class="wa-zone" id="scale">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>04</b><span>The scale</span></div>
+      <div class="wa-head-no"><b>03</b><span>The scale</span></div>
       <div>
         <h2>Africa is bigger than the map <em>in your head</em>.</h2>
         <p class="wa-note">Every world map most people have ever looked at is Mercator, which inflates everything away from the equator and shrinks everything on it. Lay the countries you already have a sense of inside the real outline and the argument for starting with a region rather than a continent makes itself.</p>
@@ -2826,6 +2774,53 @@ window.AF = {
         <p class="wa-scale-note">All four together come to 26.6 million. Africa is 30.4. These are drawn with the same equal-area projection as the map above, each centred on itself &mdash; so this is geometry, not an illustration of a fact.</p>
       </div>      <!-- /gen:scale -->
     </div>
+  </div>
+</section>
+
+<section class="wa-brief">
+  <div class="wa-frame">
+    <!-- gen:claim -->
+      <p class="wa-claim">Twenty-two countries. Five regions.<br>Twenty-seven ways to experience each of them.<br><em>572 places, each written up on its own.</em></p>
+    <!-- /gen:claim -->
+    <div class="wa-ops">
+      <!-- gen:operators -->
+      <a class="wa-op" href="/cameroon"><span class="wa-op-where">Cameroon</span><b>Kamerun</b><span class="wa-op-base">Buea and Douala &middot; since 2011</span><p>Runs the Mount Cameroon rotation with eleven licensed guides, and the fourteen-day transect from the Atlantic to the Sahel.</p><span class="wa-op-go">Enter Kamerun &rarr;</span></a>
+      <a class="wa-op" href="https://pearl-trails-uganda.vercel.app"><span class="wa-op-where">Uganda</span><b>Pearl Trails Uganda</b><span class="wa-op-base">Kampala &middot; since 2016</span><p>Gorilla and chimpanzee permits, the Rwenzori traverse, and the savanna parks, out of Kampala.</p><span class="wa-op-go">Enter Pearl Trails Uganda &rarr;</span></a>
+      <a class="wa-op" href="https://namib-skyline.vercel.app"><span class="wa-op-where">Namibia</span><b>Namib Skyline</b><span class="wa-op-base">Windhoek and Swakopmund &middot; since 2018</span><p>Self-drive circuits with the gravel already driven, or guided if you would rather someone else did it.</p><span class="wa-op-go">Enter Namib Skyline &rarr;</span></a>
+      <a class="wa-op wa-op--rest" href="/places"><span class="wa-op-where">Everywhere else</span><b>Nineteen more countries</b><span class="wa-op-base">Written up, no operator of ours yet</span><p>We run companies in Cameroon, Uganda and Namibia. The other nineteen are written up to the same twenty-seven categories by the same hands, so any two countries here can be compared on the same terms &mdash; you are just booking them through someone else.</p><span class="wa-op-go">Every place, all twenty-two countries &rarr;</span></a>      <!-- /gen:operators -->
+    </div>
+  </div>
+</section>
+
+<!-- 04 experiences -->
+<section class="wa-zone" id="experiences">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>04</b><span>What you can do</span></div>
+      <div>
+        <h2>Start with what you <em>want to do</em>.</h2>
+        <p class="wa-note">You don&rsquo;t always know the country first. Sometimes you know the experience. Pick one and the grid below narrows to the countries that lead on it &mdash; and if you add a month, to the ones that lead on it then. Nothing is ranked; the countries declare what they lead on and this asks against that.</p>
+      </div>
+    </div>
+    <!-- The picker and its answer were in the hero. Nine horizontal systems
+         on the first screen made it read as a dashboard, and this is the
+         section that already asks the same question — so it comes down to
+         where it was always going. -->
+    <div class="wa-exps">
+      <!-- gen:expcards -->
+<button class="wa-exp" type="button" data-want="cities" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V9l5-3v15"/><path d="M14 21V4l5 3v14"/><path d="M7.5 11v0M7.5 14v0M16.5 10v0M16.5 13v0"/></svg></span><div><b>Cities</b><span>Lagos, Cape Town, Marrakech, Nairobi, Dakar, Accra</span><i class="wa-exp-n">11 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="wildlife" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorillas, elephants, lions, giraffes, chimpanzees, the great migration</span><i class="wa-exp-n">11 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="culture" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg></span><div><b>People &amp; culture</b><span>Kingdoms, markets, music, dance, craft, living traditions</span><i class="wa-exp-n">14 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="coast" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, Seychelles, Mauritius</span><i class="wa-exp-n">13 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="nature" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/><path d="M9.5 19c0-4 2.5-6.5 6.5-7"/></svg></span><div><b>Nature</b><span>Kilimanjaro, Korup, the Rwenzori, the Atlas, the Namib</span><i class="wa-exp-n">4 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="food" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg></span><div><b>African food</b><span>Street food, markets, coastal cuisine, home cooking, coffee</span><i class="wa-exp-n">7 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="history" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg></span><div><b>History</b><span>Forts, palaces, ancient cities, rock churches, sacred places</span><i class="wa-exp-n">10 of 22 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="adventure" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg></span><div><b>Adventure</b><span>Gravel roads, the Nile at Jinja, the falls from both sides, the long traverse</span><i class="wa-exp-n">8 of 22 countries lead on this</i></div></button>      <!-- /gen:expcards -->
+    </div>
+    <!-- Outlined, not solid. This page has two ends that deserve the strongest
+     weight — the hero, where you arrive, and the enquiry, where you act —
+     and a third solid button in the middle flattens both of them. -->
+    <div class="wa-acts"><a class="wa-act faint" href="/tourism/">Find your experience <i>&rarr;</i></a></div>
   </div>
 </section>
 
@@ -2882,35 +2877,48 @@ window.AF = {
   </div>
 </section>
 
-<!-- 04 experiences -->
-<section class="wa-zone" id="experiences">
+<!-- what Afrinkong is -->
+<!-- AFRICA, IN CITIES.
+     It used to sit directly under the hero, as the hero's own claim being
+     proved. That job is now done above it, three times over and harder — eight
+     things you might want to feel, one morning at a trailhead, four photographs
+     of four mornings that look nothing like each other. The cities are still
+     the proof that the continent is not only wilderness, but they arrive after
+     a reader has been given a reason to care rather than instead of one.
+     "Africa isn't one place" was followed by wildlife, mountains, rainforest,
+     coast, culture and food — a complete account of the landscape and a
+     stereotype of the continent. The cities were one word in a list of
+     twenty-seven categories. They are the reason a great many people come.
+     Photography first: twelve places that look nothing like each other is an
+     argument you have to see rather than read. -->
+<section class="wa-zone dust wa-cities" id="cities">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>06</b><span>What you can do</span></div>
+      <div class="wa-head-no"><b>06</b><span>Cities</span></div>
       <div>
-        <h2>Start with what you <em>want to do</em>.</h2>
-        <p class="wa-note">You don&rsquo;t always know the country first. Sometimes you know the experience. Pick one and the grid below narrows to the countries that lead on it &mdash; and if you add a month, to the ones that lead on it then. Nothing is ranked; the countries declare what they lead on and this asks against that.</p>
+        <h2>Africa, in <em>cities</em>.</h2>
+        <p class="wa-note">The continent is not only wilderness. Eleven cities here, each one a
+          reason to come rather than a place to sleep before the drive out &mdash; and a first
+          collection rather than a closed list.</p>
       </div>
     </div>
-    <!-- The picker and its answer were in the hero. Nine horizontal systems
-         on the first screen made it read as a dashboard, and this is the
-         section that already asks the same question — so it comes down to
-         where it was always going. -->
-    <div class="wa-exps">
-      <!-- gen:expcards -->
-<button class="wa-exp" type="button" data-want="cities" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V9l5-3v15"/><path d="M14 21V4l5 3v14"/><path d="M7.5 11v0M7.5 14v0M16.5 10v0M16.5 13v0"/></svg></span><div><b>Cities</b><span>Lagos, Cape Town, Marrakech, Nairobi, Dakar, Accra</span><i class="wa-exp-n">11 of 22 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="wildlife" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorillas, elephants, lions, giraffes, chimpanzees, the great migration</span><i class="wa-exp-n">11 of 22 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="culture" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg></span><div><b>People &amp; culture</b><span>Kingdoms, markets, music, dance, craft, living traditions</span><i class="wa-exp-n">14 of 22 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="coast" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, Seychelles, Mauritius</span><i class="wa-exp-n">13 of 22 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="nature" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/><path d="M9.5 19c0-4 2.5-6.5 6.5-7"/></svg></span><div><b>Nature</b><span>Kilimanjaro, Korup, the Rwenzori, the Atlas, the Namib</span><i class="wa-exp-n">4 of 22 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="food" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg></span><div><b>African food</b><span>Street food, markets, coastal cuisine, home cooking, coffee</span><i class="wa-exp-n">7 of 22 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="history" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg></span><div><b>History</b><span>Forts, palaces, ancient cities, rock churches, sacred places</span><i class="wa-exp-n">10 of 22 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="adventure" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg></span><div><b>Adventure</b><span>Gravel roads, the Nile at Jinja, the falls from both sides, the long traverse</span><i class="wa-exp-n">8 of 22 countries lead on this</i></div></button>      <!-- /gen:expcards -->
+    <div class="wa-city-grid">
+      <!-- gen:cities -->
+      <a class="wa-city" href="/south-africa" data-wide="true" data-region="southern" data-photo="true" style="--reg-tone:#672E1D"><span class="wa-city-art"><img src="/images/uploads/city-cape-town-1080w.jpg" width="1080" height="650" alt="The V&amp;A Waterfront in Cape Town at midday, yachts and quaysides in the foreground and Table Mountain and Devil&#x27;s Peak rising directly behind the city centre" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Cape Town</b><span class="wa-city-where">South Africa</span><span class="wa-city-line">Ocean · Mountain · Design</span><span class="wa-city-note">The only city on earth with a national park through the middle of it. The mountain is inside the municipal boundary, there is an ocean on either side, and the winelands start forty minutes from the centre.</span></span></a>
+      <a class="wa-city" href="/morocco" data-wide="true" data-region="north" data-photo="true" style="--reg-tone:#865A28"><span class="wa-city-art"><img src="/images/uploads/city-marrakech-1200w.jpg" width="1200" height="800" alt="Jemaa el-Fna square in Marrakech at dusk, crowds moving between rows of covered food stalls, the pink walls of the medina and a minaret behind, with the sky going orange" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Marrakech</b><span class="wa-city-where">Morocco</span><span class="wa-city-line">Medina · Markets · Heritage</span><span class="wa-city-note">Eleven centuries inside one set of walls. Jemaa el-Fna empties and refills twice a day — orange carts and storytellers in the afternoon, a hundred food stalls after dark, and the Atlas on the skyline behind it.</span></span></a>
+      <a class="wa-city" href="/nigeria" data-region="central" data-photo="true" style="--reg-tone:#113222"><span class="wa-city-art"><img src="/images/uploads/city-lagos-1200w.jpg" width="1200" height="630" alt="The Lagos Marina waterfront seen from above, the lagoon on the left and the towers and traffic of Lagos Island running along the shoreline" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Lagos</b><span class="wa-city-where">Nigeria</span><span class="wa-city-line">Music · Fashion · Energy</span><span class="wa-city-note">The loudest cultural output on the continent, and most of it made in the last twenty years: Afrobeats, Nollywood, a gallery and fashion scene exporting worldwide, across a city of twenty million on a lagoon.</span></span></a>
+      <a class="wa-city" href="/kenya" data-region="east" data-photo="true" style="--reg-tone:#2B6E5E"><span class="wa-city-art"><img src="/images/uploads/city-nairobi-1200w.jpg" width="1200" height="800" alt="Central Nairobi from the air on a clear day, towers and older colonial-era rooftops in the foreground and the city spreading to the horizon under cumulus cloud" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Nairobi</b><span class="wa-city-where">Kenya</span><span class="wa-city-line">Innovation · Food · Wildlife</span><span class="wa-city-note">The only capital with a national park on its boundary — lion and rhino within sight of the towers — and the tech corridor that got the country called Silicon Savannah.</span></span></a>
+      <a class="wa-city" href="/ghana" data-region="central" data-photo="true" style="--reg-tone:#113222"><span class="wa-city-art"><img src="/images/uploads/city-accra-1200w.jpg" width="1200" height="800" alt="Accra from above on an overcast afternoon, a tall office block among low-rise streets, heavy tree cover through the middle of the city and stacked shipping containers on the right" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Accra</b><span class="wa-city-where">Ghana</span><span class="wa-city-line">Contemporary · Music · Coast</span><span class="wa-city-note">Where a great deal of contemporary African design and music is actually being made, on an Atlantic coast with the forts of the slave trade a couple of hours west of it.</span></span></a>
+      <a class="wa-city" href="/ethiopia" data-region="east" data-photo="true" style="--reg-tone:#2B6E5E"><span class="wa-city-art"><img src="/images/uploads/city-addis-ababa-1200w.jpg" width="1200" height="1800" alt="Bole Road in Addis Ababa at dusk, glass towers and lit shopfronts along a wide avenue with evening traffic and people crossing" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Addis Ababa</b><span class="wa-city-where">Ethiopia</span><span class="wa-city-line">Highland · Coffee · History</span><span class="wa-city-note">Two and a half thousand metres up, in the one African country never colonised — which is why the national museum, the cuisine and the calendar are all their own.</span></span></a>
+      <a class="wa-city" href="/rwanda" data-region="east" data-photo="false" style="--reg-tone:#2B6E5E"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>KI</b></span></span><span class="wa-city-say"><b>Kigali</b><span class="wa-city-where">Rwanda</span><span class="wa-city-line">Hills · Coffee · Calm</span><span class="wa-city-note">Built across a set of ridges and quiet in a way no city this size has any right to be. The coffee is grown within sight of it and the memorial is not optional.</span></span></a>
+      <a class="wa-city" href="/senegal" data-region="central" data-photo="false" style="--reg-tone:#113222"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>DA</b></span></span><span class="wa-city-say"><b>Dakar</b><span class="wa-city-where">Senegal</span><span class="wa-city-line">Atlantic · Art · Music</span><span class="wa-city-note">The westernmost city on the continent, and the one that exported mbalax and a contemporary art biennale. Gorée is twenty minutes offshore.</span></span></a>
+      <a class="wa-city" href="/cote-divoire" data-region="central" data-photo="true" style="--reg-tone:#113222"><span class="wa-city-art"><img src="/images/uploads/city-abidjan-1200w.jpg" width="1200" height="900" alt="The Boulevard Valery Giscard d&#x27;Estaing interchange in Abidjan from the air, traffic looping through a raised roundabout with the Plateau towers and the Ebrie lagoon behind it" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Abidjan</b><span class="wa-city-where">Côte d&#x27;Ivoire</span><span class="wa-city-line">Lagoon · Design · Nightlife</span><span class="wa-city-note">Built around a lagoon and out of it — the economic engine of francophone West Africa, with the architecture, the food and the nights that come with that.</span></span></a>
+      <a class="wa-city" href="/mozambique" data-region="southern" data-photo="false" style="--reg-tone:#672E1D"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>MA</b></span></span><span class="wa-city-say"><b>Maputo</b><span class="wa-city-where">Mozambique</span><span class="wa-city-line">Indian Ocean · Architecture · Food</span><span class="wa-city-note">Acacia avenues, Portuguese modernism and an Indian Ocean seafood culture, on a bay at the southern end of two thousand kilometres of coast.</span></span></a>
+      <a class="wa-city" href="/cameroon" data-region="central" data-photo="false" style="--reg-tone:#113222"><span class="wa-city-art"><span class="wa-city-plate" aria-hidden="true"><b>DO</b></span></span><span class="wa-city-say"><b>Douala</b><span class="wa-city-where">Cameroon</span><span class="wa-city-line">River · Commerce · Music</span><span class="wa-city-note">The Wouri estuary, the port that most of central Africa&#x27;s freight goes through, makossa, and the city half this site&#x27;s enquiries are answered from.</span></span></a>
+      <a class="wa-city" href="/cameroon" data-region="central" data-photo="true" style="--reg-tone:#113222"><span class="wa-city-art"><img src="/images/uploads/city-yaounde-1200w.jpg" width="1200" height="675" alt="Yaoundé from the air, the government quarter and its formal gardens in the foreground and the city spreading over wooded hills to a rocky ridge on the horizon" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Yaoundé</b><span class="wa-city-where">Cameroon</span><span class="wa-city-line">Hills · Forest · Capital</span><span class="wa-city-note">Cameroon&#x27;s capital, spread over seven hills with rainforest at the edge of most of them — a completely different city from the port two hundred kilometres south of it, in the same country.</span></span></a>
+      <a class="wa-city" href="/south-africa" data-region="southern" data-photo="true" style="--reg-tone:#672E1D"><span class="wa-city-art"><img src="/images/uploads/city-durban-1200w.jpg" width="1200" height="785" alt="Durban&#x27;s city centre from above, high-rise blocks and older warehouses running down to the Indian Ocean, with the China Mall and beachfront hotels among them" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-city-say"><b>Durban</b><span class="wa-city-where">South Africa</span><span class="wa-city-line">Indian Ocean · Surf · Curry</span><span class="wa-city-note">The busiest port in Africa, warm Indian Ocean surf at the end of most streets, and the largest Indian population outside India — which is why the food here is what it is.</span></span></a>
+      <a class="wa-city wa-city--rest" href="/places" data-span="1"><span class="wa-city-say"><b>And every other place</b><span class="wa-city-where">The atlas</span><span class="wa-city-line">A first collection, not a closed list</span><span class="wa-city-note">These thirteen are a choice, and the choice is ours. The atlas holds every place written up on this site, in all twenty-two countries, with no editor standing in front of it.</span></span></a>      <!-- /gen:cities -->
     </div>
-    <!-- Outlined, not solid. This page has two ends that deserve the strongest
-     weight — the hero, where you arrive, and the enquiry, where you act —
-     and a third solid button in the middle flattens both of them. -->
-    <div class="wa-acts"><a class="wa-act faint" href="/tourism/">Find your experience <i>&rarr;</i></a></div>
   </div>
 </section>
 
@@ -3185,10 +3193,14 @@ window.AF = {
     });
   }
 
-  /* The experiences section, three screens up, offers the same six lenses these
-     chips do, and its own copy promises "pick it and we will tell you which
-     country does it best". It never spoke to this filter. Now it sets it and
-     brings the reader down to the answer. */
+  /* The experiences section offers the same eight lenses these chips do, and
+     its own copy promises "pick one and the grid below narrows". It never spoke
+     to this filter; now it sets it and brings the reader to the answer.
+
+     It also used to sit three thousand pixels BELOW the grid it called "below",
+     so the promise was wrong in the copy and the scroll went backwards. The
+     reorder put it directly above the grid, which is the only arrangement in
+     which either sentence is true. */
   var exps = [].slice.call(document.querySelectorAll('.wa-exp[data-want]'));
   exps.forEach(function (ex) {
     ex.addEventListener('click', function () {
@@ -3251,8 +3263,6 @@ window.AF = {
 })();
 </script>
 
-</main>
-
 <!-- begin -->
 <section class="wa-zone" id="begin">
   <div class="wa-frame wa-end">
@@ -3269,6 +3279,8 @@ window.AF = {
     </div>
   </div>
 </section>
+
+</main>
 
 <!-- footer -->
 <footer class="wa-foot">
