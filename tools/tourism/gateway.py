@@ -495,9 +495,20 @@ def block_plan(countries):
     rest = len(countries) - len(ours)
     names = _and_list([c.name for c in ours])
 
-    note = ('We run tour operators in %s. The other %s are written up here to '
-            'the same twenty-seven categories, and booked through somebody else '
-            '&mdash; which we say before you write, not after.'
+    # THREE THINGS THAT ARE NOT THE SAME THING, AND THIS SENTENCE KEEPS THEM APART.
+    #   we own the company        3   Cameroon, Uganda, Namibia
+    #   we have written it up    19   the rest of the atlas
+    #   we can book it           54   the continent, through local partners
+    # Collapsing any two of those is the overclaim this page has already been
+    # corrected for once: 038 deleted "meet the local operator responsible for
+    # your destination" because there were three operators for twenty-two
+    # countries. Coverage is a real and much larger claim than ownership, and it
+    # is worth making — but as its own clause, not by widening the first one.
+    note = ('We can book anywhere on the continent through operators who live '
+            'there. In %s the operator is ours &mdash; we own the company, and '
+            'the guide on the day works for it. The other %s in this atlas are '
+            'written up to the same twenty-seven categories and booked through '
+            'somebody else, which we say before you write, not after.'
             % (names, _spell(rest).lower()))
 
     steps = [
