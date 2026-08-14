@@ -100,7 +100,24 @@ jobs:
           # process failing, and it stops the job.
           CACHED_BEFORE=$(python3 -c "import json;print(len(json.load(open('tourism/cache/images.json'))['entries']))" 2>/dev/null || echo 0)
           echo "CACHED_BEFORE=$CACHED_BEFORE" >> "$GITHUB_ENV"
+          # RECORD THE EXIT, DO NOT ACT ON IT YET.
+          #
+          # 165 removed a `|| true` here because it swallowed a crash and the run
+          # went green having resolved nothing. That was right, and it was not
+          # enough: failing at this step means every step after it is skipped —
+          # including the commit — so run #24 spent three minutes and fifty
+          # seconds resolving real slots and then threw all of it away.
+          #
+          # Partial progress is the normal case for this job. Providers
+          # rate-limit, and a run that fills two hundred slots and stops is worth
+          # keeping; the resolver is built to resume from the cache precisely so
+          # that it can be run again. So the exit is recorded here, the cache is
+          # rebuilt, verified and committed as usual, and the job fails at the
+          # very end. Red check, and the work is still in the repository.
+          set +e
           python3 tools/tourism/build.py resolve $ARGS
+          echo "RESOLVE_EXIT=$?" >> "$GITHUB_ENV"
+          set -e
 
       - name: Rebuild pages and validate
         run: |
@@ -112,7 +129,14 @@ jobs:
 
       - name: Verify the resolution actually happened
         run: |
+          # Records rather than fails, for the same reason the resolve step does:
+          # a step that exits non-zero here skips the commit below it, and the
+          # whole point is that whatever resolved reaches the repository. The
+          # final step acts on both verdicts.
+          set +e
           python3 tools/verify_resolution.py "${CACHED_BEFORE:-0}"
+          echo "VERIFY_EXIT=$?" >> "$GITHUB_ENV"
+          set -e
 
       - name: Per-slot status
         run: |
@@ -174,3 +198,22 @@ jobs:
           path: |
             tourism/cache/images.json
             tourism/REPORT.md
+
+      - name: The resolver's own exit decides the job
+        run: |
+          # Last step, so everything above it has already run and committed.
+          # A non-zero resolver is a failed run even when some slots filled:
+          # the point of 165 is that this job never reports success for a
+          # process that died. It reports success for a partial run that
+          # finished, and red for one that did not.
+          BAD=0
+          if [ "${RESOLVE_EXIT:-0}" != "0" ]; then
+            echo "::error::the resolver exited ${RESOLVE_EXIT} — whatever it managed to resolve has been committed, so re-running continues from there"
+            BAD=1
+          fi
+          if [ "${VERIFY_EXIT:-0}" != "0" ]; then
+            echo "::error::verification failed; see the table in the verify step"
+            BAD=1
+          fi
+          [ "$BAD" = "0" ] && echo "the resolver finished cleanly and the cache verifies"
+          exit "$BAD"
