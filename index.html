@@ -668,7 +668,14 @@
    thing not to do first — "then don't start with Kilimanjaro". It is the only
    place on the site with an opinion, which is why it is set like a pull quote
    and not like a card. */
+/* The answer arrives when an experience is pressed, and it arrived by simply
+   existing — display:none to display:block, no transition possible across it.
+   A panel that appears without a beat reads as a page jump rather than as an
+   answer to something the reader just did. */
 .wa-answer{display:none;border-top:2px solid var(--c-accent);padding:24px 0 6px;margin-top:18px}
+.wa-answer[data-open]{animation:wa-answer-in .34s cubic-bezier(.2,.6,.2,1) both}
+@keyframes wa-answer-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.wa-answer[data-open]{animation:none}}
 .wa-answer[data-open]{display:block}
 .wa-pick[hidden]{display:none}
 .wa-pick{display:grid;grid-template-columns:1.1fr 1fr;gap:34px;align-items:start}
