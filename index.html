@@ -1410,6 +1410,42 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-dests.is-settling .wa-dest,.wa-dests.is-settling .wa-dest-band,
 .wa-dests.is-settling .wa-dest-more{opacity:.25;transition-duration:.08s}
 
+/* ONE DAY — the peak, just before the last call.
+
+   Bigger than anything else on the page except the hero, and it has to be:
+   eleven numbered sections of evidence have been spent getting a reader here,
+   and the register has to change or this reads as a twelfth. It sits on the
+   dark ground with more air above and below than any other zone.
+
+   The list is a list because the sentences are not a paragraph — each one is a
+   separate thing a reader is asked to picture, and running them together makes
+   them scan as examples rather than as memories. */
+.wa-peak{padding:132px 0 124px}
+.wa-peak h2{font-size:clamp(32px,4.4vw,58px);line-height:1.06;margin-top:18px;
+  max-width:22ch}
+/* Two columns from 900 up. Six memories in one narrow column ran the section to
+   1,338px and left three fifths of the frame empty; the lines are short and
+   they read as a set, so they belong side by side. */
+.wa-peak-list{list-style:none;margin:var(--sp-5) 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:var(--sp-5);border-top:1px solid color-mix(in srgb,var(--c-bg) 15%,transparent)}
+.wa-peak-list li{font-family:var(--fj-display);font-size:clamp(17px,1.8vw,23px);
+  font-weight:400;line-height:1.34;color:var(--c-bg);padding:11px 0 11px 26px;
+  border-bottom:1px solid color-mix(in srgb,var(--c-bg) 15%,transparent);
+  position:relative}
+
+/* A rule rather than a bullet: a bullet turns six memories into six features. */
+.wa-peak-list li::before{content:"";position:absolute;left:0;top:1.05em;
+  width:12px;height:1px;background:var(--c-accent)}
+.wa-peak-turn{margin-top:var(--sp-5);font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(21px,2.6vw,34px);line-height:1.18;letter-spacing:-.015em;
+  color:var(--c-bg);max-width:24ch;text-wrap:balance}
+@media(max-width:880px){
+  .wa-peak{padding:86px 0 80px}
+  .wa-peak h2{max-width:none}
+  .wa-peak-list{grid-template-columns:1fr}
+}
+
 /* AFRICA, IN MOTION — the window under the hero.
 
    Sixty/forty, picture on the left, because the picture is the argument and the
@@ -3585,11 +3621,44 @@ window.AF = {
 </script>
 
 <!-- begin -->
+<!-- ONE DAY YOU WILL REMEMBER THE DAY YOU DECIDED TO GO.
+     The peak, and the only section on this page that is entirely written.
+
+     Everything above it is counted off disk, or is a photograph of a place, or
+     is a control that does something. This one is none of those: it makes no
+     claim a file could check, because it is not about Africa at all. It is
+     about the reader, and what they will have afterwards.
+
+     Typographic and not photographic, deliberately. There are already two
+     fixed-window bands on this page and a third would be a habit rather than a
+     device — and a photograph here would answer the question the words are
+     asking, which is what your own would look like.
+
+     It is unnumbered, like the bands and like the section under it. The ladder
+     of numbered sections is the argument; this is what the argument was for. -->
+<section class="wa-zone basalt wa-peak" id="decide">
+  <div class="wa-frame">
+    <span class="wa-stamp">One day</span>
+    <h2>You will remember the day<br>you <em>decided to go</em>.</h2>
+    <ul class="wa-peak-list">
+      <li>The road.</li>
+      <li>The smell after rain.</li>
+      <li>The first animal, and how much bigger it was than you expected.</li>
+      <li>The meal you could not pronounce, and ordered again the next night.</li>
+      <li>The person you met for five minutes and thought about for ten years.</li>
+      <li>The place that made you stop talking.</li>
+    </ul>
+    <p class="wa-peak-turn">You have spent long enough looking at Africa.</p>
+  </div>
+</section>
+
 <section class="wa-zone" id="begin">
   <div class="wa-frame wa-end">
     <span class="wa-stamp">Begin</span>
-    <h2>Your Africa. <em>Your journey</em>.</h2>
-    <p class="wa-end-idle" id="wa-end-idle">Tell us the month, the country &mdash; or simply the thing you want to see. It goes to the enquiry page written out as a sentence you can edit before it is sent.</p>
+    <h2>Your Africa is <em>waiting</em>.</h2>
+    <p class="wa-end-idle" id="wa-end-idle">You do not have to know where yet. Tell us what you want to
+      experience, when you can travel and who you are travelling with. It goes to the enquiry page as a
+      sentence you can edit before it is sent.</p>
     <div class="wa-end-said" id="wa-end-said" hidden>
       <span class="wa-stamp">You said</span>
       <p class="wa-end-line" id="wa-end-line"></p>

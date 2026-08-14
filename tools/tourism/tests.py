@@ -1362,7 +1362,7 @@ def main():
         # false and clicking it scrolled the reader backwards.
         WANT_ORDER = ["window", "motion", "feel", "moments", "scale", "experiences",
                       "destinations", "cities", "year", "now", "plan",
-                      "stories", "begin"]
+                      "stories", "decide", "begin"]
         got = re.findall(r'<section[^>]*id="([a-z]+)"', home_src)
         check("the homepage still argues in the order it was built to",
               got == WANT_ORDER,
