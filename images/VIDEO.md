@@ -13,6 +13,52 @@ other change to any file.
     videos/wild-bwindi-gorillas.mp4
     videos/culture-foumban-casting.mp4
 
+## If your file is too big to upload
+
+GitHub's web uploader stops at 25 MB, and a clip off a camera or a stock site is
+routinely well past that. Don't fight it — a 25 MB file was never going in the
+repository anyway. Git keeps every binary forever, so a master committed once
+costs its full size in every clone and every deploy from then on, in exchange
+for the 2 MB that is actually served.
+
+Put the master somewhere the repository can reach without swallowing it, and
+commit only the cut:
+
+**A GitHub release asset** takes up to 2 GB and does not enter the git history.
+On this repository: Releases → Draft a new release → tag it `footage` → drag the
+file into the attachments box → publish. Then
+
+    python3 tools/tourism/build.py cut \
+      https://github.com/ICOFCUCAM/fako-journeys/releases/download/footage/lagos.mp4 \
+      --name city-lagos-marina
+
+Any direct link works the same way — Drive, Dropbox or WeTransfer, as long as the
+URL serves the file itself rather than a preview page. The master lands in
+`incoming/video/masters/`, which is gitignored.
+
+**Or hand it over locally**, if you have the file on the machine already:
+
+    python3 tools/tourism/build.py cut incoming/video/masters/lagos.mp4 \
+      --name city-lagos-marina
+
+Either way what gets committed is one file in `videos/`, around 2 MB.
+
+### What the cut does
+
+Strips the audio track, scales to 1280 wide, trims to ten seconds and two-pass
+encodes to a bitrate computed from the budget — then checks the result and
+**deletes it if it is still over**, rather than writing it and letting somebody
+find out from a phone bill. Useful flags:
+
+    --seconds 8         how much to keep (default 10)
+    --start 4.5         where in the master the good part begins
+    --width 960         narrower, when 1280 will not fit the budget
+    --mb 1.5            a tighter ceiling
+
+If it refuses, take less: `--seconds` first, then `--width`. Ten seconds of a
+still-ish landscape fits in two megabytes comfortably; ten seconds of a crowded
+market at dusk may not, because there is more moving in every frame.
+
 ## What the page needs from a file
 
 - **MP4, H.264, AAC or no audio track.** The player is muted and looping, so

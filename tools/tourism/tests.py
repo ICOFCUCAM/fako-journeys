@@ -1483,6 +1483,56 @@ def main():
                   "FETCH_EXIT" in y and y.rindex("FETCH_EXIT") > y.index("git push"),
                   "the gate is the last step")
 
+        # -- what the cutter is not allowed to leave behind --------------------------
+        # A raw clip is twenty-five to several hundred times what the window can
+        # afford, and git keeps every binary forever: a master committed once is
+        # in the history of every clone and every deploy from then on. So the
+        # cutter's job is as much about what does not get written as what does.
+        cutsrc = open(os.path.join(ROOT_DIR, "tools", "tourism", "cut.py")).read()
+        build_src = open(os.path.join(ROOT_DIR, "tools", "tourism", "build.py")).read()
+        check("`cut` is a command and not just a module",
+              '"cut": cmd_cut' in build_src and "def cmd_cut" in build_src)
+        check("the cutter strips the audio track",
+              '"-an"' in cutsrc,
+              "the player is muted and looping; audio is weight nobody can hear")
+        # The two directories it writes to, and no third one.
+        cutpaths = re.findall(r"os\.path\.join\(ROOT[^)]*\)", cutsrc)
+        check("the cutter writes only to videos/ and the masters floor",
+              cutpaths and all('"videos"' in p or '"incoming"' in p
+                               for p in cutpaths),
+              " | ".join(cutpaths) or "no paths built")
+        ignored = open(os.path.join(ROOT_DIR, ".gitignore")).read()
+        check("a fetched master cannot enter the history",
+              "incoming/video/masters/" in ignored
+              and 'MASTERS = ' in cutsrc,
+              "gitignored, so `git add .` cannot commit 60 MB by accident")
+        # Over budget means no file, not a file plus a warning nobody reads.
+        overrun = cutsrc[cutsrc.index("got = os.path.getsize(dst)"):]
+        check("an over-budget cut is deleted rather than shipped",
+              "os.remove(dst)" in overrun
+              and overrun.index("os.remove(dst)") < overrun.index("raise SystemExit"),
+              "removed before it raises, so nothing survives the failure")
+        check("the byte budget is a ceiling and not a target",
+              "CAP_KBPS" in cutsrc and "min(kbps, cap)" in cutsrc,
+              "a 2s trim must not be handed 5 Mbps to spend on grain")
+        # A clip that exists is checked further down. This is the other half of
+        # it: the cutter's ceiling only binds files that went through the cutter,
+        # and nothing stops a 25 MB master being dropped into videos/ by hand.
+        # This sits under the hero, so the weight is the check.
+        placed = [s.get("clip")
+                  for t in (read_json_file(os.path.join(
+                      ROOT_DIR, "tourism", "motion.json")).get("tracks") or [])
+                  for s in (t.get("shots") or []) if s.get("clip")]
+        heavy = []
+        for c in placed:
+            f = os.path.join(ROOT_DIR, c.lstrip("/"))
+            if os.path.exists(f) and os.path.getsize(f) > 4 * 1024 * 1024:
+                heavy.append("%s at %.1f MB"
+                             % (c, os.path.getsize(f) / 1048576.0))
+        check("no clip in the window is heavier than the hero can carry",
+              not heavy,
+              "; ".join(heavy) or "%d placed, ceiling 4 MB" % len(placed))
+
         # -- the window built for footage that does not exist yet -------------------
         # Every shot in motion.json carries a clip and every clip is null, so
         # what this does today is cross-fade photographs. That is the point of
