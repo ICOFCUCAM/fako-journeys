@@ -62,3 +62,26 @@ Douala is one of the cities in cities.json still carrying `photo: null`.
 
 `Yaounde.webp` was the same 1344x768 frame as the Yaoundé already processed from
 an earlier batch, so it was dropped rather than kept twice.
+
+## Dakar and Douala, 15 August — the last two cities
+
+Both arrived from the operator as direct uploads, and both closed a gap: they
+were the only two cities in the collection with no photograph.
+
+**Dakar.** Two frames were sent. `city-dakar-corniche-1600w.jpg` is the blue-hour
+one, cropped 3:2 from `Dakar Senegal 2.jpg` (2048x1894) — the Corniche, the round
+hotel and the Plateau tower. The other, `Dakar Senegal.jpg`, is not used: it
+pushes sky and sea to a cyan that measures 251 at the 90th percentile, and
+images/STANDARD.md exists to catch exactly that. Both originals are kept.
+
+**Douala.** `city-douala-bonanjo-526w.jpg` is `Douala 2.jpg` unaltered. It is
+526x789, under the 800px floor every other photograph here meets, and it is used
+anyway for two reasons: it is the first clean frame of that city this repository
+has had — see the refusal above, for a handle burnt into the corner — and it
+lands on an ordinary card rather than one of the two wide ones, where it covers
+its column comfortably. It should be replaced with a larger frame when one
+exists, and until then it is the honest best available.
+
+Neither carries a credit line, because neither arrived with one. If these came
+from a photographer rather than the operator's own camera, that name belongs
+here.

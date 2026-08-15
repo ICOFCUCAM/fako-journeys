@@ -21,6 +21,8 @@
     build.py film <file|url>     cut a whole film into the window's pieces
     build.py scaffold            create a new country with 27 empty slots
     build.py geo                 outlines and distances, from the map itself
+    build.py grade               measure images against images/STANDARD.md
+    build.py sizes               give placed photographs their own dimensions
     build.py gateway             rewrite the gateway's country lists from the dataset
     build.py sidebyside          write /compare.html — two countries, same questions
     build.py report              write tourism/REPORT.md
@@ -284,6 +286,32 @@ def cmd_scaffold(args):
     })
     print("wrote %s with %d empty categories" % (os.path.relpath(path, ROOT), len(tax.enabled)))
     print("fill in caption/description/subject/focal, then: build.py all")
+    return 0
+
+
+def cmd_sizes(args):
+    """Backfill width/height on placed photographs that were written without."""
+    from tourism import place as place_mod
+    place_mod.backfill_sizes()
+    return 0
+
+
+def cmd_grade(args):
+    """Measure images against images/STANDARD.md. Paths on stdin, or all placed."""
+    import subprocess
+    from tourism import grade
+    # Empty stdin means "all of them", not "none of them". isatty() alone said
+    # none whenever the command was run with input redirected, which is how it
+    # gets run from a script — so it printed a header and nothing under it.
+    paths = [] if sys.stdin.isatty() else [l.strip() for l in sys.stdin if l.strip()]
+    if not paths:
+        out = subprocess.run(
+            ["grep", "-rhoE", r"/images/[A-Za-z0-9._/-]+\.(jpg|jpeg|png|webp|avif)",
+             "--include=*.html", "--include=*.json", "."],
+            capture_output=True, text=True, cwd=ROOT)
+        paths = sorted(set(out.stdout.split()))
+        print("measuring every placed image (%d)\n" % len(paths))
+    grade.main(paths)
     return 0
 
 
@@ -589,6 +617,15 @@ def cmd_all(args):
     run that fills the cache and leaves the country pages and the gateway
     showing what was there before is a run that did nothing a visitor can see.
     """
+    # geo first, and before validate reads anything: a country added to
+    # tourism/countries/ has no outline, no view box, no distances and is still
+    # drawn as part of the map's scenery until this runs. Leaving it as a
+    # separate command meant "drop a JSON file in and run all", which is what
+    # this file's own docstring promises, quietly produced a country that was on
+    # every list and unreachable on the map. Deriving is cheap and idempotent —
+    # it fills gaps and rewrites nothing that is already there.
+    cmd_geo(args)
+    print()
     rc = cmd_validate(args)
     print()
     cmd_render(args)
@@ -723,7 +760,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
-    "geo": cmd_geo, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,

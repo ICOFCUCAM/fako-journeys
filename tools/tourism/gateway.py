@@ -186,13 +186,7 @@ def shown(cities, countries):
     if len(cities) <= SHOW_CITIES:
         return cities
 
-    used = set()
-
-    def take(city):
-        used.add(city["slug"])
-        return city
-
-    leads = [take(c) for c in cities if c.get("photo")][:2]
+    leads = [c for c in cities if c.get("photo")][:2]
     used = {c["slug"] for c in leads}
     countries_used = {c.get("country") for c in leads}
 

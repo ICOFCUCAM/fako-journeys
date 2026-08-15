@@ -99,11 +99,17 @@ def rewrite_tag(tag, url, candidate, alt, focal):
     if "object-position" not in style:
         attrs["style"] = (style + ";" if style else "") + \
             "object-position:%s" % imaging.object_position(focal)
-    # No width/height attributes, for the reason documented at length in
-    # adopt.rewrite_tag: they become presentational hints, defeat the CSS
-    # aspect-ratio these slots rely on, and double the rendered height.
+    # The placed file's own pixels, so the box is held before it arrives. These
+    # were left off, following adopt.rewrite_tag, for a reason that was real and
+    # is now fixed: without height:auto on the slot the attributes made both
+    # dimensions definite, aspect-ratio was dropped, and the picture rendered at
+    # its own shape. styles/afrinkong.css carries height:auto on
+    # img[data-illustration] now, so they are a ratio hint and nothing else.
+    if candidate.get("width") and candidate.get("height"):
+        attrs["width"] = str(candidate["width"])
+        attrs["height"] = str(candidate["height"])
 
-    order = ["src", "srcset", "sizes", "alt", "loading", "decoding", "fetchpriority",
+    order = ["src", "srcset", "sizes", "alt", "width", "height", "loading", "decoding", "fetchpriority",
              "class", "style", "data-illustration", "data-illustration-alt",
              "data-provider", "data-placed", "data-generated"]
     parts = []
@@ -126,6 +132,62 @@ def revert_tag(tag):
     keep["alt"] = attrs.get("data-illustration-alt") or attrs.get("alt", "")
     order = ["src", "alt", "loading", "fetchpriority", "class"]
     return "<img " + " ".join('%s="%s"' % (k, keep[k]) for k in order if k in keep) + ">"
+
+
+def backfill_sizes(write=True, log=print):
+    """Put width and height on placed photographs that were written without them.
+
+    The tags are already in the pages and `place` cannot rewrite them without
+    the picks file that produced them, so the dimensions are read back off the
+    files the tags point at. Nothing else is touched: only <img> tags carrying
+    data-placed, only ones missing a dimension, and only where the file is on
+    disk and can be measured. Idempotent — a second run finds nothing to do.
+    """
+    from PIL import Image
+    pages = [os.path.join(ROOT, f) for f in
+             ("cameroon.html", "services.html", "about.html",
+              "contact.html", "pricing.html")]
+    done, skipped = 0, []
+    for page in pages:
+        if not os.path.exists(page):
+            continue
+        with open(page, encoding="utf-8") as fh:
+            src = fh.read()
+        out, changed = [], 0
+        pos = 0
+        for m in re.finditer(r"<img\b[^>]*>", src):
+            tag = m.group(0)
+            out.append(src[pos:m.start()])
+            pos = m.end()
+            if ("data-placed" not in tag
+                    or ('width="' in tag and 'height="' in tag)):
+                out.append(tag)
+                continue
+            got = re.search(r'src="([^"]+)"', tag)
+            rel = (got.group(1) if got else "").split("?")[0]
+            path = os.path.join(ROOT, rel.lstrip("/"))
+            if not rel.startswith("/") or not os.path.exists(path):
+                skipped.append(rel or tag[:40])
+                out.append(tag)
+                continue
+            with Image.open(path) as im:
+                w, h = im.size
+            tag = tag.replace(' loading=', ' width="%d" height="%d" loading=' % (w, h), 1) \
+                if " loading=" in tag else \
+                tag[:-1] + ' width="%d" height="%d">' % (w, h)
+            out.append(tag)
+            changed += 1
+        out.append(src[pos:])
+        if changed and write:
+            with open(page, "w", encoding="utf-8") as fh:
+                fh.write("".join(out))
+        done += changed
+        if changed:
+            log("  %-16s %d image(s) sized" % (os.path.basename(page), changed))
+    for rel in skipped:
+        log("  could not measure %s" % rel)
+    log("%d placed image(s) now reserve their box" % done)
+    return done
 
 
 def run(picks, country, revert=False, dry_run=False, write=True, log=print):

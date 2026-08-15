@@ -147,7 +147,8 @@ def rewrite_tag(tag, record, role, focal):
     attrs["srcset"] = srcset
     attrs["sizes"] = role["sizes"]
     attrs["alt"] = record.get("alt") or attrs.get("alt", "")
-    # Deliberately no width/height attributes.
+    attrs["width"], attrs["height"] = str(w), str(h)
+    # They were deliberately left off, and the reason was real:
     #
     # They look like the right thing — they are exactly what prevents layout
     # shift on the generated tourism pages. Here they break the layout. The
@@ -156,11 +157,15 @@ def rewrite_tag(tag, record, role, focal):
     # missing height, both dimensions become definite, and aspect-ratio is
     # ignored: the picture renders at 479x1280 instead of 479x638.
     #
-    # Measured, not assumed: with the attributes an image box is 479x1280,
-    # without them 479x638, which is byte-identical to the illustration it
-    # replaced. The CSS aspect-ratio already reserves the box, so nothing
-    # shifts while the photograph loads.
-    _ = (w, h)
+    # Measured, not assumed: with the attributes an image box was 479x1280,
+    # without them 479x638.
+    #
+    # What was missing was height:auto on the slot, which leaves one dimension
+    # indefinite and hands the shape back to aspect-ratio. styles/afrinkong.css
+    # carries it now, scoped to img[data-illustration], so the attributes are a
+    # ratio hint rather than a size and thirty-two photographs that reserved no
+    # space at all reserve it. Checked in a browser with the files blocked,
+    # sixty-four boxes at two widths: every one identical to before.
     attrs["data-illustration"] = illustration
     attrs["data-illustration-alt"] = original_alt
     attrs["data-provider"] = record.get("provider", "")
@@ -170,7 +175,7 @@ def rewrite_tag(tag, record, role, focal):
         attrs["style"] = (style + ";" if style else "") + \
             "object-position:%s" % imaging.object_position(focal)
 
-    order = ["src", "srcset", "sizes", "alt", "loading",
+    order = ["src", "srcset", "sizes", "alt", "width", "height", "loading",
              "decoding", "fetchpriority", "class", "style", "data-illustration",
              "data-illustration-alt", "data-provider"]
     parts = []

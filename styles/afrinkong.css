@@ -471,3 +471,17 @@ html.ex-open{overflow:hidden}
   .af-go{padding-top:6px;padding-bottom:9px}
   .af-stamp{padding-block:2px}
 }
+
+/* AN ADOPTED PHOTOGRAPH RESERVES ITS BOX
+   adopt.py used to leave width and height off every photograph it placed, and
+   its note explained why: these slots are styled `width:100%; aspect-ratio:N`
+   with no height, so the attributes make both dimensions definite, aspect-ratio
+   is dropped, and the picture renders at its own shape rather than the slot's.
+   Measured at the time: 479x1280 where 479x638 was wanted.
+
+   height:auto is what resolves it. With only one dimension definite the
+   attributes become a ratio hint, aspect-ratio still decides the shape, and the
+   box is held before the file arrives — the same fix the feel cards and the 122
+   country photographs already carry. Scoped to data-illustration so it reaches
+   the adopted photographs and nothing else on these pages. */
+img[data-illustration]{height:auto}
