@@ -116,11 +116,13 @@
    "country": "rwanda",
    "line": "Hills · Coffee · Calm",
    "say": "Built across a set of ridges and quiet in a way no city this size has any right to be. The coffee is grown within sight of it and the memorial is not optional.",
-   "photo": null,
+   "photo": "/images/uploads/city-kigali-boulevard-1600w.jpg",
    "lonlat": [
     30.0619,
     -1.9441
-   ]
+   ],
+   "photo_w": 1600,
+   "photo_h": 1067
   },
   {
    "slug": "dakar",
@@ -201,6 +203,20 @@
    "lonlat": [
     31.0218,
     -29.8587
+   ]
+  },
+  {
+   "slug": "dar-es-salaam",
+   "name": "Dar es Salaam",
+   "country": "tanzania",
+   "line": "Harbour · Indian Ocean · Modernism",
+   "say": "Tanzania's largest city and its harbour, where the ferries to Zanzibar leave from and where a run of tropical modernism sits along the water. Most people pass through it on the way to somewhere else; it is worth the two days it takes to stop.",
+   "photo": "/images/uploads/city-dar-es-salaam-blue-hour-1600w.jpg",
+   "photo_w": 1600,
+   "photo_h": 1068,
+   "lonlat": [
+    39.2083,
+    -6.7924
    ]
   }
  ],
