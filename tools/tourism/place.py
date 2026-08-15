@@ -159,19 +159,31 @@ def backfill_sizes(write=True, log=print):
             tag = m.group(0)
             out.append(src[pos:m.start()])
             pos = m.end()
-            if ("data-placed" not in tag
+            # Placed pictures and locked ones alike: a locked slot is artwork
+            # somebody chose rather than a search result, which is a reason not
+            # to change WHICH picture it is, and no reason at all to leave it
+            # reserving no space.
+            if (("data-placed" not in tag and "data-locked" not in tag)
                     or ('width="' in tag and 'height="' in tag)):
                 out.append(tag)
                 continue
             got = re.search(r'src="([^"]+)"', tag)
-            rel = (got.group(1) if got else "").split("?")[0]
+            url = got.group(1) if got else ""
+            rel = url.split("?")[0]
             path = os.path.join(ROOT, rel.lstrip("/"))
-            if not rel.startswith("/") or not os.path.exists(path):
-                skipped.append(rel or tag[:40])
-                out.append(tag)
-                continue
-            with Image.open(path) as im:
-                w, h = im.size
+            if rel.startswith("/") and os.path.exists(path):
+                with Image.open(path) as im:
+                    w, h = im.size
+            else:
+                # A remote photograph has no file here to open, and does not
+                # need one: the CDN URL asked for a size and the answer is in
+                # the query string it was asked with.
+                qs = dict(re.findall(r"[?&](w|h)=(\d+)", url))
+                if not (qs.get("w") and qs.get("h")):
+                    skipped.append(rel or tag[:40])
+                    out.append(tag)
+                    continue
+                w, h = int(qs["w"]), int(qs["h"])
             tag = tag.replace(' loading=', ' width="%d" height="%d" loading=' % (w, h), 1) \
                 if " loading=" in tag else \
                 tag[:-1] + ' width="%d" height="%d">' % (w, h)
