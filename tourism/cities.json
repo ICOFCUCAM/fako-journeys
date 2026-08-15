@@ -157,11 +157,13 @@
    "country": "mozambique",
    "line": "Indian Ocean · Architecture · Food",
    "say": "Acacia avenues, Portuguese modernism and an Indian Ocean seafood culture, on a bay at the southern end of two thousand kilometres of coast.",
-   "photo": null,
+   "photo": "/images/uploads/city-maputo-bay-1600w.jpg",
    "lonlat": [
     32.5732,
     -25.9692
-   ]
+   ],
+   "photo_w": 1600,
+   "photo_h": 1200
   },
   {
    "slug": "douala",

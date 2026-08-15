@@ -43,3 +43,22 @@ Two more are not cityscapes at all. Renamed for what they show:
 `place unknown` is not a placeholder for research nobody did. It is the reason
 those four are not on any slot that names a place, and they stay off one until
 somebody who was there says where.
+
+## Douala, and why it is not here
+
+`Douala.jpg` arrived with this batch and was not kept. Two reasons, either
+sufficient on its own:
+
+- **512x640.** The narrowest variant every other photograph here is served at is
+  800px. It could not fill a card without being enlarged past its own detail.
+- **A handle burnt into the frame.** `@marcelpoko` sits in the lower right. This
+  repository turned a city photograph away for a TikTok handle across the frame
+  before, and images/VIDEO.md sets it out as a rule: no burnt-in titles, logos,
+  watermarks or handles.
+
+The second is the one that would still apply at 4000px. If the photographer is
+somebody the operator knows, an unwatermarked copy with permission is welcome and
+Douala is one of the cities in cities.json still carrying `photo: null`.
+
+`Yaounde.webp` was the same 1344x768 frame as the Yaoundé already processed from
+an earlier batch, so it was dropped rather than kept twice.
