@@ -1321,6 +1321,107 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-head h2 em{font-style:normal;color:var(--c-accent)}
 @media(max-width:880px){.wa-zone{padding:62px 0}.wa-head{grid-template-columns:1fr;gap:18px;margin-bottom:34px}}
 
+/* FIVE WAYS FOR A SECTION TO BEHAVE
+   Twelve numbered sections all built the same way — 88px of air, a number in a
+   150px column, a headline beside it — read as twelve of the same thing, and a
+   reader scrolling learns after the third that the fourth holds nothing new.
+   The architecture stays: every section keeps its number, its label and its
+   editorial head, because that numbering is what makes the page a document
+   rather than a stack of panels. What changes is the rhythm.
+
+   Each mode says what its section is for, and the sequence alternates so no two
+   neighbours behave alike:
+
+     is-cine    Cinematic.    Stop and look.      Most air, largest type, centred.
+     is-find    Discovery.    Browse this.        Least air, head on one line.
+     is-atlas   Atlas.        Look something up.  Tight, ruled, reference type.
+     is-read    Editorial.    Read this.          Asymmetric, a measure to read.
+     is-quiet   Philosophical. Sit with it.       Most air of all, type alone.
+
+   The five are distinguished by measurements a reader feels rather than names
+   they can see: padding runs 68px to 168px, and the headline clamp runs from
+   26px to 72px. */
+
+/* A — CINEMATIC. The two sections that ask you to imagine something rather than
+   choose something. The number goes above the headline instead of beside it,
+   because a centred column with a label hanging off its left is not centred. */
+.wa-zone.is-cine{padding:132px 0}
+.wa-zone.is-cine .wa-head{grid-template-columns:1fr;justify-items:center;
+  text-align:center;gap:22px;margin-bottom:60px}
+.wa-zone.is-cine .wa-head-no{border-top:none;padding-top:0}
+.wa-zone.is-cine .wa-head-no b{font-size:26px}
+.wa-zone.is-cine .wa-head h2{font-size:clamp(38px,5.4vw,72px);max-width:17ch;
+  line-height:1.04;letter-spacing:-.02em}
+.wa-zone.is-cine .wa-note{max-width:52ch;margin-left:auto;margin-right:auto}
+
+/* B — EDITORIAL. Long-form. The number becomes a rule across the top of the
+   headline rather than a column beside it, which lets the headline start at the
+   left margin like the beginning of an article. */
+.wa-zone.is-read{padding:104px 0}
+.wa-zone.is-read .wa-head{grid-template-columns:1fr;gap:18px;margin-bottom:40px}
+.wa-zone.is-read .wa-head-no{display:flex;align-items:baseline;gap:14px;
+  border-top:none;border-bottom:1px solid var(--fj-rule);padding:0 0 10px}
+.wa-zone.is-read .wa-head-no b{font-size:22px}
+.wa-zone.is-read .wa-head-no span{margin-top:0}
+.wa-zone.is-read .wa-head h2{font-size:clamp(34px,4.6vw,62px);max-width:20ch;
+  line-height:1.08}
+.wa-zone.is-read .wa-note{max-width:56ch}
+
+/* C — DISCOVERY. Sections you browse rather than read. The head folds onto one
+   line so the grid begins in the first screen instead of below it, and the
+   headline drops to a size that reads as a label over a set of things. */
+.wa-zone.is-find{padding:68px 0}
+.wa-zone.is-find .wa-head{grid-template-columns:auto 1fr;gap:26px;
+  align-items:baseline;margin-bottom:28px}
+.wa-zone.is-find .wa-head-no{display:flex;align-items:baseline;gap:12px;
+  border-top:none;padding-top:0;white-space:nowrap}
+.wa-zone.is-find .wa-head-no b{font-size:24px}
+.wa-zone.is-find .wa-head-no span{margin-top:0}
+.wa-zone.is-find .wa-head h2{font-size:clamp(26px,2.9vw,40px);max-width:34ch}
+
+/* D — ATLAS. Reference. A rule under the whole head says the section is a table
+   of something, and the headline steps down so the data below it is the largest
+   thing on screen rather than the second largest. */
+.wa-zone.is-atlas{padding:76px 0}
+.wa-zone.is-atlas .wa-head{gap:32px;margin-bottom:30px;padding-bottom:22px;
+  border-bottom:1px solid var(--fj-rule)}
+.wa-zone.is-atlas .wa-head h2{font-size:clamp(26px,3vw,42px);max-width:28ch}
+
+/* One rule colour per ground, because --c-border is sand and dust is sand.
+   Measured: the site's hairline reads at 1.41:1 on cream, which is the
+   convention — a rule that is felt rather than seen. On the dust sections the
+   same colour came out at 1.01:1, which is not a quiet rule, it is no rule, and
+   three of the six sections that use one sit on dust. These are picked to match
+   the cream figure on their own ground rather than to beat it. */
+.wa-zone{--fj-rule:var(--c-border)}
+.wa-zone.dust{--fj-rule:#C0A87F}
+.wa-zone.basalt{--fj-rule:var(--fj-onbasalt-dim)}
+
+/* E — PHILOSOPHICAL. The two closings, which have no number and nothing to
+   click. Type alone, and more air round it than anywhere else on the page —
+   the pause is the content. */
+.wa-zone.is-quiet{padding:168px 0;text-align:center}
+.wa-zone.is-quiet .wa-head{grid-template-columns:1fr;justify-items:center;
+  margin-bottom:0}
+.wa-zone.is-quiet h2{font-size:clamp(32px,4.4vw,58px);max-width:17ch;
+  line-height:1.16;margin-left:auto;margin-right:auto}
+.wa-zone.is-quiet .wa-note{max-width:44ch;margin-left:auto;margin-right:auto}
+
+/* On a phone the five collapse towards each other, because 168px of air above a
+   40px headline is a screen and a half of nothing on a 390px screen. They keep
+   their order of magnitude — quiet is still the most generous, discovery still
+   the tightest — but the range narrows from 68-168 to 44-92. */
+@media(max-width:880px){
+  .wa-zone.is-cine{padding:84px 0}
+  .wa-zone.is-cine .wa-head{margin-bottom:34px}
+  .wa-zone.is-read{padding:72px 0}
+  .wa-zone.is-find{padding:44px 0}
+  .wa-zone.is-find .wa-head{grid-template-columns:1fr;gap:12px;margin-bottom:22px}
+  .wa-zone.is-atlas{padding:56px 0}
+  .wa-zone.is-atlas .wa-head{padding-bottom:16px;margin-bottom:22px}
+  .wa-zone.is-quiet{padding:92px 0}
+}
+
 /* ---- the icon medallion ---------------------------------------------------------
    Inline SVG, drawn from the site's own stroke weight rather than pulled from an
    icon set: a webfont or a sprite would be a network request and a second visual
@@ -3165,7 +3266,7 @@ window.AF = {
      field in lenses.json and the note there says so — and the count beside it
      is not. A lens no country calls is not printed, because a feeling with
      nowhere to have it is the one kind of copy this site cannot carry. -->
-<section class="wa-zone wa-feels" id="feel">
+<section class="wa-zone is-find wa-feels" id="feel">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>02</b><span>The reason</span></div>
@@ -3254,7 +3355,7 @@ window.AF = {
      photograph is a way in rather than decoration. None of them names a country:
      three of the four frames cannot be placed with certainty and moments.json
      says why the fourth is not named either. -->
-<section class="wa-zone wa-moments" id="moments">
+<section class="wa-zone is-cine wa-moments" id="moments">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>03</b><span>The moment</span></div>
@@ -3278,7 +3379,7 @@ window.AF = {
 </section>
 
 <!-- 02 the scale -->
-<section class="wa-zone" id="scale">
+<section class="wa-zone is-atlas" id="scale">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>04</b><span>The scale</span></div>
@@ -3321,7 +3422,7 @@ window.AF = {
 </section>
 
 <!-- 04 experiences -->
-<section class="wa-zone" id="experiences">
+<section class="wa-zone is-find" id="experiences">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>05</b><span>What you can do</span></div>
@@ -3353,7 +3454,7 @@ window.AF = {
 </section>
 
 <!-- 03 destinations -->
-<section class="wa-zone dust" id="destinations">
+<section class="wa-zone is-atlas dust" id="destinations">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>06</b><span>The countries</span></div>
@@ -3422,7 +3523,7 @@ window.AF = {
      twenty-seven categories. They are the reason a great many people come.
      Photography first: twelve places that look nothing like each other is an
      argument you have to see rather than read. -->
-<section class="wa-zone dust wa-cities" id="cities">
+<section class="wa-zone is-find dust wa-cities" id="cities">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>07</b><span>Cities</span></div>
@@ -3477,7 +3578,7 @@ window.AF = {
      the link would look as though it carried a choice and would not. The filter
      that does take a month is in the grid above, where a reader has already
      passed it. -->
-<section class="wa-zone dust wa-seasons" id="year">
+<section class="wa-zone is-atlas dust wa-seasons" id="year">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>08</b><span>The year</span></div>
@@ -3513,7 +3614,7 @@ window.AF = {
      have was any contemporary layer at all — the argument that this continent is
      not a museum, made with the part of the writing that is about what a country
      cooks, makes and builds now. -->
-<section class="wa-zone basalt" id="now">
+<section class="wa-zone is-read basalt" id="now">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>09</b><span>Africa now</span></div>
@@ -3548,7 +3649,7 @@ window.AF = {
      claim, removed because the page had started keeping the promise. -->
 
 <!-- 06 the journey -->
-<section class="wa-zone dust" id="plan">
+<section class="wa-zone is-atlas dust" id="plan">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>10</b><span>The journey</span></div>
@@ -3616,7 +3717,7 @@ window.AF = {
 </section>
 
 <!-- 07 stories -->
-<section class="wa-zone" id="stories">
+<section class="wa-zone is-read" id="stories">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>11</b><span>Stories</span></div>
@@ -4053,7 +4154,7 @@ window.AF = {
 
      It is unnumbered, like the bands and like the section under it. The ladder
      of numbered sections is the argument; this is what the argument was for. -->
-<section class="wa-zone basalt wa-peak" id="decide">
+<section class="wa-zone is-cine basalt wa-peak" id="decide">
   <div class="wa-frame">
     <span class="wa-stamp">One day</span>
     <h2>You will remember the day<br>you <em>decided to go</em>.</h2>
@@ -4069,7 +4170,7 @@ window.AF = {
   </div>
 </section>
 
-<section class="wa-zone" id="begin">
+<section class="wa-zone is-quiet" id="begin">
   <div class="wa-frame wa-end">
     <span class="wa-stamp">Begin</span>
     <h2>Your Africa is <em>waiting</em>.</h2>

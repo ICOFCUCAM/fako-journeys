@@ -1927,6 +1927,36 @@ def main():
         dest_block = re.search(r'<!-- gen:destinations -->(.*?)<!-- /gen:destinations -->',
                                home_src, re.S)
         check("the destinations grid is still generated", bool(dest_block))
+
+        # -- the page does not read the same all the way down ---------------------
+        # Twelve numbered sections built to one template is twelve of the same
+        # thing, and a reader learns after the third that the fourth holds
+        # nothing new. Each one now declares what it is for — cinematic,
+        # discovery, atlas, editorial, philosophical — and the modes carry
+        # different measurements, not different names: at 1440 the air runs
+        # 68px to 168px and the headline 40px to 72px.
+        #
+        # Two things are checked, and neither is "it looks nice". Every section
+        # has a mode, because one that does not falls back to the old single
+        # look; and no section has the same mode as the one directly above it,
+        # because two identical neighbours is the fault this set out to fix.
+        MODES = ("is-cine", "is-find", "is-atlas", "is-read", "is-quiet")
+        zones = re.findall(r'<section class="(wa-zone[^"]*)"([^>]*)>', home_src)
+        modeless = [re.search(r'id="([a-z-]+)"', a).group(1) if re.search(r'id="([a-z-]+)"', a)
+                    else c[:24]
+                    for c, a in zones if not any(m in c.split() for m in MODES)]
+        check("every numbered section says what it is for",
+              not modeless, ", ".join(modeless) or "%d sections" % len(zones))
+        seq = [(next((m for m in MODES if m in c.split()), "none"),
+                (re.search(r'id="([a-z-]+)"', a) or [None, "?"])[1]) for c, a in zones]
+        twins = ["%s after %s" % (b[1], a[1])
+                 for a, b in zip(seq, seq[1:]) if a[0] == b[0] and a[0] != "none"]
+        check("no section behaves like the one above it",
+              not twins, "; ".join(twins) or
+              " ".join(m.replace("is-", "") for m, _ in seq))
+        # And a mode nobody uses is a mode that is not doing anything.
+        unused = [m for m in MODES if not any(m == k for k, _ in seq)]
+        check("all five modes are in use", not unused, ", ".join(unused))
         if dest_block:
             body = dest_block.group(1)
             # Nobody is dropped. An index entry is a lesser treatment, not a
