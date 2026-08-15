@@ -1613,44 +1613,32 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   transition:background var(--t-fast) var(--ease)}
 .wa-feel:hover{background:var(--fj-dust)}
 /* A CARD WITH A PHOTOGRAPH IN IT
-   The section's job is desire, and eight blocks of type on a tint was the
-   weakest way to do it. The picture goes behind the words rather than above
-   them, which is the one arrangement that needs real care: type over a
-   photograph has no ground colour, and a scrim that only looks dark enough is
-   how grey-on-grey ships.
-   So the scrim is opaque where the words are and clears off the top of the
-   frame, the words sit at the bottom, and the result was measured rather than
-   eyeballed — the numbers are in the commit that added this. */
-.wa-feel.is-lit{padding:0;background:var(--c-primary);overflow:hidden;
-  min-height:clamp(210px,20vw,260px)}
-/* A light hand here, and the work done by the scrim instead. The first version
-   dimmed the whole frame to 62% and then put a near-opaque wash over that: it
-   passed every contrast measurement and the photographs could not be seen,
-   which is the one thing the section was changed to do. Brightness is for
-   evening out eight frames shot in eight different lights, not for legibility. */
-.wa-feel-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  display:block;filter:brightness(.88) saturate(1.04);
+   The photograph is above the words, not behind them, and that one decision is
+   what lets the picture be a picture.
+
+   It was behind them first. Type over a photograph has no ground colour, so it
+   needed a scrim; the scrim was not dark enough, so the frame was dimmed to 62%;
+   every contrast measurement then passed and the photographs could not be seen.
+   Lightening it to 88% helped and did not fix it, because the cause was never
+   the numbers — it was that the words were standing on the image.
+
+   With the copy on its own ground the scrim goes, the brightness filter goes,
+   and the photograph is served at the exposure it was taken at. It also puts the
+   type back where the contrast pass can read it out of the cascade, so this
+   stops being measured by hand and starts being checked on every run. */
+.wa-feel.is-lit{padding:0;background:var(--c-bg);overflow:hidden;min-height:0}
+/* 3:2, because that is what most of these frames were shot at — a 5:4 card
+   centre-cropped a herd down to blurry grass and a desert sunrise down to empty
+   sky. object-position holds the subject where the crop still bites. */
+.wa-feel-art{display:block;width:100%;height:auto;aspect-ratio:3 / 2;
+  object-fit:cover;object-position:var(--fj-feel-pos,50% 50%);
   transition:transform var(--t-slow,.6s) var(--ease)}
-.wa-feel.is-lit:hover{background:var(--c-primary)}
-.wa-feel.is-lit:hover .wa-feel-art{transform:scale(1.04)}
-.wa-feel-in{position:relative;display:flex;flex-direction:column;gap:10px;
-  justify-content:flex-end;flex:1 1 auto;padding:26px 24px 20px}
-/* Dark where the words are and nowhere else. The type sits in two bands — the
-   promise at the top, the lens and the count at the foot — with the middle of
-   the frame empty, so the scrim is heavy at both ends and lifts through the
-   centre. That is the band the photograph actually lives in, and it is now the
-   part that is not being painted over. */
-.wa-feel-in::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(to bottom,
-    rgba(12,9,6,.93) 0%,  rgba(12,9,6,.86) 18%,
-    rgba(12,9,6,.34) 38%, rgba(12,9,6,.32) 54%,
-    rgba(12,9,6,.86) 74%, rgba(12,9,6,.97) 100%)}
-.wa-feel-in > *{position:relative}
-.wa-feel.is-lit .wa-feel-say{color:var(--c-bg)}
-.wa-feel.is-lit .wa-feel-what{color:var(--c-gold)}
-.wa-feel.is-lit .wa-feel-n{color:color-mix(in srgb,var(--c-bg) 82%,transparent)}
+.wa-feel.is-lit:hover{background:var(--fj-dust)}
+.wa-feel.is-lit:hover .wa-feel-art{transform:scale(1.03)}
+.wa-feel-in{display:flex;flex-direction:column;gap:10px;flex:1 1 auto;
+  padding:22px 22px 20px}
 @media(prefers-reduced-motion:reduce){.wa-feel-art{transition:none}
-  .wa-feel.is-lit:hover .wa-feel-art{transform:none}}
+  .wa-feel.is-lit:hover .wa-feel-art{transform:none}}}
 .wa-feel-say{font-family:var(--fj-display);font-size:clamp(17px,1.5vw,21px);
   font-weight:700;line-height:1.24;letter-spacing:-.01em;color:var(--c-ink);
   text-wrap:balance}
@@ -1675,16 +1663,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-feel-grid{grid-template-columns:1fr}
   .wa-feel{padding:20px 18px 16px;gap:9px}
   .wa-feel.is-lit{padding:0}
-  .wa-feel-in{padding:20px 18px 16px;gap:9px}
-  /* One column means a shorter card, so the same gradient spreads its dark end
-     over less height and the lens label ends up where the picture is still
-     bright: measured at 2.37:1 on the wildlife card's sky, against the 4.5:1
-     ten-pixel type needs. Nearly opaque under the words here, and the
-     photograph keeps the top third of the frame. */
-  .wa-feel-in::before{background:linear-gradient(to bottom,
-    rgba(12,9,6,.94) 0%,  rgba(12,9,6,.88) 24%,
-    rgba(12,9,6,.42) 44%, rgba(12,9,6,.40) 56%,
-    rgba(12,9,6,.88) 76%, rgba(12,9,6,.97) 100%)}
+  .wa-feel-in{padding:18px 18px 16px;gap:9px}
   .wa-feel-close{max-width:none}
 }
 
@@ -3017,14 +2996,14 @@ window.AF = {
     </div>
     <div class="wa-feel-grid">
       <!-- gen:feel -->
-      <a class="wa-feel is-lit" href="/journey#/?w=cities" data-lens="cities" data-photo="true"><img class="wa-feel-art" src="/images/uploads/city-nairobi-night-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Hear a city come alive after dark, and realise it was waiting all day.</span><span class="wa-feel-what">Cities</span><span class="wa-feel-n">eleven countries lead on this</span></span></a>
-      <a class="wa-feel is-lit" href="/journey#/?w=wildlife" data-lens="wildlife" data-photo="true"><img class="wa-feel-art" src="/images/uploads/still-elephants-dry-grass-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Look across a savanna and see nothing between you and the horizon.</span><span class="wa-feel-what">Wildlife</span><span class="wa-feel-n">eleven countries lead on this</span></span></a>
-      <a class="wa-feel is-lit" href="/journey#/?w=culture" data-lens="culture" data-photo="true"><img class="wa-feel-art" src="/images/uploads/site-index-foumban-bronze-caster-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Sit down somewhere a kingdom still holds court, and it is not a museum.</span><span class="wa-feel-what">People &amp; culture</span><span class="wa-feel-n">fourteen countries lead on this</span></span></a>
-      <a class="wa-feel is-lit" href="/journey#/?w=coast" data-lens="coast" data-photo="true"><img class="wa-feel-art" src="/images/uploads/swahili-coast-ngalawa-1200w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Swim in water clear enough to lose the horizon in.</span><span class="wa-feel-what">Coast &amp; islands</span><span class="wa-feel-n">thirteen countries lead on this</span></span></a>
-      <a class="wa-feel is-lit" href="/journey#/?w=nature" data-lens="nature" data-photo="true"><img class="wa-feel-art" src="/images/uploads/kilimanjaro-elephants-acacia-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Wake up above the clouds, on a mountain that stands alone over the plain.</span><span class="wa-feel-what">Nature</span><span class="wa-feel-n">four countries lead on this</span></span></a>
-      <a class="wa-feel is-lit" href="/journey#/?w=food" data-lens="food" data-photo="true"><img class="wa-feel-art" src="/images/uploads/culture-market-produce-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Eat what a country actually eats, at the hour it actually eats it.</span><span class="wa-feel-what">African food</span><span class="wa-feel-n">seven countries lead on this</span></span></a>
-      <a class="wa-feel is-lit" href="/journey#/?w=history" data-lens="history" data-photo="true"><img class="wa-feel-art" src="/images/uploads/egypt-giza-causeway-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Stand on ground that remembers, and has done for four thousand years.</span><span class="wa-feel-what">History</span><span class="wa-feel-n">ten countries lead on this</span></span></a>
-      <a class="wa-feel is-lit" href="/journey#/?w=adventure" data-lens="adventure" data-photo="true"><img class="wa-feel-art" src="/images/uploads/desert-camp-sunrise-1440w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Cross a desert before sunrise, because by ten it will not let you.</span><span class="wa-feel-what">Adventure</span><span class="wa-feel-n">eight countries lead on this</span></span></a>      <!-- /gen:feel -->
+      <a class="wa-feel is-lit" href="/journey#/?w=cities" data-lens="cities"><img class="wa-feel-art" src="/images/uploads/city-nairobi-night-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 62%"><span class="wa-feel-in"><span class="wa-feel-say">Hear a city come alive after dark, and realise it was waiting all day.</span><span class="wa-feel-what">Cities</span><span class="wa-feel-n">eleven countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=wildlife" data-lens="wildlife"><img class="wa-feel-art" src="/images/uploads/still-elephants-dry-grass-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 68%"><span class="wa-feel-in"><span class="wa-feel-say">Look across a savanna and see nothing between you and the horizon.</span><span class="wa-feel-what">Wildlife</span><span class="wa-feel-n">eleven countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=culture" data-lens="culture"><img class="wa-feel-art" src="/images/uploads/site-index-foumban-bronze-caster-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 55%"><span class="wa-feel-in"><span class="wa-feel-say">Sit down somewhere a kingdom still holds court, and it is not a museum.</span><span class="wa-feel-what">People &amp; culture</span><span class="wa-feel-n">fourteen countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=coast" data-lens="coast"><img class="wa-feel-art" src="/images/uploads/swahili-coast-ngalawa-1200w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 45%"><span class="wa-feel-in"><span class="wa-feel-say">Swim in water clear enough to lose the horizon in.</span><span class="wa-feel-what">Coast &amp; islands</span><span class="wa-feel-n">thirteen countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=nature" data-lens="nature"><img class="wa-feel-art" src="/images/uploads/kilimanjaro-elephants-acacia-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 58%"><span class="wa-feel-in"><span class="wa-feel-say">Wake up above the clouds, on a mountain that stands alone over the plain.</span><span class="wa-feel-what">Nature</span><span class="wa-feel-n">four countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=food" data-lens="food"><img class="wa-feel-art" src="/images/uploads/culture-market-produce-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 60%"><span class="wa-feel-in"><span class="wa-feel-say">Eat what a country actually eats, at the hour it actually eats it.</span><span class="wa-feel-what">African food</span><span class="wa-feel-n">seven countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=history" data-lens="history"><img class="wa-feel-art" src="/images/uploads/egypt-giza-causeway-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 72%"><span class="wa-feel-in"><span class="wa-feel-say">Stand on ground that remembers, and has done for four thousand years.</span><span class="wa-feel-what">History</span><span class="wa-feel-n">ten countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=adventure" data-lens="adventure"><img class="wa-feel-art" src="/images/uploads/desert-camp-sunrise-1440w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 66%"><span class="wa-feel-in"><span class="wa-feel-say">Cross a desert before sunrise, because by ten it will not let you.</span><span class="wa-feel-what">Adventure</span><span class="wa-feel-n">eight countries lead on this</span></span></a>      <!-- /gen:feel -->
     </div>
     <p class="wa-feel-close">Africa is not something you see. It is something you
       <em>experience</em>. <a class="wa-feel-go" href="/journey">Find the journey that feels like yours &rarr;</a></p>

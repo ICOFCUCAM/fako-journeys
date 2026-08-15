@@ -333,15 +333,15 @@ def block_feel(countries):
             '<span class="wa-feel-what">%s</span>'
             '<span class="wa-feel-n">%s %s</span></span></a>'
             % (" is-lit" if lens.get("photo") else "", esc(key), esc(key),
-               # The contrast pass walks the DOM and reads a ground colour from
-               # the cascade; over a photograph there is no such colour to read,
-               # and it would report ivory on ivory. data-photo is how the rest
-               # of this page says "measure my pixels, not my stylesheet", and
-               # the pixels are measured — see the note by .wa-feel.is-lit.
-               ' data-photo="true"' if lens.get("photo") else "",
+               # No data-photo any more. The words sit on the page's own ground
+               # below the picture rather than on the picture, so the contrast
+               # pass can read the colour out of the cascade and does not need
+               # to be told to skip this. Measured by the suite, not by hand.
+               "",
                ('<img class="wa-feel-art" src="%s" alt="" width="1600" '
                 'height="1067" loading="lazy" decoding="async" '
-                'data-provider="upload">' % esc(lens["photo"]))
+                'data-provider="upload" style="--fj-feel-pos:%s">'
+                % (esc(lens["photo"]), esc(lens.get("photo_pos") or "50% 50%")))
                if lens.get("photo") else "",
                esc(lens.get("feel") or lens["line"]),
                lens["label"],

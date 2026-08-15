@@ -34,7 +34,8 @@
   "filterline": "If the cities are what brought you here",
   "feel": "Hear a city come alive after dark, and realise it was waiting all day.",
   "photo": "/images/uploads/city-nairobi-night-1600w.jpg",
-  "photo_alt": "Nairobi after dark from above, lit avenues running back between towers to the horizon"
+  "photo_alt": "Nairobi after dark from above, lit avenues running back between towers to the horizon",
+  "photo_pos": "50% 62%"
  },
  "wildlife": {
   "title": "Wildlife",
@@ -65,7 +66,8 @@
   "filterline": "If wildlife is what brought you here",
   "feel": "Look across a savanna and see nothing between you and the horizon.",
   "photo": "/images/uploads/still-elephants-dry-grass-1600w.jpg",
-  "photo_alt": "A line of elephants walking across open dry grassland with nothing between them and a flat horizon"
+  "photo_alt": "A line of elephants walking across open dry grassland with nothing between them and a flat horizon",
+  "photo_pos": "50% 68%"
  },
  "culture": {
   "title": "Culture",
@@ -98,7 +100,8 @@
   "filterline": "If you came to meet people",
   "feel": "Sit down somewhere a kingdom still holds court, and it is not a museum.",
   "photo": "/images/uploads/site-index-foumban-bronze-caster-1600w.jpg",
-  "photo_alt": "A bronze caster at work on the craft street at Foumban, seat of the Bamoun kings"
+  "photo_alt": "A bronze caster at work on the craft street at Foumban, seat of the Bamoun kings",
+  "photo_pos": "50% 55%"
  },
  "coast": {
   "title": "Coast",
@@ -134,7 +137,8 @@
   "filterline": "If you came for the water",
   "feel": "Swim in water clear enough to lose the horizon in.",
   "photo": "/images/uploads/swahili-coast-ngalawa-1200w.jpg",
-  "photo_alt": "A ngalawa outrigger canoe drawn up on a shore of clear shallow water on the Swahili coast"
+  "photo_alt": "A ngalawa outrigger canoe drawn up on a shore of clear shallow water on the Swahili coast",
+  "photo_pos": "50% 45%"
  },
  "nature": {
   "title": "Nature",
@@ -180,7 +184,8 @@
   "filterline": "If you came for the country itself",
   "feel": "Wake up above the clouds, on a mountain that stands alone over the plain.",
   "photo": "/images/uploads/kilimanjaro-elephants-acacia-1600w.jpg",
-  "photo_alt": "The snow-capped summit of Kilimanjaro above a band of cloud, standing alone over a plain of acacia and elephants"
+  "photo_alt": "The snow-capped summit of Kilimanjaro above a band of cloud, standing alone over a plain of acacia and elephants",
+  "photo_pos": "50% 58%"
  },
  "food": {
   "title": "Food",
@@ -205,7 +210,8 @@
   "filterline": "If you came to eat",
   "feel": "Eat what a country actually eats, at the hour it actually eats it.",
   "photo": "/images/uploads/culture-market-produce-1600w.jpg",
-  "photo_alt": "Stalls of fruit and vegetables piled under a market roof, shoppers moving between them"
+  "photo_alt": "Stalls of fruit and vegetables piled under a market roof, shoppers moving between them",
+  "photo_pos": "50% 60%"
  },
  "history": {
   "title": "History",
@@ -231,7 +237,8 @@
   "filterline": "If you came for what was here before you",
   "feel": "Stand on ground that remembers, and has done for four thousand years.",
   "photo": "/images/uploads/egypt-giza-causeway-1600w.jpg",
-  "photo_alt": "The Great Pyramid and the Pyramid of Khafre at Giza from the causeway at dusk, stone that has stood for four and a half thousand years"
+  "photo_alt": "The Great Pyramid and the Pyramid of Khafre at Giza from the causeway at dusk, stone that has stood for four and a half thousand years",
+  "photo_pos": "50% 72%"
  },
  "adventure": {
   "title": "Adventure",
@@ -266,7 +273,8 @@
   "filterline": "If you came to go a long way",
   "feel": "Cross a desert before sunrise, because by ten it will not let you.",
   "photo": "/images/uploads/desert-camp-sunrise-1440w.jpg",
-  "photo_alt": "A camp of white canvas tents on open sand with the sun just clear of the dunes behind them"
+  "photo_alt": "A camp of white canvas tents on open sand with the sun just clear of the dunes behind them",
+  "photo_pos": "50% 66%"
  },
  "$feel_note": [
   "`feel` is the one field in this file that is written rather than derived, and",
