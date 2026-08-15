@@ -1569,12 +1569,24 @@ def main():
         check("an own photograph is served from uploads and nowhere else",
               not wrong, ", ".join(wrong) or "all %d" % len(owned))
 
-        # -- a city the window names has to be one a visitor can reach --------------
-        # The rule, in the owner's words: do not share a city that cannot be
-        # accessed. The window is the most seductive thing on the page, and a
-        # city shown there with no country behind it is an invitation to a place
-        # this site cannot take anybody — the same fault as a caption naming the
-        # wrong country, arriving from the other direction.
+        # -- a city the window names has to be a city this site knows ---------------
+        # This started as "do not share a city that cannot be accessed", written
+        # when Luanda was offered and Angola had no page. The owner has since
+        # changed it: any African city may be named, Luanda included, because the
+        # atlas is being extended to meet them. That is their call to make and it
+        # is recorded rather than argued with.
+        #
+        # What survives is the narrower rule, and it is the one worth keeping: a
+        # city named in the rail must exist in cities.json, with a country, a
+        # line and a sentence written for it. That is what stops a place arriving
+        # as a caption and nothing else.
+        #
+        # The country not having a page is already handled and does no harm:
+        # gateway.py skips such a city when it builds the cities section — "a
+        # card has to lead somewhere real" — and the map falls back to /places
+        # rather than a dead link. So a city ahead of the atlas appears where it
+        # is meant to seduce and stays out of the grid meant for browsing, until
+        # the atlas catches up and it appears in both.
         city_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "cities.json"))
         _c = city_src.get("cities") or city_src
         _c = _c if isinstance(_c, list) else list(_c.values())
@@ -1587,10 +1599,17 @@ def main():
                  if t.get("slug") == "city"
                  for s2 in (t.get("shots") or []) if s2.get("say")]
         stranded = [n for n in named if n not in known]
-        check("every city the window names is one the atlas can take you to",
+        ahead = [n for n in named
+                 if n in known
+                 and (next((x.get("country") for x in _c
+                            if isinstance(x, dict) and x.get("name") == n), None)
+                      not in countries_on_disk)]
+        check("every city the window names is a city this site knows",
               not stranded,
-              ", ".join(stranded) or "%d named, all %d in cities.json across %d "
-              "countries" % (len(named), len(known), len(countries_on_disk)))
+              ", ".join(stranded) or "%d named, all %d in cities.json%s"
+              % (len(named), len(known),
+                 "" if not ahead else " — %s ahead of the atlas, which is allowed"
+                 % ", ".join(ahead)))
 
         # -- the film, cut into the pieces the window can carry ---------------------
         # The one property that makes sixteen files a film rather than sixteen
