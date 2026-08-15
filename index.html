@@ -1483,7 +1483,13 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   background:var(--fj-basalt);color:var(--fj-onbasalt)}
 .wa-motion h2{color:var(--c-bg)}
 .wa-motion .wa-note{color:var(--fj-onbasalt-dim)}
-.wa-mo-band{display:grid;min-height:clamp(480px,62vh,680px);isolation:isolate}
+/* The band was sized when this section cross-faded photographs and held
+   each for 5.2 seconds. It now carries a two-minute film in sixteen
+   pieces, and at 62vh it was 559px of a 20,190px page — the third
+   smallest section on the homepage, and the smallest thing above the
+   fold that anybody actually watches. Measured, not guessed: see the
+   table in the commit that changed it. */
+.wa-mo-band{display:grid;min-height:clamp(560px,78vh,860px);isolation:isolate}
 .wa-mo-band > *{grid-area:1 / 1}
 .wa-mo-stage{position:relative}
 /* Cropped by the band on three sides. The 34% is where the picture starts, not
@@ -1598,6 +1604,41 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   background:var(--c-bg);padding:26px 24px 20px;text-decoration:none;
   transition:background var(--t-fast) var(--ease)}
 .wa-feel:hover{background:var(--fj-dust)}
+/* A CARD WITH A PHOTOGRAPH IN IT
+   The section's job is desire, and eight blocks of type on a tint was the
+   weakest way to do it. The picture goes behind the words rather than above
+   them, which is the one arrangement that needs real care: type over a
+   photograph has no ground colour, and a scrim that only looks dark enough is
+   how grey-on-grey ships.
+   So the scrim is opaque where the words are and clears off the top of the
+   frame, the words sit at the bottom, and the result was measured rather than
+   eyeballed — the numbers are in the commit that added this. */
+.wa-feel.is-lit{padding:0;background:var(--c-primary);overflow:hidden;
+  min-height:clamp(210px,20vw,260px)}
+/* The photograph is dimmed before the scrim goes over it. Measured: with the
+   gradient alone, ivory on the wildlife card's sky came out at 2.10:1 and on
+   the coast card's water at 2.76:1, against the 3:1 the headline size needs.
+   A scrim heavy enough to fix that on its own would have buried the picture. */
+.wa-feel-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.62) saturate(1.05);
+  transition:transform var(--t-slow,.6s) var(--ease)}
+.wa-feel.is-lit:hover{background:var(--c-primary)}
+.wa-feel.is-lit:hover .wa-feel-art{transform:scale(1.04)}
+.wa-feel-in{position:relative;display:flex;flex-direction:column;gap:10px;
+  justify-content:flex-end;flex:1 1 auto;padding:26px 24px 20px}
+/* Two stops, not one. A single flat wash either eats the picture at the top or
+   lets the type go grey at the bottom; this is opaque under the words and
+   almost gone by the time it reaches the sky. */
+.wa-feel-in::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,
+    rgba(14,10,7,.97) 0%, rgba(14,10,7,.95) 42%,
+    rgba(14,10,7,.78) 68%, rgba(14,10,7,.42) 100%)}
+.wa-feel-in > *{position:relative}
+.wa-feel.is-lit .wa-feel-say{color:var(--c-bg)}
+.wa-feel.is-lit .wa-feel-what{color:var(--c-gold)}
+.wa-feel.is-lit .wa-feel-n{color:color-mix(in srgb,var(--c-bg) 82%,transparent)}
+@media(prefers-reduced-motion:reduce){.wa-feel-art{transition:none}
+  .wa-feel.is-lit:hover .wa-feel-art{transform:none}}
 .wa-feel-say{font-family:var(--fj-display);font-size:clamp(17px,1.5vw,21px);
   font-weight:700;line-height:1.24;letter-spacing:-.01em;color:var(--c-ink);
   text-wrap:balance}
@@ -1621,6 +1662,16 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 @media(max-width:560px){
   .wa-feel-grid{grid-template-columns:1fr}
   .wa-feel{padding:20px 18px 16px;gap:9px}
+  .wa-feel.is-lit{padding:0}
+  .wa-feel-in{padding:20px 18px 16px;gap:9px}
+  /* One column means a shorter card, so the same gradient spreads its dark end
+     over less height and the lens label ends up where the picture is still
+     bright: measured at 2.37:1 on the wildlife card's sky, against the 4.5:1
+     ten-pixel type needs. Nearly opaque under the words here, and the
+     photograph keeps the top third of the frame. */
+  .wa-feel-in::before{background:linear-gradient(to top,
+    rgba(14,10,7,.98) 0%, rgba(14,10,7,.97) 58%,
+    rgba(14,10,7,.88) 80%, rgba(14,10,7,.58) 100%)}
   .wa-feel-close{max-width:none}
 }
 
@@ -2948,14 +2999,14 @@ window.AF = {
     </div>
     <div class="wa-feel-grid">
       <!-- gen:feel -->
-      <a class="wa-feel" href="/journey#/?w=cities" data-lens="cities"><span class="wa-feel-say">Hear a city come alive after dark, and realise it was waiting all day.</span><span class="wa-feel-what">Cities</span><span class="wa-feel-n">eleven countries lead on this</span></a>
-      <a class="wa-feel" href="/journey#/?w=wildlife" data-lens="wildlife"><span class="wa-feel-say">Look across a savanna and see nothing between you and the horizon.</span><span class="wa-feel-what">Wildlife</span><span class="wa-feel-n">eleven countries lead on this</span></a>
-      <a class="wa-feel" href="/journey#/?w=culture" data-lens="culture"><span class="wa-feel-say">Sit down somewhere a kingdom still holds court, and it is not a museum.</span><span class="wa-feel-what">People &amp; culture</span><span class="wa-feel-n">fourteen countries lead on this</span></a>
-      <a class="wa-feel" href="/journey#/?w=coast" data-lens="coast"><span class="wa-feel-say">Swim in water clear enough to lose the horizon in.</span><span class="wa-feel-what">Coast &amp; islands</span><span class="wa-feel-n">thirteen countries lead on this</span></a>
-      <a class="wa-feel" href="/journey#/?w=nature" data-lens="nature"><span class="wa-feel-say">Wake up above the clouds, on a mountain that rises out of the sea.</span><span class="wa-feel-what">Nature</span><span class="wa-feel-n">four countries lead on this</span></a>
-      <a class="wa-feel" href="/journey#/?w=food" data-lens="food"><span class="wa-feel-say">Eat what a country actually eats, at the hour it actually eats it.</span><span class="wa-feel-what">African food</span><span class="wa-feel-n">seven countries lead on this</span></a>
-      <a class="wa-feel" href="/journey#/?w=history" data-lens="history"><span class="wa-feel-say">Stand on ground that remembers, and has done for four thousand years.</span><span class="wa-feel-what">History</span><span class="wa-feel-n">ten countries lead on this</span></a>
-      <a class="wa-feel" href="/journey#/?w=adventure" data-lens="adventure"><span class="wa-feel-say">Cross a desert before sunrise, because by ten it will not let you.</span><span class="wa-feel-what">Adventure</span><span class="wa-feel-n">eight countries lead on this</span></a>      <!-- /gen:feel -->
+      <a class="wa-feel is-lit" href="/journey#/?w=cities" data-lens="cities" data-photo="true"><img class="wa-feel-art" src="/images/uploads/city-nairobi-night-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Hear a city come alive after dark, and realise it was waiting all day.</span><span class="wa-feel-what">Cities</span><span class="wa-feel-n">eleven countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=wildlife" data-lens="wildlife" data-photo="true"><img class="wa-feel-art" src="/images/uploads/still-elephants-dry-grass-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Look across a savanna and see nothing between you and the horizon.</span><span class="wa-feel-what">Wildlife</span><span class="wa-feel-n">eleven countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=culture" data-lens="culture" data-photo="true"><img class="wa-feel-art" src="/images/uploads/site-index-foumban-bronze-caster-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Sit down somewhere a kingdom still holds court, and it is not a museum.</span><span class="wa-feel-what">People &amp; culture</span><span class="wa-feel-n">fourteen countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=coast" data-lens="coast" data-photo="true"><img class="wa-feel-art" src="/images/uploads/swahili-coast-ngalawa-1200w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Swim in water clear enough to lose the horizon in.</span><span class="wa-feel-what">Coast &amp; islands</span><span class="wa-feel-n">thirteen countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=nature" data-lens="nature" data-photo="true"><img class="wa-feel-art" src="/images/uploads/kilimanjaro-elephants-acacia-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Wake up above the clouds, on a mountain that stands alone over the plain.</span><span class="wa-feel-what">Nature</span><span class="wa-feel-n">four countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=food" data-lens="food" data-photo="true"><img class="wa-feel-art" src="/images/uploads/culture-market-produce-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Eat what a country actually eats, at the hour it actually eats it.</span><span class="wa-feel-what">African food</span><span class="wa-feel-n">seven countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=history" data-lens="history" data-photo="true"><img class="wa-feel-art" src="/images/uploads/egypt-giza-causeway-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Stand on ground that remembers, and has done for four thousand years.</span><span class="wa-feel-what">History</span><span class="wa-feel-n">ten countries lead on this</span></span></a>
+      <a class="wa-feel is-lit" href="/journey#/?w=adventure" data-lens="adventure" data-photo="true"><img class="wa-feel-art" src="/images/uploads/desert-camp-sunrise-1440w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload"><span class="wa-feel-in"><span class="wa-feel-say">Cross a desert before sunrise, because by ten it will not let you.</span><span class="wa-feel-what">Adventure</span><span class="wa-feel-n">eight countries lead on this</span></span></a>      <!-- /gen:feel -->
     </div>
     <p class="wa-feel-close">Africa is not something you see. It is something you
       <em>experience</em>. <a class="wa-feel-go" href="/journey">Find the journey that feels like yours &rarr;</a></p>
@@ -3032,7 +3083,7 @@ window.AF = {
     </div>
     <div class="wa-moment-grid">
       <!-- gen:moments -->
-      <a class="wa-moment" href="/journey#/?w=wildlife" data-lens="wildlife"><span class="wa-moment-art"><img src="/images/uploads/gorilla-trekkers-768w.jpg" width="768" height="543" alt="A silverback mountain gorilla sitting in dense green undergrowth on a forested slope while a line of trekkers and guides photograph it from a few metres away" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Hear the forest before you see it.</b><i>Rainforest</i></span></a>
+      <a class="wa-moment" href="/journey#/?w=wildlife" data-lens="wildlife"><span class="wa-moment-art"><img src="/images/uploads/still-mountain-gorilla-1600w.jpg" width="1600" height="900" alt="A mountain gorilla feeding in dense green undergrowth on a forested slope, close enough to see the leaf held in its hand and the eye turned towards the camera" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Hear the forest before you see it.</b><i>Rainforest</i></span></a>
       <a class="wa-moment" href="/journey#/?w=adventure" data-lens="adventure"><span class="wa-moment-art"><img src="/images/uploads/desert-camp-sunrise-1440w.jpg" width="1440" height="958" alt="A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Walk into a landscape that looks impossible.</b><i>Desert</i></span></a>
       <a class="wa-moment" href="/journey#/?w=coast" data-lens="coast"><span class="wa-moment-art"><img src="/images/uploads/swahili-coast-ngalawa-1200w.jpg" width="1200" height="1804" alt="A woman walking along the tideline at sunrise, silhouetted against the water, with an outrigger fishing canoe moored a short way offshore" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Walk out at sunrise. The boat is already waiting.</b><i>Coast</i></span></a>
       <a class="wa-moment" href="/journey#/?w=nature" data-lens="nature"><span class="wa-moment-art"><img src="/images/uploads/table-mountain-from-the-bay-1920w.jpg" width="1920" height="1080" alt="A flat-topped mountain and its two flanking peaks seen across a bay at sunset from rocks in the foreground, with surf breaking and a container ship at anchor" loading="lazy" decoding="async" data-provider="upload"></span><span class="wa-moment-say"><b>Climb the one that rises straight out of the sea.</b><i>Mountain</i></span></a>      <!-- /gen:moments -->

@@ -32,7 +32,9 @@
   "label": "Cities",
   "examples": "Lagos, Cape Town, Marrakech, Nairobi, Dakar, Accra",
   "filterline": "If the cities are what brought you here",
-  "feel": "Hear a city come alive after dark, and realise it was waiting all day."
+  "feel": "Hear a city come alive after dark, and realise it was waiting all day.",
+  "photo": "/images/uploads/city-nairobi-night-1600w.jpg",
+  "photo_alt": "Nairobi after dark from above, lit avenues running back between towers to the horizon"
  },
  "wildlife": {
   "title": "Wildlife",
@@ -61,7 +63,9 @@
   "label": "Wildlife",
   "examples": "Gorillas, elephants, lions, giraffes, chimpanzees, the great migration",
   "filterline": "If wildlife is what brought you here",
-  "feel": "Look across a savanna and see nothing between you and the horizon."
+  "feel": "Look across a savanna and see nothing between you and the horizon.",
+  "photo": "/images/uploads/still-elephants-dry-grass-1600w.jpg",
+  "photo_alt": "A line of elephants walking across open dry grassland with nothing between them and a flat horizon"
  },
  "culture": {
   "title": "Culture",
@@ -92,7 +96,9 @@
   "label": "People &amp; culture",
   "examples": "Kingdoms, markets, music, dance, craft, living traditions",
   "filterline": "If you came to meet people",
-  "feel": "Sit down somewhere a kingdom still holds court, and it is not a museum."
+  "feel": "Sit down somewhere a kingdom still holds court, and it is not a museum.",
+  "photo": "/images/uploads/site-index-foumban-bronze-caster-1600w.jpg",
+  "photo_alt": "A bronze caster at work on the craft street at Foumban, seat of the Bamoun kings"
  },
  "coast": {
   "title": "Coast",
@@ -126,7 +132,9 @@
   "label": "Coast &amp; islands",
   "examples": "Zanzibar, Kribi, Lamu, Seychelles, Mauritius",
   "filterline": "If you came for the water",
-  "feel": "Swim in water clear enough to lose the horizon in."
+  "feel": "Swim in water clear enough to lose the horizon in.",
+  "photo": "/images/uploads/swahili-coast-ngalawa-1200w.jpg",
+  "photo_alt": "A ngalawa outrigger canoe drawn up on a shore of clear shallow water on the Swahili coast"
  },
  "nature": {
   "title": "Nature",
@@ -170,7 +178,9 @@
   "label": "Nature",
   "examples": "Kilimanjaro, Korup, the Rwenzori, the Atlas, the Namib",
   "filterline": "If you came for the country itself",
-  "feel": "Wake up above the clouds, on a mountain that rises out of the sea."
+  "feel": "Wake up above the clouds, on a mountain that stands alone over the plain.",
+  "photo": "/images/uploads/kilimanjaro-elephants-acacia-1600w.jpg",
+  "photo_alt": "The snow-capped summit of Kilimanjaro above a band of cloud, standing alone over a plain of acacia and elephants"
  },
  "food": {
   "title": "Food",
@@ -193,7 +203,9 @@
   "label": "African food",
   "examples": "Street food, markets, coastal cuisine, home cooking, coffee",
   "filterline": "If you came to eat",
-  "feel": "Eat what a country actually eats, at the hour it actually eats it."
+  "feel": "Eat what a country actually eats, at the hour it actually eats it.",
+  "photo": "/images/uploads/culture-market-produce-1600w.jpg",
+  "photo_alt": "Stalls of fruit and vegetables piled under a market roof, shoppers moving between them"
  },
  "history": {
   "title": "History",
@@ -217,7 +229,9 @@
   "label": "History",
   "examples": "Forts, palaces, ancient cities, rock churches, sacred places",
   "filterline": "If you came for what was here before you",
-  "feel": "Stand on ground that remembers, and has done for four thousand years."
+  "feel": "Stand on ground that remembers, and has done for four thousand years.",
+  "photo": "/images/uploads/egypt-giza-causeway-1600w.jpg",
+  "photo_alt": "The Great Pyramid and the Pyramid of Khafre at Giza from the causeway at dusk, stone that has stood for four and a half thousand years"
  },
  "adventure": {
   "title": "Adventure",
@@ -250,7 +264,9 @@
   "label": "Adventure",
   "examples": "Gravel roads, the Nile at Jinja, the falls from both sides, the long traverse",
   "filterline": "If you came to go a long way",
-  "feel": "Cross a desert before sunrise, because by ten it will not let you."
+  "feel": "Cross a desert before sunrise, because by ten it will not let you.",
+  "photo": "/images/uploads/desert-camp-sunrise-1440w.jpg",
+  "photo_alt": "A camp of white canvas tents on open sand with the sun just clear of the dunes behind them"
  },
  "$feel_note": [
   "`feel` is the one field in this file that is written rather than derived, and",

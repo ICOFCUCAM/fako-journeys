@@ -1777,11 +1777,35 @@ def main():
         check("the section under the hero is generated", bool(feel_block))
         if feel_block:
             body = feel_block.group(1)
+            # Tolerant of a card with a photograph and a card without: the
+            # picture is optional, the feeling, the lens name and the count are
+            # not. Pinned to the exact old markup, this silently matched nothing
+            # the day the cards grew an <img> and a wrapper, and reported "0
+            # cards" rather than the eight that were there.
             cards = re.findall(
-                r'<a class="wa-feel" href="([^"]+)" data-lens="([a-z]+)">'
+                r'<a class="wa-feel(?:[^"]*)" href="([^"]+)" data-lens="([a-z]+)"'
+                r'[^>]*>(?:<img[^>]*>)?(?:<span class="wa-feel-in">)?'
                 r'<span class="wa-feel-say">([^<]+)</span>'
                 r'<span class="wa-feel-what">[^<]*</span>'
-                r'<span class="wa-feel-n">([^<]+)</span></a>', body)
+                r'<span class="wa-feel-n">([^<]+)</span>', body)
+            # And the photograph, where there is one, is a file that is here and
+            # says what is in it — the same two questions asked of every own
+            # photograph on a country page.
+            lens_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "lenses.json"))
+            lit = {k: v for k, v in lens_src.items()
+                   if not k.startswith("$") and isinstance(v, dict) and v.get("photo")}
+            missing = [v["photo"] for v in lit.values()
+                       if not os.path.exists(os.path.join(ROOT_DIR, v["photo"].lstrip("/")))]
+            check("every feeling shown over a photograph has one that exists",
+                  not missing, ", ".join(missing) or "%d of 8 lit" % len(lit))
+            thin = [k for k, v in lit.items() if len(v.get("photo_alt") or "") < 40]
+            check("and the picture is described where the words sit on it",
+                  not thin, ", ".join(thin) or "%d described" % len(lit))
+            check("the lit cards are marked for the contrast pass to skip",
+                  body.count('data-photo="true"') == len(lit),
+                  "%d of %d — type over a photograph has no ground colour to "
+                  "read, so it is measured in pixels instead (7.09:1 worst, "
+                  "against 4.5 needed)" % (body.count('data-photo="true"'), len(lit)))
             check("every lens with somewhere to go is offered a feeling",
                   len(cards) == len([k for k in lens_keys if called.get(k)]),
                   "%d cards" % len(cards))

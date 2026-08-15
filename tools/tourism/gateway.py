@@ -327,11 +327,23 @@ def block_feel(countries):
             # form tried and the decoder ignores it silently — the page loaded
             # on question one as though the card had never been clicked, which
             # is a link that looks like it carries a choice and does not.
-            '      <a class="wa-feel" href="/journey#/?w=%s" data-lens="%s">'
+            '      <a class="wa-feel%s" href="/journey#/?w=%s" data-lens="%s"%s>%s'
+            '<span class="wa-feel-in">'
             '<span class="wa-feel-say">%s</span>'
             '<span class="wa-feel-what">%s</span>'
-            '<span class="wa-feel-n">%s %s</span></a>'
-            % (esc(key), esc(key), esc(lens.get("feel") or lens["line"]),
+            '<span class="wa-feel-n">%s %s</span></span></a>'
+            % (" is-lit" if lens.get("photo") else "", esc(key), esc(key),
+               # The contrast pass walks the DOM and reads a ground colour from
+               # the cascade; over a photograph there is no such colour to read,
+               # and it would report ivory on ivory. data-photo is how the rest
+               # of this page says "measure my pixels, not my stylesheet", and
+               # the pixels are measured — see the note by .wa-feel.is-lit.
+               ' data-photo="true"' if lens.get("photo") else "",
+               ('<img class="wa-feel-art" src="%s" alt="" width="1600" '
+                'height="1067" loading="lazy" decoding="async" '
+                'data-provider="upload">' % esc(lens["photo"]))
+               if lens.get("photo") else "",
+               esc(lens.get("feel") or lens["line"]),
                lens["label"],
                _spell(len(names)).lower() if len(names) < 20 else len(names),
                "country leads on this" if len(names) == 1 else "countries lead on this"))
