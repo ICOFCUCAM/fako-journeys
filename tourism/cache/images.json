@@ -9316,6 +9316,69 @@
         ]
       }
     },
+    "congo/cities": {
+      "country": "congo",
+      "category": "cities",
+      "caption": "Brazzaville and Pointe-Noire",
+      "description": "A river capital looking across at Kinshasa, and an Atlantic oil port with the beaches.",
+      "provider": "pexels",
+      "photoId": "17234882",
+      "imageUrl": "https://images.pexels.com/photos/17234882/pexels-photo-17234882.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/17234882/pexels-photo-17234882.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traffic-jam-on-a-street-17234882/",
+      "photographer": "K",
+      "photographerUrl": "https://www.pexels.com/@kelly",
+      "width": 7662,
+      "height": 5110,
+      "aspectRatio": 1.4994,
+      "alt": "the Congo river frontage at Brazzaville with Kinshasa opposite",
+      "query": "Congo Brazzaville Kinshasa",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T19:26:01Z",
+      "verifiedAt": "2026-08-15T19:26:01Z",
+      "relevance": {
+        "score": 3.43,
+        "reasons": [
+          "subject: and",
+          "category: urban"
+        ]
+      }
+    },
+    "congo/crafts": {
+      "country": "congo",
+      "category": "crafts",
+      "caption": "Raffia, Masks and Nkisi",
+      "description": "Raffia weaving, Teke masks, and Kongo nkisi power figures.",
+      "provider": "pexels",
+      "photoId": "20846440",
+      "imageUrl": "https://images.pexels.com/photos/20846440/pexels-photo-20846440.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/20846440/pexels-photo-20846440.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/boy-horseback-riding-20846440/",
+      "photographer": "David Kwewum",
+      "photographerUrl": "https://www.pexels.com/@davdkuko",
+      "width": 9504,
+      "height": 6336,
+      "aspectRatio": 1.5,
+      "alt": "a flat round Teke mask with geometric carving, Congo",
+      "query": "Congo Teke",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 45
+      },
+      "createdAt": "2026-08-15T19:25:57Z",
+      "verifiedAt": "2026-08-15T19:25:57Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
     "congo/culture": {
       "country": "congo",
       "category": "culture",
@@ -9441,6 +9504,37 @@
         ]
       }
     },
+    "congo/heritage": {
+      "country": "congo",
+      "category": "heritage",
+      "caption": "Sangha Trinational",
+      "description": "Nouabale-Ndoki is part of the World Heritage forest shared with Cameroon and CAR.",
+      "provider": "pexels",
+      "photoId": "28154519",
+      "imageUrl": "https://images.pexels.com/photos/28154519/pexels-photo-28154519.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/28154519/pexels-photo-28154519.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/bosque-28154519/",
+      "photographer": "Juan Felipe Ramírez",
+      "photographerUrl": "https://www.pexels.com/@juan-felipe-ramirez-312591454",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "old-growth forest and a river in the Sangha Trinational park, Congo",
+      "query": "Congo old growth forest",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T19:25:59Z",
+      "verifiedAt": "2026-08-15T19:26:00Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: forest"
+        ]
+      }
+    },
     "congo/hero": {
       "country": "congo",
       "category": "hero",
@@ -9469,6 +9563,37 @@
         "score": 2.53,
         "reasons": [
           "subject: rainforest"
+        ]
+      }
+    },
+    "congo/historic-sites": {
+      "country": "congo",
+      "category": "historic-sites",
+      "caption": "Brazzaville's Colonial Core",
+      "description": "The Case de Gaulle and the Basilique Sainte-Anne, and a river frontage facing Kinshasa.",
+      "provider": "pexels",
+      "photoId": "37237544",
+      "imageUrl": "https://images.pexels.com/photos/37237544/pexels-photo-37237544.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37237544/pexels-photo-37237544.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/church-spire-with-red-roof-against-clear-blue-sky-37237544/",
+      "photographer": "Reinis Brūzītis",
+      "photographerUrl": "https://www.pexels.com/@reinis-bruzitis-2153679369",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the pointed roof of the Basilique Sainte-Anne in Brazzaville, Congo",
+      "query": "Congo pointed roof basilique",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-15T19:25:58Z",
+      "verifiedAt": "2026-08-15T19:25:58Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: roof"
         ]
       }
     },
