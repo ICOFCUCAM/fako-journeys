@@ -1483,7 +1483,13 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   background:var(--fj-basalt);color:var(--fj-onbasalt)}
 .wa-motion h2{color:var(--c-bg)}
 .wa-motion .wa-note{color:var(--fj-onbasalt-dim)}
-.wa-mo-band{display:grid;min-height:clamp(480px,62vh,680px);isolation:isolate}
+/* The band was sized when this section cross-faded photographs and held
+   each for 5.2 seconds. It now carries a two-minute film in sixteen
+   pieces, and at 62vh it was 559px of a 20,190px page — the third
+   smallest section on the homepage, and the smallest thing above the
+   fold that anybody actually watches. Measured, not guessed: see the
+   table in the commit that changed it. */
+.wa-mo-band{display:grid;min-height:clamp(560px,78vh,860px);isolation:isolate}
 .wa-mo-band > *{grid-area:1 / 1}
 .wa-mo-stage{position:relative}
 /* Cropped by the band on three sides. The 34% is where the picture starts, not
