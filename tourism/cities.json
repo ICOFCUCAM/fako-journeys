@@ -220,6 +220,34 @@
     39.2083,
     -6.7924
    ]
+  },
+  {
+   "slug": "luanda",
+   "name": "Luanda",
+   "country": "angola",
+   "line": "Atlantic · Bay · Modernism",
+   "say": "Angola's capital, wrapped round a bay with a sand spit closing it, and a skyline that went up faster than almost anywhere on the continent. The Marginal runs the length of it.",
+   "photo": "/images/uploads/city-luanda-bay-1600w.jpg",
+   "photo_w": 1600,
+   "photo_h": 899,
+   "lonlat": [
+    13.2344,
+    -8.8383
+   ]
+  },
+  {
+   "slug": "zanzibar-city",
+   "name": "Zanzibar City",
+   "country": "tanzania",
+   "line": "Stone Town · Dhows · Indian Ocean",
+   "say": "Stone Town on one side and the water on the other, coral-rag houses and carved doors, and dhows on the shallows in front of it. Two hours by ferry from Dar es Salaam.",
+   "photo": "/images/uploads/city-zanzibar-waterfront-1600w.jpg",
+   "photo_w": 1600,
+   "photo_h": 900,
+   "lonlat": [
+    39.1979,
+    -6.1659
+   ]
   }
  ],
  "_routes_note": [
