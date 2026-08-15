@@ -1273,6 +1273,7 @@ function serve() {
     await off.close();
   } catch (e) {
     check('the browser checks ran', false, String(e.message).slice(0, 90));
+    console.error('\n--- full stack ---\n' + (e.stack || e));
   } finally {
     if (browser) await browser.close();
     server.close();

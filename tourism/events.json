@@ -33,6 +33,7 @@
   "journey_tweaked":       ["country", "pacing", "month"],
   "journey_saved":         ["country", "stages"],
   "journey_shared":        ["country", "stages"],
+  "ground_opened":         ["country", "pacing"],
   "enquiry_started":       ["country", "stages", "month", "pacing"],
   "atlas_region_opened":   ["region"],
   "atlas_country_opened":  ["country", "region"],

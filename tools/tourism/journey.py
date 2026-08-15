@@ -28,7 +28,7 @@ import html as html_mod
 import json
 import os
 
-from . import plate
+from . import plate, rates
 from .model import ROOT, load_operators, load_regions, load_strands
 
 PAGE = os.path.join(ROOT, "journey.html")
@@ -206,6 +206,7 @@ def style_chips(data):
 
 def render(countries, taxonomy):
     data = brief(countries, taxonomy)
+    money = rates.load()
     if not data["countries"]:
         raise IOError("no published countries — nothing to plan")
     return TEMPLATE % {
@@ -220,6 +221,8 @@ def render(countries, taxonomy):
         "style": style_chips(data),
         "carried": esc(data["carried"]),
         "n": len(data["countries"]),
+        "ground": rates.block_ground(money),
+        "notincluded": rates.block_notincluded(money),
     }
 
 
@@ -227,6 +230,12 @@ def run(countries, taxonomy, log=print):
     if not os.path.isdir(ATLAS_DATA):
         raise IOError("data/atlas is missing — run: build.py atlas")
     html = render(countries, taxonomy)
+    stray = rates.drift(html, rates.load())
+    if stray:
+        raise ValueError(
+            "the tunnel prints %s, which tourism/rates.json does not price — a "
+            "figure in the copy has drifted from the cards under it."
+            % ", ".join(rates.money(v) for v in stray))
     with open(PAGE, "w") as fh:
         fh.write(html)
     log("journey: %s (%.1f KB), %d countries rankable without a request"
@@ -382,7 +391,7 @@ TEMPLATE = """<!DOCTYPE html>
         <div class="jn-dna" id="jn-dna"></div>
         <div class="jn-who" id="jn-who"></div>
         <div class="jn-acts jn-acts--end">
-          <a class="af-btn af-btn--solid" id="jn-begin" href="/contact">Begin this journey<i>&rarr;</i></a>
+          <button class="af-btn af-btn--solid" id="jn-begin" type="button" data-ground>Price the ground<i>&rarr;</i></button>
           <a class="af-btn af-btn--quiet" id="jn-meet" href="/meet">Meet the country</a>
           <button class="af-btn af-btn--quiet" type="button" data-save>Save this journey</button>
           <button class="af-btn af-btn--quiet" type="button" data-share>Copy the link</button>
@@ -394,6 +403,33 @@ TEMPLATE = """<!DOCTYPE html>
         <p class="jn-note" id="jn-pick-note"></p>
         <ul class="jn-picks" id="jn-picks"></ul>
       </aside>
+    </div>
+  </section>
+
+  <!-- the ground --------------------------------------------------------- -->
+  <!-- The tunnel used to end at the composer and hand the traveller to
+       /contact with a shape and no figure. This is the last question: what the
+       ground costs, asked only once the journey has a name, and carrying the
+       days already answered rather than asking for them twice. -->
+  <section class="jn-ground" id="ground" hidden aria-labelledby="qg">
+    <div class="jn-ground-in">
+      <span class="af-stamp">The ground</span>
+      <h1 class="jn-h1" id="qg">Your flight gets you to Africa.<br>We get you through it.</h1>
+      <p class="jn-lede">We do not sell the flight. You bring the passport, the
+        visa, the ticket and the insurance &mdash; and from the moment you land
+        the road is ours: a vehicle, a driver who stays with your journey, the
+        movement between destinations, and somebody coordinating all of it while
+        you are here. Priced by the vehicle and by the day, so four of you pay
+        what two of you would.</p>
+%(ground)s
+%(notincluded)s
+      <div class="jn-acts jn-acts--end">
+        <a class="af-btn af-btn--solid" id="jn-go" href="/contact">Begin this journey<i>&rarr;</i></a>
+        <button class="af-btn af-btn--quiet" type="button" data-back-compose>Back to the journey</button>
+      </div>
+      <p class="jn-g-nothing">Nothing is charged here. This sends your journey to
+        us as a sentence you can edit first, and we confirm your requirements
+        before we confirm the journey.</p>
     </div>
   </section>
 

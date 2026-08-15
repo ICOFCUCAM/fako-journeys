@@ -479,14 +479,15 @@
       meet.href = '/meet#/' + encodeURIComponent(chosen.slug);
       meet.textContent = 'Meet ' + c.name;
     }
+    /* The ground stage sends this same brief with the figure appended, so it is
+       built once here and read there rather than assembled twice from the same
+       inputs — which is how the two of them would drift apart. */
+    lastBrief = enquiry(title, c, rows, pace);
     var begin = document.getElementById('jn-begin');
-    begin.href = '/contact?journey=' + encodeURIComponent(enquiry(title, c, rows, pace));
     begin.onclick = function () {
       track('enquiry_started', {country: chosen.slug, stages: stages.length,
                                 month: brief.month, pacing: brief.pacing});
     };
-    begin.textContent = c.operator ? 'Send this to ' + c.operator.name : 'Begin this journey';
-    begin.insertAdjacentHTML('beforeend', '<i>&rarr;</i>');
   }
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -638,7 +639,7 @@
 
   compose.addEventListener('click', function (e) {
     var t = e.target.closest
-      ? e.target.closest('[data-toggle],[data-drop],[data-save],[data-share],[data-cross]')
+      ? e.target.closest('[data-toggle],[data-drop],[data-save],[data-share],[data-cross],[data-ground]')
       : null;
     if (!t) return;
     if (t.hasAttribute('data-cross')) {
@@ -664,8 +665,123 @@
       save();
     } else if (t.hasAttribute('data-share')) {
       share();
+    } else if (t.hasAttribute('data-ground')) {
+      openGround();
     }
   });
+
+
+  /* ---- the ground --------------------------------------------------------- */
+
+  /* The tunnel used to stop at the composer: a journey with a shape, a name and
+     no figure, handed to /contact for somebody to price by hand. This is the
+     fifth question. It carries the days already answered rather than asking a
+     second time, and it totals from data-rate attributes rather than by reading
+     the dollars back out of the labels — a label that says "Included" instead
+     of "$0" is exactly how a group silently stops being counted. */
+
+  var lastBrief = '';
+  var ground = document.getElementById('ground');
+  var gform = document.getElementById('jn-g');
+
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+
+  /* How many days the traveller is actually being quoted for. The chips offer
+     the common lengths; anything else goes in "Other", which is also where the
+     pacing answer lands when it does not match a chip — 12 days is a real
+     answer and rounding it to 10 or 14 to fit the UI would be the interface
+     lying about what it was told. */
+  function groundDays() {
+    var on = gform.querySelector('input[name=days]:checked');
+    if (!on) return 0;
+    if (on.value !== 'other') return parseInt(on.value, 10) || 0;
+    var other = gform.querySelector('input[name=days_other]');
+    return Math.max(0, parseInt(other && other.value, 10) || 0);
+  }
+
+  function prefillDays(want) {
+    var chip = gform.querySelector('input[name=days][value="' + want + '"]');
+    if (chip) { chip.checked = true; return; }
+    var other = gform.querySelector('input[name=days][value=other]');
+    var box = gform.querySelector('input[name=days_other]');
+    if (other && box) { other.checked = true; box.value = want; }
+  }
+
+  function total() {
+    var days = groundDays();
+    var perDay = 0, once = parseInt(gform.dataset.arrival, 10) || 0, quote = false;
+    var tier = null;
+    gform.querySelectorAll('input:checked').forEach(function (i) {
+      if (i.name === 'days' || i.type === 'checkbox') return;
+      if (i.hasAttribute('data-quote')) quote = true;
+      if (i.dataset.rate) perDay += parseInt(i.dataset.rate, 10) || 0;
+      if (i.dataset.once) once += parseInt(i.dataset.once, 10) || 0;
+      if (i.name === 'tier') tier = i;
+    });
+    return {days: days, sum: perDay * days + (days ? once : 0), quote: quote,
+            tier: tier ? tier.closest('.jn-card').querySelector('b').textContent : ''};
+  }
+
+  function paintGround() {
+    var t = total();
+    var sum = gform.querySelector('[data-total]');
+    var basis = gform.querySelector('[data-basis]');
+    var note = gform.querySelector('[data-quote]');
+    if (sum) sum.textContent = t.days ? money(t.sum) : '—';
+    if (basis) {
+      basis.textContent = t.days
+        ? t.days + ' days \u00b7 ' + t.tier + ' \u00b7 arrival included'
+        : 'Tell us how many days';
+    }
+    if (note) note.hidden = !t.quote;
+
+    var go = document.getElementById('jn-go');
+    if (go && chosen) {
+      var c = D.countries[chosen.slug];
+      var lines = [lastBrief,
+                   '', 'THE GROUND',
+                   'Journey: ' + t.tier,
+                   'Days: ' + (t.days || 'not yet said'),
+                   'Afrinkong service: ' + (t.days ? money(t.sum) : 'not yet priced')
+                     + ' USD, arrival coordination included'];
+      if (t.quote) {
+        lines.push('One choice is quoted once the destination is known.');
+      }
+      lines.push('Destination charges (parks, permits, entrance) are arranged by '
+                 + 'Afrinkong and added at cost.');
+      go.href = '/contact?journey=' + encodeURIComponent(lines.join('\n'));
+      go.textContent = c.operator ? 'Send this to ' + c.operator.name
+                                  : 'Begin this journey';
+      go.insertAdjacentHTML('beforeend', '<i>&rarr;</i>');
+    }
+  }
+
+  function openGround() {
+    compose.hidden = true;
+    ground.hidden = false;
+    prefillDays(E.pacingFor(D, brief.pacing).days);
+    paintGround();
+    track('ground_opened', {country: chosen ? chosen.slug : null,
+                            pacing: brief.pacing});
+    window.scrollTo({top: 0, behavior: reduced.matches ? 'auto' : 'smooth'});
+    var h = ground.querySelector('.jn-h1');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus(); }
+  }
+
+  if (gform) {
+    gform.addEventListener('change', paintGround);
+    gform.addEventListener('input', paintGround);
+    gform.addEventListener('submit', function (e) { e.preventDefault(); });
+  }
+  if (ground) {
+    ground.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target.closest('[data-back-compose]') : null;
+      if (!t) return;
+      ground.hidden = true;
+      compose.hidden = false;
+      window.scrollTo({top: 0, behavior: reduced.matches ? 'auto' : 'smooth'});
+    });
+  }
 
   /* ---- saving, sharing, restoring ---------------------------------------- */
 
