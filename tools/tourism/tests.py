@@ -699,8 +699,27 @@ def main():
               and 'data-illustration-alt="Elephants"' in tag)
         check("a placed tag is marked so `adopt` cannot overwrite it",
               'data-placed="true"' in tag and 'data-generated="true"' in tag)
-        check("a placed tag has no width or height attribute",
-              " width=" not in tag and " height=" not in tag)
+        # This asserted the opposite until the slot got height:auto. Leaving the
+        # attributes off was correct while `width:100%; aspect-ratio:N` had no
+        # height — both dimensions went definite, aspect-ratio was dropped, and
+        # a slot rendered 479x1280 instead of 479x638. With height:auto on
+        # img[data-illustration] the attributes are a ratio hint, aspect-ratio
+        # still decides the shape, and thirty-two photographs that reserved no
+        # space reserve it. So the check is now that they are there, and that
+        # the rule they depend on is there too — the attributes without the CSS
+        # is the broken state this used to be protecting against.
+        check("a placed tag carries its own dimensions",
+              ' width="%d"' % cand["width"] in tag
+              and ' height="%d"' % cand["height"] in tag,
+              tag[tag.find(" width="):tag.find(" loading=")] or "neither")
+        # The detail prints on a pass too — this is the second time in an hour I
+        # have written one as the failure explanation and had it appear under
+        # the word PASS. It says what was found.
+        css = open(os.path.join(ROOT_DIR, "styles", "afrinkong.css")).read()
+        auto = re.search(r"img\[data-illustration\][^{]*\{[^}]*height:\s*auto", css)
+        check("and the slot leaves one dimension to the CSS, or they would win",
+              auto, "afrinkong.css: %s" % (auto.group(0) if auto
+                                           else "no height:auto on img[data-illustration]"))
         check("srcset states the one width there actually is",
               'srcset="/images/generated/x.png %dw"' % cand["width"] in tag)
         check("reverting a placed tag restores the drawing exactly",
