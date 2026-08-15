@@ -28,7 +28,7 @@ import html as html_mod
 import json
 import os
 
-from . import plate, rates
+from . import company, plate, rates
 from .model import ROOT, load_operators, load_regions, load_strands
 
 PAGE = os.path.join(ROOT, "journey.html")
@@ -207,6 +207,7 @@ def style_chips(data):
 def render(countries, taxonomy):
     data = brief(countries, taxonomy)
     money = rates.load()
+    co = company.load()
     if not data["countries"]:
         raise IOError("no published countries — nothing to plan")
     return TEMPLATE % {
@@ -223,6 +224,7 @@ def render(countries, taxonomy):
         "n": len(data["countries"]),
         "ground": rates.block_ground(money),
         "notincluded": rates.block_notincluded(money),
+        "whopays": company.block_whopays(co),
     }
 
 
@@ -423,6 +425,7 @@ TEMPLATE = """<!DOCTYPE html>
         what two of you would.</p>
 %(ground)s
 %(notincluded)s
+%(whopays)s
       <div class="jn-acts jn-acts--end">
         <a class="af-btn af-btn--solid" id="jn-go" href="/contact">Begin this journey<i>&rarr;</i></a>
         <button class="af-btn af-btn--quiet" type="button" data-back-compose>Back to the journey</button>

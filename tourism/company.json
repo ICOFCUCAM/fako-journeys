@@ -1,0 +1,25 @@
+{
+ "$comment": "Who the traveller is actually contracting with. Every place the site names the company reads this file, because a legal entity typed into markup nine times is a legal entity that will be wrong in three of them.",
+
+ "$why": "The tunnel now quotes a ground journey in US dollars and says the money goes to Wankong LLC. A visitor who reads that has one reasonable question — who is Wankong, I came here for Afrinkong — and the site could not answer it: the words 'Wankong LLC' appeared nowhere in the codebase, and the homepage footer said contact details were illustrative until verified. A price is only as trustworthy as the company behind it is identifiable.",
+
+ "brand": "Afrinkong",
+ "legal": "Wankong LLC",
+ "relation": "Afrinkong is a trading name of Wankong LLC.",
+ "jurisdiction": "Delaware, USA",
+ "registration": "10588061",
+
+ "office": {
+  "$comment": "The REGISTERED office, and labelled as one wherever it is printed. 8 The Green in Dover is a registered-agent address shared by a great many Delaware companies; it is the correct thing to publish as the company's registered office and it is not somewhere a traveller should be invited to visit, telephone or send anything. It is not an operating address and the site must never present it as one.",
+  "kind": "Registered office",
+  "street": "8 The Green, Suite B",
+  "city": "Dover",
+  "region": "Delaware",
+  "postcode": "19901",
+  "country": "United States"
+ },
+
+ "money": "Journeys are quoted, invoiced and settled in US dollars, to Wankong LLC.",
+
+ "ground": "The people who drive you, host you and coordinate your days are Afrinkong's own across Africa. The company you contract with and pay is Wankong LLC in the United States, which is what puts a US-registered business behind a journey run four thousand miles from it."
+}

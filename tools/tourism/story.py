@@ -797,6 +797,8 @@ TEMPLATE = """<!DOCTYPE html>
       <a href="/stories">every story</a> &middot;
       <a href="/places">every place</a> &middot;
       <a href="/contact">enquire</a></p>
+    <p class="pl-foot-co"><!-- gen:company -->
+    <!-- /gen:company --></p>
   </div>
 </footer>
 </body>
@@ -886,6 +888,8 @@ INDEX = """<!DOCTYPE html>
       <a href="/places">every place</a> &middot;
       <a href="/atlas">the atlas</a> &middot;
       <a href="/contact">enquire</a></p>
+    <p class="pl-foot-co"><!-- gen:company -->
+    <!-- /gen:company --></p>
   </div>
 </footer>
 </body>

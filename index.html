@@ -2282,6 +2282,16 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 /* The last line on the page. It sat at the same weight as the link columns
    above it, so the page's legal footing and its navigation were one texture. */
 .wa-foot-bar{margin-top:44px;padding:20px 0;border-top:var(--fj-rule-dark);font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+/* The company line is a legal footnote and reads like one: the registered
+   office is set below the entity rather than beside it, so the bar states who
+   you contract with first and where the paperwork lives second. It is a
+   registered office, labelled, and never presented as somewhere to call. */
+  .wa-foot-bar b{color:var(--c-bg);font-weight:400}
+  /* Set in a colour rather than dimmed with opacity. Opacity leaves
+     getComputedStyle reporting the undimmed colour, so the contrast pass
+     measures a ratio the reader never sees and passes text that may not be
+     readable. The separation here is position and case, not fade. */
+  .af-co-where{display:block;margin-top:7px;letter-spacing:.1em;text-transform:none}
 @media(max-width:1080px){.wa-foot-grid{grid-template-columns:1fr 1fr 1fr;gap:30px}}
 @media(max-width:760px){.wa-foot-grid{grid-template-columns:1fr 1fr;gap:28px}}
 @media(max-width:560px){.wa-foot-grid{grid-template-columns:1fr}}
@@ -4293,7 +4303,8 @@ window.AF = {
       </div>
     </div>
     <div class="wa-foot-bar wa-frame" style="padding-left:0;padding-right:0">
-      Afrinkong &middot; Locally operated across Africa &middot; Contact details and figures on this page are illustrative until verified
+      <!-- gen:company -->
+<span class="af-co-brand">Afrinkong</span> is a trading name of <b>Wankong LLC</b> &middot; Delaware, USA &middot; Registration No. 10588061<span class="af-co-where">Registered office: 8 The Green, Suite B, Dover, Delaware 19901</span>      <!-- /gen:company -->
     </div>
   </div>
 </footer>

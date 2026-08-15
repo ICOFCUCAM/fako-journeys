@@ -514,6 +514,15 @@
 .jn-g-row input:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
 .jn-g-nothing{margin-top:18px;font-size:14px;color:var(--c-muted);max-width:60ch}
 
+/* Who you are actually paying, said next to the figure rather than only in a
+   footer. The stage quotes in dollars and the money goes to a Delaware company
+   the visitor has not heard of — they came here for Afrinkong. Answering that
+   under the total costs two lines and is the difference between a price and a
+   price you would act on. */
+.jn-g-who{margin-top:var(--sp-5);padding-top:18px;border-top:var(--fj-rule);
+  font-size:14.5px;color:var(--c-muted);max-width:66ch}
+.jn-g-who b{color:var(--c-fg);font-weight:400}
+
 @media(max-width:760px){
   .jn-ground{padding:var(--sp-5) 0 var(--sp-6)}
   .jn-g{gap:var(--sp-5)}
