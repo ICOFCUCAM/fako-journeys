@@ -42,6 +42,20 @@ WHAT IT FINDS
               photograph may be of the right country and is not evidently of
               the right subject.
 
+WHAT IT DELIBERATELY DOES NOT CHECK
+
+Word overlap between the photograph and the slot. Measured, 438 of 687 share
+no word with their caption — and most of those are fine. "Crossing the
+Tassili" is illustrated by "a desert landscape with rocks and sand"; the
+Tassili is a desert of rocks and sand. "Ghardaia" gets "brown and white
+concrete houses", which is what Ghardaia is. A check that flagged those would
+strip most of the site's photography to fix a handful of real misses, so it is
+not a check. Genuine subject weakness — a lion over "Balloon over the Mara" —
+needs a vision model or a person, and this file will not pretend otherwise.
+
+What it does check is narrow on purpose: two failures that can be proven from
+the provider's own words, with no judgement required.
+
 By default it prints and changes nothing, because an audit that edits is an
 audit nobody runs twice. With --force it quarantines what it found.
 
@@ -161,6 +175,24 @@ def run(only=None, force=False, log=print):
                 "shows the right thing is resolved.")
         return found
 
+    # The alt on every surviving record still describes what we went looking
+    # for rather than what the photograph shows. Rewritten from the provider's
+    # own words, which is the only description of the image nobody here wrote.
+    from .resolve import photo_alt
+    realt = 0
+    for key, rec in entries.items():
+        slug = rec.get("country") or key.split("/")[0]
+        country = by_slug.get(slug)
+        said = slug_words(rec)
+        if not country or not said:
+            continue
+        was = rec.get("alt")
+        now = photo_alt(said, country)
+        if now and now != was:
+            rec["altIntended"] = was      # kept: it is what the slot is for
+            rec["alt"] = now
+            realt += 1
+
     rejected = cache.setdefault("rejected", {})
     moved = 0
     for kind, rows in found.items():
@@ -174,6 +206,6 @@ def run(only=None, force=False, log=print):
     with open(CACHE, "w", encoding="utf-8") as fh:
         json.dump(cache, fh, indent=1, ensure_ascii=False, sort_keys=True)
         fh.write("\n")
-    log("\nquarantined %d; %d photographs still published."
-        % (moved, len(entries)))
+    log("\nquarantined %d; %d photographs still published, %d alt(s) rewritten "
+        "from what the photograph says." % (moved, len(entries), realt))
     return found
