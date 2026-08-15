@@ -1272,6 +1272,12 @@ function serve() {
     }
     await off.close();
   } catch (e) {
+    /* The check line truncates to 90 characters, which is right for a result
+       table and useless for a crash: "ReferenceError: q is not defined" with
+       no frame under it says nothing about which of the sixteen evaluate
+       blocks threw. The stack goes to stderr, so a passing run stays silent
+       and a failing one is diagnosable on the first read instead of the
+       third. */
     check('the browser checks ran', false, String(e.message).slice(0, 90));
     console.error('\n--- full stack ---\n' + (e.stack || e));
   } finally {
