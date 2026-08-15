@@ -1975,10 +1975,17 @@ def main():
         check("the homepage shows a fixed number of cities, not all of them",
               len(shown_slugs) == gateway.SHOW_CITIES,
               "%d shown of %d in the collection" % (len(shown_slugs), len(all_cities)))
+        # The detail prints on a pass as well as a failure in this suite, so it
+        # has to say what is true rather than what would be wrong — written the
+        # other way round it reported "the closing card does not name the
+        # collection's size" underneath the word PASS.
+        names_total = (len(all_cities) <= gateway.SHOW_CITIES
+                       or gateway._spell(len(all_cities)).lower()
+                       in (grid.group(1) if grid else ""))
         check("and says how many there are, rather than implying it is all",
-              len(all_cities) <= gateway.SHOW_CITIES
-              or gateway._spell(len(all_cities)).lower() in (grid.group(1) if grid else ""),
-              "the closing card does not name the collection's size")
+              names_total,
+              "the closing card says %s" % gateway._spell(len(all_cities)).lower()
+              if names_total else "the closing card names no total")
         # One city per country, or the rail is two of somewhere and none of
         # anywhere else.
         by_name = {c["name"]: c.get("country") for c in all_cities}
