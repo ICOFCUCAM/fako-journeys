@@ -1638,7 +1638,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-feel-in{display:flex;flex-direction:column;gap:10px;flex:1 1 auto;
   padding:22px 22px 20px}
 @media(prefers-reduced-motion:reduce){.wa-feel-art{transition:none}
-  .wa-feel.is-lit:hover .wa-feel-art{transform:none}}}
+  .wa-feel.is-lit:hover .wa-feel-art{transform:none}}
 .wa-feel-say{font-family:var(--fj-display);font-size:clamp(17px,1.5vw,21px);
   font-weight:700;line-height:1.24;letter-spacing:-.01em;color:var(--c-ink);
   text-wrap:balance}
@@ -1650,6 +1650,9 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent)}
 .wa-feel-n{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--c-muted)}
+.wa-feel-count{display:none;justify-content:flex-end;gap:.5em;margin-top:10px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;color:var(--c-muted)}
+.wa-feel-count b{font-weight:400;color:var(--c-accent)}
 .wa-feel-close{margin-top:var(--sp-5);font-family:var(--fj-display);
   font-size:clamp(21px,2.3vw,30px);line-height:1.28;max-width:30ch;
   text-wrap:balance}
@@ -1659,8 +1662,23 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   border-bottom:2px solid var(--c-accent);padding-bottom:5px;transition:color .2s}
 .wa-feel-go:hover{color:var(--c-accent)}
 @media(max-width:1099px){.wa-feel-grid{grid-template-columns:repeat(2,1fr)}}
+/* MOBILE: A RAIL, NOT A COLUMN
+   Eight cards stacked is eight scrolls before the section is over, and the
+   reader has to leave the argument to get past it. Side by side they stay one
+   thing you move through — 86% of the viewport so the next card is visibly
+   there, snapping so it never rests half-way, and a count so it is obvious how
+   much is left. Scroll-snap does the work; the script only writes the number. */
 @media(max-width:560px){
-  .wa-feel-grid{grid-template-columns:1fr}
+  .wa-feel-grid{display:flex;grid-template-columns:none;overflow-x:auto;
+    scroll-snap-type:x mandatory;scrollbar-width:none;gap:1px;
+    overscroll-behavior-x:contain}
+  .wa-feel-grid::-webkit-scrollbar{display:none}
+  /* 84vw, not 84% — the brief is a share of the phone's screen, and the rail
+     sits inside the section's gutters, so a percentage of the rail would come
+     out several points short of it. snap-align:start rather than centre so
+     every card's left edge lands on the same line as the copy above it. */
+  .wa-feel-grid > .wa-feel{flex:0 0 84vw;scroll-snap-align:start}
+  .wa-feel-count{display:flex}
   .wa-feel{padding:20px 18px 16px;gap:9px}
   .wa-feel.is-lit{padding:0}
   .wa-feel-in{padding:18px 18px 16px;gap:9px}
@@ -3005,6 +3023,7 @@ window.AF = {
       <a class="wa-feel is-lit" href="/journey#/?w=history" data-lens="history"><img class="wa-feel-art" src="/images/uploads/egypt-giza-causeway-1600w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 72%"><span class="wa-feel-in"><span class="wa-feel-say">Stand on ground that remembers, and has done for four thousand years.</span><span class="wa-feel-what">History</span><span class="wa-feel-n">ten countries lead on this</span></span></a>
       <a class="wa-feel is-lit" href="/journey#/?w=adventure" data-lens="adventure"><img class="wa-feel-art" src="/images/uploads/desert-camp-sunrise-1440w.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" data-provider="upload" style="--fj-feel-pos:50% 66%"><span class="wa-feel-in"><span class="wa-feel-say">Cross a desert before sunrise, because by ten it will not let you.</span><span class="wa-feel-what">Adventure</span><span class="wa-feel-n">eight countries lead on this</span></span></a>      <!-- /gen:feel -->
     </div>
+    <p class="wa-feel-count" aria-hidden="true"><b>01</b> / 08</p>
     <p class="wa-feel-close">Africa is not something you see. It is something you
       <em>experience</em>. <a class="wa-feel-go" href="/journey">Find the journey that feels like yours &rarr;</a></p>
   </div>
@@ -3758,6 +3777,32 @@ window.AF = {
     still.addEventListener('change', run);
     show(0);
     run();
+  }());
+
+  /* The rail's counter. Nothing else here needs a script — scroll-snap holds
+     the cards — and if this never runs the count simply reads 01, which is
+     where the rail starts anyway.
+
+     The rail width is the one condition: above it the eight cards are a grid,
+     every card is over the threshold at once, and the last one to report would
+     win. The count is hidden there, so this is tidiness rather than a bug, but
+     a number that is quietly wrong whenever it is not being looked at is the
+     kind of thing that is right until it is shown somewhere else. */
+  (function () {
+    var rail = document.querySelector('.wa-feel-grid');
+    var out = document.querySelector('.wa-feel-count b');
+    if (!rail || !out || !('IntersectionObserver' in window)) return;
+    var narrow = window.matchMedia('(max-width:560px)');
+    var cards = [].slice.call(rail.querySelectorAll('.wa-feel'));
+    var io = new IntersectionObserver(function (es) {
+      if (!narrow.matches) return;
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var n = cards.indexOf(e.target) + 1;
+        if (n) out.textContent = (n < 10 ? '0' : '') + n;
+      });
+    }, {root: rail, threshold: 0.6});
+    cards.forEach(function (c) { io.observe(c); });
   }());
 
   var exps = [].slice.call(document.querySelectorAll('.wa-exp[data-want]'));
