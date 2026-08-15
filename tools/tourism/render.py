@@ -20,7 +20,11 @@ def alt_for(country, entry):
     """The resolved photo's own alt wins: if the match came from a broadened
     query it is a waterfall in Cameroon, not the Lobe falls, and the page must
     not claim otherwise."""
-    if entry.image and entry.image.get("alt"):
+    # Unless the slot holds an own photograph, in which case the resolved
+    # record describes a picture that is no longer being shown. The image is
+    # ranked above the stock URL in imaging.delivery, and its description has
+    # to be ranked the same way or the alt text describes the loser.
+    if entry.image and entry.image.get("alt") and not getattr(entry, "photo", None):
         return entry.image["alt"]
     return validate.alt_text(country, entry)
 from .model import ROOT

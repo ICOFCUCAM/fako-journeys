@@ -64,7 +64,8 @@ def load_taxonomy(path=CATEGORY_FILE):
 class Entry:
     """One country x category assignment, before delivery details are computed."""
 
-    __slots__ = ("category", "caption", "description", "subject", "focal", "image", "local", "raw")
+    __slots__ = ("category", "caption", "description", "subject", "focal", "image",
+                 "local", "photo", "photo_alt", "raw")
 
     def __init__(self, raw):
         self.raw = raw
@@ -81,6 +82,13 @@ class Entry:
         # to hand-write an imageUrl that nobody fetched.
         self.image = None
         self.local = raw.get("local")
+        # A photograph of this place that somebody here actually took. It
+        # outranks the resolver: stock search knows what a picture was tagged
+        # with and not where it was taken, which is the whole complaint against
+        # some of the 594 resolved slots, and an operator's own frame of Giza
+        # settles the question that a keyword never can.
+        self.photo = raw.get("photo")
+        self.photo_alt = raw.get("photo_alt")
 
 
 class Operator(object):

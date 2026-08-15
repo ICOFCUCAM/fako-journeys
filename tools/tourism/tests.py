@@ -1530,6 +1530,45 @@ def main():
         check("the byte budget is a ceiling and not a target",
               "CAP_KBPS" in cutsrc and "min(kbps, cap)" in cutsrc,
               "a 2s trim must not be handed 5 Mbps to spend on grain")
+        # -- an own photograph, and the two rankings that have to agree -------------
+        # A photograph somebody here actually took outranks a resolved stock URL:
+        # keyword search knows what a picture was tagged with and not where it
+        # was taken, and that is the standing complaint against some of the 594
+        # resolved slots. The subtle part is that there are *two* rankings — the
+        # image in imaging.delivery and its description in render.alt_for — and
+        # the first version got them the opposite way round, so the page showed
+        # a photograph of Giza while the alt text described the stock picture it
+        # had replaced. Both are checked, together, because either alone passes.
+        img_src = open(os.path.join(ROOT_DIR, "tools", "tourism", "imaging.py")).read()
+        rnd_src = open(os.path.join(ROOT_DIR, "tools", "tourism", "render.py")).read()
+        check("an own photograph outranks a resolved stock URL",
+              'resolved = bool(record and record.get("imageUrl")) and not own' in img_src,
+              "imaging.delivery")
+        check("and its description outranks the stock one",
+              'and not getattr(entry, "photo", None)' in rnd_src,
+              "render.alt_for — or the alt describes the picture that lost")
+        # Every own photograph is a file that is here, and says what is in it.
+        owned = []
+        for cf in sorted(os.listdir(os.path.join(ROOT_DIR, "tourism", "countries"))):
+            if not cf.endswith(".json") or cf.startswith("_"):
+                continue
+            cd = read_json_file(os.path.join(ROOT_DIR, "tourism", "countries", cf))
+            for ent in (cd.get("entries") or cd.get("categories") or []):
+                if ent.get("photo"):
+                    owned.append((cf[:-5], ent.get("category"), ent["photo"],
+                                  ent.get("photo_alt") or ""))
+        gone = [p for _c, _k, p, _a in owned
+                if not os.path.exists(os.path.join(ROOT_DIR, p.lstrip("/")))]
+        check("every own photograph is a file that is here", not gone,
+              ", ".join(gone) or "%d placed" % len(owned))
+        thin = ["%s/%s" % (c, k) for c, k, _p, a in owned if len(a) < 40]
+        check("and every one says what is in it", not thin,
+              ", ".join(thin) or "%d described" % len(owned))
+        # It lives in uploads/, never generated/ — the folder is the proof.
+        wrong = [p for _c, _k, p, _a in owned if not p.startswith("/images/uploads/")]
+        check("an own photograph is served from uploads and nowhere else",
+              not wrong, ", ".join(wrong) or "all %d" % len(owned))
+
         # -- the film, cut into the pieces the window can carry ---------------------
         # The one property that makes sixteen files a film rather than sixteen
         # clips: they join. Each piece ends exactly where the next begins, so

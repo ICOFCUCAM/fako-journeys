@@ -22,6 +22,7 @@ Three things here that a naive implementation gets wrong:
 import os
 
 from . import providers
+from .model import ROOT
 
 UNSPLASH_HOST = "https://images.unsplash.com/"      # kept for existing callers
 
@@ -114,7 +115,12 @@ def delivery(entry, role):
     w, h = dimensions(role)
     focal = entry.focal
     record = entry.image
-    resolved = bool(record and record.get("imageUrl"))
+    # An own photograph is the best evidence on the page, so it is ranked above
+    # a resolved stock URL rather than below it. `local` stays what it always
+    # was — an illustration standing in for a photograph that is not here yet —
+    # and is still last.
+    own = getattr(entry, "photo", None)
+    resolved = bool(record and record.get("imageUrl")) and not own
     out = {
         "resolved": resolved,
         "provider": (record or {}).get("provider"),
@@ -148,6 +154,21 @@ def delivery(entry, role):
             "text": text,
             "href": link,
         }
+    elif own:
+        # Not a placeholder, and never credited to a stock provider. It carries
+        # `upload` for the same reason images/uploads/ exists at all: the folder
+        # a URL sits on is the proof of what kind of picture it is.
+        out["src"] = own
+        out["resolved"] = True
+        out["provider"] = "upload"
+        # A stock photograph is resized by its CDN from a query parameter; a
+        # file on disk cannot be, so the narrow variant has to already exist.
+        # Offered only when it does — a srcset naming a file that is not there
+        # is worse than none, because the browser will pick it.
+        narrow = own.replace("-1600w.", "-800w.")
+        if narrow != own and os.path.exists(
+                os.path.join(ROOT, narrow.lstrip("/"))):
+            out["srcset"] = "%s 800w, %s 1600w" % (narrow, own)
     elif entry.local:
         out["src"] = entry.local
         out["placeholder"] = True

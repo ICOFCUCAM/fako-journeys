@@ -97,7 +97,12 @@ def check_page(path, taxonomy, expect_categories=True):
             problems.append("%s: <img> without aspect-ratio (%s)" % (name, src_url[:60]))
         if "object-position" not in style:
             problems.append("%s: <img> without object-position (%s)" % (name, src_url[:60]))
-        if providers.owns_any(src_url):
+        # A CDN's rules only apply to a CDN. Two of the providers are local
+        # folders — /images/generated/ and /images/uploads/ — so owns_any() is
+        # true for them and this used to demand `w=`/`h=` query parameters from
+        # a file sitting on disk. What a local file needs is to exist, which is
+        # the branch below.
+        if providers.owns_any(src_url) and src_url.startswith("http"):
             if "srcset" not in a:
                 problems.append("%s: remote image without srcset (%s)" % (name, src_url[:60]))
             if "sizes" not in a:
