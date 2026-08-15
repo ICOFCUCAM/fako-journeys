@@ -1957,6 +1957,42 @@ def main():
         # And a mode nobody uses is a mode that is not doing anything.
         unused = [m for m in MODES if not any(m == k for k, _ in seq)]
         check("all five modes are in use", not unused, ", ".join(unused))
+
+        # -- the city rail does not grow with the collection ----------------------
+        # Every city was printed into the homepage, so the section got taller
+        # each time one was added — nine, then fourteen, then seventeen. It shows
+        # a fixed eight now, and the three things that can go wrong are checked:
+        # the cap holding, the page saying how many there are rather than
+        # implying it is all of them, and the eight not collapsing onto the
+        # famous capitals, which is the thing the collection exists to avoid.
+        all_cities = json.load(open(os.path.join(ROOT_DIR, "tourism",
+                                                 "cities.json")))["cities"]
+        grid = re.search(r'<!-- gen:cities -->(.*?)<!-- /gen:cities -->',
+                         home_src, re.S)
+        shown_slugs = re.findall(r'<b>([^<]+)</b><span class="wa-city-where"',
+                                 grid.group(1) if grid else "")
+        shown_slugs = [n for n in shown_slugs if n != "And every other place"]
+        check("the homepage shows a fixed number of cities, not all of them",
+              len(shown_slugs) == gateway.SHOW_CITIES,
+              "%d shown of %d in the collection" % (len(shown_slugs), len(all_cities)))
+        check("and says how many there are, rather than implying it is all",
+              len(all_cities) <= gateway.SHOW_CITIES
+              or gateway._spell(len(all_cities)).lower() in (grid.group(1) if grid else ""),
+              "the closing card does not name the collection's size")
+        # One city per country, or the rail is two of somewhere and none of
+        # anywhere else.
+        by_name = {c["name"]: c.get("country") for c in all_cities}
+        seen_countries = [by_name.get(n) for n in shown_slugs]
+        dupes = sorted({c for c in seen_countries if seen_countries.count(c) > 1 and c})
+        check("no country appears twice in the rail", not dupes, ", ".join(dupes))
+        # And it is not the eight most obvious ones. The collection was built to
+        # show cities a reader would not think of, so at least a third of what
+        # shows has to come from the half that was added later.
+        later = {c["name"] for c in all_cities[len(all_cities) // 2:]}
+        fresh = [n for n in shown_slugs if n in later]
+        check("the rail is not only the cities everyone can name",
+              len(fresh) >= gateway.SHOW_CITIES // 3,
+              ", ".join(fresh) or "none of the later half")
         if dest_block:
             body = dest_block.group(1)
             # Nobody is dropped. An index entry is a lesser treatment, not a

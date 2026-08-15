@@ -64,7 +64,7 @@ REGION_GROUPS = (
 
 MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "maplive", "mapover", "claim", "months", "scale",
-           "lede", "capafrica", "destlede", "readslede", "mapsvg",
+           "lede", "capafrica", "destlede", "readslede", "mapsvg", "citylede",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer", "regiontone", "feel",
            "moments", "momentsay", "seasons", "seasonsay", "motion",
@@ -156,6 +156,101 @@ def _spell(n):
     return word[0].upper() + word[1:]
 
 
+SHOW_CITIES = 8
+
+
+def shown(cities, countries):
+    """The eight the homepage shows, out of however many the collection holds.
+
+    Every city was printed straight into the page. Fine at nine, a growing block
+    of the homepage at seventeen, and it grows again every time one is added —
+    the same fault section 03 had against the atlas. Nothing is hidden by
+    capping it: each card leads to its country and the closing card leads to the
+    atlas, which holds them all.
+
+    Which eight is the harder question, and "the first eight" is the wrong
+    answer. In authored order that is Cape Town, Marrakech, Lagos, Nairobi,
+    Accra, Addis Ababa, Kigali and Dakar — a rail that makes exactly the point
+    this section exists to argue against, because the collection was built to
+    show the cities a reader would not think of. Capping by region does not fix
+    it either: the famous ones are spread across the regions, so a cap of two
+    per region still returns six of those eight.
+
+    So it alternates. The two wide cards are the first two with a photograph,
+    because a lead card is the strongest picture and not the strongest argument.
+    After that it takes one from the end of the collection, one from the front,
+    one from the end — the recently added against the long established — and no
+    country appears twice. What comes out is Cape Town and Marrakech leading,
+    and then Asmara, Lagos, Zanzibar City, Nairobi, Luanda, Accra.
+    """
+    if len(cities) <= SHOW_CITIES:
+        return cities
+
+    used = set()
+
+    def take(city):
+        used.add(city["slug"])
+        return city
+
+    leads = [take(c) for c in cities if c.get("photo")][:2]
+    used = {c["slug"] for c in leads}
+    countries_used = {c.get("country") for c in leads}
+
+    rest = [c for c in cities if c["slug"] not in used]
+    picked, head, tail = list(leads), 0, len(rest) - 1
+    from_tail = True
+    while len(picked) < SHOW_CITIES and head <= tail:
+        c = rest[tail] if from_tail else rest[head]
+        if from_tail:
+            tail -= 1
+        else:
+            head += 1
+        from_tail = not from_tail
+        if c.get("country") in countries_used:
+            continue
+        countries_used.add(c.get("country"))
+        picked.append(c)
+    # One country per card is a preference, not a rule: if the collection is all
+    # one or two countries the grid would come out short, and a grid with a hole
+    # in it reads as something that failed to load.
+    if len(picked) < SHOW_CITIES:
+        for c in cities:
+            if c["slug"] not in {p["slug"] for p in picked}:
+                picked.append(c)
+                if len(picked) == SHOW_CITIES:
+                    break
+    return picked
+
+
+def block_citylede(countries):
+    """The sentence above the city grid, and the number in it.
+
+    It said eleven while nine were shown, and would have said eleven while eight
+    are shown. It is the count of what is on the page, so the page counts it.
+    """
+    every = load_cities()
+    n = len(shown(every, countries))
+    return ('        <p class="wa-note">The continent is not only wilderness. %s '
+            'cities here, each one a reason to come rather than a place to sleep '
+            'before the drive out &mdash; and a first collection rather than a '
+            'closed list.</p>' % _spell(n))
+
+
+def rest_note(showing, total):
+    """What the closing card says about the ones it is not showing.
+
+    While the section printed every city, "These nine are a choice, and the
+    choice is ours" was the whole truth. It is not once the rail is capped: a
+    reader looking for Dar es Salaam has no way to know it is in the collection
+    at all, and a card that quietly leaves eight cities out while claiming to be
+    a choice is a smaller claim than it sounds. So it says both numbers.
+    """
+    if showing >= total:
+        return "These %s are a choice, and the choice is ours." % _spell(showing).lower()
+    return ("These are %s of the %s in the collection, and the choice is ours."
+            % (_spell(showing).lower(), _spell(total).lower()))
+
+
 def block_cities(countries):
     """Africa in cities — the collection, with the photography doing the work.
 
@@ -177,7 +272,9 @@ def block_cities(countries):
     picture of a real city. The moment a photograph lands in the dataset the
     plate becomes a photograph with no other change.
     """
-    cities = load_cities()
+    every = load_cities()
+    total = len(every)
+    cities = shown(every, countries)
     by_slug = dict((c.slug, c) for c in countries)
     regions = load_regions()
     rows = []
@@ -238,10 +335,10 @@ def block_cities(countries):
             '<b>And every other place</b>'
             '<span class="wa-city-where">The atlas</span>'
             '<span class="wa-city-line">A first collection, not a closed list</span>'
-            '<span class="wa-city-note">These %s are a choice, and the choice is ours. '
-            'The atlas holds every place written up on this site, in all %s '
-            'countries, with no editor standing in front of it.</span>'
-            '</span></a>' % (span, _spell(len(rows)).lower(),
+            '<span class="wa-city-note">%s The atlas holds every place written '
+            'up on this site, in all %s countries, with no editor standing in '
+            'front of it.</span>'
+            '</span></a>' % (span, rest_note(len(rows), total),
                              _spell(len(countries)).lower()))
     return "\n".join(rows)
 
@@ -1631,6 +1728,7 @@ def render(countries):
         "mapunder": block_mapunder(seq),
         "maplive": block_maplive(seq),
         "lede": block_lede(seq),
+        "citylede": block_citylede(seq),
         "mapsvg": block_mapsvg(seq),
         "capafrica": block_capafrica(seq),
         "destlede": block_destlede(seq),
