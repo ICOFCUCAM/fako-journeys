@@ -851,19 +851,30 @@ def main():
                   for b in bs))
         check("no country borders itself",
               not any(a in bs for a, bs in geo["borders"].items()))
-        # Spot-checks against an actual map. If the geometry reader breaks, these
-        # break, and they are things anybody can verify.
-        check("Uganda borders Kenya, Rwanda and Tanzania and nothing else here",
-              set(geo["borders"]["uganda"]) == {"kenya", "rwanda", "tanzania"},
-              ", ".join(geo["borders"]["uganda"]))
-        check("South Africa borders its four neighbours in the set",
-              set(geo["borders"]["south-africa"])
-              == {"botswana", "mozambique", "namibia", "zimbabwe"},
-              ", ".join(geo["borders"]["south-africa"]))
+        # Spot-checks against an actual map. These used to be scoped to whatever
+        # the atlas happened to hold — "and nothing else here", "its four
+        # neighbours in the set" — which meant they went red the moment the
+        # roster grew and the data got MORE correct: Uganda really does border
+        # South Sudan and DR Congo, South Africa really does surround Lesotho,
+        # and Egypt really does border Libya and Sudan. With all fifty-four
+        # countries in there is no "here" left to scope to, so these are now the
+        # true adjacencies and anybody can check them against a map.
+        REAL = {
+            "uganda": {"dr-congo", "kenya", "rwanda", "south-sudan", "tanzania"},
+            "south-africa": {"botswana", "eswatini", "lesotho", "mozambique",
+                             "namibia", "zimbabwe"},
+            "egypt": {"libya", "sudan"},
+            "lesotho": {"south-africa"},
+            "gambia": {"senegal"},
+        }
+        for slug, want in REAL.items():
+            check("%s borders exactly the countries it borders" % slug,
+                  set(geo["borders"][slug]) == want,
+                  ", ".join(sorted(geo["borders"][slug])))
         check("an island borders nobody",
-              not geo["borders"]["seychelles"] and not geo["borders"]["mauritius"])
-        check("Egypt borders nothing else in this set",
-              not geo["borders"]["egypt"])
+              not any(geo["borders"][s] for s in
+                      ("seychelles", "mauritius", "comoros", "cabo-verde",
+                       "sao-tome-and-principe")))
         check("distance is symmetric and non-zero",
               all(geo["km"][a][b] == geo["km"][b][a] and geo["km"][a][b] > 0
                   for a in ("uganda", "morocco") for b in ("kenya", "ghana")))
@@ -2727,9 +2738,15 @@ def main():
         for c in countries:
             for call in c.calls:
                 leads[call] = leads.get(call, 0) + 1
+        # "No month is a bad month everywhere. The quietest is May, and sixteen
+        # countries are at their best in it" — block_seasonsay counts, for each
+        # of the twelve months, how many countries name it. Same kind of number
+        # as every other one permitted here, and without it the sentence cannot
+        # say how quiet the quiet month is.
+        per_month = {sum(1 for c in countries if i in c.months) for i in range(1, 13)}
         OK = {
             "countries": ({len(countries), len(countries) - ops, ops, 5}
-                          | neighbours | set(leads.values())),
+                          | neighbours | set(leads.values()) | per_month),
             "destinations": {len(countries)},
             "portraits": {len(countries)},
             "categories": {len(ids), len(strand_cats)},
@@ -2741,8 +2758,14 @@ def main():
         }
         # Phrases where the number is deliberately about Africa, not about this
         # site, and says so in the same sentence.
+        # At parity the homepage stopped saying "Fifty-four countries. Twenty-two
+        # of them..." and started saying "Every one of them a destination here",
+        # so the first of these guards a sentence that no longer exists. It stays
+        # for the day the number of countries in Africa and the number here are
+        # different again, which is the day it was written for.
         ALLOWED_PHRASE = ("fifty-four countries. twenty-two",
-                          "fifty-four countries. not one place")
+                          "fifty-four countries. not one place",
+                          "five regions. fifty-four countries")
         wrong = {}
         for path in sorted(glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
                                      recursive=True)):

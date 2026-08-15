@@ -7,7 +7,7 @@ doors and five hundred and seventy-two addresses — and none of them was a read
 Every one of those surfaces hands you a paragraph and then asks you to click.
 Nobody has ever sat down with this dataset.
 
-So: twenty-two long reads, one per country, and a place to find them.
+So: one long read per country, and a place to find them.
 
 Why twenty-two and not two hundred. Eleven arcs times twenty-two countries is
 two hundred and forty-two stories, and two hundred and forty-two pages of three
@@ -36,7 +36,7 @@ import html as html_mod
 import json
 import os
 
-from . import plate
+from . import gateway, plate
 from .model import (ROOT, load_operators, load_regions, load_voices, region_of)
 
 OUT = os.path.join(ROOT, "portrait")
@@ -648,6 +648,11 @@ def index_page(stories, ctx, countries):
                                "of what that country says about itself."
                                % (len(stories), len(countries)), "/stories"),
         "n": len(stories), "countries": len(countries),
+        # One portrait per country, spelled out because the heading is a
+        # sentence and not a statistic. It read "Twenty-two portraits" over a
+        # grid of fifty-four of them until this was derived.
+        "nportraits": gateway._spell(len(countries)),
+        "nspelled": gateway._spell(len(countries)).lower(),
         "now": now_cards, "rails": "\n".join(rails), "portraits": portraits,
         "events": plate.events_block(),
         "explore": plate.explore_block(),
@@ -804,7 +809,7 @@ INDEX = """<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stories &mdash; Afrinkong</title>
-<meta name="description" content="Africa read rather than browsed: portraits of twenty-two countries, built entirely out of what each one says about itself.">
+<meta name="description" content="Africa read rather than browsed: portraits of %(nspelled)s countries, built entirely out of what each one says about itself.">
 %(og)s
 <link rel="canonical" href="https://afrinkong.com/stories">
 <link rel="stylesheet" href="/styles/afrinkong.css">
@@ -863,7 +868,7 @@ INDEX = """<!DOCTYPE html>
 
   <section class="sx-portraits">
     <span class="af-stamp">The long reads</span>
-    <h2 class="sx-h2">Twenty-two portraits</h2>
+    <h2 class="sx-h2">%(nportraits)s portraits</h2>
     <div class="sx-portgrid">%(portraits)s</div>
   </section>
 

@@ -346,6 +346,12 @@ def render(countries, taxonomy):
         "lenses": lens_chips(sp),
         "months": month_chips(),
         "n": len(sp["countries"]),
+        # "Fifty-four of them are destinations here" under a subheading that
+        # has just said "Fifty-four countries" reads as a mistake. At parity the
+        # sentence says what happened instead of repeating the number.
+        "lede": ("All fifty-four are destinations here"
+                 if len(sp["countries"]) >= 54
+                 else "%d of them are destinations here" % len(sp["countries"])),
         "nplaces": sum(c["places"] for c in sp["countries"].values()),
     }
 
@@ -438,7 +444,7 @@ TEMPLATE = """<!DOCTYPE html>
       <span class="af-stamp">The continent</span>
       <h1 class="at-h1">Africa</h1>
       <p class="at-sub">Five regions. Fifty-four countries. Not one place.</p>
-      <p class="at-lede">%(n)d of them are destinations here, and every one was
+      <p class="at-lede">%(lede)s, and every one was
         written up through the same twenty-seven categories &mdash; so two
         countries on opposite sides of the continent can be compared on the same
         terms rather than on whichever one had the better photographer.</p>

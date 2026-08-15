@@ -1,0 +1,296 @@
+{
+ "slug": "comoros",
+ "name": "Comoros",
+ "adjective": "Comorian",
+ "region": "Islands",
+ "tagline": "An active volcano, and the fish that came back from the dead",
+ "summary": "Karthala is one of the most active volcanoes in the world with a crater four kilometres across, the coelacanth was found alive off these islands after eighty million years, and Moroni's stone town is the least visited Swahili port on the coast.",
+ "published": true,
+ "calls": [
+  "coast",
+  "nature",
+  "culture",
+  "adventure"
+ ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "when": "May to October, the dry season. Cyclones are possible from December to March.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Karthala",
+   "description": "An active volcano with one of the largest craters on earth, walked up overnight.",
+   "subject": "the vast summit crater of Mount Karthala on Grande Comore",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Three Islands and a Claim",
+   "description": "Grande Comore, Anjouan and Moheli, each volcanic, each different, and Mayotte disputed.",
+   "subject": "the volcanic coastline and black rock of Grande Comore",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Livingstone's Fruit Bat",
+   "description": "A metre and a half across, found on Anjouan and Moheli and nowhere else.",
+   "subject": "a Livingstone's fruit bat hanging in forest canopy on Anjouan",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Moheli Marine Park",
+   "description": "Turtles nesting in numbers, dugong, and humpbacks calving between July and October.",
+   "subject": "a green turtle coming ashore on a Moheli beach at night",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Volcanic Interior",
+   "description": "Karthala at 2,361 metres on Grande Comore, and Ntringui on Anjouan.",
+   "subject": "the forested volcanic interior of Anjouan",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Anjouan's Cascades",
+   "description": "The Dziancoundre falls, and streams off the interior that run all year.",
+   "subject": "a waterfall falling through forest into a pool on Anjouan",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "No Rivers on Grande Comore",
+   "description": "The lava is too porous to hold a river — the water is in cisterns and Lake Sale.",
+   "subject": "the crater lake of Lac Sale beside the sea on Grande Comore",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Black Sand and White",
+   "description": "Black volcanic sand on Grande Comore, and white on Moheli and Anjouan.",
+   "subject": "black volcanic sand and clear water on a Grande Comore beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Last Forest",
+   "description": "Karthala's forest, and Moheli's, hold the bats, the flying fox and the endemic birds.",
+   "subject": "cloud forest on the slopes of Mount Karthala",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Climbing Karthala",
+   "description": "Overnight from Boboni, camping on the rim, and down the next day.",
+   "subject": "walkers camping on the crater rim of Karthala",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Swahili, and Ylang-Ylang",
+   "description": "A Swahili island culture, and most of the world's ylang-ylang for perfume.",
+   "subject": "ylang-ylang flowers being picked on a Comorian plantation",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Grand Mariage",
+   "description": "The anda — a marriage that confers social rank, and can take a decade to afford.",
+   "subject": "a Grand Mariage procession with drummers and gold jewellery",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Langouste and Pilao",
+   "description": "Lobster off the reef, pilao rice with cardamom, and vanilla and clove in everything.",
+   "subject": "grilled lobster with rice and coconut sauce",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Grand Mariage Season",
+   "description": "Weddings run through the dry season and take over whole villages for days.",
+   "subject": "a village square during a Grand Mariage celebration",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Woodwork, Gold and Embroidery",
+   "description": "Carved doors, gold wedding jewellery, and the embroidered kofia cap.",
+   "subject": "an embroidered Comorian kofia cap and carved door detail",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "The Medina of Moroni",
+   "description": "A Swahili stone town with the Old Friday Mosque on the harbour since 1427.",
+   "subject": "the Old Friday Mosque on the harbour at Moroni",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Nothing Listed, Much Standing",
+   "description": "No World Heritage sites, and Swahili stone towns on all three islands.",
+   "subject": "narrow stone alleys in the medina of Moroni",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Moroni and Mutsamudu",
+   "description": "A volcanic harbour capital, and Anjouan's stone town under a citadel.",
+   "subject": "the stone town and citadel of Mutsamudu on Anjouan",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Swahili Stone",
+   "description": "Coral-stone houses with carved doors, and the mosque architecture of the whole coast.",
+   "subject": "a carved wooden Swahili door in a coral-stone wall",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Harbour at Moroni",
+   "description": "Dhows unloading onto the rocks, and the mosque directly behind them.",
+   "subject": "dhows unloading at the rocky harbour below Moroni's mosque",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Turtles and Shallow Reef",
+   "description": "Moheli's nesting beaches, and reef close enough in to snorkel from the sand.",
+   "subject": "children snorkelling over shallow reef off a Comorian beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Volcano and Reef",
+   "description": "Karthala overnight, and diving the drop-offs on the same trip.",
+   "subject": "a diver over a coral drop-off in Comorian water",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Small and Simple",
+   "description": "Guesthouses and a few beach hotels. Nothing at the top end anywhere.",
+   "subject": "a small beach guesthouse under palms on Moheli",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Moheli's Community Park",
+   "description": "The marine park is run with the villages, and the turtle numbers have held because of it.",
+   "subject": "a community ranger recording turtle nests on Moheli",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Volcano and Ocean",
+   "description": "Karthala's rim at first light, with the Indian Ocean on every side of it.",
+   "subject": "sunrise from the crater rim of Karthala over the ocean",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Coelacanth",
+   "description": "Caught off these islands in 1938, having been extinct for eighty million years.",
+   "subject": "a preserved coelacanth specimen in a Comorian museum case",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Comoros",
+   "description": "An active volcano, a living fossil, and a Swahili stone town nobody visits.",
+   "subject": "a dhow off the volcanic coast of Grande Comore at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

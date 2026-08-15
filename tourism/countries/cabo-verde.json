@@ -1,0 +1,297 @@
+{
+ "slug": "cabo-verde",
+ "name": "Cabo Verde",
+ "adjective": "Cabo Verdean",
+ "region": "Islands",
+ "tagline": "Ten islands, and the morna",
+ "summary": "Ten Atlantic islands six hundred kilometres off Senegal: Fogo is an active volcano with vineyards inside the caldera, Santo Antao is cut into ribeiras you walk down, and the morna that Cesaria Evora sang is on the UNESCO list.",
+ "published": true,
+ "calls": [
+  "coast",
+  "nature",
+  "culture",
+  "adventure"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "when": "November to May. The wind for kitesurfing on Sal and Boa Vista is strongest from December to March.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Fogo",
+   "description": "A 2,829-metre volcano with a village and vineyards inside its caldera, and it erupts.",
+   "subject": "the cone of Pico do Fogo rising inside its caldera",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Ten Islands, Ten Climates",
+   "description": "Desert dunes on Boa Vista and cloud forest on Santo Antao, in the same archipelago.",
+   "subject": "terraced green ribeiras cutting into the mountains of Santo Antao",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Turtles and Humpbacks",
+   "description": "Boa Vista is one of the largest loggerhead nesting sites in the world.",
+   "subject": "a loggerhead turtle returning to the sea on Boa Vista",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Sea, Not Savanna",
+   "description": "No large land animals. What there is instead is turtles, whales and seabirds.",
+   "subject": "a humpback whale off the Cabo Verdean coast",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Pico do Fogo and Santo Antao",
+   "description": "Fogo's cone, and Santo Antao's ridges where the paths run along the crest.",
+   "subject": "a cobbled path running along a knife-edge ridge on Santo Antao",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Seasonal Only",
+   "description": "The rain comes in August and September, and the ribeiras run for a few weeks.",
+   "subject": "a dry stone-walled ribeira valley on Santo Antao",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Ribeiras",
+   "description": "Steep valleys terraced for sugarcane and coffee, and irrigated by hand-cut channels.",
+   "subject": "terraced sugarcane and levada channels in a Santo Antao ribeira",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Sal, Boa Vista and Tarrafal",
+   "description": "White sand and constant wind on Sal and Boa Vista, and quiet bays on Santiago.",
+   "subject": "windsurfers and white sand on a beach at Sal",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Cloud Forest of Santo Antao",
+   "description": "The north of Santo Antao catches enough cloud to grow coffee and dragon trees.",
+   "subject": "dragon trees and cloud in the highlands of Santo Antao",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Kitesurfing and Ridge Walking",
+   "description": "Sal and Boa Vista for wind, and Santo Antao for some of the best walking in the Atlantic.",
+   "subject": "a kitesurfer in strong wind off Sal",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Creole, and the Morna",
+   "description": "A Portuguese-African creole culture, and a music that put these islands on the map.",
+   "subject": "a morna band playing in a small bar in Mindelo",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Badiu and the Sampadjudu",
+   "description": "The Santiago interior and the northern islands, with different histories and different music.",
+   "subject": "musicians playing batuko drums on Santiago",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Cachupa and Grogue",
+   "description": "Cachupa — the slow-cooked maize and bean stew — and grogue distilled from cane.",
+   "subject": "a bowl of cachupa with sausage and egg",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Mindelo Carnival and Baia das Gatas",
+   "description": "Carnival in February and a music festival on the beach in August.",
+   "subject": "carnival costumes and crowds in the streets of Mindelo",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Pottery, Panu and Grogue",
+   "description": "The panu woven cloth of Santiago, Fogo's pottery, and cane spirit stills.",
+   "subject": "a woven panu cloth on a narrow Cabo Verdean loom",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Cidade Velha",
+   "description": "The first European colonial town in the tropics, founded in 1462, with the fort above it.",
+   "subject": "the church and fort ruins at Cidade Velha on Santiago",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Cidade Velha, Listed",
+   "description": "Inscribed in 2009 — the pillory, the cathedral ruins and the street plan of the first town.",
+   "subject": "the stone pillory in the square at Cidade Velha",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Praia and Mindelo",
+   "description": "A clifftop capital on Santiago, and the port city on Sao Vicente where the music lives.",
+   "subject": "the harbour and colonial buildings of Mindelo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Portuguese Colonial and Volcanic Stone",
+   "description": "Pastel colonial in Mindelo, and black volcanic stone houses on Fogo.",
+   "subject": "black volcanic stone houses inside the Fogo caldera",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Bar at Midnight",
+   "description": "Mindelo's bars start late and the morna does not begin until they are full.",
+   "subject": "a late-night bar in Mindelo with musicians playing",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Beaches and Short Flights",
+   "description": "Calm water on Sal and Boa Vista, short hops between islands, and a very easy pace.",
+   "subject": "children playing in calm shallow water on a Cabo Verde beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking Santo Antao",
+   "description": "Cobbled paths from the ridge down to the sea, a day at a time, between villages.",
+   "subject": "walkers descending a cobbled path towards the sea on Santo Antao",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Well Established",
+   "description": "Resorts on Sal and Boa Vista, and small good hotels on Santo Antao and Fogo.",
+   "subject": "a small hotel terrace above the sea on Santo Antao",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Turtle Patrols on Boa Vista",
+   "description": "Community and NGO patrols on the nesting beaches, and the numbers have recovered.",
+   "subject": "volunteers recording a turtle nest at night on Boa Vista",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Volcano and Vine",
+   "description": "Cha das Caldeiras at first light, with vines growing in black ash under the cone.",
+   "subject": "vineyards in black volcanic ash below the cone of Fogo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Brava",
+   "description": "The smallest inhabited island, reached only by boat, with flowers and no airport worth the name.",
+   "subject": "the green terraced slopes and village of Brava island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Cabo Verde",
+   "description": "An active volcano with vineyards in it, ridge walking above the Atlantic, and the morna.",
+   "subject": "the cone of Fogo above black lava and white houses",
+   "focal": [
+    50,
+    48
+   ]
+  }
+ ]
+}

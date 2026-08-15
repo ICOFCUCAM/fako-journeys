@@ -1,0 +1,295 @@
+{
+ "slug": "eswatini",
+ "name": "Eswatini",
+ "adjective": "Swazi",
+ "region": "Southern Africa",
+ "tagline": "Small, and full of everything",
+ "summary": "A kingdom you can cross in two hours, with rhino at Hlane and Mkhaya, granite whalebacks at Sibebe and Execution Rock, and the Umhlanga and Incwala ceremonies that are the living centre of the country's year.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "culture",
+  "nature",
+  "adventure"
+ ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "when": "May to September — dry, cooler and best for game. Umhlanga is in late August or early September.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Small, and Full",
+   "description": "Two hours across, and it holds rhino, rainforest gorges, granite domes and a living monarchy.",
+   "subject": "the Ezulwini valley with granite hills on both sides",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Highveld to Lowveld",
+   "description": "Fourteen hundred metres in the west down to two hundred in the east, in sixty kilometres.",
+   "subject": "the escarpment dropping from highveld to lowveld",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Rhino at Mkhaya",
+   "description": "Black and white rhino, tracked on foot, in a private reserve that has never lost one to poaching.",
+   "subject": "a black rhino among thorn scrub at Mkhaya",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Hlane and Mkhaya",
+   "description": "Lion and elephant at Hlane, rhino and sable at Mkhaya, both small and both excellent.",
+   "subject": "lions resting under a tree in Hlane Royal National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Sibebe",
+   "description": "The largest exposed granite dome in the world after Uluru, and you walk up it.",
+   "subject": "the bare granite dome of Sibebe rock above the valley",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Mantenga",
+   "description": "A wide falls beside the cultural village in the Ezulwini valley.",
+   "subject": "the Mantenga falls spreading over rock in the Ezulwini valley",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Great Usutu",
+   "description": "The country's main river, running east through a gorge to the Mozambican border.",
+   "subject": "the Great Usutu river running through a rocky gorge",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Landlocked, and Close",
+   "description": "No coast — but the Mozambican beaches at Ponta do Ouro are two hours from Manzini.",
+   "subject": "a river pool with rocks and trees in the Malolotja valley",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Malolotja and Ngwempisi",
+   "description": "Montane grassland and Afromontane forest in the northwest, with proper wilderness walking.",
+   "subject": "montane grassland and forest patches at Malolotja",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Canopy Tours and Whitewater",
+   "description": "The Malolotja canopy tour, and rafting the Great Usutu when it is up.",
+   "subject": "a canopy tour zipline crossing a forested gorge at Malolotja",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "A Living Monarchy",
+   "description": "Umhlanga and Incwala are not performances — they are the constitutional year.",
+   "subject": "young women in ceremonial dress at the Umhlanga reed dance",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Swazi",
+   "description": "One nation, one language, and a set of ceremonies that everyone in the country takes part in.",
+   "subject": "Swazi men in traditional dress at a royal ceremony",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Sidvudvu and Emasi",
+   "description": "Pumpkin with maize, emasi soured milk, and braai everywhere.",
+   "subject": "a bowl of sidvudvu pumpkin porridge",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Umhlanga and Incwala",
+   "description": "The reed dance in late August, and Incwala, the kingship ceremony, in December and January.",
+   "subject": "the reed dance procession at Umhlanga",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Candles, Glass and Weaving",
+   "description": "Swazi Candles, Ngwenya Glass from recycled bottles, and Gone Rural's grass weaving.",
+   "subject": "hand-made Swazi candles in bright patterns on a bench",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Ngwenya Mine",
+   "description": "Iron ore mined here forty-three thousand years ago — among the oldest mines on earth.",
+   "subject": "the red iron ore workings of the ancient Ngwenya mine",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Nothing Listed, Everything Living",
+   "description": "No World Heritage sites, and a ceremonial calendar that has never been interrupted.",
+   "subject": "a Swazi homestead of beehive huts within a reed fence",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Mbabane and Manzini",
+   "description": "A small capital in the hills, and the commercial town and market in the middle.",
+   "subject": "the market and streets of Manzini",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Beehive and Colonial",
+   "description": "Woven beehive huts in the homesteads, and small colonial towns in stone.",
+   "subject": "a woven grass beehive hut at a Swazi homestead",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Manzini Market",
+   "description": "Produce downstairs, handicraft upstairs, and the whole country passing through on a Thursday.",
+   "subject": "the handicraft section of Manzini market",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Easy and Safe",
+   "description": "Short distances, malaria-light, rhino you can walk to, and a very gentle pace.",
+   "subject": "a family on a guided walk towards rhino at Mkhaya",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking Malolotja",
+   "description": "Multi-day wilderness trails across grassland and gorge, with huts and no roads.",
+   "subject": "a walking trail crossing open grassland at Malolotja",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Small and Good",
+   "description": "Mkhaya's Stone Camp, and lodges through the Ezulwini valley.",
+   "subject": "an open-sided stone and thatch camp in the bush at Mkhaya",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Big Game Parks",
+   "description": "One family has run Hlane, Mkhaya and Mlilwane since 1960, and brought the rhino back.",
+   "subject": "a ranger tracking rhino on foot at Mkhaya",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Granite and Grass",
+   "description": "Sibebe in the late afternoon, when the whole dome goes orange.",
+   "subject": "late sun on the granite dome of Sibebe",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Ngwempisi Gorge",
+   "description": "A wilderness gorge in the west with hanging bridges and no vehicles.",
+   "subject": "a suspension bridge over the forested Ngwempisi gorge",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Eswatini",
+   "description": "Rhino on foot, a monarchy in ceremony, and a country you can cross before lunch.",
+   "subject": "a rhino at close range from a walking trail at Mkhaya",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

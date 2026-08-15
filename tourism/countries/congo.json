@@ -1,0 +1,294 @@
+{
+ "slug": "congo",
+ "name": "Congo",
+ "adjective": "Congolese",
+ "region": "Central & West Africa",
+ "tagline": "Odzala, and the western lowland gorilla",
+ "summary": "Odzala-Kokoua is one of the best places on earth to track western lowland gorillas, Nouabale-Ndoki has forest that has never been logged, and the Congo river runs the whole eastern border.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "nature"
+ ],
+ "months": [
+  6,
+  7,
+  8,
+  12,
+  1,
+  2
+ ],
+ "when": "The two dry seasons: June to August, and December to February.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Odzala-Kokoua",
+   "description": "Forest, savanna and bais together, and gorillas habituated for tracking on foot.",
+   "subject": "a forest bai clearing surrounded by rainforest in Odzala",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Congo Basin",
+   "description": "Two thirds of the country is rainforest, and much of it has never had a road in it.",
+   "subject": "unbroken Congo Basin rainforest canopy from the air",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Western Lowland Gorillas",
+   "description": "Smaller, redder and harder to see than mountain gorillas, and tracked through swamp forest.",
+   "subject": "a silverback western lowland gorilla in dense green forest",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Bai Watching",
+   "description": "Forest buffalo, bongo, sitatunga and elephant come to the clearings, and you sit and wait.",
+   "subject": "forest buffalo and elephants at a bai in Odzala",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mount Berongou",
+   "description": "903 metres in the Mayombe, and the highest ground in a country of forest and plateau.",
+   "subject": "the forested Mayombe hills under low cloud",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "The Loufoulakari",
+   "description": "Falls on the Congo above Brazzaville, where the river drops through rock.",
+   "subject": "the Loufoulakari falls dropping through rock into the Congo",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Congo River",
+   "description": "The second largest river on earth by volume, and the whole eastern border of the country.",
+   "subject": "the vast brown Congo river with forest on the far bank",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "A Hundred and Seventy Kilometres of Atlantic",
+   "description": "Pointe-Noire's beaches, and the empty sand of the Conkouati coast north of it.",
+   "subject": "an empty Atlantic beach backed by forest at Conkouati",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Nouabale-Ndoki",
+   "description": "Forest that has never been logged, and the Goualougo Triangle where the chimps had not seen people.",
+   "subject": "old-growth rainforest with enormous buttressed trees at Ndoki",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Forest and River",
+   "description": "Pirogue on the Lekoli, tracking on foot, and nights on a bai platform.",
+   "subject": "a pirogue moving up a narrow forest river in Odzala",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Congolese Rumba",
+   "description": "Rumba was made on both banks of this river, and it is on the UNESCO list because of it.",
+   "subject": "a rumba band performing at a bar in Brazzaville",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Kongo, Teke, Mbochi and the Aka",
+   "description": "Bantu peoples along the river, and Aka forest hunter-gatherers in the north.",
+   "subject": "an Aka forest camp with leaf shelters in the north",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Saka-Saka and Poulet Moambe",
+   "description": "Cassava leaf, and chicken in palm nut sauce — the dish of both Congos.",
+   "subject": "a plate of poulet moambe with cassava and rice",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Feux de Brazza",
+   "description": "A music festival in Brazzaville, and rumba the rest of the year in every bar.",
+   "subject": "a crowd dancing at a music festival in Brazzaville",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Raffia, Masks and Nkisi",
+   "description": "Raffia weaving, Teke masks, and Kongo nkisi power figures.",
+   "subject": "a flat round Teke mask with geometric carving",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Brazzaville's Colonial Core",
+   "description": "The Case de Gaulle and the Basilique Sainte-Anne, and a river frontage facing Kinshasa.",
+   "subject": "the pointed roof of the Basilique Sainte-Anne in Brazzaville",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Sangha Trinational",
+   "description": "Nouabale-Ndoki is part of the World Heritage forest shared with Cameroon and CAR.",
+   "subject": "old-growth forest and a river in the Sangha Trinational park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Brazzaville and Pointe-Noire",
+   "description": "A river capital looking across at Kinshasa, and an Atlantic oil port with the beaches.",
+   "subject": "the Congo river frontage at Brazzaville with Kinshasa opposite",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Colonial and Forest",
+   "description": "French colonial along the river, and the Poto-Poto quarter that gave its name to a painting school.",
+   "subject": "a colonial-era verandah building in Brazzaville",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Bars of Poto-Poto",
+   "description": "Rumba, grilled fish and beer, from the afternoon until it is not the afternoon.",
+   "subject": "an open-air bar with music in the Poto-Poto quarter",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Not Really",
+   "description": "Odzala is a long way in and expensive. This is a trip for adults who want gorillas.",
+   "subject": "a light aircraft on a grass strip beside forest",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Tracking and Pirogue",
+   "description": "Long days on foot through swamp forest, and quiet mornings on the Lekoli.",
+   "subject": "trackers wading a shallow forest stream",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Small and Excellent",
+   "description": "Odzala's camps are among the best-run in Central Africa, and there are three of them.",
+   "subject": "a raised forest camp deck overlooking a bai in Odzala",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Odzala's Model",
+   "description": "Ex-poachers employed as trackers, and revenue shared with the villages on the park edge.",
+   "subject": "a Congolese tracker pointing out gorilla sign in forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Green and Steam",
+   "description": "A bai at first light, when the mist is still on it and the elephants are already there.",
+   "subject": "mist over a forest bai at dawn with elephants in it",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Lesio-Louna",
+   "description": "A gorilla sanctuary on the Bateke plateau, two hours from Brazzaville.",
+   "subject": "gorillas on a wooded island in the Lesio-Louna sanctuary",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Congo",
+   "description": "The best western lowland gorilla tracking anywhere, in forest that has never been cut.",
+   "subject": "a gorilla family moving through dense green forest",
+   "focal": [
+    50,
+    48
+   ]
+  }
+ ]
+}

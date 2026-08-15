@@ -64,7 +64,7 @@ REGION_GROUPS = (
 
 MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "maplive", "mapover", "claim", "months", "scale",
-           "lede",
+           "lede", "capafrica", "destlede", "readslede", "mapsvg",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer", "regiontone", "feel",
            "moments", "momentsay", "seasons", "seasonsay", "motion",
@@ -89,6 +89,17 @@ HERO = "hero"
 
 
 IN_AFRICA = 54                 # UN member states. Western Sahara is not one.
+
+
+def all_of_them(countries):
+    """"Fifty-four countries. Twenty-two of them are destinations here" was an
+    honest sentence for as long as those were different numbers. It is a strange
+    one when they are the same, and it reads as a mistake rather than as an
+    achievement — so at parity the second clause says what actually happened."""
+    n = len(countries)
+    if n >= IN_AFRICA:
+        return "%s countries. Every one of them a destination here." % _spell(IN_AFRICA)
+    return "%s countries. %s of them are destinations here." % (_spell(IN_AFRICA), _spell(n))
 
 
 def esc(v):
@@ -364,7 +375,11 @@ def block_feel(countries):
                if lens.get("photo") else "",
                esc(lens.get("feel") or lens["line"]),
                lens["label"],
-               _spell(len(names)).lower() if len(names) < 20 else len(names),
+               # Spelled all the way, not figures above twenty. This card is a
+               # sentence — "twenty-six countries lead on this" — and it had its
+               # own cutoff at 20 that _spell does not have, so the two disagreed
+               # from the twentieth country onwards.
+               _spell(len(names)).lower(),
                "country leads on this" if len(names) == 1 else "countries lead on this"))
     return "\n".join(out)
 
@@ -670,6 +685,56 @@ def block_lede(countries):
     """
     return ('<p class="wa-lede">%s countries, written up one place at a time, '
             'by people who go there.</p>' % _spell(len(countries)))
+
+
+def block_mapsvg(countries):
+    """The map's own description — the only thing a screen reader gets of it.
+
+    It said twenty-two while fifty-four shapes were filled in, which is the
+    worst place on the page for a stale number: everybody else can see the map
+    and check, and the one person relying on this sentence cannot.
+    """
+    n = len(countries)
+    rest = ("Western Sahara is drawn in outline"
+            if n >= IN_AFRICA else
+            "the rest of the continent is drawn in outline, and can be booked "
+            "through an operator who lives there")
+    return ('        <svg class="wa-map-svg" viewBox="0 0 1000 1060" role="img" '
+            'aria-label="Map of Africa. The %d countries written up on this site '
+            'are filled in; %s. The same %d are listed as buttons directly below '
+            'this map.">' % (n, rest, n))
+
+
+def block_capafrica(countries):
+    """The caption the window shows before a country is chosen.
+
+    It sat outside every marker, one line above the block that generates the
+    other fifty-four captions, and it was the loudest number on the page: the
+    first thing said about the continent, and it said twenty-two for as long as
+    it took to notice.
+    """
+    return ('          <div class="wa-win-cap" data-slug="africa" data-on="true">'
+            '<span class="wa-win-region">The continent</span><b>Africa</b>'
+            '<span class="wa-win-tag">%s</span>'
+            '<span class="wa-win-op">Choose one on the map, or below</span>'
+            '<a class="wa-win-go" href="#destinations">See all destinations &rarr;</a></div>'
+            % esc(all_of_them(countries)))
+
+
+def block_destlede(countries):
+    """Section 06's headline. 'All of them live' is a claim about the roster, so
+    the roster is where the number comes from."""
+    return ('        <h2>%s countries, <em>all of them live</em>.</h2>'
+            % _spell(len(countries)))
+
+
+def block_readslede(countries):
+    """Section 12's note. One portrait per country, so it is the same count —
+    and story.py writes the portraits, so the two cannot be allowed to differ."""
+    return ('        <p class="wa-note">%s long reads, one per country, each '
+            'built out of what that country says about itself rather than '
+            'written about it. One from each region below.</p>'
+            % _spell(len(countries)))
 
 
 def block_maplive(countries):
@@ -980,8 +1045,7 @@ def block_regions(countries, views):
     out = ['<button class="wa-reg" type="button" data-reg="africa" aria-pressed="true" '
            'data-view="%s" data-line="%s" data-terrain="%s">Africa</button>'
            % (" ".join(str(v) for v in views.get("africa") or [0, 0, 1000, 1060]),
-              esc("%s countries. %s of them are destinations here."
-                  % (_spell(IN_AFRICA), _spell(len(countries)))),
+              esc(all_of_them(countries)),
               esc("Desert|Rainforest|Savanna|Mountain|Coast|Island"))]
     for key, reg in regions.items():
         members = [c for c in countries if c.region in reg.includes]
@@ -1555,6 +1619,10 @@ def render(countries):
         "mapunder": block_mapunder(seq),
         "maplive": block_maplive(seq),
         "lede": block_lede(seq),
+        "mapsvg": block_mapsvg(seq),
+        "capafrica": block_capafrica(seq),
+        "destlede": block_destlede(seq),
+        "readslede": block_readslede(seq),
         "mapover": block_mapover(seq),
         "window": block_window(with_shape, shape_by_slug, views),
         "captions": block_captions(with_shape),

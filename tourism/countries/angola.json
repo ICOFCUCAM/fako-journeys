@@ -1,0 +1,295 @@
+{
+ "slug": "angola",
+ "name": "Angola",
+ "adjective": "Angolan",
+ "region": "Southern Africa",
+ "tagline": "The Kalandula falls, and a coast nobody has seen",
+ "summary": "Kalandula is one of the largest waterfalls in Africa by volume, the Namib runs up the whole southern coast to the Iona dunes, and Luanda's bay is closed by a sand spit with the Atlantic on the other side of it.",
+ "published": true,
+ "calls": [
+  "cities",
+  "nature",
+  "coast",
+  "culture"
+ ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "when": "The cacimbo, May to September — dry and cooler, and the roads are passable.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Kalandula",
+   "description": "A hundred and five metres of water across four hundred, in the middle of nowhere.",
+   "subject": "the wide curtain of the Kalandula falls in Malanje",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Black Rocks and the Namib",
+   "description": "Pungo Andongo's monoliths in the north, and the Namib running the whole southern coast.",
+   "subject": "the black monoliths of Pungo Andongo standing over grassland",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Giant Sable",
+   "description": "The palanca negra gigante lives in Angola and nowhere else, and was thought extinct until 2004.",
+   "subject": "a giant sable antelope with long curved horns in miombo woodland",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Kissama and Luengue-Luiana",
+   "description": "Kissama two hours from Luanda, restocked and recovering; the southeast on the Okavango's headwaters.",
+   "subject": "elephants in open woodland in Kissama National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mount Moco",
+   "description": "2,620 metres in the Huambo highlands, with the last Afromontane forest in the country on it.",
+   "subject": "the grassy summit of Mount Moco above patches of forest",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Kalandula and Ruacana",
+   "description": "Kalandula in Malanje, and the Ruacana falls on the Cunene where Namibia begins.",
+   "subject": "water thundering over the Ruacana falls on the Cunene",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Kwanza and the Cunene",
+   "description": "The Kwanza runs to the Atlantic below Luanda; the Cunene is the Namibian border.",
+   "subject": "the wide Kwanza river running to the Atlantic",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Sixteen Hundred Kilometres of Atlantic",
+   "description": "The Ilha at Luanda, the Mussulo lagoon, and the dune coast running south to Iona.",
+   "subject": "the sand spit of the Ilha do Cabo curving across Luanda bay",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Maiombe",
+   "description": "Angola's Amazon — rainforest in the Cabinda exclave, north of the Congo river.",
+   "subject": "dense rainforest canopy in the Maiombe forest of Cabinda",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "The Southern Desert",
+   "description": "Iona, the Tundavala gap and the escarpment road down to Namibe.",
+   "subject": "the sheer escarpment and drop at the Tundavala gap",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Semba, Kizomba and Kuduro",
+   "description": "Semba became samba across the Atlantic, and kuduro went back the other way.",
+   "subject": "dancers and a sound system at a kuduro party in Luanda",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Ovimbundu, Mbundu, Bakongo, Ovahimba",
+   "description": "Ovimbundu in the centre, Bakongo in the north, and Ovahimba along the Cunene.",
+   "subject": "an Ovahimba woman in ochre and braided hair near the Cunene",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Funge, Muamba and Calulu",
+   "description": "Funge with muamba de galinha, calulu with dried fish, and Portuguese pastries after.",
+   "subject": "a plate of muamba de galinha with funge",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Carnaval da Vitoria",
+   "description": "Luanda's carnival on the Marginal, with the neighbourhood groups competing.",
+   "subject": "carnival dancers in costume on Luanda's Marginal",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "The Pensador and Basketry",
+   "description": "The Chokwe Thinker is the national symbol, and Chokwe masks and chairs are among Africa's finest.",
+   "subject": "a carved Chokwe Thinker figure in dark wood",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Mbanza Kongo",
+   "description": "The capital of the Kingdom of Kongo, and the first sub-Saharan city to have a stone cathedral.",
+   "subject": "the ruined stone cathedral walls at Mbanza Kongo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Mbanza Kongo, Listed",
+   "description": "Inscribed in 2017 as the seat of a kingdom that dealt with Portugal as an equal.",
+   "subject": "the archaeological site and old walls at Mbanza Kongo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Luanda and Benguela",
+   "description": "A bay closed by a sand spit and a skyline that went up fast, and a quieter colonial port south.",
+   "subject": "Luanda's high-rise skyline curving round the bay",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Portuguese Colonial and Modernist",
+   "description": "Fortaleza de Sao Miguel, Benguela's pastel streets, and Luanda's late-modernist blocks.",
+   "subject": "the yellow walls of the Fortaleza de Sao Miguel above Luanda",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Marginal at Six",
+   "description": "The whole city walks and runs the bay road in the evening, and keeps doing it after dark.",
+   "subject": "people walking and running the Marginal in Luanda at dusk",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "The Mussulo",
+   "description": "A lagoon behind the spit south of Luanda, calm, shallow and full of families at weekends.",
+   "subject": "families in shallow lagoon water at the Mussulo",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "The Escarpment Roads",
+   "description": "Serra da Leba's hairpins, and Tundavala where the plateau simply stops.",
+   "subject": "the hairpin bends of the Serra da Leba pass from above",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Luanda, and Little Else",
+   "description": "Good hotels in the capital, and very little organised outside it.",
+   "subject": "a hotel terrace looking over Luanda bay at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Bringing the Sable Back",
+   "description": "The giant sable was found alive in 2004 and has been fenced, guarded and bred since.",
+   "subject": "a ranger monitoring giant sable in a fenced sanctuary",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Water and Rock",
+   "description": "Kalandula in the wet season, when the spray reaches the viewpoint.",
+   "subject": "spray rising from the Kalandula falls in full flow",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Tundavala",
+   "description": "A gap in the escarpment where the ground drops a thousand metres, with no railing.",
+   "subject": "a figure at the edge of the Tundavala gap looking down",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Angola",
+   "description": "A waterfall to rival Victoria's, a desert coast, and a capital that surprises everyone.",
+   "subject": "the Kalandula falls with nobody at the viewpoint",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

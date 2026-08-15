@@ -37,6 +37,7 @@ from .model import ROOT, load_countries
 MAP = os.path.join(ROOT, "tourism", "map.json")
 SHAPES = os.path.join(ROOT, "tourism", "shapes.json")
 NEIGHBOURS = os.path.join(ROOT, "tourism", "neighbours.json")
+VIEWS = os.path.join(ROOT, "tourism", "views.json")
 BOX = 1000.0                   # the width every plate outline is scaled to
 
 # The map draws the rest of the continent under Natural Earth's names. These are
@@ -98,6 +99,29 @@ def paths():
         if row.get("n") and row.get("d"):
             out.setdefault(slug_for(row["n"]), row["d"])
     return out
+
+
+MIN_VIEW = 24.0                # a fly-to box smaller than this is a magnifier
+
+
+def bbox(d):
+    """Where a path sits on the continent, as [x, y, w, h]."""
+    ps = points(d)
+    if not ps:
+        return None
+    xs = [p[0] for p in ps]
+    ys = [p[1] for p in ps]
+    w, h = max(xs) - min(xs), max(ys) - min(ys)
+    x, y = min(xs), min(ys)
+    # The Gambia is four units tall on this map and Cabo Verde is smaller. Flown
+    # to at their true size the viewer arrives at a magnification where the
+    # coastline is three pixels of noise, so a floor is put under the short side
+    # and the box grows around its own centre rather than from a corner.
+    if w < MIN_VIEW:
+        x, w = x - (MIN_VIEW - w) / 2, MIN_VIEW
+    if h < MIN_VIEW:
+        y, h = y - (MIN_VIEW - h) / 2, MIN_VIEW
+    return [round(x, 1), round(y, 1), round(w, 1), round(h, 1)]
 
 
 def promote(check=False, log=print):
@@ -196,6 +220,36 @@ def run(check=False, log=print):
         if not check:
             shapes[slug] = box
 
+    # -- views ----------------------------------------------------------------
+    # The box the atlas flies to, and the point links.json hangs a node on. It
+    # is the country's own bounding box on the map, so it is derivable, and it
+    # was not derived: thirty-two countries went onto every list on the site
+    # with no box, which put every one of their nodes at `at: null` on the
+    # constellation. Gaps only, like the shapes — the twenty-two already here
+    # are close to this to within a tenth of a unit and there is nothing to gain
+    # by rewriting them.
+    with open(VIEWS, encoding="utf-8") as fh:
+        views = json.load(fh)
+    views.setdefault("countries", {})
+    boxed = 0
+    for slug in slugs:
+        if slug in views["countries"] or slug not in have:
+            continue
+        box = bbox(have[slug])
+        if not box:
+            problems.append("%s: no box could be taken from its path" % slug)
+            continue
+        boxed += 1
+        if not check:
+            views["countries"][slug] = box
+    for slug in slugs:
+        if slug not in views["countries"] and slug in have:
+            problems.append("%s: no view box, so the atlas cannot fly to it" % slug)
+    if not check:
+        with open(VIEWS, "w", encoding="utf-8") as fh:
+            json.dump(views, fh, indent=1, ensure_ascii=False)
+            fh.write("\n")
+
     # -- centres --------------------------------------------------------------
     for slug in slugs:
         c = centres.get(slug)
@@ -227,8 +281,8 @@ def run(check=False, log=print):
     promote(check=check, log=log)
 
     if check:
-        log("%d shape(s) would change, %d distance table(s) would be rebuilt"
-            % (drawn, 1 if changed_km else 0))
+        log("%d shape(s) and %d view box(es) would be written, %d distance "
+            "table(s) rebuilt" % (drawn, boxed, 1 if changed_km else 0))
     else:
         with open(SHAPES, "w", encoding="utf-8") as fh:
             json.dump(shapes, fh, indent=1, ensure_ascii=False)
@@ -237,8 +291,9 @@ def run(check=False, log=print):
         with open(NEIGHBOURS, "w", encoding="utf-8") as fh:
             json.dump(nb, fh, indent=1, ensure_ascii=False)
             fh.write("\n")
-        log("wrote %d outline(s) and a %dx%d distance table"
-            % (len(shapes), len(km), len(km) - 1 if km else 0))
+        log("wrote %d outline(s), %d view box(es) and a %dx%d distance table"
+            % (len(shapes), len(views["countries"]), len(km),
+               len(km) - 1 if km else 0))
 
     for p in problems:
         log("  PROBLEM  " + p)

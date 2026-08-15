@@ -52,6 +52,20 @@ AFRICA = {
 # tell at a glance what is bookable today.
 #   iso: (slug, label, tagline, href, tier)
 ROSTER = {
+    24:  ("angola", "Angola", "The Kalandula falls, and a coast nobody has seen", "/angola", "live"),
+    454: ("malawi", "Malawi", "A lake with more fish species than any other", "/malawi", "live"),
+    108: ("burundi", "Burundi", "The southernmost source of the Nile", "/burundi", "live"),
+    426: ("lesotho", "Lesotho", "The kingdom in the sky", "/lesotho", "live"),
+    748: ("eswatini", "Eswatini", "Small, and full of everything", "/eswatini", "live"),
+    174: ("comoros", "Comoros", "An active volcano, and the fish that came back from the dead", "/comoros", "live"),
+    132: ("cabo-verde", "Cabo Verde", "Ten islands, and the morna", "/cabo-verde", "live"),
+    148: ("chad", "Chad", "Zakouma, and the lakes of Ounianga", "/chad", "live"),
+    140: ("central-african-republic", "Central African Republic", "Dzanga Bai, and the forest elephants", "/central-african-republic", "live"),
+    178: ("congo", "Congo", "Odzala, and the western lowland gorilla", "/congo", "live"),
+    180: ("dr-congo", "DR Congo", "Virunga, Nyiragongo, and the okapi", "/dr-congo", "live"),
+    266: ("gabon", "Gabon", "Elephants on the beach at Loango", "/gabon", "live"),
+    226: ("equatorial-guinea", "Equatorial Guinea", "A volcanic island, and turtles on the black sand", "/equatorial-guinea", "live"),
+    678: ("sao-tome-and-principe", "Sao Tome and Principe", "Two volcanic islands and a lot of cocoa", "/sao-tome-and-principe", "live"),
     466: ("mali", "Mali", "Timbuktu, Djenne, and the Niger bend", "/mali", "live"),
     854: ("burkina-faso", "Burkina Faso", "The best cinema and the best masks in West Africa", "/burkina-faso", "live"),
     562: ("niger", "Niger", "The Air, the Tenere, and the last giraffes of West Africa", "/niger", "live"),

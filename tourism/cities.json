@@ -243,9 +243,7 @@
    "lonlat": [
     13.2344,
     -8.8383
-   ],
-   "country_name": "Angola",
-   "region": "southern"
+   ]
   },
   {
    "slug": "zanzibar-city",
@@ -260,6 +258,18 @@
    "lonlat": [
     39.1979,
     -6.1659
+   ]
+  },
+  {
+   "slug": "asmara",
+   "name": "Asmara",
+   "country": "eritrea",
+   "line": "Highland · Deco · Coffee",
+   "say": "A whole modernist city at 2,300 metres, built in the 1930s and barely altered since — the first of its kind anywhere to be listed as a World Heritage site. The passeggiata down Harnet Avenue starts about six.",
+   "photo": null,
+   "lonlat": [
+    38.9251,
+    15.3229
    ]
   }
  ],

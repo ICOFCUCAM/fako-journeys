@@ -1,0 +1,294 @@
+{
+ "slug": "chad",
+ "name": "Chad",
+ "adjective": "Chadian",
+ "region": "Central & West Africa",
+ "tagline": "Zakouma, and the lakes of Ounianga",
+ "summary": "Zakouma brought its elephants back from four hundred and fifty to over six hundred, the Ennedi is a sandstone massif full of rock art and desert crocodiles, and the Ounianga lakes sit in the middle of the Sahara without a river feeding them.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "nature",
+  "adventure"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "November to March. Zakouma is at its best in March, when the game concentrates on the last water.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Zakouma",
+   "description": "One of Africa's great turnarounds: from four hundred and fifty elephants to over six hundred.",
+   "subject": "a large herd of elephants moving across floodplain in Zakouma",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Ennedi",
+   "description": "A sandstone massif eroded into arches, towers and canyons, with water at the bottom of them.",
+   "subject": "the Aloba arch standing over sand in the Ennedi massif",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Buffalo in Thousands",
+   "description": "Zakouma's buffalo move in herds of over a thousand, and the Kordofan giraffe with them.",
+   "subject": "a dense herd of buffalo raising dust in Zakouma",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Zakouma in March",
+   "description": "Everything concentrates on the last pans, and the birdlife with it — crowned crane in their thousands.",
+   "subject": "black crowned cranes gathered at a drying pan in Zakouma",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Emi Koussi and the Tibesti",
+   "description": "A 3,415-metre volcano in the far north, the highest point in the Sahara.",
+   "subject": "the volcanic massif of the Tibesti rising from desert",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "None, and Guelta Instead",
+   "description": "No falls. What the Ennedi has is the Guelta d'Archei, a permanent gorge pool.",
+   "subject": "camels drinking at the Guelta d'Archei gorge pool",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Lake Chad and the Ounianga Lakes",
+   "description": "A shrinking inland sea in the west, and eighteen lakes in the Sahara that no river feeds.",
+   "subject": "the blue and green lakes of Ounianga between dunes",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Landlocked, and the Lake",
+   "description": "The beaches here are the shores of Lake Chad, worked by fishermen in reed boats.",
+   "subject": "reed fishing boats on the shore of Lake Chad",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Gallery Forest on the Rivers",
+   "description": "The Chari and Logone carry woodland far north into the Sahel.",
+   "subject": "gallery forest along the Chari river in southern Chad",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Crossing the Ennedi",
+   "description": "Ten days by four-wheel-drive between arches and gueltas, sleeping under the rock.",
+   "subject": "a desert camp under a sandstone arch in the Ennedi",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Two Hundred Groups",
+   "description": "Toubou and Zaghawa in the north, Sara in the south, and Arabic and French across both.",
+   "subject": "a market crowd in N'Djamena",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Toubou",
+   "description": "A desert people of the Tibesti and Ennedi, and among the most self-sufficient anywhere.",
+   "subject": "a Toubou man beside camels in the Ennedi",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Boule and Grilled Capitaine",
+   "description": "Millet boule with sauce, and Nile perch off the Chari grilled on the bank.",
+   "subject": "grilled capitaine fish and millet boule on a plate",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Gerewol and the Camel Races",
+   "description": "Wodaabe gatherings in the Sahel, and camel racing in the desert north.",
+   "subject": "camel racing at a gathering in the Chadian Sahel",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Leatherwork and Silver",
+   "description": "Toubou leather, Sara basketry, and silver from the N'Djamena market.",
+   "subject": "tooled leather camel gear and silver at a Chadian market",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Ennedi Rock Art",
+   "description": "Thousands of painted and engraved panels recording a Sahara with cattle and giraffe in it.",
+   "subject": "painted rock art figures of cattle on Ennedi sandstone",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Two Sites in the Sahara",
+   "description": "The Ennedi massif and the Ounianga lakes, both World Heritage, both barely visited.",
+   "subject": "the layered sandstone towers of the Ennedi at sunset",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "N'Djamena",
+   "description": "A capital on the Chari, opposite Cameroon, with the largest market in the region.",
+   "subject": "the riverfront and low skyline of N'Djamena on the Chari",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Mud and Banco",
+   "description": "Sahelian mud-brick in the towns, and reed and mat construction on the lake.",
+   "subject": "a mud-brick compound with a thatched granary in the Sahel",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Tea in the Shade",
+   "description": "Three glasses, poured from a height, and no business concluded before the third.",
+   "subject": "men drinking tea in the shade of a wall in N'Djamena",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Serious Country",
+   "description": "Distances are enormous and facilities are few. Zakouma is possible; the Ennedi is an expedition.",
+   "subject": "a vehicle on a long empty track across Chadian savanna",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking Zakouma",
+   "description": "Zakouma allows walking with armed rangers, which very few West and Central African parks do.",
+   "subject": "a walking group with a ranger among trees in Zakouma",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "One Camp, and It Is Good",
+   "description": "Zakouma has a single seasonal camp. The Ennedi is tents you bring with you.",
+   "subject": "a seasonal tented camp under trees in Zakouma",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "The Turnaround at Zakouma",
+   "description": "African Parks took it on in 2010 after poaching had taken ninety per cent of the elephants.",
+   "subject": "a ranger patrol vehicle at dawn in Zakouma",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Sandstone and Shadow",
+   "description": "The Ennedi arches in the last hour, when the sandstone goes from orange to red.",
+   "subject": "low sun through a sandstone arch in the Ennedi",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Guelta d'Archei",
+   "description": "Camels come down a gorge to drink, and desert crocodiles live in the pool below them.",
+   "subject": "camels descending to the dark water of the Guelta d'Archei",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Chad",
+   "description": "A national park that came back from the dead, and a desert massif almost nobody has seen.",
+   "subject": "a lone vehicle beneath the vast sandstone towers of the Ennedi",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

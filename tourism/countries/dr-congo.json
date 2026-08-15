@@ -1,0 +1,296 @@
+{
+ "slug": "dr-congo",
+ "name": "DR Congo",
+ "adjective": "Congolese",
+ "region": "Central & West Africa",
+ "tagline": "Virunga, Nyiragongo, and the okapi",
+ "summary": "An active lava lake you can camp beside on Nyiragongo, the only mountain gorillas outside Rwanda and Uganda, the okapi that lives nowhere else, and five World Heritage sites — a country of superlatives and of serious constraints on reaching them.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "nature",
+  "adventure",
+  "culture"
+ ],
+ "months": [
+  6,
+  7,
+  8,
+  12,
+  1,
+  2
+ ],
+ "when": "The dry seasons. Take current advice extremely seriously; the east is not uniformly accessible.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Nyiragongo",
+   "description": "The world's largest lava lake, in a crater you climb to in a day and sleep beside.",
+   "subject": "the glowing lava lake in the crater of Nyiragongo at night",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Albertine Rift",
+   "description": "Glaciers on the Rwenzori, volcanoes in the Virungas, and the deepest forest in Africa between them.",
+   "subject": "the glaciated peaks of the Rwenzori above forest",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Mountain Gorillas and Okapi",
+   "description": "Virunga's gorillas in the east, and the okapi in the Ituri forest, which lives nowhere else.",
+   "subject": "an okapi in dense Ituri forest undergrowth",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Garamba and Upemba",
+   "description": "Northern savanna with elephant and Kordofan giraffe, being brought back after decades of loss.",
+   "subject": "elephants on open savanna in Garamba National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Rwenzori",
+   "description": "5,109 metres at Margherita, glaciated, on the equator, and the Mountains of the Moon.",
+   "subject": "glaciers and rock on the summit ridge of the Rwenzori",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Boyoma and Lofoi",
+   "description": "The seven cataracts at Kisangani, and Lofoi with a single drop of 340 metres.",
+   "subject": "the Wagenia fishing structures at the Boyoma falls, Kisangani",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Congo River",
+   "description": "Four and a half thousand kilometres, and the deepest river in the world at 220 metres.",
+   "subject": "the immense width of the Congo river seen from the bank",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Muanda, and the Lakes",
+   "description": "Forty kilometres of Atlantic at the river mouth, and beaches on Kivu and Tanganyika.",
+   "subject": "the shore and clear water of Lake Kivu at Goma",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Ituri and the Salonga",
+   "description": "Salonga is the largest tropical rainforest reserve in Africa, and mostly unentered.",
+   "subject": "the closed canopy of the Salonga rainforest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Nyiragongo Overnight",
+   "description": "Six hours up, a night in a hut on the rim, and the lava lake below you all of it.",
+   "subject": "climbers on the crater rim of Nyiragongo above the lava lake",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Two Hundred and Fifty Peoples",
+   "description": "Four national languages, and a music that has set the terms for the whole continent.",
+   "subject": "a street market crowd in Kinshasa",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Mbuti",
+   "description": "Forest hunter-gatherers of the Ituri, with a relationship to that forest going back millennia.",
+   "subject": "Mbuti hunters with nets in the Ituri forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Fufu, Pondu and Liboke",
+   "description": "Cassava fufu, pondu cassava leaf, and fish steamed in leaves over a fire.",
+   "subject": "fish steamed in banana leaf served with fufu",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Rumba and Ndombolo",
+   "description": "Franco, Papa Wemba, Koffi Olomide — Kinshasa has exported dance music for seventy years.",
+   "subject": "a rumba band on stage in a Kinshasa nightclub",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Masks, Raffia and Copper",
+   "description": "Kuba raffia cloth, Pende and Songye masks, and Katangese copper crosses.",
+   "subject": "a length of Kuba raffia cloth with geometric appliqué",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Kisangani and the River Stations",
+   "description": "Stanley's route up the river, and the Wagenia fishing structures that predate all of it.",
+   "subject": "the wooden Wagenia fishing tripods over rapids at Kisangani",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Five World Heritage Sites",
+   "description": "Virunga, Garamba, Kahuzi-Biega, Salonga and the Okapi Reserve — all five on the danger list.",
+   "subject": "the forested slopes of Kahuzi-Biega National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Kinshasa and Lubumbashi",
+   "description": "One of the largest cities in Africa, facing Brazzaville, and the mining capital in the south.",
+   "subject": "the skyline and traffic of Kinshasa on the Congo river",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Belgian Colonial and Cite",
+   "description": "Art deco Kinshasa from the 1930s, and the cite quarters that grew around it.",
+   "subject": "a 1930s art deco building in central Kinshasa",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "SAPE",
+   "description": "The Society of Ambianceurs and Elegant People — dressing as a discipline and an argument.",
+   "subject": "a sapeur in a bright tailored suit on a Kinshasa street",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Not for Families",
+   "description": "The east requires current advice and the distances are enormous. This is careful travel.",
+   "subject": "a school class in a village in eastern DR Congo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Volcano and Gorilla",
+   "description": "Nyiragongo, then gorillas in Virunga's lowlands, from the same base at Goma.",
+   "subject": "trekkers on a forested slope in Virunga National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Virunga's Lodges",
+   "description": "Mikeno and Tchegera, run by the park itself, and the money goes back into it.",
+   "subject": "a lodge terrace looking towards the Virunga volcanoes",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Virunga's Rangers",
+   "description": "Over two hundred rangers have died protecting this park. It is the oldest in Africa.",
+   "subject": "Virunga rangers on patrol at the forest edge",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Lava at Night",
+   "description": "The Nyiragongo crater after dark, when the lake is the only light there is.",
+   "subject": "the orange glow of Nyiragongo's lava lake at night",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Lake Kivu",
+   "description": "Volcanic islands, terraced hills and calm water, between Goma and Bukavu.",
+   "subject": "Idjwi island and calm water on Lake Kivu",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why DR Congo",
+   "description": "A lava lake, mountain gorillas, glaciers on the equator, and the okapi.",
+   "subject": "a climber silhouetted on the rim above Nyiragongo's lava lake",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

@@ -1,0 +1,295 @@
+{
+ "slug": "lesotho",
+ "name": "Lesotho",
+ "adjective": "Basotho",
+ "region": "Southern Africa",
+ "tagline": "The kingdom in the sky",
+ "summary": "The only country entirely above a thousand metres, with Africa's highest single-drop waterfall at Maletsunyane, southern Africa's only ski resort, and dinosaur footprints in the sandstone.",
+ "published": true,
+ "calls": [
+  "nature",
+  "adventure",
+  "culture"
+ ],
+ "months": [
+  3,
+  4,
+  5,
+  9,
+  10,
+  11
+ ],
+ "when": "Spring and autumn for walking and riding; June to August for snow.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Kingdom in the Sky",
+   "description": "Nowhere in Lesotho is below 1,400 metres, which is true of no other country.",
+   "subject": "the high Maloti mountains with a shepherd's hut on a ridge",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Maloti",
+   "description": "Basalt highlands cut by river gorges, and the roof of southern Africa.",
+   "subject": "the Maloti mountains with deep valleys and no trees",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Bearded Vulture and Eland",
+   "description": "The lammergeier breeds on the Drakensberg escarpment, and eland are back in the reserves.",
+   "subject": "a bearded vulture in flight along a mountain escarpment",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Not the Business Here",
+   "description": "This is a mountain country, not a savanna one. What you go for is the ground and the horses.",
+   "subject": "eland grazing in high grassland at Sehlabathebe",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Thabana Ntlenyana",
+   "description": "3,482 metres, the highest point in Africa south of Kilimanjaro.",
+   "subject": "the summit plateau of Thabana Ntlenyana under snow",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Maletsunyane",
+   "description": "192 metres in a single drop, and a commercial abseil down beside it.",
+   "subject": "the single 192-metre drop of the Maletsunyane falls",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Senqu",
+   "description": "The Orange river rises here and runs the whole width of South Africa afterwards.",
+   "subject": "the young Senqu river running through a high mountain valley",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "High Reservoirs",
+   "description": "Landlocked and mountainous: the water here is Katse and Mohale, and it is sold to South Africa.",
+   "subject": "the Katse dam wall and reservoir between mountains",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Almost None",
+   "description": "Above the treeline for most of the country, and the small patches left are protected.",
+   "subject": "a patch of indigenous forest in a sheltered Lesotho gorge",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Pony Trekking",
+   "description": "The Basotho pony is the way to cross this country, and has been for a hundred and fifty years.",
+   "subject": "riders on Basotho ponies crossing a high mountain pass",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "The Blanket and the Hat",
+   "description": "The Basotho blanket is worn seriously and read closely, and the mokorotlo is on the flag.",
+   "subject": "a man in a patterned Basotho blanket on a mountain road",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Basotho",
+   "description": "One people, one language, and a kingdom that kept its independence by going uphill.",
+   "subject": "Basotho herders in blankets with sheep on a high pasture",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Papa, Moroho and Motoho",
+   "description": "Maize papa with wild greens, and motoho — fermented sorghum drink.",
+   "subject": "a bowl of papa with moroho greens",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Morija Arts and Cultural Festival",
+   "description": "Music, poetry and horse racing at Morija every year, and the country turns up.",
+   "subject": "horse racing at the Morija cultural festival",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Blankets, Hats and Tapestry",
+   "description": "Woven mohair tapestry, the conical mokorotlo hat, and the blankets themselves.",
+   "subject": "a woven mohair tapestry on a loom in Lesotho",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Thaba Bosiu",
+   "description": "The flat-topped mountain Moshoeshoe I defended, and where the nation was made.",
+   "subject": "the flat-topped plateau of Thaba Bosiu above the plain",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Maloti-Drakensberg",
+   "description": "A World Heritage site shared with South Africa, for its landscape and its San rock art.",
+   "subject": "San rock paintings on a sandstone overhang in Lesotho",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Maseru",
+   "description": "A small capital on the Caledon, with the border post at the end of the main street.",
+   "subject": "the main street and sandstone buildings of Maseru",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Sandstone and Rondavel",
+   "description": "Colonial sandstone in Maseru, and painted rondavels with stone walls in the mountains.",
+   "subject": "a stone rondavel with a thatched roof in the Maloti",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Sunday on Horseback",
+   "description": "The horse is transport, not recreation, and every village has them saddled.",
+   "subject": "villagers on horseback on a mountain track",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Ponies and Snow",
+   "description": "Short pony treks, dinosaur footprints and, in winter, actual snow.",
+   "subject": "children on Basotho ponies with a guide",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Sani and Sehlabathebe",
+   "description": "The Sani Pass in four-wheel-drive, and the rock formations and rivers of Sehlabathebe.",
+   "subject": "the hairpins of the Sani Pass climbing the escarpment",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Lodges and Trading Posts",
+   "description": "Malealea and Semonkong grew out of trading posts, and they are the best of it.",
+   "subject": "a mountain lodge with stone buildings at Semonkong",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Water as the Economy",
+   "description": "The Highlands Water Project sells water to South Africa, and the dams are the landscape now.",
+   "subject": "the Katse reservoir winding between steep mountainsides",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "High and Clear",
+   "description": "The Maloti in autumn, when the grass turns and the air will not hold any haze.",
+   "subject": "clear autumn light on golden grassland and basalt ridges",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Dinosaur Footprints",
+   "description": "Trackways in the sandstone at Moyeni and Morija, in the open and unfenced.",
+   "subject": "fossil dinosaur footprints in exposed sandstone rock",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Lesotho",
+   "description": "A whole country above a thousand metres, crossed on a pony, with snow in July.",
+   "subject": "a rider on a Basotho pony against a wide mountain horizon",
+   "focal": [
+    50,
+    48
+   ]
+  }
+ ]
+}

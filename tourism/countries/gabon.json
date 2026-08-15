@@ -1,0 +1,296 @@
+{
+ "slug": "gabon",
+ "name": "Gabon",
+ "adjective": "Gabonese",
+ "region": "Central & West Africa",
+ "tagline": "Elephants on the beach at Loango",
+ "summary": "Eighty-eight per cent forest, thirteen national parks covering eleven per cent of the country, and at Loango forest elephant, buffalo and hippo come out onto an Atlantic beach — the only place on earth where that happens.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "nature",
+  "coast"
+ ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9,
+  12,
+  1
+ ],
+ "when": "The long dry season, May to September. Whales are offshore from July to September; turtles nest from November.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Loango",
+   "description": "Forest elephant and buffalo walking out of the trees onto the Atlantic sand.",
+   "subject": "forest elephants on the beach at Loango National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Eighty-Eight Per Cent Forest",
+   "description": "One of the most forested countries on earth, and eleven per cent of it in national parks.",
+   "subject": "unbroken rainforest running down to a lagoon in Gabon",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Lowland Gorillas and Mandrills",
+   "description": "Habituated gorillas at Loango, and mandrill hordes at Lope that run to hundreds.",
+   "subject": "a mandrill with a bright face in Lope forest",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Forest and Savanna at Lope",
+   "description": "Where the forest meets the last of the Ogooue savanna, with elephant and buffalo in both.",
+   "subject": "the forest edge meeting open savanna at Lope",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Chaillu Massif",
+   "description": "1,575 metres at Mont Iboundji, forested to the top, in the middle of the country.",
+   "subject": "the forested Chaillu massif under cloud",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Kongou and Mingouli",
+   "description": "Kongou on the Ivindo — three kilometres wide in flood, in the middle of rainforest.",
+   "subject": "the wide Kongou falls spread across rainforest on the Ivindo",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Ogooue and the Ivindo",
+   "description": "The Ogooue drains almost the whole country; the Ivindo runs through Ivindo National Park.",
+   "subject": "the Ogooue river running broad between forested banks",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Eight Hundred Kilometres of Atlantic",
+   "description": "Empty beaches with forest behind them, humpbacks offshore, and leatherbacks nesting.",
+   "subject": "an empty Atlantic beach backed by rainforest in Gabon",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Congo Basin Forest",
+   "description": "Lope has one of the longest continuous records of forest-savanna change anywhere.",
+   "subject": "buttressed rainforest trees and understorey at Lope",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Whales, Turtles and Surf",
+   "description": "Humpbacks from July, leatherbacks from November, and a beach nobody else is on.",
+   "subject": "a humpback whale breaching off the Gabonese coast",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Bwiti",
+   "description": "An initiatory religion built around iboga, and the ceremonies run all night to harp and drum.",
+   "subject": "a Bwiti ceremony at night with harp and torches",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Fang, Punu, Myene and the Baka",
+   "description": "Fang across the north, Punu in the south, and Baka forest people in the interior.",
+   "subject": "a Punu white-faced mask with carved coiffure",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Nyembwe and Smoked Fish",
+   "description": "Chicken in palm nut nyembwe sauce, and river fish smoked over a slow fire.",
+   "subject": "a dish of poulet nyembwe with cassava",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Bwiti Night",
+   "description": "Ngombi harp, mouth bow and dancing until dawn, and it is a religion rather than a show.",
+   "subject": "musicians playing the ngombi harp at a night ceremony",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Masks and Ngombi Harps",
+   "description": "Punu white-faced masks, Fang reliquary figures, and the carved harps of Bwiti.",
+   "subject": "a carved Fang reliquary guardian figure",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Lope's Rock Art",
+   "description": "Engravings on the Ogooue at Lope, and Iron Age sites going back two and a half thousand years.",
+   "subject": "rock engravings on granite beside the Ogooue at Lope",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Lope-Okanda, and Ivindo",
+   "description": "Two World Heritage sites: the forest-savanna mosaic, and the falls on the Ivindo.",
+   "subject": "the forest-savanna boundary landscape at Lope-Okanda",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Libreville and Port-Gentil",
+   "description": "An Atlantic capital, and an oil town on an island at the Ogooue delta.",
+   "subject": "the seafront boulevard and buildings of Libreville",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Colonial and Contemporary",
+   "description": "French colonial along the coast, and Libreville's newer buildings behind it.",
+   "subject": "a colonial-era building beside modern blocks in Libreville",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Grilled Fish on the Sand",
+   "description": "The Libreville beach restaurants at the weekend, and the fish landed that morning.",
+   "subject": "grilled fish being served at a beach restaurant in Libreville",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Elephants From a Boat",
+   "description": "Loango's lagoon puts you at eye level with elephant and buffalo, safely, from the water.",
+   "subject": "a boat on Loango lagoon with elephants on the far bank",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Kayak, Trek and Boat",
+   "description": "Lagoon kayaking at Loango, forest trekking at Ivindo, and the train through Lope.",
+   "subject": "kayakers on the Loango lagoon at first light",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "A Handful, and Good",
+   "description": "Loango and Lope have real lodges, and the rest of the parks are camping.",
+   "subject": "a lodge deck overlooking the lagoon at Loango",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Thirteen Parks in One Decision",
+   "description": "Gabon created all thirteen national parks in 2002, on one day, covering eleven per cent of the country.",
+   "subject": "a park boundary sign at the edge of Gabonese rainforest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Forest Meeting Ocean",
+   "description": "Loango at low sun, when the elephants come out and the beach is empty in both directions.",
+   "subject": "elephants crossing an empty beach with forest behind at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Trans-Gabonais",
+   "description": "The railway from Libreville to Franceville, straight through Lope, overnight.",
+   "subject": "the Trans-Gabonais railway running through rainforest",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Gabon",
+   "description": "The only place in the world where forest elephants walk out onto an ocean beach.",
+   "subject": "a forest elephant standing on Atlantic sand at Loango",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

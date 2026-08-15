@@ -1,0 +1,293 @@
+{
+ "slug": "burundi",
+ "name": "Burundi",
+ "adjective": "Burundian",
+ "region": "East Africa",
+ "tagline": "The southernmost source of the Nile",
+ "summary": "A country of hills above Lake Tanganyika, with the drummers of Gishora on the UNESCO list, chimpanzees at Kibira, and a marker at Rutovu on the ridge where the Nile's longest tributary begins.",
+ "published": true,
+ "calls": [
+  "nature",
+  "culture",
+  "coast"
+ ],
+ "months": [
+  6,
+  7,
+  8,
+  9
+ ],
+ "when": "The long dry season, June to September.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Hills and Lake",
+   "description": "Every horizon is a ridge, and Tanganyika is at the bottom of all of them.",
+   "subject": "terraced green hills running down towards Lake Tanganyika",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Congo-Nile Divide",
+   "description": "A ridge running the length of the country, with the Nile on one side and the Congo on the other.",
+   "subject": "the forested ridge of the Congo-Nile divide under cloud",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Chimpanzees at Kibira",
+   "description": "Montane forest continuous with Rwanda's Nyungwe, with chimpanzee and colobus in it.",
+   "subject": "a chimpanzee in the montane forest canopy at Kibira",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Rusizi and Ruvubu",
+   "description": "Hippo and crocodile in the Rusizi delta, and buffalo and antelope along the Ruvubu.",
+   "subject": "hippos in the Rusizi river delta near Bujumbura",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mount Heha",
+   "description": "2,684 metres, an hour from the capital, with the whole rift visible from the top.",
+   "subject": "the view from Mount Heha across ridges towards Lake Tanganyika",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Karera",
+   "description": "Four falls in one forested gorge in the southeast, with a path between them.",
+   "subject": "the Karera falls dropping through forest in southern Burundi",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Lake Tanganyika",
+   "description": "The second deepest lake on earth, and Burundi has a hundred and sixty kilometres of it.",
+   "subject": "the deep blue water of Lake Tanganyika from a hillside",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Saga and Karera Beaches",
+   "description": "White sand on Tanganyika south of Bujumbura, with the Congo visible across the water.",
+   "subject": "white sand and palms on the shore of Lake Tanganyika",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Kibira",
+   "description": "Forty thousand hectares of montane forest on the divide, and the country's water tower.",
+   "subject": "mossy montane forest and tree ferns at Kibira",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Walking the Divide",
+   "description": "Kibira on foot, Mount Heha in a morning, and the lake shore road south.",
+   "subject": "a forest path along the ridge at Kibira",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "The Drums",
+   "description": "The royal drummers of Gishora are on the UNESCO list, and they are not a performance troupe.",
+   "subject": "Burundian royal drummers with drums on their heads",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Hutu, Tutsi and Twa",
+   "description": "One language, Kirundi, spoken by everybody, and a history the country is still working through.",
+   "subject": "a village gathering under a tree in the Burundian hills",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Beans, Ugali and Mukeke",
+   "description": "Beans and plantain, ugali, and mukeke — a Tanganyika fish grilled on the beach.",
+   "subject": "grilled mukeke fish with plantain on a plate",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Gishora",
+   "description": "The drum sanctuary above Gitega, where the drums are kept and danced on their own ground.",
+   "subject": "drummers performing at the Gishora drum sanctuary",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Basketry and Drums",
+   "description": "Coiled agaseke baskets with pointed lids, and the drums themselves.",
+   "subject": "coiled agaseke baskets with conical lids",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Rutovu",
+   "description": "A stone pyramid on a ridge marking the southernmost source of the Nile.",
+   "subject": "the stone pyramid marking the Nile source at Rutovu",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Ritual Dance of the Royal Drum",
+   "description": "Inscribed in 2014 — the drums, the dance and the making of them, together.",
+   "subject": "a drum being carved and stretched at a Burundian workshop",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Bujumbura and Gitega",
+   "description": "A lakeside city with a long promenade, and the political capital up in the hills.",
+   "subject": "the lakefront and hills at Bujumbura",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Colonial and Hillside",
+   "description": "German and Belgian colonial in Bujumbura, and tiled hillside houses everywhere else.",
+   "subject": "a Belgian colonial building in central Bujumbura",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Beach on a Sunday",
+   "description": "Bujumbura goes to Saga beach, and stays until the light goes.",
+   "subject": "crowds at Saga beach on Lake Tanganyika on a Sunday",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Lake and Hills",
+   "description": "Short distances, calm fresh water, and hippos to keep an eye on.",
+   "subject": "children playing on the sand at a Lake Tanganyika beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Hiking the Hills",
+   "description": "Heha, Kibira and the ridge roads, none of them more than a day.",
+   "subject": "a walker on a ridge path above terraced hills",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Modest",
+   "description": "A handful of hotels in Bujumbura, and lodges on the lake shore.",
+   "subject": "a lakeside hotel terrace at Bujumbura",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Kibira's Water",
+   "description": "The forest feeds the hydro that runs most of the country, and protecting it is not sentiment.",
+   "subject": "a clear stream running out of Kibira forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Drums in Motion",
+   "description": "Gishora mid-performance, when the drums are carried and struck at once.",
+   "subject": "a Burundian drummer leaping with a drum in performance",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Rusizi Delta",
+   "description": "Hippos, birds and the Congo across the water, twenty minutes from the capital.",
+   "subject": "hippos and birds in the Rusizi delta at dusk",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Burundi",
+   "description": "The Nile's furthest source, the royal drums, and a lake almost nobody visits.",
+   "subject": "a fishing boat on Lake Tanganyika below green hills",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

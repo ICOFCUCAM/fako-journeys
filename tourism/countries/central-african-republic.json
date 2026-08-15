@@ -1,0 +1,294 @@
+{
+ "slug": "central-african-republic",
+ "name": "Central African Republic",
+ "adjective": "Central African",
+ "region": "Central & West Africa",
+ "tagline": "Dzanga Bai, and the forest elephants",
+ "summary": "Dzanga Bai is a forest clearing where a hundred elephants come to drink mineral water in a single afternoon, and Dzanga-Sangha holds western lowland gorillas habituated for tracking — one of the great wildlife experiences on earth, in one of the hardest countries to reach.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "nature",
+  "culture"
+ ],
+ "months": [
+  12,
+  1,
+  2,
+  5,
+  6
+ ],
+ "when": "December to February, and a shorter window in May and June. Check advice: only the southwest is travelled.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Dzanga Bai",
+   "description": "A mineral clearing in the forest where a hundred elephants gather in an afternoon.",
+   "subject": "forest elephants gathered at the Dzanga Bai clearing",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Congo Basin Forest",
+   "description": "The northern edge of the second largest rainforest on earth, and it starts here.",
+   "subject": "unbroken rainforest canopy in the Dzanga-Sangha reserve",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Western Lowland Gorillas",
+   "description": "Habituated groups tracked on foot, with far fewer visitors than in the east.",
+   "subject": "a western lowland gorilla in forest undergrowth",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Forest, Not Savanna",
+   "description": "This is bai-watching and forest tracking. Bongo, forest buffalo and sitatunga, all on foot.",
+   "subject": "a bongo antelope at the edge of a forest clearing",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Fertit Hills and Mont Ngaoui",
+   "description": "1,420 metres on the Cameroon border, in country almost nobody visits.",
+   "subject": "wooded hills rising above savanna in western CAR",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Boali",
+   "description": "Fifty metres of water on the M'Bali river, two hours from Bangui.",
+   "subject": "the Boali waterfall dropping over a wide ledge",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Sangha and the Ubangi",
+   "description": "The Sangha runs down to the Congo; the Ubangi is the whole southern border.",
+   "subject": "the Sangha river running between walls of rainforest",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "River Sand",
+   "description": "Landlocked. The sandbanks on the Sangha come out in the dry season and people use them.",
+   "subject": "a wide sandbank on the Sangha river in the dry season",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Dzanga-Sangha",
+   "description": "Old-growth Congo Basin forest, shared with Cameroon and Congo as a trinational park.",
+   "subject": "buttressed rainforest giants in Dzanga-Sangha",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Tracking on Foot",
+   "description": "Gorillas in the morning, the bai in the afternoon, and net-hunting with the BaAka between.",
+   "subject": "trackers moving quietly through dense forest undergrowth",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "The BaAka",
+   "description": "Forest hunter-gatherers whose polyphonic singing is on the UNESCO intangible list.",
+   "subject": "BaAka women singing in polyphony in a forest camp",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "BaAka and Sangha-Sangha",
+   "description": "The BaAka in the forest, and the Sangha-Sangha along the river.",
+   "subject": "a BaAka net-hunting party moving through forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Cassava, Bushmeat and Palm Wine",
+   "description": "Cassava as the staple, smoked fish from the river, and palm wine tapped in the forest.",
+   "subject": "smoked river fish and cassava on a plate",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "BaAka Polyphony",
+   "description": "Sung in overlapping parts, with no leader and no fixed melody, and it has been studied by composers for fifty years.",
+   "subject": "BaAka singers and drummers around a forest camp fire",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Nets, Baskets and Bark Cloth",
+   "description": "Hunting nets woven from forest liana, and bark cloth beaten from tree fibre.",
+   "subject": "a woven forest hunting net and bark cloth",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Bangui's Colonial Quarter",
+   "description": "A river capital laid out by the French, and much of it still standing.",
+   "subject": "a colonial-era building on the riverfront at Bangui",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Two Sites",
+   "description": "Dzanga-Sangha for its forest, and Manovo-Gounda St Floris in the north, on the danger list.",
+   "subject": "open savanna and gallery forest in northern CAR",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Bangui",
+   "description": "On the Ubangi, opposite the Congo, with the Marche Central at the middle of it.",
+   "subject": "the Ubangi riverfront and market at Bangui",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Colonial and Forest Camp",
+   "description": "French colonial in Bangui, and leaf-and-sapling mongulu shelters in the forest.",
+   "subject": "a domed leaf mongulu shelter in a BaAka forest camp",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Marche Central",
+   "description": "Everything from cassava to river fish, and the noise of a city that never stops trading.",
+   "subject": "crowds and stalls at the Marche Central in Bangui",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Not Yet",
+   "description": "This is expedition travel in a country with a hard recent history, and it is not for families.",
+   "subject": "a village school in a forest clearing",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Forest Walking",
+   "description": "Everything here is done on foot, quietly, behind a tracker.",
+   "subject": "a narrow trail through dense Congo Basin forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "One Lodge",
+   "description": "Sangha Lodge at Dzanga-Sangha, and nothing comparable anywhere else in the country.",
+   "subject": "a forest lodge deck overlooking the Sangha river",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Dzanga-Sangha's Model",
+   "description": "The reserve employs BaAka trackers and shares gate revenue with the villages around it.",
+   "subject": "a BaAka tracker leading visitors through the forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Elephants in a Clearing",
+   "description": "Dzanga Bai from the platform at four in the afternoon, when the light comes in sideways.",
+   "subject": "afternoon light across forest elephants at Dzanga Bai",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Chimpanzees at Bai Hokou",
+   "description": "A second habituated group, and the walk in is as good as the sighting.",
+   "subject": "a chimpanzee resting in a forest tree at Bai Hokou",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why the Central African Republic",
+   "description": "A hundred forest elephants in one clearing, watched from a platform, by almost no one.",
+   "subject": "a viewing platform overlooking elephants at a forest bai",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

@@ -1,0 +1,295 @@
+{
+ "slug": "equatorial-guinea",
+ "name": "Equatorial Guinea",
+ "adjective": "Equatoguinean",
+ "region": "Central & West Africa",
+ "tagline": "A volcanic island, and turtles on the black sand",
+ "summary": "Bioko is a volcanic island with cloud forest, seven primate species and four nesting turtle species on its southern beaches; the mainland at Monte Alen holds gorillas and forest elephant.",
+ "published": true,
+ "calls": [
+  "nature",
+  "wildlife",
+  "coast"
+ ],
+ "months": [
+  6,
+  7,
+  8,
+  12,
+  1,
+  2
+ ],
+ "when": "The dry seasons. Turtle nesting on Bioko's south runs November to February.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Bioko",
+   "description": "A volcanic island in the Gulf of Guinea, forested to the summit and ringed by black sand.",
+   "subject": "the forested volcanic cone of Bioko rising above the sea",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Gran Caldera",
+   "description": "A collapsed volcanic crater in the south of Bioko, forested, and reached only on foot.",
+   "subject": "the forested rim of the Gran Caldera de Luba on Bioko",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Seven Primates on One Island",
+   "description": "Bioko has seven species, several of them found on that island and nowhere else.",
+   "subject": "a Bioko drill monkey in the island's cloud forest",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Monte Alen",
+   "description": "Mainland forest with gorilla, chimpanzee and forest elephant, walked rather than driven.",
+   "subject": "rainforest and a river valley in Monte Alen National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Pico Basile",
+   "description": "3,011 metres, the island's volcano, with a road most of the way up it.",
+   "subject": "the summit and cloud forest of Pico Basile on Bioko",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Iladyi",
+   "description": "A 250-metre cascade off the caldera rim in the south of Bioko.",
+   "subject": "the Iladyi cascade falling from the caldera rim on Bioko",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Wele and the Muni",
+   "description": "The Wele runs across the mainland; the Muni estuary marks the Gabonese border.",
+   "subject": "the Muni estuary with mangrove at low tide",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Black Sand and Turtles",
+   "description": "Four species nest on Bioko's southern beaches — leatherback, green, olive ridley and hawksbill.",
+   "subject": "a leatherback turtle on black sand at Bioko's southern beach",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Cloud Forest and Lowland",
+   "description": "Cloud forest above a thousand metres on Bioko, and Congo Basin forest on the mainland.",
+   "subject": "moss-covered cloud forest on the slopes of Pico Basile",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Trekking the Caldera",
+   "description": "Three days on foot from Ureca to the Gran Caldera, through forest, with no road at all.",
+   "subject": "walkers on a forest trail towards the Gran Caldera",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Spanish, Fang and Bubi",
+   "description": "The only Spanish-speaking country in Africa, with Fang on the mainland and Bubi on Bioko.",
+   "subject": "a street of Spanish colonial buildings in Malabo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Bubi",
+   "description": "Bioko's first people, with their own language, and a history separate from the mainland.",
+   "subject": "a Bubi village on a forested slope on Bioko",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Pepe Soup and Malamba",
+   "description": "Pepper soup with fish, and malamba — palm wine sweetened with cane.",
+   "subject": "a bowl of fish pepper soup with plantain",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Abira",
+   "description": "A Bubi purification ceremony, danced with drums and rattles.",
+   "subject": "Bubi dancers with rattles at a village ceremony on Bioko",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Carving and Basketry",
+   "description": "Fang carving on the mainland, and Bubi basketry and wooden bells on Bioko.",
+   "subject": "a carved wooden Fang figure and woven basket",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Colonial Malabo",
+   "description": "Santa Isabel was a Spanish port town, and the cathedral and customs house still stand.",
+   "subject": "the twin-spired Spanish colonial cathedral in Malabo",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Nothing Listed Yet",
+   "description": "No World Heritage sites, and a colonial architecture that has been very little studied.",
+   "subject": "a decaying Spanish colonial verandah building in Malabo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Malabo and Bata",
+   "description": "The island capital in a drowned crater, and the mainland's largest city on the coast.",
+   "subject": "the harbour and colonial waterfront of Malabo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Spanish Colonial",
+   "description": "Malabo's cathedral, customs house and shuttered merchant houses, in a Gulf of Guinea version of Spain.",
+   "subject": "shuttered Spanish colonial houses on a Malabo street",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Sunday After Mass",
+   "description": "Malabo empties into the streets after the cathedral, and stays there.",
+   "subject": "people gathered outside the cathedral in Malabo after mass",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Beach and Forest",
+   "description": "Arena Blanca on Bioko is calm and shaded, and Pico Basile is drivable.",
+   "subject": "a family on the sheltered sand at Arena Blanca on Bioko",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking Bioko",
+   "description": "The south of the island has no roads. Everything there is done on foot.",
+   "subject": "a forest path descending towards the sea on southern Bioko",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Business Hotels, Mostly",
+   "description": "Malabo and Bata have good hotels built for the oil industry, and Bioko's south has none.",
+   "subject": "a hotel terrace overlooking the sea at Malabo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "The Bioko Biodiversity Programme",
+   "description": "University-run monitoring of the turtle beaches and primates since 1998.",
+   "subject": "researchers recording a turtle nest on Bioko's black sand",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Black Sand and Green",
+   "description": "Ureca in the rain, which is most of the time — the wettest place in Africa.",
+   "subject": "rain over black sand and rainforest at Ureca on Bioko",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Annobon",
+   "description": "A volcanic island six hundred kilometres out, with a crater lake and four flights a month.",
+   "subject": "the crater lake and volcanic slopes of Annobon island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Equatorial Guinea",
+   "description": "Four turtle species on one black beach, under a forest with drills in it.",
+   "subject": "turtle tracks on black sand below rainforest at dawn",
+   "focal": [
+    50,
+    54
+   ]
+  }
+ ]
+}

@@ -1,0 +1,296 @@
+{
+ "slug": "malawi",
+ "name": "Malawi",
+ "adjective": "Malawian",
+ "region": "Southern Africa",
+ "tagline": "A lake with more fish species than any other",
+ "summary": "Lake Malawi holds more freshwater fish species than any lake on earth, Liwonde and Majete have been restocked to the point of holding all the big five, and the Mulanje massif rises three thousand metres straight off the plain.",
+ "published": true,
+ "calls": [
+  "nature",
+  "wildlife",
+  "coast",
+  "culture"
+ ],
+ "months": [
+  5,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "when": "May to October. The lake is clearest from September, and the game is best at the end of the dry season.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Lake",
+   "description": "Five hundred kilometres of it, and more fish species than any other lake in the world.",
+   "subject": "the clear water and rocky shore of Lake Malawi at Cape Maclear",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Rift and the Massif",
+   "description": "The Rift Valley floor with the lake in it, and Mulanje standing three thousand metres above the tea.",
+   "subject": "the Mulanje massif rising abruptly above tea estates",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Cichlids, and the Big Five",
+   "description": "Hundreds of endemic cichlids in the lake, and the big five back in the parks on shore.",
+   "subject": "brightly coloured mbuna cichlids over rocks in Lake Malawi",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Liwonde and Majete",
+   "description": "Both restocked from near-empty — Majete had nothing in 2003 and has the big five now.",
+   "subject": "elephants on the Shire river bank in Liwonde",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mulanje",
+   "description": "3,002 metres at Sapitwa, a granite massif with huts, paths and a week of walking on it.",
+   "subject": "the granite peaks and plateaux of the Mulanje massif",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Manchewe",
+   "description": "Off the Nyika escarpment near Livingstonia, with a cave behind the water.",
+   "subject": "the Manchewe falls dropping off the escarpment near Livingstonia",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Shire",
+   "description": "The lake's only outlet, running south through Liwonde to the Zambezi.",
+   "subject": "the Shire river with hippos and reedbeds in Liwonde",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Freshwater Beaches",
+   "description": "Landlocked, and it does not matter: Cape Maclear, Nkhata Bay and Likoma have sand and clear water.",
+   "subject": "a beach and clear water at Nkhata Bay on Lake Malawi",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Nyika and Zomba",
+   "description": "Montane grassland on Nyika at two thousand metres, and cedar forest on the Zomba plateau.",
+   "subject": "rolling montane grassland and pines on the Nyika plateau",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Diving, Kayak and the Massif",
+   "description": "Freshwater diving on the cichlid reefs, kayaking the lake shore, and Mulanje for a week.",
+   "subject": "kayakers paddling along the rocky shore of Lake Malawi",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "The Warm Heart",
+   "description": "The reputation for friendliness is real, and it is the first thing every visitor mentions.",
+   "subject": "people talking at a lakeside village market in Malawi",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Chewa, Yao, Tumbuka, Lomwe",
+   "description": "The Chewa Gule Wamkulu masquerade is on the UNESCO list and is danced still.",
+   "subject": "Gule Wamkulu masked dancers performing in a village",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Nsima and Chambo",
+   "description": "Nsima with relish, and chambo — a lake cichlid — grilled whole on the shore.",
+   "subject": "a grilled chambo fish served with nsima",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Lake of Stars",
+   "description": "A music festival on the shore, and Gule Wamkulu in the villages all year.",
+   "subject": "a crowd at a music festival on the shore of Lake Malawi",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Carving and Chitenje",
+   "description": "Blackwood carving, basketry, and the printed chitenje cloth worn everywhere.",
+   "subject": "printed chitenje cloth stacked at a market stall",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Livingstonia",
+   "description": "A mission on the escarpment built in 1894, with the manse, the church and the view intact.",
+   "subject": "the stone church and manse of Livingstonia on the escarpment",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Lake Malawi National Park",
+   "description": "The first freshwater national park in the world, listed for its cichlids.",
+   "subject": "granite boulders and clear shallow water in Lake Malawi National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Lilongwe and Blantyre",
+   "description": "A quiet capital, and an older commercial city with the country's first church in it.",
+   "subject": "the market and streets of Blantyre",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Mission Stone and Lakeshore Brick",
+   "description": "Scottish mission churches in stone, and fired brick along the lake.",
+   "subject": "the stone facade of the Blantyre mission church",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Beach at Cape Maclear",
+   "description": "Fishermen, boats, children and visitors on the same strip of sand all day.",
+   "subject": "fishing boats and children on the beach at Cape Maclear",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Easy, and Warm",
+   "description": "Short distances, no malaria-free claim but a very manageable country with children.",
+   "subject": "children swimming from a beach on Lake Malawi",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Mulanje for a Week",
+   "description": "Hut to hut across the massif, with porters, and paths that have been there a century.",
+   "subject": "walkers crossing a plateau on the Mulanje massif",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Small and Well Run",
+   "description": "Lakeshore lodges, Mkulumadzi at Majete, and Kaya Mawa on Likoma island.",
+   "subject": "a lakeside lodge deck over clear water at dusk",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Majete's Recovery",
+   "description": "African Parks took on an empty park in 2003 and it has the big five and no poaching now.",
+   "subject": "a ranger and vehicle at a waterhole in Majete",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Clear Water and Granite",
+   "description": "The lake in September, when the water is at its clearest and the boulders go down twenty metres.",
+   "subject": "clear blue water over granite boulders in Lake Malawi",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Likoma Island",
+   "description": "A Malawian island inside Mozambican water, with a cathedral the size of Winchester's.",
+   "subject": "the large Anglican cathedral standing over Likoma island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Malawi",
+   "description": "A lake with more fish species than any other on earth, and parks brought back from nothing.",
+   "subject": "a dhow under sail on Lake Malawi at sunset",
+   "focal": [
+    50,
+    54
+   ]
+  }
+ ]
+}

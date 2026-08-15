@@ -1,0 +1,296 @@
+{
+ "slug": "sao-tome-and-principe",
+ "name": "Sao Tome and Principe",
+ "adjective": "Santomean",
+ "region": "Islands",
+ "tagline": "Two volcanic islands and a lot of cocoa",
+ "summary": "Obo rainforest running from the peaks to the sea, volcanic plugs standing out of the forest, abandoned cocoa plantations being taken back by it, and some of the best chocolate in the world made where the beans grow.",
+ "published": true,
+ "calls": [
+  "nature",
+  "coast",
+  "food",
+  "culture"
+ ],
+ "months": [
+  6,
+  7,
+  8,
+  9,
+  12,
+  1
+ ],
+ "when": "The gravana, June to September, is the dry season. December and January are a shorter one.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Pico Cao Grande",
+   "description": "A volcanic plug standing three hundred metres straight out of the rainforest.",
+   "subject": "the needle of Pico Cao Grande rising from rainforest",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Obo",
+   "description": "Rainforest covering a third of Sao Tome, from the peaks down to the shore.",
+   "subject": "dense Obo rainforest running down to the sea",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Endemic Birds",
+   "description": "Twenty-eight species live on these islands and nowhere else — one of the highest rates on earth.",
+   "subject": "a Sao Tome giant weaver on a branch in Obo forest",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Sea, Not Savanna",
+   "description": "There are no large mammals. What there is instead is birds, turtles and whales.",
+   "subject": "a humpback whale off the coast of Principe",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Pico de Sao Tome",
+   "description": "2,024 metres, in cloud most of the year, and a two-day walk to the top.",
+   "subject": "the cloud-covered summit of Pico de Sao Tome above forest",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Sao Nicolau",
+   "description": "A waterfall in the forest above Trindade, reached on a short walk from the road.",
+   "subject": "the Sao Nicolau waterfall falling through dense forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Rivers to the Sea",
+   "description": "Short, steep rivers off the volcanic interior, and pools in most of them.",
+   "subject": "a clear river running over volcanic rock through forest",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Praia Jale and Banana Beach",
+   "description": "Turtle-nesting sand in the south of Sao Tome, and the curved bay on Principe.",
+   "subject": "the curved palm-backed sand of Banana Beach on Principe",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Cocoa Forest",
+   "description": "Plantations abandoned in the 1970s and taken back by the forest, with the trees still fruiting.",
+   "subject": "cocoa pods growing among overgrown plantation trees",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Walking and Diving",
+   "description": "Cao Grande and the Pico on foot, and volcanic reef straight off the beaches.",
+   "subject": "walkers on a forest trail below Pico Cao Grande",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Creole, and Portuguese",
+   "description": "Forro, Angolar and Principense creoles, and a culture built on the plantations and against them.",
+   "subject": "a street of Portuguese colonial buildings in Sao Tome town",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Angolares",
+   "description": "Descended from a shipwreck or a maroon community, depending on who tells it, and fishermen either way.",
+   "subject": "Angolares fishermen with a dugout canoe on a black beach",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Calulu and Chocolate",
+   "description": "Calulu — fish stewed with okra and palm oil — and chocolate made where the beans grow.",
+   "subject": "a plate of calulu with breadfruit and rice",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Auto de Floripes",
+   "description": "A Principe street play that runs a whole day in August, performed since the sixteenth century.",
+   "subject": "costumed performers in the Auto de Floripes on Principe",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Cocoa, Coffee and Carving",
+   "description": "Single-origin chocolate, island coffee, and carving in the plantation villages.",
+   "subject": "cocoa beans drying on a wooden rack in the sun",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "The Rocas",
+   "description": "Plantation estates with hospitals, chapels and rail lines, most of them now half-ruined and lived in.",
+   "subject": "the arcaded courtyard of an abandoned roca plantation house",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Principe Biosphere",
+   "description": "The whole of Principe is a UNESCO biosphere reserve, and it is seven thousand people.",
+   "subject": "forested peaks and coastline on Principe island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Sao Tome Town",
+   "description": "A small Portuguese colonial capital with a fort, a market and a cathedral.",
+   "subject": "the pastel colonial buildings and fort at Sao Tome town",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Portuguese Colonial and Roca",
+   "description": "Pastel colonial in town, and the plantation architecture of the rocas in the interior.",
+   "subject": "the tower and arcades of Roca Agostinho Neto",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Fish Landing",
+   "description": "Dugouts come in through the surf and the fish is sold on the sand within the hour.",
+   "subject": "fishermen landing dugout canoes through surf on a black beach",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Small and Easy",
+   "description": "Short distances, calm bays and no dangerous animals — one of the easier African countries with children.",
+   "subject": "children swimming in a calm bay on Sao Tome",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Climbing the Pico",
+   "description": "Two days through cloud forest, with a night in a shelter and a lot of rain.",
+   "subject": "a muddy trail through mossy cloud forest on the Pico",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Good, and Small",
+   "description": "Restored rocas turned into hotels, and a serious eco-resort on Principe.",
+   "subject": "a restored plantation house hotel with a verandah",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Cocoa, Grown and Made",
+   "description": "Cooperatives grow it, and the chocolate is made on the island rather than shipped raw.",
+   "subject": "a chocolate maker sorting cocoa beans on a table",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Volcano and Canopy",
+   "description": "Cao Grande through cloud in the early morning, from the road below it.",
+   "subject": "cloud parting around Pico Cao Grande above forest at dawn",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Roca Agostinho Neto",
+   "description": "The largest plantation on the island, ruined, lived in, and quite unlike anywhere else.",
+   "subject": "families living in the arcaded ruins of a roca plantation",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Sao Tome and Principe",
+   "description": "Rainforest to the shore, twenty-eight endemic birds, and chocolate made where it grows.",
+   "subject": "a volcanic peak above rainforest and an empty beach",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}
