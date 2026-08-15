@@ -238,10 +238,21 @@ check('a link with no journey in it decodes to no journey',
 
 /* The parser's whole claim is that it never guesses. So the tests are mostly
    about what it declines to do. */
+/* The expected lenses are read out of the dataset rather than typed here. They
+   were typed here — 'mountains,wildlife' — and 'mountains' stopped being a lens
+   when it was folded into 'nature'. The parser was right and the test was wrong
+   for as long as it took to notice, which is the failure mode a hardcoded key
+   has: it does not say "that lens is gone", it says "the parser is broken". */
+const lensFor = (word) => lensKeys.filter(
+  k => (D.lenses[k].words || []).indexOf(word) >= 0);
+const wantedTwo = [...new Set([...lensFor('wildlife'), ...lensFor('mountains')])].sort();
+check('the two words this sentence uses are still words some lens owns',
+  wantedTwo.length === 2, wantedTwo.join(',') || 'none');
 const said = E.parse('I have 12 days in September and want wildlife and mountains', D);
 check('a sentence becomes the same brief the buttons make',
   said.month === 9 && said.days === 12
-  && said.wants.sort().join() === 'mountains,wildlife', JSON.stringify(said.wants));
+  && said.wants.slice().sort().join() === wantedTwo.join(),
+  JSON.stringify(said.wants) + ' vs ' + JSON.stringify(wantedTwo));
 check('a length lands in an existing band', said.pacing === 'fortnight', said.pacing);
 check('it reports every field it took', said.took.length >= 4,
   said.took.map(t => t.field).join(','));
@@ -269,7 +280,14 @@ check('the parser is deterministic',
 
 /* ---- how good a match is this -------------------------------------------- */
 
-const bBrief = {wants: ['wildlife', 'mountains'], month: 9};
+/* Two real lenses, again from the dataset. band() quietly drops a key it does
+   not recognise — correctly, a link can carry anything — so a brief written
+   with a dead key asks for one thing while claiming to ask for two, and every
+   partial match below it is scored as a complete one. */
+const bBrief = {wants: wantedTwo.slice(), month: 9};
+check('the brief the bands are scored against asks for two real lenses',
+  bBrief.wants.length === 2 && bBrief.wants.every(k => !!D.lenses[k]),
+  bBrief.wants.join(','));
 const bTop = E.recommend(D, bBrief).picks[0];
 const bandTop = E.band(D, bBrief, bTop);
 check('a match is described in words, not in a percentage',

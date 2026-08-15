@@ -203,10 +203,12 @@ def picture(entry, role):
         srcset = imaging.srcset(rec, role, entry.focal)
     except (ValueError, KeyError):
         return ""
+    w, h = imaging.dimensions(role)
     return ('<span class="ct-shot"><img src="%s" srcset="%s" sizes="%s" alt="%s" '
-            'loading="lazy" decoding="async" style="object-position:%s"></span>'
+            'width="%d" height="%d" loading="lazy" decoding="async" '
+            'style="object-position:%s"></span>'
             % (esc(src), esc(srcset), esc(role["sizes"]), esc(rec.get("alt") or ""),
-               imaging.object_position(entry.focal)))
+               w, h, imaging.object_position(entry.focal)))
 
 
 def build(country, taxonomy, countries=()):
@@ -421,7 +423,13 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
 .ct-high h3{font-size:22px;margin:8px 0 8px}
 .ct-high p{font-size:15px;color:var(--c-muted)}
 .ct-high .ct-shot{display:block;margin-bottom:16px}
-.ct-high .ct-shot img{width:100%;aspect-ratio:4/3;object-fit:cover}
+/* height:auto is what lets the <img> carry width and height. Without it both
+   dimensions are definite from the attributes, aspect-ratio is ignored, and a
+   4:3 slot renders at the photograph's own 16:9 — which is why these tags were
+   written without them and 122 images across twenty pages reserved no space at
+   all. With it the attributes are a ratio hint, aspect-ratio still decides the
+   shape, and the box is held before the file arrives. */
+.ct-high .ct-shot img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
 @media(max-width:900px){.highs{grid-template-columns:1fr 1fr;gap:28px 24px}}
 @media(max-width:560px){.highs{grid-template-columns:1fr}}
 

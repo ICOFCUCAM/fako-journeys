@@ -164,12 +164,26 @@ def block_cities(countries):
     """
     cities = load_cities()
     by_slug = dict((c.slug, c) for c in countries)
+    regions = load_regions()
     rows = []
     for i, city in enumerate(cities):
         c = by_slug.get(city.get("country"))
-        if not c:
-            continue                      # a card has to lead somewhere real
-        key, reg = region_of(c)
+        # A city whose country the atlas has not written up yet still belongs in
+        # the collection — the owner's rule is that anywhere in Africa may be
+        # added, and the atlas catches up afterwards. What it may not do is link
+        # to a country page that is not there, so it leads to the atlas instead
+        # and names its country from its own record. Dropping the card silently,
+        # which is what this did before, meant a city could be added to the
+        # dataset, verified, committed, and simply not appear.
+        if c:
+            key, reg = region_of(c)
+            where, href = c.name, c.url
+        else:
+            key = city.get("region") or ""
+            reg = regions.get(key)
+            where, href = city.get("country_name") or "", "/places"
+            if not where:
+                continue                  # unnamed country, unplaceable card
         tone = reg.tone if reg else ""
         photo = city.get("photo")
         # The first two run wide. Twelve equal cards is a catalogue; a collection
@@ -193,8 +207,8 @@ def block_cities(countries):
             '<span class="wa-city-line">%s</span>'
             '<span class="wa-city-note">%s</span>'
             '</span></a>'
-            % (esc(c.url), wide, esc(key), "true" if photo else "false", esc(tone),
-               art, esc(city["name"]), esc(c.name), esc(city["line"]), esc(city["say"])))
+            % (esc(href), wide, esc(key), "true" if photo else "false", esc(tone),
+               art, esc(city["name"]), esc(where), esc(city["line"]), esc(city["say"])))
     # The grid is four columns and the first two cards are double, so the cards
     # occupy 2*2 + (n-2) cells. Eleven cities leave three empty, and three empty
     # cells at the end of a bordered grid read as a card that failed to render.

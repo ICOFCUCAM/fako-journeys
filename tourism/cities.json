@@ -122,7 +122,8 @@
     -1.9441
    ],
    "photo_w": 1600,
-   "photo_h": 1067
+   "photo_h": 1067,
+   "alt": "Kigali from above: a tree-lined divided boulevard running between green ridges of red-roofed houses, motorcycles and light traffic on it, the hills of the city rising on both sides"
   },
   {
    "slug": "dakar",
@@ -163,7 +164,8 @@
     -25.9692
    ],
    "photo_w": 1600,
-   "photo_h": 1200
+   "photo_h": 1200,
+   "alt": "Maputo from the air: dense mid-rise blocks and tin roofs running down to the bay, ships at anchor, and the long span of the Maputo-Katembe bridge crossing the water in the distance"
   },
   {
    "slug": "douala",
@@ -216,6 +218,7 @@
    "photo": "/images/uploads/city-dar-es-salaam-blue-hour-1600w.jpg",
    "photo_w": 1600,
    "photo_h": 1068,
+   "alt": "Dar es Salaam at blue hour from above: a tall pale modernist block in the foreground with its windows lit, a lit avenue running past a dark wooded park, and the harbour water and the lights of the far shore beyond it",
    "lonlat": [
     39.2083,
     -6.7924
@@ -230,10 +233,13 @@
    "photo": "/images/uploads/city-luanda-bay-1600w.jpg",
    "photo_w": 1600,
    "photo_h": 899,
+   "alt": "Luanda from the air: the long sand spit of the Ilha curving across the bay, ships at anchor inside it, and the towers of the city standing along the far shore",
    "lonlat": [
     13.2344,
     -8.8383
-   ]
+   ],
+   "country_name": "Angola",
+   "region": "southern"
   },
   {
    "slug": "zanzibar-city",
@@ -244,6 +250,7 @@
    "photo": "/images/uploads/city-zanzibar-waterfront-1600w.jpg",
    "photo_w": 1600,
    "photo_h": 900,
+   "alt": "Zanzibar City from the air along its waterfront: dhows and small boats moored on pale shallow water, and the low white and red-roofed buildings of Stone Town running behind the shore",
    "lonlat": [
     39.1979,
     -6.1659

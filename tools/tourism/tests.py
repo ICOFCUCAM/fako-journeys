@@ -1789,20 +1789,38 @@ def main():
         check("the homepage still carries its bands", len(seams) >= 2,
               "%d bands" % len(seams))
         for i, band in enumerate(seams, 1):
-            img = re.search(r'<img([^>]*)>', band)
-            attrs = img.group(1) if img else ""
+            # A band's picture is an <img> or a <video>; both fill the same
+            # fixed frame and both make the same promise, so the questions below
+            # are asked of whichever one is there. Written for <img> alone they
+            # went quiet the day the Waza band became a clip: no <img> matched,
+            # the attribute string came back empty, and an empty string has no
+            # generated path in it to object to.
+            pic = re.search(r'<(img|video)([^>]*)>', band)
+            kind = pic.group(1) if pic else None
+            attrs = pic.group(2) if pic else ""
+            sources = re.findall(r'<source[^>]*src="([^"]*)"', band)
             stamp = re.search(r'class="wa-seam-stamp">([^<]*)<', band)
             where = html_mod.unescape(
                 stamp.group(1) if stamp else "band %d" % i).split("\u00b7")[0].strip()[:22]
             # A band is one photograph filling a screen, and the copy on it says
             # "imagine" — which is exactly the place a generated picture would do
             # the most damage, because a reader has no way to tell and the whole
-            # section is an invitation to believe it.
+            # section is an invitation to believe it. A clip answers for this
+            # twice: the poster is what a reader looks at until the file
+            # arrives, so it has to be as real as the footage behind it.
+            check("the %s band has a picture at all" % where, bool(kind),
+                  kind or "neither an image nor a clip")
+            shown = re.findall(r'(?:src|poster)="([^"]*)"', attrs) + sources
             check("the %s band is a photograph, not a generation" % where,
-                  'data-provider="upload"' in attrs and "/images/generated/" not in attrs)
+                  bool(shown) and not any("/images/generated/" in u for u in shown)
+                  and (kind == "video" or 'data-provider="upload"' in attrs),
+                  ", ".join(shown) or "nothing to show")
+            # <video> has no alt, so the sentence lives on aria-label. Same
+            # sentence, same length, read out to the same person.
+            said = re.search(r'(?:alt|aria-label)="([^"]*)"', attrs)
             check("the %s band says what is in its picture" % where,
-                  len(re.search(r'alt="([^"]*)"', attrs).group(1)) > 60
-                  if re.search(r'alt="([^"]*)"', attrs) else False)
+                  bool(said) and len(said.group(1)) > 60,
+                  "%d chars" % len(said.group(1)) if said else "undescribed")
             check("the %s band reserves its space" % where,
                   'width="' in attrs and 'height="' in attrs)
 
@@ -1843,11 +1861,19 @@ def main():
             thin = [k for k, v in lit.items() if len(v.get("photo_alt") or "") < 40]
             check("and the picture is described where the words sit on it",
                   not thin, ", ".join(thin) or "%d described" % len(lit))
-            check("the lit cards are marked for the contrast pass to skip",
-                  body.count('data-photo="true"') == len(lit),
-                  "%d of %d — type over a photograph has no ground colour to "
-                  "read, so it is measured in pixels instead (7.09:1 worst, "
-                  "against 4.5 needed)" % (body.count('data-photo="true"'), len(lit)))
+            # This once asserted the opposite: that every lit card was marked
+            # data-photo so the contrast pass would skip it, because the words
+            # stood on the photograph and had no ground colour to read. The
+            # words came off the photograph, the mark went with them, and the
+            # claim worth defending is now the stronger one — there is nothing
+            # on this page the contrast pass has to be told to ignore. A card
+            # that grows an exemption again has quietly gone back to type on a
+            # picture, and that is exactly what this should refuse.
+            check("no card asks the contrast pass to look away",
+                  'data-photo="true"' not in body,
+                  "%d exempt of %d lit — every line sits on cream and is read "
+                  "out of the cascade like the rest of the page"
+                  % (body.count('data-photo="true"'), len(lit)))
             check("every lens with somewhere to go is offered a feeling",
                   len(cards) == len([k for k in lens_keys if called.get(k)]),
                   "%d cards" % len(cards))
@@ -2066,13 +2092,18 @@ def main():
 
         # A country calls `cities` exactly when it has one in the collection —
         # the two are written down separately and would otherwise drift.
+        # A country the atlas has not written up yet is allowed to have a city
+        # in the collection and obviously cannot call anything, so the pairing
+        # is only checked over countries that exist. Angola is the live case.
         city_countries = {c["country"] for c in
                           json.load(open(os.path.join(ROOT_DIR, "tourism", "cities.json")))["cities"]}
+        published = {c.slug for c in countries}
         calls_cities = {c.slug for c in countries if "cities" in c.calls}
         check("a country calls cities exactly when it has one",
-              calls_cities == city_countries,
+              calls_cities == (city_countries & published),
               "only in calls: %s | only in collection: %s"
-              % (sorted(calls_cities - city_countries), sorted(city_countries - calls_cities)))
+              % (sorted(calls_cities - city_countries),
+                 sorted((city_countries & published) - calls_cities)))
 
         # The counts printed on the experience cards are derived, and this is
         # what says so: four of the six were wrong before they were.
@@ -2089,9 +2120,20 @@ def main():
         # nothing recomputes it when a country is renamed or a file is moved.
         cities = json.load(open(os.path.join(ROOT_DIR, "tourism", "cities.json")))["cities"]
         slugs = {c.slug for c in countries}
-        orphans = [c["slug"] for c in cities if c.get("country") not in slugs]
-        check("every city leads to a country the atlas actually has",
-              not orphans, ", ".join(orphans) or "%d cities" % len(cities))
+        # The rule used to be that a city had to name a published country. It is
+        # now the owner's: anywhere in Africa may be added and the atlas catches
+        # up. So the card is allowed to lead to the atlas instead — but it still
+        # has to say which country it is in and which region it belongs to, or
+        # block_cities drops it and the city is in the dataset and nowhere else.
+        ahead = [c for c in cities if c.get("country") not in slugs]
+        unnamed = [c["slug"] for c in ahead if not (c.get("country_name") or "").strip()]
+        check("a city ahead of the atlas still names its country",
+              not unnamed, ", ".join(unnamed) or
+              "%d ahead: %s" % (len(ahead), ", ".join(c["slug"] for c in ahead) or "none"))
+        from tourism.model import load_regions as _regions
+        toneless = [c["slug"] for c in ahead if c.get("region") not in _regions()]
+        check("and knows which region it is filed under",
+              not toneless, ", ".join(toneless))
 
         # A photograph that is named and missing renders as a broken card; a
         # photograph outside uploads/ is a provenance claim this cannot support.
@@ -2425,7 +2467,7 @@ def main():
         # -- what an image costs before it arrives ---------------------------------
         print("\nwhat an image costs before it arrives")
         SKIP_IMG = {"tourism/compare.html"}
-        nodim, nolazy, noalt, heroes = [], [], [], []
+        nodim, nolazy, noalt, heroes, adopted, unpositioned = [], [], [], [], [], []
         for path in sorted(glob.glob(os.path.join(ROOT_DIR, "**", "*.html"),
                                      recursive=True)):
             rel = os.path.relpath(path, ROOT_DIR)
@@ -2434,7 +2476,27 @@ def main():
             tags = re.findall(r"<img\b[^>]*>", open(path).read())
             for i, tag in enumerate(tags):
                 if 'width="' not in tag or 'height="' not in tag:
-                    nodim.append(rel)
+                    # An adopted photograph is the one image that must not carry
+                    # them, and adopt.py explains why at length: these slots are
+                    # styled `width:100%; aspect-ratio:3/4` with no height, so
+                    # the attributes make both dimensions definite, aspect-ratio
+                    # is dropped, and the picture renders 479x1280 instead of
+                    # 479x638. It reserves its box from the CSS instead.
+                    #
+                    # It has to be exempted rather than counted, because the
+                    # count is the number of photographs the site has resolved:
+                    # it was 2 when the ceiling of 6 was written and it is 198
+                    # now, so the check was going to fail on the day the site
+                    # finally had pictures on it. (Both could be true at once by
+                    # putting height:auto on those slots. That is a real change
+                    # to make, and adopt.py's note is a measurement, so it wants
+                    # measuring again rather than assuming — not asserting here.)
+                    if 'data-illustration="' in tag:
+                        adopted.append(rel)
+                        if "object-position" not in tag:
+                            unpositioned.append(rel)
+                    else:
+                        nodim.append(rel)
                 if "alt=" not in tag:
                     noalt.append(rel)
                 # The first draft of this check said "the first <img> in the
@@ -2467,6 +2529,12 @@ def main():
               len(loose) <= 6,
               "%d images across %d files (%s)"
               % (len(nodim), len(loose), ", ".join(loose[:4])))
+        # And the exemption is not a hole: an adopted photograph gives up the
+        # attributes and must take the CSS guarantee in exchange, which is the
+        # object-position adopt.py writes onto every one of them.
+        check("every adopted photograph is positioned by the CSS instead",
+              not unpositioned, ", ".join(sorted(set(unpositioned))[:4])
+              or "%d adopted, all positioned" % len(adopted))
         check("every image has alternative text", not noalt,
               "%d without alt (%s)" % (len(noalt), ", ".join(sorted(set(noalt))[:4])))
         check("no image below the first is loaded eagerly", not nolazy,
@@ -2504,12 +2572,29 @@ def main():
         vsrc = open(os.path.join(ROOT_DIR, "tools", "tourism", "verify.py")).read()
         check("verify counts a plate as a filled slot",
               "af-plate" in vsrc, "it only knew about tq-empty")
+        # This used to demand that at least fifteen country pages be nothing but
+        # plates, as the evidence that verify's plate-counting was protecting
+        # anything. It was true when 567 of 594 slots were unresolved. Every
+        # slot on every country page is a photograph now, so the number fell to
+        # zero — by the site getting better, which is a poor thing for a check
+        # to go red over, and it went red for weeks saying nothing useful.
+        #
+        # What it was reaching for survives the improvement: a slot is filled or
+        # it is a plate, and it is never left as the grey unresolved box. That
+        # holds on a page of plates and on a page of photographs alike, and it
+        # is the fault that would actually reach a visitor.
         pages = glob.glob(os.path.join(ROOT_DIR, "tourism", "*.html"))
-        plated = [p for p in pages
-                  if open(p).read().count('class="af-plate ') > 20]
-        check("the pages with no photographs are the ones this protects",
-              len(plated) >= 15, "%d of %d country pages are all plates"
-              % (len(plated), len(pages)))
+        empties, plates, shots = [], 0, 0
+        for p in pages:
+            src = open(p).read()
+            plates += src.count('class="af-plate ')
+            shots += len(re.findall(r"<img\b", src))
+            if 'data-unresolved="true"' in src:
+                empties.append(os.path.basename(p))
+        check("no country page shows an unresolved box to a visitor",
+              not empties, ", ".join(empties[:4]) or
+              "%d pages: %d photographs, %d plates, no empties"
+              % (len(pages), shots, plates))
 
         # -- what a resolver run would actually commit -----------------------------
         print("\nwhat a resolver run would actually commit")
