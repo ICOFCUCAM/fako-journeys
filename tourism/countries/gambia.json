@@ -1,0 +1,295 @@
+{
+ "slug": "gambia",
+ "name": "The Gambia",
+ "adjective": "Gambian",
+ "region": "West Africa",
+ "tagline": "A river with a country around it",
+ "summary": "Three hundred kilometres of river with a strip of land either side, six hundred bird species, chimpanzees on the river islands, and the beaches that made it Europe's first West African destination.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "coast",
+  "culture"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3,
+  4
+ ],
+ "when": "November to April. Birding is best from November to February when the migrants are in.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The River",
+   "description": "The country is the river — three hundred kilometres of it, and a strip either bank.",
+   "subject": "the wide Gambia river with mangrove banks at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Mangrove, Savanna and Gallery Forest",
+   "description": "Salt mangrove at the mouth, freshwater swamp in the middle, dry savanna at the top.",
+   "subject": "mangrove creeks and channels off the Gambia river",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Six Hundred Bird Species",
+   "description": "In a country you can drive across in twenty minutes. It is one of the great birding places.",
+   "subject": "an Abyssinian roller on a branch in Gambian savanna",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Chimps at Baboon Islands",
+   "description": "A rehabilitated chimpanzee population on river islands, watched from boats only.",
+   "subject": "chimpanzees on the bank of a Gambia river island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Flat",
+   "description": "The highest point is fifty-three metres. This is river country, not hill country.",
+   "subject": "flat savanna and a lone baobab in the upper river region",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "None",
+   "description": "No falls. The river drops so little across the country that the tide runs a hundred kilometres up it.",
+   "subject": "still water and reflected trees on the upper Gambia river",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Gambia Itself",
+   "description": "Tidal for half its length, and every town on it is a landing.",
+   "subject": "a ferry crossing the Gambia river at Farafenni",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Eighty Kilometres of Atlantic",
+   "description": "Kotu, Kololi and Cape Point, and the quieter sand south towards Kartong.",
+   "subject": "a wide Atlantic beach with fishing boats at Tanji",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Bijilo and Abuko",
+   "description": "Small forest reserves close to the coast, with colobus, vervets and a great deal of birdlife.",
+   "subject": "red colobus monkeys in the canopy at Bijilo forest",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Upriver by Boat",
+   "description": "Four days up the river from Banjul to Janjanbureh, watching the country change.",
+   "subject": "a small river boat moving upstream past mangrove",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Mandinka, Fula, Wolof, Jola",
+   "description": "Four main peoples in a country of three million, and a griot tradition across all of them.",
+   "subject": "a kora player performing at a Gambian village gathering",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Griots",
+   "description": "The Jali families hold the histories, and the kora is how they are told.",
+   "subject": "a Jali griot playing the kora outside a compound",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Benachin and Domoda",
+   "description": "Benachin — one-pot rice — and domoda, groundnut stew with lamb.",
+   "subject": "a shared bowl of benachin rice with fish and vegetables",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Kankurang",
+   "description": "A masked figure of the Mandinka initiation, and a UNESCO-listed tradition.",
+   "subject": "the Kankurang masked figure in red bark and leaves",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Batik, Carving and Baskets",
+   "description": "Tie-dye and batik along the coast, and coiled baskets from the upper river.",
+   "subject": "batik cloth and coiled baskets at a craft market stall",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Kunta Kinteh Island",
+   "description": "A slaving island in the river, eroding, and the reason a great many people come.",
+   "subject": "the ruined fort on Kunta Kinteh Island in the Gambia river",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Stone Circles and the Slave Route",
+   "description": "The Wassu stone circles are a thousand years old; the river route is four hundred.",
+   "subject": "the standing laterite stone circles at Wassu",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Banjul and Serekunda",
+   "description": "A small capital on an island, and the much larger market town that outgrew it.",
+   "subject": "the Albert Market and crowds in Banjul",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Colonial and Compound",
+   "description": "Colonial Banjul, and the walled family compounds that are the real unit of Gambian building.",
+   "subject": "a walled family compound with a swept yard and mango tree",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Fish Landing at Tanji",
+   "description": "The boats come in mid-afternoon and the beach becomes a market in twenty minutes.",
+   "subject": "painted fishing pirogues and crowds at Tanji fish landing",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Easy for Everybody",
+   "description": "Short flights, short distances, warm shallow sea and a country used to visitors.",
+   "subject": "children playing in shallow water on a Gambian beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Birding on Foot",
+   "description": "Abuko, Tanji and the Kotu creek — three of the best birding walks in Africa, all near the beach.",
+   "subject": "birdwatchers with binoculars on a creek path at Kotu",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Long Established",
+   "description": "Everything from big beach hotels to small river lodges, and forty years of practice.",
+   "subject": "a river lodge terrace looking out over the Gambia river",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Community Birding",
+   "description": "Village guide associations have run the birding here for decades, and the money stays.",
+   "subject": "a local guide pointing out a bird to visitors on a creek",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "River Light",
+   "description": "The upper river at dawn, when the mist sits on the water and the fish eagles call.",
+   "subject": "mist on the Gambia river at dawn with a fish eagle",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Kartong",
+   "description": "The far south, a river mouth, a crocodile pool and almost nobody.",
+   "subject": "the quiet river mouth and empty beach at Kartong",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why The Gambia",
+   "description": "Six hundred bird species and four hundred years of river history, in a country you cross in a day.",
+   "subject": "a small boat on the Gambia river with mangrove either side",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

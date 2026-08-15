@@ -1,0 +1,295 @@
+{
+ "slug": "mauritania",
+ "name": "Mauritania",
+ "adjective": "Mauritanian",
+ "region": "West Africa",
+ "tagline": "The iron ore train, and the libraries of Chinguetti",
+ "summary": "A two-kilometre freight train across the Sahara you can ride on top of, four caravan towns with medieval manuscript libraries still in family hands, and the largest bird colony in West Africa at the Banc d'Arguin.",
+ "published": true,
+ "calls": [
+  "nature",
+  "culture",
+  "adventure",
+  "history"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "November to March. The rest of the year the interior is unbearable.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Iron Ore Train",
+   "description": "Two and a half kilometres long, twenty hours across the desert, and you can ride the ore.",
+   "subject": "the iron ore train crossing the Sahara at sunset in Mauritania",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Adrar",
+   "description": "A sandstone plateau cut by palm-filled canyons, with the old caravan towns in them.",
+   "subject": "a palm-filled canyon below sandstone cliffs in the Adrar",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "The Banc d'Arguin",
+   "description": "Two million wading birds winter here, on the largest tidal flats in West Africa.",
+   "subject": "flamingos and waders on the tidal flats of the Banc d'Arguin",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Desert, Not Savanna",
+   "description": "The wildlife is birds and desert-adapted mammals, and the coast is where it concentrates.",
+   "subject": "a dorcas gazelle on gravel plain in the Mauritanian desert",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Kediet ej Jill",
+   "description": "915 metres of magnetite near Zouerat, so iron-rich it deflects a compass.",
+   "subject": "the dark iron mountain of Kediet ej Jill above desert",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Guelta de Matmata",
+   "description": "Permanent pools in the rock south of Atar, with crocodiles that have been there since the Sahara was wet.",
+   "subject": "a permanent rock pool with palms in the Mauritanian desert",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Senegal River",
+   "description": "The southern border, and the only permanent river in the country.",
+   "subject": "the Senegal river with farmland on its bank at Rosso",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Seven Hundred Kilometres of Atlantic",
+   "description": "Cold current, big surf, and the Imraguen fishing villages working with dolphins.",
+   "subject": "Imraguen fishermen hauling nets on the Mauritanian Atlantic shore",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Palmeraies",
+   "description": "Date palm groves in the Adrar canyons — the only shade for hundreds of kilometres.",
+   "subject": "a dense date palm grove in a canyon at Terjit",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Riding the Ore Train",
+   "description": "Twenty hours in the open on top of iron ore, in the cold, and people do it on purpose.",
+   "subject": "passengers sitting on top of iron ore wagons in the desert",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Moor and Fulani",
+   "description": "Bidhan and Haratin Moors across the north, Fulani, Soninke and Wolof along the river.",
+   "subject": "men in blue boubous drinking tea on a mat in the desert",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Imraguen",
+   "description": "A coastal people who fish with lanchas and, by tradition, with the help of dolphins.",
+   "subject": "an Imraguen lancha under sail off the Banc d'Arguin",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Thieboudienne and Three Teas",
+   "description": "Fish and rice from the river south, and the three-glass tea ceremony everywhere.",
+   "subject": "three small glasses of Mauritanian tea poured from a height",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Chinguetti Festival",
+   "description": "Poetry, camel racing and manuscript readings in the old caravan town.",
+   "subject": "camel racing at a festival outside Chinguetti",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Silver, Leather and Chests",
+   "description": "Moorish silver, tooled leather cushions, and the painted wooden chests of the Adrar.",
+   "subject": "a painted Mauritanian wooden chest with metalwork corners",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Chinguetti and Ouadane",
+   "description": "Twelfth-century caravan towns in dry stone, half-buried by the dunes now.",
+   "subject": "the dry-stone houses and minaret of Chinguetti under encroaching sand",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Manuscript Libraries",
+   "description": "Family libraries in Chinguetti holding astronomy, law and poetry from the middle ages.",
+   "subject": "an open medieval manuscript in a family library at Chinguetti",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Nouakchott and Nouadhibou",
+   "description": "A capital built from nothing in 1958, and a port with the world's biggest ship graveyard.",
+   "subject": "the fish market and painted pirogues on the beach at Nouakchott",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Dry Stone and Sand",
+   "description": "Ksour built of flat stone without mortar, and streets that the dunes are taking back.",
+   "subject": "a dry-stone street and doorway in Ouadane",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Fish Market at Sunset",
+   "description": "The pirogues come in at Nouakchott beach and the whole catch is sold on the sand.",
+   "subject": "crowds buying fish from pirogues on the beach at Nouakchott",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Big Country for Small Children",
+   "description": "Distances are long and facilities are few. Better for teenagers than for toddlers.",
+   "subject": "children playing among date palms in an Adrar oasis",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Trekking the Adrar",
+   "description": "Camel treks between the ksour, days at a time, sleeping out on the sand.",
+   "subject": "a camel trek crossing dunes in the Adrar at dusk",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Small and Serious",
+   "description": "Auberges in Atar and Chinguetti run by people who know the desert, and little else.",
+   "subject": "a courtyard auberge with mats and cushions in Chinguetti",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Two Million Birds",
+   "description": "The Banc d'Arguin is a Ramsar site and one of the most important wintering grounds on earth.",
+   "subject": "dense flocks of waders on the mudflats of the Banc d'Arguin",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Sand Against Stone",
+   "description": "Chinguetti in the last hour, when the dunes in the streets are lit from the side.",
+   "subject": "low sun on sand drifted against the dry-stone walls of Chinguetti",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Terjit",
+   "description": "A hot spring under palms in a narrow gorge, and the best shade in the country.",
+   "subject": "a spring pool under dense palms in the Terjit gorge",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Mauritania",
+   "description": "A medieval library in a sand-buried town, and a train you ride on the ore.",
+   "subject": "a lone figure walking a sand-filled street in Ouadane",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

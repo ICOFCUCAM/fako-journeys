@@ -1,0 +1,295 @@
+{
+ "slug": "guinea-bissau",
+ "name": "Guinea-Bissau",
+ "adjective": "Bissau-Guinean",
+ "region": "West Africa",
+ "tagline": "The Bijagos, and eighty-eight islands",
+ "summary": "An archipelago of eighty-eight islands with saltwater hippos, nesting turtles and a matrilineal society that still chooses its own kings — and a mainland of mangrove and rice paddy behind it.",
+ "published": true,
+ "calls": [
+  "coast",
+  "wildlife",
+  "culture"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3,
+  4
+ ],
+ "when": "November to April. Turtle nesting on Poilao peaks between July and October.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Bijagos",
+   "description": "Eighty-eight islands, twenty of them inhabited, and a UNESCO biosphere reserve over all of it.",
+   "subject": "palm-fringed islands and tidal channels in the Bijagos archipelago",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Mangrove and Tide",
+   "description": "The tidal range here is five metres, and the channels between the islands change with it.",
+   "subject": "mangrove channels at low tide in the Bijagos",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Saltwater Hippos",
+   "description": "The hippos of Orango swim in the sea between islands, which almost no others do.",
+   "subject": "a hippo in shallow salt water off Orango island",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Turtles at Poilao",
+   "description": "One of the largest green turtle nesting sites in the Atlantic, on an uninhabited island.",
+   "subject": "a green turtle returning to the sea at dawn on Poilao",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Flat Country",
+   "description": "The highest point is three hundred metres. This is a country of water, not relief.",
+   "subject": "flat green rice paddy stretching to a treeline",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "None to Speak Of",
+   "description": "No falls — the land has nowhere to fall from. The water here moves sideways with the tide.",
+   "subject": "a tidal creek running through mangrove at Cacheu",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Geba and the Corubal",
+   "description": "Two rivers cutting deep estuaries into the mainland, navigable a long way up.",
+   "subject": "the wide brown estuary of the Geba river",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Island Sand",
+   "description": "Bubaque, Rubane and Orango have empty palm-backed beaches and warm water.",
+   "subject": "an empty palm-backed beach on Rubane island",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Palm and Sacred Grove",
+   "description": "Oil palm through the islands, and groves that are ceremonial ground and off limits.",
+   "subject": "oil palms and dense forest on a Bijagos island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Island Hopping by Pirogue",
+   "description": "There are no bridges. Everything is boats, tides and waiting, and that is the pleasure of it.",
+   "subject": "a motorised pirogue crossing between Bijagos islands",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Matrilineal, and Still So",
+   "description": "Bijago women choose husbands, own the houses, and hold the religious authority.",
+   "subject": "Bijago women in ceremonial dress on an island beach",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Bijagos",
+   "description": "Age grades govern life, and the vaca-bruto initiation is danced in a bull mask.",
+   "subject": "a Bijago dancer in a carved bull mask at a village ceremony",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Rice, Cashew and Bica",
+   "description": "Rice from the paddies, cashew as the whole export economy, and Portuguese coffee.",
+   "subject": "a plate of rice with fish and palm oil sauce",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Carnival in Bissau",
+   "description": "Masks, drums and neighbourhood competition, Portuguese in form and entirely local in content.",
+   "subject": "masked dancers at the Bissau carnival",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Carving and Cloth",
+   "description": "Bijago bull and shark masks, and the woven pano de pente cloth used as currency.",
+   "subject": "a carved Bijago shark mask and woven pano cloth",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Cacheu",
+   "description": "A slaving fort of 1588 on the river, and one of the oldest European buildings in West Africa.",
+   "subject": "the old Portuguese fort and cannon at Cacheu",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Bijagos Biosphere",
+   "description": "The whole archipelago is a UNESCO biosphere reserve, run with the island communities.",
+   "subject": "a community ranger boat among the Bijagos islands",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Bissau",
+   "description": "A small Portuguese-built capital with a decaying Bissau Velho quarter and very good music.",
+   "subject": "the faded Portuguese colonial buildings of Bissau Velho",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Portuguese Colonial and Palm Thatch",
+   "description": "Tiled colonial fronts in Bissau, and rectangular palm-thatch houses through the islands.",
+   "subject": "a palm-thatched island house with a swept sand yard",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Sunday at the Beach",
+   "description": "Bissau goes to Bubaque and the near islands at weekends, by ferry, with a stereo.",
+   "subject": "a crowded island ferry leaving Bissau on a Sunday",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Boats and Beaches",
+   "description": "Not for very small children — the boats are open and the tides are serious.",
+   "subject": "a family on the sand beside a beached pirogue",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Fishing the Channels",
+   "description": "Barracuda and tarpon in the passes between islands, on light tackle.",
+   "subject": "an angler casting from a boat in a Bijagos channel",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Two or Three Lodges",
+   "description": "Small fishing and eco-lodges on Rubane and Orango, and not much else anywhere.",
+   "subject": "a small thatched eco-lodge among palms on a Bijagos island",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Community Conservation",
+   "description": "The island communities police the turtle beaches themselves, and it works.",
+   "subject": "villagers recording a turtle nest on a Bijagos beach",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Tide and Palm",
+   "description": "The channels at low water, when the mangrove roots come out and the light goes flat.",
+   "subject": "exposed mangrove roots and channels at low tide",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Orango",
+   "description": "Hippos, an island king, and a lodge with no road on the island at all.",
+   "subject": "a savanna clearing with hippo tracks on Orango island",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Guinea-Bissau",
+   "description": "Saltwater hippos, nesting turtles, and a society run by its women.",
+   "subject": "a pirogue crossing still water between two Bijagos islands",
+   "focal": [
+    50,
+    54
+   ]
+  }
+ ]
+}

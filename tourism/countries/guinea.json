@@ -1,0 +1,294 @@
+{
+ "slug": "guinea",
+ "name": "Guinea",
+ "adjective": "Guinean",
+ "region": "West Africa",
+ "tagline": "The water tower of West Africa",
+ "summary": "The Niger, the Senegal and the Gambia all rise in the Fouta Djallon, a sandstone highland of waterfalls and cliffs — and Conakry has produced more of the region's music than anywhere except Bamako.",
+ "published": true,
+ "calls": [
+  "nature",
+  "culture",
+  "adventure"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "November to March. The Fouta is best just after the rains, when the falls are still running.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Fouta Djallon",
+   "description": "A sandstone highland at a thousand metres, cut by gorges, and the source of three great rivers.",
+   "subject": "green plateau and sandstone cliffs in the Fouta Djallon",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Where the Rivers Rise",
+   "description": "The Niger, the Senegal and the Gambia all begin within a hundred kilometres of each other.",
+   "subject": "a clear stream running over rock at the source of the Niger",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Chimpanzees at Bossou",
+   "description": "One of the best-studied wild chimpanzee groups anywhere, and one that uses stone tools.",
+   "subject": "a wild chimpanzee cracking nuts with a stone at Bossou",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "The Forest, Not the Plain",
+   "description": "There is no savanna circuit. What Guinea has is forest primates and the Nimba massif.",
+   "subject": "dense forest canopy on the slopes of Mount Nimba",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mount Nimba",
+   "description": "1,752 metres on the Liberian border, with species that live on that mountain and nowhere else.",
+   "subject": "the grassy ridge of Mount Nimba above forest",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Ditinn and Kinkon",
+   "description": "Ditinn drops a hundred metres off a sheer cliff; Kinkon runs through a gorge below Pita.",
+   "subject": "the Ditinn waterfall falling from a sheer cliff in the Fouta",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Upper Niger",
+   "description": "It rises near the Sierra Leone border and is already wide by the time it leaves the country.",
+   "subject": "the upper Niger river running broad through green country",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Three Hundred Kilometres of Atlantic",
+   "description": "Mangrove coast with the Iles de Los off Conakry, and beaches on Roume and Kassa.",
+   "subject": "a beach and palms on Roume island off Conakry",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Guinean Forest",
+   "description": "Ziama and Diecke in the southeast — some of the last high forest in West Africa.",
+   "subject": "buttressed rainforest trees in the Ziama massif",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Hiking the Fouta",
+   "description": "Village to village between waterfalls and cliffs, with the best walking network in the region.",
+   "subject": "walkers on a path between villages in the Fouta Djallon",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Where the Music Came From",
+   "description": "Bembeya Jazz, the Ballets Africains, and a state that funded orchestras for two decades.",
+   "subject": "a djembe and balafon group performing in Conakry",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Fulani, Malinke, Susu",
+   "description": "Fulani in the Fouta, Malinke in the upper Niger country, Susu on the coast.",
+   "subject": "a Fulani herder with cattle on the Fouta Djallon plateau",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Riz Gras and Fouti",
+   "description": "Rice with palm oil and fish, and the sour milk and maize of the Fouta.",
+   "subject": "a shared plate of Guinean rice with fish and sauce",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Masked Dance in the Forest Region",
+   "description": "The forest peoples of the southeast keep mask societies that are not for visitors, and some that are.",
+   "subject": "a stilt dancer performing at a village festival in Guinea",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Weaving and Indigo",
+   "description": "Fouta indigo cloth, Malinke weaving, and the leatherwork of the highland towns.",
+   "subject": "indigo-dyed cloth drying at a Fouta Djallon workshop",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "The Almamy's Fouta",
+   "description": "The Fouta Djallon was a theocratic Fulani state for a century and a half before the French came.",
+   "subject": "an old mosque and stone walls in a Fouta Djallon town",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Nimba, Listed",
+   "description": "Mount Nimba is a World Heritage site for its endemic toad, viviparous, that lives on the ridge.",
+   "subject": "montane grassland and cloud on the Nimba ridge",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Conakry",
+   "description": "A capital on a peninsula, with the Grande Mosquee and the sea on both sides.",
+   "subject": "the Grande Mosquee and low buildings of Conakry",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Colonial and Fouta Vernacular",
+   "description": "French colonial in Conakry, and round thatched houses with painted walls in the highlands.",
+   "subject": "a round thatched Fouta house with a painted wall",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Market Day in Labe",
+   "description": "The highland market fills with Fulani from every village within a day's walk.",
+   "subject": "the crowded weekly market at Labe in the Fouta Djallon",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Waterfalls You Can Swim In",
+   "description": "Most of the Fouta's falls have a pool at the bottom and a path down to it.",
+   "subject": "children swimming in a pool below a Fouta Djallon waterfall",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Trekking the Highlands",
+   "description": "The Fouta has marked routes, village guides and huts, which is rare in the region.",
+   "subject": "a marked walking trail across the Fouta Djallon plateau",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Modest",
+   "description": "Hotels in Conakry and a few in Labe and Dalaba. The Fouta runs on homestays.",
+   "subject": "a colonial-era hill station guesthouse at Dalaba",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Nimba's Endemics",
+   "description": "The mountain has species found on it and nowhere else, and an iron deposit under them.",
+   "subject": "a botanist recording plants on the Nimba grassland",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Cliffs and Water",
+   "description": "The Fouta escarpments in the hour after the rain stops, when everything is running.",
+   "subject": "cliffs and multiple waterfalls after rain in the Fouta Djallon",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Dame de Mali",
+   "description": "A rock face near Mali-ville shaped like a woman's profile, at the top of the Fouta.",
+   "subject": "the Dame de Mali rock profile above the Fouta escarpment",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Guinea",
+   "description": "The best walking in West Africa, and the rivers that made the whole region.",
+   "subject": "a walker looking out over layered Fouta Djallon ridges",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

@@ -1,0 +1,292 @@
+{
+ "slug": "burkina-faso",
+ "name": "Burkina Faso",
+ "adjective": "Burkinabe",
+ "region": "West Africa",
+ "tagline": "The best cinema and the best masks in West Africa",
+ "summary": "FESPACO is the largest film festival on the continent, the Sindou peaks are a forest of eroded sandstone, and the mask traditions of the west are among the strongest anywhere.",
+ "published": true,
+ "calls": [
+  "culture",
+  "nature"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2
+ ],
+ "when": "November to February. Check advice — much of the country is affected by the wider Sahel situation.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Sindou Peaks",
+   "description": "A ridge of sandstone eroded into fins and needles, near Banfora in the southwest.",
+   "subject": "the eroded sandstone fins and needles of the Sindou peaks",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Southwest",
+   "description": "Cascades, sugarcane and the Karfiguela falls where the land drops off the plateau.",
+   "subject": "the Karfiguela cascades falling over rock ledges near Banfora",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Hippos at Tengrela",
+   "description": "A lake outside Banfora with a resident hippo pod, worked by fishermen in pirogues.",
+   "subject": "hippos surfacing in Lake Tengrela with a pirogue nearby",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Nazinga and Arli",
+   "description": "Nazinga has one of the densest elephant populations in West Africa and you can walk in it.",
+   "subject": "elephants at a waterhole in Nazinga ranch",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Tenakourou",
+   "description": "747 metres in the southwest, and the highest ground in a country that is mostly plateau.",
+   "subject": "the sandstone escarpment of the southwest rising above farmland",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Karfiguela",
+   "description": "Water off the plateau in a series of ledges, swimmable at the bottom.",
+   "subject": "people swimming below the Karfiguela waterfall",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Black and White Volta",
+   "description": "Two of the three Voltas rise here and run south into Ghana.",
+   "subject": "the Black Volta river running between wooded banks",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Lakeshore, Not Coast",
+   "description": "Landlocked. Tengrela and the Bagre reservoir are where people swim and fish.",
+   "subject": "a fishing pirogue on Lake Tengrela at dusk",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Gallery Forest at Banfora",
+   "description": "The dome-shaped Sindou woodland, and the fields of sugarcane below the cliffs.",
+   "subject": "gallery forest along a stream below the Banfora escarpment",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Cycling the Southwest",
+   "description": "Burkina is a cycling nation. The Tour du Faso runs every year and the roads are flat.",
+   "subject": "cyclists on a red laterite road through savanna",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Sixty Languages, One Cinema",
+   "description": "FESPACO in Ouagadougou every two years, and a film industry that punches far above its size.",
+   "subject": "a crowd outside a cinema at FESPACO in Ouagadougou",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Mossi, Bobo, Lobi, Fulani",
+   "description": "The Mossi kingdoms in the centre, the Bobo and Lobi in the west, the Fulani across the north.",
+   "subject": "a Lobi compound with mud walls and a granary",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "To and Riz Gras",
+   "description": "To — millet paste with sauce — and riz gras cooked in tomato and oil.",
+   "subject": "a bowl of to with green sauce beside a plate of riz gras",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "FESPACO and FESTIMA",
+   "description": "The film festival in Ouagadougou, and the mask festival at Dedougou every other year.",
+   "subject": "masked dancers performing at the FESTIMA mask festival",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Bronze and Masks",
+   "description": "Lost-wax bronze in Ouagadougou, and the plank masks of the Bwa and Nuna.",
+   "subject": "a tall painted Bwa plank mask with geometric patterns",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "The Ruins of Loropeni",
+   "description": "Stone walls six metres high, a thousand years old, from the trans-Saharan gold trade.",
+   "subject": "the high laterite stone walls of the Loropeni ruins",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Loropeni, and the Living Rest",
+   "description": "One World Heritage site in stone, and a mask tradition that never became a museum.",
+   "subject": "a village mask performance with drummers and a crowd",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Ouagadougou and Bobo-Dioulasso",
+   "description": "A capital that fills for FESPACO, and a second city with the country's best music.",
+   "subject": "the mud-brick Grande Mosquee of Bobo-Dioulasso",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Sudanese Mud and Sukhala",
+   "description": "The Bobo-Dioulasso mosque in Sudanese style, and painted Kassena compounds at Tiebele.",
+   "subject": "the painted geometric walls of a Kassena compound at Tiebele",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Maquis at Night",
+   "description": "Open-air bars with grilled chicken and dolo, and a band more often than not.",
+   "subject": "an open-air maquis at night with grilled food and a band",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Elephants You Can Walk To",
+   "description": "Nazinga allows walking safaris, which makes it unusually good for older children.",
+   "subject": "a family walking with a guide towards elephants at Nazinga",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "The Sindou Ridge",
+   "description": "Scrambling routes through the fins, best in the last two hours of light.",
+   "subject": "a walker among the sandstone fins of Sindou at sunset",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Modest",
+   "description": "Good hotels in Ouagadougou and Bobo, and a lodge or two near Banfora.",
+   "subject": "a garden courtyard hotel in Bobo-Dioulasso",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Nazinga",
+   "description": "A community-run ranch since 1979, and one of the earliest of its kind in the region.",
+   "subject": "a ranger and visitors watching elephants from a hide at Nazinga",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Masks in Motion",
+   "description": "FESTIMA, where the masks are danced rather than displayed and the dust is part of it.",
+   "subject": "a masked dancer spinning in dust at a mask festival",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Tiebele",
+   "description": "Kassena compounds painted in black, white and ochre geometry by the women of the household.",
+   "subject": "women painting geometric patterns on a Kassena wall at Tiebele",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Burkina Faso",
+   "description": "The masks, the music and the cinema, in a country that has never traded on scenery.",
+   "subject": "a crowd watching a masked performance in a village square",
+   "focal": [
+    50,
+    48
+   ]
+  }
+ ]
+}

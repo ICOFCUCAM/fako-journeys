@@ -1,0 +1,295 @@
+{
+ "slug": "liberia",
+ "name": "Liberia",
+ "adjective": "Liberian",
+ "region": "West Africa",
+ "tagline": "Sapo, surf, and the last of the Upper Guinean forest",
+ "summary": "Sapo National Park holds pygmy hippo and forest elephant in the second largest block of rainforest in West Africa, Robertsport has the best surf on the coast, and Monrovia was founded by freed American slaves in 1822.",
+ "published": true,
+ "calls": [
+  "nature",
+  "wildlife",
+  "coast"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3,
+  4
+ ],
+ "when": "November to April. The rains are extraordinary — Monrovia gets over four metres a year.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Sapo",
+   "description": "Rainforest with pygmy hippo, forest elephant and chimpanzee, and no road into most of it.",
+   "subject": "closed rainforest canopy and a river in Sapo National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Upper Guinean Forest",
+   "description": "Liberia holds about forty per cent of what is left of it.",
+   "subject": "buttressed rainforest trees and lianas in Liberian forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "The Pygmy Hippo",
+   "description": "Nocturnal, solitary, forest-dwelling, and one of the rarest large mammals in Africa.",
+   "subject": "a pygmy hippo at the edge of a forest stream at night",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Forest Tracking",
+   "description": "There is no game drive here. Sapo is walked, with trackers, over days.",
+   "subject": "a tracker on a forest path in Sapo National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mount Nimba and Wologizi",
+   "description": "Nimba on the Guinean border, and the Wologizi range with the highest ground in the country.",
+   "subject": "the forested Wologizi range under cloud",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Kpatawee",
+   "description": "Falls over granite ledges into a swimmable pool in Bong county.",
+   "subject": "the Kpatawee waterfall falling over granite into a pool",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Saint Paul and the Cavalla",
+   "description": "The Saint Paul runs past Monrovia; the Cavalla marks the whole Ivorian border.",
+   "subject": "the Saint Paul river running wide through forest",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Five Hundred Kilometres of Atlantic",
+   "description": "Long empty beaches, and a serious swell from November on.",
+   "subject": "an empty palm-backed beach on the Liberian Atlantic coast",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Sapo and Gola",
+   "description": "Two blocks of high forest, both transboundary, and the best-protected in the region.",
+   "subject": "mist rising off rainforest canopy at dawn in Sapo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Surfing Robertsport",
+   "description": "Cassava Point and Fisherman's Point — long left-hand point breaks, and a village surf club.",
+   "subject": "a surfer on a long left-hand wave at Robertsport",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Americo-Liberian and Sixteen Others",
+   "description": "A settler republic founded in 1822 over sixteen indigenous peoples, and the tension of that.",
+   "subject": "a nineteenth-century settler house with a verandah in Monrovia",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Kpelle, Bassa, Grebo, Vai",
+   "description": "The Vai invented their own script in the 1830s, one of very few in Africa.",
+   "subject": "carved Vai script characters on a wooden board",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Jollof, Palm Butter and Fufu",
+   "description": "Palm butter soup, cassava fufu, and a jollof Liberians will argue about at length.",
+   "subject": "a bowl of palm butter soup with rice and fish",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Independence Day",
+   "description": "26 July, and the parades, the food and the noise that come with it.",
+   "subject": "an Independence Day parade in the streets of Monrovia",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Masks and Country Cloth",
+   "description": "Poro and Sande society masks in the interior, and woven country cloth everywhere.",
+   "subject": "a carved wooden Dan mask with a smooth blackened surface",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Providence Island",
+   "description": "Where the first settlers landed in 1822, in the middle of Monrovia's harbour.",
+   "subject": "the old cotton tree and monument on Providence Island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "A Republic Built by the Freed",
+   "description": "Monrovia's nineteenth-century houses are the architecture of a return that did not go simply.",
+   "subject": "a decaying nineteenth-century settler mansion in Monrovia",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Monrovia",
+   "description": "A capital on a peninsula between the Atlantic and the Mesurado, rebuilt and rebuilding.",
+   "subject": "the waterfront and low skyline of Monrovia",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Verandah and Zinc",
+   "description": "Americo-Liberian timber houses with deep verandahs, and zinc-roofed cityscape behind them.",
+   "subject": "a timber verandah house with a zinc roof in Monrovia",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Beach at Sinkor",
+   "description": "Monrovia goes to the beach bars along Sinkor at the weekend, and stays.",
+   "subject": "beach bars and crowds along the shore at Sinkor, Monrovia",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Kpatawee and the Coast",
+   "description": "A waterfall pool inland and calm bays on the coast, both easy days out.",
+   "subject": "children swimming in the pool below Kpatawee falls",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Sapo on Foot",
+   "description": "Multi-day forest walking with rangers, sleeping in camps, and no vehicles at all.",
+   "subject": "a ranger camp under tarpaulins in Sapo rainforest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Beginning",
+   "description": "Beach lodges at Robertsport and a few good hotels in Monrovia.",
+   "subject": "a simple beach lodge under palms at Robertsport",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Forty Per Cent of What Is Left",
+   "description": "Liberia's forest is the largest surviving piece of the Upper Guinean block.",
+   "subject": "an aerial view of unbroken rainforest canopy in Liberia",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Green and Water",
+   "description": "Sapo after rain, when the canopy drips and the light comes through in shafts.",
+   "subject": "shafts of light through wet rainforest canopy in Sapo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Lake Piso",
+   "description": "A lagoon behind Robertsport with mangrove, fishing villages and no visitors.",
+   "subject": "fishing canoes on the still water of Lake Piso",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Liberia",
+   "description": "The best surf in West Africa, and the forest the pygmy hippo has left.",
+   "subject": "a lone surfer walking a long empty beach at Robertsport",
+   "focal": [
+    50,
+    54
+   ]
+  }
+ ]
+}

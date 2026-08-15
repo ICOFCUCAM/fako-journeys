@@ -1,0 +1,295 @@
+{
+ "slug": "sierra-leone",
+ "name": "Sierra Leone",
+ "adjective": "Sierra Leonean",
+ "region": "West Africa",
+ "tagline": "Beaches under forested mountains",
+ "summary": "A peninsula where rainforest mountains come down to white sand, Tiwai island with eleven primate species, and the Banana and Turtle Islands offshore — the best beaches in West Africa with almost nobody on them.",
+ "published": true,
+ "calls": [
+  "coast",
+  "wildlife",
+  "nature"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3,
+  4
+ ],
+ "when": "November to April. The rains here are among the heaviest in Africa.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Freetown Peninsula",
+   "description": "Forested mountains dropping straight into the Atlantic, with beaches in every bay.",
+   "subject": "forested hills coming down to white sand at River No. 2 beach",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Loma Mountains",
+   "description": "Cloud forest and montane grassland in the northeast, hardly walked at all.",
+   "subject": "montane grassland and forest in the Loma mountains",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Eleven Primates at Tiwai",
+   "description": "An island in the Moa river with one of the highest primate densities anywhere.",
+   "subject": "a Diana monkey in the canopy on Tiwai island",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Forest, Not Plain",
+   "description": "Pygmy hippo, forest elephant and bongo in Gola — a forest circuit, not a savanna one.",
+   "subject": "dense Gola rainforest canopy from a ridge",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Bintumani",
+   "description": "1,945 metres in the Loma range, the highest point in West Africa west of Cameroon.",
+   "subject": "the grassy summit ridge of Mount Bintumani above cloud",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Charlotte and Bumbuna",
+   "description": "Charlotte falls in the peninsula forest, and Bumbuna on the Rokel in the interior.",
+   "subject": "the Charlotte waterfall falling through forest near Freetown",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Moa and the Rokel",
+   "description": "The Moa runs past Tiwai, and the Rokel comes down to the estuary at Freetown.",
+   "subject": "the wide Moa river running past forested banks at Tiwai",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "River No. 2 and the Banana Islands",
+   "description": "White sand, forest behind, and two small islands an hour offshore with reef around them.",
+   "subject": "the white sand and green forest of River No. 2 beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Gola Rainforest",
+   "description": "The largest remaining block of Upper Guinean forest, now a transboundary park with Liberia.",
+   "subject": "the closed canopy of Gola rainforest from above",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Surfing and Forest Walking",
+   "description": "Bureh has a surf club run by the village, and Tiwai has night walks for pottos.",
+   "subject": "surfers waiting for a set at Bureh beach",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Krio, and Sixteen Others",
+   "description": "Freetown was founded by freed slaves, and Krio is the language and the culture that came of it.",
+   "subject": "a Krio board house with fretwork balconies in Freetown",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Mende, Temne and Krio",
+   "description": "Mende in the south, Temne in the north, and the Krio of the peninsula.",
+   "subject": "a Mende village gathering under a large tree",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Cassava Leaf and Country Rice",
+   "description": "Cassava leaf with palm oil, groundnut stew, and fish straight off the beach.",
+   "subject": "a bowl of cassava leaf stew with rice",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Lantern Parade",
+   "description": "Illuminated floats through Freetown on the night of Independence Day.",
+   "subject": "illuminated lantern floats moving through Freetown at night",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Country Cloth and Gara",
+   "description": "Hand-woven country cloth strips, and gara tie-dye in indigo and kola.",
+   "subject": "gara tie-dyed cloth drying in a Freetown yard",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Bunce Island",
+   "description": "A slaving fort in the estuary, ruined and overgrown, and among the most affecting in Africa.",
+   "subject": "the ruined stone walls of Bunce Island fort among trees",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Cotton Tree, and What Followed",
+   "description": "Freetown grew around one tree where freed slaves gave thanks in 1792.",
+   "subject": "the historic Cotton Tree standing in central Freetown",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Freetown",
+   "description": "Krio board houses on the hills, the estuary below, and mountains directly behind.",
+   "subject": "Freetown's hills and harbour seen from above",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Krio Board Houses",
+   "description": "Timber-framed, shuttered, verandahed — an architecture that came back across the Atlantic.",
+   "subject": "a two-storey Krio board house with shutters and a verandah",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Sunday at Lumley",
+   "description": "The whole city goes to the beach, and the bars along it play until late.",
+   "subject": "crowds and beach bars at Lumley beach on a Sunday",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Beaches With Shade",
+   "description": "River No. 2 and Tokeh have forest behind the sand and calm water in the dry season.",
+   "subject": "a family under trees at the edge of River No. 2 beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Climbing Bintumani",
+   "description": "Four days from Sinekoro, through forest and out onto grassland above the cloud.",
+   "subject": "a walker crossing montane grassland on Bintumani",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Growing",
+   "description": "Good beach lodges on the peninsula, and Tiwai's community camp inland.",
+   "subject": "a beach lodge among palms at Tokeh",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Tiwai, Community-Run",
+   "description": "Eight villages own the island reserve and have done since before the war.",
+   "subject": "a community guide leading a walk on Tiwai island",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Forest Meeting Sand",
+   "description": "The peninsula beaches in the late afternoon, when the hills behind them go blue.",
+   "subject": "forested hills behind a beach in late afternoon light",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Turtle Islands",
+   "description": "Eight sand islands in the far south, reachable only by boat, with no electricity.",
+   "subject": "a sandbar island with palms and a fishing village in the Turtle Islands",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Sierra Leone",
+   "description": "The best beaches in West Africa, with rainforest mountains standing behind them.",
+   "subject": "an empty white beach below forested hills at dusk",
+   "focal": [
+    50,
+    54
+   ]
+  }
+ ]
+}

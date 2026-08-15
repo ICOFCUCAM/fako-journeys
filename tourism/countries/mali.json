@@ -1,0 +1,293 @@
+{
+ "slug": "mali",
+ "name": "Mali",
+ "adjective": "Malian",
+ "region": "West Africa",
+ "tagline": "Timbuktu, Djenne, and the Niger bend",
+ "summary": "The mud-brick mosque at Djenne is the largest building of its kind on earth, the Bandiagara escarpment holds Dogon villages built into the cliff, and the Niger loops nine hundred kilometres north into the desert before turning back.",
+ "published": true,
+ "calls": [
+  "culture",
+  "history",
+  "nature"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2
+ ],
+ "when": "November to February, after the rains and before the heat. Check advice: the north and centre are not currently travelled.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Great Mosque of Djenne",
+   "description": "The largest mud-brick building in the world, re-plastered by the whole town every spring.",
+   "subject": "the mud-brick Great Mosque of Djenne with its wooden toron beams",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Niger Bend",
+   "description": "The river runs north into the Sahara, thinks better of it, and turns southeast.",
+   "subject": "the Niger river curving broad and brown through Sahelian scrub",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Elephants in the Gourma",
+   "description": "The Gourma herd makes the longest elephant migration in Africa, on a loop into Burkina Faso.",
+   "subject": "desert-adapted elephants crossing dry Sahelian scrub in the Gourma",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Not the Business Here",
+   "description": "There is no lodge circuit. The Gourma elephants are a conservation story, not a game drive.",
+   "subject": "acacia and dry grassland in the Gourma with a waterhole",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Bandiagara Escarpment",
+   "description": "A hundred and fifty kilometres of sandstone cliff, with villages built into the face of it.",
+   "subject": "Dogon villages built into the cliff face of the Bandiagara escarpment",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Falls at Woroni",
+   "description": "Small falls on the sandstone plateau above Bandiagara, running only after the rains.",
+   "subject": "a seasonal waterfall over sandstone on the Dogon plateau",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Niger and Lake Debo",
+   "description": "Pinasses working the river between Mopti and Timbuktu, and the inland delta spreading behind them.",
+   "subject": "a loaded pinasse under sail on the Niger near Mopti",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "River Sand, Not Sea",
+   "description": "Landlocked — the beaches here are sandbars on the Niger, and people swim off them.",
+   "subject": "a sandbar and shallow water on the Niger river at low season",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Gallery Forest",
+   "description": "Ribbons of woodland along the river, and the baobabs standing alone on the plain behind.",
+   "subject": "a large baobab standing alone on Sahelian grassland",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Walking the Dogon Country",
+   "description": "Village to village along the escarpment, sleeping on roofs, four days or fourteen.",
+   "subject": "walkers on a path below the Bandiagara cliff at first light",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Where the Blues Came From",
+   "description": "Ali Farka Toure, Toumani Diabate, Salif Keita and Tinariwen are all from here.",
+   "subject": "a kora player performing at an evening gathering in Bamako",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Dogon, Bambara, Tuareg, Fulani",
+   "description": "Dogon on the escarpment, Bambara on the river, Tuareg and Fulani on the plains north of it.",
+   "subject": "a Dogon elder outside a granary with a carved door",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Tigadege Na and Capitaine",
+   "description": "Groundnut stew, and Nile perch grilled whole on the riverbank at Mopti.",
+   "subject": "grilled capitaine fish with rice and onion sauce on a plate",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Sigui and the Dama",
+   "description": "Dogon masked ceremonies, the Sigui every sixty years and the Dama for the dead.",
+   "subject": "Dogon dancers in tall kanaga masks in a village square",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Bogolan and Bamana Sculpture",
+   "description": "Mud-dyed bogolanfini cloth, Bamana chiwara antelope crests, and Dogon carved doors.",
+   "subject": "a length of mud-dyed bogolan cloth in black and ochre",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Timbuktu",
+   "description": "Three mud mosques, and a library tradition that ran to hundreds of thousands of manuscripts.",
+   "subject": "the mud-brick Sankore mosque in Timbuktu",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Four Sites, All at Risk",
+   "description": "Djenne, Timbuktu, Bandiagara and the Tomb of Askia — every one of them on the danger list.",
+   "subject": "the stepped pyramid tomb of Askia at Gao",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Bamako and Mopti",
+   "description": "A capital sprawling both sides of the Niger, and a port town built on three islands.",
+   "subject": "the Niger riverfront and pirogues at Mopti",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Sudano-Sahelian",
+   "description": "Mud walls, projecting palm beams, and buttressed towers — a style that belongs to this river.",
+   "subject": "the buttressed mud facade and wooden beams of a Sahelian mosque",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Monday Market at Djenne",
+   "description": "The whole delta comes to the square in front of the mosque, once a week.",
+   "subject": "the Monday market crowd in front of the Great Mosque of Djenne",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Hard Country for It",
+   "description": "The security situation makes most of Mali unvisitable at present, and that is the honest answer.",
+   "subject": "children playing in a village square in southern Mali",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "The Escarpment on Foot",
+   "description": "The Dogon country is walking country, and always has been.",
+   "subject": "a narrow path climbing between rocks on the Bandiagara escarpment",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Almost None",
+   "description": "A handful of hotels in Bamako. The rest of the country is guesthouses and roofs.",
+   "subject": "a courtyard hotel with mud walls in Bamako",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Re-Plastering Djenne",
+   "description": "Every year the town rebuilds the mosque's surface by hand in a single day.",
+   "subject": "the whole town plastering the Great Mosque of Djenne by hand",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Mud and Long Shadows",
+   "description": "Djenne an hour before sunset, when the toron beams throw stripes down the wall.",
+   "subject": "low sun on the mud wall and projecting beams of Djenne's mosque",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Tomb of Askia",
+   "description": "A pyramid of mud at Gao, built in 1495 for the emperor of Songhai.",
+   "subject": "the mud pyramid tomb of Askia at Gao with wooden beams",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Mali",
+   "description": "Because Djenne, Timbuktu and the Dogon country are three of the great sights of Africa.",
+   "subject": "a lone figure in front of the Great Mosque of Djenne",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

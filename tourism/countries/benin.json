@@ -1,0 +1,294 @@
+{
+ "slug": "benin",
+ "name": "Benin",
+ "adjective": "Beninese",
+ "region": "West Africa",
+ "tagline": "Where vodun comes from, and the palaces of Dahomey",
+ "summary": "Ouidah is the source of vodun and a departure point of the Atlantic slave trade, Abomey holds the earthen palaces of the kings of Dahomey, and Ganvie is a town of thirty thousand people on stilts in a lagoon.",
+ "published": true,
+ "calls": [
+  "culture",
+  "history",
+  "coast",
+  "wildlife"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2
+ ],
+ "when": "November to February, the main dry season. The Vodun festival is on 10 January.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Ganvie",
+   "description": "Thirty thousand people living on stilts in Lake Nokoue, moving between houses by pirogue.",
+   "subject": "stilt houses and pirogues in the lake village of Ganvie",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Pendjari and the Atakora",
+   "description": "The Atakora hills in the northwest, and the Pendjari river running along the park.",
+   "subject": "the Pendjari river running below wooded hills in the Atakora",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Pendjari",
+   "description": "Lion, elephant, buffalo and cheetah in one of the last strongholds of the West African lion.",
+   "subject": "a West African lion in tall grass in Pendjari National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "The W-Arly-Pendjari Complex",
+   "description": "The largest intact ecosystem in West Africa, run across three countries.",
+   "subject": "elephants at a waterhole in Pendjari at the end of the dry season",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Atakora Range",
+   "description": "Six hundred metres of quartzite ridge in the northwest, with the Somba country under it.",
+   "subject": "the quartzite ridges of the Atakora range in northern Benin",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Tanougou",
+   "description": "Falls off the Atakora into a deep pool, swimmable and cold.",
+   "subject": "the Tanougou waterfall falling into a green pool",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Lake Nokoue and the Oueme",
+   "description": "The lagoon behind Cotonou, and the Oueme running down to it through the delta.",
+   "subject": "fishing nets and stakes across Lake Nokoue at dawn",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "A Hundred Kilometres of Atlantic",
+   "description": "Grand-Popo and Ouidah, with heavy surf and coconut palms right down to the sand.",
+   "subject": "palms and heavy Atlantic surf on the beach at Grand-Popo",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Sacred Forests",
+   "description": "Kpasse at Ouidah and the groves around it, protected because they are vodun sites.",
+   "subject": "tall trees and a shrine in the sacred forest of Kpasse at Ouidah",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Pirogue and Pendjari",
+   "description": "Poling through Ganvie in the morning, and a game drive in the north two days later.",
+   "subject": "a pirogue being poled between stilt houses at Ganvie",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Where Vodun Comes From",
+   "description": "Not a folk survival — a living religion with millions of followers, and a public holiday.",
+   "subject": "a vodun ceremony with drumming and white-clad participants",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Fon, Yoruba, Bariba, Somba",
+   "description": "The Fon of Dahomey in the south, the Somba in the Atakora with their fortified houses.",
+   "subject": "a Somba tata fortified mud house in the Atakora",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Amiwo and Grilled Fish",
+   "description": "Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach.",
+   "subject": "a plate of amiwo with grilled chicken and pepper sauce",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Vodun Festival",
+   "description": "10 January at Ouidah, on the beach, and it is a religious event before it is a spectacle.",
+   "subject": "crowds and dancers on the beach at the Ouidah vodun festival",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Applique and Bronze",
+   "description": "The Abomey applique banners that recorded the kings' reigns, and Fon bronze casting.",
+   "subject": "an Abomey applique cloth banner with royal symbols",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "The Royal Palaces of Abomey",
+   "description": "Twelve palaces of the kings of Dahomey, in earth, with bas-reliefs telling the history.",
+   "subject": "earthen bas-reliefs on a wall of the royal palaces of Abomey",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Route of the Slaves",
+   "description": "Four kilometres from Ouidah's auction square to the Door of No Return on the beach.",
+   "subject": "the Door of No Return arch on the beach at Ouidah",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Cotonou, Porto-Novo, Abomey",
+   "description": "A port that never stops, a colonial capital, and the seat of a kingdom.",
+   "subject": "the Dantokpa market and motorcycle taxis in Cotonou",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Earth and Afro-Brazilian",
+   "description": "Somba tata towers in the north, and Afro-Brazilian merchant houses in Ouidah and Porto-Novo.",
+   "subject": "an Afro-Brazilian merchant house with shuttered windows in Porto-Novo",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Zemidjan",
+   "description": "The motorcycle taxis are the transport system, and their yellow shirts are the uniform.",
+   "subject": "yellow-shirted zemidjan motorcycle taxi riders waiting at a junction",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Ganvie by Pirogue",
+   "description": "A whole town on water, reached by boat, which no child has ever found boring.",
+   "subject": "children in a pirogue among the stilt houses of Ganvie",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking the Atakora",
+   "description": "Somba villages, quartzite ridges and the Tanougou pool, on foot from Natitingou.",
+   "subject": "a footpath through Atakora hills past a Somba compound",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "A Few Good Ones",
+   "description": "Lodges at Pendjari and on the coast at Grand-Popo, and good hotels in Cotonou.",
+   "subject": "a beach lodge terrace among palms at Grand-Popo",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Pendjari, Community-Run",
+   "description": "Managed since 2017 by African Parks with the villages around it, and the lion count is up.",
+   "subject": "a ranger scanning grassland from a vehicle in Pendjari",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Stilts and Reflection",
+   "description": "Ganvie at first light, when the water is still and the houses double.",
+   "subject": "stilt houses reflected in still water at dawn in Ganvie",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Possotome and Lake Aheme",
+   "description": "A quiet lake west of Ouidah with fishing villages and hot springs on its shore.",
+   "subject": "fishing boats on the shore of Lake Aheme at Possotome",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Benin",
+   "description": "Vodun at its source, the palaces of Dahomey, and West Africa's best-run national park.",
+   "subject": "a vodun devotee in white before a shrine at Ouidah",
+   "focal": [
+    50,
+    48
+   ]
+  }
+ ]
+}

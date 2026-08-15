@@ -1,0 +1,293 @@
+{
+ "slug": "togo",
+ "name": "Togo",
+ "adjective": "Togolese",
+ "region": "West Africa",
+ "tagline": "Fifty kilometres wide, and a different country every hour north",
+ "summary": "A narrow strip from the Atlantic to the Sahel: palm coast, the Kloto hills with the country's best walking, and the fortified Batammariba houses at Koutammakou that are a World Heritage site.",
+ "published": true,
+ "calls": [
+  "culture",
+  "nature",
+  "coast"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2
+ ],
+ "when": "November to February. The south has a second dry spell in August.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Koutammakou",
+   "description": "The Batammariba build towered mud houses that are fortress, granary and shrine at once.",
+   "subject": "a Batammariba takienta tower house at Koutammakou",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Kloto Hills",
+   "description": "Coffee and cocoa country in the southwest, forested and cool, around Kpalime.",
+   "subject": "forested hills and a valley of cocoa near Kpalime",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Fazao-Malfakassa",
+   "description": "Elephant, buffalo and a great many butterflies in the largest park in the country.",
+   "subject": "forest and grassland in Fazao-Malfakassa National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Small and Recovering",
+   "description": "The parks here are being rebuilt after decades of pressure, and the wildlife with them.",
+   "subject": "a waterhole and buffalo tracks in a Togolese reserve",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mont Agou",
+   "description": "986 metres, the highest point, walkable in a morning from Kpalime.",
+   "subject": "the forested cone of Mont Agou above villages and farms",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Kpime and Womé",
+   "description": "Two falls in the Kloto hills, both of them a short walk off the Kpalime road.",
+   "subject": "the Womé waterfall falling into a pool in forest near Kpalime",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Lake Togo and the Mono",
+   "description": "A shallow lagoon behind the coast, and the Mono river marking the Benin border.",
+   "subject": "pirogues on the shallow water of Lake Togo",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Fifty Kilometres of Coast",
+   "description": "Palm-backed Atlantic sand from Lome east to Aneho, with a heavy swell.",
+   "subject": "coconut palms and Atlantic surf on the beach near Aneho",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Kloto Forest",
+   "description": "Semi-deciduous forest above Kpalime, and one of the richest butterfly sites in West Africa.",
+   "subject": "butterflies on a forest path in the Kloto hills",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Walking Around Kpalime",
+   "description": "Waterfalls, coffee farms, Mont Agou and the butterfly forest, all within an hour.",
+   "subject": "a walking path through cocoa and coffee smallholdings near Kpalime",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Ewe, Kabye, Tem, Batammariba",
+   "description": "Ewe in the south, Kabye in the centre, Batammariba in the far northwest.",
+   "subject": "an Ewe drumming group performing in a village",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Batammariba",
+   "description": "Their name means 'those who shape the earth', and the houses are the argument.",
+   "subject": "a Batammariba woman on the roof terrace of a takienta house",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Fufu and Gboma Dessi",
+   "description": "Fufu with groundnut sauce, and gboma dessi — spinach stew with fish.",
+   "subject": "a bowl of gboma dessi spinach stew with fufu",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Evala and the Voodoo Market",
+   "description": "Kabye wrestling in July, and the Akodessewa fetish market in Lome all year.",
+   "subject": "young men wrestling at the Evala festival in Kabye country",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Batik and Pottery",
+   "description": "Batik and wood carving around Kpalime, and pottery from the north.",
+   "subject": "batik cloth drying on a line at a Kpalime workshop",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Aneho and the Old Coast",
+   "description": "The first colonial capital, with German and Afro-Brazilian buildings going quietly to seed.",
+   "subject": "a decaying German colonial building in Aneho",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Koutammakou, Listed",
+   "description": "The Batammariba landscape has been a World Heritage site since 2004, and is still lived in.",
+   "subject": "a cluster of takienta tower houses among fields at Koutammakou",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Lome",
+   "description": "The only capital on a border, with the biggest market in the region behind the beach.",
+   "subject": "the beach and palm-lined boulevard at Lome",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Towers of Mud",
+   "description": "Takienta houses with granaries on top, and German colonial stone in Lome and Aneho.",
+   "subject": "the sculpted mud tower and granary of a takienta house",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Grand Marche and the Nana Benz",
+   "description": "The women who built the wax-print trade ran it from this market, and still do.",
+   "subject": "wax print cloth stacked at a stall in Lome's Grand Marche",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Beach and Waterfall in a Day",
+   "description": "Togo is narrow enough that the coast and the Kloto hills are the same short trip.",
+   "subject": "a family swimming in a pool below a waterfall near Kpalime",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Mont Agou at Dawn",
+   "description": "Up before six, and Ghana visible across the valley by seven.",
+   "subject": "the view from Mont Agou across valleys at first light",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "A Handful",
+   "description": "Beach hotels at Lome and a few good places at Kpalime.",
+   "subject": "a beach hotel terrace under palms near Lome",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Butterflies at Kloto",
+   "description": "Over five hundred species recorded in one forest, and a local guiding tradition around them.",
+   "subject": "a guide showing butterflies in the Kloto forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Earth Architecture",
+   "description": "Koutammakou late in the day, when the mud goes gold and the granaries throw shadows.",
+   "subject": "late sun on the sculpted walls of takienta houses",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Aneho and Lake Togo",
+   "description": "An hour east of Lome: a lagoon, a decayed colonial town, and no visitors.",
+   "subject": "a quiet street of faded colonial houses at Aneho",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Togo",
+   "description": "A whole cross-section of West Africa in a country you can drive in a day.",
+   "subject": "a road running north through changing country in Togo",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

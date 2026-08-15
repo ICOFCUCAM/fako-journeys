@@ -1,0 +1,294 @@
+{
+ "slug": "niger",
+ "name": "Niger",
+ "adjective": "Nigerien",
+ "region": "West Africa",
+ "tagline": "The Air, the Tenere, and the last giraffes of West Africa",
+ "summary": "The Tenere is the emptiest desert on earth, the Air massif rises out of it to two thousand metres, and the last West African giraffes live wild an hour from the capital.",
+ "published": true,
+ "calls": [
+  "nature",
+  "wildlife",
+  "culture",
+  "adventure"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2
+ ],
+ "when": "November to February. The Air and Tenere need current advice and local guides.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Tenere",
+   "description": "Four hundred thousand square kilometres of sand with nothing in it at all.",
+   "subject": "the empty dune field of the Tenere desert under a low sun",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Air Massif",
+   "description": "Granite mountains standing two thousand metres out of the sand, with guelta pools in them.",
+   "subject": "the granite peaks of the Air massif rising from desert sand",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "The Last West African Giraffe",
+   "description": "About six hundred of them at Kouré, the only wild population left in the whole of West Africa.",
+   "subject": "West African giraffe browsing among bush near Kouré",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "W National Park",
+   "description": "Shared with Benin and Burkina Faso — lion, elephant and buffalo on the Niger river.",
+   "subject": "elephants in tall grass in W National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Mont Idoukal-n-Taghes",
+   "description": "2,022 metres in the Air, and the high point of a range full of rock art.",
+   "subject": "a granite peak in the Air massif with a palm-filled valley below",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Guelta Pools",
+   "description": "Permanent rock pools in the Air, the only standing water for hundreds of kilometres.",
+   "subject": "a permanent rock pool with palms in the Air mountains",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Niger at Niamey",
+   "description": "The river runs 550 kilometres across the southwest and the whole country leans on it.",
+   "subject": "pirogues on the Niger river at Niamey at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Sandbars on the River",
+   "description": "Landlocked, and the swimming is off the sandbanks at Niamey when the river is low.",
+   "subject": "a wide sandbar in the Niger river with people on it",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Doum Palm Valleys",
+   "description": "Palm-filled wadis in the Air, green lines through absolutely bare rock.",
+   "subject": "doum palms filling a wadi between bare granite in the Air",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Crossing the Tenere",
+   "description": "The Tree of Tenere marked the crossing until a truck hit it in 1973. The route is still run.",
+   "subject": "a four-wheel-drive convoy crossing the empty Tenere sand",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Tuareg, Hausa, Zarma, Fulani",
+   "description": "Tuareg and Toubou in the north, Hausa and Zarma in the south, Wodaabe in between.",
+   "subject": "a Tuareg man in indigo leading a camel in the Air",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Wodaabe",
+   "description": "The Gerewol, where the men dress and dance and the women choose.",
+   "subject": "Wodaabe men in face paint dancing at the Gerewol",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Millet, Djerma Rice and Kilishi",
+   "description": "Millet paste with sauce, and kilishi — beef dried thin and spiced, the best in the region.",
+   "subject": "strips of spiced kilishi dried beef on a rack",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "The Cure Salee",
+   "description": "Tuareg and Wodaabe gather at In-Gall in September when the salt pastures come up.",
+   "subject": "camels and tents gathered at the Cure Salee festival at In-Gall",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Tuareg Silver and Leather",
+   "description": "The Agadez cross in silver, and camel saddles and boxes in tooled leather.",
+   "subject": "silver Agadez crosses laid out on tooled leather",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Agadez",
+   "description": "A mud minaret twenty-seven metres high, and the Sultanate that has stood behind it since 1449.",
+   "subject": "the tall mud minaret of the Agadez mosque with its wooden beams",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Three Sites",
+   "description": "Agadez, the Air and Tenere reserves, and W National Park — desert, mountain and river.",
+   "subject": "prehistoric rock engravings of cattle in the Air mountains",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Niamey and Agadez",
+   "description": "A river capital with the best museum in the Sahel, and a caravan city at the desert edge.",
+   "subject": "the mud-brick old quarter of Agadez at street level",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Mud and Beams",
+   "description": "Sahelian mud with projecting timber, and the Agadez minaret as its tallest expression.",
+   "subject": "the beamed mud tower of the Agadez minaret against the sky",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Niamey Grand Marche",
+   "description": "Everything from millet to motorcycle parts, and the noise that goes with it.",
+   "subject": "the crowded aisles of the Grand Marche in Niamey",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Giraffes an Hour Away",
+   "description": "Kouré is a morning trip from Niamey, on foot, and children can do it.",
+   "subject": "a family on foot watching giraffe browse at Kouré",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "The Air on Foot and Camel",
+   "description": "Weeks of walking or riding between guelta and village, with Tuareg guides.",
+   "subject": "a camel caravan crossing sand below the Air mountains",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Very Little",
+   "description": "A few hotels in Niamey. Everything north is camps and hospitality.",
+   "subject": "a courtyard hotel terrace in Niamey at dusk",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Giraffes Beside Farms",
+   "description": "Kouré's giraffes live among fields, and the community is paid to keep it that way.",
+   "subject": "giraffe walking past millet fields and a farmer at Kouré",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Dunes and Nothing",
+   "description": "The Tenere at either end of the day, where the only vertical thing is your own shadow.",
+   "subject": "long shadows across a bare dune field in the Tenere",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Bilma Salt Caravans",
+   "description": "The azalai still runs from Agadez to Bilma and back, a thousand kilometres by camel.",
+   "subject": "a salt caravan of camels crossing dunes near Bilma",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Niger",
+   "description": "The emptiest desert on earth, and a giraffe population saved by the people farming next to it.",
+   "subject": "a giraffe standing against open Sahelian sky at Kouré",
+   "focal": [
+    50,
+    46
+   ]
+  }
+ ]
+}

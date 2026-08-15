@@ -52,6 +52,17 @@ AFRICA = {
 # tell at a glance what is bookable today.
 #   iso: (slug, label, tagline, href, tier)
 ROSTER = {
+    466: ("mali", "Mali", "Timbuktu, Djenne, and the Niger bend", "/mali", "live"),
+    854: ("burkina-faso", "Burkina Faso", "The best cinema and the best masks in West Africa", "/burkina-faso", "live"),
+    562: ("niger", "Niger", "The Air, the Tenere, and the last giraffes of West Africa", "/niger", "live"),
+    204: ("benin", "Benin", "Where vodun comes from, and the palaces of Dahomey", "/benin", "live"),
+    768: ("togo", "Togo", "Fifty kilometres wide, and a different country every hour north", "/togo", "live"),
+    478: ("mauritania", "Mauritania", "The iron ore train, and the libraries of Chinguetti", "/mauritania", "live"),
+    324: ("guinea", "Guinea", "The water tower of West Africa", "/guinea", "live"),
+    624: ("guinea-bissau", "Guinea-Bissau", "The Bijagos, and eighty-eight islands", "/guinea-bissau", "live"),
+    694: ("sierra-leone", "Sierra Leone", "Beaches under forested mountains", "/sierra-leone", "live"),
+    430: ("liberia", "Liberia", "Sapo, surf, and the last of the Upper Guinean forest", "/liberia", "live"),
+    270: ("gambia", "The Gambia", "A river with a country around it", "/gambia", "live"),
     # North Africa and the Horn, added when the atlas went past the first
     # twenty-two. ISO 3166-1 numeric, which is what the topojson keys on.
     12:  ("algeria", "Algeria", "The largest country in Africa, and the emptiest", "/algeria", "live"),

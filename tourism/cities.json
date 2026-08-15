@@ -131,7 +131,10 @@
    "country": "senegal",
    "line": "Atlantic · Art · Music",
    "say": "The westernmost city on the continent, and the one that exported mbalax and a contemporary art biennale. Gorée is twenty minutes offshore.",
-   "photo": null,
+   "photo": "/images/uploads/city-dakar-corniche-1600w.jpg",
+   "photo_w": 1600,
+   "photo_h": 1067,
+   "alt": "Dakar at blue hour from the air: the Corniche curving along the Atlantic with traffic lit orange on it, the round hotel and the tower of the Plateau standing over the shoreline, and the rest of the peninsula running away to the headland",
    "lonlat": [
     -17.4677,
     14.7167
@@ -173,7 +176,10 @@
    "country": "cameroon",
    "line": "River · Commerce · Music",
    "say": "The Wouri estuary, the port that most of central Africa's freight goes through, makossa, and the city half this site's enquiries are answered from.",
-   "photo": null,
+   "photo": "/images/uploads/city-douala-bonanjo-526w.jpg",
+   "photo_w": 526,
+   "photo_h": 789,
+   "alt": "Douala from the air: a cloverleaf interchange and dual carriageways threading between mid-rise blocks and heavy green tree cover, with the low city running back to the Atlantic on the horizon",
    "lonlat": [
     9.7679,
     4.0511
