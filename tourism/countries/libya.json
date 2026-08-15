@@ -1,0 +1,295 @@
+{
+ "slug": "libya",
+ "name": "Libya",
+ "adjective": "Libyan",
+ "region": "North Africa",
+ "tagline": "Leptis Magna, and the sand sea behind it",
+ "summary": "The best-preserved Roman city on the Mediterranean, Greek Cyrene on its escarpment, and the Ubari lakes in a sand sea — a country whose archaeology is world-class and whose access is not simple.",
+ "published": true,
+ "calls": [
+  "history",
+  "culture",
+  "nature"
+ ],
+ "months": [
+  10,
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "Late autumn to early spring. Check what your government says before you plan anything.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Leptis Magna",
+   "description": "A Roman city of a hundred thousand people, buried by sand and dug out almost complete.",
+   "subject": "the colonnaded forum and basilica of Leptis Magna",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Sand Sea and the Jebel",
+   "description": "The Ubari sand sea in the southwest, and the green Jebel Akhdar behind Benghazi.",
+   "subject": "dunes of the Ubari sand sea with a palm-fringed lake below",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Desert Survivors",
+   "description": "Barbary sheep in the Acacus, dorcas gazelle on the gravel plains, and very little else.",
+   "subject": "a Barbary sheep on rock in the Acacus mountains",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Tracking, Not Driving",
+   "description": "The wildlife is thin and shy. What you go out to see is the country it survives in.",
+   "subject": "a desert track crossing gravel plain in the Libyan Sahara",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Acacus",
+   "description": "Volcanic rock arches and towers on the Algerian border, with rock art under them.",
+   "subject": "a natural rock arch in the Acacus mountains at sunset",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Wadi Country",
+   "description": "No permanent rivers. The water is in wadis that run once a decade and in springs at the oases.",
+   "subject": "a spring-fed pool among palms in a Libyan desert oasis",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Ubari Lakes",
+   "description": "Salt lakes between dunes, the last of them dense enough to float in.",
+   "subject": "Gaberoun lake between high dunes in the Ubari sand sea",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Two Thousand Kilometres of Coast",
+   "description": "The longest Mediterranean coastline of any African country, and almost none of it built on.",
+   "subject": "an empty white sand beach on the Libyan Mediterranean coast",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Green Mountain",
+   "description": "Juniper and cypress on the Jebel Akhdar, the only real forest in the country.",
+   "subject": "juniper forest on the slopes of the Jebel Akhdar",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Into the Acacus",
+   "description": "Four-wheel-drive expeditions of a week, camping under the arches with Tuareg guides.",
+   "subject": "a desert camp under a rock arch in the Acacus at night",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Arab, Berber, Tuareg, Tebu",
+   "description": "Four peoples and three languages, and a coast that has been Phoenician, Greek, Roman, Ottoman and Italian.",
+   "subject": "a busy market street in the medina of Tripoli",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Tuareg and the Tebu",
+   "description": "The Tuareg in the southwest around Ghat, the Tebu in the Tibesti foothills in the southeast.",
+   "subject": "a Tebu man beside a camel in southern Libya",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Bazin and Bsisa",
+   "description": "Bazin with lamb and paprika, couscous on Fridays, and shorba on the table all Ramadan.",
+   "subject": "a shared plate of Libyan bazin with lamb and sauce",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Ghat and the Desert Festivals",
+   "description": "The Ghat festival brings Tuareg from three countries for racing, music and poetry.",
+   "subject": "Tuareg riders racing camels at the Ghat festival",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Silver and Leather",
+   "description": "Tuareg silver crosses, tooled leather from Ghadames, and Berber weaving in the Nafusa.",
+   "subject": "a Tuareg silver cross pendant on tooled leather",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Cyrene and Sabratha",
+   "description": "A Greek city on an escarpment above the sea, and a Roman theatre facing the water at Sabratha.",
+   "subject": "the three-storey Roman theatre at Sabratha facing the sea",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Five Sites, All of Them Major",
+   "description": "Leptis, Sabratha, Cyrene, Ghadames and the Acacus rock art — every one on the World Heritage list.",
+   "subject": "prehistoric rock engravings of giraffe in the Acacus",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Tripoli and Benghazi",
+   "description": "An Ottoman medina inside Italian arcades in Tripoli, and Benghazi rebuilding.",
+   "subject": "the Ottoman medina and clock tower of Tripoli",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Ghadames",
+   "description": "A covered mud-brick town where the streets are tunnels and the roofs are the women's road.",
+   "subject": "the whitewashed roof terraces and covered alleys of Ghadames",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Tea, Three Times",
+   "description": "Poured from a height, three glasses, and no conversation is finished before the third.",
+   "subject": "hands pouring Libyan tea from a height into small glasses",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Roman Cities Are Good for This",
+   "description": "Leptis is enormous, empty and safe to run around in, which not every ruin is.",
+   "subject": "children running along a Roman street at Leptis Magna",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "The Jebel Akhdar",
+   "description": "Walking on the green mountain between Greek tombs cut into the rock.",
+   "subject": "a walking path past rock-cut Greek tombs on the Jebel Akhdar",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Thin on the Ground",
+   "description": "There is very little at the top end here, and what exists is in Tripoli.",
+   "subject": "a restored merchant's courtyard house in Tripoli medina",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "What the Desert Keeps",
+   "description": "Sand buried Leptis Magna for a thousand years, which is why there is so much of it left.",
+   "subject": "sand drifted against the standing columns of a Roman street",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Stone and Sea",
+   "description": "Sabratha's theatre with the Mediterranean through its arches, in the last hour of light.",
+   "subject": "the arches of Sabratha's theatre with the sea beyond at sunset",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Waw an Namus",
+   "description": "A black volcanic caldera in the middle of the Sahara with green lakes at the bottom.",
+   "subject": "the black volcanic crater and green lakes of Waw an Namus",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Libya",
+   "description": "Because Leptis Magna is the best Roman city left anywhere, and hardly anyone has stood in it.",
+   "subject": "a single visitor in the vast forum of Leptis Magna",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

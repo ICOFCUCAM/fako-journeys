@@ -52,6 +52,15 @@ AFRICA = {
 # tell at a glance what is bookable today.
 #   iso: (slug, label, tagline, href, tier)
 ROSTER = {
+    # North Africa and the Horn, added when the atlas went past the first
+    # twenty-two. ISO 3166-1 numeric, which is what the topojson keys on.
+    12:  ("algeria", "Algeria", "The largest country in Africa, and the emptiest", "/algeria", "live"),
+    434: ("libya", "Libya", "Leptis Magna, and the sand sea behind it", "/libya", "live"),
+    729: ("sudan", "Sudan", "More pyramids than Egypt", "/sudan", "live"),
+    728: ("south-sudan", "South Sudan", "The Sudd, and the second-largest migration on earth", "/south-sudan", "live"),
+    232: ("eritrea", "Eritrea", "Art deco Asmara, and the Dahlak islands", "/eritrea", "live"),
+    262: ("djibouti", "Djibouti", "Where three plates pull apart", "/djibouti", "live"),
+    706: ("somalia", "Somalia", "The longest coastline in mainland Africa", "/somalia", "live"),
     120: ("cameroon", "Cameroon", "Africa in miniature", "/cameroon", "ours"),
     800: ("uganda", "Uganda", "The Pearl of Africa", "https://pearl-trails-uganda.vercel.app", "ours"),
     516: ("namibia", "Namibia", "Where the desert meets the wild", "https://namib-skyline.vercel.app", "ours"),

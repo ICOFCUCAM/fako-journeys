@@ -1,0 +1,297 @@
+{
+ "slug": "algeria",
+ "name": "Algeria",
+ "adjective": "Algerian",
+ "region": "North Africa",
+ "tagline": "The largest country in Africa, and the emptiest",
+ "summary": "Four-fifths Sahara, a Mediterranean coast of Roman cities, and the Hoggar and Tassili massifs in the deep south — rock art nine thousand years old on a plateau the size of Britain.",
+ "published": true,
+ "calls": [
+  "nature",
+  "culture",
+  "history",
+  "adventure"
+ ],
+ "months": [
+  10,
+  11,
+  12,
+  1,
+  2,
+  3,
+  4
+ ],
+ "when": "October to April. The Sahara is unvisitable in summer and the Tassili needs cool nights.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Sahara Begins Here",
+   "description": "Four-fifths of Algeria is desert, and the last fifth holds forty million people.",
+   "subject": "the dunes of the Grand Erg Oriental in southern Algeria at low sun",
+   "focal": [
+    50,
+    56
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Hoggar and Tassili",
+   "description": "Volcanic spires in the Hoggar, and a sandstone plateau at Tassili n'Ajjer eroded into streets.",
+   "subject": "the volcanic pinnacles of the Hoggar massif near Tamanrasset",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "What Lives in the Sand",
+   "description": "Fennec fox, addax and the last Saharan cheetah, all of them nocturnal and all of them rare.",
+   "subject": "a fennec fox at the edge of dunes in the Algerian Sahara",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Desert Watching, Not Game Driving",
+   "description": "There is no safari circuit here. You go out at dawn with somebody who reads tracks.",
+   "subject": "a guide reading animal tracks in sand in the Algerian Sahara",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Djurdjura and the Hoggar",
+   "description": "Snow on the Djurdjura above Kabylie in winter; Mount Tahat at 2,908 metres in the far south.",
+   "subject": "snow on the Djurdjura range above the Kabylie valleys",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Water in a Dry Country",
+   "description": "The falls at Kefrida in Bejaia, in a green fold of the coast that surprises everyone.",
+   "subject": "the Kefrida waterfall falling through green forest in Bejaia province",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Chotts and Oases",
+   "description": "Salt lakes that mirror the sky at Chott Melrhir, and the palmeraie at Timimoun.",
+   "subject": "the palm oasis and red ksar walls of Timimoun in the Gourara",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "A Thousand Kilometres of Mediterranean",
+   "description": "The Turquoise Coast west of Algiers, and the coves at Jijel under limestone cliffs.",
+   "subject": "a limestone cove on the Jijel coast with clear water",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Kabylie Cedars",
+   "description": "Atlas cedar on the Djurdjura ridge, some of it four hundred years old.",
+   "subject": "ancient Atlas cedar trees on the Djurdjura ridge in Kabylie",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Crossing the Tassili",
+   "description": "A week on foot with Tuareg guides among the sandstone towers, sleeping out.",
+   "subject": "hikers among the sandstone towers of Tassili n'Ajjer",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Three Languages Before Lunch",
+   "description": "Darija, Tamazight and French, and a coastline that has been argued over for three thousand years.",
+   "subject": "a busy street in the Casbah of Algiers with people talking",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Kabyles and the Tuareg",
+   "description": "Berber-speaking Kabylie in the north, and the Tuareg of the Hoggar in the far south.",
+   "subject": "a Tuareg man in indigo tagelmust in the Hoggar",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Couscous on Friday",
+   "description": "Chorba, m'hadjeb, and the Friday couscous that stops the whole country.",
+   "subject": "a plate of Algerian couscous with vegetables and broth",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Yennayer and the Sufi Moussems",
+   "description": "The Amazigh new year in January, and the moussems that fill desert towns for a week.",
+   "subject": "dancers at the Amazigh Yennayer new year celebration",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Silver, Wool and Pottery",
+   "description": "Kabyle silver with coral and enamel, Beni Isguen weaving, and the pottery of Maatkas.",
+   "subject": "Kabyle silver jewellery with coral and enamel on a cloth",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Timgad and Djemila",
+   "description": "Two Roman cities the desert kept: Timgad's grid is complete, Djemila's forum still stands.",
+   "subject": "the Roman ruins and triumphal arch of Timgad on the high plateau",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Seven Sites, Nine Thousand Years",
+   "description": "Tassili's rock art records a Sahara with rivers in it, and the M'zab valley is still lived in.",
+   "subject": "prehistoric rock paintings of cattle at Tassili n'Ajjer",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Algiers, White on the Bay",
+   "description": "The Casbah stacked above the harbour, and the boulevards the French cut below it.",
+   "subject": "the white terraces of the Casbah of Algiers above the bay",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "The Casbah and the M'zab",
+   "description": "Ottoman houses on top of each other in Algiers, and five fortified towns in the M'zab built to one plan.",
+   "subject": "the tiered houses and minaret of Ghardaia in the M'zab valley",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Coffee and Argument",
+   "description": "The cafe is the institution. So is the argument in it.",
+   "subject": "men at a pavement cafe table in Algiers talking",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Beaches and Roman Stones",
+   "description": "Tipaza has a Roman city on a beach, which solves most family arguments at once.",
+   "subject": "Roman columns at Tipaza with the Mediterranean behind",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking the North",
+   "description": "The Chrea forest above Blida, the Gouraya cliffs at Bejaia, and the Djurdjura ridge.",
+   "subject": "a walking path along the Gouraya cliffs above Bejaia",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Rare, and Getting Less So",
+   "description": "Restored Ottoman houses in the Casbah, and desert camps in the Hoggar run to a standard.",
+   "subject": "a restored Ottoman courtyard house in the Casbah of Algiers",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "The Case for Going Now",
+   "description": "Algeria takes very few visitors for its size, and everything about it is the better for that.",
+   "subject": "an empty Roman street at Djemila with nobody on it",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Light on Sandstone",
+   "description": "Tassili at either end of the day, when the rock goes from ochre to red to purple.",
+   "subject": "sandstone formations at Tassili n'Ajjer in late afternoon light",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Ghardaia",
+   "description": "Five towns in a valley, built by the Mozabites in the eleventh century and still run their way.",
+   "subject": "the pyramid-stacked town of Ghardaia rising to its mosque",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Algeria",
+   "description": "The Roman cities of Tunisia, the Sahara of Libya and the Atlas of Morocco, with almost nobody in them.",
+   "subject": "a lone traveller looking out over the Grand Erg from a dune",
+   "focal": [
+    50,
+    55
+   ]
+  }
+ ]
+}

@@ -1,0 +1,294 @@
+{
+ "slug": "sudan",
+ "name": "Sudan",
+ "adjective": "Sudanese",
+ "region": "North Africa",
+ "tagline": "More pyramids than Egypt",
+ "summary": "Two hundred Nubian pyramids at Meroe and Nuri, the Nile making its great bend through desert, and a Red Sea coast with reefs nobody dives — a country with an extraordinary past and a hard present.",
+ "published": true,
+ "calls": [
+  "history",
+  "culture",
+  "nature"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "November to March, and only when the security situation allows it.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "The Pyramids of Meroe",
+   "description": "Two hundred of them on a ridge of sand, steeper and smaller than Egypt's, and empty.",
+   "subject": "the Nubian pyramids of Meroe standing on desert dunes",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Great Bend",
+   "description": "The Nile turns southwest for three hundred kilometres here, against every expectation.",
+   "subject": "the Nile curving through desert at the great bend in northern Sudan",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Dinder and the Red Sea",
+   "description": "Dinder on the Ethiopian border holds lion, giraffe and roan; the reefs hold everything else.",
+   "subject": "a herd of roan antelope in Dinder National Park",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Dinder",
+   "description": "One of Africa's oldest national parks, and one of the least visited on the continent.",
+   "subject": "acacia woodland and a waterhole in Dinder National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Red Sea Hills and Jebel Marra",
+   "description": "Granite hills behind Port Sudan, and a volcanic crater lake on Jebel Marra in Darfur.",
+   "subject": "the volcanic crater lake on Jebel Marra",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "The Cataracts",
+   "description": "Six of them on the Nile, rapids where the river crosses granite, and boats have to portage.",
+   "subject": "white water over black granite at a Nile cataract",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Blue and the White",
+   "description": "They meet at Khartoum, one clear and one brown, and you can see the line between them.",
+   "subject": "the confluence of the Blue and White Nile at Khartoum from the air",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Reefs Nobody Dives",
+   "description": "Sanganeb atoll and Sha'ab Rumi, where Cousteau sank Conshelf II and the coral grew over it.",
+   "subject": "a coral wall and reef fish at Sanganeb atoll in the Red Sea",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Acacia and Doum Palm",
+   "description": "Gum arabic comes from the acacia belt across the middle of the country. Most of the world's does.",
+   "subject": "an acacia woodland tapped for gum arabic in central Sudan",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Diving and Desert Driving",
+   "description": "Liveaboards out of Port Sudan, and four-wheel-drive routes between the pyramid fields.",
+   "subject": "a dive boat anchored over a reef in the Sudanese Red Sea",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Nubian, Arab, Beja",
+   "description": "Nubian along the northern Nile, Beja in the Red Sea hills, and nearly six hundred groups altogether.",
+   "subject": "a decorated Nubian house with a painted doorway on the Nile",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Nubians",
+   "description": "The Nubian villages along the northern Nile paint their houses, and have done for a very long time.",
+   "subject": "a Nubian woman in a doorway of a brightly painted house",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Ful and Kisra",
+   "description": "Ful medames for breakfast everywhere, kisra sorghum flatbread, and coffee spiced with ginger.",
+   "subject": "a bowl of ful medames with bread and tea on a table",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Sufi Friday at Omdurman",
+   "description": "The Hamed al-Nil tomb, every Friday at sunset, drumming and whirling for two hours.",
+   "subject": "Sufi dervishes in green and red at the Hamed al-Nil tomb, Omdurman",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Basketry and Silver",
+   "description": "Coiled palm baskets from the north, Beja swords, and silver from the Omdurman souk.",
+   "subject": "coiled palm-fibre baskets in bright colours at Omdurman souk",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Meroe, Nuri and El-Kurru",
+   "description": "Three royal cemeteries of the Kingdom of Kush, which ruled Egypt for a century.",
+   "subject": "the pyramid field at Nuri with the Nile beyond",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Kush",
+   "description": "Gebel Barkal was the holy mountain of two kingdoms, and the temple of Amun is cut into it.",
+   "subject": "the flat-topped Gebel Barkal with the temple ruins at its base",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Khartoum and Omdurman",
+   "description": "Two cities facing each other across the confluence, one colonial grid and one enormous souk.",
+   "subject": "the Omdurman souk crowded with people and stalls",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Mud Brick and Painted Doors",
+   "description": "Nubian vaulted mud-brick houses with painted gates, a technique revived by Hassan Fathy.",
+   "subject": "a vaulted Nubian mud-brick house with a painted gateway",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Camel Market",
+   "description": "Omdurman's camel market on a Saturday, with animals in from Kordofan and Darfur.",
+   "subject": "camels and traders at the Omdurman camel market",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "The Nile at Tuti",
+   "description": "The island in the confluence, farmed, walkable, and reached by ferry from three sides.",
+   "subject": "small farms and palms on Tuti island in the Nile at Khartoum",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking Between Pyramids",
+   "description": "There is no fence at Meroe. You walk in off the sand and up the ridge.",
+   "subject": "footprints in sand leading up to the Meroe pyramids",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Very Little",
+   "description": "A handful of Red Sea liveaboards, and camps at Meroe. That is the whole of it.",
+   "subject": "a tented camp on sand within sight of the Meroe pyramids",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Gum Arabic and the Acacia Belt",
+   "description": "A gum tapped from wild acacia by hand, in most of the soft drinks in the world.",
+   "subject": "a tapped acacia trunk with gum arabic crystals on the bark",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Pyramids and Dunes",
+   "description": "Meroe an hour after dawn, when the sand is still ridged and the shadows are long.",
+   "subject": "long shadows across dunes below the Meroe pyramids at dawn",
+   "focal": [
+    50,
+    54
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Old Dongola",
+   "description": "A Christian Nubian capital on the Nile, with a throne hall that became a mosque.",
+   "subject": "the ruined columns and throne hall of Old Dongola above the Nile",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Sudan",
+   "description": "More pyramids than Egypt, no queue at any of them, and a welcome people write books about.",
+   "subject": "a lone figure walking among the pyramids of Meroe",
+   "focal": [
+    50,
+    54
+   ]
+  }
+ ]
+}

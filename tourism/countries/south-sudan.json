@@ -1,0 +1,293 @@
+{
+ "slug": "south-sudan",
+ "name": "South Sudan",
+ "adjective": "South Sudanese",
+ "region": "East Africa",
+ "tagline": "The Sudd, and the second-largest migration on earth",
+ "summary": "A million white-eared kob moving across Boma and Badingilo, the Sudd wetland the size of Belgium, and the cattle camps of the Mundari — the youngest country in the world, and the least travelled.",
+ "published": true,
+ "calls": [
+  "wildlife",
+  "culture",
+  "nature"
+ ],
+ "months": [
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "The dry season, December to March. Everything else is under water or unreachable.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Cattle Camps at Dawn",
+   "description": "Mundari herders and their Ankole cattle in smoke from dung fires, on the White Nile.",
+   "subject": "Mundari herders among long-horned cattle in dung smoke at dawn",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Sudd",
+   "description": "One of the largest wetlands on earth, where the Nile spreads out and slows almost to a stop.",
+   "subject": "papyrus and open water stretching to the horizon in the Sudd",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "The Great Kob Migration",
+   "description": "White-eared kob, tiang and Mongalla gazelle — counted at over a million animals.",
+   "subject": "a vast herd of white-eared kob crossing open grassland",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Boma and Badingilo",
+   "description": "Two parks either side of the migration route, with almost no infrastructure and no crowds.",
+   "subject": "open grassland and scattered trees in Boma National Park",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Imatong",
+   "description": "Mount Kinyeti at 3,187 metres on the Ugandan border, the highest point in the country.",
+   "subject": "the forested slopes of the Imatong mountains rising to Mount Kinyeti",
+   "focal": [
+    50,
+    46
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Fula Falls",
+   "description": "The Nile dropping through rock at Fula, on its way north out of Uganda.",
+   "subject": "white water at the Fula rapids on the White Nile",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The White Nile",
+   "description": "It runs the length of the country and it is the reason for everything here.",
+   "subject": "a fishing canoe on the White Nile at sunset near Juba",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "No Coast, Plenty of Water",
+   "description": "Landlocked, but the river islands and sandbars near Terekeka do the job.",
+   "subject": "a sandbar and shallow water on the White Nile near Terekeka",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Southern Forests",
+   "description": "Guinea-Congolian rainforest at the Congo border, with forest elephant and chimpanzee in it.",
+   "subject": "dense rainforest canopy in the Western Equatoria forest belt",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Getting to Boma",
+   "description": "Light aircraft and then hours of track. It is expedition travel and it is honest about that.",
+   "subject": "a light aircraft on a grass airstrip in remote grassland",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Sixty-Four Peoples",
+   "description": "Dinka, Nuer, Shilluk, Bari, Azande, Mundari and fifty-eight more, in a country of twelve million.",
+   "subject": "a group of young men at a Mundari cattle camp in the evening",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Mundari",
+   "description": "Cattle are wealth, name and argument. A camp of them at dusk is unlike anything else.",
+   "subject": "a Mundari man resting against the flank of a long-horned bull",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Kisra, Asida and Fish",
+   "description": "Sorghum asida, kisra flatbread, and Nile perch grilled on the bank.",
+   "subject": "grilled Nile perch and flatbread served on a riverbank",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Wrestling",
+   "description": "Dinka and Mundari wrestling matches draw whole districts, with drumming and singing round the ring.",
+   "subject": "traditional wrestlers and a drumming crowd at a village match",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Beadwork and Corsets",
+   "description": "Dinka beaded corsets in colours that state a man's age set, and Azande basketry.",
+   "subject": "a beaded Dinka corset in red and blue on display",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Lado and the Old Posts",
+   "description": "The Lado Enclave, Gondokoro and the river stations of the nineteenth-century Nile expeditions.",
+   "subject": "the ruins of a colonial-era river station on the White Nile",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Nothing on the List Yet",
+   "description": "No World Heritage sites, and a heritage that is living rather than ruined.",
+   "subject": "elders sitting under a large tree at a village meeting",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Juba",
+   "description": "A river port that became a capital in 2011 and has been building ever since.",
+   "subject": "the riverfront and low buildings of Juba on the White Nile",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Tukuls",
+   "description": "Round mud walls, conical thatch, and a shape that has not needed improving.",
+   "subject": "a cluster of thatched tukul houses in a South Sudanese village",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Market Day at Terekeka",
+   "description": "Cattle, sorghum, fish and tea, and the whole district in one place.",
+   "subject": "a busy open-air market with cattle and traders at Terekeka",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Hard Country for It",
+   "description": "This is not a family destination yet, and pretending otherwise would not help anyone.",
+   "subject": "a village school class sitting outside under a tree",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking the Imatong",
+   "description": "Cool forest, waterfalls and Kinyeti, from Gilo. Guides are essential and available.",
+   "subject": "a forest path climbing through the Imatong mountains",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Two Camps",
+   "description": "There is a mobile camp on the migration and very little else. That is the honest position.",
+   "subject": "a mobile tented camp pitched on open grassland",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "The Sudd Holds the Nile Back",
+   "description": "Half the water entering the Sudd evaporates in it. The wetland is a climate system.",
+   "subject": "papyrus swamp and open channels in the Sudd wetland from the air",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Smoke and Horns",
+   "description": "A Mundari camp at first light, when the fires are lit and the light comes through them.",
+   "subject": "sunlight through dung smoke over cattle horns at a Mundari camp",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Nimule",
+   "description": "A small park on the Ugandan border with elephant, and the Nile going through it.",
+   "subject": "the Nile running through green hills at Nimule",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why South Sudan",
+   "description": "A migration to rival the Serengeti's, seen by a few dozen people a year.",
+   "subject": "a single vehicle beside an immense herd of kob on open plain",
+   "focal": [
+    50,
+    52
+   ]
+  }
+ ]
+}

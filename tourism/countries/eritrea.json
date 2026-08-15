@@ -1,0 +1,297 @@
+{
+ "slug": "eritrea",
+ "name": "Eritrea",
+ "adjective": "Eritrean",
+ "region": "East Africa",
+ "tagline": "Art deco Asmara, and the Dahlak islands",
+ "summary": "A modernist capital on a highland plateau that UNESCO listed whole, a steam railway down to the Red Sea, and three hundred islands off Massawa that almost nobody visits.",
+ "published": true,
+ "calls": [
+  "cities",
+  "culture",
+  "history",
+  "coast"
+ ],
+ "months": [
+  10,
+  11,
+  12,
+  1,
+  2,
+  3,
+  4
+ ],
+ "when": "October to April. Asmara is temperate all year; the coast is only bearable in winter.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Asmara on the Plateau",
+   "description": "A whole modernist city at 2,300 metres, built in the 1930s and barely altered since.",
+   "subject": "the Fiat Tagliero building in Asmara with its concrete wings",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Escarpment",
+   "description": "The plateau drops two thousand metres to the Red Sea in about ninety kilometres.",
+   "subject": "the Eritrean highland escarpment dropping away in terraces",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Danakil and Dahlak",
+   "description": "Wild ass in the Danakil, dugong and turtle in the Dahlak archipelago.",
+   "subject": "an African wild ass on stony ground in the Danakil",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Not the Business Here",
+   "description": "There is no safari circuit. The wildlife is coastal and marine, and it is worth the swap.",
+   "subject": "a green turtle over seagrass in the Dahlak archipelago",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Emba Soira",
+   "description": "3,018 metres in the southern highlands, with terraced farming right up the sides.",
+   "subject": "terraced fields climbing the slopes of the Eritrean highlands",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Seasonal Only",
+   "description": "The highland streams run in the summer rains and are dry the rest of the year.",
+   "subject": "a dry rocky streambed in the Eritrean highlands",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Red Sea Coast",
+   "description": "No permanent rivers to speak of — the water here is the sea, and it is very warm.",
+   "subject": "clear shallow water over coral off the Eritrean Red Sea coast",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "The Dahlak Archipelago",
+   "description": "Three hundred and fifty islands, four of them inhabited, and reefs almost nobody has dived.",
+   "subject": "an empty white beach and turquoise water on a Dahlak island",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Green Belt",
+   "description": "Semenawi Bahri, a strip of cloud forest on the escarpment an hour from the capital.",
+   "subject": "mist in the cloud forest of Semenawi Bahri on the escarpment",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "The Massawa Road",
+   "description": "Down the escarpment by road or by the restored steam railway, two thousand metres in a morning.",
+   "subject": "a steam locomotive on the mountain railway above Asmara",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Nine Groups, Two Faiths",
+   "description": "Tigrinya, Tigre, Afar, Bilen and five more, roughly half Christian and half Muslim.",
+   "subject": "people at an outdoor cafe on Harnet Avenue in Asmara",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Afar and the Rashaida",
+   "description": "The Afar on the southern coast, and the Rashaida who came across from Arabia in the 1840s.",
+   "subject": "a Rashaida woman in an embroidered veil near the Red Sea coast",
+   "focal": [
+    50,
+    45
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Injera, Zigni and Macchiato",
+   "description": "Eritrean stews on injera, and an Italian coffee culture that never left.",
+   "subject": "a macchiato in a glass on a marble cafe table in Asmara",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Meskel and Eid",
+   "description": "Meskel bonfires in September, and Eid in Massawa, in the same country and often the same street.",
+   "subject": "a Meskel bonfire and crowd in an Eritrean town square",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Filigree and Basketry",
+   "description": "Silver filigree from Asmara's goldsmiths, and coiled straw baskets from the highlands.",
+   "subject": "silver filigree jewellery on a workbench in Asmara",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Adulis and Qohaito",
+   "description": "A Red Sea port that traded with Rome, and a highland city on the escarpment above it.",
+   "subject": "stone columns standing at the ruins of Qohaito on the escarpment",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Asmara, Listed Whole",
+   "description": "The first modernist city anywhere to be inscribed as a World Heritage site, in 2017.",
+   "subject": "the modernist facade of the Cinema Impero on Harnet Avenue",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Asmara and Massawa",
+   "description": "One a cool art-deco plateau town, the other a coral-block Ottoman port on the sea.",
+   "subject": "coral-block Ottoman buildings on the waterfront at Massawa",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Futurist and Coral",
+   "description": "Fiat Tagliero's concrete wings in Asmara, and Massawa's buildings cut from the reef itself.",
+   "subject": "the arched coral-stone facade of an old Massawa merchant house",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Passeggiata",
+   "description": "Asmara walks Harnet Avenue in the evening. Everybody does, and nobody hurries.",
+   "subject": "people walking Harnet Avenue in Asmara in the evening",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "The Safest Capital Around",
+   "description": "Asmara is small, walkable and calm, and children are everywhere in it after dark.",
+   "subject": "children playing in a public square in Asmara at dusk",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Cycling",
+   "description": "Eritrea is a cycling country — the Tour of Eritrea climbs the escarpment.",
+   "subject": "a peloton of cyclists climbing a mountain road in Eritrea",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Modest, and Improving",
+   "description": "A handful of restored Italian-era hotels in Asmara. Nothing on the coast yet.",
+   "subject": "a restored Italian-era hotel interior in Asmara",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Terraces That Hold the Soil",
+   "description": "Highland terracing built by hand over centuries, and still the reason the topsoil is there.",
+   "subject": "hand-built stone terraces on a steep Eritrean hillside",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Deco in Low Light",
+   "description": "Asmara's facades in the late afternoon, when the plaster goes warm and the streets empty.",
+   "subject": "late sun on a curved art deco facade in Asmara",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Tank Graveyard",
+   "description": "A hillside outside Asmara stacked with the wreckage of thirty years of war.",
+   "subject": "rusting tanks and vehicles stacked at the Asmara tank graveyard",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Eritrea",
+   "description": "Nowhere else has a whole intact modernist city, a steam railway and an unfished reef.",
+   "subject": "a vintage Fiat parked outside an art deco cinema in Asmara",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}

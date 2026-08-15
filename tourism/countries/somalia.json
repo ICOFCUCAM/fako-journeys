@@ -1,0 +1,294 @@
+{
+ "slug": "somalia",
+ "name": "Somalia",
+ "adjective": "Somali",
+ "region": "East Africa",
+ "tagline": "The longest coastline in mainland Africa",
+ "summary": "Three thousand kilometres of Indian Ocean, the painted rock shelters at Laas Geel that are among the oldest in Africa, and the Cal Madow mountains — a country with real destinations and real constraints on reaching them.",
+ "published": true,
+ "calls": [
+  "coast",
+  "history",
+  "culture"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "The cool season, November to March. Take current advice seriously; Somaliland and Puntland are the practical routes.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Three Thousand Kilometres",
+   "description": "The longest coastline on mainland Africa, most of it empty white sand.",
+   "subject": "an empty white sand beach on the Somali Indian Ocean coast",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "Cal Madow",
+   "description": "A mountain range behind Bosaso with cloud forest on top and frankincense on the slopes.",
+   "subject": "the escarpment of the Cal Madow mountains above dry plains",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Speke's Gazelle and the Sea",
+   "description": "Speke's gazelle and dibatag inland, and turtles, dugong and whale sharks offshore.",
+   "subject": "a Speke's gazelle on stony ground in the Somali interior",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Not the Circuit",
+   "description": "There are no game lodges. The wildlife here is coastal, and the interior is for those who know it.",
+   "subject": "arid acacia scrub and open plain in the Somali interior",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "Shimbiris",
+   "description": "2,460 metres in the Cal Madow, the highest point, with juniper and cycads near the top.",
+   "subject": "juniper and cycads on the high slopes of Shimbiris",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Seasonal, and Sudden",
+   "description": "The Shabelle and Juba run south; everything else runs for a fortnight after the rains.",
+   "subject": "a seasonal river running full through dry country after rain",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "The Juba and the Shabelle",
+   "description": "Two rivers off the Ethiopian highlands that make the only irrigated farmland in the country.",
+   "subject": "irrigated banana plantations along the Juba river",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "Berbera and Beyond",
+   "description": "Berbera's beaches on the Gulf of Aden, and a reef wall a short swim from the sand.",
+   "subject": "the beach and clear water at Berbera on the Gulf of Aden",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "Frankincense Country",
+   "description": "Boswellia trees on the Cal Madow slopes, tapped as they have been for four thousand years.",
+   "subject": "a tapped frankincense tree with resin beading on the bark",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Diving Berbera",
+   "description": "Unfished reefs in the Gulf of Aden, and almost no one to share them with.",
+   "subject": "a diver over an unfished coral reef in the Gulf of Aden",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Poetry as the National Art",
+   "description": "Somalis are called a nation of poets, and the reputation is deserved and enforced.",
+   "subject": "men listening to a poet reciting at an evening gathering",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "Nomad and Pastoralist",
+   "description": "Camel herding is the oldest way of life here and still a large part of the economy.",
+   "subject": "a Somali herder with camels on open thornbush country",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Camel Milk and Bariis",
+   "description": "Camel milk, bariis iskukaris spiced with cumin and cardamom, and Somali tea with ginger.",
+   "subject": "a plate of bariis iskukaris with goat and banana",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Weddings and Buraanbur",
+   "description": "Buraanbur — women's poetry with drumming and dance — carries the celebration.",
+   "subject": "women performing buraanbur poetry and dance at a wedding",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Weaving and Woodcarving",
+   "description": "Aqal nomadic house frames, carved wooden headrests, and woven mats from the north.",
+   "subject": "the woven frame and mats of a Somali aqal nomadic house",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Laas Geel",
+   "description": "Rock shelters near Hargeisa painted with cattle and people, five thousand years old and unfaded.",
+   "subject": "painted cattle and human figures on the rock shelters at Laas Geel",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "Ports of the Indian Ocean",
+   "description": "Mogadishu, Merca and Barawa were trading cities when Europe had none on this ocean.",
+   "subject": "the coral-stone ruins of an old trading house at Merca",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Mogadishu and Hargeisa",
+   "description": "A white Indian Ocean capital rebuilding, and a highland city that has been quiet for thirty years.",
+   "subject": "the seafront and white buildings of Mogadishu",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Coral Stone and Carved Doors",
+   "description": "Swahili coral-rag architecture along the southern coast, with heavy carved doors.",
+   "subject": "a carved wooden door in a coral-stone wall on the Somali coast",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "The Camel Market",
+   "description": "Hargeisa's livestock market on a weekday morning, and the money that moves through it.",
+   "subject": "traders and camels at the Hargeisa livestock market",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Beaches, and Care",
+   "description": "Lido beach in Mogadishu fills at the weekend. Go with local advice, always.",
+   "subject": "families on Lido beach in Mogadishu at the weekend",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "Walking the Cal Madow",
+   "description": "Cool forest, cycads and views to the Gulf of Aden, from Erigavo.",
+   "subject": "a walking path through juniper forest in the Cal Madow",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Beginning to Exist",
+   "description": "New hotels in Hargeisa and Mogadishu, mostly for business travellers, some of them good.",
+   "subject": "a rooftop terrace restaurant overlooking Hargeisa",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Frankincense and the Land",
+   "description": "Boswellia grows on bare limestone where nothing else will, and it holds the slope together.",
+   "subject": "frankincense trees growing from bare limestone on a steep slope",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "Ochre on Rock",
+   "description": "Laas Geel in the morning, when the shelters are lit and the cattle look painted yesterday.",
+   "subject": "morning light on the painted rock shelter interior at Laas Geel",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "Berbera's Ottoman Quarter",
+   "description": "A decaying Ottoman and colonial old town by the harbour, being slowly repaired.",
+   "subject": "arched Ottoman-era buildings in the old town of Berbera",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Somalia",
+   "description": "Rock art older than the pyramids, an unfished ocean, and a poetry tradition still practised daily.",
+   "subject": "a lone figure on an empty Somali beach at sunrise",
+   "focal": [
+    50,
+    55
+   ]
+  }
+ ]
+}

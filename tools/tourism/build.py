@@ -20,6 +20,7 @@
     build.py cut <file|url>      cut one raw clip down to what the window can carry
     build.py film <file|url>     cut a whole film into the window's pieces
     build.py scaffold            create a new country with 27 empty slots
+    build.py geo                 outlines and distances, from the map itself
     build.py gateway             rewrite the gateway's country lists from the dataset
     build.py sidebyside          write /compare.html — two countries, same questions
     build.py report              write tourism/REPORT.md
@@ -284,6 +285,13 @@ def cmd_scaffold(args):
     print("wrote %s with %d empty categories" % (os.path.relpath(path, ROOT), len(tax.enabled)))
     print("fill in caption/description/subject/focal, then: build.py all")
     return 0
+
+
+def cmd_geo(args):
+    """The outlines and the distance table, from geometry the site already has."""
+    from tourism import atlas_geo
+    problems = atlas_geo.run(check=bool(getattr(args, "describe", False)))
+    return 1 if problems else 0
 
 
 def cmd_sidebyside(args):
@@ -715,7 +723,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
-    "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "geo": cmd_geo, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,

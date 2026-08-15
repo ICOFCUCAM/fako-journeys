@@ -63,7 +63,8 @@ REGION_GROUPS = (
 )
 
 MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
-           "wants", "expcards", "mapunder", "mapover", "claim", "months", "scale",
+           "wants", "expcards", "mapunder", "maplive", "mapover", "claim", "months", "scale",
+           "lede",
            "destinations", "operators", "picks", "plannote", "plansteps",
            "nownote", "now", "stories", "footer", "regiontone", "feel",
            "moments", "momentsay", "seasons", "seasonsay", "motion",
@@ -85,6 +86,9 @@ MONTHS = ("January", "February", "March", "April", "May", "June",
 # The one category that is a country's opening picture rather than a place, and
 # so is the one entry in twenty-seven that never gets a page of its own.
 HERO = "hero"
+
+
+IN_AFRICA = 54                 # UN member states. Western Sahara is not one.
 
 
 def esc(v):
@@ -224,9 +228,10 @@ def block_cities(countries):
             '<span class="wa-city-where">The atlas</span>'
             '<span class="wa-city-line">A first collection, not a closed list</span>'
             '<span class="wa-city-note">These %s are a choice, and the choice is ours. '
-            'The atlas holds every place written up on this site, in all twenty-two '
+            'The atlas holds every place written up on this site, in all %s '
             'countries, with no editor standing in front of it.</span>'
-            '</span></a>' % (span, _spell(len(rows)).lower()))
+            '</span></a>' % (span, _spell(len(rows)).lower(),
+                             _spell(len(countries)).lower()))
     return "\n".join(rows)
 
 
@@ -641,6 +646,82 @@ def block_mapunder(countries):
     return "".join(out)
 
 
+MIN_HIT = 60.0                 # narrower than this and the shape is not clickable
+HIT_R = "34.0"                 # so a 68-unit circle goes behind it
+
+
+def _extent(d):
+    """How wide and how tall a path is, in map units."""
+    ps = [(float(x), float(y)) for x, y in
+          re.findall(r"(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)", d)]
+    if not ps:
+        return 0.0, 0.0
+    xs = [p[0] for p in ps]
+    ys = [p[1] for p in ps]
+    return max(xs) - min(xs), max(ys) - min(ys)
+
+
+def block_lede(countries):
+    """The one sentence under the headline, and the number in it.
+
+    It said twenty-two for as long as there were twenty-two, and then for a
+    while after there were not. A count typed into copy is a claim with no
+    owner: nothing recomputes it, nothing checks it, and it is wrong quietly.
+    """
+    return ('<p class="wa-lede">%s countries, written up one place at a time, '
+            'by people who go there.</p>' % _spell(len(countries)))
+
+
+def block_maplive(countries):
+    """The countries themselves: the scenery, then the ones you can go to.
+
+    This was thirty kilobytes of hand-pasted SVG, which was fine while the
+    roster was twenty-two and stopped being fine the moment it was not. A
+    country added to tourism/countries/ went onto every list on the site and
+    stayed part of the unnamed background on the one thing the page is built
+    around, with nothing to say it had — the shape was drawn, so nothing looked
+    broken. Generating it means the map cannot disagree with the atlas.
+
+    Two details that are easy to lose in a rewrite and expensive to lose in
+    use. A shape narrower than sixty units cannot be hit with a finger — Rwanda
+    is twenty-five across — so it gets a circle behind it at the label anchor,
+    which is a pointer target and not a drawn thing. And the island states are
+    a dot rather than a two-pixel outline, because at continental scale their
+    true shape is smaller than the stroke that would draw it.
+    """
+    with open(os.path.join(ROOT, "tourism", "map.json"), encoding="utf-8") as fh:
+        m = json.load(fh)
+    out = ['<g class="wa-map-rest" aria-hidden="true">']
+    for row in m.get("rest") or []:
+        out.append('\n<path d="%s"><title>%s</title></path>'
+                   % (row["d"], esc(row.get("n") or "")))
+    out.append('\n</g>')
+    for row in sorted(m.get("live") or [], key=lambda r: r["slug"]):
+        w, h = _extent(row["d"])
+        hit = ""
+        if row.get("at") and min(w, h) < MIN_HIT:
+            hit = ('<circle class="wa-map-hit" cx="%s" cy="%s" r="%s"/>'
+                   % (row["at"][0], row["at"][1], HIT_R))
+        out.append('\n<a tabindex="-1" class="wa-map-live" data-tier="%s" '
+                   'data-slug="%s" data-name="%s" data-tag="%s" href="%s">'
+                   '%s<path d="%s"/><title>%s &#8212; %s</title></a>'
+                   % (esc(row.get("tier") or "live"), esc(row["slug"]),
+                      esc(row["name"]), esc(row["tag"]), esc(row["href"]),
+                      hit, row["d"], esc(row["name"]), esc(row["tag"])))
+    for row in sorted(m.get("marks") or [], key=lambda r: r["slug"]):
+        x, y = row["at"]
+        out.append('\n<a tabindex="-1" class="wa-map-live wa-map-mark" '
+                   'data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s" '
+                   'href="%s"><circle class="wa-map-hit" cx="%s" cy="%s" r="%s"/>'
+                   '<circle cx="%s" cy="%s" r="12"/>'
+                   '<title>%s &#8212; %s</title></a>'
+                   % (esc(row.get("tier") or "live"), esc(row["slug"]),
+                      esc(row["name"]), esc(row["tag"]), esc(row["href"]),
+                      x, y, row.get("r", 36), x, y,
+                      esc(row["name"]), esc(row["tag"])))
+    return "".join(out) + "\n"
+
+
 def block_mapover(countries):
     """Water, then journeys, then cities, then the compass.
 
@@ -899,7 +980,8 @@ def block_regions(countries, views):
     out = ['<button class="wa-reg" type="button" data-reg="africa" aria-pressed="true" '
            'data-view="%s" data-line="%s" data-terrain="%s">Africa</button>'
            % (" ".join(str(v) for v in views.get("africa") or [0, 0, 1000, 1060]),
-              esc("Fifty-four countries. Twenty-two of them are destinations here."),
+              esc("%s countries. %s of them are destinations here."
+                  % (_spell(IN_AFRICA), _spell(len(countries)))),
               esc("Desert|Rainforest|Savanna|Mountain|Coast|Island"))]
     for key, reg in regions.items():
         members = [c for c in countries if c.region in reg.includes]
@@ -1471,6 +1553,8 @@ def render(countries):
         "wants": block_wants(seq),
         "expcards": block_expcards(seq),
         "mapunder": block_mapunder(seq),
+        "maplive": block_maplive(seq),
+        "lede": block_lede(seq),
         "mapover": block_mapover(seq),
         "window": block_window(with_shape, shape_by_slug, views),
         "captions": block_captions(with_shape),
@@ -1517,7 +1601,18 @@ def splice(src, blocks):
     for name, body in blocks.items():
         pattern = re.compile(r"(%s\n).*?(\s*%s)"
                              % (re.escape(marker(name)), re.escape(marker(name, True))), re.S)
-        src = pattern.sub(lambda m: m.group(1) + body + m.group(2), src, count=1)
+        src, hits = pattern.subn(lambda m: m.group(1) + body + m.group(2), src, count=1)
+        # A marker that is present but does not match is the same fault as one
+        # that is absent, and it is the quieter of the two: the pattern wants a
+        # newline directly after the opening marker, so a pair written inline —
+        # `<!-- gen:lede --><!-- /gen:lede -->` — passes the check above, matches
+        # nothing, and leaves the region empty for as long as nobody looks at the
+        # page. It did, for one build.
+        if not hits:
+            raise ValueError(
+                "gen:%s is in the page but nothing was written into it. The "
+                "opening marker needs a newline directly after it, and the "
+                "closing marker has to come after it." % name)
     return src
 
 

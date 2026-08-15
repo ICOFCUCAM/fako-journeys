@@ -1,0 +1,294 @@
+{
+ "slug": "djibouti",
+ "name": "Djibouti",
+ "adjective": "Djiboutian",
+ "region": "East Africa",
+ "tagline": "Where three plates pull apart",
+ "summary": "Lake Assal at 155 metres below sea level, whale sharks in the Gulf of Tadjoura every winter, and the Ardoukoba rift where the continent is actively splitting — all of it in a country the size of Wales.",
+ "published": true,
+ "calls": [
+  "nature",
+  "coast",
+  "adventure"
+ ],
+ "months": [
+  11,
+  12,
+  1,
+  2,
+  3
+ ],
+ "when": "November to March, when the heat is survivable and the whale sharks are in the gulf.",
+ "entries": [
+  {
+   "category": "hero",
+   "caption": "Lake Assal",
+   "description": "A salt lake 155 metres below sea level, ringed white, the lowest point in Africa.",
+   "subject": "the white salt shore and turquoise water of Lake Assal",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "nature",
+   "caption": "The Afar Triangle",
+   "description": "Three tectonic plates pulling apart, and you can stand in the crack.",
+   "subject": "the black basalt fissures of the Ardoukoba rift",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "wildlife",
+   "caption": "Whale Sharks",
+   "description": "They come into the Gulf of Tadjoura from November, in numbers, close to shore.",
+   "subject": "a whale shark swimming near the surface in the Gulf of Tadjoura",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "safari",
+   "caption": "Day Forest",
+   "description": "Beira antelope and the last Djibouti francolin in the juniper of the Goda mountains.",
+   "subject": "juniper forest on the slopes of the Goda mountains at Day",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "mountains",
+   "caption": "The Goda and Mabla",
+   "description": "Mousa Ali at 2,028 metres, and juniper forest above the coastal plain at Day.",
+   "subject": "the Goda mountains rising above the arid coastal plain",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "waterfalls",
+   "caption": "Nothing Permanent",
+   "description": "There are no rivers here. The water is in wadis, springs and the sea.",
+   "subject": "a palm-shaded spring pool in a Djiboutian wadi",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "lakes-rivers",
+   "caption": "Lake Abbe",
+   "description": "Limestone chimneys steaming on a dry lake bed, on the Ethiopian border.",
+   "subject": "limestone chimneys venting steam on the flats of Lake Abbe",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "beaches",
+   "caption": "The Gulf of Tadjoura",
+   "description": "Beaches at Sable Blanc and the Sept Freres islands, and reef straight off the sand.",
+   "subject": "the white sand and clear water of Sable Blanc beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "forests",
+   "caption": "The Last Juniper",
+   "description": "The Day forest is a relic of a wetter Horn, and it is shrinking.",
+   "subject": "old juniper trees in the mist of the Day forest",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "adventure",
+   "caption": "Snorkelling and Rift Walking",
+   "description": "Swimming with whale sharks in the morning, walking a spreading rift in the afternoon.",
+   "subject": "snorkellers entering the water beside a boat in the Gulf of Tadjoura",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "culture",
+   "caption": "Afar and Somali",
+   "description": "Two peoples, French and Arabic official, and a port that half the Horn depends on.",
+   "subject": "a busy street market in Djibouti City",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "traditional-people",
+   "caption": "The Afar",
+   "description": "Salt caravans still come up from Assal, and the Afar have worked that trade for centuries.",
+   "subject": "an Afar man leading camels loaded with salt slabs from Lake Assal",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "food",
+   "caption": "Skoudehkaris and Yemeni Fish",
+   "description": "Spiced rice with lamb, and whole fish baked in a Yemeni clay oven on the coast.",
+   "subject": "a whole fish baked Yemeni-style served on flatbread",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "festivals",
+   "caption": "Independence Day",
+   "description": "27 June, and the Afar and Somali dance traditions that come out for it.",
+   "subject": "dancers in traditional dress at a Djibouti independence celebration",
+   "focal": [
+    50,
+    48
+   ]
+  },
+  {
+   "category": "crafts",
+   "caption": "Weaving and Woodwork",
+   "description": "Afar mats and milk vessels, and carved wooden headrests that double as stools.",
+   "subject": "a carved wooden Afar headrest and woven milk vessel",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "historic-sites",
+   "caption": "Ottoman Tadjoura",
+   "description": "One of the oldest towns on this coast, with seven mosques and a sultan's history.",
+   "subject": "the white mosques and low houses of Tadjoura on the gulf",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "heritage",
+   "caption": "The Lake Abbe Landscape",
+   "description": "Not listed, but the chimneys are on every list of the strangest places on earth.",
+   "subject": "steaming limestone chimneys at dawn on Lake Abbe",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "cities",
+   "caption": "Djibouti City",
+   "description": "A French-Arab port city with a covered market, and the Horn's busiest container terminal.",
+   "subject": "the covered central market of Djibouti City",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "architecture",
+   "caption": "Arcades and Coral",
+   "description": "Colonial arcades in the European quarter, and coral-block houses in the old town.",
+   "subject": "colonnaded arcades in the European quarter of Djibouti City",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "local-life",
+   "caption": "Khat at Four",
+   "description": "The flight lands from Ethiopia and the city stops for it. Every afternoon.",
+   "subject": "men sorting bundles of khat at a street stall in the afternoon",
+   "focal": [
+    50,
+    50
+   ]
+  },
+  {
+   "category": "family-community",
+   "caption": "Sable Blanc",
+   "description": "Shallow, warm, empty white sand an hour and a half from the capital.",
+   "subject": "a family on the empty white sand of Sable Blanc beach",
+   "focal": [
+    50,
+    55
+   ]
+  },
+  {
+   "category": "outdoor",
+   "caption": "The Ardoukoba",
+   "description": "A volcano that erupted in 1978 as the rift opened. The lava field is still bare.",
+   "subject": "the bare black lava field of the Ardoukoba volcano",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "luxury",
+   "caption": "Small and Getting Better",
+   "description": "A few good hotels in the capital and a diving lodge on the gulf.",
+   "subject": "a terrace overlooking the Gulf of Tadjoura at sunset",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "eco-tourism",
+   "caption": "Salt, Cut by Hand",
+   "description": "Slabs still cut from Assal and loaded onto camels, on a route a thousand years old.",
+   "subject": "salt slabs being cut by hand from the crust at Lake Assal",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "photography",
+   "caption": "White on Turquoise",
+   "description": "Lake Assal at midday, when the salt is blinding and the water is the wrong blue.",
+   "subject": "the salt crust and impossibly blue water of Lake Assal at midday",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "hidden-gems",
+   "caption": "The Sept Freres",
+   "description": "Seven islands at the mouth of the gulf, with the best reef in the country round them.",
+   "subject": "a small boat off the Sept Freres islands with reef below",
+   "focal": [
+    50,
+    52
+   ]
+  },
+  {
+   "category": "why-visit",
+   "caption": "Why Djibouti",
+   "description": "Whale sharks, the lowest point in Africa and a rift valley opening, in a country you cross in a day.",
+   "subject": "a swimmer in clear water beside a whale shark",
+   "focal": [
+    50,
+    50
+   ]
+  }
+ ]
+}
