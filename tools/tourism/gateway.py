@@ -196,7 +196,16 @@ def shown(cities, countries):
     used = {c["slug"] for c in leads}
     countries_used = {c.get("country") for c in leads}
 
-    rest = [c for c in cities if c["slug"] not in used]
+    # A card with no photograph falls back to a typographic plate, which is the
+    # right treatment in a full listing where most cards are pictures and the
+    # wrong one as an eighth of the section whose whole argument is the
+    # photography. So the eight are drawn from the cities that have a photograph
+    # first; a plate only appears here if there are not eight of those. Asmara
+    # was in this rail for exactly as long as it took to look at it, and comes
+    # straight back the day it has a picture.
+    rest = [c for c in cities if c["slug"] not in used and c.get("photo")]
+    if len(rest) + len(leads) < SHOW_CITIES:
+        rest = [c for c in cities if c["slug"] not in used]
     picked, head, tail = list(leads), 0, len(rest) - 1
     from_tail = True
     while len(picked) < SHOW_CITIES and head <= tail:
@@ -205,11 +214,16 @@ def shown(cities, countries):
             tail -= 1
         else:
             head += 1
-        from_tail = not from_tail
+        # The side only changes on a card that was actually taken. Flipping on a
+        # skip as well handed the turn back to the front every time a duplicate
+        # country was passed over, and since the duplicates cluster at the end —
+        # Dar es Salaam behind Zanzibar, Durban behind Cape Town — the rail
+        # drifted towards the cities everyone can already name.
         if c.get("country") in countries_used:
             continue
         countries_used.add(c.get("country"))
         picked.append(c)
+        from_tail = not from_tail
     # One country per card is a preference, not a rule: if the collection is all
     # one or two countries the grid would come out short, and a grid with a hole
     # in it reads as something that failed to load.
