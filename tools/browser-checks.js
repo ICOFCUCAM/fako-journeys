@@ -59,7 +59,11 @@ const TYPES = {
   '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
   '.json': 'application/json', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
-  '.xml': 'application/xml', '.txt': 'text/plain'
+  '.xml': 'application/xml', '.txt': 'text/plain',
+  // The window under the hero is a sixteen-piece film. Without these two the
+  // clips were served as application/octet-stream and the browser stalled on
+  // them, which is where a 37-second pass went to spend 408 seconds.
+  '.mp4': 'video/mp4', '.webm': 'video/webm'
 };
 
 /* ---------------------------------------------------------------------------
@@ -275,7 +279,23 @@ function serve() {
       } catch (e) { /* fall through to the 404 */ }
       fs.readFile(file, (err, body) => {
         if (err) { res.writeHead(404); res.end('no'); return; }
-        res.writeHead(200, {'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream'});
+        const type = TYPES[path.extname(file)] || 'application/octet-stream';
+        // Range requests, because Chromium will not stream media from a server
+        // that answers 200 to every one of them. Without this the video element
+        // asked for bytes, got the whole file and no Accept-Ranges, and sat
+        // there — the goto timeouts that made this whole file report nothing.
+        const m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || '');
+        if (m) {
+          const start = m[1] ? parseInt(m[1], 10) : 0;
+          const end = m[2] ? parseInt(m[2], 10) : body.length - 1;
+          res.writeHead(206, {'Content-Type': type, 'Accept-Ranges': 'bytes',
+            'Content-Range': 'bytes ' + start + '-' + end + '/' + body.length,
+            'Content-Length': end - start + 1});
+          res.end(body.slice(start, end + 1));
+          return;
+        }
+        res.writeHead(200, {'Content-Type': type, 'Accept-Ranges': 'bytes',
+                            'Content-Length': body.length});
         res.end(body);
       });
     });
