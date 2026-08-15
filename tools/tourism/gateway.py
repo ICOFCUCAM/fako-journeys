@@ -1122,12 +1122,24 @@ def block_window(countries, shape_by_slug, views):
     return "\n".join(out)
 
 
+# The fifty-five captions share one box and it is as tall as the tallest of
+# them, so a name that takes two lines makes every caption two lines tall. At
+# twenty-two countries the longest was "South Africa" and the box fitted the
+# stage with a pixel to spare; "Central African Republic" is twenty-four
+# characters, took a second line, and pushed the readout forty pixels below the
+# hero — one country changing the height of a caption that is showing a
+# different one. The generator knows the length and the CSS does not, so it
+# marks the long ones and the stylesheet steps the size down for them.
+LONG_NAME = 17
+
+
 def block_captions(countries):
     return "\n          ".join(
-        '<div class="wa-win-cap" data-slug="%s"><span class="wa-win-region">%s</span>'
+        '<div class="wa-win-cap" data-slug="%s"%s><span class="wa-win-region">%s</span>'
         '<b>%s</b><span class="wa-win-tag">%s</span><span class="wa-win-op">%s</span>'
         '<a class="wa-win-go" href="%s">Enter %s &rarr;</a></div>'
-        % (esc(c.slug), esc(c.region), esc(c.name), esc(c.tagline),
+        % (esc(c.slug), ' data-long="%d"' % len(c.name) if len(c.name) > LONG_NAME else '',
+           esc(c.region), esc(c.name), esc(c.tagline),
            operator_line(c), esc(c.url), esc(c.name))
         for c in countries)
 

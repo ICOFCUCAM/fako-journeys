@@ -266,8 +266,14 @@ check('a sentence it does not understand takes nothing',
 check('and it says so rather than guessing', nonsense.missed.length === 1);
 check('an empty sentence is not an error',
   E.parse('', D).took.length === 0 && E.parse(null, D).wants.length === 0);
+/* Chad used to be the second name here, chosen because the atlas did not have
+   it. The atlas has it now, the parser correctly found it, and the check went
+   red for the parser doing its job. Both names are fictional now, and the real
+   guarantee — that a name outside the set is never matched — is asserted
+   against the set rather than against a country that might join it. */
 check('it never invents a country that is not in the set',
-  !E.parse('I want to go to Wakanda and Chad', D).country);
+  !E.parse('I want to go to Wakanda and Genovia', D).country
+  && !E.parse('I want to go to Ruritania', D).country);
 check('a lens is matched only on its own recorded words',
   !E.parse('I want something nice', D).wants.length);
 check('every lens can be reached by at least one word',
@@ -393,10 +399,15 @@ check('every address a search offers is one the build actually wrote',
     .every(function (q) {
       return Q.search(q, G, rowsOf).hits.every(function (h) { return everyUrl[h.url]; });
     }));
-check('it never invents a country', Object.keys(G.countries).length === 22
+/* The count was typed as 22. It is the graph's own roster, so it is read off
+   the dataset — the claim worth making is that the graph and the atlas agree,
+   not that either of them is a particular size. */
+check('it never invents a country',
+  Object.keys(G.countries).length === slugs.length
   && ['Wakanda', 'Zamunda', 'Genovia'].every(function (n) {
     return Q.parse(n, G).country === null;
-  }));
+  }), Object.keys(G.countries).length + ' in the graph, '
+    + slugs.length + ' in the dataset');
 check('the same question gives the same answer twice',
   JSON.stringify(Q.search('craft in Kenya', G, rowsOf).hits)
   === JSON.stringify(Q.search('craft in Kenya', G, rowsOf).hits));
