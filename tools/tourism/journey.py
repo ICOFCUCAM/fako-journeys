@@ -417,12 +417,11 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="jn-ground-in">
       <span class="af-stamp">The ground</span>
       <h1 class="jn-h1" id="qg">Your flight gets you to Africa.<br>We get you through it.</h1>
-      <p class="jn-lede">We do not sell the flight. You bring the passport, the
-        visa, the ticket and the insurance &mdash; and from the moment you land
-        the road is ours: a vehicle, a driver who stays with your journey, the
-        movement between destinations, and somebody coordinating all of it while
-        you are here. Priced by the vehicle and by the day, so four of you pay
-        what two of you would.</p>
+      <p class="jn-lede">From the moment you land, the road is ours: a vehicle,
+        a driver who stays with your journey, the movement between destinations,
+        and somebody coordinating all of it while you are here. Priced by the
+        vehicle and by the day, so four of you pay what two of you would. You
+        bring the passport, the visa, the ticket and the insurance.</p>
 %(ground)s
 %(notincluded)s
 %(whopays)s

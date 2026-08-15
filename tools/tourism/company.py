@@ -131,3 +131,39 @@ def run(log=print):
     log("company: %s, trading as %s, into %d of %d page(s) that ask for it"
         % (d["legal"], d["brand"], touched, seen))
     return touched
+
+
+def block_who(d, css="pl-who", stamp=True):
+    """Who would take you, answered with who does rather than who does not.
+
+    The block this replaces opened with "Not us, in Senegal" and closed with
+    "Ask anyway", on roughly thirteen hundred place pages, the homepage, the
+    atlas, the tunnel, /meet and the enquiry form. It was written to be
+    scrupulously honest at a time when the only product was three local
+    operators, and honest it was.
+
+    It is now weak and out of date at once. Out of date because the ground
+    journey is Afrinkong's own across all fifty-four countries, so "nobody of
+    ours runs it" stopped being true. Weak because answering "who would take
+    you" with a country we do not operate in sells nothing, and a reader
+    deciding where to spend four thousand dollars does not need our
+    org chart — they need to know somebody has the road.
+
+    Availability, coverage and exclusions belong in the booking flow and the
+    terms, where a traveller has asked. Not in the middle of the reason to go.
+    """
+    w = d["who"]
+    return (
+        '<div class="%s">%s<b>%s</b><p>%s</p><p class="%s-more">%s</p>'
+        '<a class="af-go" href="%s">%s &rarr;</a></div>'
+        % (esc(css),
+           '<span class="af-stamp">%s</span>' % esc(w["stamp"]) if stamp
+           else '<span>%s</span>' % esc(w["stamp"]),
+           esc(w["name"]), esc(w["say"]), esc(css), esc(w["more"]),
+           esc(w["href"]), esc(w["act"])))
+
+
+def who_js(d):
+    """The same words for the three scripts that build this block in the page."""
+    w = d["who"]
+    return {k: w[k] for k in ("stamp", "name", "say", "more", "act", "href")}

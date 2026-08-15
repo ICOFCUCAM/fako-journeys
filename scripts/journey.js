@@ -548,20 +548,21 @@
             + '</button></li>';
         }).join('') + '</ul>'
       + '<p class="jn-onward-note">Straight-line distances between country centres. '
-      + 'The road, the border post and how long either takes are things your '
-      + 'operator knows and we do not.</p></div>';
+      + 'Your coordinator plans the road and the border post around your '
+      + 'dates.</p></div>';
   }
 
   /* Local means a company with an address, a year and a sentence about what it
-     actually runs. Where we have that, print it. Where we do not, there is no
-     company — the earlier version said "a licensed company based in <country>",
-     which invented one for nineteen countries — so say that instead. */
+     actually runs. Where we have that, name it — it is evidence and it is a
+     strength. Where we do not, the answer is not "nobody of ours": the ground
+     journey is Afrinkong's own everywhere, which is the thing the traveller is
+     actually asking about at the end of composing one. */
   function whoBlock(c) {
     if (!c.operator) {
-      return '<div class="jn-who-in" data-none><span class="af-stamp">Who would run it</span>'
-        + '<b>Nobody of ours, in ' + esc(c.name) + '</b>'
-        + '<p>We run companies in three countries and this is not one of them. '
-        + 'Send the journey anyway and we will say who to ask.</p></div>';
+      return '<div class="jn-who-in" data-house><span class="af-stamp">Who would run it</span>'
+        + '<b>Afrinkong</b>'
+        + '<p>Your vehicle, your driver for the whole journey, and a coordinator '
+        + 'holding the days together — ours, wherever this goes.</p></div>';
     }
     var o = c.operator;
     return '<div class="jn-who-in" data-ours><span class="af-stamp">Operated locally by</span>'

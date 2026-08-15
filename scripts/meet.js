@@ -167,13 +167,13 @@
         + esc(said.operator.name) + ' &mdash; ' + esc(said.operator.base) + '</p>'
         + '</section>';
     }
-    if (!c.operator) {
-      return '<section class="mt-voice mt-voice--none">'
-        + '<span class="af-stamp">Local voice</span>'
-        + '<p class="mt-voice-none">No operator of ours runs ' + esc(c.name)
-        + '. There is nobody here to quote, and we will not write a note on '
-        + 'behalf of a company we have not named.</p></section>';
-    }
+    /* Where there is no operator there is no quote, so nothing is rendered.
+       The block that stood here printed a paragraph announcing the absence —
+       "there is nobody here to quote, and we will not write a note on behalf
+       of a company we have not named" — which is a section whose entire
+       content is an apology for not being a section. Not writing a fake quote
+       is right; devoting a panel to saying so is not. */
+    if (!c.operator) return '';
     return '<section class="mt-voice"><span class="af-stamp">Local voice</span>'
       + '<blockquote class="mt-voice-said">&ldquo;' + esc(c.operator.line)
       + '&rdquo;</blockquote>'

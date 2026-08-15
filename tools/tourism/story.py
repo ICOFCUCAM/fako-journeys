@@ -452,8 +452,12 @@ def trust_block(country, pack, ops, arcs_used):
                 'run a journey here. Nothing on this page is a quotation from them '
                 'or written by them.' % (esc(op.name), esc(op.base), esc(op.since)))
                if op else
-               'No operator of ours runs %s. Nothing on this page is written by '
-               'an operator either way.' % esc(country.name),
+               # Was "No operator of ours runs <Country>." The useful half of
+               # that sentence is the second one — that nothing here is an
+               # operator's marketing — and it is true either way, so it is
+               # the only half kept.
+               'The ground journey in %s is run by Afrinkong. Nothing on this '
+               'page is written by an operator either way.' % esc(country.name),
                arcs_used, total))
 
 

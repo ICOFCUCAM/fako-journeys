@@ -430,12 +430,15 @@
 
   function who(c) {
     if (!c.operator) {
-      /* "A licensed local company" named a company that does not exist. Three
-         operators are in the dataset and there have only ever been three. */
-      return '<div class="at-who at-who--none"><span>Who takes you</span><b>Not us</b>'
-        + '<p>We do not run a company in ' + esc(c.name) + '. It is written up here '
-        + 'through the same twenty-seven categories as everywhere else, and booked '
-        + 'through somebody else.</p></div>';
+      /* Was "Not us" and "We do not run a company in <Country>". Answering
+         "who takes you" by naming somebody who does not is a sentence that
+         sells nothing, and it stopped being true when the ground journey
+         became ours across all fifty-four. */
+      return '<div class="at-who at-who--house"><span>Who takes you</span>'
+        + '<b>Afrinkong</b>'
+        + '<p>The ground is ours right across Africa: your vehicle, your driver '
+        + 'for the whole journey, and the days shaped around what you came for.</p>'
+        + '<a class="af-go" href="/journey">Plan your journey &rarr;</a></div>';
     }
     var op = c.operator;
     return '<div class="at-who"><span>Who takes you</span><b>' + esc(op.name) + '</b>'

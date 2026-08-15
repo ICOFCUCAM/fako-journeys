@@ -232,10 +232,10 @@ TEMPLATE = """<!DOCTYPE html>
   </div>
   <div id="cp-body"><noscript>
     <div class="cp-nojs">
-      <h2>This one needs a script, and there is not one running.</h2>
+      <h2>Read them side by side, two tabs at a time.</h2>
       <p>The table is assembled in the browser from a payload carrying all
         %(total)d countries, so that changing either menu is instant rather than a
-        page load. With scripting off there is nothing to assemble it.</p>
+        page load &mdash; which needs a script running.</p>
       <p>Every country here has its own page, written through the same
         %(count)d categories in the same order, so two of them read side by side
         in two tabs say exactly what this table would have said.</p>

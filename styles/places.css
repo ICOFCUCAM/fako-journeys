@@ -57,6 +57,10 @@
 .pl-who b{display:block;font-family:var(--fj-display);font-size:24px;text-transform:uppercase;
   margin-top:8px;line-height:1.05}
 .pl-who p{margin-top:8px;font-size:15.5px;color:var(--c-muted)}
+/* The second sentence names the three countries where the company on the
+   ground is ours as well. It is a supporting fact, not the headline, so it is
+   set under the main line rather than beside it. */
+.pl-who-more{margin-top:7px;font-size:14px;color:var(--c-muted)}
 .pl-who .af-go{margin-top:11px}
 
 .pl-acts{display:flex;flex-wrap:wrap;gap:11px;margin-top:var(--sp-5)}

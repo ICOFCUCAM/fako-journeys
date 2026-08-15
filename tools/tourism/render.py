@@ -136,12 +136,14 @@ def footer(country, ours=None):
         # not from three strings typed into this file.
         named = ", ".join('%s in %s' % (esc(c.operator.name), esc(c.name))
                           for c in (ours or []))
-        who = ('<p>%s. Everywhere else you would be booking through somebody we '
-               'have not named yet.</p>' % named) if named else ''
+        who = ('<p>%s &mdash; and the ground journey is ours right across '
+               'Africa.</p>' % named) if named else ''
     else:
-        who = ('<p>We do not run a company in %s. It is written up here to the '
-               'same twenty-seven categories as the rest, and booked through '
-               'someone else.</p>' % esc(country.name))
+        # Was "We do not run a company in <Country>." A footer is not the
+        # place to volunteer a limitation nobody asked about.
+        who = ('<p>Your ground journey in %s is ours: the vehicle, the driver '
+               'who stays with you, and the days built around what you came '
+               'for.</p>' % esc(country.name))
     return ('<footer class="fj-foot">\n'
             '  <div class="fj-frame">\n'
             '    <div class="fj-foot-grid">\n'

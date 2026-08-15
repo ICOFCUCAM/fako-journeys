@@ -129,8 +129,16 @@ def shapes():
 
 
 def operator_line(c):
+    """The line under a country's name on the homepage.
+
+    It said "Written up here, run by somebody else" on fifty-one of the
+    fifty-four cards — a disclaimer stamped across most of the continent, in
+    the grid whose job is to make somebody want to open one. Where the company
+    on the ground is ours that is worth naming, because it is evidence. Where
+    it is not, the true and useful thing is that the journey is ours anyway.
+    """
     return ("Operated locally by %s" % esc(c.operator.name)) if c.operator \
-        else "Written up here, run by somebody else"
+        else "Your journey here, run by Afrinkong"
 
 
 # This page spells its numbers. A figure in the middle of a display line reads
@@ -1036,12 +1044,19 @@ def block_plan(countries):
     # your destination" because there were three operators for twenty-two
     # countries. Coverage is a real and much larger claim than ownership, and it
     # is worth making — but as its own clause, not by widening the first one.
-    note = ('We can book anywhere on the continent through operators who live '
-            'there. In %s the operator is ours &mdash; we own the company, and '
-            'the guide on the day works for it. The other %s in this atlas are '
-            'written up to the same twenty-seven categories and booked through '
-            'somebody else, which we say before you write, not after.'
-            % (names, _spell(rest).lower()))
+    # The clause this replaces ended "booked through somebody else, which we
+    # say before you write, not after" — a disclosure worn as a virtue, in the
+    # sentence that is supposed to make somebody want to go. What is true and
+    # stronger: the ground journey is ours on all fifty-four, and in three the
+    # company on the ground is ours as well. The ownership claim stays exactly
+    # as narrow as it was; it is the coverage claim that has grown, and it is
+    # the one worth leading with.
+    note = ('We take you anywhere on the continent: your vehicle, your driver '
+            'for the whole journey, and a coordinator holding the days '
+            'together. In %s the company on the ground is ours too &mdash; we '
+            'own it, and the guide on the day works for it. The other %s are '
+            'written up to the same twenty-seven categories, and travelled the '
+            'same way.' % (names, _spell(rest).lower()))
 
     steps = [
         ('/journey', 'Discover',
@@ -1067,10 +1082,15 @@ def block_plan(countries):
                    % (esc(url), i, esc(title), text, esc(go)))
     # The last step is the only one that is not a link, because it is the only
     # one that happens away from this website.
-    out.append('      <div class="wa-step"><i>%02d</i><b>Travel</b><p>Where the '
-               'operator is ours, the guide on the day works for the company you '
-               'booked: %s. Where it is not, we are not going to describe a day '
-               'run by people we have not named.</p></div>'
+    # "Where it is not, we are not going to describe a day run by people we
+    # have not named" was the last line of the how-it-works list — a refusal,
+    # at the exact point the reader is imagining the trip. What is true and
+    # better is that the ground is ours everywhere and in three countries the
+    # guide is ours as well.
+    out.append('      <div class="wa-step"><i>%02d</i><b>Travel</b><p>Your driver '
+               'and your coordinator are ours for the whole journey, wherever it '
+               'goes. In %s the guide on the day works for our own company '
+               'there.</p></div>'
                % (len(steps) + 1,
                   _and_list(['%s in %s' % (esc(c.operator.name), esc(c.name))
                              for c in ours])))
@@ -1112,10 +1132,11 @@ def block_operators(countries):
     rest = len(countries) - len(ours)
     cards.append(
         '      <a class="wa-op wa-op--rest" href="/places"><span class="wa-op-where">Everywhere else</span>'
-        '<b>%s more countries</b><span class="wa-op-base">Written up, no operator of ours yet</span>'
-        '<p>We run companies in %s. The other %s are written up to the same '
-        'twenty-seven categories by the same hands, so any two countries here can be '
-        'compared on the same terms &mdash; you are just booking them through someone else.</p>'
+        '<b>%s more countries</b><span class="wa-op-base">Your journey here, run by Afrinkong</span>'
+        '<p>We own the companies on the ground in %s. The other %s are written '
+        'up to the same twenty-seven categories by the same hands, so any two '
+        'countries here can be compared on the same terms &mdash; and travelled '
+        'the same way, with a vehicle, a driver and a coordinator of ours.</p>'
         '<span class="wa-op-go">Every place, all %s countries &rarr;</span></a>'
         % (_spell(rest), _and_list([c.name for c in ours]),
            _spell(rest).lower(), _spell(len(countries)).lower()))

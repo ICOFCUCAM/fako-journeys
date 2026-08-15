@@ -28,7 +28,7 @@ import html as html_mod
 import json
 import os
 
-from . import imaging, plate
+from . import company, imaging, plate
 from .model import ROOT, region_of
 
 SHAPES_PATH = os.path.join(ROOT, "tourism", "shapes.json")
@@ -140,15 +140,10 @@ def operator_block(country):
     """Who actually runs this country, with enough about them to be evidence."""
     op = country.operator
     if not op:
-        return ('<div class="ct-op ct-op--none"><span>Local operator</span>'
-                '<b>None of ours in %s</b>'
-                '<p>We run companies in three countries and %s is not one of them. '
-                'It is written up here through the same twenty-seven categories as '
-                'the rest, so it can be compared with them on the same terms &mdash; '
-                'you would just be booking it through somebody else. Tell us the '
-                'month and we will say who to ask.</p>'
-                '<a class="af-go" href="/contact">Ask anyway &rarr;</a></div>'
-                % (esc(country.name), esc(country.name)))
+        # Was "None of ours in <Country>" and "Ask anyway". The homepage is
+        # where somebody decides whether Africa is possible for them, and the
+        # answer to that is what we do, not the shape of our subsidiaries.
+        return company.block_who(company.load(), "ct-op ct-op--house", stamp=False)
     return ('<div class="ct-op"><span>Operated locally by</span><b>%s</b>'
             '<p class="ct-op-base">%s &middot; since %s</p><p>%s</p>'
             '<a class="af-go" href="%s">Enter %s &rarr;</a></div>'

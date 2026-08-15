@@ -230,6 +230,6 @@ def block_notincluded(d):
         '<div><h3 class="jn-h3">We arrange these, at cost</h3><ul class="jn-g-list">%s</ul>'
         '<p class="jn-note">Paid to us once, settled by us on the ground, and '
         'shown at what they actually cost.</p></div>'
-        '<div><h3 class="jn-h3">And these we do not touch</h3><ul class="jn-g-list is-not">%s</ul></div>'
+        '<div><h3 class="jn-h3">And these stay yours</h3><ul class="jn-g-list is-not">%s</ul></div>'
         '</div>' % ("".join("<li>%s</li>" % esc(v) for v in d["destination_charges"]),
                     "".join("<li>%s</li>" % esc(v) for v in d["excluded"])))
