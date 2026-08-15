@@ -9253,6 +9253,194 @@
         ]
       }
     },
+    "congo/adventure": {
+      "country": "congo",
+      "category": "adventure",
+      "caption": "Forest and River",
+      "description": "Pirogue on the Lekoli, tracking on foot, and nights on a bai platform.",
+      "provider": "pexels",
+      "photoId": "38510344",
+      "imageUrl": "https://images.pexels.com/photos/38510344/pexels-photo-38510344.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38510344/pexels-photo-38510344.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/rustic-thatched-shelter-in-kinshasa-jungle-38510344/",
+      "photographer": "Manass Rex",
+      "photographerUrl": "https://www.pexels.com/@manass-rex-333886502",
+      "width": 7952,
+      "height": 5304,
+      "aspectRatio": 1.4992,
+      "alt": "a pirogue moving up a narrow forest river in Odzala, Congo",
+      "query": "Congo Odzala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:24:07Z",
+      "verifiedAt": "2026-08-15T19:24:08Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "congo/beaches": {
+      "country": "congo",
+      "category": "beaches",
+      "caption": "A Hundred and Seventy Kilometres of Atlantic",
+      "description": "Pointe-Noire's beaches, and the empty sand of the Conkouati coast north of it.",
+      "provider": "pexels",
+      "photoId": "36881364",
+      "imageUrl": "https://images.pexels.com/photos/36881364/pexels-photo-36881364.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36881364/pexels-photo-36881364.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/tropical-beach-scene-with-palm-trees-and-waves-36881364/",
+      "photographer": "Rosario Incandela",
+      "photographerUrl": "https://www.pexels.com/@rosario-incandela-2160642933",
+      "width": 7008,
+      "height": 4672,
+      "aspectRatio": 1.5,
+      "alt": "an empty Atlantic beach backed by forest at Conkouati, Congo",
+      "query": "Congo Atlantic Conkouati",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-15T19:24:05Z",
+      "verifiedAt": "2026-08-15T19:24:05Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "subject: and,beach",
+          "category: beach"
+        ]
+      }
+    },
+    "congo/culture": {
+      "country": "congo",
+      "category": "culture",
+      "caption": "Congolese Rumba",
+      "description": "Rumba was made on both banks of this river, and it is on the UNESCO list because of it.",
+      "provider": "pexels",
+      "photoId": "10033973",
+      "imageUrl": "https://images.pexels.com/photos/10033973/pexels-photo-10033973.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/10033973/pexels-photo-10033973.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/woman-in-her-orange-dress-sitting-on-sofa-10033973/",
+      "photographer": "Rimiscky Tayuna",
+      "photographerUrl": "https://www.pexels.com/@rimiscky",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a rumba band performing at a bar in Brazzaville, Congo",
+      "query": "Congo Brazzaville",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-15T19:24:08Z",
+      "verifiedAt": "2026-08-15T19:24:09Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: brazzaville"
+        ]
+      }
+    },
+    "congo/festivals": {
+      "country": "congo",
+      "category": "festivals",
+      "caption": "The Feux de Brazza",
+      "description": "A music festival in Brazzaville, and rumba the rest of the year in every bar.",
+      "provider": "pexels",
+      "photoId": "20060690",
+      "imageUrl": "https://images.pexels.com/photos/20060690/pexels-photo-20060690.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/20060690/pexels-photo-20060690.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/back-view-of-a-man-standing-in-the-crowd-20060690/",
+      "photographer": "anicet tumine",
+      "photographerUrl": "https://www.pexels.com/@anicet-tumine-935743983",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a crowd dancing at a music festival in Brazzaville, Congo",
+      "query": "Congo Brazzaville",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-15T19:24:11Z",
+      "verifiedAt": "2026-08-15T19:24:12Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: brazzaville,crowd"
+        ]
+      }
+    },
+    "congo/food": {
+      "country": "congo",
+      "category": "food",
+      "caption": "Saka-Saka and Poulet Moambe",
+      "description": "Cassava leaf, and chicken in palm nut sauce — the dish of both Congos.",
+      "provider": "pexels",
+      "photoId": "34463121",
+      "imageUrl": "https://images.pexels.com/photos/34463121/pexels-photo-34463121.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34463121/pexels-photo-34463121.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/fresh-tomatoes-with-a-healthy-meal-setting-34463121/",
+      "photographer": "Nascimento Jr.",
+      "photographerUrl": "https://www.pexels.com/@nascimento-jr-1451812733",
+      "width": 6160,
+      "height": 4640,
+      "aspectRatio": 1.3276,
+      "alt": "a plate of poulet moambe with cassava and rice, Congo",
+      "query": "Congo plate poulet moambe",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T19:24:10Z",
+      "verifiedAt": "2026-08-15T19:24:11Z",
+      "relevance": {
+        "score": 7.99,
+        "reasons": [
+          "subject: and,rice",
+          "category: dish,food"
+        ]
+      }
+    },
+    "congo/forests": {
+      "country": "congo",
+      "category": "forests",
+      "caption": "Nouabale-Ndoki",
+      "description": "Forest that has never been logged, and the Goualougo Triangle where the chimps had not seen people.",
+      "provider": "pexels",
+      "photoId": "32181432",
+      "imageUrl": "https://images.pexels.com/photos/32181432/pexels-photo-32181432.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32181432/pexels-photo-32181432.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-gorilla-in-lush-green-forest-habitat-32181432/",
+      "photographer": "Jay Brand",
+      "photographerUrl": "https://www.pexels.com/@jay-brand-1763356224",
+      "width": 6234,
+      "height": 4988,
+      "aspectRatio": 1.2498,
+      "alt": "old-growth rainforest with enormous buttressed trees at Ndoki, Congo",
+      "query": "Congo Ndoki",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T19:24:06Z",
+      "verifiedAt": "2026-08-15T19:24:07Z",
+      "relevance": {
+        "score": 2.81,
+        "reasons": [
+          "subject: trees"
+        ]
+      }
+    },
     "congo/hero": {
       "country": "congo",
       "category": "hero",
@@ -9281,6 +9469,37 @@
         "score": 2.53,
         "reasons": [
           "subject: rainforest"
+        ]
+      }
+    },
+    "congo/lakes-rivers": {
+      "country": "congo",
+      "category": "lakes-rivers",
+      "caption": "The Congo River",
+      "description": "The second largest river on earth by volume, and the whole eastern border of the country.",
+      "provider": "pexels",
+      "photoId": "9216687",
+      "imageUrl": "https://images.pexels.com/photos/9216687/pexels-photo-9216687.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/9216687/pexels-photo-9216687.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/green-trees-on-brown-mountains-under-a-blue-sky-with-white-clouds-9216687/",
+      "photographer": "Leonardo Martins",
+      "photographerUrl": "https://www.pexels.com/@leonardo-martins-3624464",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the vast brown Congo river with forest on the far bank",
+      "query": "Congo vast brown congo",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:24:04Z",
+      "verifiedAt": "2026-08-15T19:24:04Z",
+      "relevance": {
+        "score": 3.93,
+        "reasons": [
+          "subject: brown,the"
         ]
       }
     },
@@ -9374,6 +9593,38 @@
         "score": 4.67,
         "reasons": [
           "subject: buffalo,forest"
+        ]
+      }
+    },
+    "congo/traditional-people": {
+      "country": "congo",
+      "category": "traditional-people",
+      "caption": "Kongo, Teke, Mbochi and the Aka",
+      "description": "Bantu peoples along the river, and Aka forest hunter-gatherers in the north.",
+      "provider": "pexels",
+      "photoId": "9370331",
+      "imageUrl": "https://images.pexels.com/photos/9370331/pexels-photo-9370331.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/9370331/pexels-photo-9370331.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-man-in-a-white-shirt-with-paint-on-his-face-9370331/",
+      "photographer": "Sierra Koder",
+      "photographerUrl": "https://www.pexels.com/@sierra-koder-94542064",
+      "width": 4160,
+      "height": 6240,
+      "aspectRatio": 0.6667,
+      "alt": "an Aka forest camp with leaf shelters in the north, Congo",
+      "query": "Congo Aka",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T19:24:09Z",
+      "verifiedAt": "2026-08-15T19:24:10Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: and",
+          "category: portrait"
         ]
       }
     },
