@@ -189,7 +189,17 @@
 
 /* The company line under the footer bar: quieter than the links above it,
    and the registered office quieter again. */
+/* No colour of its own. .pl-foot paints a per-country plate tone and sets
+   color:var(--c-bg) against it; this line arrived with --c-muted and --c-fg,
+   which are the light-mode tokens — dark text on a dark plate, measured at
+   2.25:1 where 4.5 is required. Inheriting is also the only safe answer here:
+   the ground is a different tone on each of fifty-four countries, so a fixed
+   dim value that clears AA on the darkest fails on the lightest.
+
+   The hierarchy comes from size and position rather than from fading, and
+   deliberately not from opacity: opacity leaves getComputedStyle reporting the
+   undimmed colour, so the contrast pass would measure a ratio nobody sees. */
 .pl-foot-co{margin-top:10px;font-family:var(--fj-mono);font-size:9px;
-  letter-spacing:.12em;color:var(--c-muted);line-height:1.7}
-.pl-foot-co b{font-weight:400;color:var(--c-fg)}
+  letter-spacing:.12em;line-height:1.7}
+.pl-foot-co b{font-weight:400}
 .pl-foot-co .af-co-where{display:block;margin-top:5px;text-transform:none}
