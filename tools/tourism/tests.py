@@ -1569,6 +1569,29 @@ def main():
         check("an own photograph is served from uploads and nowhere else",
               not wrong, ", ".join(wrong) or "all %d" % len(owned))
 
+        # -- a city the window names has to be one a visitor can reach --------------
+        # The rule, in the owner's words: do not share a city that cannot be
+        # accessed. The window is the most seductive thing on the page, and a
+        # city shown there with no country behind it is an invitation to a place
+        # this site cannot take anybody — the same fault as a caption naming the
+        # wrong country, arriving from the other direction.
+        city_src = read_json_file(os.path.join(ROOT_DIR, "tourism", "cities.json"))
+        _c = city_src.get("cities") or city_src
+        _c = _c if isinstance(_c, list) else list(_c.values())
+        known = {(x.get("name") or "").strip() for x in _c if isinstance(x, dict)}
+        countries_on_disk = {f[:-5] for f in os.listdir(
+            os.path.join(ROOT_DIR, "tourism", "countries"))
+            if f.endswith(".json") and not f.startswith("_")}
+        named = [s2.get("say") for t in (read_json_file(os.path.join(
+                     ROOT_DIR, "tourism", "motion.json")).get("tracks") or [])
+                 if t.get("slug") == "city"
+                 for s2 in (t.get("shots") or []) if s2.get("say")]
+        stranded = [n for n in named if n not in known]
+        check("every city the window names is one the atlas can take you to",
+              not stranded,
+              ", ".join(stranded) or "%d named, all %d in cities.json across %d "
+              "countries" % (len(named), len(known), len(countries_on_disk)))
+
         # -- the film, cut into the pieces the window can carry ---------------------
         # The one property that makes sixteen files a film rather than sixteen
         # clips: they join. Each piece ends exactly where the next begins, so
