@@ -1181,7 +1181,15 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-seam{position:relative;clip-path:inset(0);min-height:130svh;
   display:flex;align-items:center}
 .wa-seam-pic{position:fixed;inset:0;z-index:0}
-.wa-seam-pic img{width:100%;height:100%;object-fit:cover;display:block}
+.wa-seam-pic img,.wa-seam-pic video{width:100%;height:100%;object-fit:cover;display:block}
+/* A clip in a seam autoplays muted and loops, which is the one arrangement a
+   browser will start without being asked. It carries the still it replaced as
+   its poster, so the frame is filled from the first paint and stays filled if
+   the file never arrives or the visitor has asked for less motion. */
+@media(prefers-reduced-motion:reduce){.wa-seam-pic video{display:none}
+  .wa-seam-pic{background:var(--c-primary)}
+  .wa-seam-pic::after{content:"";position:absolute;inset:0;
+    background:url(/images/uploads/site-index-waza-elephants-1600w.jpg) center/cover}}
 /* Deep forest rather than black, so the band belongs to the palette and the
    photograph stays warm under it.
    
@@ -3394,25 +3402,45 @@ window.AF = {
 <!-- the window band.
      A full-viewport photograph the page travels across rather than scrolls with,
      placed between the journey and the stories because it is the one moment on
-     this page that argues by showing instead of telling. The subject is Waza —
-     Sahel, in a country the rest of the site shows as rainforest and volcano —
-     which is the homepage's own headline restated as a picture: not one place. -->
+     this page that argues by showing instead of telling.
+
+     It was Waza — Sahel, in a country the rest of the site shows as rainforest
+     and volcano — and every line of the copy leaned on that: six ecological
+     zones, four days' drive from the coast, the herds arriving before the rains
+     close the tracks. It was true because the photograph was a real Waza
+     photograph.
+
+     The picture is now a clip of a herd walking through dry grass, and nobody
+     can say where it was filmed. So the copy stopped naming a country rather
+     than keeping a sentence the frame can no longer support, and says instead
+     the one thing that is true of the clip and of the continent this site is
+     named for: the dry season moves the herds, and no operator can promise you
+     will be standing there. The link goes to the wildlife lens rather than to
+     Cameroon, because the section no longer argues for one country.
+
+     The Waza photograph is not gone. It is the poster here — what a visitor
+     sees before the clip arrives and what they keep if it cannot play — and it
+     is still on the wild rail of the window under its own name. -->
 <section class="wa-seam">
   <div class="wa-seam-pic">
-    <img src="/images/uploads/site-index-waza-elephants-1600w.jpg" width="1600" height="1067"
-         alt="A herd of elephants, adults and calves, drinking at a shrinking waterhole on open Sahel plain at Waza in northern Cameroon"
-         loading="lazy" decoding="async" data-provider="upload">
+    <video class="wa-seam-art" poster="/images/uploads/site-index-waza-elephants-1600w.jpg"
+           autoplay muted playsinline loop preload="none"
+           aria-label="A herd of elephants, adults and calves together, walking in line through tall dry grass on open country, with candelabra euphorbia and thorn trees standing behind them">
+      <source src="/videos/elephants-dry-grass-herd.webm" type="video/webm">
+      <source src="/videos/elephants-dry-grass-herd.mp4" type="video/mp4">
+    </video>
     <span class="wa-seam-tint" aria-hidden="true"></span>
   </div>
   <div class="wa-seam-copy">
     <div class="wa-seam-inner">
-      <p class="wa-seam-stamp">Waza &middot; the far north, end of the dry season</p>
-      <h2>Nine hundred kilometres north of the rainforest, the same country is Sahel.</h2>
+      <p class="wa-seam-stamp">The dry season &middot; the long walk to water</p>
+      <h2>Some of this still happens at the scale it always did.</h2>
       <span class="wa-seam-hr" aria-hidden="true"></span>
-      <p class="wa-seam-say">Cameroon is six ecological zones deep, and Waza is the last of them &mdash; open plain,
-        acacia, and herds that come to the water in the weeks before the rains arrive and the
-        tracks close. It is a four-day drive from the coast this site opens on.</p>
-      <a class="wa-seam-go" href="/cameroon">Explore Cameroon &rarr;</a>
+      <p class="wa-seam-say">When the pans go down the herds walk &mdash; tens of kilometres in a day, along
+        routes that are older than any border drawn over them, until the rains turn them back.
+        Nobody arranges it and nobody can promise it. You are either standing there when it
+        happens or you plan a year around being.</p>
+      <a class="wa-seam-go" href="/journey#/?w=wildlife">Find where to stand &rarr;</a>
     </div>
   </div>
 </section>
