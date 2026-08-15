@@ -9284,6 +9284,37 @@
         ]
       }
     },
+    "congo/mountains": {
+      "country": "congo",
+      "category": "mountains",
+      "caption": "Mount Berongou",
+      "description": "903 metres in the Mayombe, and the highest ground in a country of forest and plateau.",
+      "provider": "pexels",
+      "photoId": "17316642",
+      "imageUrl": "https://images.pexels.com/photos/17316642/pexels-photo-17316642.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/17316642/pexels-photo-17316642.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/mist-covering-sun-over-woodland-17316642/",
+      "photographer": "Serg Alesenko",
+      "photographerUrl": "https://www.pexels.com/@sergk1",
+      "width": 6240,
+      "height": 4160,
+      "aspectRatio": 1.5,
+      "alt": "the forested Mayombe hills under low cloud, Congo",
+      "query": "Congo forested mayombe hills",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-15T19:22:26Z",
+      "verifiedAt": "2026-08-15T19:22:26Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: forested,hills"
+        ]
+      }
+    },
     "congo/nature": {
       "country": "congo",
       "category": "nature",
@@ -9343,6 +9374,37 @@
         "score": 4.67,
         "reasons": [
           "subject: buffalo,forest"
+        ]
+      }
+    },
+    "congo/waterfalls": {
+      "country": "congo",
+      "category": "waterfalls",
+      "caption": "The Loufoulakari",
+      "description": "Falls on the Congo above Brazzaville, where the river drops through rock.",
+      "provider": "pexels",
+      "photoId": "10677790",
+      "imageUrl": "https://images.pexels.com/photos/10677790/pexels-photo-10677790.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/10677790/pexels-photo-10677790.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/heating-vegetable-in-buckts-10677790/",
+      "photographer": "Josiah Matthew",
+      "photographerUrl": "https://www.pexels.com/@josiah-matthew-145486517",
+      "width": 4160,
+      "height": 6240,
+      "aspectRatio": 0.6667,
+      "alt": "the Loufoulakari falls dropping through rock into the Congo",
+      "query": "Congo Loufoulakari",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:22:27Z",
+      "verifiedAt": "2026-08-15T19:22:28Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: the"
         ]
       }
     },
