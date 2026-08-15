@@ -8597,6 +8597,68 @@
         ]
       }
     },
+    "comoros/eco-tourism": {
+      "country": "comoros",
+      "category": "eco-tourism",
+      "caption": "Moheli's Community Park",
+      "description": "The marine park is run with the villages, and the turtle numbers have held because of it.",
+      "provider": "pexels",
+      "photoId": "9733797",
+      "imageUrl": "https://images.pexels.com/photos/9733797/pexels-photo-9733797.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/9733797/pexels-photo-9733797.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/camera-man-shooting-a-local-person-9733797/",
+      "photographer": "Brian kimotho",
+      "photographerUrl": "https://www.pexels.com/@brian-kimotho-114875604",
+      "width": 7952,
+      "height": 5304,
+      "aspectRatio": 1.4992,
+      "alt": "a community ranger recording turtle nests on Moheli, Comoros",
+      "query": "Comoros community ranger recording",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:21:17Z",
+      "verifiedAt": "2026-08-15T19:21:17Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: community,recording"
+        ]
+      }
+    },
+    "comoros/family-community": {
+      "country": "comoros",
+      "category": "family-community",
+      "caption": "Turtles and Shallow Reef",
+      "description": "Moheli's nesting beaches, and reef close enough in to snorkel from the sand.",
+      "provider": "pexels",
+      "photoId": "11443861",
+      "imageUrl": "https://images.pexels.com/photos/11443861/pexels-photo-11443861.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/11443861/pexels-photo-11443861.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/back-view-shot-of-father-and-children-sitting-on-the-shallow-part-of-the-beach-11443861/",
+      "photographer": "Atlantic Ambience",
+      "photographerUrl": "https://www.pexels.com/@freestockpro",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "children snorkelling over shallow reef off a Comorian beach, Comoros",
+      "query": "Comoros children snorkelling shallow",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-15T19:21:13Z",
+      "verifiedAt": "2026-08-15T19:21:14Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: beach,children"
+        ]
+      }
+    },
     "comoros/festivals": {
       "country": "comoros",
       "category": "festivals",
@@ -8754,6 +8816,38 @@
         ]
       }
     },
+    "comoros/hidden-gems": {
+      "country": "comoros",
+      "category": "hidden-gems",
+      "caption": "The Coelacanth",
+      "description": "Caught off these islands in 1938, having been extinct for eighty million years.",
+      "provider": "pexels",
+      "photoId": "38404520",
+      "imageUrl": "https://images.pexels.com/photos/38404520/pexels-photo-38404520.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38404520/pexels-photo-38404520.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/close-up-of-a-fish-in-valencia-aquarium-38404520/",
+      "photographer": "Emilio Sánchez  Hernández",
+      "photographerUrl": "https://www.pexels.com/@emilio-sanchez-hernandez-285921208",
+      "width": 9504,
+      "height": 6336,
+      "aspectRatio": 1.5,
+      "alt": "a preserved coelacanth specimen in a Comorian museum case, Comoros",
+      "query": "Comoros preserved coelacanth specimen",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T19:21:18Z",
+      "verifiedAt": "2026-08-15T19:21:18Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: the",
+          "category: the"
+        ]
+      }
+    },
     "comoros/historic-sites": {
       "country": "comoros",
       "category": "historic-sites",
@@ -8848,6 +8942,37 @@
         ]
       }
     },
+    "comoros/luxury": {
+      "country": "comoros",
+      "category": "luxury",
+      "caption": "Small and Simple",
+      "description": "Guesthouses and a few beach hotels. Nothing at the top end anywhere.",
+      "provider": "pexels",
+      "photoId": "4093370",
+      "imageUrl": "https://images.pexels.com/photos/4093370/pexels-photo-4093370.png",
+      "thumbnailUrl": "https://images.pexels.com/photos/4093370/pexels-photo-4093370.png?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/people-swimming-on-the-beach-4093370/",
+      "photographer": "Dre Dawkcide",
+      "photographerUrl": "https://www.pexels.com/@dawkcide",
+      "width": 6048,
+      "height": 4024,
+      "aspectRatio": 1.503,
+      "alt": "a small beach guesthouse under palms on Moheli, Comoros",
+      "query": "Comoros Moheli",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:21:15Z",
+      "verifiedAt": "2026-08-15T19:21:16Z",
+      "relevance": {
+        "score": 4.54,
+        "reasons": [
+          "subject: and,beach"
+        ]
+      }
+    },
     "comoros/mountains": {
       "country": "comoros",
       "category": "mountains",
@@ -8907,6 +9032,68 @@
         "score": 4.53,
         "reasons": [
           "subject: and,black"
+        ]
+      }
+    },
+    "comoros/outdoor": {
+      "country": "comoros",
+      "category": "outdoor",
+      "caption": "Volcano and Reef",
+      "description": "Karthala overnight, and diving the drop-offs on the same trip.",
+      "provider": "pexels",
+      "photoId": "4961417",
+      "imageUrl": "https://images.pexels.com/photos/4961417/pexels-photo-4961417.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/4961417/pexels-photo-4961417.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/unrecognizable-person-diving-above-rocks-4961417/",
+      "photographer": "Daniel Torobekov",
+      "photographerUrl": "https://www.pexels.com/@alohaphotostudio",
+      "width": 7765,
+      "height": 4367,
+      "aspectRatio": 1.7781,
+      "alt": "a diver over a coral drop-off in Comorian water, Comoros",
+      "query": "Comoros diver coral drop",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:21:14Z",
+      "verifiedAt": "2026-08-15T19:21:15Z",
+      "relevance": {
+        "score": 5.0,
+        "reasons": [
+          "subject: coral,diver,reef"
+        ]
+      }
+    },
+    "comoros/photography": {
+      "country": "comoros",
+      "category": "photography",
+      "caption": "Volcano and Ocean",
+      "description": "Karthala's rim at first light, with the Indian Ocean on every side of it.",
+      "provider": "pexels",
+      "photoId": "37450066",
+      "imageUrl": "https://images.pexels.com/photos/37450066/pexels-photo-37450066.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37450066/pexels-photo-37450066.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/tropical-paradise-beach-with-boats-under-palm-trees-37450066/",
+      "photographer": "Aurélie  Nateba Studio",
+      "photographerUrl": "https://www.pexels.com/@nomadaventure",
+      "width": 6048,
+      "height": 4024,
+      "aspectRatio": 1.503,
+      "alt": "sunrise from the crater rim of Karthala over the ocean, Comoros",
+      "query": "Comoros Karthala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T19:21:17Z",
+      "verifiedAt": "2026-08-15T19:21:18Z",
+      "relevance": {
+        "score": 1.93,
+        "reasons": [
+          "subject: and"
         ]
       }
     },
@@ -9004,6 +9191,37 @@
         ]
       }
     },
+    "comoros/why-visit": {
+      "country": "comoros",
+      "category": "why-visit",
+      "caption": "Why Comoros",
+      "description": "An active volcano, a living fossil, and a Swahili stone town nobody visits.",
+      "provider": "pexels",
+      "photoId": "36478662",
+      "imageUrl": "https://images.pexels.com/photos/36478662/pexels-photo-36478662.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36478662/pexels-photo-36478662.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/scenic-sunset-view-of-canal-in-trieste-italy-36478662/",
+      "photographer": "Ana Kenk",
+      "photographerUrl": "https://www.pexels.com/@ana-kenk-2159501753",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a dhow off the volcanic coast of Grande Comore at sunset, Comoros",
+      "query": "Comoros Grande Comore",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:21:18Z",
+      "verifiedAt": "2026-08-15T19:21:19Z",
+      "relevance": {
+        "score": 1.93,
+        "reasons": [
+          "subject: sunset"
+        ]
+      }
+    },
     "comoros/wildlife": {
       "country": "comoros",
       "category": "wildlife",
@@ -9032,6 +9250,130 @@
         "score": 2.53,
         "reasons": [
           "subject: forest"
+        ]
+      }
+    },
+    "congo/hero": {
+      "country": "congo",
+      "category": "hero",
+      "caption": "Odzala-Kokoua",
+      "description": "Forest, savanna and bais together, and gorillas habituated for tracking on foot.",
+      "provider": "pexels",
+      "photoId": "1238272",
+      "imageUrl": "https://images.pexels.com/photos/1238272/pexels-photo-1238272.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/1238272/pexels-photo-1238272.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/close-up-photo-of-gorilla-1238272/",
+      "photographer": "Francesco Ungaro",
+      "photographerUrl": "https://www.pexels.com/@francesco-ungaro",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a forest bai clearing surrounded by rainforest in Odzala, Congo",
+      "query": "Congo Odzala",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:21:19Z",
+      "verifiedAt": "2026-08-15T19:21:20Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: rainforest"
+        ]
+      }
+    },
+    "congo/nature": {
+      "country": "congo",
+      "category": "nature",
+      "caption": "The Congo Basin",
+      "description": "Two thirds of the country is rainforest, and much of it has never had a road in it.",
+      "provider": "pexels",
+      "photoId": "6872287",
+      "imageUrl": "https://images.pexels.com/photos/6872287/pexels-photo-6872287.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/6872287/pexels-photo-6872287.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/boats-in-shallow-water-6872287/",
+      "photographer": "Quang Nguyen Vinh",
+      "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+      "width": 8000,
+      "height": 6000,
+      "aspectRatio": 1.3333,
+      "alt": "unbroken Congo Basin rainforest canopy from the air",
+      "query": "Congo unbroken congo basin",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:21:21Z",
+      "verifiedAt": "2026-08-15T19:21:21Z",
+      "relevance": {
+        "score": 2.25,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "congo/safari": {
+      "country": "congo",
+      "category": "safari",
+      "caption": "Bai Watching",
+      "description": "Forest buffalo, bongo, sitatunga and elephant come to the clearings, and you sit and wait.",
+      "provider": "pexels",
+      "photoId": "34053905",
+      "imageUrl": "https://images.pexels.com/photos/34053905/pexels-photo-34053905.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34053905/pexels-photo-34053905.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/buffalo-grazing-in-lush-east-java-forest-34053905/",
+      "photographer": "Nizar F",
+      "photographerUrl": "https://www.pexels.com/@rfniza",
+      "width": 7728,
+      "height": 5152,
+      "aspectRatio": 1.5,
+      "alt": "forest buffalo and elephants at a bai in Odzala, Congo",
+      "query": "Congo forest buffalo elephants",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T19:21:23Z",
+      "verifiedAt": "2026-08-15T19:21:24Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: buffalo,forest"
+        ]
+      }
+    },
+    "congo/wildlife": {
+      "country": "congo",
+      "category": "wildlife",
+      "caption": "Western Lowland Gorillas",
+      "description": "Smaller, redder and harder to see than mountain gorillas, and tracked through swamp forest.",
+      "provider": "pexels",
+      "photoId": "37136205",
+      "imageUrl": "https://images.pexels.com/photos/37136205/pexels-photo-37136205.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/37136205/pexels-photo-37136205.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/close-up-portrait-of-a-western-lowland-gorilla-37136205/",
+      "photographer": "Jonathan Cooper",
+      "photographerUrl": "https://www.pexels.com/@theshuttervision",
+      "width": 10944,
+      "height": 7296,
+      "aspectRatio": 1.5,
+      "alt": "a silverback western lowland gorilla in dense green forest, Congo",
+      "query": "Congo silverback western lowland",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-15T19:21:22Z",
+      "verifiedAt": "2026-08-15T19:21:23Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: gorilla,lowland,western"
         ]
       }
     },
