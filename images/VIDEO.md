@@ -13,6 +13,115 @@ other change to any file.
     videos/wild-bwindi-gorillas.mp4
     videos/culture-foumban-casting.mp4
 
+## If your file is too big to upload
+
+GitHub's web uploader stops at 25 MB, and a clip off a camera or a stock site is
+routinely well past that. Don't fight it — a 25 MB file was never going in the
+repository anyway. Git keeps every binary forever, so a master committed once
+costs its full size in every clone and every deploy from then on, in exchange
+for the 2 MB that is actually served.
+
+Put the master somewhere the repository can reach without swallowing it, and
+commit only the cut:
+
+**A GitHub release asset** takes up to 2 GB and does not enter the git history.
+On this repository: Releases → Draft a new release → tag it `footage` → drag the
+file into the attachments box → publish. Then
+
+    python3 tools/tourism/build.py cut \
+      https://github.com/ICOFCUCAM/fako-journeys/releases/download/footage/lagos.mp4 \
+      --name city-lagos-marina
+
+Any direct link works the same way — Drive, Dropbox or WeTransfer, as long as the
+URL serves the file itself rather than a preview page. The master lands in
+`incoming/video/masters/`, which is gitignored.
+
+**Or hand it over locally**, if you have the file on the machine already:
+
+    python3 tools/tourism/build.py cut incoming/video/masters/lagos.mp4 \
+      --name city-lagos-marina
+
+Either way what gets committed is one file in `videos/`, around 2 MB.
+
+### What the cut does
+
+Strips the audio track, scales to 1280 wide, trims to ten seconds and two-pass
+encodes to a bitrate computed from the budget — then checks the result and
+**deletes it if it is still over**, rather than writing it and letting somebody
+find out from a phone bill. Useful flags:
+
+    --seconds 8         how much to keep (default 10)
+    --start 4.5         where in the master the good part begins
+    --width 960         narrower, when 1280 will not fit the budget
+    --mb 1.5            a tighter ceiling
+
+If it refuses, take less: `--seconds` first, then `--width`. Ten seconds of a
+still-ish landscape fits in two megabytes comfortably; ten seconds of a crowded
+market at dusk may not, because there is more moving in every frame.
+
+## About a voiceover
+
+**Short answer: the window does not want one, and adding one here would not
+work the way it sounds like it should.**
+
+Three things stand in the way, and none of them is about effort.
+
+**A browser will not play sound you did not ask for.** Chrome, Safari and
+Firefox all block audible autoplay. A video may autoplay *muted*, which is what
+this one does, and the moment it carries a voice the browser keeps it muted
+anyway until the visitor clicks something. So a narrated window is a silent
+window for almost everyone who sees it — the narration would be paid for in
+bytes by every visitor and heard by the few who go looking for an unmute button.
+
+**The window is scenery, not a programme.** It sits directly under the hero
+while a visitor is still deciding whether to stay, and they are reading the
+headline next to it. A voice competes with the words it was put there to
+support. That is also why it loops silently and why every shot carries a
+caption: the caption is the narration, and it works with the sound off.
+
+**And the film is sixteen files.** A voice that runs across a cut has to be one
+continuous stream. Between one `<video>` ending and the next starting there is a
+gap the browser makes no promise about — tens of milliseconds on a fast
+connection, up to a second on a slow one — so a sentence spanning a boundary
+would be audibly chopped. Sixteen pieces and one flowing narration cannot both
+be true.
+
+### If you want a narrated film anyway — and there is a good case for one
+
+Give it its own place rather than putting it under the hero. A documentary piece
+is something a visitor *chooses*: a still frame, a play button, and then two
+minutes with sound, full width, nothing competing. That is a different thing
+from the window and a good thing to have.
+
+It needs to be **one continuous file**, not the sixteen pieces, because of the
+gap problem above. Everything for it already exists:
+
+    python3 tools/tourism/build.py cut incoming/video/masters/narrated.mp4 \
+      --name the-film --seconds 120 --mb 12 --keep-audio
+
+`--keep-audio` keeps the voice (AAC in the mp4, Opus in the WebM) and pays for
+it out of the same byte ceiling rather than on top of it.
+
+### What has been organised so the voice does not break anything
+
+- **The cut is regenerable, not hand-made.** The sixteen boundaries live as
+  timecodes in `tools/tourism/film.py`, not in whatever file happened to be
+  passed in. Hand a *narrated* master to `build.py film` and the same sixteen
+  pieces come out with the voice in them, same boundaries, same captions, one
+  command. Nothing is re-cut by hand and no caption moves.
+- **Boundaries are the film's own cuts**, and consecutive pieces join exactly —
+  each one ends where the next begins, with no gap and no overlap. That is
+  checked (`build.py film --list` reports it, and the suite fails if they stop
+  joining). It is the condition that makes a continuous narration survive as
+  well as it possibly can across separate files, if you ever do want to try.
+- **Audio is a switch, not a rebuild.** `--keep-audio` on `cut` and `film`.
+- **The master never enters git**, so re-cutting from a narrated version later
+  costs nothing that has already been spent.
+
+If you would rather the voice go in the window regardless, say so — it is a
+one-line change to the generator. It will be muted for most visitors, and that
+is the trade you would be making.
+
 ## What the page needs from a file
 
 - **MP4, H.264, AAC or no audio track.** The player is muted and looping, so

@@ -59,7 +59,11 @@ const TYPES = {
   '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
   '.json': 'application/json', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
-  '.xml': 'application/xml', '.txt': 'text/plain'
+  '.xml': 'application/xml', '.txt': 'text/plain',
+  // The window under the hero is a sixteen-piece film. Without these two the
+  // clips were served as application/octet-stream and the browser stalled on
+  // them, which is where a 37-second pass went to spend 408 seconds.
+  '.mp4': 'video/mp4', '.webm': 'video/webm'
 };
 
 /* ---------------------------------------------------------------------------
@@ -275,7 +279,23 @@ function serve() {
       } catch (e) { /* fall through to the 404 */ }
       fs.readFile(file, (err, body) => {
         if (err) { res.writeHead(404); res.end('no'); return; }
-        res.writeHead(200, {'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream'});
+        const type = TYPES[path.extname(file)] || 'application/octet-stream';
+        // Range requests, because Chromium will not stream media from a server
+        // that answers 200 to every one of them. Without this the video element
+        // asked for bytes, got the whole file and no Accept-Ranges, and sat
+        // there — the goto timeouts that made this whole file report nothing.
+        const m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || '');
+        if (m) {
+          const start = m[1] ? parseInt(m[1], 10) : 0;
+          const end = m[2] ? parseInt(m[2], 10) : body.length - 1;
+          res.writeHead(206, {'Content-Type': type, 'Accept-Ranges': 'bytes',
+            'Content-Range': 'bytes ' + start + '-' + end + '/' + body.length,
+            'Content-Length': end - start + 1});
+          res.end(body.slice(start, end + 1));
+          return;
+        }
+        res.writeHead(200, {'Content-Type': type, 'Accept-Ranges': 'bytes',
+                            'Content-Length': body.length});
         res.end(body);
       });
     });
@@ -294,6 +314,38 @@ function serve() {
 
   const server = await serve();
   const base = 'http://127.0.0.1:' + server.address().port;
+
+  /* WHY NOT waitUntil: 'networkidle'
+   *
+   * Every pass below used to. It stopped being usable the day the window under
+   * the hero became a sixteen-piece film: the rail fetches the next piece as
+   * each one ends, so the network on the home page is never quiet for the 500ms
+   * networkidle waits for, and every goto against it ran to the 30-second
+   * timeout. The first symptom was the whole browser suite reporting nothing at
+   * all, because one throw takes the process with it.
+   *
+   * What these passes actually need is not a quiet network — it is a settled
+   * layout: images with their intrinsic sizes in, fonts swapped, nothing about
+   * to reflow under the measurement. That is what this waits for, and unlike
+   * networkidle it is true on a page that is deliberately still loading video.
+   */
+  async function open(page, url) {
+    await page.goto(base + url, {waitUntil: 'load'});
+    /* Raced against a deadline, because page.evaluate has no timeout of its own:
+       a promise that never settles hangs the whole suite for ever rather than
+       failing a check. An earlier version of this waited on requestAnimationFrame
+       as well and did exactly that — headless throttles rAF on a page it is not
+       painting, so the frame never came. */
+    await page.evaluate(() => Promise.race([
+      Promise.all([
+        document.fonts ? document.fonts.ready : Promise.resolve(),
+        ...[...document.images].filter(i => !i.complete).map(i =>
+          new Promise(done => { i.onload = i.onerror = done; }))
+      ]),
+      new Promise(done => setTimeout(done, 4000))
+    ]));
+  }
+
   let browser;
   try {
     browser = await launcher.launch({executablePath: exe});
@@ -359,7 +411,7 @@ function serve() {
                                            reducedMotion: 'reduce'});
       for (const url of REDUCED_PAGES) {
         const page = await rm.newPage();
-        await page.goto(base + url, {waitUntil: 'networkidle'});
+        await open(page, url);
         /* Move through whatever states the page has, then look for anything
            that is invisible and still reachable. Selecting is what triggers a
            cross-fade, and a cross-fade is where the delays live. */
@@ -422,7 +474,7 @@ function serve() {
      */
     for (const [w, h] of HERO_TYPE_WIDTHS) {
       const page = await browser.newPage({viewport: {width: w, height: h}});
-      await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
+      await open(page, '/index.html');
       const bad = await page.evaluate(async (need) => {
         function lum(c) {
           const f = c.map(v => (v /= 255) <= 0.03928 ? v / 12.92
@@ -531,7 +583,7 @@ function serve() {
     const KILLERS = ['transform', 'filter', 'backdropFilter', 'perspective', 'willChange', 'contain'];
     for (const [w, h] of BAND_WIDTHS) {
       const page = await browser.newPage({viewport: {width: w, height: h}});
-      await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
+      await open(page, '/index.html');
       const bands = await page.$$eval('.wa-seam-pic', els => els.length);
       if (!bands) { await page.close(); continue; }
       /* Every image eager, then wait for the document to stop growing. Without
@@ -701,7 +753,7 @@ function serve() {
       const page = await browser.newPage({viewport: {width: w, height: h}});
       const errs = [];
       page.on('pageerror', e => errs.push(String(e.message).slice(0, 60)));
-      await page.goto(base + '/index.html', {waitUntil: 'networkidle'});
+      await open(page, '/index.html');
       const seen = await page.evaluate(([bleed, band, mapMin]) => {
         const q = s => document.querySelector(s);
         const B = s => { const e = q(s); return e && e.getBoundingClientRect(); };
@@ -954,7 +1006,7 @@ function serve() {
     /* ---- pass seven: where the keyboard can go --------------------------- */
     for (const url of PAGES) {
       const page = await browser.newPage({viewport: {width: 1280, height: 900}});
-      await page.goto(base + url, {waitUntil: 'networkidle'});
+      await open(page, url);
       let stops = 0;
       const blind = [];
       for (let i = 0; i < TAB_STOPS; i++) {
@@ -993,7 +1045,7 @@ function serve() {
                                             isMobile: true, hasTouch: true});
     for (const url of PAGES) {
       const page = await touch.newPage();
-      await page.goto(base + url, {waitUntil: 'networkidle'});
+      await open(page, url);
       const small = await page.evaluate((min) => {
         const out = [];
         document.querySelectorAll(
@@ -1027,7 +1079,7 @@ function serve() {
     /* ---- pass five: how long a line of prose gets ------------------------ */
     for (const url of PAGES) {
       const page = await browser.newPage({viewport: {width: 1440, height: 900}});
-      await page.goto(base + url, {waitUntil: 'networkidle'});
+      await open(page, url);
       const long = await page.evaluate((cap) => {
         /* Measured in average lowercase letters, not CSS ch. `ch` is the width
            of a zero, which in this serif is 1.09x the average letter, so a rule
@@ -1071,7 +1123,7 @@ function serve() {
       const wrong = [];
       for (const width of WIDTHS) {
         const page = await browser.newPage({viewport: {width, height: 900}});
-        await page.goto(base + url, {waitUntil: 'networkidle'});
+        await open(page, url);
         const seen = await page.evaluate(() => {
           const over = document.documentElement.scrollWidth - window.innerWidth;
           if (over <= 1) return null;
@@ -1095,7 +1147,7 @@ function serve() {
     /* ---- pass three: contrast ------------------------------------------- */
     for (const url of PAGES) {
       const page = await browser.newPage({viewport: {width: 1280, height: 900}});
-      await page.goto(base + url, {waitUntil: 'networkidle'});
+      await open(page, url);
       const bad = await page.evaluate(([small, large]) => {
         function rgb(text) {
           let m = String(text).match(/^color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/);
@@ -1177,7 +1229,7 @@ function serve() {
                                           javaScriptEnabled: false});
     for (const url of PAGES) {
       const lit = await browser.newPage({viewport: {width: 1280, height: 900}});
-      await lit.goto(base + url, {waitUntil: 'networkidle'});
+      await open(lit, url);
       const withJs = await lit.evaluate(
         () => (document.body.innerText || '').trim().split(/\s+/).length);
       await lit.close();

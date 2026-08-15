@@ -29,7 +29,19 @@ class Finding:
 
 
 def alt_text(country, entry):
-    """Derived, never "Uganda image": the subject phrase, placed in its country."""
+    """Derived, never "Uganda image": the subject phrase, placed in its country.
+
+    Unless the slot holds a photograph somebody here actually took, in which
+    case that photograph's own description wins. The rule everywhere else is
+    that alt text comes from the slot's instruction rather than from a stock
+    caption — because the instruction is what the picture was supposed to show.
+    An own photograph inverts that: it is not standing in for the instruction,
+    it *is* the thing, and a reader using a screen reader should be told what is
+    in the frame rather than what was once asked for.
+    """
+    own = (getattr(entry, "photo_alt", None) or "").strip().rstrip(".")
+    if own and getattr(entry, "photo", None):
+        return own
     subject = (entry.subject or "").strip().rstrip(".")
     if not subject:
         return ""

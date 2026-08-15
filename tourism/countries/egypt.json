@@ -290,7 +290,9 @@
       "focal": [
         50,
         52
-      ]
+      ],
+      "photo": "/images/uploads/egypt-giza-aerial-1600w.jpg",
+      "photo_alt": "The pyramids at Giza from the air, three of them casting long shadows across the desert with the edge of Cairo visible beyond the plateau"
     }
   ]
 }

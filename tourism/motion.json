@@ -30,6 +30,141 @@
  ],
  "tracks": [
   {
+   "slug": "film",
+   "label": "The film",
+   "line": "two minutes, end to end",
+   "shots": [
+    {
+     "photo": "/images/uploads/film-lagos-third-mainland-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "The Third Mainland Bridge carrying traffic across Lagos lagoon seen from the air, followed by two aerial passes over a city of mid-rise blocks and green suburbs",
+     "say": "Lagos, from the air",
+     "clip": "/videos/film-01-lagos-third-mainland.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-plains-and-giza-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Zebra and wildebeest crowded at a dry waterhole, then the pyramids at Giza beyond the shoulder of a woman looking towards them",
+     "say": "Zebra, and then Giza",
+     "clip": "/videos/film-02-plains-and-giza.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-dusk-and-lekki-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "A city at dusk with traffic on a wide highway under a low sun, then the Lekki-Ikoyi Link Bridge in Lagos from the air with its single white pylon",
+     "say": "Dusk, and the Lekki bridge",
+     "clip": "/videos/film-03-dusk-and-lekki.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-grass-and-indoors-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Two zebra walking through green grass, then three women in patterned dress coming through a decorated room hung with mirrors and cane furniture",
+     "say": "Out there, and inside",
+     "clip": "/videos/film-04-grass-and-indoors.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-lions-and-highland-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "A lion and lioness resting together on a rock, then green highland ridges under low cloud",
+     "say": "Lions, and the high ground",
+     "clip": "/videos/film-05-lions-and-highland.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-victoria-falls-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Water pouring over the lip of Victoria Falls in close-up through spray, then the full width of the falls seen through trees with a rainbow across the gorge",
+     "say": "Victoria Falls",
+     "clip": "/videos/film-06-victoria-falls.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-mountain-gorilla-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "A mountain gorilla feeding in dense green undergrowth, close enough to see the leaf in its hand, then a zebra standing in open woodland",
+     "say": "Mountain gorilla",
+     "clip": "/videos/film-07-mountain-gorilla.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-on-game-drive-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Open bush country, then an elephant crossing a track in front of a stopped white vehicle, then a line of safari vehicles waiting on a rise with an impala in the foreground",
+     "say": "On game drive",
+     "clip": "/videos/film-08-on-game-drive.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-elephants-and-lions-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Elephants bathing and rolling in a brown river, a lion and lioness on their rock, then a line of elephants walking through dry grass",
+     "say": "Elephants, and lions again",
+     "clip": "/videos/film-09-elephants-and-lions.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-the-river-and-who-comes-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Elephants spread along a wide river below dry hills, a giraffe browsing the top of a thorn tree, and zebra and wildebeest packed together at a waterhole",
+     "say": "The river, and who comes to it",
+     "clip": "/videos/film-10-the-river-and-who-comes.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-nairobi-from-the-park-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "A giraffe standing in dry scrub, zebra at a waterhole, then a giraffe browsing with the towers of central Nairobi standing on the horizon behind it",
+     "say": "Nairobi, from the park",
+     "clip": "/videos/film-11-nairobi-from-the-park.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-traffic-and-water-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "A busy street under lines of bunting with tricycle taxis and motorcycles threading through traffic, then the Lekki-Ikoyi Link Bridge from directly overhead, then a waterfront city seen from the air",
+     "say": "Traffic, and the water",
+     "clip": "/videos/film-12-traffic-and-water.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-market-and-procession-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Stalls of fruit and vegetables piled under a market roof with shoppers moving between them, then men in white robes carrying instruments in procession, then a city from the air",
+     "say": "Market day, and a procession",
+     "clip": "/videos/film-13-market-and-procession.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-in-the-pot-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Close on a large pot over a flame, a hand turning meat and pepper sauce through it with a wooden spoon, a second pot and a basin alongside",
+     "say": "In the pot",
+     "clip": "/videos/film-14-in-the-pot.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-lagos-mid-morning-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "Lagos from the air in the middle of the morning, low blocks and office towers running back from a green highway verge towards the sea",
+     "say": "Lagos, mid-morning",
+     "clip": "/videos/film-15-lagos-mid-morning.mp4"
+    },
+    {
+     "photo": "/images/uploads/film-lekki-bridge-1280w.jpg",
+     "photo_w": 1280,
+     "photo_h": 720,
+     "alt": "The Lekki-Ikoyi Link Bridge in Lagos seen from the air: a single white pylon with its cable stays fanning out over the lagoon, traffic crossing in both directions, and the streets and towers of Ikoyi behind it",
+     "say": "The Lekki bridge",
+     "clip": "/videos/film-16-lekki-bridge.mp4"
+    }
+   ]
+  },
+  {
    "slug": "city",
    "label": "City life",
    "line": "Cities wake.",
