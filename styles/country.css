@@ -92,11 +92,7 @@
    so the heading above it keeps the block's full width. */
 .ct-op p{color:var(--c-muted);margin-top:12px;max-width:72ch}
 .ct-op .af-go{margin-top:16px}
-/* Was .ct-op--none, sized down because "None of ours in Central African
-   Republic" ran to four words and a country name. The block now says
-   "Afrinkong" and takes the same size as a named operator, which is the
-   point: it is not a lesser answer. */
-.ct-op--house .af-go{margin-top:14px;display:inline-block}
+.ct-op--none b{font-size:clamp(20px,2.2vw,27px)}
 @media(max-width:640px){.ct-cal-row{grid-template-columns:repeat(6,1fr)}
   .ct-mon:nth-child(6n){border-right:0}
   .ct-mon:nth-child(-n+6){border-bottom:var(--fj-rule)}}

@@ -27,9 +27,35 @@ NOISE = {
     "africa", "african", "nature", "outdoor", "outdoors", "landscape",
 }
 
+# Function words, which words() used to keep because it only dropped anything
+# under three letters. "the" and "and" are four and three, so they survived and
+# then scored as subject matches. That is not a subtlety; it is how a photograph
+# of fishing boats came to illustrate "The Cloud Forest of Santo Antao" with the
+# reason "subject: the", how Russian solyanka came to be Cabo Verdean cachupa on
+# "subject: and,bowl", and how a carpet became pottery on "subject: and,woven".
+# Every one of those scored above four out of nine and shipped.
+STOP = {
+    "the", "and", "for", "with", "from", "into", "onto", "over", "under",
+    "near", "off", "out", "its", "his", "her", "their", "this", "that",
+    "these", "those", "there", "here", "they", "them", "then", "than",
+    "was", "were", "are", "been", "being", "has", "have", "had", "not",
+    "but", "who", "what", "when", "where", "which", "while", "some", "any",
+    "all", "one", "two", "three", "more", "most", "very", "just", "also",
+    "you", "your", "our", "can", "will", "would", "about", "above", "after",
+    "before", "between", "during", "such", "same", "other", "another",
+}
+
 
 def words(text):
-    return {w for w in re.findall(r"[a-z']+", (text or "").lower()) if len(w) > 2}
+    """Content words only.
+
+    The length filter alone is not a stopword list: it drops "of" and "in" and
+    keeps "the", "and", "with", "from" — the four words most likely to appear
+    in any caption ever written, and therefore the four least capable of
+    telling one photograph from another.
+    """
+    return {w for w in re.findall(r"[a-z']+", (text or "").lower())
+            if len(w) > 2 and w not in STOP}
 
 
 def subject_terms(entry, category):
@@ -85,9 +111,52 @@ def sameness(candidate, taken):
     return worst
 
 
+# Places that are not in Africa and keep winning African queries, because a
+# stock library's Cabo Verde results are full of the Canaries and its Comoros
+# results are full of anywhere warm with a boat. Naming one of these is not a
+# weak signal to be outweighed by a big image and a lucky word — it is the
+# provider telling us, in its own words, that the photograph is of somewhere
+# else. Published examples: a canal in Trieste as Comoros, cliffs in Tenerife
+# as Cabo Verde, a promenade in Guayaquil as Cote d'Ivoire.
+ELSEWHERE = {
+    "tenerife", "lanzarote", "fuerteventura", "gomera", "vallehermoso",
+    "corralejo", "canary", "canaries", "madeira", "azores", "spain",
+    "spanish", "portugal", "portuguese", "italy", "italian", "trieste",
+    "greece", "greek", "croatia", "turkey", "turkish", "norway", "iceland",
+    "scotland", "ireland", "france", "french", "germany", "switzerland",
+    "brazil", "brazilian", "mexico", "peru", "chile", "argentina", "ecuador",
+    "guayaquil", "cuba", "jamaica", "bahamas", "maldives", "india", "indian",
+    "nepal", "china", "chinese", "japan", "japanese", "thailand", "vietnam",
+    "indonesia", "bali", "philippines", "malaysia", "australia", "zealand",
+    "florida", "california", "hawaii", "texas", "russia", "russian",
+    "solyanka", "ukraine", "poland", "dubai", "emirates", "qatar",
+}
+
+
+def elsewhere(candidate, country):
+    """The place this photograph says it is, when that is not this country.
+
+    A country of ours named in the text is fine and common — a photo can be
+    taken on a border, or a caption can list two. What is never fine is a
+    caption naming somewhere the journey does not go.
+    """
+    text = words(candidate.get("text"))
+    mine = words(country.name) | words(country.adjective)
+    hits = (text & ELSEWHERE) - mine
+    return sorted(hits)
+
+
 def score(candidate, country, category, entry, role, taken=None):
     """-> (score, reasons). Higher is better; below MIN_SCORE is a rejection."""
     text = words(candidate.get("text"))
+
+    # Checked before anything else and returned as a hard rejection rather than
+    # a penalty. A -2.5 would have been outvoted by a 6000px image and two
+    # lucky subject words, which is how these shipped in the first place.
+    away = elsewhere(candidate, country)
+    if away:
+        return -99.0, ["the photograph says it is in %s" % ", ".join(away[:2])]
+
     terms, hint = subject_terms(entry, category)
     reasons = []
     total = 0.0

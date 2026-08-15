@@ -84,6 +84,11 @@ class Cache:
         self.path = path or cache_file()
         self.version = raw.get("version", 1)
         self.entries = raw.get("entries", {})
+        # Photographs the audit found to be of somewhere else, or picked on a
+        # function word. Kept rather than deleted so the resolver does not
+        # spend a fresh API call re-picking the picture it was already told
+        # is wrong — Mount Vesuvius is no less Italian the second time.
+        self.rejected = raw.get("rejected", {})
 
     # -- reads ------------------------------------------------------------------
 
@@ -101,8 +106,10 @@ class Cache:
         return "%s:%s" % (record.get("provider") or "?", record.get("photoId"))
 
     def photo_ids(self):
-        """Every photo already spent, so the resolver never reuses one."""
-        return {self.photo_key(r) for r in self.entries.values() if r.get("photoId")}
+        """Every photo already spent or already rejected."""
+        return {self.photo_key(r)
+                for r in list(self.entries.values()) + list(self.rejected.values())
+                if r.get("photoId")}
 
     def duplicates(self):
         """photoId -> [slot, slot, ...] for any id used more than once."""
@@ -138,6 +145,11 @@ class Cache:
             "note": NOTE,
             "entries": dict(sorted(self.entries.items())),
         }
+        # Without this the first resolver run after an audit silently emptied
+        # the quarantine, and the photographs it had rejected became eligible
+        # again on the next pass.
+        if self.rejected:
+            payload["rejected"] = dict(sorted(self.rejected.items()))
         with open(self.path, "w") as f:
             json.dump(payload, f, indent=2, ensure_ascii=False)
             f.write("\n")
