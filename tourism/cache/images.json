@@ -19831,6 +19831,38 @@
         ]
       }
     },
+    "guinea-bissau/hidden-gems": {
+      "country": "guinea-bissau",
+      "category": "hidden-gems",
+      "caption": "Orango",
+      "description": "Hippos, an island king, and a lodge with no road on the island at all.",
+      "provider": "pexels",
+      "photoId": "30705896",
+      "imageUrl": "https://images.pexels.com/photos/30705896/pexels-photo-30705896.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30705896/pexels-photo-30705896.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/hippopotamus-grazing-in-kenyan-savanna-30705896/",
+      "photographer": "Hugo Sykes",
+      "photographerUrl": "https://www.pexels.com/@hugosykes",
+      "width": 9504,
+      "height": 6336,
+      "aspectRatio": 1.5,
+      "alt": "a savanna clearing with hippo tracks on Orango island, Guinea-Bissau",
+      "query": "Guinea-Bissau savanna clearing hippo",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T23:09:02Z",
+      "verifiedAt": "2026-08-15T23:09:04Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "subject: savanna",
+          "category: the"
+        ]
+      }
+    },
     "guinea-bissau/historic-sites": {
       "country": "guinea-bissau",
       "category": "historic-sites",
@@ -20174,6 +20206,38 @@
         ]
       }
     },
+    "guinea-bissau/why-visit": {
+      "country": "guinea-bissau",
+      "category": "why-visit",
+      "caption": "Why Guinea-Bissau",
+      "description": "Saltwater hippos, nesting turtles, and a society run by its women.",
+      "provider": "pexels",
+      "photoId": "32656543",
+      "imageUrl": "https://images.pexels.com/photos/32656543/pexels-photo-32656543.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/32656543/pexels-photo-32656543.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/traditional-canoe-fishing-in-papua-new-guinea-32656543/",
+      "photographer": "Alex Fanaso",
+      "photographerUrl": "https://www.pexels.com/@alex-fanaso-2153283068",
+      "width": 6960,
+      "height": 4640,
+      "aspectRatio": 1.5,
+      "alt": "a pirogue crossing still water between two Bijagos islands, Guinea-Bissau",
+      "query": "Guinea-Bissau pirogue crossing still",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-15T23:09:04Z",
+      "verifiedAt": "2026-08-15T23:09:05Z",
+      "relevance": {
+        "score": 5.43,
+        "reasons": [
+          "names the country",
+          "subject: guinea,two"
+        ]
+      }
+    },
     "guinea-bissau/wildlife": {
       "country": "guinea-bissau",
       "category": "wildlife",
@@ -20203,6 +20267,225 @@
         "reasons": [
           "subject: hippos",
           "category: wildlife"
+        ]
+      }
+    },
+    "guinea/hero": {
+      "country": "guinea",
+      "category": "hero",
+      "caption": "The Fouta Djallon",
+      "description": "A sandstone highland at a thousand metres, cut by gorges, and the source of three great rivers.",
+      "provider": "pexels",
+      "photoId": "30372869",
+      "imageUrl": "https://images.pexels.com/photos/30372869/pexels-photo-30372869.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30372869/pexels-photo-30372869.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/rugged-sandstone-cliff-with-green-vegetation-30372869/",
+      "photographer": "ansar photography",
+      "photographerUrl": "https://www.pexels.com/@ansar-photography-1907972127",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "green plateau and sandstone cliffs in the Fouta Djallon, Guinea",
+      "query": "Guinea green plateau sandstone",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T23:09:05Z",
+      "verifiedAt": "2026-08-15T23:09:06Z",
+      "relevance": {
+        "score": 4.53,
+        "reasons": [
+          "subject: green,sandstone"
+        ]
+      }
+    },
+    "guinea/lakes-rivers": {
+      "country": "guinea",
+      "category": "lakes-rivers",
+      "caption": "The Upper Niger",
+      "description": "It rises near the Sierra Leone border and is already wide by the time it leaves the country.",
+      "provider": "pexels",
+      "photoId": "33229792",
+      "imageUrl": "https://images.pexels.com/photos/33229792/pexels-photo-33229792.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/33229792/pexels-photo-33229792.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/vintage-map-with-bible-verses-overlay-33229792/",
+      "photographer": "Nothing Ahead",
+      "photographerUrl": "https://www.pexels.com/@ian-panelo",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the upper Niger river running broad through green country, Guinea",
+      "query": "Guinea Niger",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T23:09:11Z",
+      "verifiedAt": "2026-08-15T23:09:11Z",
+      "relevance": {
+        "score": 1.93,
+        "reasons": [
+          "subject: the"
+        ]
+      }
+    },
+    "guinea/mountains": {
+      "country": "guinea",
+      "category": "mountains",
+      "caption": "Mount Nimba",
+      "description": "1,752 metres on the Liberian border, with species that live on that mountain and nowhere else.",
+      "provider": "pexels",
+      "photoId": "35440146",
+      "imageUrl": "https://images.pexels.com/photos/35440146/pexels-photo-35440146.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/35440146/pexels-photo-35440146.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/hikers-on-scenic-trail-in-mount-merbabu-java-35440146/",
+      "photographer": "R.Praditya Trias Herlambang",
+      "photographerUrl": "https://www.pexels.com/@r-praditya-trias-herlambang-2158533585",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the grassy ridge of Mount Nimba above forest, Guinea",
+      "query": "Guinea Mount Nimba",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-15T23:09:09Z",
+      "verifiedAt": "2026-08-15T23:09:10Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "subject: mount",
+          "category: mountain"
+        ]
+      }
+    },
+    "guinea/nature": {
+      "country": "guinea",
+      "category": "nature",
+      "caption": "Where the Rivers Rise",
+      "description": "The Niger, the Senegal and the Gambia all begin within a hundred kilometres of each other.",
+      "provider": "pexels",
+      "photoId": "30684014",
+      "imageUrl": "https://images.pexels.com/photos/30684014/pexels-photo-30684014.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/30684014/pexels-photo-30684014.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-small-town-with-vast-landscape-30684014/",
+      "photographer": "Bobby Dimas",
+      "photographerUrl": "https://www.pexels.com/@bobbydimas",
+      "width": 6527,
+      "height": 4351,
+      "aspectRatio": 1.5001,
+      "alt": "a clear stream running over rock at the source of the Niger, Guinea",
+      "query": "Guinea Niger",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-15T23:09:06Z",
+      "verifiedAt": "2026-08-15T23:09:07Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: clear"
+        ]
+      }
+    },
+    "guinea/safari": {
+      "country": "guinea",
+      "category": "safari",
+      "caption": "The Forest, Not the Plain",
+      "description": "There is no savanna circuit. What Guinea has is forest primates and the Nimba massif.",
+      "provider": "pexels",
+      "photoId": "38262907",
+      "imageUrl": "https://images.pexels.com/photos/38262907/pexels-photo-38262907.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/38262907/pexels-photo-38262907.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/stunning-view-of-mount-bromo-at-sunrise-east-java-38262907/",
+      "photographer": "Daneswara Eka",
+      "photographerUrl": "https://www.pexels.com/@daneswara-eka-2157956675",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "dense forest canopy on the slopes of Mount Nimba, Guinea",
+      "query": "Guinea Mount Nimba",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T23:09:09Z",
+      "verifiedAt": "2026-08-15T23:09:09Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: mount"
+        ]
+      }
+    },
+    "guinea/waterfalls": {
+      "country": "guinea",
+      "category": "waterfalls",
+      "caption": "Ditinn and Kinkon",
+      "description": "Ditinn drops a hundred metres off a sheer cliff; Kinkon runs through a gorge below Pita.",
+      "provider": "pexels",
+      "photoId": "29153438",
+      "imageUrl": "https://images.pexels.com/photos/29153438/pexels-photo-29153438.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/29153438/pexels-photo-29153438.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/guinea-fowl-and-geese-in-rustic-barnyard-setting-29153438/",
+      "photographer": "Matheus Bertelli",
+      "photographerUrl": "https://www.pexels.com/@bertellifotografia",
+      "width": 4216,
+      "height": 6324,
+      "aspectRatio": 0.6667,
+      "alt": "the Ditinn waterfall falling from a sheer cliff in the Fouta, Guinea",
+      "query": "Guinea Ditinn Fouta",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-15T23:09:10Z",
+      "verifiedAt": "2026-08-15T23:09:11Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "guinea/wildlife": {
+      "country": "guinea",
+      "category": "wildlife",
+      "caption": "Chimpanzees at Bossou",
+      "description": "One of the best-studied wild chimpanzee groups anywhere, and one that uses stone tools.",
+      "provider": "pexels",
+      "photoId": "27083326",
+      "imageUrl": "https://images.pexels.com/photos/27083326/pexels-photo-27083326.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27083326/pexels-photo-27083326.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/brazilian-guinea-pig-in-nature-27083326/",
+      "photographer": "Juan Felipe Ramírez",
+      "photographerUrl": "https://www.pexels.com/@juan-felipe-ramirez-312591454",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "a wild chimpanzee cracking nuts with a stone at Bossou, Guinea",
+      "query": "Guinea Bossou",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-15T23:09:07Z",
+      "verifiedAt": "2026-08-15T23:09:08Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: wild"
         ]
       }
     },
