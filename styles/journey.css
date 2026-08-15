@@ -453,8 +453,33 @@
 .jn-chip--other input[type=number]:focus-visible{outline:2px solid var(--c-accent);
   outline-offset:2px}
 
+/* A priced card is not a pacing card. .jn-card-n at 9.5px mono is right for
+   "3-4 days" and wrong for "$650": it made the price the smallest thing on a
+   card whose only job is the price, beside a 26px name. Here the amount leads
+   and the unit follows it, quietly. */
+.jn-card--rate .jn-card-in{grid-template-columns:1fr auto;
+  grid-template-areas:"name money" "line money";align-items:center}
+.jn-card--rate .jn-card-n{grid-area:money;text-align:right;margin-top:0;
+  display:block;letter-spacing:0;text-transform:none}
+.jn-card-amt{display:block;font-family:var(--fj-display);
+  font-size:clamp(22px,2.4vw,30px);font-weight:700;line-height:1;
+  letter-spacing:-.015em;font-variant-numeric:tabular-nums;color:var(--c-fg)}
+.jn-card--rate .jn-card-n i{display:block;margin-top:5px;font-style:normal;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted)}
+.jn-card input:checked + .jn-card-in .jn-card-amt{color:var(--c-bg)}
+.jn-card input:checked + .jn-card-in .jn-card-n i{color:var(--fj-onbasalt-dim)}
+
+/* "Included" and "Quoted" are words in the price slot, not sums. They should
+   not shout at the size a dollar figure earns. */
+.jn-card--rate[data-word] .jn-card-amt{font-size:15px;letter-spacing:0}
+
 /* The recommendation is marked on the card, not asserted in the prose. */
 .jn-card--row.is-rec .jn-card-in{box-shadow:inset 3px 0 0 var(--c-accent)}
+.jn-card--row.is-rec{position:relative}
+.jn-card--row.is-rec::after{content:"Most journeys";position:absolute;top:-9px;left:18px;
+  background:var(--c-accent);color:var(--c-bg);font-family:var(--fj-mono);
+  font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 8px}
 
 /* The running total. Tabular figures so the sum does not jitter by a pixel
    every time a digit changes under it. */

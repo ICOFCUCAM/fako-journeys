@@ -114,13 +114,19 @@ def drift(src, d):
 # in /journey uses — keeps it operable from the keyboard.
 
 
-def card(name, value, title, line, note="", checked=False, rate=None,
+def card(name, value, title, line, amount="", unit="", checked=False, rate=None,
          once=None, quote=False, mod=""):
     """One choice. The rate travels as data, never as parsed text.
 
     An earlier version totalled the journey by reading the dollars back out of
     the card's own label, which worked until a label said "Included" instead of
     "$0" and the total silently stopped counting that group.
+
+    The amount is set apart from its unit because the generic card meta —
+    .jn-card-n, 9.5px mono — is right for "3-4 days" on the pacing question and
+    wrong here. It made $650 the smallest text on a card whose entire job is to
+    say $650, sitting beside a 26px name. A price that has to be hunted for
+    reads as a price somebody would rather you did not read.
     """
     at = ['type="radio"', 'name="%s"' % esc(name), 'value="%s"' % esc(value)]
     if checked:
@@ -131,13 +137,17 @@ def card(name, value, title, line, note="", checked=False, rate=None,
         at.append('data-once="%d"' % once)
     if quote:
         at.append('data-quote="true"')
+    money_bit = ('<span class="jn-card-n"><b class="jn-card-amt">%s</b>%s</span>'
+                 % (esc(amount), '<i>%s</i>' % esc(unit) if unit else "")) if amount else ""
+    # "Included" and "Quoted" sit in the price slot but are not sums, and set at
+    # the size a dollar figure earns they shout louder than the dollar figures.
+    word = "" if amount.startswith("$") else ' data-word="true"'
     return (
-        '<label class="jn-card jn-card--row%s">'
+        '<label class="jn-card jn-card--row jn-card--rate%s"%s>'
         '<input %s>'
         '<span class="jn-card-in"><b>%s</b>'
-        '<span class="jn-card-line">%s</span>'
-        '<span class="jn-card-n">%s</span></span></label>'
-        % (mod, " ".join(at), esc(title), esc(line), esc(note)))
+        '<span class="jn-card-line">%s</span>%s</span></label>'
+        % (mod, word, " ".join(at), esc(title), esc(line), money_bit))
 
 
 def block_ground(d):
@@ -163,7 +173,7 @@ def block_ground(d):
     out.append('<div class="jn-cards jn-cards--rows" role="group" aria-label="Which journey">')
     for t in d["tiers"]:
         out.append(card("tier", t["id"], t["name"], t["line"],
-                        "%s a day" % money(t["rate"]),
+                        money(t["rate"]), "a day",
                         checked=t["id"] == d["default_tier"], rate=t["rate"],
                         mod=" is-rec" if t.get("recommended") else ""))
     out.append('</div></fieldset>')
@@ -176,13 +186,13 @@ def block_ground(d):
                    % esc(g["name"]))
         for c in g["choices"]:
             if c.get("quote"):
-                note = "Quoted for your destination"
+                amount, unit = "Quoted", "for your destination"
             elif c.get("rate"):
-                note = "%s a day" % money(c["rate"])
+                amount, unit = money(c["rate"]), "a day"
             else:
-                note = "Included"
-            out.append(card(g["id"], c["id"], c["name"], c.get("say", ""), note,
-                            checked=bool(c.get("default")),
+                amount, unit = "Included", ""
+            out.append(card(g["id"], c["id"], c["name"], c.get("say", ""),
+                            amount, unit, checked=bool(c.get("default")),
                             rate=c.get("rate"), quote=bool(c.get("quote"))))
         out.append('</div>')
         if g.get("note"):
