@@ -222,8 +222,9 @@ def sitemap(rows, ctx):
             # leaving them out only meant the operator was unfindable while
             # their enquiry page was listed.
             "/about", "/pricing", "/services",
-            # The wonders, which the homepage sends people to by name.
-            "/wonders"]
+            # The wonders, which the homepage sends people to by name, and
+            # the fork between the two things Afrinkong sells.
+            "/wonders", "/how-it-works"]
     # Trans Afrique, read off its own data so a tenth page lists itself. The
     # series was never in here at all — not even /trans-afrique, the most
     # expensive thing on the site — and splitting one page into nine turned one

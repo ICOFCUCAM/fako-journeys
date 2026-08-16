@@ -812,6 +812,12 @@ def fee_body(d, by_slug):
         '<div class="tf-page tf-page--after">',
         '<section class="tf-block" id="fee">%s'
         '<p class="tf-fine">%s</p></section>' % (money_lists(d), esc(d["fine"])),
+        # The one page on the site that holds both price shapes side by side.
+        # A reader who has just read a five-figure band is exactly the reader
+        # who needs to know that a single country is quoted a different way.
+        next_step("How Afrinkong prices both", "/how-it-works",
+                  "A crossing is quoted whole. Time in one country is quoted "
+                  "per day. Both, side by side, and why they differ."),
         '</div>',
         close_block(d),
     ])
@@ -888,7 +894,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/wonders">The Wonders</a>
     <a href="/atlas">The Atlas</a>
     <a href="/places">Every place</a>
-    <a href="/stories">Stories</a>
+    <a href="/how-it-works">How it works</a>
   </nav>
   <a class="af-btn af-btn--quiet" href="/enquire">Ask about an expedition<i>&rarr;</i></a>
 </header>

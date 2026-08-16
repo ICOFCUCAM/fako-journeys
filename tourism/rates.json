@@ -1,11 +1,8 @@
 {
  "$comment": "The Afrinkong journey, as data. You handle getting to Africa; Afrinkong handles Africa. The customer is not buying a driver — they are buying continuity, private mobility, coordination and somebody who has the ground. Every figure the pricing page prints comes from this file.",
-
  "$model": "Two kinds of charge, never mixed. AFRINKONG SERVICE is what Afrinkong earns — the vehicle, the driver, the coordination, the support. DESTINATION CHARGES are what the parks, the governments and the permit offices charge, passed through at cost: Afrinkong arranges and settles them so a traveller is never standing at a park gate asking what they owe, and they are itemised so nobody can pretend the margin is bigger than it is. Hiding a park fee inside a day rate would be the easy version and the dishonest one.",
-
  "currency": "USD",
  "unit": "per vehicle, per day",
-
  "tiers": [
   {
    "id": "private",
@@ -60,34 +57,89 @@
    ]
   }
  ],
-
- "durations": [3, 5, 7, 10, 14],
+ "durations": [
+  3,
+  5,
+  7,
+  10,
+  14
+ ],
  "default_days": 7,
  "default_tier": "signature",
-
  "service": [
-  {"name": "Airport arrival coordination", "low": 150, "high": 250, "per": "journey"},
-  {"name": "Private vehicle and dedicated driver", "low": 400, "high": 650, "per": "day"},
-  {"name": "Premium 4x4 and driver", "low": 550, "high": 850, "per": "day"},
-  {"name": "Journey companion or host", "low": 150, "high": 250, "per": "day"},
-  {"name": "Security escort", "low": 200, "high": 500, "per": "day", "from": true},
-  {"name": "Overtime beyond the agreed itinerary", "low": 75, "high": 125, "per": "hour"},
-  {"name": "Emergency or after-hours coordination", "low": 100, "high": 200, "per": "instance"}
+  {
+   "name": "Airport arrival coordination",
+   "low": 150,
+   "high": 250,
+   "per": "journey"
+  },
+  {
+   "name": "Private vehicle and dedicated driver",
+   "low": 400,
+   "high": 650,
+   "per": "day"
+  },
+  {
+   "name": "Premium 4x4 and driver",
+   "low": 550,
+   "high": 850,
+   "per": "day"
+  },
+  {
+   "name": "Journey companion or host",
+   "low": 150,
+   "high": 250,
+   "per": "day"
+  },
+  {
+   "name": "Security escort",
+   "low": 200,
+   "high": 500,
+   "per": "day",
+   "from": true
+  },
+  {
+   "name": "Overtime beyond the agreed itinerary",
+   "low": 75,
+   "high": 125,
+   "per": "hour"
+  },
+  {
+   "name": "Emergency or after-hours coordination",
+   "low": 100,
+   "high": 200,
+   "per": "instance"
+  }
  ],
-
- "arrival": {"name": "Airport arrival coordination", "rate": 200, "per": "journey"},
-
+ "arrival": {
+  "name": "Airport arrival coordination",
+  "rate": 200,
+  "per": "journey"
+ },
  "options": [
   {
    "id": "companion",
    "name": "Journey companion",
    "ask": "Would you like someone to travel with you beyond your driver?",
    "choices": [
-    {"id": "none", "name": "No companion", "rate": 0, "default": true},
-    {"id": "cultural", "name": "Cultural companion", "rate": 150,
-     "say": "Travels with you, helps with local interaction, and gives the days context."},
-    {"id": "assistant", "name": "Personal journey assistant", "rate": 250,
-     "say": "A higher level of personal assistance throughout the journey."}
+    {
+     "id": "none",
+     "name": "No companion",
+     "rate": 0,
+     "default": true
+    },
+    {
+     "id": "cultural",
+     "name": "Cultural companion",
+     "rate": 150,
+     "say": "Travels with you, helps with local interaction, and gives the days context."
+    },
+    {
+     "id": "assistant",
+     "name": "Personal journey assistant",
+     "rate": 250,
+     "say": "A higher level of personal assistance throughout the journey."
+    }
    ]
   },
   {
@@ -96,15 +148,26 @@
    "ask": "Do you require additional security for your journey?",
    "$comment": "Deliberately three options and not a single 'police escort' tick. Whether an armed escort is legal, available, or even a good idea differs across fifty-four countries and their police forces. A US company that promises one universally has promised something it cannot deliver in most of them, and the wording below is what can honestly be offered before a destination is known.",
    "choices": [
-    {"id": "none", "name": "No additional security", "rate": 0, "default": true},
-    {"id": "licensed", "name": "Licensed security escort", "rate": 250},
-    {"id": "official", "name": "Government or police escort, where legally available",
-     "quote": true}
+    {
+     "id": "none",
+     "name": "No additional security",
+     "rate": 0,
+     "default": true
+    },
+    {
+     "id": "licensed",
+     "name": "Licensed security escort",
+     "rate": 250
+    },
+    {
+     "id": "official",
+     "name": "Government or police escort, where legally available",
+     "quote": true
+    }
    ],
    "note": "Availability, personnel and pricing are determined by the laws and the security requirements of the destination. Nothing is confirmed until we have confirmed it locally."
   }
  ],
-
  "destination_charges": [
   "National park entrance fees",
   "Conservation fees",
@@ -119,7 +182,6 @@
   "Government-required charges",
   "Accommodation, where you ask us to arrange it"
  ],
-
  "excluded": [
   "International flights",
   "Visas and entry authorisation",
@@ -129,35 +191,80 @@
   "Personal expenses",
   "Tips"
  ],
-
  "food": {
   "yours": "Your meals are yours. Hotel restaurant, roadside, a family table, somewhere expensive — you choose and you pay, and Afrinkong does not become a food company in the middle of your holiday.",
   "ours": "Your driver's meals, accommodation and per diem are ours. You should never be working out whether you are expected to feed the person driving you."
  },
-
  "requirements": [
-  {"id": "passport", "say": "A valid passport",
-   "why": "Most African countries want six months' validity beyond your date of entry."},
-  {"id": "visa", "say": "The visa or entry authorisation for your destination",
-   "why": "Requirements differ by country and by the passport you hold, and several must be applied for before you fly."},
-  {"id": "flight", "say": "A confirmed international flight",
-   "why": "Your journey is built around your arrival and departure, so it cannot be confirmed before they are."},
-  {"id": "insurance", "say": "Travel and medical insurance", "hard": true,
-   "collect": ["Insurance provider", "Policy number", "Emergency assistance number"],
-   "why": "This is the one we will not waive, and we ask for the policy number rather than your word. Medical care abroad is paid at the point of use and an air evacuation runs to tens of thousands of dollars. Afrinkong does not sell insurance and takes nothing from it."},
-  {"id": "contact", "say": "An emergency contact",
-   "why": "One name and one number, held for the length of your journey and used for nothing else."}
+  {
+   "id": "passport",
+   "say": "A valid passport",
+   "why": "Most African countries want six months' validity beyond your date of entry."
+  },
+  {
+   "id": "visa",
+   "say": "The visa or entry authorisation for your destination",
+   "why": "Requirements differ by country and by the passport you hold, and several must be applied for before you fly."
+  },
+  {
+   "id": "flight",
+   "say": "A confirmed international flight",
+   "why": "Your journey is built around your arrival and departure, so it cannot be confirmed before they are."
+  },
+  {
+   "id": "insurance",
+   "say": "Travel and medical insurance",
+   "hard": true,
+   "collect": [
+    "Insurance provider",
+    "Policy number",
+    "Emergency assistance number"
+   ],
+   "why": "This is the one we will not waive, and we ask for the policy number rather than your word. Medical care abroad is paid at the point of use and an air evacuation runs to tens of thousands of dollars. Afrinkong does not sell insurance and takes nothing from it."
+  },
+  {
+   "id": "contact",
+   "say": "An emergency contact",
+   "why": "One name and one number, held for the length of your journey and used for nothing else."
+  }
  ],
-
  "days": [
-  {"n": 1, "where": "Arrival", "say": "Your driver meets you at the airport and takes you to your hotel."},
-  {"n": 2, "where": "The city", "say": "Your driver takes you through the experiences you chose."},
-  {"n": 3, "where": "Wildlife", "say": "Your driver takes you out, and waits to the itinerary. The park fees are already settled."},
-  {"n": 4, "where": "The coast", "say": "Your driver moves with you."},
-  {"n": 5, "where": "Heritage", "say": "Your journey continues, and so does your driver."},
-  {"n": 6, "where": "Adventure", "say": "Your Afrinkong coordinator handles the movement."},
-  {"n": 0, "where": "Departure", "say": "Your driver takes you back for your flight."}
+  {
+   "n": 1,
+   "where": "Arrival",
+   "say": "Your driver meets you at the airport and takes you to your hotel."
+  },
+  {
+   "n": 2,
+   "where": "The city",
+   "say": "Your driver takes you through the experiences you chose."
+  },
+  {
+   "n": 3,
+   "where": "Wildlife",
+   "say": "Your driver takes you out, and waits to the itinerary. The park fees are already settled."
+  },
+  {
+   "n": 4,
+   "where": "The coast",
+   "say": "Your driver moves with you."
+  },
+  {
+   "n": 5,
+   "where": "Heritage",
+   "say": "Your journey continues, and so does your driver."
+  },
+  {
+   "n": 6,
+   "where": "Adventure",
+   "say": "Your Afrinkong coordinator handles the movement."
+  },
+  {
+   "n": 0,
+   "where": "Departure",
+   "say": "Your driver takes you back for your flight."
+  }
  ],
-
- "extension": "Additional days are billed at your journey's daily rate, plus any additional destination, permit or conservation charges they incur. Your driver or coordinator can raise the request on the road; nothing is added until you have approved and paid it."
+ "extension": "Additional days are billed at your journey's daily rate, plus any additional destination, permit or conservation charges they incur. Your driver or coordinator can raise the request on the road; nothing is added until you have approved and paid it.",
+ "$naming": "THE TIER NAMES COLLIDE WITH TRANS AFRIQUE'S AND THIS FILE DOES NOT FIX IT. Afrinkong Private is the ENTRY tier for time in one country; Trans Afrique Private is the TOP tier for a crossing. Signature repeats too. A reader who carries either word across the two ladders will be wrong by an order of magnitude — $450 a day against $25,000 to $50,000 for a journey. /how-it-works sets both ladders side by side and says the names repeat, which makes the trap visible; it does not remove it. Renaming a tier is a brand decision with a price list attached, so it is somebody's call and not a build step."
 }

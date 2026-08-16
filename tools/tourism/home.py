@@ -703,6 +703,7 @@ TEMPLATE = """<!DOCTYPE html>
       <a href="/journey">Build a journey</a>
       <a href="/meet#/%(slug)s">Meet %(name)s</a>
       <a href="/tourism/%(slug)s">All %(count)d</a>
+      <a href="/how-it-works">How it works</a>
     </nav>
     <a class="af-btn af-btn--solid" href="/journey">Build a journey</a>
   </div>

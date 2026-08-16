@@ -266,7 +266,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/meet">Meet Africa</a>
     <a href="/places">Every place</a>
     <a href="/stories">Stories</a>
-    <a href="/compare">Compare</a>
+    <a href="/how-it-works">How it works</a>
   </nav>
   <a class="af-btn af-btn--quiet" href="/enquire">Talk to us<i>&rarr;</i></a>
 </header>

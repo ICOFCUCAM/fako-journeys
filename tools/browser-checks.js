@@ -63,6 +63,9 @@ const PAGES = [
   '/trans-afrique/why.html', '/trans-afrique/crossings.html',
   '/trans-afrique/ways.html', '/trans-afrique/east.html',
   '/places/index.html', '/compare.html', '/meet.html', '/404.html',
+  // The fork between the two things Afrinkong sells. It is the one page a
+  // reader may have open beside a spreadsheet, so it is gated like the rest.
+  '/how-it-works.html',
   '/portrait/kenya.html', '/places/kenya/balloon-over-the-mara.html',
   '/tourism/kenya.html', '/tourism/index.html', '/kenya.html',
   '/cameroon.html', '/contact.html', '/about.html', '/pricing.html',

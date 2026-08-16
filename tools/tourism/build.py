@@ -309,6 +309,13 @@ def cmd_enquire(args):
     return 0
 
 
+def cmd_twoways(args):
+    """The fork: a country priced per day, a crossing priced whole."""
+    from tourism import twoways
+    twoways.run()
+    return 0
+
+
 def cmd_wonders(args):
     """The Wonders of Africa, all of them, by strand."""
     from tourism import wonders
@@ -803,7 +810,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
-    "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique,
+    "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
     "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,

@@ -1,0 +1,117 @@
+/* /how-it-works — the fork between the two things Afrinkong sells.
+ * ---------------------------------------------------------------------------
+ * The site had two tunnels and never named them in one place: a country priced
+ * per vehicle per day, and a crossing priced as a band for the whole journey.
+ * A reader who had seen "$450 a day" on one page and "$15,000 to $30,000" on
+ * another had no way to tell whether those were the same product quoted twice.
+ *
+ * ON THE LIGHT GROUND, ON PURPOSE. Trans Afrique and the Wonders are basalt
+ * because they are meant to be looked at; this page is meant to be read and
+ * checked, and it is the one page on the site somebody may have open beside a
+ * spreadsheet. Ivory, one measure, no photographs.
+ */
+.hw-body{background:var(--c-bg);color:var(--c-primary)}
+.hw-page{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
+
+/* The block is capped where the LEDE reads, and the headline is capped where a
+   headline reads. One measure for both put "Two kinds of journey, priced two
+   different ways." over six lines in a column a third of the page wide. */
+.hw-open{margin-bottom:var(--sp-6)}
+.hw-eyebrow{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--c-accent);margin:0}
+.hw-h1{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(32px,4.4vw,62px);line-height:1;letter-spacing:-.02em;
+  margin:16px 0 0;max-width:19ch}
+.hw-lede{margin-top:22px;font-size:clamp(17px,1.6vw,21px);line-height:1.55;
+  color:var(--c-muted);max-width:52ch}
+
+/* The fork. Two doors, equal weight, each carrying the SHAPE of its price
+   rather than a headline figure — "from $450 per vehicle per day" and "from
+   $6,000 for the whole crossing" answer different questions and the unit is
+   the whole point. */
+.hw-fork{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--sp-4);margin-bottom:var(--sp-7)}
+.hw-door{border-top:3px solid var(--c-accent);padding-top:22px}
+.hw-door-no{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
+  color:var(--c-accent);margin:0}
+.hw-door-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(22px,2.4vw,34px);line-height:1.04;margin:12px 0 0}
+.hw-door-say{margin-top:14px;font-size:16px;line-height:1.55;color:var(--c-muted);
+  max-width:36ch}
+.hw-door-price{margin-top:20px;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(19px,1.9vw,25px)}
+.hw-door-price span{display:block;margin-top:5px;font-family:var(--fj-mono);
+  font-size:9.5px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--c-muted)}
+.hw-door-go{display:inline-flex;align-items:center;min-height:24px;gap:9px;
+  margin-top:20px;font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.hw-door-go:hover{border-bottom-color:var(--c-accent)}
+
+.hw-block{margin-top:var(--sp-6);padding-top:var(--sp-5);border-top:var(--fj-rule)}
+.hw-h2{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(22px,2.4vw,34px);line-height:1.04;margin:0 0 var(--sp-4);
+  max-width:22ch}
+
+/* The two ladders, set identically so the SHAPES can be compared. Different
+   type on each would have made them look like two designs rather than two
+   answers to the same question. */
+.hw-ladders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--sp-4)}
+.hw-ladder{border-top:var(--fj-rule);padding-top:18px}
+.hw-ladder-h{font-family:var(--fj-display);font-weight:700;font-size:19px;
+  text-transform:uppercase;margin:0}
+.hw-unit{margin-top:8px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--c-accent)}
+.hw-steps{margin:18px 0 0}
+.hw-step{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;
+  padding:13px 0;border-bottom:1px solid
+  color-mix(in srgb,var(--c-primary) 11%,transparent)}
+.hw-step dt{font-family:var(--fj-display);font-weight:700;font-size:16px;
+  line-height:1.15}
+.hw-step dd{margin:0;grid-column:2;text-align:right;font-family:var(--fj-display);
+  font-weight:700;font-size:16px;white-space:nowrap}
+.hw-step dd span{display:block;margin-top:5px;font-family:var(--fj-serif,inherit);
+  font-weight:400;font-size:13px;line-height:1.45;color:var(--c-muted);
+  text-align:left;white-space:normal;grid-column:1}
+.hw-note{margin-top:16px;font-size:14px;line-height:1.6;color:var(--c-muted)}
+
+/* The name collision, said in the open. Both ladders have a Private and a
+   Signature at opposite ends of their own ranges, and a reader who carries the
+   word across will be wrong by an order of magnitude. */
+.hw-warn{margin-top:var(--sp-4);padding:18px 20px;font-size:15px;line-height:1.6;
+  border-left:3px solid var(--c-accent);
+  background:color-mix(in srgb,var(--c-accent) 6%,transparent);max-width:76ch}
+
+.hw-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-5)}
+.hw-col-h{font-family:var(--fj-display);font-weight:700;font-size:19px;
+  text-transform:uppercase;margin:0 0 var(--sp-3);padding-bottom:12px;
+  border-bottom:2px solid var(--c-accent)}
+.hw-col-say{margin:var(--sp-3) 0 10px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted)}
+.hw-list{list-style:none;margin:0;padding:0}
+.hw-list li{padding:7px 0 7px 18px;position:relative;font-size:15px;
+  line-height:1.5}
+.hw-list li::before{content:"";position:absolute;left:0;top:15px;width:7px;
+  height:1px;background:var(--c-accent)}
+/* What is NOT covered is marked as absence rather than dressed as a feature. */
+.hw-list.is-not li{color:var(--c-muted)}
+.hw-list.is-not li::before{background:color-mix(in srgb,var(--c-primary) 30%,transparent)}
+
+.hw-end{margin-top:var(--sp-7);padding-top:var(--sp-5);border-top:2px solid var(--c-primary)}
+.hw-end-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(24px,2.8vw,40px);line-height:1.04;margin:0;max-width:20ch}
+.hw-end-say{margin-top:18px;font-size:17px;line-height:1.55;color:var(--c-muted);
+  max-width:52ch}
+.hw-end-acts{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+
+@media(max-width:900px){
+  .hw-fork,.hw-ladders,.hw-cols{grid-template-columns:minmax(0,1fr)}
+  .hw-cols{gap:var(--sp-5)}
+}
+@media(max-width:760px){
+  .hw-page{padding:var(--sp-5) 20px var(--sp-6)}
+  .hw-step{grid-template-columns:minmax(0,1fr)}
+  .hw-step dd{grid-column:1;text-align:left}
+}
