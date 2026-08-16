@@ -167,6 +167,86 @@ def _spell(n):
 SHOW_CITIES = 8
 
 
+
+# Label placement, in viewBox units, calibrated against a real getBBox rather
+# than assumed: ADDIS ABABA measures 161.5 x 22.7 units, which is 14.69 per
+# character across eleven of them. The width formula was already right; the
+# height was set to 15 by eye and is two thirds of the truth, which is why the
+# first pass left ACCRA and ABIDJAN overlapping by two pixels vertically —
+# their boxes were shorter than their type.
+LAB_CH = 21 * 0.6 + 21 * 0.1     # 14.7, and the measurement agrees
+LAB_H = 22.7
+LAB_PAD = 8.0                    # about 4px at the size this renders
+
+# The four places a label can go, in the order an atlas would try them: east of
+# the dot first because that is where the eye expects it, then west, then above
+# and below on the dot's own vertical.
+LAB_SIDES = (
+    ("east",  11.0, 4.0, "start"),
+    ("west", -11.0, 4.0, "end"),
+    ("north",  0.0, -13.0, "middle"),
+    ("south",  0.0, 19.0, "middle"),
+)
+
+
+def _lab_box(x, y, name, dx, dy, anchor):
+    w = LAB_CH * len(name)
+    left = x + dx
+    if anchor == "end":
+        left -= w
+    elif anchor == "middle":
+        left -= w / 2.0
+    top = y + dy - LAB_H
+    return (left, top, left + w, top + LAB_H)
+
+
+def _overlap_area(a, b, pad=LAB_PAD):
+    """How much two label boxes fight over, padded. 0 means they do not."""
+    w = min(a[2] + pad, b[2] + pad) - max(a[0] - pad, b[0] - pad)
+    h = min(a[3] + pad, b[3] + pad) - max(a[1] - pad, b[1] - pad)
+    return w * h if w > 0 and h > 0 else 0.0
+
+
+def place_labels(cities, named):
+    """Which side of its dot each label sits on, so that none of them collide.
+
+    Every label used to be written at x + 11 — always east, no exceptions —
+    which is fine until two cities are close. Measured on the built page at
+    three widths, five pairs overlapped every time: ACCRA over ABIDJAN by
+    29x11px, DOUALA over YAOUNDE by 35x12, and LAGOS across both of the first
+    two. A map whose labels sit on top of each other is decoration; resolving
+    them is most of what makes it an instrument.
+
+    Greedy, in importance order — the cities with a photograph are placed first
+    and keep the east side they were designed around, and the rest take the
+    first free side. Deterministic, so the same dataset always draws the same
+    map.
+    """
+    order = sorted(cities, key=lambda c: (c["slug"] not in named, c["slug"]))
+    taken, out = [], {}
+    for c in order:
+        name = c["name"].upper()
+        best = None
+        for i, (side, dx, dy, anchor) in enumerate(LAB_SIDES):
+            box = _lab_box(c["x"], c["y"], name, dx, dy, anchor)
+            cost = sum(_overlap_area(box, t) for t in taken)
+            # Ties go to the earlier side, so east stays the default where it
+            # is free and the order of preference still means something.
+            if best is None or cost < best[0]:
+                best = (cost, i, box, dx, dy, anchor, side)
+            if cost == 0:
+                break
+        # Least overlap, not first-free. The West African cluster — Abidjan,
+        # Accra, Lagos within a few degrees of each other — can exhaust all
+        # four sides, and an earlier version treated that as failure and put
+        # every one of them back on the east side it was trying to escape.
+        # Minimising leaves the crowded ones only as bad as they have to be.
+        _, _, box, dx, dy, anchor, side = best
+        taken.append(box)
+        out[c["slug"]] = (dx, dy, anchor, side)
+    return out
+
+
 def shown(cities, countries):
     """The eight the homepage shows, out of however many the collection holds.
 
@@ -950,6 +1030,7 @@ def block_mapover(countries):
     named = {c["slug"] for c in load_cities() if c.get("photo")}
     urls = dict((x.slug, x.url) for x in countries)
     out.append('<g class="wa-map-cities">')
+    sides = place_labels(d["cities"], named)
     for c in d["cities"]:
         lead = ' data-lead="true"' if c["slug"] in named else ''
         # A point that cannot be pressed is decoration. These are places with a
@@ -957,13 +1038,16 @@ def block_mapover(countries):
         # order and gives a screen reader something to announce.
         out.append('<a class="wa-map-city" href="%s"%s data-slug="%s">'
                    % (esc(urls.get(c["country"], "/places")), lead, esc(c["slug"])))
+        dx, dy, anchor, side = sides[c["slug"]]
         out.append('<g class="wa-map-city-in" data-slug="%s">'
                    '<circle class="wa-map-city-dot" cx="%.1f" cy="%.1f" r="3.4"/>'
                    '<circle class="wa-map-city-ring" cx="%.1f" cy="%.1f" r="7"/>'
-                   '<text class="wa-map-city-say" x="%.1f" y="%.1f">%s</text>'
+                   '<text class="wa-map-city-say" x="%.1f" y="%.1f"'
+                   ' text-anchor="%s" data-side="%s">%s</text>'
                    '<title>%s</title></g>'
                    % (esc(c["slug"]), c["x"], c["y"], c["x"], c["y"],
-                      c["x"] + 11, c["y"] + 4, esc(c["name"].upper()), esc(c["name"])))
+                      c["x"] + dx, c["y"] + dy, anchor, side,
+                      esc(c["name"].upper()), esc(c["name"])))
         out.append('</a>')
     out.append('</g>')
 
