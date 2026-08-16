@@ -9,14 +9,41 @@
  "say": "From the Atlantic to the Indian Ocean. From rainforest to savanna. From ancient kingdoms to modern cities. Cross Africa one country at a time, by road, through the places that cannot be understood from an airport window.",
  "stamp": "The Afrinkong journey series",
  "act": "Explore the journeys",
- "$hero": "The opening spread. Full-bleed photograph on the site's fixed-window architecture — position:fixed picture, clip-path:inset(0) band — so the road stands still while the title travels over it. Nothing between the band and the picture may carry transform, filter, backdrop-filter, perspective, will-change or contain; any one of them demotes the fixed to absolute and the effect dies silently. docs/window-band.md is the full account.\n\nThe photograph is the same journey the homepage door opens on, one beat later: the same loaded vehicle, now going, on a road that leaves the frame. It is deliberately not the door's own frame — repeating it would say the journey had not started.",
+ "$hero": "The opening spread, and it is four photographs rather than one.\n\nA single frame can only argue one kind of crossing. Four argue the claim the headline makes: a loaded vehicle on a red road, a convoy on tarmac with people walking beside it, an elephant crossing in front of that convoy, and a camel caravan in the Horn. Same idea, four Africas — which is what 'many countries' has to look like if it is not going to be a phrase.\n\nIt rides the site's fixed-window architecture: position:fixed picture, clip-path:inset(0) band, so the photographs stand still while the title travels over them. Nothing between the band and the picture may carry transform, filter, backdrop-filter, perspective, will-change or contain — each demotes the fixed to absolute and the effect dies with no error. The cross-fade is opacity ONLY, which makes a stacking context and not a containing block, so it is the one animation this element can safely have. docs/window-band.md is the full account.\n\nEvery slide is in the DOM, so with scripting off or animation refused the reader still gets the first frame and every alt text.",
  "hero": {
   "image": "/images/uploads/site-services-laterite-road-1600w.jpg",
   "width": 1600,
   "height": 1067,
   "alt": "A loaded four-wheel drive with a roof box driving away on a red laterite road, dust rising behind it, the road running on over green hills towards a line of higher country on the horizon",
   "act": "Explore the crossings",
-  "mark": "Trans Afrique"
+  "mark": "Trans Afrique",
+  "sub": "One continent. Many countries. One extraordinary journey.",
+  "slides": [
+   {
+    "image": "/images/uploads/site-services-laterite-road-1600w.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "A loaded four-wheel drive with a roof box driving away on a red laterite road, dust rising behind it, the road running on over green hills"
+   },
+   {
+    "image": "/images/uploads/cross-convoy-on-the-road-1600w.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "A convoy of expedition vehicles on a tarmac road at dusk, seen from inside one of them, with people walking along the verge under acacias"
+   },
+   {
+    "image": "/images/uploads/cross-elephant-and-convoy-1600w.jpg",
+    "width": 1600,
+    "height": 1067,
+    "alt": "An elephant crossing a dirt track in front of a line of stopped safari vehicles in dry savanna"
+   },
+   {
+    "image": "/images/uploads/cross-camel-caravan-1600w.jpg",
+    "width": 1600,
+    "height": 967,
+    "alt": "Four laden camels roped nose to tail crossing pale sand below a rock ridge, one man riding and one walking behind"
+   }
+  ]
  },
  "$door": "The homepage band, and it is a title sequence rather than a paragraph. The old version told a morning in the second person and ended on a button; it was warm, and it made the reader work out for themselves what was being sold. This states the proposition first and names the product afterwards, which is the order a film uses — cold open, then title card. The eyebrow says 'series' and not 'Trans Afrique' precisely so that the name still has somewhere to land.\n\nThe copy lives here rather than in index.html because the door and the page are one product and were drifting apart: the band said one thing about a crossing and /trans-afrique said another, and nothing made them agree. The three facts are not written here at all — they are derived from the levels and the routes, so a new crossing or a changed length cannot leave a stale number on the homepage.",
  "door": {
@@ -31,10 +58,9 @@
   "title": "The idea",
   "line": "Africa is too large to be a destination.",
   "say": [
-   "Dakar to Mombasa is further than Lisbon to Kabul, and there are fifty-four countries in between. A week in one of them is a week in one of them — which is the right journey for most people most of the time, and it is what the rest of this site is for.",
-   "A crossing is the other answer. You travel by road, you wake up in a different country most weeks, and the continent changes slowly enough to watch it happen: the landscape first, then the language, then what is for sale at the roadside, then what is for dinner. Nobody assembles that from home. Borders keep their own hours, permits are booked in months rather than days, and the part that decides whether a month works is having somebody whose job is the phone call at the frontier post on a Sunday."
+   "Dakar to Mombasa is further than Lisbon to Kabul, and there are fifty-four countries in between. A week in one of them is a week in one of them — which is the right journey for most people most of the time, and it is what the rest of this site is for."
   ],
-  "pull": "You don’t visit Africa. You move through it."
+  "tail": "Nobody assembles that from home. Borders keep their own hours, permits are booked in months rather than days, and the part that decides whether a month works is having somebody whose job is the phone call at the frontier post on a Sunday."
  },
  "$levels": "Three ways to travel the same continent, and the difference is who designed the route. Private is yours; Signature is ours and you pick the dates; Expedition is a fixed departure with a fixed number of seats, which is the only one of the three where scarcity is a fact rather than a technique.",
  "levels": [
@@ -259,7 +285,11 @@
   "title": "When the route demands more",
   "say": "On selected crossings a medical professional accompanies the expedition. The level of support is set by the itinerary, the group size, the route and the conditions — and it is confirmed for your crossing before you book.",
   "but": "It is expedition support in addition to travel and medical insurance and to local emergency services, never in place of either. Every traveller carries their own cover, and that requirement does not change because a doctor is on the crossing.",
-  "stamp": "Confirmed before booking &middot; never assumed"
+  "stamp": "Confirmed before booking &middot; never assumed",
+  "image": "/images/uploads/cross-vehicles-on-the-pan-1200w.jpg",
+  "width": 1200,
+  "height": 2133,
+  "alt": "Eight expedition vehicles drawn up together on an open pan, people standing between them, an empty plain running to the horizon behind"
  },
  "$close": "The page used to end like an article — a sentence and a link. An expedition company ends with a way in, and with two of them because the two audiences are genuinely different: somebody who wants a crossing designed around them, and somebody who wants to be told which of ours fits. One button for each, and neither of them is a checkout.",
  "close": {
@@ -276,9 +306,24 @@
     "href": "/enquire"
    }
   ],
-  "stamp": "Private &middot; Signature &middot; Expedition"
+  "stamp": "Private &middot; Signature &middot; Expedition",
+  "image": "/images/uploads/cross-leaning-out-1600w.jpg",
+  "width": 1600,
+  "height": 1065,
+  "alt": "A woman leaning out of a moving vehicle's window smiling at the camera, dry hills and grassland running away behind her",
+  "line": "Where do you want Africa to take you?"
  },
  "map_title": "Four ways across a continent.",
  "$map": "Its own section, and the page's signature. Each crossing takes a colour and its own line; East and South are drawn over the Continental spine they are segments of, narrower and on top, so the overlap reads as what it is rather than as a collision. The legend names every country, which is the question the map raises and a legend of counts would leave unanswered.",
- "$short": "The one-word name each crossing goes by in the homepage door's row of four. Derived string surgery on the full name gave 'The Continental Expedition', which is twice the width of its three neighbours and unbalances a row that exists to be scanned. Written down rather than computed, because it is an editorial decision about what a crossing is called when there is room for one word."
+ "$short": "The one-word name each crossing goes by in the homepage door's row of four. Derived string surgery on the full name gave 'The Continental Expedition', which is twice the width of its three neighbours and unbalances a row that exists to be scanned. Written down rather than computed, because it is an editorial decision about what a crossing is called when there is room for one word.",
+ "$photography": "Uploads, resized to 1600w and 800w and renamed for what is in the frame, which is the standing rule of images/uploads. The originals are 2 to 3.5 MB each and several are 5,000 pixels wide; a hero that ships four of those is a hero nobody on a phone ever sees.",
+ "$philosophy": "The turn, lifted out of the idea section and put on a photograph. It was a pull quote between two paragraphs, which is the right place for a sentence and the wrong place for the page's thesis. On a road with people walking beside it, 'you move through it' stops being a phrase and becomes a description of the frame.",
+ "philosophy": {
+  "pull": "You don’t visit Africa. You move through it.",
+  "say": "A crossing is the other answer. You travel by road, you wake up in a different country most weeks, and the continent changes slowly enough to watch it happen: the landscape first, then the language, then what is for sale at the roadside, then what is for dinner.",
+  "image": "/images/uploads/cross-convoy-on-the-road-1600w.jpg",
+  "width": 1600,
+  "height": 1067,
+  "alt": "A convoy of expedition vehicles on a tarmac road at dusk, seen from inside one of them, with a family walking along the verge under acacia trees"
+ }
 }

@@ -177,52 +177,68 @@ def medical_note(d):
     """
     m = d["medical"]
     return ('<aside class="tf-med">'
+            '<div class="tf-med-pic"><img src="%s" width="%d" height="%d" alt="%s" '
+            'loading="lazy" decoding="async" data-provider="upload"></div>'
+            '<div class="tf-med-in">'
             '<p class="tf-med-h">%s</p>'
             '<p class="tf-med-say">%s</p>'
             '<p class="tf-med-but">%s</p>'
-            '<p class="tf-med-stamp">%s</p></aside>'
-            % (esc(m["title"]), esc(m["say"]), esc(m["but"]), m["stamp"]))
+            '<p class="tf-med-stamp">%s</p></div></aside>'
+            % (esc(m["image"]), m["width"], m["height"], esc(m["alt"]),
+               esc(m["title"]), esc(m["say"]), esc(m["but"]), m["stamp"]))
 
 
 def hero(d, by_slug):
-    """The opening spread, on the site's fixed-window architecture.
+    """The opening spread: four photographs on the fixed-window architecture.
 
-    Full-bleed photograph at position:fixed inside a band with
-    clip-path:inset(0), so the road stands still while the title travels over
-    it. NOTHING between .tf-band and .tf-band-pic may carry transform, filter,
-    backdrop-filter, perspective, will-change or contain — each makes an element
-    a containing block for fixed descendants, demotes that fixed to absolute,
-    and kills the effect with no error and nothing visibly broken.
-    docs/window-band.md is the full account and browser-checks.js asserts it.
+    ONE FRAME CANNOT ARGUE THIS HEADLINE. "Don't just cross Africa" needs more
+    than one kind of crossing behind it, so there are four: a loaded vehicle on
+    a red road, a convoy on tarmac with people walking beside it, an elephant
+    crossing in front of that convoy, and a camel caravan in the Horn. Same
+    idea, four Africas — which is what "many countries" has to look like if it
+    is not going to stay a phrase.
 
-    The picture is the same journey the homepage door opens on, one beat later:
-    the same loaded vehicle, now going, on a road that leaves the frame.
+    THE MECHANISM IS THE BAND AND MUST NOT BREAK. The picture sits at
+    position:fixed inside a band with clip-path:inset(0), so the photographs
+    stand still while the title travels over them. Nothing between the band and
+    the picture may carry transform, filter, backdrop-filter, perspective,
+    will-change or contain — each makes an element a containing block for fixed
+    descendants and ends the effect with no error raised.
 
-    The type is a title card and not a summary. Name, series, proposition, the
-    whole road as a chain, one restrained way in. No prices, no lengths, no
-    team — every one of those has a section of its own below.
+    Which is why the cross-fade is opacity and nothing else. Opacity creates a
+    stacking context, not a containing block, so it is the one animation this
+    element can safely have; a fade written with transform would have looked
+    identical in a browser and silently killed the fixed picture.
+
+    Every slide is in the DOM. With scripting off, or animation refused, the
+    reader still gets the first frame and every alt text.
     """
     h = d["hero"]
+    slides = h.get("slides") or [h]
+    pics = "".join(
+        '<img src="%s" width="%d" height="%d" alt="%s" style="--i:%d" '
+        '%s decoding="async" data-provider="upload">'
+        % (esc(s_["image"]), s_["width"], s_["height"], esc(s_["alt"]), i,
+           'fetchpriority="high"' if i == 0 else 'loading="lazy"')
+        for i, s_ in enumerate(slides))
     great = next((r for r in d["routes"] if r.get("great")), d["routes"][0])
     chain = "".join('<span>%s</span>' % esc(by_slug[s_].name)
                     for s_ in great["countries"] if s_ in by_slug)
     return (
-        '<section class="tf-band">'
-        '<div class="tf-band-pic">'
-        '<img src="%s" width="%d" height="%d" alt="%s" '
-        'fetchpriority="high" decoding="async" data-provider="upload">'
+        '<section class="tf-band" data-slides="%d">'
+        '<div class="tf-band-pic">%s'
         '<span class="tf-band-tint" aria-hidden="true"></span>'
         '</div>'
         '<div class="tf-band-copy"><div class="tf-band-in">'
         '<p class="tf-band-mark">%s</p>'
         '<p class="tf-band-series">%s</p>'
         '<h1 class="tf-h1">%s</h1>'
+        '<p class="tf-band-sub">%s</p>'
         '<p class="tf-band-chain">%s</p>'
         '<a class="af-btn tf-band-go" href="#crossings">%s<i>&rarr;</i></a>'
         '</div></div></section>'
-        % (esc(h["image"]), h["width"], h["height"], esc(h["alt"]),
-           esc(h["mark"]), esc(d["stamp"]), esc(d["line"]), chain,
-           esc(h["act"])))
+        % (len(slides), pics, esc(h["mark"]), esc(d["stamp"]), esc(d["line"]),
+           esc(h.get("sub") or d["sub"]), chain, esc(h["act"])))
 
 
 def idea_block(d):
@@ -234,122 +250,41 @@ def idea_block(d):
     only argument that actually lands, rather than in adjectives.
     """
     i = d["idea"]
-    # The pull quote lands between the two paragraphs rather than after them.
-    # After, it is a conclusion nobody needed; between, it is the turn — the
-    # first paragraph says a week in one country is a week in one country, the
-    # quote says what the alternative actually is, and the second paragraph
-    # then has something to explain.
-    says = ['<p class="tf-idea-say">%s</p>' % esc(t) for t in i["say"]]
-    pull = '<p class="tf-idea-pull">%s</p>' % esc(i["pull"])
-    body = says[0] + pull + "".join(says[1:]) if says else pull
+    says = "".join('<p class="tf-idea-say">%s</p>' % esc(t) for t in i["say"])
+    tail = '<p class="tf-idea-say tf-idea-tail">%s</p>' % esc(i["tail"])
     return ('<section class="tf-block tf-idea" id="idea">'
             '<h2 class="tf-h2">%s</h2>'
             '<div class="tf-idea-in"><p class="tf-idea-line">%s</p>'
-            '<div class="tf-idea-body">%s</div></div></section>'
-            % (esc(i["title"]), esc(i["line"]), body))
+            '<div class="tf-idea-body">%s%s</div></div></section>'
+            % (esc(i["title"]), esc(i["line"]), says, tail))
 
 
-def _spread(levels):
-    """The shortest and longest a crossing runs, read off the levels.
+def philosophy_band(d):
+    """The thesis, on a photograph, between the idea and the machinery.
 
-    Typed on the homepage as "14 to 60+ days" it would be a number in a second
-    place, and the ground journey has already taught this file what that costs:
-    a hero plate said $350 while the tier beside it said $650 for a fortnight,
-    because somebody changed one and not the other. So the range is read from
-    the same `days` strings the level cards print — "30 to 60+", "14 to 25",
-    "34" — and a new level or a changed length moves the homepage with it.
+    "You don't visit Africa. You move through it." was a pull quote wedged
+    between two paragraphs. That is the right place for a good sentence and the
+    wrong place for the page's thesis — a reader scanning goes straight past it.
+
+    On a road with a convoy on it and a family walking the verge, the sentence
+    stops being a phrase and becomes a description of the frame. Which is also
+    the rule this site keeps: the copy is written to the photograph, and this
+    one earns its line rather than decorating it.
+
+    Not the fixed-window band. That belongs to the opening spread; a second
+    fixed picture two screens later turns a technique into a tic.
     """
-    lows, highs, plus = [], [], False
-    for v in levels:
-        nums = [int(n) for n in re.findall(r"\d+", str(v.get("days") or ""))]
-        if not nums:
-            continue
-        lows.append(nums[0])
-        highs.append(nums[-1])
-        if str(v.get("days") or "").rstrip().endswith("+"):
-            plus = True
-    if not lows:
-        return ""
-    return "%d to %d%s days" % (min(lows), max(highs), "+" if plus else "")
-
-
-def door_meta(d):
-    """Shape without price, in one line.
-
-    It was three chips in a grid, each with a line icon. Two things were wrong
-    with that. The icons were decoration on a door that has a photograph doing
-    the emotional work already — and the middle chip said "15 countries, 4
-    crossings" directly above a row that names all four crossings and counts
-    every one of them, which is the same fact printed twice and the taller of
-    the two ways to print it.
-
-    Derived, never typed: length off the levels, the tiers off the level names.
-    The ground journey once shipped a $350 hero plate beside a $650 tier
-    because one figure lived in two places and only one was updated.
-    """
-    tiers = " &middot; ".join(
-        esc(v["name"].replace("Trans Afrique", "").strip()) for v in d["levels"])
-    return ('<p class="wa-door-meta"><b>%s</b><i aria-hidden="true"></i><b>%s</b></p>'
-            % (esc(_spread(d["levels"])), tiers))
-
-
-def door_index(d):
-    """The four crossings, by name, on the door.
-
-    This is what the homepage's Trans Afrique section used to carry — four
-    cards with country chains, strand lists, a line of description each and a
-    floor price — and the section is gone. Nothing was lost that a door should
-    have been saying: the cards explained a product the reader had not yet
-    decided they wanted, on a homepage, three screens after being handed a
-    photograph. What survives is the only part of it a door can use, which is
-    the answer to *where does it go*: four names and how many countries each.
-
-    They are links, so the door is a way into any one of them rather than a
-    list of things that exist. One word each, from the file rather than sliced
-    off the full name: the cards on /trans-afrique say "Trans Afrique — East",
-    and repeating that prefix four times in one row is the brand shouting its
-    own name at itself, while slicing gave "The Continental Expedition" — twice
-    the width of its three neighbours in a row built to be scanned.
-    """
-    rows = []
-    for r in d["routes"]:
-        short = r.get("short") or r["name"].split("\u2014")[-1].strip()
-        rows.append('<a href="/trans-afrique#crossings"><b>%s</b><i>%d</i></a>'
-                    % (esc(short), len(r.get("countries") or [])))
-    return ('<p class="wa-door-cross"><span>The crossings</span>%s</p>'
-            % "".join(rows))
-
-
-def block_door(countries):
-    """The homepage band's copy: a title sequence, not a paragraph.
-
-    Order is film grammar. The proposition opens cold — "Cross Africa. Don't
-    just visit it." — then a line that is pure invitation, then the name, then
-    what it is, then its shape, then where it goes. The eyebrow says "series"
-    and not "Trans Afrique" so that the title card still has somewhere to land.
-
-    It also carries what the homepage's Trans Afrique section used to say. That
-    section is deleted: four cards explaining a crossing, three screens into a
-    homepage, to somebody who had not decided they wanted one. The row of four
-    crossings at the foot of this block is the only part of it a door can use.
-
-    What it still does NOT do is explain. No support domains, no bands, no
-    lengths per crossing. The page is one click away and carries all of it.
-    """
-    d = load()
-    dr = d["door"]
-    return (
-        '<p class="wa-seam-stamp">%s</p>\n'
-        '      <h2>%s</h2>\n'
-        '      <span class="wa-seam-hr" aria-hidden="true"></span>\n'
-        '      <p class="wa-seam-say">%s</p>\n'
-        '      <p class="wa-door-mark">Trans Afrique</p>\n'
-        '      <p class="wa-door-sub">%s</p>\n'
-        '      %s\n'
-        '      %s\n'
-        '      <a class="wa-seam-go" href="/trans-afrique">%s &rarr;</a>'
-        % (esc(dr["eyebrow"]), esc(dr["line"]), esc(dr["lede"]),
-           esc(dr["sub"]), door_meta(d), door_index(d), esc(dr["act"])))
+    ph = d["philosophy"]
+    return ('<section class="tf-phil" id="philosophy">'
+            '<img class="tf-phil-pic" src="%s" width="%d" height="%d" alt="%s" '
+            'loading="lazy" decoding="async" data-provider="upload">'
+            '<span class="tf-phil-tint" aria-hidden="true"></span>'
+            '<div class="tf-phil-in">'
+            '<p class="tf-phil-pull">%s</p>'
+            '<p class="tf-phil-say">%s</p>'
+            '</div></section>'
+            % (esc(ph["image"]), ph["width"], ph["height"], esc(ph["alt"]),
+               esc(ph["pull"]), esc(ph["say"])))
 
 
 def great_block(d, by_slug):
@@ -402,84 +337,18 @@ def close_block(d):
            esc(a_["href"]), esc(a_["label"]))
         for a_ in c["acts"])
     return ('<section class="tf-close" id="begin">'
+            '<img class="tf-close-pic" src="%s" width="%d" height="%d" alt="%s" '
+            'loading="lazy" decoding="async" data-provider="upload">'
+            '<span class="tf-close-tint" aria-hidden="true"></span>'
             '<div class="tf-close-in">'
+            '<p class="tf-close-eyebrow">%s</p>'
             '<h2 class="tf-close-h">%s</h2>'
             '<p class="tf-close-say">%s</p>'
             '<div class="tf-close-acts">%s</div>'
             '<p class="tf-close-stamp">%s</p>'
             '</div></section>'
-            % (esc(c["title"]), esc(c["say"]), acts, c["stamp"]))
-
-
-def money_lists(d):
-    def ul(key, title, cls=""):
-        return ('<div class="tf-money-col%s"><h3 class="tf-money-h">%s</h3>'
-                '<ul class="tf-money-list">%s</ul></div>'
-                % (cls, esc(title),
-                   "".join("<li>%s</li>" % esc(x) for x in d[key])))
-    return ('<div class="tf-money">%s%s%s</div>'
-            % (ul("included", "In the journey fee"),
-               ul("arranged", "Arranged by us, at cost"),
-               ul("excluded", "Yours", " is-not")))
-
-
-def great_block(d, by_slug):
-    """The flagship, and it does not share a hierarchy with the other three.
-
-    East, West and South are three crossings. The Continental Expedition is the
-    reason the other three exist — nine countries, two oceans, one road — and
-    setting it as a fourth card in the same grid said it was one of four
-    options. It is the option the other three are portions of, which is a
-    different kind of thing and gets a different kind of block: full width, the
-    name at the scale of a section heading, the chain running the whole measure,
-    and the facts as a row rather than a column.
-    """
-    r = next((x for x in d["routes"] if x.get("great")), None)
-    if not r:
-        return ""
-    strands = " &middot; ".join(esc(x) for x in (r.get("strands") or []))
-    return (
-        '<section class="tf-great" id="continental">'
-        '<p class="tf-great-eyebrow">%s</p>'
-        '<h2 class="tf-great-name">%s</h2>'
-        '<p class="tf-great-strands">%s</p>'
-        '<p class="tf-great-where">%s</p>'
-        '<p class="tf-great-say">%s</p>'
-        '<dl class="tf-great-facts">'
-        '<div><dt>Shape</dt><dd>%s</dd></div>'
-        '<div><dt>Length</dt><dd>%s days</dd></div>'
-        '<div><dt>Journey fee</dt><dd>%s</dd></div>'
-        '</dl>'
-        '<p class="tf-great-close">One continent. One expedition.</p>'
-        '</section>'
-        % (esc(d["name"]), esc(r["name"].split("&mdash;")[-1].replace("Trans Afrique — ", "")),
-           strands, chain(r, by_slug), esc(r["say"]),
-           esc(r["shape"]), esc(r["days"]), band(r)))
-
-
-def close_block(d):
-    """A way in, not a checkout.
-
-    The page used to end like an article — one sentence and one link. Two
-    buttons, because the two audiences are genuinely different: somebody who
-    wants a crossing built around them, and somebody who wants to be told which
-    of ours fits. Neither of them is Buy Now, which would be the wrong verb for
-    a five-figure month that is quoted in writing before anything is held.
-    """
-    c = d["close"]
-    acts = "".join(
-        '<a class="af-btn %s" href="%s">%s<i>&rarr;</i></a>'
-        % ("tf-close-go" if a_.get("solid") else "tf-close-alt",
-           esc(a_["href"]), esc(a_["label"]))
-        for a_ in c["acts"])
-    return ('<section class="tf-close" id="begin">'
-            '<div class="tf-close-in">'
-            '<h2 class="tf-close-h">%s</h2>'
-            '<p class="tf-close-say">%s</p>'
-            '<div class="tf-close-acts">%s</div>'
-            '<p class="tf-close-stamp">%s</p>'
-            '</div></section>'
-            % (esc(c["title"]), esc(c["say"]), acts, c["stamp"]))
+            % (esc(c["image"]), c["width"], c["height"], esc(c["alt"]),
+               esc(c["title"]), esc(c["line"]), esc(c["say"]), acts, c["stamp"]))
 
 
 def money_lists(d):
@@ -536,6 +405,7 @@ def run(countries, log=print):
         "events": plate.events_block(),
         "hero": hero(d, by_slug),
         "idea": idea_block(d),
+        "philosophy": philosophy_band(d),
         "levels": "\n".join(level_card(v, i)
                              for i, v in enumerate(d["levels"], 1)),
         "routes": "\n".join(route_card(r, by_slug)
@@ -607,7 +477,11 @@ TEMPLATE = """<!DOCTYPE html>
 
 <div class="tf-page">
 %(idea)s
+</div>
 
+%(philosophy)s
+
+<div class="tf-page tf-page--after">
   <section class="tf-block" id="team">
     <h2 class="tf-h2">%(support_title)s</h2>
     <p class="tf-motto">%(motto)s</p>
