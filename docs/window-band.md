@@ -1,7 +1,7 @@
 # The window band
 
-*How the "Imagine tomorrow morning" section is built, and why every part of it is
-the way it is. Written so it can be rebuilt from scratch by somebody who has
+*How the Trans Afrique door on the homepage is built, and why every part of it
+is the way it is. Written so it can be rebuilt from scratch by somebody who has
 never seen this repository.*
 
 The band is the section where a photograph appears to stand still while the words
@@ -20,37 +20,33 @@ grid of type. That grid is good at breadth and bad at conviction — a reader wh
 has never been can pick the word "wildlife" off a card without any picture in
 their head of what the word costs them to get to.
 
-The band answers the same question **once, concretely, in the second person**:
+The band answers it once, at full scale, with a proposition:
 
-> You wake before it is light. No alarm, no traffic, no office — just voices
-> outside and somebody loading the vehicle. You step out into air cold enough to
-> see, and the grass is still wet through.
+> **Cross Africa. Don't just visit it.**
+>
+> Some journeys are measured in countries. Others are measured in everything
+> that happens between them.
 
-Second person, present tense, one morning. Not "our safaris begin early."
-
-### And it is the door into one product, not a general mood
+### It is the door into one product, not a general mood
 
 The band used to end on "a whole day in front of you" with a button to the
 journey tunnel — the same invitation every other section on the homepage makes.
 The strongest picture on the site was spending itself on a link an eight-card
-grid already provides.
+grid already provides. It now opens the one thing nothing else on the page can
+introduce.
 
-It is now the first morning of a **Trans Afrique** crossing: same photograph,
-same effect, different meaning. *A beautiful African morning* became *the first
-morning of a continental journey*, which is a difference in what the reader is
-being asked to want.
+It went through a narrative draft first — *Imagine tomorrow morning*, a
+paragraph in the second person about waking before light. That version was
+warmer and it is worth knowing why it was replaced: it made the reader work out
+for themselves what was being sold. A door into the most expensive thing the
+company offers should state the proposition; the page behind it has room to
+seduce at length.
 
-Two facts happen to be literally inside this frame, and both of them are the
-product:
-
-- the grass is in Kenya and the mountain on its horizon is in Tanzania, so **the
-  border is in the picture** — which is why the section can carry
-  `Kenya → Tanzania` as a caption rather than a claim;
-- the roof is loaded — a box and a bag strapped over the rack — so *"the roof is
-  loaded for longer than a day"* is a description.
-
-The copy rule did not bend to accommodate a new product. The frame already held
-it.
+**The photograph is still the argument.** The grass in this frame is in Kenya
+and the mountain on its horizon is in Tanzania, so the border the whole product
+is about is already inside the picture — which is why the chain of countries
+under the lede is a caption rather than a claim. The roof is loaded, so this is
+a vehicle packed for weeks.
 
 ### The band is a door, not a summary
 
@@ -64,14 +60,14 @@ So the split is:
 
 | | says |
 |---|---|
-| **The band** | *Imagine tomorrow morning.* → **Enter Trans Afrique** |
+| **The band** | *Cross Africa. Don't just visit it.* → **Discover Trans Afrique** |
 | **Homepage §07** | where it goes — four names, four country chains, one floor price → **See how a crossing works** |
 | **`/trans-afrique`** | levels, lengths, bands, the six support domains, the medical note, what the fee is and is not |
 
 Each step answers exactly one more question than the last. Nothing on the
 homepage explains the expedition; the reader who wants that arrives at the page
 by choosing to. Two doors to the same place must never use the same verb —
-"Enter" and "See how it works" are different offers, "Explore" twice is one
+"Discover" and "See how it works" are different offers, "Explore" twice is one
 offer printed twice.
 
 ### The rule that makes the copy work
@@ -284,34 +280,39 @@ thumb-flicks, which stops reading as a moment and starts reading as a stall.
                  padding-bottom: 6px; }
 ```
 
-Six elements, in this order, and no more: **stamp → route → headline → rule →
-paragraph → kicker → link.** The stamp (`Trans Afrique · before six, engine
-already running`) does the work of a caption without being one — it names the
-product and the hour before the headline asks the reader to imagine it. The
-route line under it (`Kenya → Tanzania`) is the same mono size at wider tracking
-rather than a smaller subtitle: it is not subordinate to the stamp, it is the
-other half of it.
+Nine elements, in this order, and the order is film grammar: **eyebrow →
+headline → rule → lede → country chain → wordmark → sub → facts → button.**
 
-The **kicker** — `One continent is waiting.` — is the turn. Everything above it
-is one morning in the second person; that sentence makes the morning the first
-of many, and it is the only reason the band can carry a Trans Afrique button
-without the button arriving from nowhere. It is set in the display face and in
-caps so it reads as a second headline, and well under the `h2` so it answers it
-rather than competes with it.
+The proposition opens cold — *Cross Africa. Don't just visit it.* — then a line
+that is pure invitation, then the road as a chain of countries, and only then
+the name. The eyebrow says *the Afrinkong journey series* and deliberately not
+*Trans Afrique*, because the title card needs somewhere to land and an eyebrow
+that has already said the name takes it.
 
-Both new lines are ivory, including the route's arrow. Gold measured 3.15:1 over
-these pixels, and an arrow made of type is type.
+The band used to open on *Imagine tomorrow morning* and a paragraph of narrative
+in the second person. That was warmer, and it made the reader work out for
+themselves what was being sold; a door into the most expensive thing the company
+offers should state the proposition and let the page do the seducing at length.
 
-`max-width: 44ch` on the paragraph and `560px` on the block are what keep the
-right-hand side of the photograph empty. The empty half is the composition.
+**Everything is ivory except the wordmark.** Terracotta at 34px clears the 3:1
+that large text needs over these pixels; the same colour on the 10px chain
+measured 3.15:1 against a 4.5 bar, which is why the small type keeps its voice
+by tracking rather than by hue.
 
-### Ivory, not gold
+**The three facts are derived, never typed** — length off the levels, countries
+and crossings off the routes, the tiers off the level names. The ground journey
+once shipped a $350 hero plate beside a $650 tier because one figure lived in
+two places and only one was updated.
 
-Muted gold is the metadata voice everywhere else on this site and was the obvious
-choice for the stamp. Measured against the pixels it actually sits on it reaches
-**3.15:1 where 4.5 is required** — the wash that carries a 52px headline at 5:1
-is nowhere near enough for 10px of gold. The voice is kept by size and
-letterspacing instead of by hue.
+Each fact is a list of lines rather than a sentence. Run together with middots
+they wrapped wherever the column happened to end — *15 countries, 4* over
+*crossings*, and a separator orphaned at the start of a line. Stacked, the wrap
+is the design.
+
+The copy is a generated block (`<!-- gen:door -->`), written from
+`tourism/transafrique.json` by `tools/tourism/transafrique.py`. It lived in
+`index.html` as hand-written markup and drifted: the band said one thing about a
+crossing and `/trans-afrique` said another, and nothing made them agree.
 
 ### Video instead of a still
 
@@ -412,12 +413,13 @@ Self-contained. Paste into an empty file and open it.
   .band-inner { max-width: 560px; }
   .band-stamp { font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
                 text-transform: uppercase; color: var(--c-bg); margin: 0; }
-  .band-route { font-family: var(--mono); font-size: 10px; letter-spacing: .3em;
-                text-transform: uppercase; color: var(--c-bg); margin: 10px 0 0; }
-  .band-route i { font-style: normal; margin: 0 .35em; }
-  .band-kick  { font-family: var(--display); font-weight: 700; text-transform: uppercase;
-                letter-spacing: .02em; line-height: 1.15;
-                font-size: clamp(16px, 1.6vw, 21px); color: var(--c-bg); margin: 24px 0 0; }
+  .band-chain { font-family: var(--mono); font-size: 10px; letter-spacing: .26em;
+                text-transform: uppercase; color: var(--c-bg); margin: 24px 0 0;
+                display: flex; flex-wrap: wrap; line-height: 2; }
+  .band-chain span + span::before { content: "\2192"; margin: 0 .55em; }
+  .band-mark  { font-family: var(--display); font-weight: 700; text-transform: uppercase;
+                line-height: 1; font-size: clamp(24px, 2.6vw, 36px);
+                color: var(--c-accent-lit); margin: 26px 0 0; }
   .band h2    { font-family: var(--display); font-weight: 700; text-transform: uppercase;
                 letter-spacing: -.01em; line-height: 1.04;
                 font-size: clamp(29px, 3.5vw, 52px); margin: 16px 0 0; color: var(--c-bg); }
@@ -453,14 +455,14 @@ Self-contained. Paste into an empty file and open it.
   </div>
   <div class="band-copy">
     <div class="band-inner">
-      <p class="band-stamp">Trans Afrique &middot; before six, engine already running</p>
-      <p class="band-route">Kenya <i aria-hidden="true">&rarr;</i> Tanzania</p>
-      <h2>Imagine tomorrow morning.</h2>
+      <p class="band-stamp">The Afrinkong journey series</p>
+      <h2>Cross Africa. Don&rsquo;t just visit it.</h2>
       <span class="band-hr" aria-hidden="true"></span>
-      <p class="band-say">You wake before it is light. No alarm, no traffic, no
-        office &mdash; just voices outside and somebody loading the vehicle.</p>
-      <p class="band-kick">One continent is waiting.</p>
-      <a class="band-go" href="/trans-afrique">Enter Trans Afrique &rarr;</a>
+      <p class="band-say">Some journeys are measured in countries. Others are
+        measured in everything that happens between them.</p>
+      <p class="band-chain"><span>Kenya</span><span>Uganda</span><span>Rwanda</span></p>
+      <p class="band-mark">Trans Afrique</p>
+      <a class="band-go" href="/trans-afrique">Discover Trans Afrique &rarr;</a>
     </div>
   </div>
 </section>

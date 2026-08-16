@@ -19,6 +19,15 @@
   "act": "Enter the crossing"
  },
 
+ "$door": "The homepage band, and it is a title sequence rather than a paragraph. The old version told a morning in the second person and ended on a button; it was warm, and it made the reader work out for themselves what was being sold. This states the proposition first and names the product afterwards, which is the order a film uses — cold open, then title card. The eyebrow says 'series' and not 'Trans Afrique' precisely so that the name still has somewhere to land.\n\nThe copy lives here rather than in index.html because the door and the page are one product and were drifting apart: the band said one thing about a crossing and /trans-afrique said another, and nothing made them agree. The three facts are not written here at all — they are derived from the levels and the routes, so a new crossing or a changed length cannot leave a stale number on the homepage.",
+ "door": {
+  "eyebrow": "The Afrinkong journey series",
+  "line": "Cross Africa. Don’t just visit it.",
+  "lede": "Some journeys are measured in countries. Others are measured in everything that happens between them.",
+  "sub": "Multi-country journeys by road, with the people, expertise and support to make the crossing possible.",
+  "act": "Discover Trans Afrique"
+ },
+
  "$idea": "The frame between the door and the machinery. Somebody arriving from the homepage has been sold a morning and nothing else; sending them straight into six support domains and three price bands asks them to evaluate a product they have not yet been told the shape of. This is the paragraph that says what a crossing is, and it is the only place on the site where the argument is made in distances rather than in adjectives.",
  "idea": {
   "title": "The idea",

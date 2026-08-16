@@ -44,6 +44,7 @@ caught out would matter most.
 import html as html_mod
 import json
 import os
+import re
 
 from . import routemap
 from .model import ROOT
@@ -225,6 +226,110 @@ def idea_block(d):
             '<p class="tf-idea-line">%s</p>%s</section>'
             % (esc(i["title"]), esc(i["line"]),
                "".join('<p class="tf-idea-say">%s</p>' % esc(p) for p in i["say"])))
+
+
+# Three line drawings for the door's facts, in the same 24x24 stroke convention
+# as the lens icons in gateway.py. Presentation, so it lives in code — but the
+# text beside each one is derived, never typed.
+DOOR_ICONS = {
+    "days": '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.3l3.4 2"/>',
+    "where": '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/>'
+             '<path d="M12 3.5c2.6 2.8 4 5.6 4 8.5s-1.4 5.7-4 8.5'
+             'c-2.6-2.8-4-5.6-4-8.5s1.4-5.7 4-8.5z"/>',
+    "levels": '<circle cx="9" cy="9" r="3"/>'
+              '<path d="M3.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/>'
+              '<path d="M16 6.6a3 3 0 0 1 0 4.8"/>'
+              '<path d="M17.5 14.9c1.9.6 3 2.4 3 4.6"/>',
+}
+
+
+def _spread(levels):
+    """The shortest and longest a crossing runs, read off the levels.
+
+    Typed on the homepage as "14 to 60+ days" it would be a number in a second
+    place, and the ground journey has already taught this file what that costs:
+    a hero plate said $350 while the tier beside it said $650 for a fortnight,
+    because somebody changed one and not the other. So the range is read from
+    the same `days` strings the level cards print — "30 to 60+", "14 to 25",
+    "34" — and a new level or a changed length moves the homepage with it.
+    """
+    lows, highs, plus = [], [], False
+    for v in levels:
+        nums = [int(n) for n in re.findall(r"\d+", str(v.get("days") or ""))]
+        if not nums:
+            continue
+        lows.append(nums[0])
+        highs.append(nums[-1])
+        if str(v.get("days") or "").rstrip().endswith("+"):
+            plus = True
+    if not lows:
+        return ""
+    return "%d to %d%s days" % (min(lows), max(highs), "+" if plus else "")
+
+
+def door_facts(d):
+    """Shape without price: how long, how far, and how it is bought.
+
+    Deliberately no money. A reader on the homepage has not asked what it costs
+    and a five-figure band in a door is a question answered before it is put;
+    /trans-afrique carries every number.
+    """
+    countries = {s for r in d["routes"] for s in (r.get("countries") or [])}
+    # Each fact is a list of lines, not a sentence, and each line is set on its
+    # own row inside its column. Run together with middots they wrapped wherever
+    # the column happened to end — "15 countries, 4" over "crossings", and a
+    # separator orphaned at the start of a line, which is the one break
+    # typography has no excuse for. Stacked, the wrap is the design.
+    rows = [
+        ("days", [_spread(d["levels"])]),
+        ("where", ["%d countries" % len(countries),
+                   "%d crossings" % len(d["routes"])]),
+        ("levels", [v["name"].replace("Trans Afrique", "").strip()
+                    for v in d["levels"]]),
+    ]
+    return ('<ul class="wa-door-facts">%s</ul>'
+            % "".join(
+                '<li><span class="wa-door-ico" aria-hidden="true">'
+                '<svg viewBox="0 0 24 24">%s</svg></span>'
+                '<b>%s</b></li>'
+                % (DOOR_ICONS[key],
+                   "".join("<span>%s</span>" % esc(line) for line in lines if line))
+                for key, lines in rows if any(lines)))
+
+
+def block_door(countries):
+    """The homepage band's copy: a title sequence, not a paragraph.
+
+    Order is film grammar. The proposition opens cold — "Cross Africa. Don't
+    just visit it." — then a line that is pure invitation, then the road as a
+    chain of countries, and only then the name. The eyebrow says "series" and
+    not "Trans Afrique" so that the title card still has somewhere to land.
+
+    What it does NOT do is explain. No support domains, no bands, no lengths per
+    crossing; three derived facts and a way in. The page is two clicks of scroll
+    away and carries all of it.
+    """
+    d = load()
+    by_slug = {c.slug: c for c in countries}
+    dr = d["door"]
+    great = next((r for r in d["routes"] if r.get("great")), d["routes"][0])
+    # Four names and an ellipsis, in the order the crossing actually drives
+    # them. Printing all nine would make the door a route listing, and printing
+    # a prettier order would be a route nobody drives.
+    names = [by_slug[s].name for s in great["countries"] if s in by_slug]
+    chain = "".join('<span>%s</span>' % esc(n) for n in names[:4])
+    return (
+        '<p class="wa-seam-stamp">%s</p>\n'
+        '      <h2>%s</h2>\n'
+        '      <span class="wa-seam-hr" aria-hidden="true"></span>\n'
+        '      <p class="wa-seam-say">%s</p>\n'
+        '      <p class="wa-door-chain">%s<i aria-hidden="true">&hellip;</i></p>\n'
+        '      <p class="wa-door-mark">Trans Afrique</p>\n'
+        '      <p class="wa-door-sub">%s</p>\n'
+        '      %s\n'
+        '      <a class="wa-seam-go" href="/trans-afrique">%s &rarr;</a>'
+        % (esc(dr["eyebrow"]), esc(dr["line"]), esc(dr["lede"]), chain,
+           esc(dr["sub"]), door_facts(d), esc(dr["act"])))
 
 
 def money_lists(d):
