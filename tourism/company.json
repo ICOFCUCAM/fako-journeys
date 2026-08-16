@@ -25,5 +25,12 @@
   "more": "In Cameroon, Uganda and Namibia you travel with companies of our own as well.",
   "act": "Plan your journey",
   "href": "/journey"
+ },
+ "enquiries": {
+  "$comment": "Where a journey built in the tunnel is sent. Until this existed there was nowhere for one to go: every enquiry on the site mailed bonjour@kamerun.cm, so a journey composed for Eritrea arrived at a Cameroonian operator's desk in Douala under a KAMERUN masthead with a +237 telephone number beside it. Kamerun keeps that address for Kamerun's own pages; this is Afrinkong's.",
+  "$change_me": "The mailbox is a placeholder consistent with the site's own canonical domain — every page already declares https://afrinkong.com — and the domain is not bought yet. It is one edit, here, and the tunnel, the enquiry page and the footer all follow it.",
+  "email": "hello@afrinkong.com",
+  "say": "Journeys are read by the Afrinkong coordination desk, which arranges the ground wherever the journey goes.",
+  "hours": "We answer within one working day."
  }
 }

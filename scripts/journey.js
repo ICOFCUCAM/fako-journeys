@@ -220,6 +220,38 @@
         + '<span class="jn-alt-why">' + esc(oneLine(p)) + '</span></span>'
         + '<span class="jn-alt-go" aria-hidden="true">&rarr;</span></button>';
     }).join('');
+    paintField();
+  }
+
+  /* The continent, coloured rather than filtered.
+     Every country stays on the page and stays clickable. What a lens changes
+     is the colour, not the population — and the line under each name is always
+     what that country leads on, never what it does not. "Senegal — Cities,
+     Culture, Food, Coast" says everything "no wildlife in Senegal" would have
+     said, without the site being the one to say no. */
+  function paintField() {
+    var grid = document.getElementById('jn-field-grid');
+    if (!grid) return;
+    var sec = document.getElementById('jn-field');
+    if (sec) sec.hidden = false;
+    var rows = E.field(D, brief);
+    var say = document.getElementById('jn-field-say');
+    var strong = rows.filter(function (r) { return r.match === 'leads'; }).length;
+    if (say) {
+      say.textContent = brief.wants.length
+        ? strong + ' of the fifty-four lead on what you asked for. The rest are '
+          + 'here too, and any of them can be your journey.'
+        : 'Choose any one, or answer the questions again and watch them re-colour.';
+    }
+    grid.innerHTML = rows.map(function (r) {
+      return '<button class="jn-c" type="button" data-country="' + esc(r.slug) + '"'
+        + ' data-match="' + r.match + '"'
+        + (chosen && chosen.slug === r.slug ? ' data-picked="true"' : '')
+        + (r.inSeason ? '' : ' data-off="true"')
+        + '><b>' + esc(r.name) + '</b>'
+        + '<span class="jn-c-for">' + esc(r.leads.join(' \u00b7 ')) + '</span>'
+        + '</button>';
+    }).join('');
   }
 
   /* Who lives there, before why we chose it. A country that arrives as an
@@ -278,8 +310,10 @@
     return bits.length ? bits.join(' \u00b7 ') : 'Where we would start';
   }
 
-  reveal.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-alt],[data-compose],[data-others],[data-restart]') : null;
+  /* The field is its own section now, so the delegated handler has to be bound
+     to both. Bound only to .jn-reveal, every country in the grid was inert. */
+  function onPick(e) {
+    var t = e.target.closest ? e.target.closest('[data-alt],[data-compose],[data-others],[data-restart],[data-country]') : null;
     if (!t) return;
     if (t.hasAttribute('data-alt')) {
       var found = picks.filter(function (p) { return p.slug === t.dataset.alt; })[0];
@@ -298,6 +332,19 @@
       if (alts.hasAttribute('data-open')) {
         alts.scrollIntoView({behavior: reduced.matches ? 'auto' : 'smooth', block: 'start'});
       }
+    } else if (t.hasAttribute('data-country')) {
+      /* They picked one themselves. That is the whole point of showing all
+         fifty-four, so nothing here second-guesses it: the country they chose
+         becomes the journey, whatever the ranking thought. */
+      var want = t.dataset.country;
+      var found = E.rank(D, {wants: brief.wants, month: brief.month, seed: brief.seed})
+        .filter(function (p) { return p.slug === want; })[0];
+      chosen = found || {slug: want, reasons: [], outOfSeason: false};
+      picks = [chosen].concat(picks.filter(function (p) { return p.slug !== want; }));
+      track('country_chosen', {country: want});
+      var fs = document.getElementById('jn-field');
+      if (fs) fs.hidden = true;
+      openComposer(want);
     } else if (t.hasAttribute('data-restart')) {
       /* Re-rolling changes the tie-break, not the rules: two countries that
          scored the same get to take turns. It travels in the link, so a
@@ -305,9 +352,14 @@
       brief.seed = (brief.seed + 1) % 7;
       reveal.hidden = true;
       form.hidden = false;
+      var fieldSec = document.getElementById('jn-field');
+      if (fieldSec) fieldSec.hidden = true;
       show(1);
     }
-  });
+  }
+  reveal.addEventListener('click', onPick);
+  var fieldEl = document.getElementById('jn-field');
+  if (fieldEl) fieldEl.addEventListener('click', onPick);
 
   /* ---- the composer ------------------------------------------------------ */
 
@@ -736,6 +788,9 @@
     }
     if (note) note.hidden = !t.quote;
 
+    /* /enquire, not /contact. The tunnel used to end on Kamerun's page: a
+       journey composed for Eritrea arrived under a KAMERUN masthead beside a
+       Douala address and a +237 number. */
     var go = document.getElementById('jn-go');
     if (go && chosen) {
       var c = D.countries[chosen.slug];
@@ -750,7 +805,7 @@
       }
       lines.push('Destination charges (parks, permits, entrance) are arranged by '
                  + 'Afrinkong and added at cost.');
-      go.href = '/contact?journey=' + encodeURIComponent(lines.join('\n'));
+      go.href = '/enquire?journey=' + encodeURIComponent(lines.join('\n'));
       go.textContent = c.operator ? 'Send this to ' + c.operator.name
                                   : 'Begin this journey';
       go.insertAdjacentHTML('beforeend', '<i>&rarr;</i>');

@@ -250,7 +250,7 @@ TEMPLATE = """<!DOCTYPE html>
 
 <footer class="foot">
   <div class="af-frame">
-    <p>Afrinkong runs tour operators of its own in three countries and writes up %(total)d, all through the same %(count)d categories. <a href="/#destinations">See all destinations</a>, or <a href="/contact">tell us what you are after</a>.</p>
+    <p>Afrinkong runs tour operators of its own in three countries and writes up %(total)d, all through the same %(count)d categories. <a href="/#destinations">See all destinations</a>, or <a href="/enquire">tell us what you are after</a>.</p>
     <p class="foot-co"><!-- gen:company -->
     <!-- /gen:company --></p>
   </div>

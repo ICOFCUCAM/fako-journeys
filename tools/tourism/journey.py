@@ -268,7 +268,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/stories">Stories</a>
     <a href="/compare">Compare</a>
   </nav>
-  <a class="af-btn af-btn--quiet" href="/contact">Talk to us<i>&rarr;</i></a>
+  <a class="af-btn af-btn--quiet" href="/enquire">Talk to us<i>&rarr;</i></a>
 </header>
 
 <main class="jn" id="jn" data-step="1">
@@ -373,6 +373,34 @@ TEMPLATE = """<!DOCTYPE html>
     </div>
   </section>
 
+  <!-- the whole continent, coloured rather than filtered --------------------
+         Afrinkong recommends; the traveller decides. A lens does not remove a
+         country from the page, it changes how strongly the page answers with
+         it, and every one of the fifty-four stays here and stays clickable.
+       Somebody who arrived knowing they want Ghana finds Ghana.
+
+       It is its own section and not a child of .jn-reveal, which is a
+       full-height flex row: dropped in there the grid became the reveal's
+       second column and printed fifty-four countries one per line down a
+       half-width gutter. -->
+  <section class="jn-field" id="jn-field" hidden>
+    <div class="jn-field-in">
+      <div class="jn-field-head">
+        <span class="af-stamp">The continent</span>
+        <h2 class="jn-field-h">All fifty-four, <em>and how each one answers</em>.</h2>
+        <p class="jn-field-say" id="jn-field-say"></p>
+      </div>
+      <div class="jn-field-key" aria-hidden="true">
+        <span data-match="leads">Leads on what you asked</span>
+        <span data-match="region">Its region does</span>
+        <span data-match="open">Written up here too</span>
+      </div>
+      <div class="jn-field-grid" id="jn-field-grid" role="group"
+           aria-label="Every country. Choose any one."></div>
+      <p class="jn-field-fine">We can recommend a direction. You choose the destination.</p>
+    </div>
+  </section>
+
   <!-- the composer -------------------------------------------------------- -->
   <section class="jn-compose" id="compose" hidden>
     <div class="jn-compose-head">
@@ -426,7 +454,7 @@ TEMPLATE = """<!DOCTYPE html>
 %(notincluded)s
 %(whopays)s
       <div class="jn-acts jn-acts--end">
-        <a class="af-btn af-btn--solid" id="jn-go" href="/contact">Begin this journey<i>&rarr;</i></a>
+        <a class="af-btn af-btn--solid" id="jn-go" href="/enquire">Begin this journey<i>&rarr;</i></a>
         <button class="af-btn af-btn--quiet" type="button" data-back-compose>Back to the journey</button>
       </div>
       <p class="jn-g-nothing">Nothing is charged here. This sends your journey to
@@ -439,7 +467,7 @@ TEMPLATE = """<!DOCTYPE html>
     <p class="jn-nojs">This page builds a journey as you answer, which needs
       JavaScript. Without it, the same countries and the same twenty-six places
       each are all readable in <a href="/atlas">the atlas</a> and on every
-      destination page, and <a href="/contact">a person</a> will do the rest.</p>
+      destination page, and <a href="/enquire">a person</a> will do the rest.</p>
   </noscript>
 </main>
 

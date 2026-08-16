@@ -58,6 +58,99 @@
     return x >>> 0;
   }
 
+
+  /* ---- the experience profile -------------------------------------------
+   *
+   * Afrinkong recommends; the traveller decides. So a lens does not filter the
+   * continent, it colours it: every country stays visible and selectable, and
+   * what changes is how strongly each one answers what was asked.
+   *
+   * Three levels, and all three come from the dataset rather than from an
+   * opinion typed into this file:
+   *
+   *   leads   the country declares this lens in its own `calls`. That list is
+   *           editorial and deliberately short — Uganda calls wildlife and
+   *           culture and does not call coast, though it has lakes — so a hit
+   *           here is the strongest thing the data can say.
+   *   region  the country does not declare it, but most of its region does.
+   *           Real and measurable: 80% of southern Africa calls wildlife and
+   *           0% of north Africa does; every island calls coast. A country
+   *           sitting inside that is a fair second answer.
+   *   open    everything else. Not "no" — every country in the set has all
+   *           twenty-seven categories written up, so the places are there to
+   *           read whatever the lens says.
+   *
+   * There is deliberately no five-dot intensity. It would need a per-country
+   * per-lens judgement that this dataset does not contain: every country has
+   * the same twenty-seven write-ups, so counting them gives all fifty-four an
+   * identical profile. Three levels that are true beat five that are invented.
+   */
+
+  var REGION_LEADS = null;
+
+  function regionLeads(data) {
+    if (REGION_LEADS) return REGION_LEADS;
+    var tally = {};
+    Object.keys(data.countries).forEach(function (slug) {
+      var c = data.countries[slug], r = c.regionKey || '?';
+      tally[r] = tally[r] || {n: 0, lens: {}};
+      tally[r].n++;
+      (c.calls || []).forEach(function (k) {
+        tally[r].lens[k] = (tally[r].lens[k] || 0) + 1;
+      });
+    });
+    REGION_LEADS = {};
+    Object.keys(tally).forEach(function (r) {
+      REGION_LEADS[r] = {};
+      Object.keys(data.lenses).forEach(function (k) {
+        REGION_LEADS[r][k] = (tally[r].lens[k] || 0) / tally[r].n >= 0.5;
+      });
+    });
+    return REGION_LEADS;
+  }
+
+  /* What one country says about one lens. */
+  function level(data, slug, lens) {
+    var c = data.countries[slug];
+    if (!c) return 'open';
+    if ((c.calls || []).indexOf(lens) >= 0) return 'leads';
+    var reg = regionLeads(data)[c.regionKey || '?'];
+    return (reg && reg[lens]) ? 'region' : 'open';
+  }
+
+  /* The whole continent against what was asked, strongest first, nothing
+     dropped. `match` is the colour; `leads` is what the country itself says it
+     is for, which is what gets printed under its name — "Culture, Coast,
+     Food", never "no wildlife here". */
+  function field(data, brief) {
+    var wants = (brief.wants || []).filter(function (k) { return !!data.lenses[k]; });
+    var rank = {leads: 0, region: 1, open: 2};
+    var rows = Object.keys(data.countries).map(function (slug) {
+      var c = data.countries[slug];
+      var best = 'open';
+      wants.forEach(function (k) {
+        var l = level(data, slug, k);
+        if (rank[l] < rank[best]) best = l;
+      });
+      var hits = wants.filter(function (k) { return level(data, slug, k) === 'leads'; });
+      return {
+        slug: slug, name: c.name, region: c.region, regionKey: c.regionKey,
+        match: wants.length ? best : 'open',
+        hits: hits.length,
+        /* Always what it IS for, never what it is not. */
+        leads: (c.calls || []).map(function (k) { return data.lenses[k].title; }),
+        inSeason: !brief.month || (c.months || []).indexOf(brief.month) >= 0
+      };
+    });
+    rows.sort(function (a, b) {
+      if (rank[a.match] !== rank[b.match]) return rank[a.match] - rank[b.match];
+      if (b.hits !== a.hits) return b.hits - a.hits;
+      if (a.inSeason !== b.inSeason) return a.inSeason ? -1 : 1;
+      return a.name.localeCompare(b.name);
+    });
+    return rows;
+  }
+
   function rank(data, brief) {
     var w = data.weights;
     var wants = (brief.wants || []).filter(function (k) { return !!data.lenses[k]; });
@@ -574,6 +667,7 @@
     keyword: keyword, name: name, composition: composition,
     stageOf: stageOf, stageId: stageId, onward: onward,
     parse: parse, band: band,
-    encode: encode, decode: decode
+    encode: encode, decode: decode,
+    level: level, field: field
   };
 });

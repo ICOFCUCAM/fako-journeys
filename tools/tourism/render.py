@@ -160,7 +160,7 @@ def footer(country, ours=None):
             '      </div>\n'
             '      <div class="fj-foot-col">\n        <b>Plan</b>\n'
             '        <a href="/journey">Build a journey</a>\n'
-            '        <a href="/contact">Contact an operator</a>\n'
+            '        <a href="/enquire">Begin a journey</a>\n'
             '        <a href="/#seasons">Travel seasons</a>\n'
             '      </div>\n'
             '    </div>\n'

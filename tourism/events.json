@@ -1,6 +1,5 @@
 {
  "$comment": "What this product is allowed to count, and exactly what may travel with each thing counted. It is a list rather than a convention because a convention is a thing people mean to follow: an event not named here is dropped, and a property not named under its event is stripped before anything sees it. That makes 'we do not collect that' a fact about the code rather than a promise in a policy.\n\nThree rules the shape of this file enforces.\n\nNo free text, ever. The journey builder has a box a visitor types a sentence into — 'twelve days in September, wildlife and mountains' — and the obvious mistake is to record it. Every value permitted below is an enum the dataset already contains (a lens key, a country slug, a month number, a pacing key) or a small integer. There is nowhere for a sentence to go, and a test asserts it.\n\nNo identifiers. No cookie, no localStorage id, no fingerprint, no IP-derived anything, nothing that survives a reload or joins two page-loads together. These are counts of what happened, not a trail of who did it.\n\nNothing leaves the browser by default. There is no third-party script and no endpoint. Until somebody sets a sink, `track()` validates the event and returns; the events exist so that the day a destination is chosen it is one line, and so that the choice is visible rather than inherited from a tag manager.",
-
  "$props": {
   "want": "a lens key from lenses.json",
   "wants": "how many lenses were chosen — a count, not which",
@@ -20,35 +19,122 @@
   "matched": "how many results a search returned — a count, never the words typed",
   "kind": "which sort of thing was opened from the index: country, place, story, name, go, open"
  },
-
  "events": {
-  "journey_started":       ["source"],
-  "question_answered":     ["step", "wants", "month", "pacing", "party"],
-  "sentence_read":         ["wants", "month", "pacing"],
-  "journey_revealed":      ["country", "band", "wants", "month"],
-  "alternative_opened":    ["country"],
-  "journey_composed":      ["country", "stages", "pacing", "month"],
-  "stage_changed":         ["country", "stages"],
-  "border_crossed":        ["country", "to"],
-  "journey_tweaked":       ["country", "pacing", "month"],
-  "journey_saved":         ["country", "stages"],
-  "journey_shared":        ["country", "stages"],
-  "ground_opened":         ["country", "pacing"],
-  "enquiry_started":       ["country", "stages", "month", "pacing"],
-  "atlas_region_opened":   ["region"],
-  "atlas_country_opened":  ["country", "region"],
-  "atlas_place_opened":    ["country"],
-  "atlas_lens_used":       ["want", "month"],
-  "atlas_links_opened":    ["want"],
-  "surprise_taken":        ["country", "want", "month"],
-  "meet_strand_opened":    ["strand"],
-  "meet_country_opened":   ["country"],
-  "place_page_opened":     ["country"],
-  "portrait_opened":       ["country", "region"],
-  "chapter_read":          ["country", "arc"],
-  "story_opened":          ["country", "format"],
-  "story_searched":        ["matched"],
-  "month_seen":            ["month"],
-  "explore_opened":        ["kind"]
+  "journey_started": [
+   "source"
+  ],
+  "question_answered": [
+   "step",
+   "wants",
+   "month",
+   "pacing",
+   "party"
+  ],
+  "sentence_read": [
+   "wants",
+   "month",
+   "pacing"
+  ],
+  "journey_revealed": [
+   "country",
+   "band",
+   "wants",
+   "month"
+  ],
+  "alternative_opened": [
+   "country"
+  ],
+  "journey_composed": [
+   "country",
+   "stages",
+   "pacing",
+   "month"
+  ],
+  "country_chosen": [
+   "country"
+  ],
+  "stage_changed": [
+   "country",
+   "stages"
+  ],
+  "border_crossed": [
+   "country",
+   "to"
+  ],
+  "journey_tweaked": [
+   "country",
+   "pacing",
+   "month"
+  ],
+  "journey_saved": [
+   "country",
+   "stages"
+  ],
+  "journey_shared": [
+   "country",
+   "stages"
+  ],
+  "ground_opened": [
+   "country",
+   "pacing"
+  ],
+  "enquiry_started": [
+   "country",
+   "stages",
+   "month",
+   "pacing"
+  ],
+  "atlas_region_opened": [
+   "region"
+  ],
+  "atlas_country_opened": [
+   "country",
+   "region"
+  ],
+  "atlas_place_opened": [
+   "country"
+  ],
+  "atlas_lens_used": [
+   "want",
+   "month"
+  ],
+  "atlas_links_opened": [
+   "want"
+  ],
+  "surprise_taken": [
+   "country",
+   "want",
+   "month"
+  ],
+  "meet_strand_opened": [
+   "strand"
+  ],
+  "meet_country_opened": [
+   "country"
+  ],
+  "place_page_opened": [
+   "country"
+  ],
+  "portrait_opened": [
+   "country",
+   "region"
+  ],
+  "chapter_read": [
+   "country",
+   "arc"
+  ],
+  "story_opened": [
+   "country",
+   "format"
+  ],
+  "story_searched": [
+   "matched"
+  ],
+  "month_seen": [
+   "month"
+  ],
+  "explore_opened": [
+   "kind"
+  ]
  }
 }
