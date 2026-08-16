@@ -76,23 +76,37 @@ def chain(r, by_slug):
         for s in (r.get("countries") or []) if s in by_slug)
 
 
-def route_card(r, by_slug):
+def route_card(r, by_slug, preview=False):
+    """The same card twice, minus its numbers on the homepage.
+
+    A visitor three screens into a homepage is not choosing between a
+    twenty-one-day East at $6,000 and a twenty-four-day West at $7,000. They are
+    deciding whether crossing a continent is a thing they want at all, and a
+    price on that screen answers a question they have not asked yet — worse, it
+    invites them to compare four options before they have wanted any of them.
+
+    So the homepage card is name, countries, strands and one line: where it goes
+    and what it is like. Shape, length and fee are on /trans-afrique, where the
+    reader arrived by choosing to.
+    """
     strands = " &middot; ".join(esc(x) for x in (r.get("strands") or []))
+    facts = "" if preview else (
+        '<dl class="tf-route-facts">'
+        '<div><dt>Shape</dt><dd>%s</dd></div>'
+        '<div><dt>Length</dt><dd>%s days</dd></div>'
+        '<div><dt>Journey fee</dt><dd>%s</dd></div>'
+        '</dl>' % (esc(r["shape"]), esc(r["days"]), band(r)))
     return (
-        '<article class="tf-route%s" data-route="%s">'
+        '<article class="tf-route%s%s" data-route="%s">'
         '<div class="tf-route-in">'
         '<h3 class="tf-route-name">%s</h3>'
         '<p class="tf-route-where">%s</p>'
         '<p class="tf-route-strands">%s</p>'
         '<p class="tf-route-say">%s</p>'
-        '<dl class="tf-route-facts">'
-        '<div><dt>Shape</dt><dd>%s</dd></div>'
-        '<div><dt>Length</dt><dd>%s days</dd></div>'
-        '<div><dt>Journey fee</dt><dd>%s</dd></div>'
-        '</dl></div></article>'
-        % (" tf-route--great" if r.get("great") else "", esc(r["id"]),
-           esc(r["name"]), chain(r, by_slug), strands, esc(r["say"]),
-           esc(r["shape"]), esc(r["days"]), band(r)))
+        '%s</div></article>'
+        % (" tf-route--great" if r.get("great") else "",
+           " tf-route--peek" if preview else "", esc(r["id"]),
+           esc(r["name"]), chain(r, by_slug), strands, esc(r["say"]), facts))
 
 
 def level_card(v):
@@ -165,24 +179,34 @@ def money_lists(d):
 
 
 def block_trans(countries):
+    """The homepage section: where it goes, and nothing about how it works.
+
+    This used to be the whole page repeated inside the homepage — the motto, the
+    six support domains, the medical note, three levels with their bands, four
+    routes with shape and length and fee, and the fine print. A reader who had
+    not yet decided they wanted to cross a continent was being handed doctors,
+    drivers, security, seat counts, park fees and five-figure sums, all in one
+    screen, before wanting any of it.
+
+    The desire is made twice above this: the window band is the door, in the
+    second person, on one morning. This section answers only the question that
+    door leaves open — *where does it go* — in four names and four country
+    chains, and then stops. Every "how does it work" answer moved to
+    /trans-afrique, which the reader reaches by choosing to.
+    """
     d = load()
     by_slug = {c.slug: c for c in countries}
     out = ['<p class="tf-motto">%s</p>' % esc(d["motto"])]
-    # The team first. It is the reason the rest of the numbers are what they
-    # are, and putting the price above the team would have asked the reader to
-    # judge the figure before knowing what it buys.
-    out.append('<div class="tf-sup-head"><h3 class="tf-sup-title">%s</h3>'
-               '<p class="tf-sup-lede">%s</p></div>'
-               % (esc(d["support_title"]), esc(d["support_say"])))
-    out.append(support_grid(d))
-    out.append(medical_note(d))
-    out.append('<div class="tf-levels">')
-    out += [level_card(v) for v in d["levels"]]
+    out.append('<div class="tf-routes tf-routes--peek">')
+    out += [route_card(r, by_slug, preview=True) for r in d["routes"]]
     out.append('</div>')
-    out.append('<div class="tf-routes">')
-    out += [route_card(r, by_slug) for r in d["routes"]]
-    out.append('</div>')
-    out.append('<p class="tf-fine">%s</p>' % esc(d["fine"]))
+    # The one line of commerce the homepage carries, and it is a range across the
+    # whole series rather than four prices to compare. It exists so that nobody
+    # arrives at the page having imagined a different order of magnitude.
+    out.append('<p class="tf-peek-fine">Crossings run from %s, quoted as a whole '
+               'and in writing. Lengths, routes and what the fee covers are on '
+               'the Trans Afrique page.</p>'
+               % money(min(r["low"] for r in d["routes"])))
     return "\n".join(out)
 
 

@@ -28,6 +28,52 @@ The band answers the same question **once, concretely, in the second person**:
 
 Second person, present tense, one morning. Not "our safaris begin early."
 
+### And it is the door into one product, not a general mood
+
+The band used to end on "a whole day in front of you" with a button to the
+journey tunnel — the same invitation every other section on the homepage makes.
+The strongest picture on the site was spending itself on a link an eight-card
+grid already provides.
+
+It is now the first morning of a **Trans Afrique** crossing: same photograph,
+same effect, different meaning. *A beautiful African morning* became *the first
+morning of a continental journey*, which is a difference in what the reader is
+being asked to want.
+
+Two facts happen to be literally inside this frame, and both of them are the
+product:
+
+- the grass is in Kenya and the mountain on its horizon is in Tanzania, so **the
+  border is in the picture** — which is why the section can carry
+  `Kenya → Tanzania` as a caption rather than a claim;
+- the roof is loaded — a box and a bag strapped over the rack — so *"the roof is
+  loaded for longer than a day"* is a description.
+
+The copy rule did not bend to accommodate a new product. The frame already held
+it.
+
+### The band is a door, not a summary
+
+No routes, no lengths, no prices, no team, no park fees. A visitor two screens
+into a homepage is not choosing between a 21-day East and a 24-day West; they
+are deciding whether crossing a continent is a thing they want at all. A price
+there answers a question they have not asked, and invites them to compare four
+options before wanting any of them.
+
+So the split is:
+
+| | says |
+|---|---|
+| **The band** | *Imagine tomorrow morning.* → **Enter Trans Afrique** |
+| **Homepage §07** | where it goes — four names, four country chains, one floor price → **See how a crossing works** |
+| **`/trans-afrique`** | levels, lengths, bands, the six support domains, the medical note, what the fee is and is not |
+
+Each step answers exactly one more question than the last. Nothing on the
+homepage explains the expedition; the reader who wants that arrives at the page
+by choosing to. Two doors to the same place must never use the same verb —
+"Enter" and "See how it works" are different offers, "Explore" twice is one
+offer printed twice.
+
 ### The rule that makes the copy work
 
 **The copy is written to the photograph. The photograph is not found for the
@@ -238,10 +284,23 @@ thumb-flicks, which stops reading as a moment and starts reading as a stall.
                  padding-bottom: 6px; }
 ```
 
-Five elements, in this order, and no more: **place-stamp → headline → rule →
-paragraph → link.** The stamp (`Amboseli · before six, engine already running`)
-does the work of a caption without being one — it tells the reader this is a real
-place at a real hour before the headline asks them to imagine it.
+Six elements, in this order, and no more: **stamp → route → headline → rule →
+paragraph → kicker → link.** The stamp (`Trans Afrique · before six, engine
+already running`) does the work of a caption without being one — it names the
+product and the hour before the headline asks the reader to imagine it. The
+route line under it (`Kenya → Tanzania`) is the same mono size at wider tracking
+rather than a smaller subtitle: it is not subordinate to the stamp, it is the
+other half of it.
+
+The **kicker** — `One continent is waiting.` — is the turn. Everything above it
+is one morning in the second person; that sentence makes the morning the first
+of many, and it is the only reason the band can carry a Trans Afrique button
+without the button arriving from nowhere. It is set in the display face and in
+caps so it reads as a second headline, and well under the `h2` so it answers it
+rather than competes with it.
+
+Both new lines are ivory, including the route's arrow. Gold measured 3.15:1 over
+these pixels, and an arrow made of type is type.
 
 `max-width: 44ch` on the paragraph and `560px` on the block are what keep the
 right-hand side of the photograph empty. The empty half is the composition.
@@ -353,6 +412,12 @@ Self-contained. Paste into an empty file and open it.
   .band-inner { max-width: 560px; }
   .band-stamp { font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
                 text-transform: uppercase; color: var(--c-bg); margin: 0; }
+  .band-route { font-family: var(--mono); font-size: 10px; letter-spacing: .3em;
+                text-transform: uppercase; color: var(--c-bg); margin: 10px 0 0; }
+  .band-route i { font-style: normal; margin: 0 .35em; }
+  .band-kick  { font-family: var(--display); font-weight: 700; text-transform: uppercase;
+                letter-spacing: .02em; line-height: 1.15;
+                font-size: clamp(16px, 1.6vw, 21px); color: var(--c-bg); margin: 24px 0 0; }
   .band h2    { font-family: var(--display); font-weight: 700; text-transform: uppercase;
                 letter-spacing: -.01em; line-height: 1.04;
                 font-size: clamp(29px, 3.5vw, 52px); margin: 16px 0 0; color: var(--c-bg); }
@@ -388,12 +453,14 @@ Self-contained. Paste into an empty file and open it.
   </div>
   <div class="band-copy">
     <div class="band-inner">
-      <p class="band-stamp">Amboseli &middot; before six, engine already running</p>
+      <p class="band-stamp">Trans Afrique &middot; before six, engine already running</p>
+      <p class="band-route">Kenya <i aria-hidden="true">&rarr;</i> Tanzania</p>
       <h2>Imagine tomorrow morning.</h2>
       <span class="band-hr" aria-hidden="true"></span>
       <p class="band-say">You wake before it is light. No alarm, no traffic, no
         office &mdash; just voices outside and somebody loading the vehicle.</p>
-      <a class="band-go" href="/journey">Start building your journey &rarr;</a>
+      <p class="band-kick">One continent is waiting.</p>
+      <a class="band-go" href="/trans-afrique">Enter Trans Afrique &rarr;</a>
     </div>
   </div>
 </section>
@@ -417,7 +484,9 @@ and the fix is a different photograph rather than a heavier tint.
 - [ ] Below 950px the tint is flat, set by the brightest pixel the copy crosses.
 - [ ] `svh`, never `vh`.
 - [ ] Contrast measured at ~13 scroll positions per width, worst value recorded.
-- [ ] The `alt` describes the frame; the stamp gives place and hour.
+- [ ] Every line of copy is named in the gate's `BAND_TEXT`, or it ships unmeasured.
+- [ ] The `alt` describes the frame; the stamp gives the product and the hour.
+- [ ] The band's CTA verb is not repeated by any other link to the same page.
 - [ ] `prefers-reduced-motion` has a still to fall back to if a clip is used.
 
 ---
@@ -433,3 +502,13 @@ and the fix is a different photograph rather than a heavier tint.
 
 Run the gate with `node tools/browser-checks.js`. Only one instance at a time —
 concurrent runs compete for the same port.
+
+**Read the output, not the exit code.** The runner prints `PASS`/`FAIL` per
+check and exits `0` either way, and node buffers its stdout when it is not
+attached to a terminal, so a run that is killed early leaves a zero-byte log
+that is indistinguishable from a clean one. Count the lines:
+
+```sh
+node tools/browser-checks.js > gate.out 2>&1
+grep -c '^PASS' gate.out; grep '^FAIL' gate.out
+```
