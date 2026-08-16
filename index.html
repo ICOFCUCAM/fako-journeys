@@ -91,9 +91,9 @@
 .wa-open .wa-act.go{background:var(--c-accent);border-color:var(--c-accent);
   color:var(--c-primary)}
 .wa-open .wa-act.go:hover{background:var(--c-bg);border-color:var(--c-bg)}
-.wa-open .wa-act.faint{border-color:color-mix(in srgb,var(--c-bg) 26%,transparent)}
-.wa-open .wa-act.faint:hover{border-color:var(--c-bg);color:var(--c-bg)}
-.wa-open .wa-act.plain:hover{color:var(--c-accent)}
+/* .wa-open's faint and plain variants went with the second and third hero
+   calls. The unscoped .wa-act.faint / .plain below are still in use further
+   down the page and stay. */
 /* The rails: rules that were ink on paper become paper on ink. */
 .wa-open .wa-regs,.wa-open .wa-ticks{border-color:var(--c-bg)}
 .wa-open .wa-reg,.wa-open .wa-tick{color:var(--c-bg);border-right-color:var(--fj-rule-dark)}
@@ -193,9 +193,6 @@
    promise line down to 14px, and they are the value with scripting off. */
 .wa-h1-rest{display:block;line-height:1;letter-spacing:-.015em;margin-top:.12em;
   font-size:clamp(26px, calc(var(--fj-h1, 3.6vw) * .244), 63px)}
-.wa-find{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  line-height:1.04;color:var(--c-accent);margin-top:16px;
-  font-size:clamp(17px, calc(var(--fj-h1, 2.1vw) * .141), 37px)}
 /* Pretty rather than balance: this is prose, it runs to two lines on a phone
    and one on a desktop, and evening a two-line paragraph makes the first line
    short for no reason a reader can see. pretty leaves the rag alone and only
@@ -401,19 +398,23 @@
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
 .wa-win-key span[data-tier="ours"]::before{background:var(--c-tier-ours)}
 .wa-win-key span[data-tier="live"]::before{background:var(--c-accent-fill)}
-.wa-win-key span[data-tier="rest"]::before{background:var(--c-land);
-  box-shadow:0 0 0 1px var(--c-border)}
 .wa-win-line{min-height:22px;margin-bottom:10px;font-size:14.5px;color:var(--c-accent);max-width:60em}
 
 /* The map is the signature, and it says three things.
    ---------------------------------------------------------------------------
-       SAND        Africa. The fifty-four, the ground everything sits on.
-       TERRACOTTA  a destination. Written up here, twenty-two of them.
+       SAND        Africa. The land itself, the ground everything sits on.
+       TERRACOTTA  a destination. All fifty-one of them without a company of
+                   ours, which is to say every country the ground journey
+                   covers and does not also own the operator in.
        FOREST      ours. The three countries we run a company in.
+
+   The middle line said "twenty-two" while the atlas grew to fifty-four, and
+   the legend under the map used to key the sand as "Bookable" — which made
+   the coastline a category a traveller could be in.
 
    It used to be a 13% tint of the ink for the continent and a 46% tint of the
    accent for a destination — grey and pale pink, two shades of almost-nothing,
-   with no way to tell at a glance which of the twenty-two we actually run. The
+   with no way to tell at a glance which of them we actually run. The
    three fills above are three different colours doing three different jobs, and
    the legend under the map names them.
 
@@ -1014,7 +1015,6 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-win{position:static;width:auto;max-width:none;top:auto;right:auto}
   .wa-open-say,.wa-open-tail{max-width:none}
   .wa-hair{margin-top:18px}
-  .wa-find{margin-top:14px}
   .wa-open .wa-lede{margin-top:0;font-size:17px}
   .wa-acts{margin-top:20px}
   .wa-win{display:block}
@@ -2329,14 +2329,24 @@ window.AF = {
 <header class="wa-mast">
   <div class="wa-frame wa-mast-in">
     <a class="wa-mark" href="/"><b>Afrinkong</b><span>Journeys across Africa</span></a>
+    <!-- "Build a journey" was in the nav AND "Begin a journey" was the button,
+         which a visitor reads as the same invitation twice — except they went
+         to different places. The nav item opened the tunnel at /journey; the
+         button scrolled to #plan, which is the section headed "What happens
+         after you choose Africa?" and explains the process rather than
+         starting one. Two synonyms, two destinations, no way to tell from the
+         labels which was which.
+         The button now does the thing it says, the nav loses the duplicate,
+         and the verb matches the page it opens — /journey calls itself Build a
+         journey. #plan is still there to scroll to; a section on this page does
+         not need a masthead entry to be found. -->
     <nav class="wa-routes" aria-label="Primary">
       <a href="/atlas">The Atlas</a>
-      <a href="/journey">Build a journey</a>
       <a href="/stories">Stories</a>
       <a href="/meet">Meet Africa</a>
       <a href="/places">Every place</a>
     </nav>
-    <a class="btn" href="#plan">Begin a journey</a>
+    <a class="btn" href="/journey">Build a journey</a>
   </div>
 </header>
 
@@ -2352,8 +2362,12 @@ window.AF = {
   <div class="wa-open-stage">
     <div class="wa-frame wa-open-grid">
       <div class="wa-open-say">
+        <!-- "Find your Africa." was a third line under the headline, in a third
+             size and a second colour, and it said the word the 213px word had
+             just finished saying. Counted across the first screen at 1440,
+             "Africa" appeared eleven times. The headline can afford to say it
+             once and stop. -->
         <h1 class="wa-h1"><span class="wa-h1-big">Africa</span><span class="wa-h1-rest">isn&rsquo;t one place.</span></h1>
-        <p class="wa-find">Find your Africa.</p>
       </div>
       <div class="wa-win">
         <div class="wa-win-frame">
@@ -2711,7 +2725,17 @@ window.AF = {
           <!-- /gen:captions -->
           </div>
           <div class="wa-terrain" id="wa-terrain" aria-hidden="true"></div>
-          <p class="wa-win-key" aria-hidden="true"><span data-tier="rest">Bookable</span><span data-tier="live">Written up here</span><span data-tier="ours">Our own operator</span></p>
+          <!-- Two keys, not three.
+               "Bookable" keyed data-tier="rest", which is the land itself —
+               the coastline under the countries, not a category a traveller
+               can be in. "Written up here" keyed the other fifty-one, and drew
+               the same coverage line the rest of the site has stopped drawing:
+               the ground journey is ours in every one of them, so being
+               written up is not a lesser tier, it is all of them.
+               What is left is the one distinction that is real and worth a
+               swatch — the three countries where we own the company on the
+               ground as well. -->
+          <p class="wa-win-key" aria-hidden="true"><span data-tier="live">Every country</span><span data-tier="ours">Our own company there</span></p>
         </div>
       </div>
       <!-- The lede and the three calls used to close the stage, below the
@@ -2723,17 +2747,19 @@ window.AF = {
       <div class="wa-open-tail">
         <!-- gen:lede -->
 <p class="wa-lede">Fifty-four countries, written up one place at a time, by people who go there.</p><!-- /gen:lede -->
-        <!-- Three calls, three weights, three different things — and the ladder
-             is the answer to "what can I do here": ask it a question, look at
-             the continent, or just read one. The reading room had no route out
-             of the first fold at all before this, which for a site whose
-             deepest work is twenty-two long reads was the wrong thing to leave
-             out. Weights are solid / outlined / plain text, so the eye gets an
-             order rather than three equal boxes. -->
+        <!-- One call, not three.
+             The ladder that stood here — ask a question / open the atlas / read
+             a country, in solid, outlined and plain — was argued as giving the
+             eye an order. What it actually did was restate the navigation in a
+             second visual language two inches below it: /journey, /atlas and
+             /stories are Build a journey, The Atlas and Stories in the masthead
+             above, so all three were already one click away and the reading
+             route was never missing.
+             Measured at 1440 the first screen held ninety-one elements of text
+             and nine competing actions. A hero with nine actions has none. The
+             nav can carry browsing; the hero carries the invitation. -->
         <div class="wa-acts">
-          <a class="wa-act go" href="/journey">What are you looking for? <i>&rarr;</i></a>
-          <a class="wa-act faint" href="/atlas">Open the atlas <i>&rarr;</i></a>
-          <a class="wa-act plain" href="/stories">Or read a country <i>&rarr;</i></a>
+          <a class="wa-act go" href="/journey">Build your journey <i>&rarr;</i></a>
         </div>
       </div>
       <div class="wa-win-rail">
@@ -3054,7 +3080,12 @@ window.AF = {
     caps[0].innerHTML = '<span class="wa-win-region">' + (el.dataset.region || 'Destination') + '</span>'
       + '<b>' + el.dataset.name + '</b>'
       + '<span class="wa-win-tag">' + el.dataset.tag + '</span>'
-      + '<span class="wa-win-op">' + (el.dataset.op || 'Written up here, run by somebody else') + '</span>'
+      /* The fallback here still said "Written up here, run by somebody else"
+         after every generated caption had stopped saying it. A default that
+         never fires renders nowhere, so the sweep over visible text could not
+         see it — it would have surfaced the first time a shape arrived without
+         a data-op. */
+      + '<span class="wa-win-op">' + (el.dataset.op || 'Your journey here, run by Afrinkong') + '</span>'
       + (href ? '<a class="wa-win-go" href="' + href + '">Enter ' + el.dataset.name + ' &rarr;</a>' : '');
   }
   shapes.forEach(function(el){
