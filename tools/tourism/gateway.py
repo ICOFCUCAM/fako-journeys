@@ -1974,9 +1974,29 @@ def splice(src, blocks):
     if missing:
         raise ValueError("index.html is missing markers: %s" % ", ".join(missing))
     for name, body in blocks.items():
-        pattern = re.compile(r"(%s\n).*?(\s*%s)"
+        # THIS HAS TO BE IDEMPOTENT, AND FOR A LONG TIME IT WAS NOT.
+        #
+        # The pattern was `(open\n).*?(\s*close)` and the replacement re-emitted
+        # group 2 verbatim. `\s*` is greedy for whitespace and `.*?` is lazy, so
+        # group 2 absorbed every newline sitting between the body and the
+        # closing marker — and then the new body, which ends in a newline of its
+        # own, was written in front of it. One extra blank line per build, every
+        # build, for ever. index.html had accumulated thirty-two of them inside
+        # gen:maplive, and two commits on main exist for no other reason than
+        # that a resolver run which changed nothing still produced a diff.
+        #
+        # `\n?[ \t]*` cannot cross a line, so the lazy `.*?` gives it only the
+        # last newline and the closing marker's own indentation. Everything
+        # before that is body and is replaced. Run it twice and the second run
+        # writes the same bytes as the first.
+        #
+        # rstrip on the body for the same reason: it is the body's job to say
+        # what it contains, not how much air sits under it.
+        pattern = re.compile(r"(%s\n).*?(\n?[ \t]*)(%s)"
                              % (re.escape(marker(name)), re.escape(marker(name, True))), re.S)
-        src, hits = pattern.subn(lambda m: m.group(1) + body + m.group(2), src, count=1)
+        src, hits = pattern.subn(
+            lambda m: m.group(1) + body.rstrip() + m.group(2) + m.group(3),
+            src, count=1)
         # A marker that is present but does not match is the same fault as one
         # that is absent, and it is the quieter of the two: the pattern wants a
         # newline directly after the opening marker, so a pair written inline —

@@ -3311,6 +3311,36 @@ def main():
         # line each; if node is not installed they are reported as skipped and
         # counted as neither passed nor failed, because a check that did not run
         # is not a check that passed.
+        # -- the generated blocks are written the same way twice -------------------
+        # splice() re-emitted the whitespace it had captured before a closing
+        # marker, so a body ending in a newline left one more blank line behind
+        # on every build. index.html had thirty-two of them inside gen:maplive,
+        # and two commits exist on main whose entire content is blank lines
+        # added by a resolver run that changed nothing else.
+        #
+        # A build that is not idempotent is worse than untidy: every scheduled
+        # run produces a diff, so a diff stops meaning anything happened.
+        print("\nthe generated blocks are stable")
+        from . import gateway as _gw
+        page = ("<p>before</p>\n<!-- gen:x -->\nOLD\n  <!-- /gen:x -->\n"
+                "<div>after</div>\n")
+        try:
+            real, _gw.MARKERS = _gw.MARKERS, ["x"]
+            once = _gw.splice(page, {"x": "NEW\n"})
+            twice = _gw.splice(once, {"x": "NEW\n"})
+            thrice = _gw.splice(twice, {"x": "NEW\n"})
+        finally:
+            _gw.MARKERS = real
+        check("splicing a block twice writes the same bytes", once == twice,
+              "%d chars then %d" % (len(once), len(twice)))
+        check("and a third time changes nothing either", twice == thrice,
+              "%d chars" % len(thrice))
+        check("the closing marker keeps its own indentation",
+              "\n  <!-- /gen:x -->" in once, repr(once[-40:]))
+        check("nothing outside the markers is touched",
+              once.startswith("<p>before</p>\n") and once.endswith("<div>after</div>\n"),
+              repr(once[:20]) + " ... " + repr(once[-20:]))
+
         # -- the resolve workflow's own verdict ------------------------------------
         # verify_resolution.py is what turns the green tick on the resolve
         # workflow into a claim. It used to compare len(entries) before against
