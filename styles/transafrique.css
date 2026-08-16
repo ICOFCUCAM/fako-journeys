@@ -9,76 +9,76 @@
 .tf-body{background:var(--fj-basalt);color:var(--fj-onbasalt)}
 .tf-page{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
 
-/* ---- the hero ------------------------------------------------------------- */
-/* THE FIRST SCREEN AFTER THE DOOR, AND ITS JOB IS CONTINUITY.
+/* ---- 01 the opening spread ------------------------------------------------ */
+/* THE FIXED-WINDOW BAND, AND IT MUST NOT BE BROKEN.
    ---------------------------------------------------------------------------
-   The homepage band spends two screens building a morning — a loaded vehicle
-   at Amboseli before six, the mountain on the horizon, Kenya to Tanzania — and
-   this page used to answer it with type on an empty dark field. That reads as
-   a different website rather than as the next frame, and the momentum was gone
-   in one click.
+   .tf-band-pic holds one viewport of photograph at position:fixed; the band is
+   given clip-path:inset(0), which clips that fixed child to the band's own box.
+   Scrolling slides the window down the picture and the picture never moves.
+   There is no script — this is two properties.
 
-   So the picture takes most of the width and it is the same journey one beat
-   later: the same loaded vehicle going, dust behind it, on a road that leaves
-   the frame. Roughly a third type to two thirds photograph.
+   NOTHING between .tf-band and .tf-band-pic, or on either, may carry
+   transform, filter, backdrop-filter, perspective, will-change or contain.
+   Each makes an element a containing block for fixed descendants, which turns
+   that `fixed` into `absolute` and ends the effect with no error and nothing
+   obviously wrong — the picture simply starts scrolling like any other image.
+   A hover effect added here in two years is enough to do it, which is why
+   tools/browser-checks.js asserts the mechanism rather than the appearance.
 
-   AND IT IS DELIBERATELY NOT THE WINDOW BAND AGAIN. The fixed-picture
-   technique belongs to the door. Used twice inside two clicks it stops being
-   cinema and starts being a template, and the second use is always the weaker
-   one because the reader already knows the trick.
+   background-attachment:fixed is the other way to do this and is not used: iOS
+   Safari ignores it outright, on the platform most of these readers are on.
 
-   Full-bleed, so the photograph reaches both edges of the screen the way the
-   band does. The type column is padded to land on the same left margin as
-   every paragraph below it — measured off --frame rather than guessed, so the
-   headline and the body text share one edge at every width. */
-.tf-hero{display:grid;grid-template-columns:minmax(0,37fr) minmax(0,63fr);
-  min-height:min(76svh,720px);background:var(--fj-basalt)}
-.tf-hero-say{display:flex;align-items:center;
-  padding:var(--sp-5) 40px var(--sp-5)
-          max(44px, calc((100vw - var(--frame)) / 2 + 44px))}
-.tf-hero-in{max-width:46ch;margin-left:auto}
-.tf-hero-pic{margin:0;overflow:hidden;background:var(--c-primary)}
-.tf-hero-pic img{width:100%;height:100%;object-fit:cover;display:block}
-.tf-hero-sub{margin:22px 0 0;font-family:var(--fj-display);font-weight:700;
-  font-size:clamp(17px,1.8vw,24px);line-height:1.2;color:var(--c-accent-lit)}
-.tf-hero-lede{margin:16px 0 0;font-size:clamp(15.5px,1.4vw,18px);line-height:1.6;
-  color:var(--fj-onbasalt);max-width:46ch}
-/* The chain the door started. The band shows two countries because two is what
-   is in that photograph; this shows the nine the continental crossing actually
-   takes, which is the seam — a border, then the road through nine of them.
-   Names rather than links: the hero is a statement, and nine outbound links in
-   a first screen is a menu. The routes below link every one of them. */
-.tf-hero-chain{margin:22px 0 0;display:flex;flex-wrap:wrap;
-  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.155em;
-  text-transform:uppercase;color:var(--c-gold);line-height:1.9}
-.tf-hero-chain span+span::before{content:"\2192";margin:0 .5em;color:var(--fj-onbasalt-dim)}
-/* THE SOLID BUTTON, INVERTED FOR A DARK GROUND.
-   af-btn--solid fills with deep forest and inks in ivory, which is a call to
-   action on paper and a dark rectangle on basalt — this hero's ground is deep
-   forest mixed 95% with black, so the button was very nearly the wall.
-
-   Terracotta was the first fix and it measured 3.15:1: this block is one of the
-   dark grounds that repoints --c-accent to its lit variant, so an ivory label
-   landed on #CB6F4B and needed 4.5. Deep-forest ink on that same terracotta is
-   4.58 — over the bar by eight hundredths, which is not a margin, it is a
-   coincidence waiting for somebody to nudge a colour.
-
-   So the fill inverts instead of shifting hue: ivory ground, deep forest ink,
-   14.3:1, and it is the brightest object on a very dark page — which is what
-   the one thing to do next should be. */
-.tf-hero-go{margin-top:28px;background:var(--c-bg);border-color:var(--c-bg);
+   88svh, and svh rather than vh: on a phone vh changes as the toolbars hide,
+   which would resize the window while the reader is inside it. */
+.tf-band{position:relative;clip-path:inset(0);min-height:88svh;
+  display:flex;align-items:flex-end}
+.tf-band-pic{position:fixed;inset:0;z-index:0}
+.tf-band-pic img{width:100%;height:100%;object-fit:cover;display:block}
+/* Fixed WITH the picture, not laid on the band: a tint on the band would
+   travel while the photograph stood still and the shading would crawl across
+   the frame. Graded, not flat — this photograph is a bright orange road under
+   a pale sky, and a flat wash heavy enough for the worst pixel is the dark
+   scrim this is built not to be. Weight goes where the type is and is released
+   over the hills, which is the half of the picture worth keeping luminous. */
+/* HORIZONTAL, AND IT HAS TO BE.
+   The first version graded this vertically — heavy at the foot where the type
+   sits, released at the top over the hills — and it measured 3.55 to 4.48:1
+   against a 4.5 bar. The reason is the same one the homepage band records: the
+   tint is fixed to the viewport and the copy travels the whole height of it, so
+   every line passes through every band of a vertical gradient. Grading it that
+   way does not fix anything, it only chooses which scroll position fails.
+   Horizontally there is no such problem, because the copy is pinned to the left
+   column and stays there for the whole travel — weight put on the left is under
+   the type at every scroll position. So the left is carried and the right, which
+   is hills and sky and the best part of the photograph, keeps its light. */
+.tf-band-tint{position:absolute;inset:0;background:
+  linear-gradient(100deg,
+    color-mix(in srgb,var(--c-primary) 90%,transparent) 0%,
+    color-mix(in srgb,var(--c-primary) 86%,transparent) 34%,
+    color-mix(in srgb,var(--c-primary) 72%,transparent) 54%,
+    color-mix(in srgb,var(--c-primary) 34%,transparent) 78%,
+    color-mix(in srgb,var(--c-primary) 14%,transparent) 100%)}
+.tf-band-copy{position:relative;z-index:1;width:100%;max-width:var(--frame);
+  margin:0 auto;padding:0 44px var(--sp-6)}
+.tf-band-in{max-width:56ch}
+.tf-band-mark{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  letter-spacing:.16em;font-size:clamp(13px,1.2vw,16px);color:var(--c-bg);margin:0}
+.tf-band-series{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--c-bg);margin:8px 0 0}
+.tf-band-chain{margin:24px 0 0;display:flex;flex-wrap:wrap;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-bg);line-height:2}
+.tf-band-chain span+span::before{content:"\2192";margin:0 .5em}
+/* Ivory fill, deep-forest ink: the one thing to do from a very dark screen has
+   to be the brightest object on it, and terracotta over this photograph
+   measured 3.15:1 where 4.5 was needed. */
+.tf-band-go{margin-top:30px;background:var(--c-bg);border-color:var(--c-bg);
   color:var(--c-primary)}
-.tf-hero-go:hover{background:var(--c-accent-lit);border-color:var(--c-accent-lit);
-  color:var(--c-primary)}
-
+.tf-band-go:hover{background:var(--c-accent-lit);border-color:var(--c-accent-lit)}
 @media(max-width:900px){
-  /* Stacked, and the photograph goes first: the whole point of this screen is
-     that the reader has not left the journey, and a wall of type above the
-     picture says they have. */
-  .tf-hero{grid-template-columns:1fr;min-height:0}
-  .tf-hero-pic{order:-1;aspect-ratio:16/10}
-  .tf-hero-say{padding:var(--sp-5) 28px}
-  .tf-hero-in{max-width:none;margin-left:0}
+  .tf-band{min-height:82svh}
+  .tf-band-copy{padding:0 24px var(--sp-5)}
+  .tf-band-tint{background:color-mix(in srgb,var(--c-primary) 72%,transparent)}
 }
 
 /* Widened when the headline grew. 'Don't just cross Africa. Experience it
@@ -92,29 +92,34 @@
 .tf-lede{margin-top:24px;font-size:clamp(17px,1.7vw,22px);line-height:1.5;
   color:var(--fj-onbasalt);max-width:56ch}
 
-/* ---- the idea ------------------------------------------------------------- */
-/* The argument in distances rather than adjectives, which is the only version
-   that survives a reader who has never been. */
+/* ---- 02 the idea ---------------------------------------------------------- */
+/* Asymmetric on purpose: the statement holds the left column and the argument
+   runs down the right, so the page reads as a spread rather than as a stack of
+   centred blocks. The argument is in distances rather than adjectives, which is
+   the only version that survives a reader who has never been. */
+.tf-idea-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+  gap:var(--sp-4) var(--sp-6);align-items:start}
 .tf-idea-line{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(26px,3.2vw,46px);line-height:1.02;letter-spacing:-.02em;
-  color:var(--c-bg);margin:0;max-width:18ch}
-.tf-idea-say{margin:22px 0 0;font-size:clamp(16px,1.5vw,19px);line-height:1.62;
-  color:var(--fj-onbasalt);max-width:62ch}
+  font-size:clamp(30px,3.8vw,58px);line-height:1;letter-spacing:-.025em;
+  color:var(--c-bg);margin:0;max-width:13ch}
+.tf-idea-say{margin:0 0 20px;font-size:clamp(16px,1.4vw,18.5px);line-height:1.65;
+  color:var(--fj-onbasalt);max-width:60ch}
+/* The turn, and it sits between the paragraphs rather than after them: the
+   first says a week in one country is a week in one country, this says what the
+   alternative actually is, and the second then has something to explain. */
+.tf-idea-pull{margin:26px 0 26px;padding-left:22px;
+  border-left:2px solid var(--c-accent-lit);
+  font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(19px,2vw,28px);line-height:1.1;letter-spacing:-.01em;
+  color:var(--c-bg);max-width:20ch}
+@media(max-width:900px){.tf-idea-in{grid-template-columns:minmax(0,1fr)}}
 
 .tf-block{margin-top:var(--sp-7)}
 .tf-h2{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
   text-transform:uppercase;color:var(--c-accent-lit);font-weight:400;
   border-top:2px solid var(--c-accent-fill);padding-top:18px;margin:0 0 var(--sp-4)}
 
-/* Who travels with you. Rows, not cards: it is a crew list, and a crew list is
-   a list. */
-.tf-team{display:grid;gap:0}
-.tf-team-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
-  gap:12px 32px;padding:18px 0;border-bottom:var(--fj-rule-dark)}
-.tf-team-row b{font-family:var(--fj-display);font-size:clamp(17px,1.6vw,23px);
-  font-weight:700;color:var(--c-bg);line-height:1.14}
-.tf-team-row span{font-size:15.5px;line-height:1.55;color:var(--fj-onbasalt-dim);
-  max-width:46ch}
+
 
 /* ---- the crossings, on the continent -------------------------------------- */
 /* A DIAGRAM OF ONE ROAD SYSTEM, NOT FOUR TOUR PACKAGES.
@@ -144,50 +149,16 @@
   transition:fill .25s ease}
 .tf-map-line{fill:none;stroke:var(--c-gold);stroke-width:4.5;
   stroke-linejoin:round;stroke-linecap:round;transition:stroke .25s ease,stroke-width .25s ease}
-/* The spine carries the weight; the arc is its equal in kind and shorter in
-   fact. East and South have no stroke at rest because the spine is already
-   drawn along them — they appear by brightening, not by arriving. */
-.tf-map-line[data-route="great"]{stroke:var(--c-gold);stroke-width:5.5}
-.tf-map-line[data-route="west"]{stroke:var(--c-gold);stroke-width:5.5}
-.tf-map-line[data-route="east"],.tf-map-line[data-route="south"]{stroke:none}
-.tf-map-nodes circle{fill:var(--c-bg);stroke:none}
 .tf-map-label{font-family:var(--fj-mono);font-size:17px;letter-spacing:2.4px;
   fill:var(--c-gold)}
 
-/* Hovering or tabbing to a card lights its countries and its road. The
-   selector reaches from the section down into the figure, which is why the map
-   and the cards have to stay inside one .tf-block. */
-.tf-block:has(.tf-route[data-route="east"]:hover) .tf-map-line[data-route="east"],
-.tf-block:has(.tf-route[data-route="south"]:hover) .tf-map-line[data-route="south"],
-.tf-block:has(.tf-route:focus-within[data-route="east"]) .tf-map-line[data-route="east"],
-.tf-block:has(.tf-route:focus-within[data-route="south"]) .tf-map-line[data-route="south"]{
-  stroke:var(--c-bg);stroke-width:7}
-.tf-block:has(.tf-route[data-route="west"]:hover) .tf-map-line[data-route="west"],
-.tf-block:has(.tf-route[data-route="great"]:hover) .tf-map-line[data-route="great"]{
-  stroke:var(--c-bg);stroke-width:7}
-.tf-block:has(.tf-route[data-route="east"]:hover) .tf-map-in path[data-in~="east"],
-.tf-block:has(.tf-route[data-route="west"]:hover) .tf-map-in path[data-in~="west"],
-.tf-block:has(.tf-route[data-route="south"]:hover) .tf-map-in path[data-in~="south"],
-.tf-block:has(.tf-route[data-route="great"]:hover) .tf-map-in path[data-in~="great"]{
-  fill:color-mix(in srgb,var(--c-bg) 58%,transparent)}
-
-.tf-map-cap{margin:0}
+.tf-map-cap{margin:0;min-width:0}
 .tf-map-say{margin:0;font-size:15px;line-height:1.6;color:var(--fj-onbasalt-dim);
   max-width:44ch}
-.tf-map-key{list-style:none;margin:var(--sp-3) 0 0;padding:0}
-.tf-map-key li{display:flex;align-items:baseline;gap:14px;padding:9px 0;
-  border-bottom:var(--fj-rule-dark)}
-/* min-width:0 so the longest name wraps instead of shouldering the count off
-   the end of its row: "Trans Afrique — The Continental Expedition" against
-   "9 countries" left them touching. */
-.tf-map-key b{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:15px;color:var(--c-bg);line-height:1.2;min-width:0}
-.tf-map-key span{margin-left:auto;flex:0 0 auto;padding-left:8px;
-  font-family:var(--fj-mono);font-size:9.5px;
-  letter-spacing:.155em;text-transform:uppercase;color:var(--c-gold);white-space:nowrap}
+.tf-map-key{list-style:none;margin:var(--sp-3) 0 0;padding:0;min-width:0}
 
 @media(max-width:860px){
-  .tf-map{grid-template-columns:1fr;gap:var(--sp-3)}
+  .tf-map{grid-template-columns:minmax(0,1fr);gap:var(--sp-3)}
 }
 
 /* The crossings. The country chain is the picture — arrows between names, which
@@ -321,3 +292,124 @@
 .tf-med-but{margin-top:10px;font-size:14px;line-height:1.6;color:var(--fj-onbasalt-dim)}
 
 @media(max-width:760px){.tf-support{grid-template-columns:1fr}}
+
+
+/* ---- 03 the dossier, 04 the medical note ---------------------------------- */
+/* 01 / MEDICAL reads as a manifest; six unnumbered boxes read as a features
+   grid. The number is the whole premiumisation and it costs one element. */
+.tf-sup-no{display:flex;align-items:center;gap:12px;margin:0 0 12px}
+.tf-sup-no b{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;
+  color:var(--c-accent-lit);font-weight:400}
+.tf-sup-no i{flex:1 1 auto;height:1px;background:var(--fj-rule-dark);display:block}
+.tf-sup{border-top:0;padding-top:0}
+.tf-med{position:relative}
+.tf-med-stamp{margin:18px 0 0;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-gold)}
+
+/* ---- 05 three ways to cross ----------------------------------------------- */
+/* Not a pricing table. The number and the promise come first and the figures
+   come last in the metadata voice, because the figure is a consequence of the
+   product rather than the product. */
+.tf-level-no{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;
+  color:var(--c-accent-lit);margin:0 0 12px}
+
+/* ---- 06 the crossings, on the map ----------------------------------------- */
+/* Four colours, and the widths carry the truth the colours alone could not:
+   East is the Continental spine's first four countries and South is its last
+   five, so the three lines are coincident. Drawn in descending width — spine
+   widest and underneath, then South, then East on top — the overlap reads as
+   the regional crossings sitting inside the trunk, which is exactly what they
+   are. Four equal lines would have read as a collision. */
+.tf-map-line[data-route="great"]{stroke:var(--c-gold)}
+.tf-map-line[data-route="south"]{stroke:#E0A24A}
+.tf-map-line[data-route="east"]{stroke:var(--c-accent-lit)}
+.tf-map-line[data-route="west"]{stroke:#7FA88B}
+.tf-map-nodes circle[data-route="great"]{fill:var(--c-gold)}
+.tf-map-nodes circle[data-route="south"]{fill:#E0A24A}
+.tf-map-nodes circle[data-route="east"]{fill:var(--c-accent-lit)}
+.tf-map-nodes circle[data-route="west"]{fill:#7FA88B}
+.tf-map-nodes circle{stroke:var(--fj-basalt);stroke-width:2.5}
+.tf-map-art{min-width:0}
+.tf-map-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(26px,3vw,42px);line-height:1.02;letter-spacing:-.02em;
+  color:var(--c-bg);margin:0 0 18px;max-width:14ch}
+/* The legend names every country, because "6 countries" raises exactly the
+   question it then refuses to answer — and it doubles as the map's control. */
+.tf-map-key li{display:flex;align-items:flex-start;gap:14px;padding:14px 0;
+  border-bottom:var(--fj-rule-dark)}
+.tf-key-dot{flex:0 0 auto;width:11px;height:11px;border-radius:50%;margin-top:4px}
+.tf-map-key li[data-route="great"] .tf-key-dot{background:var(--c-gold)}
+.tf-map-key li[data-route="south"] .tf-key-dot{background:#E0A24A}
+.tf-map-key li[data-route="east"] .tf-key-dot{background:var(--c-accent-lit)}
+.tf-map-key li[data-route="west"] .tf-key-dot{background:#7FA88B}
+.tf-key-in{flex:1 1 auto;min-width:0}
+.tf-key-where{display:block;margin-top:5px;overflow-wrap:anywhere;font-size:13.5px;line-height:1.5;
+  color:var(--fj-onbasalt-dim)}
+.tf-map-key i{flex:0 0 auto;font-style:normal;padding-left:10px;
+  font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-gold);white-space:nowrap;margin-top:4px}
+.tf-map-go{margin-top:var(--sp-4);border-color:var(--c-accent-lit);
+  color:var(--c-accent-lit);background:none}
+.tf-map-go:hover{background:var(--c-accent-lit);color:var(--c-primary)}
+/* Hovering a legend row lifts its line and dims the rest. Transitions only —
+   no transform anywhere near the band, and nothing here is fixed anyway. */
+.tf-map:has(.tf-map-key li[data-route="east"]:hover) .tf-map-line:not([data-route="east"]),
+.tf-map:has(.tf-map-key li[data-route="west"]:hover) .tf-map-line:not([data-route="west"]),
+.tf-map:has(.tf-map-key li[data-route="south"]:hover) .tf-map-line:not([data-route="south"]),
+.tf-map:has(.tf-map-key li[data-route="great"]:hover) .tf-map-line:not([data-route="great"]){
+  stroke:color-mix(in srgb,var(--c-bg) 16%,transparent)}
+
+/* ---- 08 the flagship ------------------------------------------------------ */
+/* Full width and out of the grid the other three sit in. East, West and South
+   are three crossings; this is the one they are portions of, which is a
+   different kind of thing and must not read as a fourth option. */
+.tf-great{margin:var(--sp-7) auto 0;max-width:var(--frame);padding:var(--sp-6) 44px;
+  border-top:2px solid var(--c-accent-fill);border-bottom:2px solid var(--c-accent-fill)}
+.tf-great-eyebrow{font-family:var(--fj-mono);font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--c-accent-lit);margin:0}
+.tf-great-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(32px,5.6vw,86px);line-height:.94;letter-spacing:-.03em;
+  color:var(--c-bg);margin:14px 0 0;max-width:14ch}
+.tf-great-strands{margin:20px 0 0;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-gold)}
+.tf-great-where{margin:16px 0 0;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--fj-onbasalt);line-height:2.1}
+.tf-great-where a{color:inherit;border-bottom:1px solid transparent}
+.tf-great-where a:hover{border-color:var(--c-gold)}
+.tf-great-say{margin:24px 0 0;font-size:clamp(16px,1.5vw,20px);line-height:1.6;
+  color:var(--fj-onbasalt);max-width:60ch}
+.tf-great-facts{display:flex;flex-wrap:wrap;gap:0 var(--sp-5);margin:var(--sp-4) 0 0;
+  padding-top:var(--sp-3);border-top:var(--fj-rule-dark)}
+.tf-great-facts div{padding:6px 0}
+.tf-great-facts dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.tf-great-facts dd{margin:6px 0 0;font-size:17px;color:var(--c-bg)}
+.tf-great-close{margin:var(--sp-4) 0 0;font-family:var(--fj-display);font-weight:700;
+  text-transform:uppercase;font-size:clamp(17px,1.8vw,25px);letter-spacing:.01em;
+  color:var(--c-accent-lit)}
+
+/* ---- 10 ready to cross ---------------------------------------------------- */
+/* An invitation, not a checkout. Two buttons because the two audiences are
+   genuinely different, and the ground changes to deep forest so the end of the
+   page is a room rather than another paragraph. */
+.tf-close{background:var(--c-primary);margin-top:var(--sp-7)}
+.tf-close-in{max-width:var(--frame);margin:0 auto;padding:var(--sp-7) 44px}
+.tf-close-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(34px,5vw,72px);line-height:.96;letter-spacing:-.028em;
+  color:var(--c-bg);margin:0}
+.tf-close-say{margin:22px 0 0;font-size:clamp(16px,1.5vw,19px);line-height:1.6;
+  color:var(--fj-onbasalt);max-width:54ch}
+.tf-close-acts{display:flex;flex-wrap:wrap;gap:14px;margin-top:var(--sp-4)}
+.tf-close-go{background:var(--c-bg);border-color:var(--c-bg);color:var(--c-primary)}
+.tf-close-go:hover{background:var(--c-accent-lit);border-color:var(--c-accent-lit)}
+.tf-close-alt{border-color:var(--c-bg);color:var(--c-bg);background:none}
+.tf-close-alt:hover{background:var(--c-bg);color:var(--c-primary)}
+.tf-close-stamp{margin:var(--sp-4) 0 0;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--c-gold)}
+.tf-page--foot{padding-top:var(--sp-5)}
+
+@media(max-width:860px){
+  .tf-great{padding:var(--sp-5) 24px}
+  .tf-close-in{padding:var(--sp-6) 24px}
+  .tf-map-key i{display:none}
+}

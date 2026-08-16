@@ -68,8 +68,9 @@ def _shape(text):
     return (text or "").rstrip(".").upper()
 
 
-def build(d):
+def build(d, by_slug=None):
     """`d` is the loaded tourism/transafrique.json."""
+    by_slug = by_slug or {}
     m = load_map()
     view = m.get("view") or [0, 0, 1000.0, 1060.0]
     at = {}
@@ -81,91 +82,112 @@ def build(d):
             at[c["slug"]] = c["at"]
     rest = [r["d"] for r in m.get("rest", []) if r.get("d")]
 
-    routes = {r["id"]: r for r in d["routes"]}
-    great = next((r for r in d["routes"] if r.get("great")), None)
-
-    # slug -> the routes that cross it, so one path can be lit by any of them.
     crosses = {}
     for r in d["routes"]:
-        for s in r.get("countries") or []:
-            crosses.setdefault(s, []).append(r["id"])
+        for s_ in r.get("countries") or []:
+            crosses.setdefault(s_, []).append(r["id"])
 
-    out = []
-    out.append(
-        '<svg class="tf-map-svg" viewBox="%s %s %s %s" role="img" '
-        'aria-labelledby="tf-map-t">'
-        % tuple(view))
-    out.append('<title id="tf-map-t">%s</title>'
-               % ("The crossings on the map of Africa: a spine of nine "
-                  "countries from Kenya to South Africa, and an arc of six "
-                  "along the Atlantic from Senegal to Ghana."))
+    out = ['<svg class="tf-map-svg" viewBox="%s %s %s %s" role="img" '
+           'aria-labelledby="tf-map-t">' % tuple(view)]
+    out.append('<title id="tf-map-t">The four crossings drawn on Africa: East '
+               'through Kenya, Uganda, Rwanda and Tanzania; West down the '
+               'Atlantic from Senegal to Ghana; South from South Africa up to '
+               'Zambia; and the Continental Expedition running the whole '
+               'length from Kenya to South Africa.</title>')
 
-    # 1. The continent, quiet. Everything Afrinkong does not cross is still
-    #    drawn — a map of thirteen countries floating alone is a diagram, and
+    # 1. The continent, flat and quiet. Everything Afrinkong does not cross is
+    #    still drawn: thirteen countries alone on a dark field is a diagram, and
     #    the point of putting a crossing on Africa is that Africa is around it.
     out.append('<g class="tf-map-rest" aria-hidden="true">')
     out += ['<path d="%s"/>' % p for p in rest]
     out += ['<path d="%s"/>' % p for _, p in base]
     out.append('</g>')
 
-    # 2. The countries a crossing actually enters.
     out.append('<g class="tf-map-in" aria-hidden="true">')
     for slug, path in base:
         if slug in crosses:
-            out.append('<path d="%s" data-in="%s"/>'
-                       % (path, " ".join(crosses[slug])))
+            out.append('<path d="%s" data-in="%s"/>' % (path, " ".join(crosses[slug])))
     out.append('</g>')
 
-    # 3. The roads. The spine and the arc are drawn; East and South are drawn
-    #    coincident with the spine and carry no stroke until their card is
-    #    under the cursor or the keyboard.
+    # 2. THE ROADS, AND WHY FOUR LINES RATHER THAN TWO.
+    #
+    #    East is the Continental Expedition's first four countries and South is
+    #    its last five reversed, so three of the four lines are geometrically
+    #    coincident. Drawn as four equals they would collide and read as a
+    #    mistake. Drawn in descending width — the spine widest and underneath,
+    #    then South, then East on top — the overlap reads as what it is: the
+    #    regional crossings are lengths of the trunk, visibly sitting inside it.
+    #    Each keeps its own colour so the legend can point at it.
+    order = ["great", "south", "east", "west"]
+    # Wide enough apart to read as nesting rather than as a colour clash: the
+    # spine is the road, South is a length of it, East is a shorter length
+    # again. Three strokes within a pixel of each other would look like one
+    # badly antialiased line.
+    widths = {"great": 10.0, "south": 5.8, "east": 2.8, "west": 5.8}
+    routes = {r["id"]: r for r in d["routes"]}
     out.append('<g class="tf-map-lines" aria-hidden="true">')
-    for r in d["routes"]:
-        pts = [at[s] for s in (r.get("countries") or []) if s in at]
+    for rid in order:
+        r = routes.get(rid)
+        if not r:
+            continue
+        pts = [at[s_] for s_ in (r.get("countries") or []) if s_ in at]
         if len(pts) < 2:
             continue
         dpath = "M" + "L".join("%.1f %.1f" % (x, y) for x, y in pts)
-        out.append('<path class="tf-map-line" data-route="%s" d="%s"/>'
-                   % (r["id"], dpath))
+        out.append('<path class="tf-map-line" data-route="%s" d="%s" '
+                   'style="stroke-width:%s"/>' % (rid, dpath, widths[rid]))
     out.append('</g>')
 
-    # 4. A node per country on a drawn road, once each rather than once per
-    #    route: Kenya is on the spine and on East, and two circles at the same
-    #    centre is a heavier dot for no reason.
+    # 3. One node per country, coloured by the narrowest route through it, so a
+    #    dot on the spine that East also uses reads as East's.
+    priority = {"east": 0, "west": 1, "south": 2, "great": 3}
     out.append('<g class="tf-map-nodes" aria-hidden="true">')
     for slug in sorted(crosses):
-        if slug in at:
-            out.append('<circle cx="%.1f" cy="%.1f" r="5.5" data-in="%s"/>'
-                       % (at[slug][0], at[slug][1], " ".join(crosses[slug])))
+        if slug not in at:
+            continue
+        owner = sorted(crosses[slug], key=lambda k: priority.get(k, 9))[0]
+        out.append('<circle cx="%.1f" cy="%.1f" r="6" data-route="%s" data-in="%s"/>'
+                   % (at[slug][0], at[slug][1], owner, " ".join(crosses[slug])))
     out.append('</g>')
 
-    # 5. Two labels, and they name the road rather than mark a city.
     out.append('<g class="tf-map-labels" aria-hidden="true">')
     for rid, (x, y, anchor) in LABELS.items():
-        r = great if rid == "great" else routes.get(rid)
+        r = routes.get(rid)
         if not r:
             continue
         out.append('<text class="tf-map-label" x="%.1f" y="%.1f" '
-                   'text-anchor="%s">%s</text>'
-                   % (x, y, anchor, _shape(r.get("shape"))))
+                   'text-anchor="%s">%s</text>' % (x, y, anchor, _shape(r.get("shape"))))
     out.append('</g>')
-
     out.append('</svg>')
 
+    # 4. The legend names every country, because "6 countries" raises exactly
+    #    the question it refuses to answer. It is also the hover control for the
+    #    map: :has() on the figure lights the matching line and countries.
     legend = "".join(
-        '<li data-route="%s"><b>%s</b><span>%s</span></li>'
+        '<li data-route="%s"><span class="tf-key-dot" aria-hidden="true"></span>'
+        '<span class="tf-key-in"><b>%s</b>'
+        '<span class="tf-key-where">%s</span></span>'
+        '<i>%d countries</i></li>'
         % (r["id"], _esc(r["name"]),
-           "%d countries" % len(r.get("countries") or []))
+           " &middot; ".join(_esc(by_slug[s_].name) if s_ in by_slug
+                             else _esc(s_.replace("-", " ").title())
+                             for s_ in (r.get("countries") or [])),
+           len(r.get("countries") or []))
         for r in d["routes"])
 
-    return ('<figure class="tf-map">%s'
+    return ('<figure class="tf-map">'
+            '<div class="tf-map-art">%s</div>'
             '<figcaption class="tf-map-cap">'
+            '<h3 class="tf-map-h">%s</h3>'
             '<p class="tf-map-say">Two roads and four crossings: East is the '
             'first four countries of the Continental Expedition and South is '
             'its last five, so the regional journeys are lengths of the same '
             'spine rather than separate routes.</p>'
             '<ul class="tf-map-key">%s</ul>'
-            '</figcaption></figure>' % ("".join(out), legend))
+            '<a class="af-btn tf-map-go" href="#records">View all crossings<i>&rarr;</i></a>'
+            '</figcaption></figure>'
+            % ("".join(out), _esc(d.get("map_title") or "Four ways across a continent."),
+               legend))
 
 
 def _esc(v):

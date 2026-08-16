@@ -9,16 +9,15 @@
  "say": "From the Atlantic to the Indian Ocean. From rainforest to savanna. From ancient kingdoms to modern cities. Cross Africa one country at a time, by road, through the places that cannot be understood from an airport window.",
  "stamp": "The Afrinkong journey series",
  "act": "Explore the journeys",
-
- "$hero": "The next frame of the same journey. The homepage band shows a loaded vehicle standing still at Amboseli before six with the mountain on the horizon; this shows a loaded vehicle going, dust behind it, on a road that runs on over the hills and out of the picture. Same roof box, same product, one beat later — which is what makes the click feel like entering rather than leaving. It is deliberately not the same photograph: repeating the frame would say the journey had not started.\n\nIt is also why the alternative was rejected. still-safari-vehicles is three tourist vehicles at one sighting, which is a package safari — the exact thing a continental crossing is not.\n\nThe frame is already on /services as one of Cameroon's twenty-seven, and it names no country: the subject line for it is 'a 4x4 on a red laterite road between rainforest and highland farmland'. A crossing hero has to be a road rather than a place, so a photograph that cannot be pinned to one country is the right one here and would be the wrong one for an atlas page.",
+ "$hero": "The opening spread. Full-bleed photograph on the site's fixed-window architecture — position:fixed picture, clip-path:inset(0) band — so the road stands still while the title travels over it. Nothing between the band and the picture may carry transform, filter, backdrop-filter, perspective, will-change or contain; any one of them demotes the fixed to absolute and the effect dies silently. docs/window-band.md is the full account.\n\nThe photograph is the same journey the homepage door opens on, one beat later: the same loaded vehicle, now going, on a road that leaves the frame. It is deliberately not the door's own frame — repeating it would say the journey had not started.",
  "hero": {
   "image": "/images/uploads/site-services-laterite-road-1600w.jpg",
   "width": 1600,
   "height": 1067,
   "alt": "A loaded four-wheel drive with a roof box driving away on a red laterite road, dust rising behind it, the road running on over green hills towards a line of higher country on the horizon",
-  "act": "Enter the crossing"
+  "act": "Explore the crossings",
+  "mark": "Trans Afrique"
  },
-
  "$door": "The homepage band, and it is a title sequence rather than a paragraph. The old version told a morning in the second person and ended on a button; it was warm, and it made the reader work out for themselves what was being sold. This states the proposition first and names the product afterwards, which is the order a film uses — cold open, then title card. The eyebrow says 'series' and not 'Trans Afrique' precisely so that the name still has somewhere to land.\n\nThe copy lives here rather than in index.html because the door and the page are one product and were drifting apart: the band said one thing about a crossing and /trans-afrique said another, and nothing made them agree. The three facts are not written here at all — they are derived from the levels and the routes, so a new crossing or a changed length cannot leave a stale number on the homepage.",
  "door": {
   "eyebrow": "The Afrinkong journey series",
@@ -27,7 +26,6 @@
   "sub": "Multi-country journeys by road, with the people, expertise and support to make the crossing possible.",
   "act": "Discover Trans Afrique"
  },
-
  "$idea": "The frame between the door and the machinery. Somebody arriving from the homepage has been sold a morning and nothing else; sending them straight into six support domains and three price bands asks them to evaluate a product they have not yet been told the shape of. This is the paragraph that says what a crossing is, and it is the only place on the site where the argument is made in distances rather than in adjectives.",
  "idea": {
   "title": "The idea",
@@ -35,9 +33,9 @@
   "say": [
    "Dakar to Mombasa is further than Lisbon to Kabul, and there are fifty-four countries in between. A week in one of them is a week in one of them — which is the right journey for most people most of the time, and it is what the rest of this site is for.",
    "A crossing is the other answer. You travel by road, you wake up in a different country most weeks, and the continent changes slowly enough to watch it happen: the landscape first, then the language, then what is for sale at the roadside, then what is for dinner. Nobody assembles that from home. Borders keep their own hours, permits are booked in months rather than days, and the part that decides whether a month works is having somebody whose job is the phone call at the frontier post on a Sunday."
-  ]
+  ],
+  "pull": "You don’t visit Africa. You move through it."
  },
-
  "$levels": "Three ways to travel the same continent, and the difference is who designed the route. Private is yours; Signature is ours and you pick the dates; Expedition is a fixed departure with a fixed number of seats, which is the only one of the three where scarcity is a fact rather than a technique.",
  "levels": [
   {
@@ -254,8 +252,28 @@
  ],
  "$medical": "Written to be exactly true and no more. An accompanying medical professional is support in addition to insurance and local emergency services, never a substitute for either, and the site says so in the same breath as the offer rather than in a footnote somebody has to go looking for. Insurance stays mandatory — it is already the one requirement rates.json marks as hard.",
  "medical": {
-  "title": "About medical support",
-  "say": "On a long expedition a medical professional can accompany the group, with the level of support set by the itinerary, the group size and the destination. It is confirmed for your crossing before you book and never assumed.",
-  "but": "It is additional expedition support and not a replacement for travel and medical insurance or for local emergency services. Every traveller carries their own insurance; that requirement does not change because a doctor is on the crossing."
- }
+  "title": "When the route demands more",
+  "say": "On selected crossings a medical professional accompanies the expedition. The level of support is set by the itinerary, the group size, the route and the conditions — and it is confirmed for your crossing before you book.",
+  "but": "It is expedition support in addition to travel and medical insurance and to local emergency services, never in place of either. Every traveller carries their own cover, and that requirement does not change because a doctor is on the crossing.",
+  "stamp": "Confirmed before booking &middot; never assumed"
+ },
+ "$close": "The page used to end like an article — a sentence and a link. An expedition company ends with a way in, and with two of them because the two audiences are genuinely different: somebody who wants a crossing designed around them, and somebody who wants to be told which of ours fits. One button for each, and neither of them is a checkout.",
+ "close": {
+  "title": "Ready to cross?",
+  "say": "Tell us how you want to travel, how long you have and what you want to be changed by. We will say which crossing fits, and what it costs, in writing before anything is held.",
+  "acts": [
+   {
+    "label": "Build my crossing",
+    "href": "/journey",
+    "solid": true
+   },
+   {
+    "label": "Ask about a private expedition",
+    "href": "/enquire"
+   }
+  ],
+  "stamp": "Private &middot; Signature &middot; Expedition"
+ },
+ "map_title": "Four ways across a continent.",
+ "$map": "Its own section, and the page's signature. Each crossing takes a colour and its own line; East and South are drawn over the Continental spine they are segments of, narrower and on top, so the overlap reads as what it is rather than as a collision. The legend names every country, which is the question the map raises and a legend of counts would leave unanswered."
 }

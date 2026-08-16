@@ -111,11 +111,21 @@ def route_card(r, by_slug, preview=False):
            esc(r["name"]), chain(r, by_slug), strands, esc(r["say"]), facts))
 
 
-def level_card(v):
+def level_card(v, n=0):
+    """A way of crossing a continent, not a row in a pricing table.
+
+    The order on the card is the argument: number, name, the promise in the
+    traveller's own words, what it actually is, then — last, small, and in the
+    metadata voice — how long and how much. A SaaS tier leads with the figure
+    because the figure is the product. Here the figure is a consequence of the
+    product, and putting it first would invite somebody to choose a crossing
+    the way they choose a subscription.
+    """
     seats = ('<p class="tf-level-seats">%d seats on each departure</p>'
              % v["seats"]) if v.get("seats") else ""
     return (
         '<article class="tf-level%s" data-level="%s">'
+        '<p class="tf-level-no">%02d</p>'
         '<h3 class="tf-level-name">%s</h3>'
         '<p class="tf-level-line">%s</p>'
         '<p class="tf-level-say">%s</p>%s'
@@ -124,13 +134,13 @@ def level_card(v):
         '<div><dt>Journey fee</dt><dd>%s</dd></div>'
         '</dl>'
         '<p class="tf-level-who">%s</p></article>'
-        % (" is-rec" if v.get("recommended") else "", esc(v["id"]),
+        % (" is-rec" if v.get("recommended") else "", esc(v["id"]), n,
            esc(v["name"]), esc(v["line"]), esc(v["say"]), seats,
            esc(v["days"]), band(v), esc(v["who"])))
 
 
 def support_grid(d):
-    """Six domains, not twelve job titles.
+    """Six domains, numbered, as an expedition dossier rather than six cards.
 
     A list of people — doctor, nurse, driver, historian, chef — reads as
     staffing. Naming what is covered reads as capability, and it is the more
@@ -138,78 +148,86 @@ def support_grid(d):
     what has to be covered does not. It also keeps the medical line from turning
     the page into a medical tour, which is what a month-long expedition with a
     doctor on it starts to sound like if the doctor is the headline.
+
+    The numbers are the premiumisation and they are nearly free: 01 / MEDICAL
+    reads as a manifest, six unnumbered boxes read as a features grid. They are
+    generated from position, so a seventh domain numbers itself.
     """
     out = []
-    for s_ in d["support"]:
+    for i, s_ in enumerate(d["support"], 1):
         roles = "".join("<li>%s</li>" % esc(r) for r in s_["roles"])
         out.append(
             '<article class="tf-sup" data-support="%s">'
+            '<p class="tf-sup-no"><b>%02d</b><i aria-hidden="true"></i></p>'
             '<h3 class="tf-sup-name">%s</h3>'
             '<p class="tf-sup-say">%s</p>'
             '<ul class="tf-sup-roles">%s</ul></article>'
-            % (esc(s_["id"]), esc(s_["name"]), esc(s_["say"]), roles))
+            % (esc(s_["id"]), i, esc(s_["name"]), esc(s_["say"]), roles))
     return '<div class="tf-support">%s</div>' % "".join(out)
 
 
 def medical_note(d):
-    """The offer and its limit, in the same block.
+    """The offer and its limit, and the limit is not a disclaimer.
 
-    An accompanying medical professional is additional support and not a
-    substitute for insurance or for local emergency services. That belongs
-    beside the offer rather than in a footnote somebody has to go looking for —
-    it is the single sentence a traveller would be most entitled to be angry
-    about later if it were buried, and insurance stays mandatory regardless,
-    which rates.json already marks as the one requirement that is never waived.
+    Written as a footnote it read as legal cover, which is the worst possible
+    register for the one thing on this page a traveller is entitled to be angry
+    about later if it were buried. Written as preparation it says the same
+    words and means confidence: here is what we arrange, here is what decides
+    it, here is what it does not replace. Nothing is softened — insurance stays
+    mandatory, and rates.json already marks it as the one requirement never
+    waived — but the sentence sounds like an expedition company rather than a
+    liability paragraph.
+
+    The stamp under it is the whole promise in five words.
     """
     m = d["medical"]
-    return ('<aside class="tf-med"><h3 class="tf-med-h">%s</h3>'
+    return ('<aside class="tf-med">'
+            '<p class="tf-med-h">%s</p>'
             '<p class="tf-med-say">%s</p>'
-            '<p class="tf-med-but">%s</p></aside>'
-            % (esc(m["title"]), esc(m["say"]), esc(m["but"])))
+            '<p class="tf-med-but">%s</p>'
+            '<p class="tf-med-stamp">%s</p></aside>'
+            % (esc(m["title"]), esc(m["say"]), esc(m["but"]), m["stamp"]))
 
 
 def hero(d, by_slug):
-    """The first screen, and the one that decides whether the click felt like
-    entering something or leaving somewhere.
+    """The opening spread, on the site's fixed-window architecture.
 
-    The homepage band hands the reader a morning: a loaded vehicle standing at
-    Amboseli before six, the mountain on the horizon, `Kenya -> Tanzania`. What
-    used to be here was type on an empty dark field, which reads as a different
-    website rather than the next frame — the momentum the band spends two
-    screens building was gone in one.
+    Full-bleed photograph at position:fixed inside a band with
+    clip-path:inset(0), so the road stands still while the title travels over
+    it. NOTHING between .tf-band and .tf-band-pic may carry transform, filter,
+    backdrop-filter, perspective, will-change or contain — each makes an element
+    a containing block for fixed descendants, demotes that fixed to absolute,
+    and kills the effect with no error and nothing visibly broken.
+    docs/window-band.md is the full account and browser-checks.js asserts it.
 
-    So: photograph and type side by side, the picture taking most of the width,
-    and the picture is the same journey one beat later — the same loaded vehicle
-    going, on a road that leaves the frame. The country chain continues the
-    band's two names into the whole continental crossing, which is the seam:
-    the door showed a border, the page shows the road through nine of them.
+    The picture is the same journey the homepage door opens on, one beat later:
+    the same loaded vehicle, now going, on a road that leaves the frame.
 
-    Deliberately NOT the window band again. That technique is the door's, and
-    using it twice in two clicks turns a thing that felt like cinema into a
-    thing that feels like a template.
+    The type is a title card and not a summary. Name, series, proposition, the
+    whole road as a chain, one restrained way in. No prices, no lengths, no
+    team — every one of those has a section of its own below.
     """
     h = d["hero"]
     great = next((r for r in d["routes"] if r.get("great")), d["routes"][0])
-    chain = " ".join(
-        '<span>%s</span>' % esc(by_slug[s].name)
-        for s in great["countries"] if s in by_slug)
+    chain = "".join('<span>%s</span>' % esc(by_slug[s_].name)
+                    for s_ in great["countries"] if s_ in by_slug)
     return (
-        '<section class="tf-hero">'
-        '<div class="tf-hero-say"><div class="tf-hero-in">'
-        '<span class="af-stamp">%s</span>'
-        '<h1 class="tf-h1">%s</h1>'
-        '<p class="tf-hero-sub">%s</p>'
-        '<p class="tf-hero-lede">%s</p>'
-        '<p class="tf-hero-chain">%s</p>'
-        '<a class="af-btn af-btn--solid tf-hero-go" href="#crossings">%s<i>&rarr;</i></a>'
-        '</div></div>'
-        '<figure class="tf-hero-pic">'
+        '<section class="tf-band">'
+        '<div class="tf-band-pic">'
         '<img src="%s" width="%d" height="%d" alt="%s" '
         'fetchpriority="high" decoding="async" data-provider="upload">'
-        '</figure></section>'
-        % (esc(d["stamp"]), esc(d["line"]), esc(d["sub"]), esc(d["say"]),
-           chain, esc(h["act"]), esc(h["image"]), h["width"], h["height"],
-           esc(h["alt"])))
+        '<span class="tf-band-tint" aria-hidden="true"></span>'
+        '</div>'
+        '<div class="tf-band-copy"><div class="tf-band-in">'
+        '<p class="tf-band-mark">%s</p>'
+        '<p class="tf-band-series">%s</p>'
+        '<h1 class="tf-h1">%s</h1>'
+        '<p class="tf-band-chain">%s</p>'
+        '<a class="af-btn tf-band-go" href="#crossings">%s<i>&rarr;</i></a>'
+        '</div></div></section>'
+        % (esc(h["image"]), h["width"], h["height"], esc(h["alt"]),
+           esc(h["mark"]), esc(d["stamp"]), esc(d["line"]), chain,
+           esc(h["act"])))
 
 
 def idea_block(d):
@@ -221,11 +239,19 @@ def idea_block(d):
     only argument that actually lands, rather than in adjectives.
     """
     i = d["idea"]
+    # The pull quote lands between the two paragraphs rather than after them.
+    # After, it is a conclusion nobody needed; between, it is the turn — the
+    # first paragraph says a week in one country is a week in one country, the
+    # quote says what the alternative actually is, and the second paragraph
+    # then has something to explain.
+    says = ['<p class="tf-idea-say">%s</p>' % esc(t) for t in i["say"]]
+    pull = '<p class="tf-idea-pull">%s</p>' % esc(i["pull"])
+    body = says[0] + pull + "".join(says[1:]) if says else pull
     return ('<section class="tf-block tf-idea" id="idea">'
             '<h2 class="tf-h2">%s</h2>'
-            '<p class="tf-idea-line">%s</p>%s</section>'
-            % (esc(i["title"]), esc(i["line"]),
-               "".join('<p class="tf-idea-say">%s</p>' % esc(p) for p in i["say"])))
+            '<div class="tf-idea-in"><p class="tf-idea-line">%s</p>'
+            '<div class="tf-idea-body">%s</div></div></section>'
+            % (esc(i["title"]), esc(i["line"]), body))
 
 
 # Three line drawings for the door's facts, in the same 24x24 stroke convention
@@ -332,6 +358,65 @@ def block_door(countries):
            esc(dr["sub"]), door_facts(d), esc(dr["act"])))
 
 
+def great_block(d, by_slug):
+    """The flagship, and it does not share a hierarchy with the other three.
+
+    East, West and South are three crossings. The Continental Expedition is the
+    reason the other three exist — nine countries, two oceans, one road — and
+    setting it as a fourth card in the same grid said it was one of four
+    options. It is the option the other three are portions of, which is a
+    different kind of thing and gets a different kind of block: full width, the
+    name at the scale of a section heading, the chain running the whole measure,
+    and the facts as a row rather than a column.
+    """
+    r = next((x for x in d["routes"] if x.get("great")), None)
+    if not r:
+        return ""
+    strands = " &middot; ".join(esc(x) for x in (r.get("strands") or []))
+    return (
+        '<section class="tf-great" id="continental">'
+        '<p class="tf-great-eyebrow">%s</p>'
+        '<h2 class="tf-great-name">%s</h2>'
+        '<p class="tf-great-strands">%s</p>'
+        '<p class="tf-great-where">%s</p>'
+        '<p class="tf-great-say">%s</p>'
+        '<dl class="tf-great-facts">'
+        '<div><dt>Shape</dt><dd>%s</dd></div>'
+        '<div><dt>Length</dt><dd>%s days</dd></div>'
+        '<div><dt>Journey fee</dt><dd>%s</dd></div>'
+        '</dl>'
+        '<p class="tf-great-close">One continent. One expedition.</p>'
+        '</section>'
+        % (esc(d["name"]), esc(r["name"].split("&mdash;")[-1].replace("Trans Afrique — ", "")),
+           strands, chain(r, by_slug), esc(r["say"]),
+           esc(r["shape"]), esc(r["days"]), band(r)))
+
+
+def close_block(d):
+    """A way in, not a checkout.
+
+    The page used to end like an article — one sentence and one link. Two
+    buttons, because the two audiences are genuinely different: somebody who
+    wants a crossing built around them, and somebody who wants to be told which
+    of ours fits. Neither of them is Buy Now, which would be the wrong verb for
+    a five-figure month that is quoted in writing before anything is held.
+    """
+    c = d["close"]
+    acts = "".join(
+        '<a class="af-btn %s" href="%s">%s<i>&rarr;</i></a>'
+        % ("tf-close-go" if a_.get("solid") else "tf-close-alt",
+           esc(a_["href"]), esc(a_["label"]))
+        for a_ in c["acts"])
+    return ('<section class="tf-close" id="begin">'
+            '<div class="tf-close-in">'
+            '<h2 class="tf-close-h">%s</h2>'
+            '<p class="tf-close-say">%s</p>'
+            '<div class="tf-close-acts">%s</div>'
+            '<p class="tf-close-stamp">%s</p>'
+            '</div></section>'
+            % (esc(c["title"]), esc(c["say"]), acts, c["stamp"]))
+
+
 def money_lists(d):
     def ul(key, title, cls=""):
         return ('<div class="tf-money-col%s"><h3 class="tf-money-h">%s</h3>'
@@ -394,15 +479,19 @@ def run(countries, log=print):
         "events": plate.events_block(),
         "hero": hero(d, by_slug),
         "idea": idea_block(d),
-        "levels": "\n".join(level_card(v) for v in d["levels"]),
-        "routes": "\n".join(route_card(r, by_slug) for r in d["routes"]),
+        "levels": "\n".join(level_card(v, i)
+                             for i, v in enumerate(d["levels"], 1)),
+        "routes": "\n".join(route_card(r, by_slug)
+                            for r in d["routes"] if not r.get("great")),
+        "great": great_block(d, by_slug),
         "motto": esc(d["motto"]),
         "support_title": esc(d["support_title"]),
         "support_say": esc(d["support_say"]),
         "support": support_grid(d),
         "medical": medical_note(d),
         "money": money_lists(d),
-        "map": routemap.build(d),
+        "map": routemap.build(d, by_slug),
+        "close": close_block(d),
         "fine": esc(d["fine"]),
     }
     with open(PAGE, "w", encoding="utf-8") as fh:
@@ -441,13 +530,22 @@ TEMPLATE = """<!DOCTYPE html>
 </header>
 
 <main id="main">
-<!-- THE ORDER IS THE FILM, AND IT IS NOT THE ORDER THE FACTS ARRIVED IN.
-     Hero, then what a crossing is, then who travels with you, then the three
-     ways to buy it, then where it goes, then the money. Seduce, explain,
-     prove, price. The team used to come first because it is the strongest
-     material on the page, which is exactly why it was wrong: a reader who has
-     not been told what a crossing is cannot tell whether six support domains
-     are impressive or excessive. -->
+<!-- THE PAGE IS A JOURNEY AND THE ORDER IS THE ARGUMENT.
+     Desire, idea, trust, choice, route, flagship, practical, invitation.
+       01  the opening spread          — I want to do this
+       02  the idea                    — why a crossing at all
+       03  the team                    — this is professionally run
+       04  when the route demands more — and it is prepared for
+       05  three ways to cross         — which one am I
+       06  the crossings, on the map   — where does it go
+       07  east / west / south         — the records
+       08  the continental expedition  — the flagship, alone
+       09  what the fee is, and is not — what am I actually buying
+       10  ready to cross              — a way in, not a checkout
+     The team used to open the page because it is the strongest material on it,
+     which is exactly why it was wrong: a reader who has not been told what a
+     crossing is cannot judge whether six support domains are impressive or
+     excessive. Trust has to follow the idea, never precede it. -->
 %(hero)s
 
 <div class="tf-page">
@@ -461,7 +559,7 @@ TEMPLATE = """<!DOCTYPE html>
 %(medical)s
   </section>
 
-  <section class="tf-block">
+  <section class="tf-block" id="levels">
     <h2 class="tf-h2">Three ways to cross</h2>
     <div class="tf-levels">
 %(levels)s
@@ -471,22 +569,26 @@ TEMPLATE = """<!DOCTYPE html>
   <section class="tf-block" id="crossings">
     <h2 class="tf-h2">The crossings</h2>
 %(map)s
+  </section>
+
+  <section class="tf-block" id="records">
     <div class="tf-routes">
 %(routes)s
     </div>
   </section>
 
-  <section class="tf-block">
+%(great)s
+
+  <section class="tf-block" id="fee">
     <h2 class="tf-h2">What the fee is, and is not</h2>
 %(money)s
     <p class="tf-fine">%(fine)s</p>
   </section>
+</div>
 
-  <div class="tf-end">
-    <p>Every crossing is quoted as a whole, in writing, before anything is held.</p>
-    <a class="af-btn af-btn--solid" href="/enquire">Ask about a crossing<i>&rarr;</i></a>
-  </div>
+%(close)s
 
+<div class="tf-page tf-page--foot">
   <footer class="jn-enq-foot">
     <!-- gen:company -->
     <!-- /gen:company -->

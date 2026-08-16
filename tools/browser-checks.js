@@ -586,20 +586,28 @@ function serve() {
      * body text at 1.81:1, both of which read as perfectly fine in a screenshot
      * taken at the position I happened to choose.
      */
+    /* EVERY BAND ON THE SITE, NOT EVERY BAND ON THE HOMEPAGE.
+       The technique moved to /trans-afrique's opening spread under its own
+       class names, and this pass only knew about .wa-seam — so the newest and
+       most expensive use of a mechanism whose entire failure mode is silence
+       was the one nobody was checking. A band added under new names has to be
+       added here, which is the price of the effect being CSS rather than code
+       that could announce itself. */
+    const BAND_PAGES = [
+      {page: '/index.html', band: '.wa-seam', pic: '.wa-seam-pic', copy: '.wa-seam-copy',
+       text: ['.wa-seam-stamp', '.wa-seam-copy h2', '.wa-seam-say', '.wa-door-chain',
+              '.wa-door-mark', '.wa-door-sub', '.wa-door-facts b', '.wa-seam-go']},
+      {page: '/trans-afrique.html', band: '.tf-band', pic: '.tf-band-pic', copy: '.tf-band-copy',
+       text: ['.tf-band-mark', '.tf-band-series', '.tf-h1', '.tf-band-chain', '.tf-band-go']},
+    ];
     const BAND_WIDTHS = [[1920, 1080], [1440, 900], [1280, 860], [950, 800], [390, 844]];
-    /* Every line in the band, and the list has to grow when the copy does. The
-       band's whole failure mode is silence, so a line that is not named here is
-       a line nobody is measuring — which is how the second band went unchecked
-       for a while, and how the door's own lines would have shipped at whatever
-       contrast they happened to land on. */
-    const BAND_TEXT = ['.wa-seam-stamp', '.wa-seam-copy h2', '.wa-seam-say',
-                       '.wa-door-chain', '.wa-door-mark', '.wa-door-sub',
-                       '.wa-door-facts b', '.wa-seam-go'];
     const KILLERS = ['transform', 'filter', 'backdropFilter', 'perspective', 'willChange', 'contain'];
+    for (const SPEC of BAND_PAGES)
     for (const [w, h] of BAND_WIDTHS) {
+      const BAND_TEXT = SPEC.text;
       const page = await browser.newPage({viewport: {width: w, height: h}});
-      await open(page, '/index.html');
-      const bands = await page.$$eval('.wa-seam-pic', els => els.length);
+      await open(page, SPEC.page);
+      const bands = await page.$$eval(SPEC.pic, els => els.length);
       if (!bands) { await page.close(); continue; }
       /* Every image eager, then wait for the document to stop growing. Without
          this a scroll target computed now lands on a different section by the
@@ -618,9 +626,9 @@ function serve() {
          it fails silently, so an untested band is an unheld one. Every lookup
          below is indexed. */
       for (let bi = 0; bi < bands; bi++) {
-      const hazards = await page.evaluate(([KILL, bi]) => {
+      const hazards = await page.evaluate(([KILL, bi, P]) => {
         const bad = [];
-        for (let e = document.querySelectorAll('.wa-seam-pic')[bi]; e; e = e.parentElement) {
+        for (let e = document.querySelectorAll(P)[bi]; e; e = e.parentElement) {
           const cs = getComputedStyle(e);
           for (const k of KILL) {
             const v = cs[k];
@@ -629,16 +637,16 @@ function serve() {
           }
         }
         return bad;
-      }, [KILLERS, bi]);
+      }, [KILLERS, bi, SPEC.pic]);
 
       /* Park the copy `off` px from the viewport's centre, re-reading its live
          position each time rather than trusting an offset computed earlier. */
       const park = async off => {
         for (let i = 0; i < 4; i++) {
-          const c = await page.evaluate(bi => {
-            const r = document.querySelectorAll('.wa-seam-copy')[bi].getBoundingClientRect();
+          const c = await page.evaluate(([bi, C]) => {
+            const r = document.querySelectorAll(C)[bi].getBoundingClientRect();
             return {abs: scrollY + r.top, h: r.height};
-          }, bi);
+          }, [bi, SPEC.copy]);
           const want = Math.max(0, Math.round(c.abs + c.h / 2 - h / 2 + off));
           await page.evaluate(v => scrollTo(0, v), want);
           await page.waitForTimeout(110);
@@ -654,29 +662,40 @@ function serve() {
       for (const off of stops) {
         await park(off);
         const mast = await page.evaluate(() => {
-          const m = document.querySelector('.wa-mast');
+          const m = document.querySelector('.wa-mast, .jn-mast');
           return m ? m.getBoundingClientRect().bottom : 0;
         });
-        const rect = await page.evaluate(bi => {
-          const r = document.querySelectorAll('.wa-seam-pic')[bi].getBoundingClientRect();
+        const rect = await page.evaluate(([bi, P]) => {
+          const r = document.querySelectorAll(P)[bi].getBoundingClientRect();
           return [r.x, r.y, r.width, r.height].map(v => Math.round(v * 100) / 100).join(',');
-        }, bi);
+        }, [bi, SPEC.pic]);
         if (anchor === null) anchor = rect;
         else if (rect !== anchor && !drifted) drifted = rect + ' vs ' + anchor;
 
-        const lines = await page.evaluate(([SEL, bi]) => {
-          const band = document.querySelectorAll('.wa-seam')[bi];
+        const lines = await page.evaluate(([SEL, bi, B]) => {
+          const band = document.querySelectorAll(B)[bi];
           const o = {};
           SEL.forEach(s => {
             const e = band.querySelector(s); if (!e) return;
             const rg = document.createRange(); rg.selectNodeContents(e);
+            /* An element that paints its own opaque background is not sitting
+               on the photograph, whatever the screenshot says underneath it.
+               The filled button in the /trans-afrique band measured 1.01:1
+               because its deep-forest label was being compared with the pale
+               sky behind the button rather than with the ivory it is printed
+               on. Record the fill and let the sampler use it. */
+            const cs2 = getComputedStyle(e);
+            const solid = /^rgba?\(([^)]+)\)$/.exec(cs2.backgroundColor);
+            const parts = solid ? solid[1].split(',').map(Number) : null;
             o[s] = {rects: [...rg.getClientRects()].map(r => ({x: r.x, y: r.y, w: r.width, h: r.height})),
-                    color: getComputedStyle(e).color,
-                    size: parseFloat(getComputedStyle(e).fontSize),
-                    weight: getComputedStyle(e).fontWeight};
+                    color: cs2.color,
+                    fill: (parts && (parts.length < 4 || parts[3] === 1))
+                          ? parts.slice(0, 3).map(Math.round) : null,
+                    size: parseFloat(cs2.fontSize),
+                    weight: cs2.fontWeight};
           });
           return o;
-        }, [BAND_TEXT, bi]);
+        }, [BAND_TEXT, bi, SPEC.band]);
 
         if (off === 0 && !mastRide) {
           for (const k in lines) {
@@ -684,9 +703,9 @@ function serve() {
           }
         }
 
-        await page.evaluate(bi => { document.querySelectorAll('.wa-seam-copy')[bi].style.visibility = 'hidden'; }, bi);
+        await page.evaluate(([bi, C]) => { document.querySelectorAll(C)[bi].style.visibility = 'hidden'; }, [bi, SPEC.copy]);
         const shot = await page.screenshot();
-        await page.evaluate(bi => { document.querySelectorAll('.wa-seam-copy')[bi].style.visibility = ''; }, bi);
+        await page.evaluate(([bi, C]) => { document.querySelectorAll(C)[bi].style.visibility = ''; }, [bi, SPEC.copy]);
 
         const ground = await page.evaluate(async ([b64, lines, vh, mastB]) => {
           const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
@@ -712,6 +731,9 @@ function serve() {
                 if (l > hiL) { hiL = l; hi = [d[i], d[i + 1], d[i + 2]]; }
               }
             }
+            if (lines[k].fill) { out[k] = {darkest: lines[k].fill, lightest: lines[k].fill,
+                                           color: lines[k].color, size: lines[k].size,
+                                           weight: lines[k].weight}; continue; }
             if (seen) out[k] = {darkest: lo, lightest: hi, color: lines[k].color,
                                 size: lines[k].size, weight: lines[k].weight};
           }
@@ -734,7 +756,7 @@ function serve() {
       if (drifted) faults.push('the picture moved: ' + drifted);
       if (mastRide) faults.push(mastRide + ' sits under the masthead at rest');
       if (worstText) faults.push(worstText);
-      check('window band ' + (bi + 1) + ' of ' + bands + ' holds at ' + w + 'x' + h,
+      check(SPEC.page + ' window band ' + (bi + 1) + ' of ' + bands + ' holds at ' + w + 'x' + h,
             !faults.length,
             faults.length ? faults.join(' | ')
               : 'fixed, ' + stops.length + ' positions, worst text '
