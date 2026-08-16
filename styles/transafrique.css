@@ -1,0 +1,69 @@
+/* /trans-afrique — the expedition.
+ *
+ * Dramatic by scale and contrast, not by effects. The house rules the rest of
+ * the site keeps apply here too: no gradients, no glass, no glow, no 3D. What
+ * makes this feel different from every other page is that the type is bigger,
+ * the ground is darker, and the route reads as a line of countries with arrows
+ * between them rather than as a list.
+ */
+.tf-body{background:var(--fj-basalt);color:var(--fj-onbasalt)}
+.tf-page{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
+
+.tf-open{max-width:34ch;margin-bottom:var(--sp-7)}
+.tf-h1{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(38px,6vw,88px);line-height:.94;letter-spacing:-.025em;
+  color:var(--c-bg);margin:14px 0 0;max-width:13ch}
+.tf-lede{margin-top:24px;font-size:clamp(17px,1.7vw,22px);line-height:1.5;
+  color:var(--fj-onbasalt);max-width:52ch}
+
+.tf-block{margin-top:var(--sp-7)}
+.tf-h2{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--c-accent-lit);font-weight:400;
+  border-top:2px solid var(--c-accent-fill);padding-top:18px;margin:0 0 var(--sp-4)}
+
+/* Who travels with you. Rows, not cards: it is a crew list, and a crew list is
+   a list. */
+.tf-team{display:grid;gap:0}
+.tf-team-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
+  gap:12px 32px;padding:18px 0;border-bottom:var(--fj-rule-dark)}
+.tf-team-row b{font-family:var(--fj-display);font-size:clamp(17px,1.6vw,23px);
+  font-weight:700;color:var(--c-bg);line-height:1.14}
+.tf-team-row span{font-size:15.5px;line-height:1.55;color:var(--fj-onbasalt-dim);
+  max-width:46ch}
+
+/* The crossings. The country chain is the picture — arrows between names, which
+   is what an expedition actually looks like on paper. */
+.tf-routes{display:grid;gap:var(--sp-3);
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.tf-route-in{border-top:2px solid var(--c-accent-fill);padding-top:20px;height:100%;
+  display:flex;flex-direction:column}
+.tf-route-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(21px,2.1vw,29px);line-height:1.04;color:var(--c-bg);margin:0}
+.tf-route-where{margin-top:12px;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--c-gold);line-height:2}
+.tf-route-where a{color:inherit;border-bottom:1px solid transparent;transition:border-color .2s}
+.tf-route-where a:hover{border-color:var(--c-gold)}
+.tf-open{}
+.tf-route-where .tf-open{color:var(--fj-onbasalt-dim)}
+.tf-route-say{margin-top:14px;font-size:15.5px;line-height:1.5;
+  color:var(--fj-onbasalt-dim);max-width:34ch;flex:1 1 auto}
+.tf-route-facts{margin:20px 0 0;padding-top:14px;border-top:var(--fj-rule-dark)}
+.tf-route-facts div{display:grid;grid-template-columns:78px 1fr;gap:14px;padding:6px 0}
+.tf-route-facts dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.tf-route-facts dd{margin:0;font-size:15px;color:var(--c-bg)}
+
+.tf-fine{margin-top:var(--sp-4);font-size:14px;line-height:1.6;
+  color:var(--fj-onbasalt-dim);max-width:70ch}
+
+.tf-end{margin-top:var(--sp-7);padding-top:var(--sp-5);border-top:var(--fj-rule-dark);
+  display:flex;flex-wrap:wrap;align-items:center;gap:20px 28px}
+.tf-end p{font-family:var(--fj-display);font-size:clamp(19px,2vw,27px);
+  color:var(--c-bg);margin:0;max-width:26ch}
+
+@media(max-width:760px){
+  .tf-page{padding:var(--sp-5) 18px var(--sp-6)}
+  .tf-block{margin-top:var(--sp-6)}
+  .tf-team-row{grid-template-columns:1fr;gap:7px}
+  .tf-routes{grid-template-columns:1fr}
+}

@@ -1,0 +1,57 @@
+{
+ "$comment": "Trans Afrique — the expedition. Afrinkong's signature product and deliberately not one of the eight experiences: an experience is a lens you look at the continent through, and this is a thing you do with a month of your life. Putting it in the grid would have made it the ninth tile in a row of eight.",
+
+ "$why_here": "The homepage asks 'what do you want to feel', then shows what there is to see. Trans Afrique is the escalation after both: why choose one country at all. Tourist, then traveller, then explorer — and the section has to feel like the site opening into something else, or it is just a longer holiday.",
+
+ "$money": "No figure is typed here. The daily rate comes from tourism/rates.json — the same file the ground journey is priced from — so an expedition cannot quote a number the rest of the site disagrees with. What is stated is the tier and the length; the arithmetic is done at build time and shown as a from.",
+
+ "name": "Trans Afrique",
+ "line": "Don’t just visit Africa. Cross it.",
+ "say": "One continent, several countries, one journey that does not stop at a border. Weeks on the road with a team that stays with you — a driver who knows the route, specialists who live where you are going, and on selected expeditions a medical professional travelling with the group.",
+ "stamp": "The Afrinkong expedition",
+ "act": "Explore Trans Afrique",
+
+ "$team": "Stated carefully. Drivers and local specialists are on every expedition. Medical accompaniment is written as 'on selected expeditions' and nowhere else, because it depends on the route, the season and who is available, and a site that promises a doctor on every crossing has promised something it cannot always deliver.",
+ "team": [
+  {"who": "A driver for the whole crossing",
+   "say": "The same one from the first border to the last. They have driven it before."},
+  {"who": "Local specialists along the route",
+   "say": "People who live where you are, joining for the stretch they know and handing over to the next."},
+  {"who": "An Afrinkong expedition coordinator",
+   "say": "Permits, borders, fuel, beds, and the plan when one of those does not work."},
+  {"who": "Medical accompaniment on selected expeditions",
+   "say": "Where the route, the season and the group make it right. Confirmed before you book, never assumed."}
+ ],
+
+ "$routes": "Three, and the third is honestly open-ended. Every country named is one the atlas already carries, so an expedition cannot promise a border the rest of the site has never written up.",
+ "routes": [
+  {
+   "id": "east",
+   "name": "The East African Crossing",
+   "countries": ["kenya", "uganda", "rwanda", "tanzania"],
+   "days": 24,
+   "say": "Rift lakes, two gorilla forests and the migration, overland and in that order.",
+   "shape": "Nairobi to Arusha, the long way round."
+  },
+  {
+   "id": "southern",
+   "name": "The Southern Crossing",
+   "countries": ["south-africa", "namibia", "botswana", "zimbabwe", "zambia"],
+   "days": 30,
+   "say": "Desert to delta to the falls, across five borders and most of a continent’s weather.",
+   "shape": "Cape Town to Victoria Falls."
+  },
+  {
+   "id": "great",
+   "name": "The Great Africa Expedition",
+   "countries": [],
+   "days": 60,
+   "open": true,
+   "say": "Built around you, from wherever you want to start to wherever you decide to stop.",
+   "shape": "Two months, or as long as it takes."
+  }
+ ],
+
+ "tier": "bespoke",
+ "fine": "Priced at the Afrinkong Bespoke daily rate, per vehicle, with the destination charges — permits, park fees, border formalities — arranged by us and passed through at cost. An expedition is quoted as a whole, in writing, before anything is held."
+}

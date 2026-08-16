@@ -770,6 +770,49 @@
    viewBox flies to. A visitor who presses "East Africa" is not filtering a list;
    they are looking at East Africa. */
 .wa-regs{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--c-primary)}
+/* TRANS AFRIQUE, ON THE HOMEPAGE
+   ---------------------------------------------------------------------------
+   The escalation. The wonders above ask what is worth seeing; this asks why
+   choose one country at all. It has to feel like the page opening into
+   something else, and on a site with no gradients, no glass and no glow that
+   has to come from scale: the crew list runs full width in large type, and the
+   three crossings are the widest cards on the page.
+
+   It shares .tf- with /trans-afrique deliberately. An expedition that looks
+   like itself in both places is one product; two treatments would be two. */
+.wa-trans .wa-head h2{max-width:22ch;font-size:clamp(34px,4.4vw,64px)}
+.wa-trans .tf-team{margin-top:var(--sp-5);display:grid;gap:0}
+.wa-trans .tf-team-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
+  gap:10px 32px;padding:17px 0;border-bottom:var(--fj-rule-dark)}
+.wa-trans .tf-team-row b{font-family:var(--fj-display);font-size:clamp(16px,1.5vw,21px);
+  font-weight:700;color:var(--c-bg);line-height:1.14}
+.wa-trans .tf-team-row span{font-size:15px;line-height:1.55;
+  color:var(--fj-onbasalt-dim);max-width:46ch}
+.wa-trans .tf-routes{margin-top:var(--sp-5);display:grid;gap:var(--sp-3);
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.wa-trans .tf-route-in{border-top:2px solid var(--c-accent-fill);padding-top:20px;
+  height:100%;display:flex;flex-direction:column}
+.wa-trans .tf-route-name{font-family:var(--fj-display);font-weight:700;
+  text-transform:uppercase;font-size:clamp(20px,2vw,27px);line-height:1.04;
+  color:var(--c-bg);margin:0}
+.wa-trans .tf-route-where{margin-top:12px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--c-gold);line-height:2}
+.wa-trans .tf-route-where a{color:inherit;border-bottom:1px solid transparent}
+.wa-trans .tf-route-where a:hover{border-color:var(--c-gold)}
+.wa-trans .tf-route-say{margin-top:13px;font-size:15px;line-height:1.5;
+  color:var(--fj-onbasalt-dim);max-width:34ch;flex:1 1 auto}
+.wa-trans .tf-route-facts{margin:18px 0 0;padding-top:13px;border-top:var(--fj-rule-dark)}
+.wa-trans .tf-route-facts div{display:grid;grid-template-columns:74px 1fr;gap:14px;padding:5px 0}
+.wa-trans .tf-route-facts dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.wa-trans .tf-route-facts dd{margin:0;font-size:15px;color:var(--c-bg)}
+.wa-trans .tf-fine{margin-top:var(--sp-4);font-size:13.5px;line-height:1.6;
+  color:var(--fj-onbasalt-dim);max-width:74ch}
+@media(max-width:760px){
+  .wa-trans .tf-team-row{grid-template-columns:1fr;gap:6px}
+  .wa-trans .tf-routes{grid-template-columns:1fr}
+}
+
 /* THE WONDERS
    ---------------------------------------------------------------------------
    Two at hero scale, then a row of six. The experience grid directly above
@@ -2483,6 +2526,11 @@ window.AF = {
          not need a masthead entry to be found. -->
     <nav class="wa-routes" aria-label="Primary">
       <a href="/atlas">The Atlas</a>
+      <!-- Trans Afrique earns a route of its own. It is the most expensive
+           thing Afrinkong sells and the only product that is not a country, so
+           reaching it by scrolling past six sections would have been the wrong
+           kind of discreet. -->
+      <a href="/trans-afrique">Trans Afrique</a>
       <a href="/stories">Stories</a>
       <a href="/meet">Meet Africa</a>
       <a href="/places">Every place</a>
@@ -2592,6 +2640,9 @@ window.AF = {
 <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="zimbabwe" data-name="Zimbabwe" data-tag="Great Zimbabwe and the Zambezi" data-calls="adventure history wildlife" data-near="culture" href="/zimbabwe"><path d="M673.3 829.4L650.5 826.5L646.8 824.3L646.7 821.5L634.8 818.3L630.9 812.2L631.6 805.6L626.5 804.9L625.5 800.2L613.5 793.1L611 785.6L602.8 773.5L603.1 771.3L621.5 774.5L624.5 773.5L636.1 760.3L646.3 755.8L648.5 749L658.6 744.8L666.8 744.8L667.1 749.3L676.9 749.7L685.3 754.9L697.4 758.6L696.9 778.7L692.8 786.5L694.5 788.6L693.4 792.1L695.5 799.6L689 807.9L687.8 815.9L673.3 829.4Z"/><title>Zimbabwe &#8212; Great Zimbabwe and the Zambezi</title></a>
 <a tabindex="-1" class="wa-map-live wa-map-mark" data-tier="live" data-slug="mauritius" data-name="Mauritius" data-tag="Reef, sugar and the volcanic interior" data-calls="coast food" data-near="culture nature" href="/mauritius"><circle class="wa-map-hit" cx="982.5" cy="812.8" r="9"/><circle cx="982.5" cy="812.8" r="12"/><title>Mauritius &#8212; Reef, sugar and the volcanic interior</title></a>
 <a tabindex="-1" class="wa-map-live wa-map-mark" data-tier="live" data-slug="seychelles" data-name="Seychelles" data-tag="Granite islands in the Indian Ocean" data-calls="coast" data-near="culture nature" href="/seychelles"><circle class="wa-map-hit" cx="979.6" cy="604.7" r="9"/><circle cx="979.6" cy="604.7" r="12"/><title>Seychelles &#8212; Granite islands in the Indian Ocean</title></a>
+
+
+
 
 
 
@@ -3758,6 +3809,35 @@ window.AF = {
   </div>
 </section>
 
+<!-- trans afrique -->
+<section class="wa-zone is-cine basalt wa-trans" id="trans-afrique">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>07</b><span>Trans Afrique</span></div>
+      <div>
+        <!-- gen:translede -->
+<span class="wa-eyebrow">The Afrinkong expedition</span>
+        <h2>Don’t just visit Africa. Cross it.</h2>
+        <p class="wa-say">One continent, several countries, one journey that does not stop at a border. Weeks on the road with a team that stays with you — a driver who knows the route, specialists who live where you are going, and on selected expeditions a medical professional travelling with the group.</p>        <!-- /gen:translede -->
+      </div>
+    </div>
+    <!-- gen:trans -->
+<div class="tf-team">
+<div class="tf-team-row"><b>A driver for the whole crossing</b><span>The same one from the first border to the last. They have driven it before.</span></div>
+<div class="tf-team-row"><b>Local specialists along the route</b><span>People who live where you are, joining for the stretch they know and handing over to the next.</span></div>
+<div class="tf-team-row"><b>An Afrinkong expedition coordinator</b><span>Permits, borders, fuel, beds, and the plan when one of those does not work.</span></div>
+<div class="tf-team-row"><b>Medical accompaniment on selected expeditions</b><span>Where the route, the season and the group make it right. Confirmed before you book, never assumed.</span></div>
+</div>
+<div class="tf-routes">
+<article class="tf-route" data-route="east"><div class="tf-route-in"><h3 class="tf-route-name">The East African Crossing</h3><p class="tf-route-where"><a href="/kenya">Kenya</a> &rarr; <a href="https://pearl-trails-uganda.vercel.app">Uganda</a> &rarr; <a href="/rwanda">Rwanda</a> &rarr; <a href="/tanzania">Tanzania</a></p><p class="tf-route-say">Rift lakes, two gorilla forests and the migration, overland and in that order.</p><dl class="tf-route-facts"><div><dt>Shape</dt><dd>Nairobi to Arusha, the long way round.</dd></div><div><dt>Length</dt><dd>24 days</dd></div><div><dt>From</dt><dd>$24,000</dd></div></dl></div></article>
+<article class="tf-route" data-route="southern"><div class="tf-route-in"><h3 class="tf-route-name">The Southern Crossing</h3><p class="tf-route-where"><a href="/south-africa">South Africa</a> &rarr; <a href="https://namib-skyline.vercel.app">Namibia</a> &rarr; <a href="/botswana">Botswana</a> &rarr; <a href="/zimbabwe">Zimbabwe</a> &rarr; <a href="/zambia">Zambia</a></p><p class="tf-route-say">Desert to delta to the falls, across five borders and most of a continent’s weather.</p><dl class="tf-route-facts"><div><dt>Shape</dt><dd>Cape Town to Victoria Falls.</dd></div><div><dt>Length</dt><dd>30 days</dd></div><div><dt>From</dt><dd>$30,000</dd></div></dl></div></article>
+<article class="tf-route" data-route="great"><div class="tf-route-in"><h3 class="tf-route-name">The Great Africa Expedition</h3><p class="tf-route-where"><span class="tf-open">Wherever you decide</span></p><p class="tf-route-say">Built around you, from wherever you want to start to wherever you decide to stop.</p><dl class="tf-route-facts"><div><dt>Shape</dt><dd>Two months, or as long as it takes.</dd></div><div><dt>Length</dt><dd>60 days</dd></div><div><dt>From</dt><dd>$60,000</dd></div></dl></div></article>
+</div>
+<p class="tf-fine">Priced at the Afrinkong Bespoke daily rate, per vehicle, with the destination charges — permits, park fees, border formalities — arranged by us and passed through at cost. An expedition is quoted as a whole, in writing, before anything is held. Every figure above is Afrinkong Bespoke at $1,000 a day, per vehicle, for the length shown.</p>    <!-- /gen:trans -->
+    <div class="wa-acts"><a class="wa-act faint" href="/trans-afrique">Explore Trans Afrique <i>&rarr;</i></a></div>
+  </div>
+</section>
+
 <!-- 03 destinations -->
 <section class="wa-zone is-atlas dust" id="destinations">
   <div class="wa-frame">
@@ -4522,9 +4602,9 @@ window.AF = {
       <div class="wa-foot-col">
         <b>Plan</b>
         <a href="/journey">Build a journey</a>
+        <a href="/trans-afrique">Trans Afrique</a>
         <a href="/enquire">Begin your journey</a>
         <a href="#destinations">Travel seasons</a>
-        <a href="/compare">Compare two countries</a>
       </div>
       <!-- /gen:footer -->
     </div>
@@ -4539,6 +4619,7 @@ window.AF = {
       <a href="/#window">The five regions</a>
       <a href="/places">Every place</a>
       <a href="/wonders">The wonders of Africa</a>
+      <a href="/trans-afrique">Trans Afrique</a>
       <a href="/compare">Compare two countries</a>
       <a href="/#scale">The size of Africa</a>
       <a href="/tourism/">All twenty-seven categories</a>

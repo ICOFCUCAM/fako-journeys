@@ -28,6 +28,7 @@ import os
 import re
 
 from . import plate
+from . import transafrique as _trans
 from . import wonders as _wonders
 from .model import (CATEGORY_FILE, ROOT, load_cities, load_lenses, load_moments,
                     load_motion, load_picks, load_regions, load_views, region_of)
@@ -63,7 +64,7 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("wonders", "wonderslede",
+MARKERS = ("wonders", "wonderslede", "trans", "translede",
            "window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "maplive", "mapover", "claim", "months", "scale",
            "lede", "capafrica", "destlede", "readslede", "mapsvg", "citylede",
@@ -1892,9 +1893,9 @@ def block_footer(countries):
 
     plan = [
         ("/journey", "Build a journey"),
+        ("/trans-afrique", "Trans Afrique"),
         ("/enquire", "Begin your journey"),
         ("#destinations", "Travel seasons"),
-        ("/compare", "Compare two countries"),
     ]
     plan_links = "\n".join('        <a href="%s">%s</a>' % (esc(u), esc(t))
                            for u, t in plan)
@@ -1951,6 +1952,8 @@ def render(countries):
         "regiontone": block_regiontone(),
         "wonders": _wonders.block_wonders(seq),
         "wonderslede": _wonders.block_wonderslede(seq),
+        "trans": _trans.block_trans(seq),
+        "translede": _trans.block_translede(seq),
     }
 
 
