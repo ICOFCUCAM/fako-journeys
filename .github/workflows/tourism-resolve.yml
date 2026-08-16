@@ -98,7 +98,10 @@ jobs:
           # The resolver handles per-slot failure itself and exits 0 when it
           # finishes with slots unfilled. Anything non-zero from here is the
           # process failing, and it stops the job.
-          CACHED_BEFORE=$(python3 -c "import json;print(len(json.load(open('tourism/cache/images.json'))['entries']))" 2>/dev/null || echo 0)
+          # Published AND quarantined. The audit step below moves records from
+          # one to the other, so counting only the published ones would read a
+          # healthy run that rejected more than it found as a shrinking cache.
+          CACHED_BEFORE=$(python3 -c "import json;d=json.load(open('tourism/cache/images.json'));print(len(d['entries'])+len(d.get('rejected') or {}))" 2>/dev/null || echo 0)
           echo "CACHED_BEFORE=$CACHED_BEFORE" >> "$GITHUB_ENV"
           # RECORD THE EXIT, DO NOT ACT ON IT YET.
           #
@@ -118,6 +121,44 @@ jobs:
           python3 tools/tourism/build.py resolve $ARGS
           echo "RESOLVE_EXIT=$?" >> "$GITHUB_ENV"
           set -e
+
+      - name: Quarantine what the resolver should not have taken
+        run: |
+          # THE RESOLVER DECIDES WHAT TO FETCH. THE AUDIT DECIDES WHAT TO KEEP.
+          #
+          # This step did not exist, and the gap it left is not theoretical: the
+          # run that filled Sierra Leone, Somalia, South Sudan, Sudan and Togo
+          # committed a woman in a crochet dress as the Wome waterfall, men with
+          # mud on their bodies as the forested Kloto hills, and "beach on
+          # seashore" as the city of Lome. Twenty-two of a hundred and nineteen.
+          # The resolver's own score let them through because a score computed
+          # from a search query cannot see what the photograph turned out to be;
+          # the audit reads the provider's own description out of the sourceUrl
+          # and compares it with what the page claims, which can.
+          #
+          # It also closes the hole that made the last merge dangerous. The
+          # quarantine lives in the cache as `rejected`, and Cache.photo_ids()
+          # counts those ids as spent so they are never fetched twice — but only
+          # for a run that starts from a cache that already has them. Dispatched
+          # on a ref without the quarantine, the resolver re-adopted all 315
+          # previously rejected photographs, byte-identical, and nothing in the
+          # diff looked wrong. Auditing here makes that impossible to ship
+          # whichever ref the run starts from: the same photographs fail the
+          # same checks again and are quarantined again before anything renders.
+          #
+          # Before `all`, deliberately. The audit reads the cache and the
+          # taxonomy and needs no rendered page, so quarantining first means the
+          # dropped slots are never rendered, never committed, and fall back to
+          # the country plate in the same pass. --force is what writes; without
+          # it this only prints.
+          #
+          # And this one is allowed to fail the job. The steps above record their
+          # exit rather than raising because a partial resolve is still worth
+          # committing. That reasoning does not carry here: if the audit cannot
+          # run, the alternative is committing photographs nobody has checked,
+          # which is the exact outcome this step exists to prevent. Better to
+          # lose the run.
+          python3 tools/tourism/build.py audit --force
 
       - name: Rebuild pages and validate
         run: |

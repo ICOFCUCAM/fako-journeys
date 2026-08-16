@@ -267,6 +267,7 @@
 .at-who span{display:block;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--c-muted);margin-top:5px}
 .at-who p{margin-top:9px;font-size:15.5px;color:var(--c-muted)}
+.at-who .af-go{margin-top:11px;display:inline-block}
 
 .at-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--sp-4)}
 

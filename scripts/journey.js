@@ -220,6 +220,38 @@
         + '<span class="jn-alt-why">' + esc(oneLine(p)) + '</span></span>'
         + '<span class="jn-alt-go" aria-hidden="true">&rarr;</span></button>';
     }).join('');
+    paintField();
+  }
+
+  /* The continent, coloured rather than filtered.
+     Every country stays on the page and stays clickable. What a lens changes
+     is the colour, not the population — and the line under each name is always
+     what that country leads on, never what it does not. "Senegal — Cities,
+     Culture, Food, Coast" says everything "no wildlife in Senegal" would have
+     said, without the site being the one to say no. */
+  function paintField() {
+    var grid = document.getElementById('jn-field-grid');
+    if (!grid) return;
+    var sec = document.getElementById('jn-field');
+    if (sec) sec.hidden = false;
+    var rows = E.field(D, brief);
+    var say = document.getElementById('jn-field-say');
+    var strong = rows.filter(function (r) { return r.match === 'leads'; }).length;
+    if (say) {
+      say.textContent = brief.wants.length
+        ? strong + ' of the fifty-four lead on what you asked for. The rest are '
+          + 'here too, and any of them can be your journey.'
+        : 'Choose any one, or answer the questions again and watch them re-colour.';
+    }
+    grid.innerHTML = rows.map(function (r) {
+      return '<button class="jn-c" type="button" data-country="' + esc(r.slug) + '"'
+        + ' data-match="' + r.match + '"'
+        + (chosen && chosen.slug === r.slug ? ' data-picked="true"' : '')
+        + (r.inSeason ? '' : ' data-off="true"')
+        + '><b>' + esc(r.name) + '</b>'
+        + '<span class="jn-c-for">' + esc(r.leads.join(' \u00b7 ')) + '</span>'
+        + '</button>';
+    }).join('');
   }
 
   /* Who lives there, before why we chose it. A country that arrives as an
@@ -278,8 +310,10 @@
     return bits.length ? bits.join(' \u00b7 ') : 'Where we would start';
   }
 
-  reveal.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-alt],[data-compose],[data-others],[data-restart]') : null;
+  /* The field is its own section now, so the delegated handler has to be bound
+     to both. Bound only to .jn-reveal, every country in the grid was inert. */
+  function onPick(e) {
+    var t = e.target.closest ? e.target.closest('[data-alt],[data-compose],[data-others],[data-restart],[data-country]') : null;
     if (!t) return;
     if (t.hasAttribute('data-alt')) {
       var found = picks.filter(function (p) { return p.slug === t.dataset.alt; })[0];
@@ -298,6 +332,19 @@
       if (alts.hasAttribute('data-open')) {
         alts.scrollIntoView({behavior: reduced.matches ? 'auto' : 'smooth', block: 'start'});
       }
+    } else if (t.hasAttribute('data-country')) {
+      /* They picked one themselves. That is the whole point of showing all
+         fifty-four, so nothing here second-guesses it: the country they chose
+         becomes the journey, whatever the ranking thought. */
+      var want = t.dataset.country;
+      var found = E.rank(D, {wants: brief.wants, month: brief.month, seed: brief.seed})
+        .filter(function (p) { return p.slug === want; })[0];
+      chosen = found || {slug: want, reasons: [], outOfSeason: false};
+      picks = [chosen].concat(picks.filter(function (p) { return p.slug !== want; }));
+      track('country_chosen', {country: want});
+      var fs = document.getElementById('jn-field');
+      if (fs) fs.hidden = true;
+      openComposer(want);
     } else if (t.hasAttribute('data-restart')) {
       /* Re-rolling changes the tie-break, not the rules: two countries that
          scored the same get to take turns. It travels in the link, so a
@@ -305,9 +352,14 @@
       brief.seed = (brief.seed + 1) % 7;
       reveal.hidden = true;
       form.hidden = false;
+      var fieldSec = document.getElementById('jn-field');
+      if (fieldSec) fieldSec.hidden = true;
       show(1);
     }
-  });
+  }
+  reveal.addEventListener('click', onPick);
+  var fieldEl = document.getElementById('jn-field');
+  if (fieldEl) fieldEl.addEventListener('click', onPick);
 
   /* ---- the composer ------------------------------------------------------ */
 
@@ -479,14 +531,15 @@
       meet.href = '/meet#/' + encodeURIComponent(chosen.slug);
       meet.textContent = 'Meet ' + c.name;
     }
+    /* The ground stage sends this same brief with the figure appended, so it is
+       built once here and read there rather than assembled twice from the same
+       inputs — which is how the two of them would drift apart. */
+    lastBrief = enquiry(title, c, rows, pace);
     var begin = document.getElementById('jn-begin');
-    begin.href = '/contact?journey=' + encodeURIComponent(enquiry(title, c, rows, pace));
     begin.onclick = function () {
       track('enquiry_started', {country: chosen.slug, stages: stages.length,
                                 month: brief.month, pacing: brief.pacing});
     };
-    begin.textContent = c.operator ? 'Send this to ' + c.operator.name : 'Begin this journey';
-    begin.insertAdjacentHTML('beforeend', '<i>&rarr;</i>');
   }
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -547,20 +600,21 @@
             + '</button></li>';
         }).join('') + '</ul>'
       + '<p class="jn-onward-note">Straight-line distances between country centres. '
-      + 'The road, the border post and how long either takes are things your '
-      + 'operator knows and we do not.</p></div>';
+      + 'Your coordinator plans the road and the border post around your '
+      + 'dates.</p></div>';
   }
 
   /* Local means a company with an address, a year and a sentence about what it
-     actually runs. Where we have that, print it. Where we do not, there is no
-     company — the earlier version said "a licensed company based in <country>",
-     which invented one for nineteen countries — so say that instead. */
+     actually runs. Where we have that, name it — it is evidence and it is a
+     strength. Where we do not, the answer is not "nobody of ours": the ground
+     journey is Afrinkong's own everywhere, which is the thing the traveller is
+     actually asking about at the end of composing one. */
   function whoBlock(c) {
     if (!c.operator) {
-      return '<div class="jn-who-in" data-none><span class="af-stamp">Who would run it</span>'
-        + '<b>Nobody of ours, in ' + esc(c.name) + '</b>'
-        + '<p>We run companies in three countries and this is not one of them. '
-        + 'Send the journey anyway and we will say who to ask.</p></div>';
+      return '<div class="jn-who-in" data-house><span class="af-stamp">Who would run it</span>'
+        + '<b>Afrinkong</b>'
+        + '<p>Your vehicle, your driver for the whole journey, and a coordinator '
+        + 'holding the days together — ours, wherever this goes.</p></div>';
     }
     var o = c.operator;
     return '<div class="jn-who-in" data-ours><span class="af-stamp">Operated locally by</span>'
@@ -638,7 +692,7 @@
 
   compose.addEventListener('click', function (e) {
     var t = e.target.closest
-      ? e.target.closest('[data-toggle],[data-drop],[data-save],[data-share],[data-cross]')
+      ? e.target.closest('[data-toggle],[data-drop],[data-save],[data-share],[data-cross],[data-ground]')
       : null;
     if (!t) return;
     if (t.hasAttribute('data-cross')) {
@@ -664,8 +718,126 @@
       save();
     } else if (t.hasAttribute('data-share')) {
       share();
+    } else if (t.hasAttribute('data-ground')) {
+      openGround();
     }
   });
+
+
+  /* ---- the ground --------------------------------------------------------- */
+
+  /* The tunnel used to stop at the composer: a journey with a shape, a name and
+     no figure, handed to /contact for somebody to price by hand. This is the
+     fifth question. It carries the days already answered rather than asking a
+     second time, and it totals from data-rate attributes rather than by reading
+     the dollars back out of the labels — a label that says "Included" instead
+     of "$0" is exactly how a group silently stops being counted. */
+
+  var lastBrief = '';
+  var ground = document.getElementById('ground');
+  var gform = document.getElementById('jn-g');
+
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+
+  /* How many days the traveller is actually being quoted for. The chips offer
+     the common lengths; anything else goes in "Other", which is also where the
+     pacing answer lands when it does not match a chip — 12 days is a real
+     answer and rounding it to 10 or 14 to fit the UI would be the interface
+     lying about what it was told. */
+  function groundDays() {
+    var on = gform.querySelector('input[name=days]:checked');
+    if (!on) return 0;
+    if (on.value !== 'other') return parseInt(on.value, 10) || 0;
+    var other = gform.querySelector('input[name=days_other]');
+    return Math.max(0, parseInt(other && other.value, 10) || 0);
+  }
+
+  function prefillDays(want) {
+    var chip = gform.querySelector('input[name=days][value="' + want + '"]');
+    if (chip) { chip.checked = true; return; }
+    var other = gform.querySelector('input[name=days][value=other]');
+    var box = gform.querySelector('input[name=days_other]');
+    if (other && box) { other.checked = true; box.value = want; }
+  }
+
+  function total() {
+    var days = groundDays();
+    var perDay = 0, once = parseInt(gform.dataset.arrival, 10) || 0, quote = false;
+    var tier = null;
+    gform.querySelectorAll('input:checked').forEach(function (i) {
+      if (i.name === 'days' || i.type === 'checkbox') return;
+      if (i.hasAttribute('data-quote')) quote = true;
+      if (i.dataset.rate) perDay += parseInt(i.dataset.rate, 10) || 0;
+      if (i.dataset.once) once += parseInt(i.dataset.once, 10) || 0;
+      if (i.name === 'tier') tier = i;
+    });
+    return {days: days, sum: perDay * days + (days ? once : 0), quote: quote,
+            tier: tier ? tier.closest('.jn-card').querySelector('b').textContent : ''};
+  }
+
+  function paintGround() {
+    var t = total();
+    var sum = gform.querySelector('[data-total]');
+    var basis = gform.querySelector('[data-basis]');
+    var note = gform.querySelector('[data-quote]');
+    if (sum) sum.textContent = t.days ? money(t.sum) : '—';
+    if (basis) {
+      basis.textContent = t.days
+        ? t.days + ' days \u00b7 ' + t.tier + ' \u00b7 arrival included'
+        : 'Tell us how many days';
+    }
+    if (note) note.hidden = !t.quote;
+
+    /* /enquire, not /contact. The tunnel used to end on Kamerun's page: a
+       journey composed for Eritrea arrived under a KAMERUN masthead beside a
+       Douala address and a +237 number. */
+    var go = document.getElementById('jn-go');
+    if (go && chosen) {
+      var c = D.countries[chosen.slug];
+      var lines = [lastBrief,
+                   '', 'THE GROUND',
+                   'Journey: ' + t.tier,
+                   'Days: ' + (t.days || 'not yet said'),
+                   'Afrinkong service: ' + (t.days ? money(t.sum) : 'not yet priced')
+                     + ' USD, arrival coordination included'];
+      if (t.quote) {
+        lines.push('One choice is quoted once the destination is known.');
+      }
+      lines.push('Destination charges (parks, permits, entrance) are arranged by '
+                 + 'Afrinkong and added at cost.');
+      go.href = '/enquire?journey=' + encodeURIComponent(lines.join('\n'));
+      go.textContent = c.operator ? 'Send this to ' + c.operator.name
+                                  : 'Begin this journey';
+      go.insertAdjacentHTML('beforeend', '<i>&rarr;</i>');
+    }
+  }
+
+  function openGround() {
+    compose.hidden = true;
+    ground.hidden = false;
+    prefillDays(E.pacingFor(D, brief.pacing).days);
+    paintGround();
+    track('ground_opened', {country: chosen ? chosen.slug : null,
+                            pacing: brief.pacing});
+    window.scrollTo({top: 0, behavior: reduced.matches ? 'auto' : 'smooth'});
+    var h = ground.querySelector('.jn-h1');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus(); }
+  }
+
+  if (gform) {
+    gform.addEventListener('change', paintGround);
+    gform.addEventListener('input', paintGround);
+    gform.addEventListener('submit', function (e) { e.preventDefault(); });
+  }
+  if (ground) {
+    ground.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target.closest('[data-back-compose]') : null;
+      if (!t) return;
+      ground.hidden = true;
+      compose.hidden = false;
+      window.scrollTo({top: 0, behavior: reduced.matches ? 'auto' : 'smooth'});
+    });
+  }
 
   /* ---- saving, sharing, restoring ---------------------------------------- */
 

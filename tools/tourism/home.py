@@ -28,7 +28,7 @@ import html as html_mod
 import json
 import os
 
-from . import imaging, plate
+from . import company, imaging, plate
 from .model import ROOT, region_of
 
 SHAPES_PATH = os.path.join(ROOT, "tourism", "shapes.json")
@@ -140,15 +140,10 @@ def operator_block(country):
     """Who actually runs this country, with enough about them to be evidence."""
     op = country.operator
     if not op:
-        return ('<div class="ct-op ct-op--none"><span>Local operator</span>'
-                '<b>None of ours in %s</b>'
-                '<p>We run companies in three countries and %s is not one of them. '
-                'It is written up here through the same twenty-seven categories as '
-                'the rest, so it can be compared with them on the same terms &mdash; '
-                'you would just be booking it through somebody else. Tell us the '
-                'month and we will say who to ask.</p>'
-                '<a class="af-go" href="/contact">Ask anyway &rarr;</a></div>'
-                % (esc(country.name), esc(country.name)))
+        # Was "None of ours in <Country>" and "Ask anyway". The homepage is
+        # where somebody decides whether Africa is possible for them, and the
+        # answer to that is what we do, not the shape of our subsidiaries.
+        return company.block_who(company.load(), "ct-op ct-op--house", stamp=False)
     return ('<div class="ct-op"><span>Operated locally by</span><b>%s</b>'
             '<p class="ct-op-base">%s &middot; since %s</p><p>%s</p>'
             '<a class="af-go" href="%s">Enter %s &rarr;</a></div>'
@@ -533,6 +528,26 @@ def write_all(countries, taxonomy, skip=("cameroon", "uganda", "namibia"), out_d
     return written
 
 
+# THE COUNTRY FOOTER, AND TWO THINGS THAT WERE IN IT
+#
+# The bar read "0 of 27 slots illustrated - Figures and contact details are
+# illustrative until verified". The first half is a build metric — how far our
+# own photograph pipeline has got — printed to a traveller, and on a country
+# whose photographs have not resolved yet it read as "this place has nothing".
+# The second half stopped being true the moment the company acquired a name, a
+# registration and an address. The bar carries the colophon now, the same one
+# the homepage ends on; the fifty-one country pages had no company line at all
+# until this.
+#
+# The Elsewhere column offered "Afrinkong / Cameroon / Every destination /
+# Enquire". Cameroon was hardcoded, so /morocco proposed Cameroon as its one
+# neighbour for no reason a reader of that page could see, and Enquire went to
+# /contact, which is Kamerun's desk.
+#
+# Explanations like this belong here and not in the template. The first draft
+# put them in the HTML and they shipped into all fifty-one pages.
+
+
 TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -555,7 +570,7 @@ TEMPLATE = """<!DOCTYPE html>
       <a href="/meet#/%(slug)s">Meet %(name)s</a>
       <a href="/tourism/%(slug)s">All %(count)d</a>
     </nav>
-    <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>
+    <a class="af-btn af-btn--solid" href="/journey">Build a journey</a>
   </div>
 </header>
 
@@ -569,7 +584,7 @@ TEMPLATE = """<!DOCTYPE html>
         <p class="open-tag">%(tagline)s.</p>
         <p class="lede">%(summary)s</p>
         <div class="acts">
-          <a class="af-btn af-btn--solid" href="/contact">Plan a journey <i>&rarr;</i></a>
+          <a class="af-btn af-btn--solid" href="/journey">Build a journey <i>&rarr;</i></a>
           <a class="af-btn af-btn--quiet" href="#experiences">What you can do here <i>&rarr;</i></a>
         </div>
       </div>
@@ -634,7 +649,7 @@ TEMPLATE = """<!DOCTYPE html>
     <h2>Your %(name)s <em>starts here</em>.</h2>
     <p>Tell us the month, or simply the thing you want to see, and a guide who works there will answer.</p>
     <div class="acts">
-      <a class="act go" href="/contact">Plan a journey <i>&rarr;</i></a>
+      <a class="act go" href="/journey">Build a journey <i>&rarr;</i></a>
       <a class="act faint" href="/tourism/%(slug)s">See all %(count)d experiences <i>&rarr;</i></a>
     </div>
   </div>
@@ -670,13 +685,15 @@ TEMPLATE = """<!DOCTYPE html>
       <div class="foot-col">
         <b>Elsewhere</b>
         <a href="/">Afrinkong</a>
-        <a href="/cameroon">Cameroon</a>
-        <a href="/tourism/">Every destination</a>
-        <a href="/contact">Enquire</a>
+        <a href="/atlas">The atlas of Africa</a>
+        <a href="/places">Every place</a>
+        <a href="/enquire">Begin a journey</a>
       </div>
     </div>
     <div class="foot-bar">
-      <a href="/">Part of Afrinkong</a> &middot; %(name)s &middot; %(resolved)d of %(count)d slots illustrated &middot; Figures and contact details are illustrative until verified
+      <a href="/">Part of Afrinkong</a> &middot; %(name)s
+      <span class="foot-co"><!-- gen:company -->
+      <!-- /gen:company --></span>
     </div>
   </div>
 </footer>

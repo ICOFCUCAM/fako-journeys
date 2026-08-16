@@ -1,0 +1,252 @@
+{
+ "$comment": "Trans Afrique — a journey series, not a category. Afrinkong's signature product and deliberately outside the eight experiences: an experience is a lens you look at the continent through, and this is a month of somebody's life. In the grid it would have been a ninth tile in a row of eight.",
+ "$why_here": "AFRICA ISN'T ONE PLACE is the first thing the homepage says. Trans Afrique is that sentence as a product — the physical expression of it. Most operators say come to our country; this says come and cross the continent.",
+ "$pricing": "These are journey prices and NOT the daily rate multiplied out. The ground journey in tourism/rates.json is priced per vehicle per day — $450 Private, $650 Signature, $1,000 Bespoke — and that is the right shape for a week or two. An expedition is not: twenty-one days at the Bespoke rate would be $21,000 against a band that tops out at $12,000, and the difference is real rather than a discount. Length earns it. One vehicle and one driver committed for a month cost less per day than the same pair for four days, the coordination is written once and used for thirty days instead of seven, and a route that repeats across departures is a route already solved. So the bands are stated as bands, per journey, and the file says why.",
+ "$what_it_buys": "Not kilometres. Multiple countries, landscapes, cuisines and cultures inside one itinerary the traveller did not have to assemble — plus the parts that are genuinely hard from abroad: border coordination, permits, park arrangements, accommodation chosen rather than searched for, and somebody reachable when a plan fails at a frontier post on a Sunday.",
+ "name": "Trans Afrique",
+ "line": "Don’t just cross Africa. Experience it with a team.",
+ "sub": "One continent. Many countries. One extraordinary journey.",
+ "say": "From the Atlantic to the Indian Ocean. From rainforest to savanna. From ancient kingdoms to modern cities. Cross Africa one country at a time, by road, through the places that cannot be understood from an airport window.",
+ "stamp": "The Afrinkong journey series",
+ "act": "Explore the journeys",
+
+ "$hero": "The next frame of the same journey. The homepage band shows a loaded vehicle standing still at Amboseli before six with the mountain on the horizon; this shows a loaded vehicle going, dust behind it, on a road that runs on over the hills and out of the picture. Same roof box, same product, one beat later — which is what makes the click feel like entering rather than leaving. It is deliberately not the same photograph: repeating the frame would say the journey had not started.\n\nIt is also why the alternative was rejected. still-safari-vehicles is three tourist vehicles at one sighting, which is a package safari — the exact thing a continental crossing is not.\n\nThe frame is already on /services as one of Cameroon's twenty-seven, and it names no country: the subject line for it is 'a 4x4 on a red laterite road between rainforest and highland farmland'. A crossing hero has to be a road rather than a place, so a photograph that cannot be pinned to one country is the right one here and would be the wrong one for an atlas page.",
+ "hero": {
+  "image": "/images/uploads/site-services-laterite-road-1600w.jpg",
+  "width": 1600,
+  "height": 1067,
+  "alt": "A loaded four-wheel drive with a roof box driving away on a red laterite road, dust rising behind it, the road running on over green hills towards a line of higher country on the horizon",
+  "act": "Enter the crossing"
+ },
+
+ "$idea": "The frame between the door and the machinery. Somebody arriving from the homepage has been sold a morning and nothing else; sending them straight into six support domains and three price bands asks them to evaluate a product they have not yet been told the shape of. This is the paragraph that says what a crossing is, and it is the only place on the site where the argument is made in distances rather than in adjectives.",
+ "idea": {
+  "title": "The idea",
+  "line": "Africa is too large to be a destination.",
+  "say": [
+   "Dakar to Mombasa is further than Lisbon to Kabul, and there are fifty-four countries in between. A week in one of them is a week in one of them — which is the right journey for most people most of the time, and it is what the rest of this site is for.",
+   "A crossing is the other answer. You travel by road, you wake up in a different country most weeks, and the continent changes slowly enough to watch it happen: the landscape first, then the language, then what is for sale at the roadside, then what is for dinner. Nobody assembles that from home. Borders keep their own hours, permits are booked in months rather than days, and the part that decides whether a month works is having somebody whose job is the phone call at the frontier post on a Sunday."
+  ]
+ },
+
+ "$levels": "Three ways to travel the same continent, and the difference is who designed the route. Private is yours; Signature is ours and you pick the dates; Expedition is a fixed departure with a fixed number of seats, which is the only one of the three where scarcity is a fact rather than a technique.",
+ "levels": [
+  {
+   "id": "private",
+   "name": "Trans Afrique Private",
+   "line": "Build Africa around me.",
+   "say": "Your route, your dates, your length. A private vehicle and a dedicated driver-host for the whole crossing, and an itinerary written from the beginning rather than chosen from a list.",
+   "days": "30 to 60+",
+   "low": 25000,
+   "high": 50000,
+   "who": "For travellers who know roughly what they want the year to look like."
+  },
+  {
+   "id": "signature",
+   "name": "Trans Afrique Signature",
+   "line": "The route is ours. The dates are yours.",
+   "say": "One of the crossings below, designed and driven before, run privately for your party on the dates you choose.",
+   "days": "14 to 25",
+   "low": 6000,
+   "high": 16000,
+   "recommended": true,
+   "who": "For travellers who want the thinking done and the journey still theirs."
+  },
+  {
+   "id": "expedition",
+   "name": "Trans Afrique Expedition",
+   "line": "A fixed departure, and a fixed number of seats.",
+   "say": "A set itinerary, a set date and a small group who travel it together. Twelve travellers, eight countries, thirty-four days, one journey across Africa.",
+   "days": "34",
+   "low": 15000,
+   "high": 30000,
+   "seats": 12,
+   "who": "For travellers who would rather join a crossing than commission one."
+  }
+ ],
+ "$routes": "Every country named is one the atlas already carries, so a crossing cannot promise a border the rest of the site has never written up. The strands under each are the lenses that route actually leads on.",
+ "routes": [
+  {
+   "id": "east",
+   "name": "Trans Afrique — East",
+   "countries": [
+    "kenya",
+    "uganda",
+    "rwanda",
+    "tanzania"
+   ],
+   "strands": [
+    "Wildlife",
+    "Mountains",
+    "Culture",
+    "Great Lakes"
+   ],
+   "days": "21",
+   "low": 6000,
+   "high": 12000,
+   "say": "Rift lakes, two gorilla forests and the migration, overland and in that order.",
+   "shape": "Nairobi to Arusha, the long way round."
+  },
+  {
+   "id": "west",
+   "name": "Trans Afrique — West",
+   "countries": [
+    "senegal",
+    "gambia",
+    "guinea-bissau",
+    "guinea",
+    "cote-divoire",
+    "ghana"
+   ],
+   "strands": [
+    "Atlantic coast",
+    "Culture",
+    "Food",
+    "History"
+   ],
+   "days": "24",
+   "low": 7000,
+   "high": 14000,
+   "say": "Six countries down the Atlantic, and the food changes at every border.",
+   "shape": "Dakar to Accra."
+  },
+  {
+   "id": "south",
+   "name": "Trans Afrique — South",
+   "countries": [
+    "south-africa",
+    "namibia",
+    "botswana",
+    "zimbabwe",
+    "zambia"
+   ],
+   "strands": [
+    "Desert",
+    "Wildlife",
+    "Rivers",
+    "Falls",
+    "Wilderness"
+   ],
+   "days": "21",
+   "low": 8000,
+   "high": 16000,
+   "say": "Desert to delta to the falls, across five borders and most of a continent’s weather.",
+   "shape": "Cape Town to Victoria Falls."
+  },
+  {
+   "id": "great",
+   "name": "Trans Afrique — The Continental Expedition",
+   "countries": [
+    "kenya",
+    "uganda",
+    "rwanda",
+    "tanzania",
+    "zambia",
+    "zimbabwe",
+    "botswana",
+    "namibia",
+    "south-africa"
+   ],
+   "strands": [
+    "Nine countries",
+    "Two oceans",
+    "One road"
+   ],
+   "days": "35 to 45",
+   "low": 15000,
+   "high": 30000,
+   "great": true,
+   "say": "Nine countries, top to bottom, in one continuous crossing. Cross borders, follow ancient roads, enter the wilderness, meet the people, see the places — and travel with a team built for the journey.",
+   "shape": "Nairobi to Cape Town."
+  }
+ ],
+ "$included": "Split the same way the rest of the site splits money: what Afrinkong earns, and what Africa costs. Keeping accommodation on the arranged side rather than the included side is deliberate — it is arranged and it is charged, and calling it included would make the band a fiction.",
+ "included": [
+  "Private ground transport for the whole crossing",
+  "A driver-host, and specialists along the route",
+  "Border-crossing coordination and permits",
+  "Journey coordination from arrival to departure",
+  "Park and attraction arrangements",
+  "24/7 support while you are on the road"
+ ],
+ "arranged": [
+  "Accommodation, chosen rather than searched for",
+  "Park, conservation and permit fees",
+  "Domestic flights where a leg is better flown",
+  "Special access and activities"
+ ],
+ "excluded": [
+  "International flights",
+  "Visas and entry authorisation",
+  "Travel and medical insurance",
+  "Your own meals and personal expenses"
+ ],
+ "fine": "Bands are the Afrinkong journey fee — what we earn for building and running the crossing. Accommodation, park fees, permits and domestic flights are arranged by us and passed through at cost; international flights, visas, insurance and your own meals are yours. Every crossing is quoted as a whole, in writing, before anything is held.",
+ "motto": "Some journeys need a guide. Trans Afrique needs a team.",
+ "$support": "Six domains rather than twelve job titles. A list of people — doctor, nurse, driver, historian, chef — reads as staffing; naming what is covered reads as capability, and it is also the more honest shape, because which individual travels changes with the route while what has to be covered does not. It keeps the medical line from making this sound like a medical tour, which is the thing a long expedition with a doctor on it can easily start to sound like.",
+ "support_title": "Expedition support",
+ "support_say": "Not every journey needs every specialist. The route determines the team — and the team is assembled per crossing, not kept on a bus.",
+ "support": [
+  {
+   "id": "medical",
+   "name": "Medical",
+   "roles": [
+    "Physician",
+    "Nurse or paramedic"
+   ],
+   "say": "Where the itinerary, the group size and the destination call for it."
+  },
+  {
+   "id": "mobility",
+   "name": "Mobility",
+   "roles": [
+    "Professional drivers",
+    "Vehicle technician"
+   ],
+   "say": "The vehicles, the roads, the borders and what to do when one of them closes."
+  },
+  {
+   "id": "security",
+   "name": "Security",
+   "roles": [
+    "Security professionals where appropriate"
+   ],
+   "say": "Assessed per route and per season, and arranged locally and lawfully or not at all."
+  },
+  {
+   "id": "cultural",
+   "name": "Cultural",
+   "roles": [
+    "Local cultural specialists",
+    "Historian or archaeologist",
+    "Translator or language specialist"
+   ],
+   "say": "People who can tell you what you are looking at, in the language it is spoken in."
+  },
+  {
+   "id": "wildlife",
+   "name": "Wildlife and nature",
+   "roles": [
+    "Wildlife and safari specialists",
+    "Nature and environmental specialists"
+   ],
+   "say": "Trackers and naturalists for the stretches where that is the point."
+  },
+  {
+   "id": "operations",
+   "name": "Journey operations",
+   "roles": [
+    "Journey director",
+    "Photographer or filmmaker",
+    "Chef or culinary specialist on selected expeditions"
+   ],
+   "say": "The person whose whole job is that the month works, and the ones who record it."
+  }
+ ],
+ "$medical": "Written to be exactly true and no more. An accompanying medical professional is support in addition to insurance and local emergency services, never a substitute for either, and the site says so in the same breath as the offer rather than in a footnote somebody has to go looking for. Insurance stays mandatory — it is already the one requirement rates.json marks as hard.",
+ "medical": {
+  "title": "About medical support",
+  "say": "On a long expedition a medical professional can accompany the group, with the level of support set by the itinerary, the group size and the destination. It is confirmed for your crossing before you book and never assumed.",
+  "but": "It is additional expedition support and not a replacement for travel and medical insurance or for local emergency services. Every traveller carries their own insurance; that requirement does not change because a doctor is on the crossing."
+ }
+}

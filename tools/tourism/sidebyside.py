@@ -211,7 +211,7 @@ TEMPLATE = """<!DOCTYPE html>
       <a href="/#window">The map</a>
       <a href="/#destinations">Destinations</a>
       <a href="/tourism/">Every country</a>
-      <a href="/contact">Plan a journey</a>
+      <a href="/journey">Build a journey</a>
     </nav>
   </div>
 </header>
@@ -232,10 +232,10 @@ TEMPLATE = """<!DOCTYPE html>
   </div>
   <div id="cp-body"><noscript>
     <div class="cp-nojs">
-      <h2>This one needs a script, and there is not one running.</h2>
+      <h2>Read them side by side, two tabs at a time.</h2>
       <p>The table is assembled in the browser from a payload carrying all
         %(total)d countries, so that changing either menu is instant rather than a
-        page load. With scripting off there is nothing to assemble it.</p>
+        page load &mdash; which needs a script running.</p>
       <p>Every country here has its own page, written through the same
         %(count)d categories in the same order, so two of them read side by side
         in two tabs say exactly what this table would have said.</p>
@@ -250,7 +250,9 @@ TEMPLATE = """<!DOCTYPE html>
 
 <footer class="foot">
   <div class="af-frame">
-    <p>Afrinkong runs tour operators of its own in three countries and writes up %(total)d, all through the same %(count)d categories. <a href="/#destinations">See all destinations</a>, or <a href="/contact">tell us what you are after</a>.</p>
+    <p>Afrinkong runs tour operators of its own in three countries and writes up %(total)d, all through the same %(count)d categories. <a href="/#destinations">See all destinations</a>, or <a href="/enquire">tell us what you are after</a>.</p>
+    <p class="foot-co"><!-- gen:company -->
+    <!-- /gen:company --></p>
   </div>
 </footer>
 

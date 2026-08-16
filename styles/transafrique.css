@@ -1,0 +1,323 @@
+/* /trans-afrique — the expedition.
+ *
+ * Dramatic by scale and contrast, not by effects. The house rules the rest of
+ * the site keeps apply here too: no gradients, no glass, no glow, no 3D. What
+ * makes this feel different from every other page is that the type is bigger,
+ * the ground is darker, and the route reads as a line of countries with arrows
+ * between them rather than as a list.
+ */
+.tf-body{background:var(--fj-basalt);color:var(--fj-onbasalt)}
+.tf-page{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
+
+/* ---- the hero ------------------------------------------------------------- */
+/* THE FIRST SCREEN AFTER THE DOOR, AND ITS JOB IS CONTINUITY.
+   ---------------------------------------------------------------------------
+   The homepage band spends two screens building a morning — a loaded vehicle
+   at Amboseli before six, the mountain on the horizon, Kenya to Tanzania — and
+   this page used to answer it with type on an empty dark field. That reads as
+   a different website rather than as the next frame, and the momentum was gone
+   in one click.
+
+   So the picture takes most of the width and it is the same journey one beat
+   later: the same loaded vehicle going, dust behind it, on a road that leaves
+   the frame. Roughly a third type to two thirds photograph.
+
+   AND IT IS DELIBERATELY NOT THE WINDOW BAND AGAIN. The fixed-picture
+   technique belongs to the door. Used twice inside two clicks it stops being
+   cinema and starts being a template, and the second use is always the weaker
+   one because the reader already knows the trick.
+
+   Full-bleed, so the photograph reaches both edges of the screen the way the
+   band does. The type column is padded to land on the same left margin as
+   every paragraph below it — measured off --frame rather than guessed, so the
+   headline and the body text share one edge at every width. */
+.tf-hero{display:grid;grid-template-columns:minmax(0,37fr) minmax(0,63fr);
+  min-height:min(76svh,720px);background:var(--fj-basalt)}
+.tf-hero-say{display:flex;align-items:center;
+  padding:var(--sp-5) 40px var(--sp-5)
+          max(44px, calc((100vw - var(--frame)) / 2 + 44px))}
+.tf-hero-in{max-width:46ch;margin-left:auto}
+.tf-hero-pic{margin:0;overflow:hidden;background:var(--c-primary)}
+.tf-hero-pic img{width:100%;height:100%;object-fit:cover;display:block}
+.tf-hero-sub{margin:22px 0 0;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(17px,1.8vw,24px);line-height:1.2;color:var(--c-accent-lit)}
+.tf-hero-lede{margin:16px 0 0;font-size:clamp(15.5px,1.4vw,18px);line-height:1.6;
+  color:var(--fj-onbasalt);max-width:46ch}
+/* The chain the door started. The band shows two countries because two is what
+   is in that photograph; this shows the nine the continental crossing actually
+   takes, which is the seam — a border, then the road through nine of them.
+   Names rather than links: the hero is a statement, and nine outbound links in
+   a first screen is a menu. The routes below link every one of them. */
+.tf-hero-chain{margin:22px 0 0;display:flex;flex-wrap:wrap;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.155em;
+  text-transform:uppercase;color:var(--c-gold);line-height:1.9}
+.tf-hero-chain span+span::before{content:"\2192";margin:0 .5em;color:var(--fj-onbasalt-dim)}
+/* THE SOLID BUTTON, INVERTED FOR A DARK GROUND.
+   af-btn--solid fills with deep forest and inks in ivory, which is a call to
+   action on paper and a dark rectangle on basalt — this hero's ground is deep
+   forest mixed 95% with black, so the button was very nearly the wall.
+
+   Terracotta was the first fix and it measured 3.15:1: this block is one of the
+   dark grounds that repoints --c-accent to its lit variant, so an ivory label
+   landed on #CB6F4B and needed 4.5. Deep-forest ink on that same terracotta is
+   4.58 — over the bar by eight hundredths, which is not a margin, it is a
+   coincidence waiting for somebody to nudge a colour.
+
+   So the fill inverts instead of shifting hue: ivory ground, deep forest ink,
+   14.3:1, and it is the brightest object on a very dark page — which is what
+   the one thing to do next should be. */
+.tf-hero-go{margin-top:28px;background:var(--c-bg);border-color:var(--c-bg);
+  color:var(--c-primary)}
+.tf-hero-go:hover{background:var(--c-accent-lit);border-color:var(--c-accent-lit);
+  color:var(--c-primary)}
+
+@media(max-width:900px){
+  /* Stacked, and the photograph goes first: the whole point of this screen is
+     that the reader has not left the journey, and a wall of type above the
+     picture says they have. */
+  .tf-hero{grid-template-columns:1fr;min-height:0}
+  .tf-hero-pic{order:-1;aspect-ratio:16/10}
+  .tf-hero-say{padding:var(--sp-5) 28px}
+  .tf-hero-in{max-width:none;margin-left:0}
+}
+
+/* Widened when the headline grew. 'Don't just cross Africa. Experience it
+   with a team.' at 13ch set it in eight lines down a narrow column, which
+   reads as a poem rather than a statement. In the hero column it is narrower
+   again, so the size is cut with it — 88px against a 37% column would set the
+   same eight lines the 13ch measure did. */
+.tf-h1{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(34px,3.9vw,58px);line-height:.96;letter-spacing:-.025em;
+  color:var(--c-bg);margin:14px 0 0}
+.tf-lede{margin-top:24px;font-size:clamp(17px,1.7vw,22px);line-height:1.5;
+  color:var(--fj-onbasalt);max-width:56ch}
+
+/* ---- the idea ------------------------------------------------------------- */
+/* The argument in distances rather than adjectives, which is the only version
+   that survives a reader who has never been. */
+.tf-idea-line{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(26px,3.2vw,46px);line-height:1.02;letter-spacing:-.02em;
+  color:var(--c-bg);margin:0;max-width:18ch}
+.tf-idea-say{margin:22px 0 0;font-size:clamp(16px,1.5vw,19px);line-height:1.62;
+  color:var(--fj-onbasalt);max-width:62ch}
+
+.tf-block{margin-top:var(--sp-7)}
+.tf-h2{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--c-accent-lit);font-weight:400;
+  border-top:2px solid var(--c-accent-fill);padding-top:18px;margin:0 0 var(--sp-4)}
+
+/* Who travels with you. Rows, not cards: it is a crew list, and a crew list is
+   a list. */
+.tf-team{display:grid;gap:0}
+.tf-team-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
+  gap:12px 32px;padding:18px 0;border-bottom:var(--fj-rule-dark)}
+.tf-team-row b{font-family:var(--fj-display);font-size:clamp(17px,1.6vw,23px);
+  font-weight:700;color:var(--c-bg);line-height:1.14}
+.tf-team-row span{font-size:15.5px;line-height:1.55;color:var(--fj-onbasalt-dim);
+  max-width:46ch}
+
+/* ---- the crossings, on the continent -------------------------------------- */
+/* A DIAGRAM OF ONE ROAD SYSTEM, NOT FOUR TOUR PACKAGES.
+   ---------------------------------------------------------------------------
+   Plotted, the geometry says something the cards cannot: Trans Afrique East is
+   the first four countries of the Continental Expedition and Trans Afrique
+   South is its last five reversed. Four separate lines would have put three of
+   them on top of each other and drawn three roads where there is one.
+
+   So two roads are drawn — a spine down the east side and an arc along the
+   Atlantic — and East and South are lit as lengths of the spine when their
+   card is under the cursor or the keyboard. No script: :has() on the section
+   does it, and a browser without :has() shows the finished map rather than a
+   broken one, which is the right way round for a fallback.
+
+   Restrained means the continent is drawn in one flat tone with no borders
+   picked out, no labels on countries, no pins and no shadow. The only things
+   with any weight are the two roads and the thirteen countries they enter. */
+.tf-map{margin:0 0 var(--sp-5);display:grid;gap:var(--sp-4);
+  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:center}
+.tf-map-svg{width:100%;height:auto;display:block}
+/* Everything Afrinkong does not cross is still drawn. Thirteen countries alone
+   on a black field is a diagram; the point of putting a crossing on Africa is
+   that Africa is around it. */
+.tf-map-rest path{fill:color-mix(in srgb,var(--c-bg) 9%,transparent);stroke:none}
+.tf-map-in path{fill:color-mix(in srgb,var(--c-bg) 26%,transparent);stroke:none;
+  transition:fill .25s ease}
+.tf-map-line{fill:none;stroke:var(--c-gold);stroke-width:4.5;
+  stroke-linejoin:round;stroke-linecap:round;transition:stroke .25s ease,stroke-width .25s ease}
+/* The spine carries the weight; the arc is its equal in kind and shorter in
+   fact. East and South have no stroke at rest because the spine is already
+   drawn along them — they appear by brightening, not by arriving. */
+.tf-map-line[data-route="great"]{stroke:var(--c-gold);stroke-width:5.5}
+.tf-map-line[data-route="west"]{stroke:var(--c-gold);stroke-width:5.5}
+.tf-map-line[data-route="east"],.tf-map-line[data-route="south"]{stroke:none}
+.tf-map-nodes circle{fill:var(--c-bg);stroke:none}
+.tf-map-label{font-family:var(--fj-mono);font-size:17px;letter-spacing:2.4px;
+  fill:var(--c-gold)}
+
+/* Hovering or tabbing to a card lights its countries and its road. The
+   selector reaches from the section down into the figure, which is why the map
+   and the cards have to stay inside one .tf-block. */
+.tf-block:has(.tf-route[data-route="east"]:hover) .tf-map-line[data-route="east"],
+.tf-block:has(.tf-route[data-route="south"]:hover) .tf-map-line[data-route="south"],
+.tf-block:has(.tf-route:focus-within[data-route="east"]) .tf-map-line[data-route="east"],
+.tf-block:has(.tf-route:focus-within[data-route="south"]) .tf-map-line[data-route="south"]{
+  stroke:var(--c-bg);stroke-width:7}
+.tf-block:has(.tf-route[data-route="west"]:hover) .tf-map-line[data-route="west"],
+.tf-block:has(.tf-route[data-route="great"]:hover) .tf-map-line[data-route="great"]{
+  stroke:var(--c-bg);stroke-width:7}
+.tf-block:has(.tf-route[data-route="east"]:hover) .tf-map-in path[data-in~="east"],
+.tf-block:has(.tf-route[data-route="west"]:hover) .tf-map-in path[data-in~="west"],
+.tf-block:has(.tf-route[data-route="south"]:hover) .tf-map-in path[data-in~="south"],
+.tf-block:has(.tf-route[data-route="great"]:hover) .tf-map-in path[data-in~="great"]{
+  fill:color-mix(in srgb,var(--c-bg) 58%,transparent)}
+
+.tf-map-cap{margin:0}
+.tf-map-say{margin:0;font-size:15px;line-height:1.6;color:var(--fj-onbasalt-dim);
+  max-width:44ch}
+.tf-map-key{list-style:none;margin:var(--sp-3) 0 0;padding:0}
+.tf-map-key li{display:flex;align-items:baseline;gap:14px;padding:9px 0;
+  border-bottom:var(--fj-rule-dark)}
+/* min-width:0 so the longest name wraps instead of shouldering the count off
+   the end of its row: "Trans Afrique — The Continental Expedition" against
+   "9 countries" left them touching. */
+.tf-map-key b{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:15px;color:var(--c-bg);line-height:1.2;min-width:0}
+.tf-map-key span{margin-left:auto;flex:0 0 auto;padding-left:8px;
+  font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.155em;text-transform:uppercase;color:var(--c-gold);white-space:nowrap}
+
+@media(max-width:860px){
+  .tf-map{grid-template-columns:1fr;gap:var(--sp-3)}
+}
+
+/* The crossings. The country chain is the picture — arrows between names, which
+   is what an expedition actually looks like on paper. */
+.tf-routes{display:grid;gap:var(--sp-3);
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.tf-route-in{border-top:2px solid var(--c-accent-fill);padding-top:20px;height:100%;
+  display:flex;flex-direction:column}
+.tf-route-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(21px,2.1vw,29px);line-height:1.04;color:var(--c-bg);margin:0}
+.tf-route-where{margin-top:12px;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--c-gold);line-height:2}
+.tf-route-where a{color:inherit;border-bottom:1px solid transparent;transition:border-color .2s}
+.tf-route-where a:hover{border-color:var(--c-gold)}
+.tf-route-say{margin-top:14px;font-size:15.5px;line-height:1.5;
+  color:var(--fj-onbasalt-dim);max-width:34ch;flex:1 1 auto}
+.tf-route-facts{margin:20px 0 0;padding-top:14px;border-top:var(--fj-rule-dark)}
+.tf-route-facts div{display:grid;grid-template-columns:78px 1fr;gap:14px;padding:6px 0}
+.tf-route-facts dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.tf-route-facts dd{margin:0;font-size:15px;color:var(--c-bg)}
+
+.tf-fine{margin-top:var(--sp-4);font-size:14px;line-height:1.6;
+  color:var(--fj-onbasalt-dim);max-width:70ch}
+
+.tf-end{margin-top:var(--sp-7);padding-top:var(--sp-5);border-top:var(--fj-rule-dark);
+  display:flex;flex-wrap:wrap;align-items:center;gap:20px 28px}
+.tf-end p{font-family:var(--fj-display);font-size:clamp(19px,2vw,27px);
+  color:var(--c-bg);margin:0;max-width:26ch}
+
+@media(max-width:760px){
+  .tf-page{padding:var(--sp-5) 18px var(--sp-6)}
+  .tf-block{margin-top:var(--sp-6)}
+  .tf-team-row{grid-template-columns:1fr;gap:7px}
+  .tf-routes{grid-template-columns:1fr}
+}
+
+/* Three ways to cross. The middle one is recommended and says so on the card,
+   the way the ground journey's tiers do — the same idea in the same language,
+   because they are the same company's way of offering a choice. */
+.tf-levels{display:grid;gap:var(--sp-3);
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.tf-level{border-top:2px solid var(--c-accent-fill);padding-top:20px;
+  display:flex;flex-direction:column;position:relative}
+.tf-level.is-rec{box-shadow:inset 0 3px 0 var(--c-accent-lit)}
+.tf-level.is-rec::after{content:"Most crossings";position:absolute;top:-9px;right:0;
+  background:var(--c-accent);color:var(--c-bg);font-family:var(--fj-mono);
+  font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;padding:3px 8px}
+.tf-level-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(19px,1.9vw,25px);line-height:1.05;color:var(--c-bg);margin:0}
+.tf-level-line{margin-top:10px;font-family:var(--fj-display);font-size:16px;
+  color:var(--c-accent-lit)}
+.tf-level-say{margin-top:12px;font-size:15px;line-height:1.55;
+  color:var(--fj-onbasalt-dim);flex:1 1 auto}
+.tf-level-seats{margin-top:11px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold)}
+.tf-level-facts{margin:18px 0 0;padding-top:13px;border-top:var(--fj-rule-dark)}
+.tf-level-facts div{display:grid;grid-template-columns:88px 1fr;gap:12px;padding:5px 0}
+.tf-level-facts dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.tf-level-facts dd{margin:0;font-size:15px;color:var(--c-bg);
+  font-variant-numeric:tabular-nums}
+.tf-level-who{margin-top:12px;font-size:13.5px;color:var(--fj-onbasalt-dim)}
+
+/* The lenses a crossing leads on, under the country chain. */
+.tf-route-strands{margin-top:9px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent-lit)}
+/* Nine countries and two oceans deserves the width. */
+.tf-route--great{grid-column:1/-1}
+.tf-route--great .tf-route-name{font-size:clamp(24px,2.6vw,36px)}
+.tf-route--great .tf-route-where{line-height:2.1}
+.tf-route--great .tf-route-say{max-width:52ch}
+
+/* What the fee is and is not, in three columns rather than one long list, so
+   the split between what we earn and what Africa costs is visible at a glance
+   rather than read. */
+.tf-money{display:grid;gap:var(--sp-4) var(--sp-5);
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tf-money-h{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-accent-lit);font-weight:400;margin:0 0 12px}
+.tf-money-col.is-not .tf-money-h{color:var(--fj-onbasalt-dim)}
+.tf-money-list{list-style:none;margin:0;padding:0}
+.tf-money-list li{padding:9px 0 9px 20px;border-bottom:var(--fj-rule-dark);
+  position:relative;font-size:15px;color:var(--fj-onbasalt)}
+.tf-money-list li::before{content:"\002B";position:absolute;left:0;top:9px;
+  color:var(--c-accent-lit);font-family:var(--fj-mono);font-size:11px}
+.tf-money-col.is-not .tf-money-list li{color:var(--fj-onbasalt-dim)}
+.tf-money-col.is-not .tf-money-list li::before{content:"\2013";color:var(--fj-onbasalt-dim)}
+
+.tf-sub{display:block;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(18px,1.9vw,26px);color:var(--c-accent-lit);margin-bottom:12px}
+
+@media(max-width:760px){
+  .tf-levels{grid-template-columns:1fr}
+  .tf-money{grid-template-columns:1fr}
+}
+
+/* SOME JOURNEYS NEED A GUIDE. TRANS AFRIQUE NEEDS A TEAM.
+   The line the section turns on, so it is set at statement scale rather than
+   as copy. */
+.tf-motto{font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(20px,2.3vw,32px);line-height:1.14;color:var(--c-accent-lit);
+  max-width:30ch;margin:var(--sp-4) 0 0}
+
+/* Expedition support: six domains, and the roles inside each. Naming what is
+   covered rather than who is on the bus — which individual travels changes with
+   the route, and what has to be covered does not. */
+.tf-sup-head{margin-top:var(--sp-6)}
+.tf-sup-title{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--c-accent-lit);font-weight:400;
+  border-top:2px solid var(--c-accent-fill);padding-top:18px;margin:0}
+.tf-sup-lede{margin-top:12px;font-size:15.5px;color:var(--fj-onbasalt-dim);max-width:52ch}
+.tf-support{margin-top:var(--sp-4);display:grid;gap:var(--sp-3) var(--sp-4);
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tf-sup{border-top:var(--fj-rule-dark);padding-top:16px}
+.tf-sup-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:17px;line-height:1.06;color:var(--c-bg);margin:0}
+.tf-sup-say{margin-top:9px;font-size:14.5px;line-height:1.5;color:var(--fj-onbasalt-dim)}
+.tf-sup-roles{list-style:none;margin:12px 0 0;padding:0}
+.tf-sup-roles li{font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-gold);padding:3px 0}
+
+/* The medical offer and its limit, in one block. The limit is not a footnote:
+   it is the sentence a traveller would be most entitled to be angry about later
+   if it were buried, so it sits directly under the offer and is marked. */
+.tf-med{margin-top:var(--sp-4);border-left:3px solid var(--c-accent-lit);
+  padding:2px 0 2px 20px;max-width:66ch}
+.tf-med-h{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-accent-lit);font-weight:400;margin:0}
+.tf-med-say{margin-top:10px;font-size:15.5px;line-height:1.55;color:var(--fj-onbasalt)}
+.tf-med-but{margin-top:10px;font-size:14px;line-height:1.6;color:var(--fj-onbasalt-dim)}
+
+@media(max-width:760px){.tf-support{grid-template-columns:1fr}}

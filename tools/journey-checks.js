@@ -426,7 +426,7 @@ for (let mo = 1; mo <= 12; mo++) {
 }
 check('a month only lists countries whose own file says that month',
   !offBook.length, offBook.join(',') || 'all twelve months checked');
-check('no month is empty, and none is all twenty-two',
+check('no month is empty, and no month is the whole atlas',
   (function () {
     for (var m = 1; m <= 12; m++) {
       var n = Q.monthly(m, G).length;

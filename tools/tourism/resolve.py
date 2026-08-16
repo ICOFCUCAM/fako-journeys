@@ -24,6 +24,7 @@ sent to a browser: the site is static files.
 """
 
 import datetime
+import re
 import urllib.error
 import urllib.request
 
@@ -79,8 +80,22 @@ def build_record(candidate, provider, country, category, entry, query, tier, rol
     from the API response or from the country dataset — none is invented."""
     from .validate import alt_text
 
-    alt = (alt_text(country, entry) if tier == "subject"
-           else queries.generic_alt(country, category))
+    # The alt describes the PHOTOGRAPH, and the only text about the photograph
+    # that we did not write ourselves is the provider's.
+    #
+    # It used to be alt_text(country, entry) — our subject line, the thing we
+    # went looking for. That reads correctly and is not a description of the
+    # image at all, so when the search returned something else the alt asserted
+    # the something else was a dhow off Grande Comore. It was a canal in
+    # Trieste. A sighted reader sees the mismatch; a screen-reader user is
+    # simply told the wrong thing, and no text check can catch it because the
+    # alt agrees with the caption by construction.
+    said = (candidate.get("text") or "").strip()
+    if said:
+        alt = photo_alt(said, country)
+    else:
+        alt = (alt_text(country, entry) if tier == "subject"
+               else queries.generic_alt(country, category))
     w, h = candidate.get("width") or 0, candidate.get("height") or 0
     return {
         "country": country.slug,
@@ -105,6 +120,36 @@ def build_record(candidate, provider, country, category, entry, query, tier, rol
         "verifiedAt": None,
         "relevance": None,
     }
+
+
+
+def photo_alt(said, country):
+    """The provider's description of the photograph, as alt text.
+
+    Stock captions arrive lowercase and often already name the country
+    ("colorful fishing boats in pedra lume cabo verde"). This tidies the
+    sentence and names the country once if it is missing, and does not
+    otherwise improve on what the photographer said — the whole value of this
+    string is that we did not write it.
+    """
+    said = " ".join(said.split())
+    # Stock filler. "Photo of" in alt text is what a screen reader is already
+    # about to say — it announces the image — so it is noise twice over.
+    said = re.sub(r"^(a |an |the )?(beautiful |stunning |amazing |scenic |"
+                  r"close[- ]up |closeup |low angle |high angle |aerial |"
+                  r"selective focus |free )*"
+                  r"(stock )?(photo|photograph|picture|image|shot|view)s? "
+                  r"(of|showing) ", "", said, flags=re.I)
+    said = " ".join(said.split())
+    if not said:
+        return ""
+    low = said.lower()
+    for word in (country.name.lower(), (country.adjective or "").lower()):
+        if word and word in low:
+            break
+    else:
+        said = "%s, %s" % (said, country.name)
+    return said[0].upper() + said[1:]
 
 
 def _best_from(provider, query, orient, country, category, entry, role, seen,

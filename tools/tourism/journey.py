@@ -28,7 +28,7 @@ import html as html_mod
 import json
 import os
 
-from . import plate
+from . import company, plate, rates
 from .model import ROOT, load_operators, load_regions, load_strands
 
 PAGE = os.path.join(ROOT, "journey.html")
@@ -206,6 +206,8 @@ def style_chips(data):
 
 def render(countries, taxonomy):
     data = brief(countries, taxonomy)
+    money = rates.load()
+    co = company.load()
     if not data["countries"]:
         raise IOError("no published countries — nothing to plan")
     return TEMPLATE % {
@@ -220,6 +222,9 @@ def render(countries, taxonomy):
         "style": style_chips(data),
         "carried": esc(data["carried"]),
         "n": len(data["countries"]),
+        "ground": rates.block_ground(money),
+        "notincluded": rates.block_notincluded(money),
+        "whopays": company.block_whopays(co),
     }
 
 
@@ -227,6 +232,12 @@ def run(countries, taxonomy, log=print):
     if not os.path.isdir(ATLAS_DATA):
         raise IOError("data/atlas is missing — run: build.py atlas")
     html = render(countries, taxonomy)
+    stray = rates.drift(html, rates.load())
+    if stray:
+        raise ValueError(
+            "the tunnel prints %s, which tourism/rates.json does not price — a "
+            "figure in the copy has drifted from the cards under it."
+            % ", ".join(rates.money(v) for v in stray))
     with open(PAGE, "w") as fh:
         fh.write(html)
     log("journey: %s (%.1f KB), %d countries rankable without a request"
@@ -257,7 +268,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/stories">Stories</a>
     <a href="/compare">Compare</a>
   </nav>
-  <a class="af-btn af-btn--quiet" href="/contact">Talk to us<i>&rarr;</i></a>
+  <a class="af-btn af-btn--quiet" href="/enquire">Talk to us<i>&rarr;</i></a>
 </header>
 
 <main class="jn" id="jn" data-step="1">
@@ -362,6 +373,34 @@ TEMPLATE = """<!DOCTYPE html>
     </div>
   </section>
 
+  <!-- the whole continent, coloured rather than filtered --------------------
+         Afrinkong recommends; the traveller decides. A lens does not remove a
+         country from the page, it changes how strongly the page answers with
+         it, and every one of the fifty-four stays here and stays clickable.
+       Somebody who arrived knowing they want Ghana finds Ghana.
+
+       It is its own section and not a child of .jn-reveal, which is a
+       full-height flex row: dropped in there the grid became the reveal's
+       second column and printed fifty-four countries one per line down a
+       half-width gutter. -->
+  <section class="jn-field" id="jn-field" hidden>
+    <div class="jn-field-in">
+      <div class="jn-field-head">
+        <span class="af-stamp">The continent</span>
+        <h2 class="jn-field-h">All fifty-four, <em>and how each one answers</em>.</h2>
+        <p class="jn-field-say" id="jn-field-say"></p>
+      </div>
+      <div class="jn-field-key" aria-hidden="true">
+        <span data-match="leads">Leads on what you asked</span>
+        <span data-match="region">Its region does</span>
+        <span data-match="open">Written up here too</span>
+      </div>
+      <div class="jn-field-grid" id="jn-field-grid" role="group"
+           aria-label="Every country. Choose any one."></div>
+      <p class="jn-field-fine">We can recommend a direction. You choose the destination.</p>
+    </div>
+  </section>
+
   <!-- the composer -------------------------------------------------------- -->
   <section class="jn-compose" id="compose" hidden>
     <div class="jn-compose-head">
@@ -382,7 +421,7 @@ TEMPLATE = """<!DOCTYPE html>
         <div class="jn-dna" id="jn-dna"></div>
         <div class="jn-who" id="jn-who"></div>
         <div class="jn-acts jn-acts--end">
-          <a class="af-btn af-btn--solid" id="jn-begin" href="/contact">Begin this journey<i>&rarr;</i></a>
+          <button class="af-btn af-btn--solid" id="jn-begin" type="button" data-ground>Price the ground<i>&rarr;</i></button>
           <a class="af-btn af-btn--quiet" id="jn-meet" href="/meet">Meet the country</a>
           <button class="af-btn af-btn--quiet" type="button" data-save>Save this journey</button>
           <button class="af-btn af-btn--quiet" type="button" data-share>Copy the link</button>
@@ -397,11 +436,38 @@ TEMPLATE = """<!DOCTYPE html>
     </div>
   </section>
 
+  <!-- the ground --------------------------------------------------------- -->
+  <!-- The tunnel used to end at the composer and hand the traveller to
+       /contact with a shape and no figure. This is the last question: what the
+       ground costs, asked only once the journey has a name, and carrying the
+       days already answered rather than asking for them twice. -->
+  <section class="jn-ground" id="ground" hidden aria-labelledby="qg">
+    <div class="jn-ground-in">
+      <span class="af-stamp">The ground</span>
+      <h1 class="jn-h1" id="qg">Your flight gets you to Africa.<br>We get you through it.</h1>
+      <p class="jn-lede">From the moment you land, the road is ours: a vehicle,
+        a driver who stays with your journey, the movement between destinations,
+        and somebody coordinating all of it while you are here. Priced by the
+        vehicle and by the day, so four of you pay what two of you would. You
+        bring the passport, the visa, the ticket and the insurance.</p>
+%(ground)s
+%(notincluded)s
+%(whopays)s
+      <div class="jn-acts jn-acts--end">
+        <a class="af-btn af-btn--solid" id="jn-go" href="/enquire">Begin this journey<i>&rarr;</i></a>
+        <button class="af-btn af-btn--quiet" type="button" data-back-compose>Back to the journey</button>
+      </div>
+      <p class="jn-g-nothing">Nothing is charged here. This sends your journey to
+        us as a sentence you can edit first, and we confirm your requirements
+        before we confirm the journey.</p>
+    </div>
+  </section>
+
   <noscript>
     <p class="jn-nojs">This page builds a journey as you answer, which needs
       JavaScript. Without it, the same countries and the same twenty-six places
       each are all readable in <a href="/atlas">the atlas</a> and on every
-      destination page, and <a href="/contact">a person</a> will do the rest.</p>
+      destination page, and <a href="/enquire">a person</a> will do the rest.</p>
   </noscript>
 </main>
 

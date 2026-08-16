@@ -452,8 +452,12 @@ def trust_block(country, pack, ops, arcs_used):
                 'run a journey here. Nothing on this page is a quotation from them '
                 'or written by them.' % (esc(op.name), esc(op.base), esc(op.since)))
                if op else
-               'No operator of ours runs %s. Nothing on this page is written by '
-               'an operator either way.' % esc(country.name),
+               # Was "No operator of ours runs <Country>." The useful half of
+               # that sentence is the second one — that nothing here is an
+               # operator's marketing — and it is true either way, so it is
+               # the only half kept.
+               'The ground journey in %s is run by Afrinkong. Nothing on this '
+               'page is written by an operator either way.' % esc(country.name),
                arcs_used, total))
 
 
@@ -739,7 +743,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/journey#/j/%(slug)s/">Build a journey</a>
     <a href="/places#%(slug)s">Every place</a>
   </nav>
-  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
 </header>
 
 <main class="po" id="main">
@@ -796,7 +800,9 @@ TEMPLATE = """<!DOCTYPE html>
     <p class="pl-foot-bar"><a href="/">Afrinkong</a> &middot; %(country)s &middot;
       <a href="/stories">every story</a> &middot;
       <a href="/places">every place</a> &middot;
-      <a href="/contact">enquire</a></p>
+      <a href="/enquire">enquire</a></p>
+    <p class="pl-foot-co"><!-- gen:company -->
+    <!-- /gen:company --></p>
   </div>
 </footer>
 </body>
@@ -826,7 +832,7 @@ INDEX = """<!DOCTYPE html>
     <a href="/meet">Meet Africa</a>
     <a href="/places">Every place</a>
   </nav>
-  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
 </header>
 
 <main class="sx" id="main">
@@ -885,7 +891,9 @@ INDEX = """<!DOCTYPE html>
     <p class="pl-foot-bar"><a href="/">Afrinkong</a> &middot;
       <a href="/places">every place</a> &middot;
       <a href="/atlas">the atlas</a> &middot;
-      <a href="/contact">enquire</a></p>
+      <a href="/enquire">enquire</a></p>
+    <p class="pl-foot-co"><!-- gen:company -->
+    <!-- /gen:company --></p>
   </div>
 </footer>
 </body>

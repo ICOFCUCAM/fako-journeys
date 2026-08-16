@@ -30,7 +30,7 @@ import json
 import os
 import re
 
-from . import plate
+from . import company, plate
 from .model import ROOT, load_operators, load_regions, region_of
 
 OUT = os.path.join(ROOT, "places")
@@ -133,17 +133,11 @@ def page(country, place, pack, order, tax, ctx):
            % (esc(op.name), esc(op.base), esc(op.line),
               ('<a class="af-go" href="%s">Open %s &rarr;</a>' % (esc(op.url), esc(op.name)))
               if op.url else "")) if op else (
-           # "A licensed company based in <Country>" named a company that does
-           # not exist. tourism/operators.json holds three and has only ever held
-           # three; for the other nineteen there is no company here, licensed or
-           # otherwise. What is true is that nobody of ours runs it.
-           '<div class="pl-who pl-who--none"><span class="af-stamp">Who would take you</span>'
-           '<b>Not us, in %s</b>'
-           '<p>We run companies in three countries and %s is not one of them. '
-           'It is written up here to the same twenty-seven categories as the '
-           'rest &mdash; tell us the month and we will say who to ask.</p>'
-           '<a class="af-go" href="/contact">Ask anyway &rarr;</a></div>'
-           % (esc(country.name), esc(country.name)))
+           # Answered with who does take you, not who does not. The block that
+           # stood here said "Not us, in Senegal" and "Ask anyway" — true when
+           # the only product was three local operators, and neither true nor
+           # worth saying now the ground journey is ours across all fifty-four.
+           company.block_who(company.load(), "pl-who pl-who--house"))
 
     title = "%s, %s" % (place["title"], country.name)
     return TEMPLATE % {
@@ -302,7 +296,7 @@ CHROME = """<header class="pl-mast">
     <a href="/journey#/j/%(slug)s/">Build a journey</a>
     <a href="/places">Every place</a>
   </nav>
-  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
 </header>"""
 
 TEMPLATE = """<!DOCTYPE html>
@@ -368,7 +362,9 @@ addEventListener('DOMContentLoaded',function(){
     %(near)s
     <p class="pl-foot-bar"><a href="/">Afrinkong</a> &middot; %(country)s &middot;
       <a href="/places">every place</a> &middot;
-      <a href="/contact">enquire</a></p>
+      <a href="/enquire">enquire</a></p>
+    <p class="pl-foot-co"><!-- gen:company -->
+    <!-- /gen:company --></p>
   </div>
 </footer>
 </body>
@@ -396,7 +392,7 @@ INDEX = """<!DOCTYPE html>
     <a href="/journey">Build a journey</a>
     <a href="/meet">Meet Africa</a>
   </nav>
-  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
 </header>
 
 <main class="pi" id="main">

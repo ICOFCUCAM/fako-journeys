@@ -1,15 +1,12 @@
 {
  "$comment": "How to be here. This is the one file on the site that is a position rather than a fact, and it is marked as such everywhere it prints: it is not a claim about any country, it is what Afrinkong asks of the people it sends. That distinction matters, because everything else the site prints about a place comes from that place's own write-up and this does not.\n\nIt is short on purpose. A page of rules is a page nobody reads, and a visitor who is lectured at arrives ready to be defensive rather than ready to ask. Each note is one instruction and one reason, and the reason is the part that survives the flight.\n\nThe photography notes are separate from the rest because they are the ones most often ignored and the ones with the clearest victim. A camera pointed at somebody who did not agree to it is the single most common way a visitor turns a place into a product, and it is the easiest of all of these to simply not do.",
-
  "$schema": {
   "key": "stable id",
   "title": "the instruction, in the imperative and under six words",
   "line": "why, in one sentence. Not a rule restated at greater length",
   "kind": "people | place | money | camera"
  },
-
  "$stance": "Written by Afrinkong. Not sourced from any country, community or operator in this dataset, and not to be read as one speaking.",
-
  "notes": [
   {
    "key": "ask-first",
@@ -39,7 +36,7 @@
    "key": "guide-local",
    "kind": "people",
    "title": "Go with somebody from here",
-   "line": "The three operators on this site are companies registered in the countries they work in \u2014 which is the difference between money that lands and money that passes through. Nineteen countries here have no operator of ours yet, and asking who is running a day is a fair question to put to whoever sells it to you."
+   "line": "The three operators on this site are companies registered in the countries they work in, and everywhere else the drivers, hosts and coordinators are hired where the journey runs — which is the difference between money that lands and money that passes through. Asking who is running a day is a fair question to put to whoever sells it to you, here or anywhere."
   },
   {
    "key": "greeting",

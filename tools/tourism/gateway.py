@@ -28,6 +28,8 @@ import os
 import re
 
 from . import plate
+from . import transafrique as _trans
+from . import wonders as _wonders
 from .model import (CATEGORY_FILE, ROOT, load_cities, load_lenses, load_moments,
                     load_motion, load_picks, load_regions, load_views, region_of)
 
@@ -62,7 +64,8 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
+MARKERS = ("wonders", "wonderslede", "trans", "translede",
+           "window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "maplive", "mapover", "claim", "months", "scale",
            "lede", "capafrica", "destlede", "readslede", "mapsvg", "citylede",
            "destinations", "operators", "picks", "plannote", "plansteps",
@@ -129,8 +132,16 @@ def shapes():
 
 
 def operator_line(c):
+    """The line under a country's name on the homepage.
+
+    It said "Written up here, run by somebody else" on fifty-one of the
+    fifty-four cards — a disclaimer stamped across most of the continent, in
+    the grid whose job is to make somebody want to open one. Where the company
+    on the ground is ours that is worth naming, because it is evidence. Where
+    it is not, the true and useful thing is that the journey is ours anyway.
+    """
     return ("Operated locally by %s" % esc(c.operator.name)) if c.operator \
-        else "Written up here, run by somebody else"
+        else "Your journey here, run by Afrinkong"
 
 
 # This page spells its numbers. A figure in the middle of a display line reads
@@ -157,6 +168,86 @@ def _spell(n):
 
 
 SHOW_CITIES = 8
+
+
+
+# Label placement, in viewBox units, calibrated against a real getBBox rather
+# than assumed: ADDIS ABABA measures 161.5 x 22.7 units, which is 14.69 per
+# character across eleven of them. The width formula was already right; the
+# height was set to 15 by eye and is two thirds of the truth, which is why the
+# first pass left ACCRA and ABIDJAN overlapping by two pixels vertically —
+# their boxes were shorter than their type.
+LAB_CH = 21 * 0.6 + 21 * 0.1     # 14.7, and the measurement agrees
+LAB_H = 22.7
+LAB_PAD = 8.0                    # about 4px at the size this renders
+
+# The four places a label can go, in the order an atlas would try them: east of
+# the dot first because that is where the eye expects it, then west, then above
+# and below on the dot's own vertical.
+LAB_SIDES = (
+    ("east",  11.0, 4.0, "start"),
+    ("west", -11.0, 4.0, "end"),
+    ("north",  0.0, -13.0, "middle"),
+    ("south",  0.0, 19.0, "middle"),
+)
+
+
+def _lab_box(x, y, name, dx, dy, anchor):
+    w = LAB_CH * len(name)
+    left = x + dx
+    if anchor == "end":
+        left -= w
+    elif anchor == "middle":
+        left -= w / 2.0
+    top = y + dy - LAB_H
+    return (left, top, left + w, top + LAB_H)
+
+
+def _overlap_area(a, b, pad=LAB_PAD):
+    """How much two label boxes fight over, padded. 0 means they do not."""
+    w = min(a[2] + pad, b[2] + pad) - max(a[0] - pad, b[0] - pad)
+    h = min(a[3] + pad, b[3] + pad) - max(a[1] - pad, b[1] - pad)
+    return w * h if w > 0 and h > 0 else 0.0
+
+
+def place_labels(cities, named):
+    """Which side of its dot each label sits on, so that none of them collide.
+
+    Every label used to be written at x + 11 — always east, no exceptions —
+    which is fine until two cities are close. Measured on the built page at
+    three widths, five pairs overlapped every time: ACCRA over ABIDJAN by
+    29x11px, DOUALA over YAOUNDE by 35x12, and LAGOS across both of the first
+    two. A map whose labels sit on top of each other is decoration; resolving
+    them is most of what makes it an instrument.
+
+    Greedy, in importance order — the cities with a photograph are placed first
+    and keep the east side they were designed around, and the rest take the
+    first free side. Deterministic, so the same dataset always draws the same
+    map.
+    """
+    order = sorted(cities, key=lambda c: (c["slug"] not in named, c["slug"]))
+    taken, out = [], {}
+    for c in order:
+        name = c["name"].upper()
+        best = None
+        for i, (side, dx, dy, anchor) in enumerate(LAB_SIDES):
+            box = _lab_box(c["x"], c["y"], name, dx, dy, anchor)
+            cost = sum(_overlap_area(box, t) for t in taken)
+            # Ties go to the earlier side, so east stays the default where it
+            # is free and the order of preference still means something.
+            if best is None or cost < best[0]:
+                best = (cost, i, box, dx, dy, anchor, side)
+            if cost == 0:
+                break
+        # Least overlap, not first-free. The West African cluster — Abidjan,
+        # Accra, Lagos within a few degrees of each other — can exhaust all
+        # four sides, and an earlier version treated that as failure and put
+        # every one of them back on the east side it was trying to escape.
+        # Minimising leaves the crowded ones only as bad as they have to be.
+        _, _, box, dx, dy, anchor, side = best
+        taken.append(box)
+        out[c["slug"]] = (dx, dy, anchor, side)
+    return out
 
 
 def shown(cities, countries):
@@ -861,6 +952,33 @@ def block_maplive(countries):
     """
     with open(os.path.join(ROOT, "tourism", "map.json"), encoding="utf-8") as fh:
         m = json.load(fh)
+
+    # What each country leads on, and what its region leads on, carried onto the
+    # shape itself. Pressing WILDLIFE used to fly the map to one country and
+    # leave the other fifty-three exactly as they were, which answers "where is
+    # the single best place" — a question nobody asked — instead of "where does
+    # this come alive", which is the one on the button. Colouring needs to know
+    # each country's own claim, so the claim travels with the shape rather than
+    # in a second payload the page would have to fetch and keep in step.
+    calls = {c.slug: list(c.calls or []) for c in countries}
+    region_of = {c.slug: (c.region or "?") for c in countries}
+    tally = {}
+    for slug, ks in calls.items():
+        r = tally.setdefault(region_of[slug], {"n": 0, "lens": {}})
+        r["n"] += 1
+        for k in ks:
+            r["lens"][k] = r["lens"].get(k, 0) + 1
+    region_leads = dict(
+        (r, sorted(k for k, n in v["lens"].items() if n / float(v["n"]) >= 0.5))
+        for r, v in tally.items())
+
+    def lens_attrs(slug):
+        mine = calls.get(slug) or []
+        near = [k for k in region_leads.get(region_of.get(slug, "?"), [])
+                if k not in mine]
+        return ' data-calls="%s" data-near="%s"' % (
+            esc(" ".join(sorted(mine))), esc(" ".join(near)))
+
     out = ['<g class="wa-map-rest" aria-hidden="true">']
     for row in m.get("rest") or []:
         out.append('\n<path d="%s"><title>%s</title></path>'
@@ -873,20 +991,22 @@ def block_maplive(countries):
             hit = ('<circle class="wa-map-hit" cx="%s" cy="%s" r="%s"/>'
                    % (row["at"][0], row["at"][1], HIT_R))
         out.append('\n<a tabindex="-1" class="wa-map-live" data-tier="%s" '
-                   'data-slug="%s" data-name="%s" data-tag="%s" href="%s">'
+                   'data-slug="%s" data-name="%s" data-tag="%s"%s href="%s">'
                    '%s<path d="%s"/><title>%s &#8212; %s</title></a>'
                    % (esc(row.get("tier") or "live"), esc(row["slug"]),
-                      esc(row["name"]), esc(row["tag"]), esc(row["href"]),
+                      esc(row["name"]), esc(row["tag"]),
+                      lens_attrs(row["slug"]), esc(row["href"]),
                       hit, row["d"], esc(row["name"]), esc(row["tag"])))
     for row in sorted(m.get("marks") or [], key=lambda r: r["slug"]):
         x, y = row["at"]
         out.append('\n<a tabindex="-1" class="wa-map-live wa-map-mark" '
-                   'data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s" '
+                   'data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"%s '
                    'href="%s"><circle class="wa-map-hit" cx="%s" cy="%s" r="%s"/>'
                    '<circle cx="%s" cy="%s" r="12"/>'
                    '<title>%s &#8212; %s</title></a>'
                    % (esc(row.get("tier") or "live"), esc(row["slug"]),
-                      esc(row["name"]), esc(row["tag"]), esc(row["href"]),
+                      esc(row["name"]), esc(row["tag"]),
+                      lens_attrs(row["slug"]), esc(row["href"]),
                       x, y, row.get("r", 36), x, y,
                       esc(row["name"]), esc(row["tag"])))
     return "".join(out) + "\n"
@@ -942,6 +1062,7 @@ def block_mapover(countries):
     named = {c["slug"] for c in load_cities() if c.get("photo")}
     urls = dict((x.slug, x.url) for x in countries)
     out.append('<g class="wa-map-cities">')
+    sides = place_labels(d["cities"], named)
     for c in d["cities"]:
         lead = ' data-lead="true"' if c["slug"] in named else ''
         # A point that cannot be pressed is decoration. These are places with a
@@ -949,13 +1070,16 @@ def block_mapover(countries):
         # order and gives a screen reader something to announce.
         out.append('<a class="wa-map-city" href="%s"%s data-slug="%s">'
                    % (esc(urls.get(c["country"], "/places")), lead, esc(c["slug"])))
+        dx, dy, anchor, side = sides[c["slug"]]
         out.append('<g class="wa-map-city-in" data-slug="%s">'
                    '<circle class="wa-map-city-dot" cx="%.1f" cy="%.1f" r="3.4"/>'
                    '<circle class="wa-map-city-ring" cx="%.1f" cy="%.1f" r="7"/>'
-                   '<text class="wa-map-city-say" x="%.1f" y="%.1f">%s</text>'
+                   '<text class="wa-map-city-say" x="%.1f" y="%.1f"'
+                   ' text-anchor="%s" data-side="%s">%s</text>'
                    '<title>%s</title></g>'
                    % (esc(c["slug"]), c["x"], c["y"], c["x"], c["y"],
-                      c["x"] + 11, c["y"] + 4, esc(c["name"].upper()), esc(c["name"])))
+                      c["x"] + dx, c["y"] + dy, anchor, side,
+                      esc(c["name"].upper()), esc(c["name"])))
         out.append('</a>')
     out.append('</g>')
 
@@ -1036,12 +1160,19 @@ def block_plan(countries):
     # your destination" because there were three operators for twenty-two
     # countries. Coverage is a real and much larger claim than ownership, and it
     # is worth making — but as its own clause, not by widening the first one.
-    note = ('We can book anywhere on the continent through operators who live '
-            'there. In %s the operator is ours &mdash; we own the company, and '
-            'the guide on the day works for it. The other %s in this atlas are '
-            'written up to the same twenty-seven categories and booked through '
-            'somebody else, which we say before you write, not after.'
-            % (names, _spell(rest).lower()))
+    # The clause this replaces ended "booked through somebody else, which we
+    # say before you write, not after" — a disclosure worn as a virtue, in the
+    # sentence that is supposed to make somebody want to go. What is true and
+    # stronger: the ground journey is ours on all fifty-four, and in three the
+    # company on the ground is ours as well. The ownership claim stays exactly
+    # as narrow as it was; it is the coverage claim that has grown, and it is
+    # the one worth leading with.
+    note = ('We take you anywhere on the continent: your vehicle, your driver '
+            'for the whole journey, and a coordinator holding the days '
+            'together. In %s the company on the ground is ours too &mdash; we '
+            'own it, and the guide on the day works for it. The other %s are '
+            'written up to the same twenty-seven categories, and travelled the '
+            'same way.' % (names, _spell(rest).lower()))
 
     steps = [
         ('/journey', 'Discover',
@@ -1053,12 +1184,18 @@ def block_plan(countries):
          % (_spell(len(countries)).lower(),
             _spell(len(read_json(CATEGORY_FILE, {}).get("categories", []))).lower()),
          'Put two side by side'),
-        ('/contact', 'Ask',
-         'Enquiries reach %s in %s. For %s they are the operator; for the other '
-         '%s they will tell you who is.'
-         % (esc(host.operator.name), esc(host.operator.base), esc(host.name),
-            _spell(rest).lower()),
-         'Write to them'),
+        # Was /contact — Kamerun's desk — with "Enquiries reach Kamerun in Buea
+        # and Douala. For Cameroon they are the operator; for the other
+        # fifty-one they will tell you who is." Wrong destination and the old
+        # defensive framing in one step: the last rung of how-it-works handed
+        # the whole continent to one country's office and then explained that
+        # for the rest we would find somebody.
+        ('/enquire', 'Ask',
+         'Send us the journey and we come back with what can be arranged on '
+         'your dates, in writing, in US dollars. In %s the company on the '
+         'ground is ours as well.'
+         % _and_list([c.name for c in countries if c.operator]),
+         'Begin your journey'),
     ]
     out = []
     for i, (url, title, text, go) in enumerate(steps, 1):
@@ -1067,10 +1204,15 @@ def block_plan(countries):
                    % (esc(url), i, esc(title), text, esc(go)))
     # The last step is the only one that is not a link, because it is the only
     # one that happens away from this website.
-    out.append('      <div class="wa-step"><i>%02d</i><b>Travel</b><p>Where the '
-               'operator is ours, the guide on the day works for the company you '
-               'booked: %s. Where it is not, we are not going to describe a day '
-               'run by people we have not named.</p></div>'
+    # "Where it is not, we are not going to describe a day run by people we
+    # have not named" was the last line of the how-it-works list — a refusal,
+    # at the exact point the reader is imagining the trip. What is true and
+    # better is that the ground is ours everywhere and in three countries the
+    # guide is ours as well.
+    out.append('      <div class="wa-step"><i>%02d</i><b>Travel</b><p>Your driver '
+               'and your coordinator are ours for the whole journey, wherever it '
+               'goes. In %s the guide on the day works for our own company '
+               'there.</p></div>'
                % (len(steps) + 1,
                   _and_list(['%s in %s' % (esc(c.operator.name), esc(c.name))
                              for c in ours])))
@@ -1112,10 +1254,11 @@ def block_operators(countries):
     rest = len(countries) - len(ours)
     cards.append(
         '      <a class="wa-op wa-op--rest" href="/places"><span class="wa-op-where">Everywhere else</span>'
-        '<b>%s more countries</b><span class="wa-op-base">Written up, no operator of ours yet</span>'
-        '<p>We run companies in %s. The other %s are written up to the same '
-        'twenty-seven categories by the same hands, so any two countries here can be '
-        'compared on the same terms &mdash; you are just booking them through someone else.</p>'
+        '<b>%s more countries</b><span class="wa-op-base">Your journey here, run by Afrinkong</span>'
+        '<p>We own the companies on the ground in %s. The other %s are written '
+        'up to the same twenty-seven categories by the same hands, so any two '
+        'countries here can be compared on the same terms &mdash; and travelled '
+        'the same way, with a vehicle, a driver and a coordinator of ours.</p>'
         '<span class="wa-op-go">Every place, all %s countries &rarr;</span></a>'
         % (_spell(rest), _and_list([c.name for c in ours]),
            _spell(rest).lower(), _spell(len(countries)).lower()))
@@ -1712,14 +1855,56 @@ def block_stories(countries):
 
 
 def block_footer(countries):
-    """Two columns, split evenly, so the footer never becomes one long list."""
-    half = (len(countries) + 1) // 2
-    cols = (("Destinations", countries[:half]), ("More destinations", countries[half:]))
-    out = []
-    for title, group in cols:
-        links = "\n".join('        <a href="%s">%s</a>' % (esc(c.url), esc(c.name)) for c in group)
-        out.append('      <div class="wa-foot-col">\n        <b>%s</b>\n%s\n      </div>' % (title, links))
-    return "\n".join(out)
+    """The colophon, not a second copy of the website.
+
+    It used to be two columns headed "Destinations" and "More destinations",
+    which split Africa in half at whatever index len(countries)//2 landed on —
+    fifty-four names down two vertical lists, with Eritrea ending one column
+    and Ethiopia starting the next for no reason a reader could see. Beside
+    them sat a paragraph explaining that we run three operators and nineteen
+    other countries are written up anyway, which is the same defensive sentence
+    the rest of the site has stopped making, in the calmest place on the page.
+
+    Now it is the five regions the atlas already uses, the eight lenses, and
+    the three things a visitor can actually do. The links are real: the map
+    reads the hash, so /#r/east opens the footer straight into East Africa and
+    /#w/wildlife colours the continent for wildlife. A footer link that only
+    scrolls somewhere is a footer link nobody presses twice.
+
+    The deeper the visitor goes the more there is; the footer is where it gets
+    quiet again.
+    """
+    # The same five the map's own region row uses, in the same order, so the
+    # footer and the top of the page cannot disagree about how Africa is cut.
+    regions = []
+    for key, label, names in REGION_GROUPS:
+        n = len([c for c in countries if c.region in names])
+        if not n:
+            continue
+        regions.append('        <a href="/#r/%s">%s<i>%d</i></a>'
+                       % (esc(key), label, n))
+
+    lenses = []
+    for key, lens in sorted(load_lenses().items(),
+                            key=lambda kv: kv[1].get("title", kv[0])):
+        if key.startswith("$"):
+            continue
+        lenses.append('        <a href="/#w/%s">%s</a>' % (esc(key), esc(lens["title"])))
+
+    plan = [
+        ("/journey", "Build a journey"),
+        ("/trans-afrique", "Trans Afrique"),
+        ("/enquire", "Begin your journey"),
+        ("#destinations", "Travel seasons"),
+    ]
+    plan_links = "\n".join('        <a href="%s">%s</a>' % (esc(u), esc(t))
+                           for u, t in plan)
+
+    return (
+        '      <div class="wa-foot-col">\n        <b>Destinations</b>\n%s\n      </div>\n'
+        '      <div class="wa-foot-col">\n        <b>Experiences</b>\n%s\n      </div>\n'
+        '      <div class="wa-foot-col">\n        <b>Plan</b>\n%s\n      </div>'
+        % ("\n".join(regions), "\n".join(lenses), plan_links))
 
 
 def render(countries):
@@ -1765,6 +1950,10 @@ def render(countries):
         "seasons": block_seasons(seq),
         "seasonsay": block_seasonsay(seq),
         "regiontone": block_regiontone(),
+        "wonders": _wonders.block_wonders(seq),
+        "wonderslede": _wonders.block_wonderslede(seq),
+        "trans": _trans.block_trans(seq),
+        "translede": _trans.block_translede(seq),
     }
 
 
@@ -1785,9 +1974,29 @@ def splice(src, blocks):
     if missing:
         raise ValueError("index.html is missing markers: %s" % ", ".join(missing))
     for name, body in blocks.items():
-        pattern = re.compile(r"(%s\n).*?(\s*%s)"
+        # THIS HAS TO BE IDEMPOTENT, AND FOR A LONG TIME IT WAS NOT.
+        #
+        # The pattern was `(open\n).*?(\s*close)` and the replacement re-emitted
+        # group 2 verbatim. `\s*` is greedy for whitespace and `.*?` is lazy, so
+        # group 2 absorbed every newline sitting between the body and the
+        # closing marker — and then the new body, which ends in a newline of its
+        # own, was written in front of it. One extra blank line per build, every
+        # build, for ever. index.html had accumulated thirty-two of them inside
+        # gen:maplive, and two commits on main exist for no other reason than
+        # that a resolver run which changed nothing still produced a diff.
+        #
+        # `\n?[ \t]*` cannot cross a line, so the lazy `.*?` gives it only the
+        # last newline and the closing marker's own indentation. Everything
+        # before that is body and is replaced. Run it twice and the second run
+        # writes the same bytes as the first.
+        #
+        # rstrip on the body for the same reason: it is the body's job to say
+        # what it contains, not how much air sits under it.
+        pattern = re.compile(r"(%s\n).*?(\n?[ \t]*)(%s)"
                              % (re.escape(marker(name)), re.escape(marker(name, True))), re.S)
-        src, hits = pattern.subn(lambda m: m.group(1) + body + m.group(2), src, count=1)
+        src, hits = pattern.subn(
+            lambda m: m.group(1) + body.rstrip() + m.group(2) + m.group(3),
+            src, count=1)
         # A marker that is present but does not match is the same fault as one
         # that is absent, and it is the quieter of the two: the pattern wants a
         # newline directly after the opening marker, so a pair written inline —

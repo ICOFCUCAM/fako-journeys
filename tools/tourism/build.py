@@ -23,6 +23,11 @@
     build.py geo                 outlines and distances, from the map itself
     build.py grade               measure images against images/STANDARD.md
     build.py sizes               give placed photographs their own dimensions
+    build.py audit               does the photograph show what the page says
+    build.py enquire             /enquire, where a built journey actually arrives
+    build.py wonders             /wonders, the whole collection
+    build.py transafrique        /trans-afrique, the expedition
+    build.py company             the legal entity, into every Afrinkong-side footer
     build.py gateway             rewrite the gateway's country lists from the dataset
     build.py sidebyside          write /compare.html — two countries, same questions
     build.py report              write tourism/REPORT.md
@@ -286,6 +291,44 @@ def cmd_scaffold(args):
     })
     print("wrote %s with %d empty categories" % (os.path.relpath(path, ROOT), len(tax.enabled)))
     print("fill in caption/description/subject/focal, then: build.py all")
+    return 0
+
+
+def cmd_audit(args):
+    """Check every resolved photograph against what the provider says it shows."""
+    from tourism import audit
+    found = audit.run(only=(args.country or "").strip().lower() or None,
+                      force=bool(args.force))
+    return 1 if sum(len(v) for v in found.values()) else 0
+
+
+def cmd_enquire(args):
+    """Afrinkong's own enquiry page, so a journey stops landing on Kamerun's."""
+    from tourism import enquire
+    enquire.run()
+    return 0
+
+
+def cmd_wonders(args):
+    """The Wonders of Africa, all of them, by strand."""
+    from tourism import wonders
+    from tourism.model import load_countries
+    wonders.run([c for c in load_countries() if c.published])
+    return 0
+
+
+def cmd_transafrique(args):
+    """Trans Afrique, the expedition page."""
+    from tourism import transafrique
+    from tourism.model import load_countries
+    transafrique.run([c for c in load_countries() if c.published])
+    return 0
+
+
+def cmd_company(args):
+    """Write the legal entity into the footers that name it."""
+    from tourism import company
+    company.run()
     return 0
 
 
@@ -760,6 +803,7 @@ COMMANDS = {
     "providers": cmd_providers,
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
+    "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique,
     "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,

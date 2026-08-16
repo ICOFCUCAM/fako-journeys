@@ -279,7 +279,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/places">Every place</a>
     <a href="/stories">Stories</a>
   </nav>
-  <a class="af-btn af-btn--quiet" href="/contact">Talk to us<i>&rarr;</i></a>
+  <a class="af-btn af-btn--quiet" href="/enquire">Talk to us<i>&rarr;</i></a>
 </header>
 
 <main class="mt" id="mt" data-mode="strand">

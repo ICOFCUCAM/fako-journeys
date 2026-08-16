@@ -116,7 +116,7 @@ def masthead(country, taxonomy):
             '      <a href="/meet">Meet Africa</a>\n'
             '      <a href="/tourism/">Every country</a>\n'
             '    </nav>\n%s'
-            '    <a class="btn" href="/contact">Plan a journey</a>\n'
+            '    <a class="btn" href="/journey">Build a journey</a>\n'
             '  </div>\n</header>'
             % (esc(country.url), esc(country.name), len(taxonomy.enabled),
                ('<a href="%s">%s home</a>' % (esc(country.url), esc(country.name)))
@@ -136,12 +136,14 @@ def footer(country, ours=None):
         # not from three strings typed into this file.
         named = ", ".join('%s in %s' % (esc(c.operator.name), esc(c.name))
                           for c in (ours or []))
-        who = ('<p>%s. Everywhere else you would be booking through somebody we '
-               'have not named yet.</p>' % named) if named else ''
+        who = ('<p>%s &mdash; and the ground journey is ours right across '
+               'Africa.</p>' % named) if named else ''
     else:
-        who = ('<p>We do not run a company in %s. It is written up here to the '
-               'same twenty-seven categories as the rest, and booked through '
-               'someone else.</p>' % esc(country.name))
+        # Was "We do not run a company in <Country>." A footer is not the
+        # place to volunteer a limitation nobody asked about.
+        who = ('<p>Your ground journey in %s is ours: the vehicle, the driver '
+               'who stays with you, and the days built around what you came '
+               'for.</p>' % esc(country.name))
     return ('<footer class="fj-foot">\n'
             '  <div class="fj-frame">\n'
             '    <div class="fj-foot-grid">\n'
@@ -157,8 +159,8 @@ def footer(country, ours=None):
             '        <a href="/#window">The map</a>\n'
             '      </div>\n'
             '      <div class="fj-foot-col">\n        <b>Plan</b>\n'
-            '        <a href="/contact">Start a journey</a>\n'
-            '        <a href="/contact">Contact an operator</a>\n'
+            '        <a href="/journey">Build a journey</a>\n'
+            '        <a href="/enquire">Begin a journey</a>\n'
             '        <a href="/#seasons">Travel seasons</a>\n'
             '      </div>\n'
             '    </div>\n'
@@ -508,6 +510,16 @@ def render_country(country, taxonomy, shell):
             if entry:
                 parts.append(render_hero(country, entry, cat, taxonomy))
             continue
+        # The closing call on every /tourism/<country> page. It read "Plan a
+        # circuit" and pointed at /contact, and both belonged to Kamerun:
+        # circuits are what the Cameroon operator sells and /contact is its
+        # desk in Douala. These pages are Afrinkong's, one for each of the
+        # fifty-four, so /tourism/kenya offered a Cameroonian circuit from a
+        # Kenyan page.
+        #
+        # Written here rather than beside the markup: the first draft put this
+        # note in the template and it shipped into all fifty-four pages, which
+        # is the second time in one sitting.
         if key == "why":
             cat, entry = taxonomy.by_id["why-visit"], country.entry("why-visit")
             if entry:
@@ -517,7 +529,7 @@ def render_country(country, taxonomy, shell):
   <div class="fj-frame">
     <h2>%s</h2>
     <p>%s</p>
-    <a class="btn" href="/contact">Plan a circuit</a>
+    <a class="btn" href="/journey">Build a journey</a>
   </div>
 </section>""" % (esc(entry.caption), esc(entry.description)))
             continue

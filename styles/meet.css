@@ -158,7 +158,8 @@
   text-transform:uppercase;color:var(--c-accent)}
 .mt-voice-note,.mt-voice-none{margin-top:12px;font-size:14.5px;line-height:1.6;
   color:var(--c-muted)}
-.mt-voice--none{border-top-color:var(--c-border)}
+/* .mt-voice--none is gone: where there is no operator there is no quote, and
+   the section is not rendered rather than rendered to announce its absence. */
 
 /* ---- people -------------------------------------------------------------- */
 

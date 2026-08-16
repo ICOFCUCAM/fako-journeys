@@ -82,14 +82,15 @@
         + ' is run by ' + esc(ours[s].op) + ' &rarr;</a>';
     }).join(' ');
   } else {
-    /* None of the three. Say that plainly rather than routing them anywhere:
-       the site has already said it does not run a company in the other
-       nineteen, and repeating that here is the consistent answer. */
+    /* None of the three have an operator of ours, which used to open this
+       sentence: "We do not run a company in Senegal." The visitor has just
+       typed where they want to go and the first thing back was a limitation.
+       The ground journey is ours everywhere, so the answer is who handles it,
+       and the portraits stay as somewhere to read next. */
     say.innerHTML = lead
-      + ' We do not run a company in ' + listed(names) + ' &mdash; '
-      + (named.length > 1 ? 'those countries are' : 'that country is')
-      + ' written up here but booked through someone else. Send it anyway and '
-      + 'they will say who, or read '
+      + ' Your ground journey in ' + listed(names) + ' is ours &mdash; the '
+      + 'vehicle, the driver for the whole journey and the coordination. Send '
+      + 'this and we will come back with the shape of it, or read '
       + listed(named.map(function (s) {
         return '<a href="/portrait/' + esc(s) + '">' + esc((ours[s] || {}).name || rest[s]) + '</a>';
       })) + ' first.';

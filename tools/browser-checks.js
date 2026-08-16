@@ -45,9 +45,17 @@ const SETTLE = 2600;        // ms to watch after the HTML lands
 
 /* The pages worth watching: one of each kind, not all 650. A place page and a
    portrait stand for their 571 and 21 siblings, which are built by the same
-   generator from the same template and cannot differ in layout. */
+   generator from the same template and cannot differ in layout.
+
+   /trans-afrique and /wonders were missing from this list for as long as they
+   have existed, which meant the most expensive thing the company sells and the
+   editorial collection next to it were the only two pages on the site whose
+   contrast, overflow and no-script behaviour nobody was measuring. Neither is
+   a sibling of anything — they have their own stylesheet and their own layout,
+   so nothing else in this list stands for them. */
 const PAGES = [
   '/index.html', '/atlas.html', '/journey.html', '/stories.html',
+  '/trans-afrique.html', '/wonders.html',
   '/places/index.html', '/compare.html', '/meet.html', '/404.html',
   '/portrait/kenya.html', '/places/kenya/balloon-over-the-mara.html',
   '/tourism/kenya.html', '/tourism/index.html', '/kenya.html',
@@ -579,7 +587,13 @@ function serve() {
      * taken at the position I happened to choose.
      */
     const BAND_WIDTHS = [[1920, 1080], [1440, 900], [1280, 860], [950, 800], [390, 844]];
-    const BAND_TEXT = ['.wa-seam-stamp', '.wa-seam-copy h2', '.wa-seam-say', '.wa-seam-go'];
+    /* Every line in the band, and the list has to grow when the copy does. The
+       band's whole failure mode is silence, so a line that is not named here is
+       a line nobody is measuring — which is how the second band went unchecked
+       for a while, and how .wa-seam-route and .wa-seam-kick would have shipped
+       at whatever contrast they happened to land on. */
+    const BAND_TEXT = ['.wa-seam-stamp', '.wa-seam-route', '.wa-seam-copy h2',
+                       '.wa-seam-say', '.wa-seam-kick', '.wa-seam-go'];
     const KILLERS = ['transform', 'filter', 'backdropFilter', 'perspective', 'willChange', 'contain'];
     for (const [w, h] of BAND_WIDTHS) {
       const page = await browser.newPage({viewport: {width: w, height: h}});
@@ -1272,7 +1286,14 @@ function serve() {
     }
     await off.close();
   } catch (e) {
+    /* The check line truncates to 90 characters, which is right for a result
+       table and useless for a crash: "ReferenceError: q is not defined" with
+       no frame under it says nothing about which of the sixteen evaluate
+       blocks threw. The stack goes to stderr, so a passing run stays silent
+       and a failing one is diagnosable on the first read instead of the
+       third. */
     check('the browser checks ran', false, String(e.message).slice(0, 90));
+    console.error('\n--- full stack ---\n' + (e.stack || e));
   } finally {
     if (browser) await browser.close();
     server.close();
