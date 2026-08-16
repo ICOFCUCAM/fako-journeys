@@ -78,36 +78,31 @@ def chain(r, by_slug):
         for s in (r.get("countries") or []) if s in by_slug)
 
 
-def route_card(r, by_slug, preview=False):
-    """The same card twice, minus its numbers on the homepage.
+def route_card(r, by_slug):
+    """One crossing, as an expedition record.
 
-    A visitor three screens into a homepage is not choosing between a
-    twenty-one-day East at $6,000 and a twenty-four-day West at $7,000. They are
-    deciding whether crossing a continent is a thing they want at all, and a
-    price on that screen answers a question they have not asked yet — worse, it
-    invites them to compare four options before they have wanted any of them.
-
-    So the homepage card is name, countries, strands and one line: where it goes
-    and what it is like. Shape, length and fee are on /trans-afrique, where the
-    reader arrived by choosing to.
+    It was built twice — once here in full and once on the homepage with its
+    numbers stripped — because the homepage carried a Trans Afrique section.
+    That section is gone: it explained a product to a reader three screens into
+    a homepage who had not yet decided they wanted one, and the only part of it
+    a door can use is the four names, which the door now carries itself. So
+    there is one card again, and it is the full one.
     """
     strands = " &middot; ".join(esc(x) for x in (r.get("strands") or []))
-    facts = "" if preview else (
-        '<dl class="tf-route-facts">'
-        '<div><dt>Shape</dt><dd>%s</dd></div>'
-        '<div><dt>Length</dt><dd>%s days</dd></div>'
-        '<div><dt>Journey fee</dt><dd>%s</dd></div>'
-        '</dl>' % (esc(r["shape"]), esc(r["days"]), band(r)))
+    facts = ('<dl class="tf-route-facts">'
+             '<div><dt>Shape</dt><dd>%s</dd></div>'
+             '<div><dt>Length</dt><dd>%s days</dd></div>'
+             '<div><dt>Journey fee</dt><dd>%s</dd></div>'
+             '</dl>' % (esc(r["shape"]), esc(r["days"]), band(r)))
     return (
-        '<article class="tf-route%s%s" data-route="%s">'
+        '<article class="tf-route%s" data-route="%s">'
         '<div class="tf-route-in">'
         '<h3 class="tf-route-name">%s</h3>'
         '<p class="tf-route-where">%s</p>'
         '<p class="tf-route-strands">%s</p>'
         '<p class="tf-route-say">%s</p>'
         '%s</div></article>'
-        % (" tf-route--great" if r.get("great") else "",
-           " tf-route--peek" if preview else "", esc(r["id"]),
+        % (" tf-route--great" if r.get("great") else "", esc(r["id"]),
            esc(r["name"]), chain(r, by_slug), strands, esc(r["say"]), facts))
 
 
@@ -254,21 +249,6 @@ def idea_block(d):
             % (esc(i["title"]), esc(i["line"]), body))
 
 
-# Three line drawings for the door's facts, in the same 24x24 stroke convention
-# as the lens icons in gateway.py. Presentation, so it lives in code — but the
-# text beside each one is derived, never typed.
-DOOR_ICONS = {
-    "days": '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.3l3.4 2"/>',
-    "where": '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/>'
-             '<path d="M12 3.5c2.6 2.8 4 5.6 4 8.5s-1.4 5.7-4 8.5'
-             'c-2.6-2.8-4-5.6-4-8.5s1.4-5.7 4-8.5z"/>',
-    "levels": '<circle cx="9" cy="9" r="3"/>'
-              '<path d="M3.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/>'
-              '<path d="M16 6.6a3 3 0 0 1 0 4.8"/>'
-              '<path d="M17.5 14.9c1.9.6 3 2.4 3 4.6"/>',
-}
-
-
 def _spread(levels):
     """The shortest and longest a crossing runs, read off the levels.
 
@@ -293,69 +273,154 @@ def _spread(levels):
     return "%d to %d%s days" % (min(lows), max(highs), "+" if plus else "")
 
 
-def door_facts(d):
-    """Shape without price: how long, how far, and how it is bought.
+def door_meta(d):
+    """Shape without price, in one line.
 
-    Deliberately no money. A reader on the homepage has not asked what it costs
-    and a five-figure band in a door is a question answered before it is put;
-    /trans-afrique carries every number.
+    It was three chips in a grid, each with a line icon. Two things were wrong
+    with that. The icons were decoration on a door that has a photograph doing
+    the emotional work already — and the middle chip said "15 countries, 4
+    crossings" directly above a row that names all four crossings and counts
+    every one of them, which is the same fact printed twice and the taller of
+    the two ways to print it.
+
+    Derived, never typed: length off the levels, the tiers off the level names.
+    The ground journey once shipped a $350 hero plate beside a $650 tier
+    because one figure lived in two places and only one was updated.
     """
-    countries = {s for r in d["routes"] for s in (r.get("countries") or [])}
-    # Each fact is a list of lines, not a sentence, and each line is set on its
-    # own row inside its column. Run together with middots they wrapped wherever
-    # the column happened to end — "15 countries, 4" over "crossings", and a
-    # separator orphaned at the start of a line, which is the one break
-    # typography has no excuse for. Stacked, the wrap is the design.
-    rows = [
-        ("days", [_spread(d["levels"])]),
-        ("where", ["%d countries" % len(countries),
-                   "%d crossings" % len(d["routes"])]),
-        ("levels", [v["name"].replace("Trans Afrique", "").strip()
-                    for v in d["levels"]]),
-    ]
-    return ('<ul class="wa-door-facts">%s</ul>'
-            % "".join(
-                '<li><span class="wa-door-ico" aria-hidden="true">'
-                '<svg viewBox="0 0 24 24">%s</svg></span>'
-                '<b>%s</b></li>'
-                % (DOOR_ICONS[key],
-                   "".join("<span>%s</span>" % esc(line) for line in lines if line))
-                for key, lines in rows if any(lines)))
+    tiers = " &middot; ".join(
+        esc(v["name"].replace("Trans Afrique", "").strip()) for v in d["levels"])
+    return ('<p class="wa-door-meta"><b>%s</b><i aria-hidden="true"></i><b>%s</b></p>'
+            % (esc(_spread(d["levels"])), tiers))
+
+
+def door_index(d):
+    """The four crossings, by name, on the door.
+
+    This is what the homepage's Trans Afrique section used to carry — four
+    cards with country chains, strand lists, a line of description each and a
+    floor price — and the section is gone. Nothing was lost that a door should
+    have been saying: the cards explained a product the reader had not yet
+    decided they wanted, on a homepage, three screens after being handed a
+    photograph. What survives is the only part of it a door can use, which is
+    the answer to *where does it go*: four names and how many countries each.
+
+    They are links, so the door is a way into any one of them rather than a
+    list of things that exist. One word each, from the file rather than sliced
+    off the full name: the cards on /trans-afrique say "Trans Afrique — East",
+    and repeating that prefix four times in one row is the brand shouting its
+    own name at itself, while slicing gave "The Continental Expedition" — twice
+    the width of its three neighbours in a row built to be scanned.
+    """
+    rows = []
+    for r in d["routes"]:
+        short = r.get("short") or r["name"].split("\u2014")[-1].strip()
+        rows.append('<a href="/trans-afrique#crossings"><b>%s</b><i>%d</i></a>'
+                    % (esc(short), len(r.get("countries") or [])))
+    return ('<p class="wa-door-cross"><span>The crossings</span>%s</p>'
+            % "".join(rows))
 
 
 def block_door(countries):
     """The homepage band's copy: a title sequence, not a paragraph.
 
     Order is film grammar. The proposition opens cold — "Cross Africa. Don't
-    just visit it." — then a line that is pure invitation, then the road as a
-    chain of countries, and only then the name. The eyebrow says "series" and
-    not "Trans Afrique" so that the title card still has somewhere to land.
+    just visit it." — then a line that is pure invitation, then the name, then
+    what it is, then its shape, then where it goes. The eyebrow says "series"
+    and not "Trans Afrique" so that the title card still has somewhere to land.
 
-    What it does NOT do is explain. No support domains, no bands, no lengths per
-    crossing; three derived facts and a way in. The page is two clicks of scroll
-    away and carries all of it.
+    It also carries what the homepage's Trans Afrique section used to say. That
+    section is deleted: four cards explaining a crossing, three screens into a
+    homepage, to somebody who had not decided they wanted one. The row of four
+    crossings at the foot of this block is the only part of it a door can use.
+
+    What it still does NOT do is explain. No support domains, no bands, no
+    lengths per crossing. The page is one click away and carries all of it.
     """
     d = load()
-    by_slug = {c.slug: c for c in countries}
     dr = d["door"]
-    great = next((r for r in d["routes"] if r.get("great")), d["routes"][0])
-    # Four names and an ellipsis, in the order the crossing actually drives
-    # them. Printing all nine would make the door a route listing, and printing
-    # a prettier order would be a route nobody drives.
-    names = [by_slug[s].name for s in great["countries"] if s in by_slug]
-    chain = "".join('<span>%s</span>' % esc(n) for n in names[:4])
     return (
         '<p class="wa-seam-stamp">%s</p>\n'
         '      <h2>%s</h2>\n'
         '      <span class="wa-seam-hr" aria-hidden="true"></span>\n'
         '      <p class="wa-seam-say">%s</p>\n'
-        '      <p class="wa-door-chain">%s<i aria-hidden="true">&hellip;</i></p>\n'
         '      <p class="wa-door-mark">Trans Afrique</p>\n'
         '      <p class="wa-door-sub">%s</p>\n'
         '      %s\n'
+        '      %s\n'
         '      <a class="wa-seam-go" href="/trans-afrique">%s &rarr;</a>'
-        % (esc(dr["eyebrow"]), esc(dr["line"]), esc(dr["lede"]), chain,
-           esc(dr["sub"]), door_facts(d), esc(dr["act"])))
+        % (esc(dr["eyebrow"]), esc(dr["line"]), esc(dr["lede"]),
+           esc(dr["sub"]), door_meta(d), door_index(d), esc(dr["act"])))
+
+
+def great_block(d, by_slug):
+    """The flagship, and it does not share a hierarchy with the other three.
+
+    East, West and South are three crossings. The Continental Expedition is the
+    reason the other three exist — nine countries, two oceans, one road — and
+    setting it as a fourth card in the same grid said it was one of four
+    options. It is the option the other three are portions of, which is a
+    different kind of thing and gets a different kind of block: full width, the
+    name at the scale of a section heading, the chain running the whole measure,
+    and the facts as a row rather than a column.
+    """
+    r = next((x for x in d["routes"] if x.get("great")), None)
+    if not r:
+        return ""
+    strands = " &middot; ".join(esc(x) for x in (r.get("strands") or []))
+    return (
+        '<section class="tf-great" id="continental">'
+        '<p class="tf-great-eyebrow">%s</p>'
+        '<h2 class="tf-great-name">%s</h2>'
+        '<p class="tf-great-strands">%s</p>'
+        '<p class="tf-great-where">%s</p>'
+        '<p class="tf-great-say">%s</p>'
+        '<dl class="tf-great-facts">'
+        '<div><dt>Shape</dt><dd>%s</dd></div>'
+        '<div><dt>Length</dt><dd>%s days</dd></div>'
+        '<div><dt>Journey fee</dt><dd>%s</dd></div>'
+        '</dl>'
+        '<p class="tf-great-close">One continent. One expedition.</p>'
+        '</section>'
+        % (esc(d["name"]), esc(r["name"].split("&mdash;")[-1].replace("Trans Afrique — ", "")),
+           strands, chain(r, by_slug), esc(r["say"]),
+           esc(r["shape"]), esc(r["days"]), band(r)))
+
+
+def close_block(d):
+    """A way in, not a checkout.
+
+    The page used to end like an article — one sentence and one link. Two
+    buttons, because the two audiences are genuinely different: somebody who
+    wants a crossing built around them, and somebody who wants to be told which
+    of ours fits. Neither of them is Buy Now, which would be the wrong verb for
+    a five-figure month that is quoted in writing before anything is held.
+    """
+    c = d["close"]
+    acts = "".join(
+        '<a class="af-btn %s" href="%s">%s<i>&rarr;</i></a>'
+        % ("tf-close-go" if a_.get("solid") else "tf-close-alt",
+           esc(a_["href"]), esc(a_["label"]))
+        for a_ in c["acts"])
+    return ('<section class="tf-close" id="begin">'
+            '<div class="tf-close-in">'
+            '<h2 class="tf-close-h">%s</h2>'
+            '<p class="tf-close-say">%s</p>'
+            '<div class="tf-close-acts">%s</div>'
+            '<p class="tf-close-stamp">%s</p>'
+            '</div></section>'
+            % (esc(c["title"]), esc(c["say"]), acts, c["stamp"]))
+
+
+def money_lists(d):
+    def ul(key, title, cls=""):
+        return ('<div class="tf-money-col%s"><h3 class="tf-money-h">%s</h3>'
+                '<ul class="tf-money-list">%s</ul></div>'
+                % (cls, esc(title),
+                   "".join("<li>%s</li>" % esc(x) for x in d[key])))
+    return ('<div class="tf-money">%s%s%s</div>'
+            % (ul("included", "In the journey fee"),
+               ul("arranged", "Arranged by us, at cost"),
+               ul("excluded", "Yours", " is-not")))
 
 
 def great_block(d, by_slug):
@@ -459,14 +524,6 @@ def block_trans(countries):
                'the Trans Afrique page.</p>'
                % money(min(r["low"] for r in d["routes"])))
     return "\n".join(out)
-
-
-def block_translede(countries):
-    d = load()
-    return ('<span class="wa-eyebrow">%s</span>\n'
-            '        <h2>%s</h2>\n'
-            '        <p class="wa-say"><b class="tf-sub">%s</b> %s</p>'
-            % (esc(d["stamp"]), esc(d["line"]), esc(d["sub"]), esc(d["say"])))
 
 
 def run(countries, log=print):

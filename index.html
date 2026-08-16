@@ -793,77 +793,11 @@
    viewBox flies to. A visitor who presses "East Africa" is not filtering a list;
    they are looking at East Africa. */
 .wa-regs{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--c-primary)}
-/* TRANS AFRIQUE, ON THE HOMEPAGE
-   ---------------------------------------------------------------------------
-   The escalation. The wonders above ask what is worth seeing; this asks why
-   choose one country at all. It has to feel like the page opening into
-   something else, and on a site with no gradients, no glass and no glow that
-   has to come from scale: these are the widest cards on the page.
-
-   WHAT IS DELIBERATELY NOT HERE ANY MORE
-
-   The levels, the support domains, the medical note, the money columns and the
-   fine print were all on this homepage and are now only on /trans-afrique. A
-   reader who has not yet decided they want to cross a continent was being
-   handed doctors, security, seat counts, park fees and five-figure bands in one
-   screen. The window band two sections up is the door and this is the answer to
-   the one question the door leaves open — *where does it go* — in four names
-   and four country chains. Everything after "how does it work" is on the page.
-
-   So every rule below styles a route card, and nothing else. When a class stops
-   being emitted here, its CSS goes with it rather than sitting as a fossil that
-   the next reader has to prove is dead.
-
-   It shares .tf- with /trans-afrique deliberately. An expedition that looks
-   like itself in both places is one product; two treatments would be two. */
-.wa-trans .wa-head h2{max-width:22ch;font-size:clamp(34px,4.4vw,64px)}
-.wa-trans .tf-routes{margin-top:var(--sp-5);display:grid;gap:var(--sp-3);
-  grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
-.wa-trans .tf-route-in{border-top:2px solid var(--c-accent-fill);padding-top:20px;
-  height:100%;display:flex;flex-direction:column}
-.wa-trans .tf-route-name{font-family:var(--fj-display);font-weight:700;
-  text-transform:uppercase;font-size:clamp(20px,2vw,27px);line-height:1.04;
-  color:var(--c-bg);margin:0}
-.wa-trans .tf-route-where{margin-top:12px;font-family:var(--fj-mono);font-size:9.5px;
-  letter-spacing:.14em;text-transform:uppercase;color:var(--c-gold);line-height:2}
-.wa-trans .tf-route-where a{color:inherit;border-bottom:1px solid transparent}
-.wa-trans .tf-route-where a:hover{border-color:var(--c-gold)}
-.wa-trans .tf-route-say{margin-top:13px;font-size:15px;line-height:1.5;
-  color:var(--fj-onbasalt-dim);max-width:34ch;flex:1 1 auto}
-@media(max-width:760px){
-  .wa-trans .tf-routes{grid-template-columns:1fr}
-}
-
-/* The lenses a crossing leads on, under the country chain. */
-.wa-trans .tf-route-strands{margin-top:9px;font-family:var(--fj-mono);font-size:9px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent-lit)}
-/* Nine countries and two oceans deserves the width. */
-.wa-trans .tf-route--great{grid-column:1/-1}
-.wa-trans .tf-route--great .tf-route-name{font-size:clamp(24px,2.6vw,36px)}
-.wa-trans .tf-route--great .tf-route-where{line-height:2.1}
-.wa-trans .tf-route--great .tf-route-say{max-width:52ch}
-/* Stripped of their facts these cards are short, so the line does the work the
-   definition list used to and runs a size up. */
-.wa-trans .tf-route--peek .tf-route-say{font-size:16px;max-width:38ch}
-
-.wa-trans .tf-sub{display:block;font-family:var(--fj-display);font-weight:700;
-  font-size:clamp(18px,1.9vw,26px);color:var(--c-accent-lit);margin-bottom:12px}
-
-/* SOME JOURNEYS NEED A GUIDE. TRANS AFRIQUE NEEDS A TEAM.
-   The line the section turns on, so it is set at statement scale rather than
-   as copy. It is the only sentence about the team that the homepage carries —
-   it promises a team without listing one, which is the difference between
-   making somebody want the thing and making them evaluate it. */
-.wa-trans .tf-motto{font-family:var(--fj-display);font-weight:700;
-  font-size:clamp(20px,2.3vw,32px);line-height:1.14;color:var(--c-accent-lit);
-  max-width:30ch;margin:var(--sp-4) auto 0}
-
-/* One line of commerce, and it is a floor across the whole series rather than
-   four prices to compare. Nobody should arrive at /trans-afrique having
-   imagined a different order of magnitude; nobody should be asked to choose
-   between crossings on a homepage either. */
-.wa-trans .tf-peek-fine{margin-top:var(--sp-4);font-size:13.5px;line-height:1.6;
-  color:var(--fj-onbasalt-dim);max-width:74ch}
+/* The homepage's Trans Afrique section is gone and its rules went with it.
+   Four cards explaining a crossing, three screens into a homepage, to a reader
+   who had not decided they wanted one — the only part of it a door can use is
+   the four names, and the door carries those itself now. About seventy lines
+   of .wa-trans CSS were deleted rather than left to be proved dead later. */
 
 /* THE WONDERS
    ---------------------------------------------------------------------------
@@ -876,7 +810,19 @@
    waiting, and the moment they resolve these cards take them; until then the
    type carries it on basalt, which is quieter than a stock photograph of
    somewhere that might not be the place. */
-.wa-wonders .wa-head h2{max-width:26ch;font-size:clamp(32px,4vw,56px)}
+/* Left-aligned and larger. In the centred cine mode this headline was the
+   third centred column in a row and read as a template; against the door's
+   full-bleed photograph directly above it, a centred paragraph is the weakest
+   available answer. The editorial mode puts the number on a rule across the
+   top and starts the headline at the left margin, like the opening of an
+   article — which is what an editorial collection is. */
+.wa-wonders .wa-head h2{max-width:20ch;font-size:clamp(34px,4.6vw,64px);
+  line-height:1.02;letter-spacing:-.02em}
+.wa-wonders .wa-say{max-width:58ch}
+/* The two leads take the width they were promised and the rest hold a four-up
+   row, so the section has a shape rather than a size. */
+.wa-wonders .wo-lead{margin-top:var(--sp-5)}
+.wa-wonders .wo-strands{margin-top:var(--sp-5)}
 .wo-lead{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);
   margin-top:var(--sp-5)}
 .wo-rest{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -1467,61 +1413,71 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 /* THE DOOR IS A TITLE SEQUENCE, NOT A PARAGRAPH.
    ---------------------------------------------------------------------------
    Order is film grammar: the proposition opens cold, then a line that is pure
-   invitation, then the road as a chain of countries, and only then the name.
-   The eyebrow says "series" rather than "Trans Afrique" for exactly that
-   reason — the title card needs somewhere to land, and an eyebrow that has
-   already said the name takes it.
+   invitation, then the name, then what it is, then the shape of it, then where
+   it goes. The eyebrow says "series" rather than "Trans Afrique" for exactly
+   that reason — the title card needs somewhere to land, and an eyebrow that
+   has already said the name takes it.
 
-   Everything here is ivory, and the wordmark was the last to give in. Terracotta
-   is what the design called for and what a mockup can have, because a mockup
-   controls its own background; measured against the pixels this photograph
-   actually puts behind the letters — pale sky on the right, a tan vehicle
-   through the middle — #CB6F4B ran 2.04 to 2.46:1 against the 3.0 that large
-   text needs, at every width. That is not a technicality, it is illegible for a
-   lot of people.
+   IT ALSO CARRIES THE SECTION THAT USED TO SIT BELOW IT. The homepage had a
+   Trans Afrique section with four cards, country chains, strand lists and a
+   floor price; it explained a product to somebody three screens into a
+   homepage who had not decided they wanted one, and it is gone. The only part
+   of it a door can honestly keep is the answer to *where does it go*, which is
+   the row of four crossings at the foot of this block.
 
-   So the title card is ivory and does its work by scale and tracking, which is
-   the same conclusion the eyebrow reached when muted gold measured 3.15:1 here.
-   The accent still appears in this section, on the rule under the headline,
-   where it is a shape rather than a letterform and can be any colour it likes. */
-.wa-door-chain{margin:24px 0 0;display:flex;flex-wrap:wrap;align-items:baseline;
-  font-family:var(--fj-mono);font-size:10px;letter-spacing:.26em;
-  text-transform:uppercase;color:var(--c-bg);line-height:2}
-.wa-door-chain span+span::before{content:"\2192";margin:0 .55em}
-.wa-door-chain i{font-style:normal;margin-left:.55em}
+   Everything here is ivory. Terracotta is what the design called for on the
+   wordmark and what a mockup can have, because a mockup controls its own
+   background; measured against the pixels this photograph actually puts behind
+   the letters — pale sky on the right, a tan vehicle through the middle —
+   #CB6F4B ran 2.04 to 2.46:1 against the 3.0 that large text needs, at every
+   width. The accent stays on the rule, where it is a shape rather than a
+   letterform and can be any colour it likes. */
+/* THE HEADLINE CARRIES THE PROPOSITION, so it takes the size a proposition
+   needs and two lines of it. */
+.wa-seam-copy h2{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  letter-spacing:-.02em;line-height:.98;font-size:clamp(31px,4.2vw,62px);
+  margin:18px 0 0;color:var(--c-bg)}
+/* THE FOUR CROSSINGS, WHICH IS THE HOMEPAGE SECTION THAT USED TO BE BELOW.
+   That section carried four cards with country chains, strand lists, a line of
+   description each and a floor price. It is deleted, and this row is what a
+   door can honestly keep of it: the answer to *where does it go*, in four
+   names and four counts. They are links, so the door is a way into any one of
+   them rather than a list of things that exist. */
+.wa-door-cross{display:flex;flex-wrap:wrap;align-items:baseline;gap:0;
+  margin:24px 0 0;padding-top:20px;
+  border-top:1px solid color-mix(in srgb,var(--c-bg) 30%,transparent)}
+.wa-door-cross>span{flex:0 0 100%;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--c-bg);margin-bottom:12px}
+.wa-door-cross a{display:flex;align-items:baseline;gap:8px;
+  padding:4px 15px 4px 0;margin-right:15px;
+  border-right:1px solid color-mix(in srgb,var(--c-bg) 26%,transparent)}
+.wa-door-cross a:last-child{border-right:0;margin-right:0;padding-right:0}
+.wa-door-cross b{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:15px;letter-spacing:.01em;color:var(--c-bg);line-height:1.1}
+.wa-door-cross i{font-style:normal;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.14em;color:var(--c-bg)}
+.wa-door-cross a:hover b{color:var(--c-accent-lit)}
+
 /* The title card. Set at the scale of a name rather than a heading — it is not
    the section's headline, the proposition above it is, and a second element at
    headline size would leave the reader with two things to read first. */
-.wa-door-mark{margin:26px 0 0;font-family:var(--fj-display);font-weight:700;
+.wa-door-mark{margin:28px 0 0;font-family:var(--fj-display);font-weight:700;
   text-transform:uppercase;letter-spacing:.01em;line-height:1;
   font-size:clamp(24px,2.6vw,36px);color:var(--c-bg)}
 .wa-door-sub{margin:12px 0 0;font-size:15.5px;line-height:1.55;color:var(--c-bg);
   max-width:46ch}
-/* Shape without price: how long, how far, how it is bought. The numbers are
-   derived from the levels and the routes in transafrique.py, never typed —
-   the ground journey once shipped a $350 hero plate beside a $650 tier because
-   two places held the same figure and only one was updated. */
-/* Three columns, not a wrapping row. Flexed, the third chip fell to a second
-   line and kept the divider that had been separating it from its neighbour, so
-   an orphan arrived with a rule in front of it and the row read as an accident.
-   A fixed three-track grid lets the long labels wrap inside their own column,
-   which is what makes this a spec row rather than a sentence in three pieces. */
-.wa-door-facts{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  align-items:start;margin:28px 0 0;padding:0}
-.wa-door-facts li{display:flex;align-items:flex-start;gap:10px;padding:0 16px;
-  border-left:1px solid color-mix(in srgb,var(--c-bg) 34%,transparent)}
-.wa-door-facts li:first-child{padding-left:0;border-left:0}
-.wa-door-ico{flex:0 0 auto;display:block;width:20px;height:20px}
-.wa-door-ico svg{width:100%;height:100%;fill:none;stroke:var(--c-bg);
-  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.wa-door-facts b{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
-  text-transform:uppercase;font-weight:400;color:var(--c-bg);line-height:1.75}
-.wa-door-facts b span{display:block;white-space:nowrap}
-.wa-door-ico svg{margin-top:2px}
-.wa-seam-copy h2{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  letter-spacing:-.02em;line-height:.98;font-size:clamp(31px,4.2vw,62px);
-  margin:18px 0 0;color:var(--c-bg)}
-.wa-seam-hr{display:block;width:64px;height:2px;margin:26px 0;background:var(--c-accent-lit)}
+/* Shape without price, on one line. It was three chips in a grid with a line
+   icon each; the icons were decoration on a block whose photograph is already
+   doing the emotional work, and the middle chip said "15 countries, 4
+   crossings" directly above a row that names all four and counts every one —
+   the same fact printed twice, in the taller of the two ways. Derived from the
+   levels, never typed. */
+.wa-door-meta{display:flex;flex-wrap:wrap;align-items:center;gap:0 12px;
+  margin:20px 0 0;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-bg);line-height:1.9}
+.wa-door-meta b{font-weight:400}
+.wa-door-meta i{width:18px;height:1px;background:color-mix(in srgb,var(--c-bg) 46%,transparent);
+  display:block}
 .wa-seam-say{font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:var(--c-bg);
   max-width:38ch;margin:0}
 /* A bordered box rather than an underlined phrase: this is the one thing to do
@@ -1572,8 +1528,8 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-seam-say{font-size:16px;max-width:none}
   /* Stacked, and the dividers come off with the row: a vertical list of three
      rules down the left edge reads as three unfinished boxes. */
-  .wa-door-facts{grid-template-columns:1fr;gap:13px}
-  .wa-door-facts li{padding:0;border-left:0}
+  .wa-door-cross a{padding-right:12px;margin-right:12px}
+  .wa-door-cross b{font-size:13.5px}
   .wa-door-sub{max-width:none}
 }
 
@@ -3734,10 +3690,10 @@ window.AF = {
       <h2>Cross Africa. Don’t just visit it.</h2>
       <span class="wa-seam-hr" aria-hidden="true"></span>
       <p class="wa-seam-say">Some journeys are measured in countries. Others are measured in everything that happens between them.</p>
-      <p class="wa-door-chain"><span>Kenya</span><span>Uganda</span><span>Rwanda</span><span>Tanzania</span><i aria-hidden="true">&hellip;</i></p>
       <p class="wa-door-mark">Trans Afrique</p>
       <p class="wa-door-sub">Multi-country journeys by road, with the people, expertise and support to make the crossing possible.</p>
-      <ul class="wa-door-facts"><li><span class="wa-door-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5.3l3.4 2"/></svg></span><b><span>14 to 60+ days</span></b></li><li><span class="wa-door-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.6 2.8 4 5.6 4 8.5s-1.4 5.7-4 8.5c-2.6-2.8-4-5.6-4-8.5s1.4-5.7 4-8.5z"/></svg></span><b><span>15 countries</span><span>4 crossings</span></b></li><li><span class="wa-door-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><path d="M3.5 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 6.6a3 3 0 0 1 0 4.8"/><path d="M17.5 14.9c1.9.6 3 2.4 3 4.6"/></svg></span><b><span>Private</span><span>Signature</span><span>Expedition</span></b></li></ul>
+      <p class="wa-door-meta"><b>14 to 60+ days</b><i aria-hidden="true"></i><b>Private &middot; Signature &middot; Expedition</b></p>
+      <p class="wa-door-cross"><span>The crossings</span><a href="/trans-afrique#crossings"><b>East</b><i>4</i></a><a href="/trans-afrique#crossings"><b>West</b><i>6</i></a><a href="/trans-afrique#crossings"><b>South</b><i>5</i></a><a href="/trans-afrique#crossings"><b>Continental</b><i>9</i></a></p>
       <a class="wa-seam-go" href="/trans-afrique">Discover Trans Afrique &rarr;</a>      <!-- /gen:door -->
     </div>
   </div>
@@ -3855,7 +3811,7 @@ window.AF = {
 </section>
 
 <!-- the wonders -->
-<section class="wa-zone is-cine basalt wa-wonders" id="wonders">
+<section class="wa-zone is-read basalt wa-wonders" id="wonders">
   <div class="wa-frame">
     <div class="wa-head">
       <div class="wa-head-no"><b>06</b><span>The wonders</span></div>
@@ -3890,39 +3846,12 @@ window.AF = {
   </div>
 </section>
 
-<!-- trans afrique -->
-<section class="wa-zone is-cine basalt wa-trans" id="trans-afrique">
-  <div class="wa-frame">
-    <div class="wa-head">
-      <div class="wa-head-no"><b>07</b><span>Trans Afrique</span></div>
-      <div>
-        <!-- gen:translede -->
-<span class="wa-eyebrow">The Afrinkong journey series</span>
-        <h2>Don’t just cross Africa. Experience it with a team.</h2>
-        <p class="wa-say"><b class="tf-sub">One continent. Many countries. One extraordinary journey.</b> From the Atlantic to the Indian Ocean. From rainforest to savanna. From ancient kingdoms to modern cities. Cross Africa one country at a time, by road, through the places that cannot be understood from an airport window.</p>        <!-- /gen:translede -->
-      </div>
-    </div>
-    <!-- gen:trans -->
-<p class="tf-motto">Some journeys need a guide. Trans Afrique needs a team.</p>
-<div class="tf-routes tf-routes--peek">
-<article class="tf-route tf-route--peek" data-route="east"><div class="tf-route-in"><h3 class="tf-route-name">Trans Afrique — East</h3><p class="tf-route-where"><a href="/kenya">Kenya</a> &rarr; <a href="https://pearl-trails-uganda.vercel.app">Uganda</a> &rarr; <a href="/rwanda">Rwanda</a> &rarr; <a href="/tanzania">Tanzania</a></p><p class="tf-route-strands">Wildlife &middot; Mountains &middot; Culture &middot; Great Lakes</p><p class="tf-route-say">Rift lakes, two gorilla forests and the migration, overland and in that order.</p></div></article>
-<article class="tf-route tf-route--peek" data-route="west"><div class="tf-route-in"><h3 class="tf-route-name">Trans Afrique — West</h3><p class="tf-route-where"><a href="/senegal">Senegal</a> &rarr; <a href="/gambia">The Gambia</a> &rarr; <a href="/guinea-bissau">Guinea-Bissau</a> &rarr; <a href="/guinea">Guinea</a> &rarr; <a href="/cote-divoire">Côte d&#x27;Ivoire</a> &rarr; <a href="/ghana">Ghana</a></p><p class="tf-route-strands">Atlantic coast &middot; Culture &middot; Food &middot; History</p><p class="tf-route-say">Six countries down the Atlantic, and the food changes at every border.</p></div></article>
-<article class="tf-route tf-route--peek" data-route="south"><div class="tf-route-in"><h3 class="tf-route-name">Trans Afrique — South</h3><p class="tf-route-where"><a href="/south-africa">South Africa</a> &rarr; <a href="https://namib-skyline.vercel.app">Namibia</a> &rarr; <a href="/botswana">Botswana</a> &rarr; <a href="/zimbabwe">Zimbabwe</a> &rarr; <a href="/zambia">Zambia</a></p><p class="tf-route-strands">Desert &middot; Wildlife &middot; Rivers &middot; Falls &middot; Wilderness</p><p class="tf-route-say">Desert to delta to the falls, across five borders and most of a continent’s weather.</p></div></article>
-<article class="tf-route tf-route--great tf-route--peek" data-route="great"><div class="tf-route-in"><h3 class="tf-route-name">Trans Afrique — The Continental Expedition</h3><p class="tf-route-where"><a href="/kenya">Kenya</a> &rarr; <a href="https://pearl-trails-uganda.vercel.app">Uganda</a> &rarr; <a href="/rwanda">Rwanda</a> &rarr; <a href="/tanzania">Tanzania</a> &rarr; <a href="/zambia">Zambia</a> &rarr; <a href="/zimbabwe">Zimbabwe</a> &rarr; <a href="/botswana">Botswana</a> &rarr; <a href="https://namib-skyline.vercel.app">Namibia</a> &rarr; <a href="/south-africa">South Africa</a></p><p class="tf-route-strands">Nine countries &middot; Two oceans &middot; One road</p><p class="tf-route-say">Nine countries, top to bottom, in one continuous crossing. Cross borders, follow ancient roads, enter the wilderness, meet the people, see the places — and travel with a team built for the journey.</p></div></article>
-</div>
-<p class="tf-peek-fine">Crossings run from $6,000, quoted as a whole and in writing. Lengths, routes and what the fee covers are on the Trans Afrique page.</p>    <!-- /gen:trans -->
-    <!-- The band two sections up already says "Enter Trans Afrique". Repeating
-         that verb here would be the same door twice; this one names the
-         question the four cards above it have just raised. -->
-    <div class="wa-acts"><a class="wa-act faint" href="/trans-afrique">See how a crossing works <i>&rarr;</i></a></div>
-  </div>
-</section>
 
 <!-- 03 destinations -->
 <section class="wa-zone is-atlas dust" id="destinations">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>06</b><span>The countries</span></div>
+      <div class="wa-head-no"><b>07</b><span>The countries</span></div>
       <div>
         <!-- gen:destlede -->
         <h2>Fifty-four countries, <em>all of them live</em>.</h2><!-- /gen:destlede -->
@@ -3991,7 +3920,7 @@ window.AF = {
 <section class="wa-zone is-find dust wa-cities" id="cities">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>07</b><span>Cities</span></div>
+      <div class="wa-head-no"><b>08</b><span>Cities</span></div>
       <div>
         <h2>Africa, in <em>cities</em>.</h2>
         <!-- gen:citylede -->
@@ -4036,7 +3965,7 @@ window.AF = {
 <section class="wa-zone is-atlas dust wa-seasons" id="year">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>08</b><span>The year</span></div>
+      <div class="wa-head-no"><b>09</b><span>The year</span></div>
       <div>
         <h2>When can you <em>travel</em>?</h2>
         <p class="wa-note"><!-- gen:seasonsay -->
@@ -4072,7 +4001,7 @@ window.AF = {
 <section class="wa-zone is-read basalt" id="now">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>09</b><span>Africa now</span></div>
+      <div class="wa-head-no"><b>10</b><span>Africa now</span></div>
       <div>
         <h2>Not a <em>museum</em>.</h2>
         <!-- gen:nownote -->
@@ -4107,7 +4036,7 @@ window.AF = {
 <section class="wa-zone is-atlas dust" id="plan">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>10</b><span>The journey</span></div>
+      <div class="wa-head-no"><b>11</b><span>The journey</span></div>
       <div>
         <h2>What happens after you <em>choose Africa</em>?</h2>
         <!-- gen:plannote -->
@@ -4175,7 +4104,7 @@ window.AF = {
 <section class="wa-zone is-read" id="stories">
   <div class="wa-frame">
     <div class="wa-head">
-      <div class="wa-head-no"><b>11</b><span>Stories</span></div>
+      <div class="wa-head-no"><b>12</b><span>Stories</span></div>
       <div>
         <h2>Africa is <em>more than a destination</em>.</h2>
         <!-- gen:readslede -->

@@ -92,7 +92,8 @@
    "low": 6000,
    "high": 12000,
    "say": "Rift lakes, two gorilla forests and the migration, overland and in that order.",
-   "shape": "Nairobi to Arusha, the long way round."
+   "shape": "Nairobi to Arusha, the long way round.",
+   "short": "East"
   },
   {
    "id": "west",
@@ -115,7 +116,8 @@
    "low": 7000,
    "high": 14000,
    "say": "Six countries down the Atlantic, and the food changes at every border.",
-   "shape": "Dakar to Accra."
+   "shape": "Dakar to Accra.",
+   "short": "West"
   },
   {
    "id": "south",
@@ -138,7 +140,8 @@
    "low": 8000,
    "high": 16000,
    "say": "Desert to delta to the falls, across five borders and most of a continent’s weather.",
-   "shape": "Cape Town to Victoria Falls."
+   "shape": "Cape Town to Victoria Falls.",
+   "short": "South"
   },
   {
    "id": "great",
@@ -164,7 +167,8 @@
    "high": 30000,
    "great": true,
    "say": "Nine countries, top to bottom, in one continuous crossing. Cross borders, follow ancient roads, enter the wilderness, meet the people, see the places — and travel with a team built for the journey.",
-   "shape": "Nairobi to Cape Town."
+   "shape": "Nairobi to Cape Town.",
+   "short": "Continental"
   }
  ],
  "$included": "Split the same way the rest of the site splits money: what Afrinkong earns, and what Africa costs. Keeping accommodation on the arranged side rather than the included side is deliberate — it is arranged and it is charged, and calling it included would make the band a fiction.",
@@ -275,5 +279,6 @@
   "stamp": "Private &middot; Signature &middot; Expedition"
  },
  "map_title": "Four ways across a continent.",
- "$map": "Its own section, and the page's signature. Each crossing takes a colour and its own line; East and South are drawn over the Continental spine they are segments of, narrower and on top, so the overlap reads as what it is rather than as a collision. The legend names every country, which is the question the map raises and a legend of counts would leave unanswered."
+ "$map": "Its own section, and the page's signature. Each crossing takes a colour and its own line; East and South are drawn over the Continental spine they are segments of, narrower and on top, so the overlap reads as what it is rather than as a collision. The legend names every country, which is the question the map raises and a legend of counts would leave unanswered.",
+ "$short": "The one-word name each crossing goes by in the homepage door's row of four. Derived string surgery on the full name gave 'The Continental Expedition', which is twice the width of its three neighbours and unbalances a row that exists to be scanned. Written down rather than computed, because it is an editorial decision about what a crossing is called when there is room for one word."
 }

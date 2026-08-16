@@ -595,8 +595,9 @@ function serve() {
        that could announce itself. */
     const BAND_PAGES = [
       {page: '/index.html', band: '.wa-seam', pic: '.wa-seam-pic', copy: '.wa-seam-copy',
-       text: ['.wa-seam-stamp', '.wa-seam-copy h2', '.wa-seam-say', '.wa-door-chain',
-              '.wa-door-mark', '.wa-door-sub', '.wa-door-facts b', '.wa-seam-go']},
+       text: ['.wa-seam-stamp', '.wa-seam-copy h2', '.wa-seam-say', '.wa-door-mark',
+              '.wa-door-sub', '.wa-door-meta b', '.wa-door-cross span',
+              '.wa-door-cross b', '.wa-door-cross i', '.wa-seam-go']},
       {page: '/trans-afrique.html', band: '.tf-band', pic: '.tf-band-pic', copy: '.tf-band-copy',
        text: ['.tf-band-mark', '.tf-band-series', '.tf-h1', '.tf-band-chain', '.tf-band-go']},
     ];

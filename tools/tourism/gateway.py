@@ -64,7 +64,7 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("wonders", "wonderslede", "trans", "translede", "door",
+MARKERS = ("wonders", "wonderslede", "door",
            "window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "maplive", "mapover", "claim", "months", "scale",
            "lede", "capafrica", "destlede", "readslede", "mapsvg", "citylede",
@@ -1953,8 +1953,6 @@ def render(countries):
         "wonders": _wonders.block_wonders(seq),
         "wonderslede": _wonders.block_wonderslede(seq),
         "door": _trans.block_door(seq),
-        "trans": _trans.block_trans(seq),
-        "translede": _trans.block_translede(seq),
     }
 
 
