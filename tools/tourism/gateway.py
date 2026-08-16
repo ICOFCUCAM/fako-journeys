@@ -1846,14 +1846,56 @@ def block_stories(countries):
 
 
 def block_footer(countries):
-    """Two columns, split evenly, so the footer never becomes one long list."""
-    half = (len(countries) + 1) // 2
-    cols = (("Destinations", countries[:half]), ("More destinations", countries[half:]))
-    out = []
-    for title, group in cols:
-        links = "\n".join('        <a href="%s">%s</a>' % (esc(c.url), esc(c.name)) for c in group)
-        out.append('      <div class="wa-foot-col">\n        <b>%s</b>\n%s\n      </div>' % (title, links))
-    return "\n".join(out)
+    """The colophon, not a second copy of the website.
+
+    It used to be two columns headed "Destinations" and "More destinations",
+    which split Africa in half at whatever index len(countries)//2 landed on —
+    fifty-four names down two vertical lists, with Eritrea ending one column
+    and Ethiopia starting the next for no reason a reader could see. Beside
+    them sat a paragraph explaining that we run three operators and nineteen
+    other countries are written up anyway, which is the same defensive sentence
+    the rest of the site has stopped making, in the calmest place on the page.
+
+    Now it is the five regions the atlas already uses, the eight lenses, and
+    the three things a visitor can actually do. The links are real: the map
+    reads the hash, so /#r/east opens the footer straight into East Africa and
+    /#w/wildlife colours the continent for wildlife. A footer link that only
+    scrolls somewhere is a footer link nobody presses twice.
+
+    The deeper the visitor goes the more there is; the footer is where it gets
+    quiet again.
+    """
+    # The same five the map's own region row uses, in the same order, so the
+    # footer and the top of the page cannot disagree about how Africa is cut.
+    regions = []
+    for key, label, names in REGION_GROUPS:
+        n = len([c for c in countries if c.region in names])
+        if not n:
+            continue
+        regions.append('        <a href="/#r/%s">%s<i>%d</i></a>'
+                       % (esc(key), label, n))
+
+    lenses = []
+    for key, lens in sorted(load_lenses().items(),
+                            key=lambda kv: kv[1].get("title", kv[0])):
+        if key.startswith("$"):
+            continue
+        lenses.append('        <a href="/#w/%s">%s</a>' % (esc(key), esc(lens["title"])))
+
+    plan = [
+        ("/journey", "Build a journey"),
+        ("/enquire", "Begin your journey"),
+        ("#destinations", "Travel seasons"),
+        ("/compare", "Compare two countries"),
+    ]
+    plan_links = "\n".join('        <a href="%s">%s</a>' % (esc(u), esc(t))
+                           for u, t in plan)
+
+    return (
+        '      <div class="wa-foot-col">\n        <b>Destinations</b>\n%s\n      </div>\n'
+        '      <div class="wa-foot-col">\n        <b>Experiences</b>\n%s\n      </div>\n'
+        '      <div class="wa-foot-col">\n        <b>Plan</b>\n%s\n      </div>'
+        % ("\n".join(regions), "\n".join(lenses), plan_links))
 
 
 def render(countries):

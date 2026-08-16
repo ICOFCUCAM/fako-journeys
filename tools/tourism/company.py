@@ -75,10 +75,26 @@ def block_company(d):
         # left dangling at the end of the line above it.
         '<span class="af-co-brand">%s</span> is a trading name of '
         '<b>%s</b> &middot; %s &middot; Registration No. %s'
-        '<span class="af-co-where">%s: %s, %s, %s %s</span>'
+        # No "Registered office:" label. It sits directly under a line giving
+        # the jurisdiction and the registration number, so it already reads as
+        # registration detail rather than a door to knock on — and the label
+        # was the loudest thing in the quietest part of the page.
+        '<span class="af-co-where">%s &middot; %s, %s %s</span>'
         % (esc(d["brand"]), esc(d["legal"]), esc(d["jurisdiction"]),
-           esc(d["registration"]), esc(o["kind"]), esc(o["street"]),
+           esc(d["registration"]), esc(o["street"]),
            esc(o["city"]), esc(o["region"]), esc(o["postcode"])))
+
+
+def block_colophon(d):
+    """The last line on the page: whose copyright, and nothing else.
+
+    Privacy, Terms and Cookies are not here. /privacy, /terms and /cookies do
+    not exist, and a colophon that links to three 404s is less trustworthy than
+    one that stays quiet — this is the strip a reader checks when they want to
+    know who they are dealing with, so it is the worst possible place to be
+    caught out. Write the pages and this will carry them.
+    """
+    return '&copy; %d %s' % (d["colophon"]["since"], esc(d["legal"]))
 
 
 def block_whopays(d):
@@ -117,7 +133,7 @@ def pages():
 
 def run(log=print):
     d = load()
-    blocks = {"company": block_company(d)}
+    blocks = {"company": block_company(d), "colophon": block_colophon(d)}
     seen = touched = 0
     for path in pages():
         seen += 1

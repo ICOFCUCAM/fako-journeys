@@ -32,5 +32,9 @@
   "email": "hello@afrinkong.com",
   "say": "Journeys are read by the Afrinkong coordination desk, which arranges the ground wherever the journey goes.",
   "hours": "We answer within one working day."
+ },
+ "colophon": {
+  "$comment": "The very bottom. Privacy, Terms and Cookies are deliberately not linked: /privacy, /terms and /cookies do not exist, and a footer that links to three 404s is worse than one that does not mention them. Add the pages, then add them here.",
+  "since": 2026
  }
 }

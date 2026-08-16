@@ -2334,7 +2334,31 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 /* Five columns at 34px on a 1240 frame is 226px each, which is wider than
    any link in them and narrower than the brand block wants. The gap does the
    separating and the columns stop being a table. */
-.wa-foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr 1.1fr;gap:48px}
+/* Three columns and a wide brand block, not five columns of everything.
+   The footer's job is to close the experience, not repeat the website: the
+   deeper a visitor goes the more there is, and this is where it gets quiet
+   again. */
+.wa-foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px}
+.wa-foot-say{max-width:34ch}
+/* The line that answers the hero. AFRICA ISN'T ONE PLACE opens the page; this
+   closes it, in the display face rather than the body face so it reads as a
+   statement and not as copy. */
+.wa-foot-line{margin-top:20px;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(19px,1.7vw,25px);line-height:1.16;color:var(--c-bg);max-width:18ch}
+.wa-foot-line em{display:block;font-style:normal;color:var(--c-accent-lit)}
+/* A count beside each region: the atlas habit of telling you how much is
+   behind a door before you open it. */
+.wa-foot-col a i{font-style:normal;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.1em;color:var(--fj-onbasalt-dim);margin-left:8px}
+/* The atlas on one line, between the columns and the colophon. */
+.wa-foot-atlas{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px;
+  margin-top:var(--sp-5);padding-top:20px;border-top:var(--fj-rule-dark)}
+.wa-foot-atlas b{font-family:var(--fj-mono);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-accent);font-weight:400}
+.wa-foot-atlas a{font-size:14.5px;color:var(--fj-onbasalt-dim);transition:color .2s}
+.wa-foot-atlas a:hover{color:var(--c-bg)}
+.wa-foot-rights{display:block;margin-bottom:7px}
+@media(max-width:900px){.wa-foot-atlas{gap:6px 16px}}
 .wa-foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
 .wa-foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
 .wa-foot-grid p{margin-top:16px;font-size:14.5px;max-width:32em;color:var(--fj-onbasalt-dim)}
@@ -2513,6 +2537,8 @@ window.AF = {
 <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="zimbabwe" data-name="Zimbabwe" data-tag="Great Zimbabwe and the Zambezi" data-calls="adventure history wildlife" data-near="culture" href="/zimbabwe"><path d="M673.3 829.4L650.5 826.5L646.8 824.3L646.7 821.5L634.8 818.3L630.9 812.2L631.6 805.6L626.5 804.9L625.5 800.2L613.5 793.1L611 785.6L602.8 773.5L603.1 771.3L621.5 774.5L624.5 773.5L636.1 760.3L646.3 755.8L648.5 749L658.6 744.8L666.8 744.8L667.1 749.3L676.9 749.7L685.3 754.9L697.4 758.6L696.9 778.7L692.8 786.5L694.5 788.6L693.4 792.1L695.5 799.6L689 807.9L687.8 815.9L673.3 829.4Z"/><title>Zimbabwe &#8212; Great Zimbabwe and the Zambezi</title></a>
 <a tabindex="-1" class="wa-map-live wa-map-mark" data-tier="live" data-slug="mauritius" data-name="Mauritius" data-tag="Reef, sugar and the volcanic interior" data-calls="coast food" data-near="culture nature" href="/mauritius"><circle class="wa-map-hit" cx="982.5" cy="812.8" r="9"/><circle cx="982.5" cy="812.8" r="12"/><title>Mauritius &#8212; Reef, sugar and the volcanic interior</title></a>
 <a tabindex="-1" class="wa-map-live wa-map-mark" data-tier="live" data-slug="seychelles" data-name="Seychelles" data-tag="Granite islands in the Indian Ocean" data-calls="coast" data-near="culture nature" href="/seychelles"><circle class="wa-map-hit" cx="979.6" cy="604.7" r="9"/><circle cx="979.6" cy="604.7" r="12"/><title>Seychelles &#8212; Granite islands in the Indian Ocean</title></a>
+
+
 
 
 
@@ -3122,6 +3148,25 @@ window.AF = {
     }
   }
 
+  /* The footer links here, so they have to arrive somewhere.
+     /#r/east opens the map on East Africa; /#w/wildlife colours the continent
+     for wildlife. Without this the footer's five regions and eight experiences
+     would be decoration that scrolled the page and did nothing, which is the
+     kind of link a reader presses once. */
+  function readHash(){
+    var m = /^#\/?(r|w)\/([a-z-]+)$/.exec(location.hash || '');
+    if (!m) return;
+    if (m[1] === 'r') {
+      var reg = regs.filter(function(x){ return x.dataset.reg === m[2]; })[0];
+      if (reg) reg.click();
+    } else {
+      var tag = tags.filter(function(x){ return x.dataset.exp === m[2]; })[0];
+      if (tag && held !== m[2]) tag.click();
+    }
+    sec.scrollIntoView({behavior: reduced.matches ? 'auto' : 'smooth', block: 'start'});
+  }
+  window.addEventListener('hashchange', readHash);
+
   tags.forEach(function(t){
     t.addEventListener('click', function(){
       if (held === t.dataset.exp) {
@@ -3190,6 +3235,9 @@ window.AF = {
   });
 
   paintRegion('africa');
+
+  readHash();
+
 })();
 </script>
 <script>
@@ -4342,101 +4390,64 @@ window.AF = {
 <footer class="wa-foot">
   <div class="wa-frame">
     <div class="wa-foot-grid">
-      <div>
+      <div class="wa-foot-say">
         <div class="wa-foot-brand">Afrinkong<span>Journeys across Africa</span></div>
-        <p>Three tour operators of our own &mdash; in Cameroon, Uganda and Namibia &mdash; and nineteen more countries written up to the same twenty-seven categories, so any two can be compared on the same terms. Nothing here is written by an agency abroad.</p>
+        <!-- The paragraph that stood here explained that we run three operators
+             and nineteen other countries are written up anyway. That is the
+             same defensive sentence the rest of the site has stopped making,
+             delivered in the calmest place on the page.
+             What replaces it closes the loop the hero opens: the first screen
+             says AFRICA ISN'T ONE PLACE and the last one answers it. -->
+        <p class="wa-foot-line">Africa isn&rsquo;t one place.<em>Find the one that feels like yours.</em></p>
       </div>
       <!-- gen:footer -->
       <div class="wa-foot-col">
         <b>Destinations</b>
-        <a href="/cameroon">Cameroon</a>
-        <a href="https://pearl-trails-uganda.vercel.app">Uganda</a>
-        <a href="https://namib-skyline.vercel.app">Namibia</a>
-        <a href="/central-african-republic">Central African Republic</a>
-        <a href="/chad">Chad</a>
-        <a href="/congo">Congo</a>
-        <a href="/dr-congo">DR Congo</a>
-        <a href="/equatorial-guinea">Equatorial Guinea</a>
-        <a href="/gabon">Gabon</a>
-        <a href="/benin">Benin</a>
-        <a href="/burkina-faso">Burkina Faso</a>
-        <a href="/cote-divoire">Côte d&#x27;Ivoire</a>
-        <a href="/ghana">Ghana</a>
-        <a href="/guinea">Guinea</a>
-        <a href="/guinea-bissau">Guinea-Bissau</a>
-        <a href="/liberia">Liberia</a>
-        <a href="/mali">Mali</a>
-        <a href="/mauritania">Mauritania</a>
-        <a href="/niger">Niger</a>
-        <a href="/nigeria">Nigeria</a>
-        <a href="/senegal">Senegal</a>
-        <a href="/sierra-leone">Sierra Leone</a>
-        <a href="/gambia">The Gambia</a>
-        <a href="/togo">Togo</a>
-        <a href="/burundi">Burundi</a>
-        <a href="/djibouti">Djibouti</a>
-        <a href="/eritrea">Eritrea</a>
+        <a href="/#r/central">Central &amp; West Africa<i>22</i></a>
+        <a href="/#r/east">East Africa<i>10</i></a>
+        <a href="/#r/southern">Southern Africa<i>10</i></a>
+        <a href="/#r/north">North Africa<i>6</i></a>
+        <a href="/#r/islands">Islands<i>6</i></a>
       </div>
       <div class="wa-foot-col">
-        <b>More destinations</b>
-        <a href="/ethiopia">Ethiopia</a>
-        <a href="/kenya">Kenya</a>
-        <a href="/rwanda">Rwanda</a>
-        <a href="/somalia">Somalia</a>
-        <a href="/south-sudan">South Sudan</a>
-        <a href="/tanzania">Tanzania</a>
-        <a href="/angola">Angola</a>
-        <a href="/botswana">Botswana</a>
-        <a href="/eswatini">Eswatini</a>
-        <a href="/lesotho">Lesotho</a>
-        <a href="/malawi">Malawi</a>
-        <a href="/mozambique">Mozambique</a>
-        <a href="/south-africa">South Africa</a>
-        <a href="/zambia">Zambia</a>
-        <a href="/zimbabwe">Zimbabwe</a>
-        <a href="/algeria">Algeria</a>
-        <a href="/egypt">Egypt</a>
-        <a href="/libya">Libya</a>
-        <a href="/morocco">Morocco</a>
-        <a href="/sudan">Sudan</a>
-        <a href="/tunisia">Tunisia</a>
-        <a href="/cabo-verde">Cabo Verde</a>
-        <a href="/comoros">Comoros</a>
-        <a href="/madagascar">Madagascar</a>
-        <a href="/mauritius">Mauritius</a>
-        <a href="/sao-tome-and-principe">Sao Tome and Principe</a>
-        <a href="/seychelles">Seychelles</a>
-      </div>
-      <!-- /gen:footer -->
-      <div class="wa-foot-col">
-        <b>Explore</b>
-        <a href="#experiences">Experiences</a>
-        <a href="#destinations">Every destination</a>
-        <a href="#destinations">Where to begin</a>
-        <a href="#destinations">Travel seasons</a>
-        <a href="/compare">Compare two countries</a>
-        <a href="/tourism/">All twenty-seven categories</a>
-        <a href="/journey">Build a journey</a>
-        <a href="/journey">Build a journey</a>
-        <a href="/contact">Contact an operator</a>
+        <b>Experiences</b>
+        <a href="/#w/adventure">Adventure</a>
+        <a href="/#w/cities">Cities</a>
+        <a href="/#w/coast">Coast</a>
+        <a href="/#w/culture">Culture</a>
+        <a href="/#w/food">Food</a>
+        <a href="/#w/history">History</a>
+        <a href="/#w/nature">Nature</a>
+        <a href="/#w/wildlife">Wildlife</a>
       </div>
       <div class="wa-foot-col">
         <b>Plan</b>
         <a href="/journey">Build a journey</a>
-        <a href="/contact">Contact an operator</a>
+        <a href="/enquire">Begin your journey</a>
         <a href="#destinations">Travel seasons</a>
-        <a href="#plan">Guides</a>
-        <a href="#plan">Transport</a>
-        <b style="margin-top:26px">Regions</b>
-        <a href="/atlas">The atlas of Africa</a>
-        <a href="/journey">Build a journey</a>
-        <a href="#window">The five regions</a>
-        <a href="#scale">The size of Africa</a>
+        <a href="/compare">Compare two countries</a>
       </div>
+      <!-- /gen:footer -->
     </div>
+
+    <!-- The atlas, on one line. It was three entries scattered across two
+         columns — "The atlas of Africa", "The five regions", "The size of
+         Africa" — beside "Build a journey" printed three separate times
+         between them. -->
+    <nav class="wa-foot-atlas" aria-label="The atlas">
+      <b>The Atlas</b>
+      <a href="/atlas">The atlas of Africa</a>
+      <a href="/#window">The five regions</a>
+      <a href="/places">Every place</a>
+      <a href="/compare">Compare two countries</a>
+      <a href="/#scale">The size of Africa</a>
+      <a href="/tourism/">All twenty-seven categories</a>
+    </nav>
     <div class="wa-foot-bar wa-frame" style="padding-left:0;padding-right:0">
+      <span class="wa-foot-rights"><!-- gen:colophon -->
+&copy; 2026 Wankong LLC      <!-- /gen:colophon --></span>
       <!-- gen:company -->
-<span class="af-co-brand">Afrinkong</span> is a trading name of <b>Wankong LLC</b> &middot; Delaware, USA &middot; Registration No. 10588061<span class="af-co-where">Registered office: 8 The Green, Suite B, Dover, Delaware 19901</span>      <!-- /gen:company -->
+<span class="af-co-brand">Afrinkong</span> is a trading name of <b>Wankong LLC</b> &middot; Delaware, USA &middot; Registration No. 10588061<span class="af-co-where">8 The Green, Suite B &middot; Dover, Delaware 19901</span>      <!-- /gen:company -->
     </div>
   </div>
 </footer>
