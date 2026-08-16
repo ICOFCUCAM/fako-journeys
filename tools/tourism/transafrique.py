@@ -536,7 +536,15 @@ def series_nav(d, active):
     costs — and a reader who follows it end to end has been told the whole
     argument in the order it makes sense in.
     """
-    out = ['<nav class="tf-series" aria-label="Trans Afrique">',
+    # NOT STICKY ON THE DOOR. The overview opens on the fixed-window band, and
+    # a bar pinned over it is what broke that band at every width: the headline
+    # travels the full height of a fixed photograph, so anything parked in its
+    # path is something the copy slides under. It also has nothing to offer
+    # there — a reader on the first page of a series does not need a way back to
+    # the first page of the series. Static here, sticky on the eight pages where
+    # it is genuinely a way out.
+    out = ['<nav class="tf-series%s" aria-label="Trans Afrique">'
+           % (" tf-series--top" if active == "overview" else ""),
            '<a class="tf-series-mark%s" href="/trans-afrique"%s>Trans Afrique</a>'
            % (" is-on" if active == "overview" else "",
               ' aria-current="page"' if active == "overview" else ""),
