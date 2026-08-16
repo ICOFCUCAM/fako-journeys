@@ -157,43 +157,6 @@
 
 
 /* ---- the crossings, on the continent -------------------------------------- */
-/* A DIAGRAM OF ONE ROAD SYSTEM, NOT FOUR TOUR PACKAGES.
-   ---------------------------------------------------------------------------
-   Plotted, the geometry says something the cards cannot: Trans Afrique East is
-   the first four countries of the Continental Expedition and Trans Afrique
-   South is its last five reversed. Four separate lines would have put three of
-   them on top of each other and drawn three roads where there is one.
-
-   So two roads are drawn — a spine down the east side and an arc along the
-   Atlantic — and East and South are lit as lengths of the spine when their
-   card is under the cursor or the keyboard. No script: :has() on the section
-   does it, and a browser without :has() shows the finished map rather than a
-   broken one, which is the right way round for a fallback.
-
-   Restrained means the continent is drawn in one flat tone with no borders
-   picked out, no labels on countries, no pins and no shadow. The only things
-   with any weight are the two roads and the thirteen countries they enter. */
-.tf-map{margin:0 0 var(--sp-5);display:grid;gap:var(--sp-4);
-  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:center}
-.tf-map-svg{width:100%;height:auto;display:block}
-/* Everything Afrinkong does not cross is still drawn. Thirteen countries alone
-   on a black field is a diagram; the point of putting a crossing on Africa is
-   that Africa is around it. */
-.tf-map-rest path{fill:color-mix(in srgb,var(--c-bg) 9%,transparent);stroke:none}
-.tf-map-in path{fill:color-mix(in srgb,var(--c-bg) 26%,transparent);stroke:none;
-  transition:fill .25s ease}
-.tf-map-line{fill:none;stroke:var(--c-gold);stroke-width:4.5;
-  stroke-linejoin:round;stroke-linecap:round;transition:stroke .25s ease,stroke-width .25s ease}
-.tf-map-label{font-family:var(--fj-mono);font-size:17px;letter-spacing:2.4px;
-  fill:var(--c-gold)}
-
-.tf-map-cap{margin:0;min-width:0}
-.tf-map-say{margin:0;font-size:15px;line-height:1.6;color:var(--fj-onbasalt-dim);
-  max-width:44ch}
-.tf-map-key{list-style:none;margin:var(--sp-3) 0 0;padding:0;min-width:0}
-
-@media(max-width:860px){
-  .tf-map{grid-template-columns:minmax(0,1fr);gap:var(--sp-3)}
 }
 
 /* The crossings. The country chain is the picture — arrows between names, which
@@ -355,44 +318,10 @@
    widest and underneath, then South, then East on top — the overlap reads as
    the regional crossings sitting inside the trunk, which is exactly what they
    are. Four equal lines would have read as a collision. */
-.tf-map-line[data-route="great"]{stroke:var(--c-gold)}
-.tf-map-line[data-route="south"]{stroke:#E0A24A}
-.tf-map-line[data-route="east"]{stroke:var(--c-accent-lit)}
-.tf-map-line[data-route="west"]{stroke:#7FA88B}
-.tf-map-nodes circle[data-route="great"]{fill:var(--c-gold)}
-.tf-map-nodes circle[data-route="south"]{fill:#E0A24A}
-.tf-map-nodes circle[data-route="east"]{fill:var(--c-accent-lit)}
-.tf-map-nodes circle[data-route="west"]{fill:#7FA88B}
-.tf-map-nodes circle{stroke:var(--fj-basalt);stroke-width:2.5}
-.tf-map-art{min-width:0}
-.tf-map-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(26px,3vw,42px);line-height:1.02;letter-spacing:-.02em;
-  color:var(--c-bg);margin:0 0 18px;max-width:14ch}
 /* The legend names every country, because "6 countries" raises exactly the
    question it then refuses to answer — and it doubles as the map's control. */
-.tf-map-key li{display:flex;align-items:flex-start;gap:14px;padding:14px 0;
-  border-bottom:var(--fj-rule-dark)}
-.tf-key-dot{flex:0 0 auto;width:11px;height:11px;border-radius:50%;margin-top:4px}
-.tf-map-key li[data-route="great"] .tf-key-dot{background:var(--c-gold)}
-.tf-map-key li[data-route="south"] .tf-key-dot{background:#E0A24A}
-.tf-map-key li[data-route="east"] .tf-key-dot{background:var(--c-accent-lit)}
-.tf-map-key li[data-route="west"] .tf-key-dot{background:#7FA88B}
-.tf-key-in{flex:1 1 auto;min-width:0}
-.tf-key-where{display:block;margin-top:5px;overflow-wrap:anywhere;font-size:13.5px;line-height:1.5;
-  color:var(--fj-onbasalt-dim)}
-.tf-map-key i{flex:0 0 auto;font-style:normal;padding-left:10px;
-  font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--c-gold);white-space:nowrap;margin-top:4px}
-.tf-map-go{margin-top:var(--sp-4);border-color:var(--c-accent-lit);
-  color:var(--c-accent-lit);background:none}
-.tf-map-go:hover{background:var(--c-accent-lit);color:var(--c-primary)}
 /* Hovering a legend row lifts its line and dims the rest. Transitions only —
    no transform anywhere near the band, and nothing here is fixed anyway. */
-.tf-map:has(.tf-map-key li[data-route="east"]:hover) .tf-map-line:not([data-route="east"]),
-.tf-map:has(.tf-map-key li[data-route="west"]:hover) .tf-map-line:not([data-route="west"]),
-.tf-map:has(.tf-map-key li[data-route="south"]:hover) .tf-map-line:not([data-route="south"]),
-.tf-map:has(.tf-map-key li[data-route="great"]:hover) .tf-map-line:not([data-route="great"]){
-  stroke:color-mix(in srgb,var(--c-bg) 16%,transparent)}
 
 /* ---- 08 the flagship ------------------------------------------------------ */
 /* Full width and out of the grid the other three sit in. East, West and South
@@ -446,7 +375,6 @@
 @media(max-width:860px){
   .tf-great{padding:var(--sp-5) 24px}
   .tf-close-in{padding:var(--sp-6) 24px}
-  .tf-map-key i{display:none}
 }
 
 
@@ -734,3 +662,207 @@
 .tf-page--after > .tf-block:first-child,
 .tf-page--after > .tf-next:first-child,
 .tf-page--after > .tf-index:first-child{margin-top:0}
+
+/* ===========================================================================
+   THE CROSSINGS PLATE
+   ---------------------------------------------------------------------------
+   The map was a small SVG beside a legend, and it read as an infographic
+   dropped onto a dark page. It is now the object the section is about: the
+   continent takes roughly three fifths of the measure and the four journeys
+   sit beside it as an editorial index rather than a key.
+
+   THE INDEX IS NOT A LEGEND. A legend explains a picture; this one chooses
+   what the picture shows. Which is also why the four route cards that used to
+   repeat under the map are gone — they printed the same four names, the same
+   four country chains and the same three figures one screen further down.
+
+   ALL THE STATE IS `data-lit` ON THE FIGURE, set by scripts/crossings.js and
+   read only here. Nothing below is applied from JavaScript, so the whole look
+   can change without touching the script, and the map and the panel cannot
+   disagree about what is selected.
+   =========================================================================== */
+.tf-atlas{margin:0;display:grid;gap:var(--sp-5);
+  grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:start}
+.tf-atlas-art{min-width:0;position:relative}
+.tf-plate-svg{width:100%;height:auto;display:block;overflow:visible}
+.tf-atlas-panel{margin:0;min-width:0}
+
+/* ---- the continent ------------------------------------------------------ */
+/* Two tones and one hairline. Everything Afrinkong does not cross is the
+   quietest thing on the plate; the countries the roads enter come up a step
+   and carry a border, so the road has something to run between. Picking every
+   border out would make this an atlas index, and picking none out leaves the
+   road crossing an undifferentiated shape. */
+.tf-plate-rest path{fill:color-mix(in srgb,var(--c-bg) 10%,transparent);stroke:none}
+.tf-plate-in path{fill:color-mix(in srgb,var(--c-bg) 19%,transparent);
+  stroke:color-mix(in srgb,var(--c-bg) 27%,transparent);stroke-width:1.1;
+  transition:fill .3s ease}
+
+/* ---- the roads ---------------------------------------------------------- */
+/* The halo is a wider stroke of the GROUND colour under each road, so a
+   narrower crossing running along a wider one is separated by a hair of dark
+   instead of merging into it. A filter would do the same job and is banned
+   anywhere near this page — see docs/window-band.md. */
+.tf-plate-halo{fill:none;stroke:var(--fj-basalt);stroke-linecap:round;
+  stroke-linejoin:round;opacity:.85;transition:opacity .3s ease}
+.tf-plate-road{fill:none;stroke-linecap:round;stroke-linejoin:round;
+  transition:opacity .3s ease,stroke-width .3s ease}
+/* Four accents, all cut from the palette, and the spine is the warmest and
+   widest because it is the journey the other three are lengths of. */
+.tf-plate-road[data-route="great"]{stroke:var(--c-gold)}
+.tf-plate-road[data-route="south"]{stroke:#E0A24A}
+.tf-plate-road[data-route="east"]{stroke:var(--c-accent-lit)}
+.tf-plate-road[data-route="west"]{stroke:#7FA88B}
+
+/* ---- nodes and termini -------------------------------------------------- */
+.tf-plate-nodes circle{transition:opacity .3s ease,r .3s ease}
+.tf-node{stroke:var(--fj-basalt);stroke-width:2}
+.tf-node[data-route="great"]{fill:var(--c-gold)}
+.tf-node[data-route="south"]{fill:#E0A24A}
+.tf-node[data-route="east"]{fill:var(--c-accent-lit)}
+.tf-node[data-route="west"]{fill:#7FA88B}
+/* A ring, not a dot with a name. The anchor is a country's centroid, so a
+   larger marker saying "the road starts here" is true and "NAIROBI" printed on
+   it would be false by about two hundred kilometres. The city pair is in the
+   panel, in words, claiming nothing about a position. */
+.tf-term{fill:none;stroke-width:2.4;opacity:0}
+.tf-term[data-route="great"]{stroke:var(--c-gold)}
+.tf-term[data-route="south"]{stroke:#E0A24A}
+.tf-term[data-route="east"]{stroke:var(--c-accent-lit)}
+.tf-term[data-route="west"]{stroke:#7FA88B}
+
+/* Country names: in the SVG for every road, shown for the chosen one. Drawn
+   once and revealed by state rather than re-rendered, so the plate is whole
+   with scripting off and selecting is a repaint and not a rebuild. */
+.tf-name{font-family:var(--fj-mono);font-size:15px;letter-spacing:1.6px;
+  fill:var(--fj-onbasalt);opacity:0;transition:opacity .3s ease;
+  paint-order:stroke;stroke:var(--fj-basalt);stroke-width:3.5;
+  stroke-linejoin:round}
+
+/* ---- what selection does ------------------------------------------------ */
+/* Nothing until the script says the figure is live: with no JavaScript the
+   plate shows all four roads at full strength and the panel lists all four
+   journeys open, which is a complete answer rather than a degraded one. */
+.tf-atlas[data-lit] .tf-plate-road:not([data-route]),
+.tf-atlas[data-lit] .tf-plate-road{opacity:.16}
+.tf-atlas[data-lit] .tf-plate-halo{opacity:.35}
+.tf-atlas[data-lit] .tf-node{opacity:.18}
+/* A country that is not on the chosen road falls back to the rest of the
+   continent's tone — not below it. Dimmed past the ground it sits on, an
+   unselected crossing reads as a hole cut in Africa. */
+.tf-atlas[data-lit] .tf-plate-in path{fill:color-mix(in srgb,var(--c-bg) 10%,transparent)}
+.tf-atlas[data-lit="east"] .tf-plate-road[data-route="east"],
+.tf-atlas[data-lit="west"] .tf-plate-road[data-route="west"],
+.tf-atlas[data-lit="south"] .tf-plate-road[data-route="south"],
+.tf-atlas[data-lit="great"] .tf-plate-road[data-route="great"]{opacity:1}
+.tf-atlas[data-lit="east"] .tf-node[data-in~="east"],
+.tf-atlas[data-lit="west"] .tf-node[data-in~="west"],
+.tf-atlas[data-lit="south"] .tf-node[data-in~="south"],
+.tf-atlas[data-lit="great"] .tf-node[data-in~="great"]{opacity:1;r:5.6}
+.tf-atlas[data-lit="east"] .tf-plate-in path[data-in~="east"],
+.tf-atlas[data-lit="west"] .tf-plate-in path[data-in~="west"],
+.tf-atlas[data-lit="south"] .tf-plate-in path[data-in~="south"],
+.tf-atlas[data-lit="great"] .tf-plate-in path[data-in~="great"]{
+  fill:color-mix(in srgb,var(--c-bg) 24%,transparent)}
+.tf-atlas[data-lit="east"] .tf-term[data-route="east"],
+.tf-atlas[data-lit="west"] .tf-term[data-route="west"],
+.tf-atlas[data-lit="south"] .tf-term[data-route="south"],
+.tf-atlas[data-lit="great"] .tf-term[data-route="great"]{opacity:1}
+.tf-atlas[data-lit="east"] .tf-name[data-in~="east"],
+.tf-atlas[data-lit="west"] .tf-name[data-in~="west"],
+.tf-atlas[data-lit="south"] .tf-name[data-in~="south"],
+.tf-atlas[data-lit="great"] .tf-name[data-in~="great"]{opacity:1}
+
+/* ---- the panel ---------------------------------------------------------- */
+.tf-atlas-head{margin-bottom:var(--sp-4)}
+.tf-atlas-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(22px,2.2vw,32px);line-height:1.04;letter-spacing:-.015em;
+  color:var(--c-bg);margin:0;max-width:16ch}
+.tf-atlas-say{margin:14px 0 0;font-size:15px;line-height:1.6;
+  color:var(--fj-onbasalt-dim);max-width:44ch}
+
+.tf-picks{list-style:none;margin:0;padding:0;border-top:var(--fj-rule-dark)}
+.tf-pick{border-bottom:1px solid color-mix(in srgb,var(--c-bg) 13%,transparent)}
+/* A row, not a card. Thin rules and type, the way an index in a book is set;
+   four boxes with borders would be the "collection of coloured cards" this
+   section is explicitly not. */
+.tf-pick-hit{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:baseline;gap:4px 12px;width:100%;padding:18px 0;
+  background:none;border:0;text-align:left;cursor:pointer;
+  font:inherit;color:inherit}
+.tf-pick-dot{grid-row:1;width:9px;height:9px;border-radius:50%;
+  align-self:center;transition:transform .25s ease}
+.tf-pick[data-route="great"] .tf-pick-dot{background:var(--c-gold)}
+.tf-pick[data-route="south"] .tf-pick-dot{background:#E0A24A}
+.tf-pick[data-route="east"] .tf-pick-dot{background:var(--c-accent-lit)}
+.tf-pick[data-route="west"] .tf-pick-dot{background:#7FA88B}
+.tf-pick-name{grid-row:1;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(16px,1.5vw,20px);line-height:1.15;color:var(--c-bg);
+  transition:color .2s ease}
+.tf-pick-n{grid-row:1;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--fj-onbasalt-dim);
+  white-space:nowrap}
+.tf-pick-where{grid-row:2;grid-column:2/-1;margin-top:7px;font-size:13.5px;
+  line-height:1.55;color:var(--fj-onbasalt-dim)}
+/* The flagship is the one the other three are lengths of, and the index says
+   so in weight rather than in a badge. */
+.tf-pick.is-great .tf-pick-name{font-size:clamp(18px,1.7vw,23px)}
+.tf-pick-hit:hover .tf-pick-name,
+.tf-pick-hit:focus-visible .tf-pick-name{color:var(--c-accent-lit)}
+.tf-pick-hit:hover .tf-pick-dot{transform:scale(1.35)}
+.tf-pick-hit[aria-current] .tf-pick-name{color:var(--c-accent-lit)}
+.tf-pick-hit:focus-visible{outline:2px solid var(--c-accent-lit);outline-offset:3px}
+
+.tf-sum{padding:0 0 20px}
+.tf-sum-say{margin:0;font-size:15px;line-height:1.6;color:var(--fj-onbasalt);
+  max-width:44ch}
+/* Shape takes the whole row. "Nairobi to Arusha, the long way round." is a
+   sentence and the other two are a number each; in three equal columns the
+   sentence broke over three lines beside two that used one. */
+.tf-sum-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0 20px;margin:18px 0 0}
+.tf-sum-facts>div:first-child{grid-column:1/-1}
+.tf-sum-facts dt{font-family:var(--fj-mono);font-size:8.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.tf-sum-facts dd{margin:6px 0 12px;font-family:var(--fj-display);font-size:16px;
+  color:var(--c-bg)}
+.tf-sum-go{display:inline-flex;align-items:center;min-height:24px;gap:8px;
+  margin-top:6px;font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-accent-lit);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent-lit) 45%,transparent)}
+.tf-sum-go:hover{border-bottom-color:var(--c-accent-lit)}
+
+/* The accordion exists only once the script says so. Before that every summary
+   is open and the buttons control nothing, which is why the markup ships
+   aria-expanded="true" and the script is what makes it false. */
+.tf-atlas.is-live .tf-sum{display:none}
+.tf-atlas.is-live .tf-pick-hit[aria-expanded="true"]+.tf-sum{display:block}
+
+.tf-atlas-go{margin-top:var(--sp-4)}
+
+@media(prefers-reduced-motion:reduce){
+  .tf-plate-road,.tf-plate-halo,.tf-plate-in path,.tf-plate-nodes circle,
+  .tf-name,.tf-pick-dot,.tf-pick-name{transition:none}
+}
+
+/* Tablet: the plate stays the dominant object and the index moves under it,
+   two columns wide so four journeys are still one glance. */
+@media(max-width:1000px){
+  .tf-atlas{grid-template-columns:minmax(0,1fr);gap:var(--sp-4)}
+  .tf-atlas-head{margin-bottom:var(--sp-3)}
+  .tf-picks{columns:2;column-gap:var(--sp-4)}
+  .tf-pick{break-inside:avoid}
+  .tf-name{font-size:19px;letter-spacing:2px}
+}
+/* Phone: one column, and the country names come up again because the plate is
+   now 390 pixels wide rather than 700 and 15px of viewBox type is four. */
+@media(max-width:640px){
+  .tf-picks{columns:1}
+  .tf-name{font-size:26px;letter-spacing:2.6px;stroke-width:5}
+  .tf-plate-road{stroke-width:inherit}
+  /* The countries come before the count of them. Wrapped the other way round
+     the row read "4 COUNTRIES / Kenya, Uganda, Rwanda, Tanzania", which is the
+     caption above the thing it captions. */
+  .tf-pick-where{grid-row:2;grid-column:1/-1}
+  .tf-pick-n{grid-row:3;grid-column:1/-1;margin-top:8px}
+}

@@ -684,22 +684,20 @@ def crossings_body(d, by_slug):
     printed four times on a page that had already printed a great deal. They are
     a way in now: enough to choose between, and each one opens its own page.
     """
-    cards = "".join(route_card(r, by_slug) for r in d["routes"])
+    # THE ROUTE CARDS ARE GONE AND NOTHING WENT WITH THEM. They printed the
+    # same four names, the same four country chains and the same shape, length
+    # and fee that the plate's own index now carries, one screen further down —
+    # so the page said everything about all four crossings twice. Every field
+    # from the card is in routemap.build()'s summaries, plus the link to the
+    # crossing's own page that the card had.
     return "\n".join([
         page_top(by_id(d, "series", "crossings")),
         '<div class="tf-page tf-page--after">',
-        # The map's caption must not restate the page's own headline. Left with
-        # its default it set "Four ways across a continent." as an h3 directly
-        # under the h1 saying exactly that, with the same sentence under both.
+        # No heading over the plate: the page's own h1 two hundred pixels above
+        # says "Four ways across a continent." and an h3 repeating it under the
+        # same sentence was the section talking to itself.
         '<section class="tf-block" id="map">%s</section>'
-        % routemap.build(d, by_slug, title="Where they go",
-                         say="East is the first four countries of the "
-                             "Continental Expedition and South is its last "
-                             "five, so the regional journeys are lengths of "
-                             "the same spine rather than separate roads."),
-        '<section class="tf-block" id="records">'
-        '<h2 class="tf-h2">The four crossings</h2>'
-        '<div class="tf-routes">%s</div></section>' % cards,
+        % routemap.build(d, by_slug),
         next_step("Ways to travel", "/trans-afrique/ways",
                   "The same roads, run three ways."),
         '</div>',
@@ -897,6 +895,7 @@ TEMPLATE = """<!DOCTYPE html>
 </div>
 </main>
 %(events)s
+<script src="/scripts/crossings.js" defer></script>
 </body>
 </html>
 """

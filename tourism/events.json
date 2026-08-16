@@ -17,7 +17,8 @@
   "arc": "an arc key from arcs.json",
   "format": "a story format from arcs.json",
   "matched": "how many results a search returned — a count, never the words typed",
-  "kind": "which sort of thing was opened from the index: country, place, story, name, go, open"
+  "kind": "which sort of thing was opened from the index: country, place, story, name, go, open",
+  "crossing": "a Trans Afrique route id from transafrique.json"
  },
  "events": {
   "journey_started": [
@@ -135,6 +136,9 @@
   ],
   "explore_opened": [
    "kind"
+  ],
+  "crossing_opened": [
+   "crossing"
   ]
  }
 }
