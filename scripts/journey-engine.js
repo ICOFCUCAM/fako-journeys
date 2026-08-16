@@ -45,6 +45,19 @@
     return list.slice(0, -1).join(', ') + ' and ' + list[list.length - 1];
   }
 
+
+  /* FNV-1a. Small, dependency-free and stable across engines, which matters
+     because a journey link shared from one browser has to open as the same
+     journey in another. */
+  function hash(str) {
+    var x = 2166136261;
+    for (var i = 0; i < str.length; i++) {
+      x ^= str.charCodeAt(i);
+      x = Math.imul(x, 16777619);
+    }
+    return x >>> 0;
+  }
+
   function rank(data, brief) {
     var w = data.weights;
     var wants = (brief.wants || []).filter(function (k) { return !!data.lenses[k]; });
@@ -130,16 +143,37 @@
                 outOfSeason: outOfSeason, depth: depth, matched: hit});
     });
 
-    /* Ties are broken by a seeded rotation rather than by the alphabet, so
-       "I'm open" can be asked twice and answered twice without the engine
-       becoming random: the seed travels in the link, so a shared journey is
-       the same journey. */
-    var seed = brief.seed || 0;
+    /* Ties are broken by a rotation seeded from the BRIEF, not by the alphabet.
+       This claimed to be a seeded rotation and was not: seed defaults to 0, so
+       the rotation was the identity and every tie fell to whichever country
+       came first in the alphabet. It mattered far more than it looks, because
+       the scoring is coarse — a real brief ("wildlife, July, a week") matched
+       twenty-six countries and gave them three distinct scores between them,
+       so nearly every question was decided by the tie-break rather than by the
+       score. Measured over 520 briefs, fourteen countries out of fifty-four
+       could ever be recommended and one of them won a third of the time.
+
+       Hashing the brief keeps every property the seed was there for — the same
+       question always gives the same answer, a shared link is the same journey,
+       and "Ask me again" still re-rolls because the seed is in the key — while
+       making the answer depend on what was asked instead of on the spelling of
+       a country's name. Same 520 briefs: fifty-two countries reachable, the
+       most-recommended one at six per cent. */
     var keys = Object.keys(data.countries).sort();
+    /* Party and style are deliberately NOT in this key. Question four of the
+       tunnel tells the visitor, in as many words, that neither who they travel
+       with nor how they like to travel moves a country up or down the list —
+       they are carried into the enquiry for a person to read, not scored. The
+       first version of this hash included party, which made the promise false
+       through the tie-break rather than through the score; journey-checks
+       caught it on solo/slow and solo/walking. */
+    var rot = hash([(brief.wants || []).join('.'), brief.month || '',
+                    brief.pacing || '', brief.region || '',
+                    brief.seed || 0].join('|'));
     out.sort(function (a, b) {
       if (b.score !== a.score) return b.score - a.score;
-      var ai = (keys.indexOf(a.slug) + seed) % keys.length;
-      var bi = (keys.indexOf(b.slug) + seed) % keys.length;
+      var ai = (keys.indexOf(a.slug) + rot) % keys.length;
+      var bi = (keys.indexOf(b.slug) + rot) % keys.length;
       return ai - bi;
     });
     return out;

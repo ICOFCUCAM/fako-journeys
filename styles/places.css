@@ -170,6 +170,16 @@
   .pl-routes{display:none}
   .pl-mark b{font-size:17px}
   .pl-mast .af-btn{padding:11px 12px;font-size:9.5px;white-space:nowrap}
+}
+
+/* The masthead call went from "Plan a journey" to "Build a journey" when every
+   journey CTA was pointed at the tunnel, and one extra character pushed the
+   header two pixels past a 320px screen. The button is nowrap by design — a
+   two-line call in a masthead looks broken — so the room comes out of the
+   padding and the tracking instead. */
+@media(max-width:380px){
+  .pl-mast{gap:8px}
+  .pl-mast .af-btn{padding:11px 8px;letter-spacing:.08em}
   .pl{padding:var(--sp-4) 18px var(--sp-6)}
   .pl-foot-in{padding:0 18px}
   .pl-h1{font-size:clamp(30px,9vw,44px)}
