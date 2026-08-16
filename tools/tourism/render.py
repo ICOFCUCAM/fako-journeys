@@ -510,6 +510,16 @@ def render_country(country, taxonomy, shell):
             if entry:
                 parts.append(render_hero(country, entry, cat, taxonomy))
             continue
+        # The closing call on every /tourism/<country> page. It read "Plan a
+        # circuit" and pointed at /contact, and both belonged to Kamerun:
+        # circuits are what the Cameroon operator sells and /contact is its
+        # desk in Douala. These pages are Afrinkong's, one for each of the
+        # fifty-four, so /tourism/kenya offered a Cameroonian circuit from a
+        # Kenyan page.
+        #
+        # Written here rather than beside the markup: the first draft put this
+        # note in the template and it shipped into all fifty-four pages, which
+        # is the second time in one sitting.
         if key == "why":
             cat, entry = taxonomy.by_id["why-visit"], country.entry("why-visit")
             if entry:
@@ -519,7 +529,7 @@ def render_country(country, taxonomy, shell):
   <div class="fj-frame">
     <h2>%s</h2>
     <p>%s</p>
-    <a class="btn" href="/contact">Plan a circuit</a>
+    <a class="btn" href="/journey">Build a journey</a>
   </div>
 </section>""" % (esc(entry.caption), esc(entry.description)))
             continue

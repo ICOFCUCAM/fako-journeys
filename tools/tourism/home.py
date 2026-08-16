@@ -528,6 +528,26 @@ def write_all(countries, taxonomy, skip=("cameroon", "uganda", "namibia"), out_d
     return written
 
 
+# THE COUNTRY FOOTER, AND TWO THINGS THAT WERE IN IT
+#
+# The bar read "0 of 27 slots illustrated - Figures and contact details are
+# illustrative until verified". The first half is a build metric — how far our
+# own photograph pipeline has got — printed to a traveller, and on a country
+# whose photographs have not resolved yet it read as "this place has nothing".
+# The second half stopped being true the moment the company acquired a name, a
+# registration and an address. The bar carries the colophon now, the same one
+# the homepage ends on; the fifty-one country pages had no company line at all
+# until this.
+#
+# The Elsewhere column offered "Afrinkong / Cameroon / Every destination /
+# Enquire". Cameroon was hardcoded, so /morocco proposed Cameroon as its one
+# neighbour for no reason a reader of that page could see, and Enquire went to
+# /contact, which is Kamerun's desk.
+#
+# Explanations like this belong here and not in the template. The first draft
+# put them in the HTML and they shipped into all fifty-one pages.
+
+
 TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -665,13 +685,15 @@ TEMPLATE = """<!DOCTYPE html>
       <div class="foot-col">
         <b>Elsewhere</b>
         <a href="/">Afrinkong</a>
-        <a href="/cameroon">Cameroon</a>
-        <a href="/tourism/">Every destination</a>
-        <a href="/contact">Enquire</a>
+        <a href="/atlas">The atlas of Africa</a>
+        <a href="/places">Every place</a>
+        <a href="/enquire">Begin a journey</a>
       </div>
     </div>
     <div class="foot-bar">
-      <a href="/">Part of Afrinkong</a> &middot; %(name)s &middot; %(resolved)d of %(count)d slots illustrated &middot; Figures and contact details are illustrative until verified
+      <a href="/">Part of Afrinkong</a> &middot; %(name)s
+      <span class="foot-co"><!-- gen:company -->
+      <!-- /gen:company --></span>
     </div>
   </div>
 </footer>

@@ -1181,12 +1181,18 @@ def block_plan(countries):
          % (_spell(len(countries)).lower(),
             _spell(len(read_json(CATEGORY_FILE, {}).get("categories", []))).lower()),
          'Put two side by side'),
-        ('/contact', 'Ask',
-         'Enquiries reach %s in %s. For %s they are the operator; for the other '
-         '%s they will tell you who is.'
-         % (esc(host.operator.name), esc(host.operator.base), esc(host.name),
-            _spell(rest).lower()),
-         'Write to them'),
+        # Was /contact — Kamerun's desk — with "Enquiries reach Kamerun in Buea
+        # and Douala. For Cameroon they are the operator; for the other
+        # fifty-one they will tell you who is." Wrong destination and the old
+        # defensive framing in one step: the last rung of how-it-works handed
+        # the whole continent to one country's office and then explained that
+        # for the rest we would find somebody.
+        ('/enquire', 'Ask',
+         'Send us the journey and we come back with what can be arranged on '
+         'your dates, in writing, in US dollars. In %s the company on the '
+         'ground is ours as well.'
+         % _and_list([c.name for c in countries if c.operator]),
+         'Begin your journey'),
     ]
     out = []
     for i, (url, title, text, go) in enumerate(steps, 1):
