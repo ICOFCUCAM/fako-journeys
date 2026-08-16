@@ -325,5 +325,95 @@
   "width": 1600,
   "height": 1067,
   "alt": "A convoy of expedition vehicles on a tarmac road at dusk, seen from inside one of them, with a family walking along the verge under acacia trees"
+ },
+ "$pages": "Trans Afrique is a series inside Afrinkong, not a single landing page, and this is the copy for each page of it. One page was trying to do the work of nine: desire, philosophy, trust, choice, geography, four itineraries, price and invitation, stacked, so the reader met the medical protocol before they had decided they wanted a crossing at all. Split, each page answers one question and hands the reader the next one. Nothing was cut — every block that was on the long page is on one of these, at more length than it had.",
+ "series": [
+  {
+   "id": "why",
+   "nav": "Why",
+   "title": "Why Trans Afrique",
+   "eyebrow": "The idea",
+   "line": "You don’t visit Africa. You move through it.",
+   "sub": "What a crossing is, why it has to be driven, and why nobody assembles one from home.",
+   "image": "/images/uploads/cross-leaning-out-1600w.jpg",
+   "width": 1600,
+   "height": 1065,
+   "alt": "A woman leaning out of a moving vehicle's window smiling at the camera, dry hills and grassland running away behind her"
+  },
+  {
+   "id": "crossings",
+   "nav": "The crossings",
+   "title": "The crossings",
+   "eyebrow": "Where it goes",
+   "line": "Four ways across a continent.",
+   "sub": "Two roads and four crossings, drawn on Africa. East and South are lengths of the Continental Expedition rather than separate routes.",
+   "image": "/images/uploads/cross-vehicles-on-the-pan-1200w.jpg",
+   "width": 1200,
+   "height": 2133,
+   "alt": "Eight expedition vehicles drawn up together on an open pan, people standing between them, an empty plain running to the horizon behind"
+  },
+  {
+   "id": "ways",
+   "nav": "Ways to travel",
+   "title": "Ways to travel",
+   "eyebrow": "How you cross",
+   "line": "Choose how you cross.",
+   "sub": "The same roads, run three ways: yours alone, ours with your dates, or a fixed departure with a fixed number of seats.",
+   "image": "/images/uploads/cross-watching-zebra-1200w.jpg",
+   "width": 1200,
+   "height": 1800,
+   "alt": "A man leaning out of a stopped vehicle watching a herd of zebra through binoculars across dry grassland"
+  },
+  {
+   "id": "support",
+   "nav": "Support",
+   "title": "Expedition support",
+   "eyebrow": "The team",
+   "line": "Some journeys need a guide. Trans Afrique needs a team.",
+   "sub": "Six disciplines, assembled per crossing. The route decides who travels.",
+   "image": "/images/uploads/cross-herd-beside-vehicle-1600w.jpg",
+   "width": 1600,
+   "height": 1067,
+   "alt": "A herd of elephants walking past an open-sided safari vehicle in long grass, the people inside watching from a few metres away"
+  },
+  {
+   "id": "fee",
+   "nav": "The fee",
+   "title": "What the fee includes",
+   "eyebrow": "What you are buying",
+   "line": "In your journey fee.",
+   "sub": "What Afrinkong earns, what Afrinkong arranges, and what stays yours. Set out before anything is held.",
+   "image": null,
+   "width": 0,
+   "height": 0,
+   "alt": ""
+  }
+ ],
+ "$crossing_pages": "Each crossing gets its own page. Four itineraries on one page made them a list to be compared rather than four journeys to be wanted, and the Continental Expedition — the reason the other three exist — was the fourth card in a row of four.",
+ "crossing_art": {
+  "east": {
+   "image": "/images/uploads/cross-elephant-and-convoy-1600w.jpg",
+   "width": 1600,
+   "height": 1067,
+   "alt": "An elephant crossing a dirt track in front of a line of stopped safari vehicles in dry savanna"
+  },
+  "west": {
+   "image": "/images/uploads/cross-camel-caravan-1600w.jpg",
+   "width": 1600,
+   "height": 967,
+   "alt": "Four laden camels roped nose to tail crossing pale sand below a rock ridge, one man riding and one walking behind"
+  },
+  "south": {
+   "image": "/images/uploads/cross-vehicles-on-the-pan-1200w.jpg",
+   "width": 1200,
+   "height": 2133,
+   "alt": "Eight expedition vehicles drawn up together on an open pan, people standing between them, an empty plain running to the horizon behind"
+  },
+  "great": {
+   "image": "/images/uploads/cross-convoy-on-the-road-1600w.jpg",
+   "width": 1600,
+   "height": 1067,
+   "alt": "A convoy of expedition vehicles on a tarmac road at dusk, seen from inside one of them, with a family walking along the verge under acacia trees"
+  }
  }
 }

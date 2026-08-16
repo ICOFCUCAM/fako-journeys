@@ -68,8 +68,14 @@ def _shape(text):
     return (text or "").rstrip(".").upper()
 
 
-def build(d, by_slug=None):
-    """`d` is the loaded tourism/transafrique.json."""
+def build(d, by_slug=None, only=None, act=None, title=None, say=None):
+    """`d` is the loaded tourism/transafrique.json.
+
+    `only` is a route id. The crossings page draws all four; a single crossing's
+    own page draws the same continent with that one lit and the other three left
+    out of the legend — the same plate, not a second map, so a reader who has
+    seen the four recognises where this one sits in them.
+    """
     by_slug = by_slug or {}
     m = load_map()
     view = m.get("view") or [0, 0, 1000.0, 1060.0]
@@ -82,18 +88,37 @@ def build(d, by_slug=None):
             at[c["slug"]] = c["at"]
     rest = [r["d"] for r in m.get("rest", []) if r.get("d")]
 
+    shown = [r for r in d["routes"] if only is None or r["id"] == only]
+    say = ('<p class="tf-map-say">%s</p>' % _esc(say)) if say else (
+          '<p class="tf-map-say">Two roads and four crossings: East is the '
+           'first four countries of the Continental Expedition and South is its '
+           'last five, so the regional journeys are lengths of the same spine '
+           'rather than separate routes.</p>' if only is None else "")
     crosses = {}
-    for r in d["routes"]:
+    for r in shown:
         for s_ in r.get("countries") or []:
             crosses.setdefault(s_, []).append(r["id"])
 
     out = ['<svg class="tf-map-svg" viewBox="%s %s %s %s" role="img" '
            'aria-labelledby="tf-map-t">' % tuple(view)]
-    out.append('<title id="tf-map-t">The four crossings drawn on Africa: East '
-               'through Kenya, Uganda, Rwanda and Tanzania; West down the '
-               'Atlantic from Senegal to Ghana; South from South Africa up to '
-               'Zambia; and the Continental Expedition running the whole '
-               'length from Kenya to South Africa.</title>')
+    # The alt text has to describe THIS plate. Left as the four-crossing
+    # sentence, a single-crossing map would have told a screen reader about
+    # three roads that are not drawn on it — the accessible name being the one
+    # description nobody sighted ever proofreads.
+    if only is None:
+        out.append('<title id="tf-map-t">The four crossings drawn on Africa: East '
+                   'through Kenya, Uganda, Rwanda and Tanzania; West down the '
+                   'Atlantic from Senegal to Ghana; South from South Africa up to '
+                   'Zambia; and the Continental Expedition running the whole '
+                   'length from Kenya to South Africa.</title>')
+    else:
+        one = next((r for r in shown), {})
+        out.append('<title id="tf-map-t">%s drawn on Africa: %s, through %s.</title>'
+                   % (_esc(one.get("name") or only), _esc(_shape(one.get("shape"))),
+                      _esc(", ".join(
+                          (by_slug[s_].name if s_ in by_slug
+                           else s_.replace("-", " ").title())
+                          for s_ in (one.get("countries") or [])))))
 
     # 1. The continent, flat and quiet. Everything Afrinkong does not cross is
     #    still drawn: thirteen countries alone on a dark field is a diagram, and
@@ -118,13 +143,14 @@ def build(d, by_slug=None):
     #    then South, then East on top — the overlap reads as what it is: the
     #    regional crossings are lengths of the trunk, visibly sitting inside it.
     #    Each keeps its own colour so the legend can point at it.
-    order = ["great", "south", "east", "west"]
+    order = [k for k in ("great", "south", "east", "west")
+             if only is None or k == only]
     # Wide enough apart to read as nesting rather than as a colour clash: the
     # spine is the road, South is a length of it, East is a shorter length
     # again. Three strokes within a pixel of each other would look like one
     # badly antialiased line.
     widths = {"great": 10.0, "south": 5.8, "east": 2.8, "west": 5.8}
-    routes = {r["id"]: r for r in d["routes"]}
+    routes = {r["id"]: r for r in shown}
     out.append('<g class="tf-map-lines" aria-hidden="true">')
     for rid in order:
         r = routes.get(rid)
@@ -173,21 +199,21 @@ def build(d, by_slug=None):
                              else _esc(s_.replace("-", " ").title())
                              for s_ in (r.get("countries") or [])),
            len(r.get("countries") or []))
-        for r in d["routes"])
+        for r in shown)
 
     return ('<figure class="tf-map">'
             '<div class="tf-map-art">%s</div>'
             '<figcaption class="tf-map-cap">'
             '<h3 class="tf-map-h">%s</h3>'
-            '<p class="tf-map-say">Two roads and four crossings: East is the '
-            'first four countries of the Continental Expedition and South is '
-            'its last five, so the regional journeys are lengths of the same '
-            'spine rather than separate routes.</p>'
+            '%s'
             '<ul class="tf-map-key">%s</ul>'
-            '<a class="af-btn tf-map-go" href="#records">View all crossings<i>&rarr;</i></a>'
+            '%s'
             '</figcaption></figure>'
-            % ("".join(out), _esc(d.get("map_title") or "Four ways across a continent."),
-               legend))
+            % ("".join(out),
+               _esc(title or d.get("map_title") or "Four ways across a continent."),
+               say, legend,
+               ('<a class="af-btn tf-map-go" href="%s">%s<i>&rarr;</i></a>'
+                % (_esc(act[1]), _esc(act[0]))) if act else ""))
 
 
 def _esc(v):

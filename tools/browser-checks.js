@@ -56,6 +56,12 @@ const SETTLE = 2600;        // ms to watch after the HTML lands
 const PAGES = [
   '/index.html', '/atlas.html', '/journey.html', '/stories.html',
   '/trans-afrique.html', '/wonders.html',
+  // The Trans Afrique series. One page became nine; a gate that only looks at
+  // the overview now covers a tenth of what it used to. One of each shape —
+  // the reading page, the map page, the card page, a crossing — rather than
+  // all nine, because every page here costs the contrast pass a full sweep.
+  '/trans-afrique/why.html', '/trans-afrique/crossings.html',
+  '/trans-afrique/ways.html', '/trans-afrique/east.html',
   '/places/index.html', '/compare.html', '/meet.html', '/404.html',
   '/portrait/kenya.html', '/places/kenya/balloon-over-the-mara.html',
   '/tourism/kenya.html', '/tourism/index.html', '/kenya.html',
@@ -1187,13 +1193,36 @@ function serve() {
       const page = await browser.newPage({viewport: {width: 1280, height: 900}});
       await open(page, url);
       const bad = await page.evaluate(([small, large]) => {
-        function rgb(text) {
-          let m = String(text).match(/^color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/);
-          if (m) return [+m[1], +m[2], +m[3]];
-          m = String(text).match(/^rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?/);
+        /* Colour with its alpha kept. THE ALPHA IS THE WHOLE POINT AND IT USED
+           TO BE DROPPED ON ONE OF THE TWO FORMS: the color(srgb ...) branch
+           matched and returned before anything looked for a "/ 0.15" after the
+           channels, so every color-mix(..., transparent) background on this
+           site — and there are dozens — was read as fully opaque. A gold wash
+           at fifteen per cent over basalt was measured as solid gold, which
+           reported gold text on it as 1.00:1 while the real ratio is 4.8, and
+           would just as happily have called a genuinely unreadable pair fine.
+           Chromium serialises a color-mix() result as color(srgb ...) and a
+           plain rgba() as rgba(), so the two branches are one value in two
+           spellings and must behave identically. */
+        function rgba(text) {
+          let m = String(text).match(
+            /^color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)(?:\s*\/\s*([\d.]+))?/);
+          if (m) return [+m[1], +m[2], +m[3], m[4] === undefined ? 1 : +m[4]];
+          m = String(text).match(
+            /^rgba?\(([\d.]+),?\s*([\d.]+),?\s*([\d.]+)(?:[,/]\s*([\d.]+))?/);
           if (!m) return null;
-          if (m[4] !== undefined && +m[4] < 0.95) return null;   // translucent: skip
-          return [m[1] / 255, m[2] / 255, m[3] / 255];
+          return [m[1] / 255, m[2] / 255, m[3] / 255,
+                  m[4] === undefined ? 1 : +m[4]];
+        }
+        function rgb(text) {
+          const c = rgba(text);
+          return c && c[3] >= 0.95 ? [c[0], c[1], c[2]] : null;
+        }
+        function over(top, bottom) {          /* source-over, both premultiplied out */
+          const a = top[3];
+          return [top[0] * a + bottom[0] * (1 - a),
+                  top[1] * a + bottom[1] * (1 - a),
+                  top[2] * a + bottom[2] * (1 - a)];
         }
         function lum(c) {
           const f = v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
@@ -1208,11 +1237,25 @@ function serve() {
            an element with no background of its own inherits nothing, it just
            shows whatever is behind it. */
         function ground(el) {
+          /* Translucent layers are COMPOSITED, not skipped. Skipping them
+             measured gold text against the basalt two levels up and missed
+             that a fifteen-per-cent gold wash sits between; compositing gives
+             the pixel the reader actually sees. Collected nearest-first, then
+             painted furthest-first onto the opaque base. */
+          const stack = [];
           for (let n = el; n; n = n.parentElement) {
-            const c = rgb(getComputedStyle(n).backgroundColor);
-            if (c) return c;
+            const c = rgba(getComputedStyle(n).backgroundColor);
+            if (!c || c[3] === 0) continue;
+            if (c[3] >= 0.95) {
+              let out = [c[0], c[1], c[2]];
+              for (let i = stack.length - 1; i >= 0; i--) out = over(stack[i], out);
+              return out;
+            }
+            stack.push(c);
           }
-          return [1, 1, 1];
+          let out = [1, 1, 1];
+          for (let i = stack.length - 1; i >= 0; i--) out = over(stack[i], out);
+          return out;
         }
         const out = [];
         document.querySelectorAll('body *').forEach(el => {

@@ -476,7 +476,13 @@
 .tf-med{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.55fr);
   gap:0;margin-top:var(--sp-5);border-left:0;padding:0;max-width:none;
   border:1px solid var(--fj-rule-dark)}
-.tf-med-pic{overflow:hidden;background:var(--c-primary);min-height:100%}
+/* CAPPED, because nothing else here sets the row's height. The frame is a tall
+   portrait and the note beside it is four short paragraphs, so on its own page
+   the picture drove a row twice the height of the words next to it and the
+   strip stopped reading as a strip. On the old long page the surrounding copy
+   happened to be tall enough to hide that. */
+.tf-med-pic{overflow:hidden;background:var(--c-primary);min-height:100%;
+  max-height:min(62svh,560px)}
 /* The vehicles sit about two thirds down a tall portrait frame, so a centred
    cover crop showed nothing but cloud. Measured off the picture, not guessed. */
 .tf-med-pic img{width:100%;height:100%;object-fit:cover;display:block;
@@ -532,3 +538,159 @@
 .tf-money-list li::before{content:"\002B"}
 .tf-money-col:nth-child(2) .tf-money-list li::before{content:"\25CB";font-size:9px}
 .tf-money-col.is-not .tf-money-list li::before{content:"\2013"}
+
+/* ===========================================================================
+   THE SERIES — nine pages where there was one.
+   ---------------------------------------------------------------------------
+   One page was answering nine questions in one scroll, so a reader met the
+   medical protocol before deciding they wanted a crossing. Length was never
+   the fault; every question sharing a page with every other question was.
+   What follows is the chrome that makes nine pages read as one thing: a bar
+   that is always there, an opening that is a still photograph rather than a
+   second fixed band, and a way on at the foot of every page.
+   =========================================================================== */
+
+/* The bar. Sticky under the masthead — a series a reader can leave at any
+   point but never fall out of. */
+.tf-series{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;
+  align-items:baseline;gap:0 26px;
+  background:color-mix(in srgb,var(--fj-basalt) 94%,var(--c-bg));
+  border-bottom:1px solid color-mix(in srgb,var(--c-bg) 14%,transparent);
+  padding:12px max(20px,calc((100vw - var(--frame)) / 2 + 44px))}
+.tf-series-mark{font-family:var(--fj-display);font-weight:700;font-size:13px;
+  text-transform:uppercase;letter-spacing:.02em;color:var(--c-bg);
+  white-space:nowrap;margin-right:auto}
+/* The current page is marked by the RULE, not by tinting the ink. Set in
+   accent-lit the label measured 3.94:1 on this ground, under the 4.5 a
+   nine-pixel label needs — and dimming the one item the reader is on is
+   backwards anyway. Ivory ink, accent underline. */
+.tf-series-mark.is-on{color:var(--c-bg);
+  border-bottom:2px solid var(--c-accent);padding-bottom:4px}
+.tf-series-list{list-style:none;display:flex;flex-wrap:wrap;gap:4px 22px;
+  margin:0;padding:0}
+.tf-series-list a{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);white-space:nowrap;
+  padding:6px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.tf-series-list a:hover{color:var(--c-bg)}
+.tf-series-list a[aria-current]{color:var(--c-bg);
+  border-bottom-color:var(--c-accent)}
+@media(max-width:760px){
+  .tf-series{gap:6px 16px;padding-left:20px;padding-right:20px}
+  .tf-series-mark{margin-right:0;width:100%}
+  .tf-series-list{gap:2px 16px}
+}
+
+/* A child page's opening. DELIBERATELY NOT THE BAND: the fixed-window effect
+   belongs to the door and earns its cost once. Repeated on eight more pages it
+   stops being an event and starts being a habit. Still photograph, hard scrim,
+   type on top. */
+.tf-top{position:relative;display:flex;align-items:flex-end;min-height:52svh;
+  overflow:hidden;background:var(--fj-basalt)}
+.tf-top.no-pic{min-height:auto;padding-top:var(--sp-6)}
+.tf-top-pic{position:absolute;inset:0}
+.tf-top-pic img{width:100%;height:100%;object-fit:cover;display:block}
+/* The scrim is a sibling span rather than a filter on the picture: filter on
+   an ancestor of a fixed element kills the band elsewhere on this page shape,
+   and keeping one rule for both means nobody has to remember which is which. */
+/* Heavier than it looks like it needs to be, on purpose. These photographs
+   are chosen for the subject and not for a dark corner to set type in, and
+   three of the five have open sky exactly where the eyebrow lands. The scrim
+   has to hold ivory over the brightest frame in the set, not the average one —
+   and this is the one contrast the automatic pass cannot see, because it walks
+   up to the section's own background and never looks at the picture. */
+.tf-top-tint{position:absolute;inset:0;background:linear-gradient(to top,
+  color-mix(in srgb,var(--fj-basalt) 96%,transparent) 0%,
+  color-mix(in srgb,var(--fj-basalt) 84%,transparent) 40%,
+  color-mix(in srgb,var(--fj-basalt) 58%,transparent) 72%,
+  color-mix(in srgb,var(--fj-basalt) 34%,transparent) 100%)}
+.tf-top-in{position:relative;z-index:2;width:100%;max-width:var(--frame);
+  margin:0 auto;padding:var(--sp-6) 44px var(--sp-5)}
+.tf-top-eyebrow{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--c-accent-lit);margin:0}
+.tf-top-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(34px,5.4vw,76px);line-height:.98;letter-spacing:-.022em;
+  color:var(--c-bg);margin:14px 0 0;max-width:16ch}
+.tf-top-sub{margin-top:18px;font-size:clamp(16px,1.5vw,20px);line-height:1.5;
+  color:var(--fj-onbasalt);max-width:46ch}
+@media(max-width:760px){.tf-top-in{padding-left:20px;padding-right:20px}}
+
+/* The overview's own lead: the chain, straight under the band, because the
+   door promises a crossing and this is the first thing that makes it real. */
+.tf-lead{padding-top:var(--sp-5)}
+.tf-lead-sub{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(22px,2.6vw,38px);line-height:1.04;letter-spacing:-.015em;
+  color:var(--c-bg);margin:0;max-width:22ch}
+.tf-lead-chain{margin-top:20px;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);
+  line-height:2.1}
+.tf-lead-chain a{color:inherit;border-bottom:1px solid transparent}
+.tf-lead-chain a:hover{border-color:var(--c-gold)}
+.tf-lead-go{margin-top:26px}
+
+/* Reading pages — why, and a crossing's own account. One measure, no columns:
+   these are the pages somebody actually reads rather than scans. */
+.tf-read{max-width:60ch}
+.tf-say{font-size:clamp(16px,1.5vw,19px);line-height:1.62;
+  color:var(--fj-onbasalt);margin-top:20px}
+.tf-read .tf-h2{color:var(--c-accent-lit)}
+
+.tf-crossing-strands{font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-gold);margin:0}
+.tf-crossing-say{margin-top:20px;font-size:clamp(17px,1.7vw,23px);line-height:1.5;
+  color:var(--c-bg)}
+.tf-crossing-chain{margin-top:24px;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--fj-onbasalt-dim);
+  line-height:2.1}
+.tf-crossing-chain a{color:var(--c-gold);border-bottom:1px solid transparent}
+.tf-crossing-chain a:hover{border-color:var(--c-gold)}
+.tf-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:0 26px;margin-top:30px;border-top:var(--fj-rule-dark);padding-top:18px}
+.tf-facts dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.tf-facts dd{margin:7px 0 18px;font-family:var(--fj-display);font-size:19px;
+  color:var(--c-bg)}
+
+/* The way on. A page in a series that ends without one has handed the reader
+   back to the browser's Back button, which is the failure mode of every site
+   that splits a long page and stops there. */
+.tf-next{margin-top:var(--sp-6);padding-top:var(--sp-4);
+  border-top:var(--fj-rule-dark);max-width:56ch}
+.tf-next-say{font-size:17px;line-height:1.55;color:var(--fj-onbasalt-dim);
+  margin:0 0 20px}
+
+/* The table of contents, and the three questions a crossing raises. Same
+   object twice because they do the same job: name the page, say what is on it,
+   and go there. */
+.tf-index,.tf-onward{margin-top:var(--sp-6);padding-top:var(--sp-4);
+  border-top:var(--fj-rule-dark)}
+.tf-index-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--c-gold);margin:0}
+.tf-index-list{list-style:none;margin:20px 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 34px}
+.tf-index-list a{display:grid;grid-template-columns:minmax(0,1fr) auto;
+  align-items:baseline;gap:10px;padding:16px 0;
+  border-bottom:1px solid color-mix(in srgb,var(--c-bg) 13%,transparent)}
+.tf-index-list b{grid-column:1;font-family:var(--fj-display);font-weight:700;
+  text-transform:uppercase;font-size:19px;line-height:1.1;color:var(--c-bg)}
+.tf-index-list span{grid-column:1;font-size:14px;line-height:1.5;
+  color:var(--fj-onbasalt-dim);margin-top:6px}
+.tf-index-list i{grid-column:2;grid-row:1;font-style:normal;
+  color:var(--c-accent-lit);transition:transform .2s}
+.tf-index-list a:hover i{transform:translateX(4px)}
+
+/* The route card is a way in now, not the whole record. */
+.tf-route-name a{color:inherit}
+.tf-route-name a:hover{color:var(--c-accent-lit)}
+.tf-route-go{display:inline-flex;align-items:baseline;gap:8px;margin-top:20px;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-accent-lit);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent-lit) 45%,transparent)}
+.tf-route-go:hover{border-bottom-color:var(--c-accent-lit)}
+
+/* A page's first block sits under its own opening, not under two stacked
+   spacers. .tf-page--after already pads the top of the column and .tf-block
+   adds a margin of its own on top of that, which on the child pages put most
+   of a screen of nothing between the headline and the first sentence. */
+.tf-page--after > .tf-block:first-child,
+.tf-page--after > .tf-next:first-child,
+.tf-page--after > .tf-index:first-child{margin-top:0}

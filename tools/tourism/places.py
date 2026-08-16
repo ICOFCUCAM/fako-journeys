@@ -221,7 +221,21 @@ def sitemap(rows, ctx):
             # each — they are real, and their titles say whose they are, so
             # leaving them out only meant the operator was unfindable while
             # their enquiry page was listed.
-            "/about", "/pricing", "/services"]
+            "/about", "/pricing", "/services",
+            # The wonders, which the homepage sends people to by name.
+            "/wonders"]
+    # Trans Afrique, read off its own data so a tenth page lists itself. The
+    # series was never in here at all — not even /trans-afrique, the most
+    # expensive thing on the site — and splitting one page into nine turned one
+    # unfindable page into ten.
+    try:
+        from . import transafrique as _tf
+        tf = _tf.load()
+        urls.append("/trans-afrique")
+        urls += ["/trans-afrique/%s" % s["id"] for s in tf.get("series") or []]
+        urls += [_tf.route_url(r) for r in tf.get("routes") or []]
+    except Exception:      # a sitemap is not worth failing the build over
+        pass
     for country, pack, order in rows:
         if country.url.startswith("/"):
             urls.append(country.url)

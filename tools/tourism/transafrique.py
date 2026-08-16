@@ -51,6 +51,15 @@ from .model import ROOT
 
 DATA = os.path.join(ROOT, "tourism", "transafrique.json")
 PAGE = os.path.join(ROOT, "trans-afrique.html")
+SUB = os.path.join(ROOT, "trans-afrique")
+
+# The crossing whose id is "great" answers to /trans-afrique/continental, because
+# "great" is a flag in the data and "continental" is what the journey is called.
+SLUGS = {"great": "continental"}
+
+
+def route_url(r):
+    return "/trans-afrique/%s" % SLUGS.get(r["id"], r["id"])
 
 
 def esc(v):
@@ -94,16 +103,21 @@ def route_card(r, by_slug):
              '<div><dt>Length</dt><dd>%s days</dd></div>'
              '<div><dt>Journey fee</dt><dd>%s</dd></div>'
              '</dl>' % (esc(r["shape"]), esc(r["days"]), band(r)))
+    # The name is the way in. The card used to be the whole record because it
+    # was the only place a crossing existed; each one has its own page now, so
+    # the card's job is to be chosen rather than to be read to the end.
     return (
         '<article class="tf-route%s" data-route="%s">'
         '<div class="tf-route-in">'
-        '<h3 class="tf-route-name">%s</h3>'
+        '<h3 class="tf-route-name"><a href="%s">%s</a></h3>'
         '<p class="tf-route-where">%s</p>'
         '<p class="tf-route-strands">%s</p>'
         '<p class="tf-route-say">%s</p>'
-        '%s</div></article>'
+        '%s<a class="tf-route-go" href="%s">See this crossing<i>&rarr;</i></a>'
+        '</div></article>'
         % (" tf-route--great" if r.get("great") else "", esc(r["id"]),
-           esc(r["name"]), chain(r, by_slug), strands, esc(r["say"]), facts))
+           esc(route_url(r)), esc(r["name"]), chain(r, by_slug), strands,
+           esc(r["say"]), facts, esc(route_url(r))))
 
 
 def level_card(v, n=0):
@@ -262,7 +276,9 @@ def door_index(d):
     rows = []
     for r in d["routes"]:
         short = r.get("short") or r["name"].split("\u2014")[-1].strip()
-        rows.append('<a href="/trans-afrique#crossings"><b>%s</b><i>%d</i></a>'
+        # Each name now opens its own crossing rather than dropping the reader
+        # at an anchor on a page that no longer has that section on it.
+        rows.append('<a href="' + route_url(r) + '"><b>%s</b><i>%d</i></a>'
                     % (esc(short), len(r.get("countries") or [])))
     return ('<p class="wa-door-cross"><span>The crossings</span>%s</p>'
             % "".join(rows))
@@ -475,71 +491,364 @@ def money_lists(d):
                ul("excluded", "Yours", " is-not")))
 
 
-def block_trans(countries):
-    """The homepage section: where it goes, and nothing about how it works.
+# block_trans() lived here: the homepage's Trans Afrique section, deleted when
+# the door absorbed it. It outlived its only caller and went on calling
+# route_card(preview=True) after that argument was removed, so it was a second
+# broken generator sitting in the file next to block_door — found the same way,
+# by running the build rather than by reading it.
 
-    This used to be the whole page repeated inside the homepage — the motto, the
-    six support domains, the medical note, three levels with their bands, four
-    routes with shape and length and fee, and the fine print. A reader who had
-    not yet decided they wanted to cross a continent was being handed doctors,
-    drivers, security, seat counts, park fees and five-figure sums, all in one
-    screen, before wanting any of it.
 
-    The desire is made twice above this: the window band is the door, in the
-    second person, on one morning. This section answers only the question that
-    door leaves open — *where does it go* — in four names and four country
-    chains, and then stops. Every "how does it work" answer moved to
-    /trans-afrique, which the reader reaches by choosing to.
+# ---- the series: nine pages instead of one ---------------------------------
+#
+# ONE PAGE WAS DOING THE WORK OF NINE. Desire, philosophy, trust, price, four
+# itineraries and an invitation, stacked in one scroll, so a reader met the
+# medical protocol two screens after being shown a photograph and three screens
+# before deciding they wanted a crossing at all. Length was never the problem;
+# the problem was that every question was being answered on the same page as
+# every other question, so none of them could be answered properly.
+#
+#   /trans-afrique                the door: want it, see where it goes, come in
+#   /trans-afrique/why            the argument, at the length an argument needs
+#   /trans-afrique/crossings      the map, and four ways across
+#   /trans-afrique/east|west|
+#     south|continental           one journey each, at its own scale
+#   /trans-afrique/ways           private, signature, expedition
+#   /trans-afrique/support        the six disciplines, and the medical note
+#   /trans-afrique/fee            what the fee is, and is not
+#
+# NOTHING WAS CUT. Every block that was on the long page is on one of these,
+# and most of them have more room than they had. The overview is the only page
+# that got shorter, which is the whole point of an overview.
+#
+# The overview keeps the fixed-window opening spread and it is the ONLY page
+# that has one. Nothing between .tf-band and .tf-band-pic may carry transform,
+# filter, backdrop-filter, perspective, will-change or contain — see
+# docs/window-band.md. The child pages open on a still photograph instead: a
+# second fixed band on every page of a series turns a technique into a tic.
+
+
+def series_nav(d, active):
+    """The bar that makes nine pages one thing.
+
+    Without it every child page is a cul-de-sac reachable only by going back,
+    which is how a split turns a long page into a worse long page. It is an
+    ordered list because the series has an order — why, where, how, who, what it
+    costs — and a reader who follows it end to end has been told the whole
+    argument in the order it makes sense in.
     """
-    d = load()
-    by_slug = {c.slug: c for c in countries}
-    out = ['<p class="tf-motto">%s</p>' % esc(d["motto"])]
-    out.append('<div class="tf-routes tf-routes--peek">')
-    out += [route_card(r, by_slug, preview=True) for r in d["routes"]]
-    out.append('</div>')
-    # The one line of commerce the homepage carries, and it is a range across the
-    # whole series rather than four prices to compare. It exists so that nobody
-    # arrives at the page having imagined a different order of magnitude.
-    out.append('<p class="tf-peek-fine">Crossings run from %s, quoted as a whole '
-               'and in writing. Lengths, routes and what the fee covers are on '
-               'the Trans Afrique page.</p>'
-               % money(min(r["low"] for r in d["routes"])))
-    return "\n".join(out)
+    out = ['<nav class="tf-series" aria-label="Trans Afrique">',
+           '<a class="tf-series-mark%s" href="/trans-afrique"%s>Trans Afrique</a>'
+           % (" is-on" if active == "overview" else "",
+              ' aria-current="page"' if active == "overview" else ""),
+           '<ol class="tf-series-list">']
+    for s_ in d["series"]:
+        on = s_["id"] == active
+        out.append('<li><a href="/trans-afrique/%s"%s>%s</a></li>'
+                   % (esc(s_["id"]),
+                      ' aria-current="page"' if on else "", esc(s_["nav"])))
+    out.append('</ol></nav>')
+    return "".join(out)
+
+
+def page_top(s_, eyebrow=None, line=None, sub=None):
+    """A child page's opening: a still photograph, the eyebrow, the line.
+
+    Deliberately not the band. The fixed-window effect is the door's, and it
+    earns its cost once — repeated on eight more pages it stops being an event.
+    """
+    art = ""
+    if s_.get("image"):
+        art = ('<div class="tf-top-pic">'
+               '<img src="%s" width="%d" height="%d" alt="%s" '
+               'fetchpriority="high" decoding="async" data-provider="upload">'
+               '<span class="tf-top-tint" aria-hidden="true"></span></div>'
+               % (esc(s_["image"]), s_["width"], s_["height"], esc(s_["alt"])))
+    return ('<header class="tf-top%s">%s<div class="tf-top-in">'
+            '<p class="tf-top-eyebrow">%s</p>'
+            '<h1 class="tf-top-h">%s</h1>'
+            '<p class="tf-top-sub">%s</p>'
+            '</div></header>'
+            % (" has-pic" if art else " no-pic", art,
+               esc(eyebrow if eyebrow is not None else s_.get("eyebrow")),
+               esc(line if line is not None else s_.get("line")),
+               esc(sub if sub is not None else s_.get("sub"))))
+
+
+def next_step(label, href, say=""):
+    """One way on, at the foot of a page. A page in a series that ends without
+    one has handed the reader back to the browser's Back button."""
+    return ('<div class="tf-next">%s'
+            '<a class="af-btn tf-next-go" href="%s">%s<i>&rarr;</i></a></div>'
+            % ('<p class="tf-next-say">%s</p>' % esc(say) if say else "",
+               esc(href), esc(label)))
+
+
+def by_id(d, key, ident):
+    return next((x for x in d[key] if x["id"] == ident), None)
+
+
+def overview_body(d, by_slug):
+    """The door. Want it, see where it goes, understand what it is in one
+    paragraph, and be handed the argument rather than given it.
+
+    THIS IS THE ONLY PAGE THAT GOT SHORTER, and everything it lost is one click
+    away rather than gone. What stays is what a door is for: the opening spread,
+    the chain of countries, the single strongest idea, the thesis on a
+    photograph, and the way in. What left is everything that answers a question
+    the reader has not asked yet — six support disciplines, three price bands,
+    four itineraries, the fee breakdown.
+    """
+    i = d["idea"]
+    return "\n".join([
+        # The band already carries the sub, the chain and the way to the
+        # crossings — printed ON the photograph, which is the better place for
+        # all three. A .tf-lead section repeating them directly underneath said
+        # the same three things twice within one screen, which is what happens
+        # when a page is split by moving blocks rather than by reading it.
+        hero(d, by_slug),
+        '<div class="tf-page">',
+        # The idea, at door length: the line and one paragraph. The rest of it,
+        # including the frontier logistics, is /why.
+        '<section class="tf-block tf-idea" id="idea">'
+        '<h2 class="tf-h2">%s</h2>'
+        '<div class="tf-idea-in"><p class="tf-idea-line">%s</p>'
+        '<div class="tf-idea-body"><p class="tf-idea-say">%s</p></div></div>'
+        '</section>' % (esc(i["title"]), esc(i["line"]), esc(i["say"][0])),
+        '</div>',
+        philosophy_band(d),
+        '<div class="tf-page tf-page--after">',
+        # NOT the band's own paragraph again. Handing off with the sentence the
+        # reader has just finished reading, forty pixels higher, is the giveaway
+        # of a page that was cut up rather than rewritten.
+        next_step("Why Trans Afrique", "/trans-afrique/why",
+                  "Why it has to be driven, what changes on the way, and why "
+                  "nobody assembles a month like this from home."),
+        series_index(d),
+        '</div>',
+        close_block(d),
+    ])
+
+
+def series_index(d):
+    """Every page of the series, named, on the page that opens it. The nav bar
+    is a way back; this is the table of contents, and it is the reason a reader
+    who wants the fee before the philosophy can have it."""
+    rows = "".join(
+        '<li><a href="/trans-afrique/%s"><b>%s</b><span>%s</span>'
+        '<i aria-hidden="true">&rarr;</i></a></li>'
+        % (esc(s_["id"]), esc(s_["title"]), esc(s_["sub"]))
+        for s_ in d["series"])
+    return ('<section class="tf-index"><h2 class="tf-index-h">In this series</h2>'
+            '<ol class="tf-index-list">%s</ol></section>' % rows)
+
+
+def why_body(d, by_slug):
+    """The full argument, which is what the overview hands off.
+
+    On the long page this was one section between a photograph and the support
+    grid, and it had to be short enough not to delay the machinery. It is the
+    reason for the whole product, so here it is the page.
+    """
+    i = d["idea"]
+    ph = d["philosophy"]
+    says = "".join('<p class="tf-say">%s</p>' % esc(t) for t in i["say"])
+    return "\n".join([
+        page_top(by_id(d, "series", "why")),
+        '<div class="tf-page tf-page--after">',
+        '<section class="tf-block tf-read">'
+        '<h2 class="tf-h2">%s</h2>%s</section>' % (esc(i["line"]), says),
+        '</div>',
+        philosophy_band(d),
+        '<div class="tf-page tf-page--after">',
+        '<section class="tf-block tf-read">'
+        '<h2 class="tf-h2">Nobody assembles that from home</h2>'
+        '<p class="tf-say">%s</p></section>' % esc(i["tail"]),
+        next_step("The crossings", "/trans-afrique/crossings",
+                  "Four ways across, drawn on the continent."),
+        '</div>',
+    ])
+
+
+def crossings_body(d, by_slug):
+    """The map, and the four journeys as cards that go somewhere.
+
+    The cards used to be the whole record — shape, length, fee, chain, strands —
+    printed four times on a page that had already printed a great deal. They are
+    a way in now: enough to choose between, and each one opens its own page.
+    """
+    cards = "".join(route_card(r, by_slug) for r in d["routes"])
+    return "\n".join([
+        page_top(by_id(d, "series", "crossings")),
+        '<div class="tf-page tf-page--after">',
+        # The map's caption must not restate the page's own headline. Left with
+        # its default it set "Four ways across a continent." as an h3 directly
+        # under the h1 saying exactly that, with the same sentence under both.
+        '<section class="tf-block" id="map">%s</section>'
+        % routemap.build(d, by_slug, title="Where they go",
+                         say="East is the first four countries of the "
+                             "Continental Expedition and South is its last "
+                             "five, so the regional journeys are lengths of "
+                             "the same spine rather than separate roads."),
+        '<section class="tf-block" id="records">'
+        '<h2 class="tf-h2">The four crossings</h2>'
+        '<div class="tf-routes">%s</div></section>' % cards,
+        next_step("Ways to travel", "/trans-afrique/ways",
+                  "The same roads, run three ways."),
+        '</div>',
+    ])
+
+
+def crossing_body(d, r, by_slug):
+    """One journey, at its own scale.
+
+    Four itineraries on one page made them a list to be compared rather than
+    four journeys to be wanted, and the Continental Expedition — the reason the
+    other three exist — was the fourth card in a row of four. Here each one gets
+    a photograph, the road drawn on the continent, its countries as a chain, and
+    the three answers a reader needs next, which are how to travel it, who
+    travels with them, and what the fee covers.
+    """
+    art = (d.get("crossing_art") or {}).get(r["id"]) or {}
+    strands = " &middot; ".join(esc(x) for x in (r.get("strands") or []))
+    # A literal middot, not the entity: page_top() escapes what it is handed, so
+    # "&middot;" arrived on the page spelled out as &MIDDOT; in the eyebrow.
+    top = page_top({"image": art.get("image"), "width": art.get("width", 0),
+                    "height": art.get("height", 0), "alt": art.get("alt", "")},
+                   eyebrow="%s · Trans Afrique" % d["stamp"],
+                   line=r["name"].split("—")[-1].strip(),
+                   sub=r["shape"])
+    facts = ('<dl class="tf-facts">'
+             '<div><dt>Shape</dt><dd>%s</dd></div>'
+             '<div><dt>Length</dt><dd>%s days</dd></div>'
+             '<div><dt>Countries</dt><dd>%d</dd></div>'
+             '<div><dt>Journey fee</dt><dd>%s</dd></div>'
+             '</dl>' % (esc(r["shape"]), esc(r["days"]),
+                        len(r.get("countries") or []), band(r)))
+    return "\n".join([
+        top,
+        '<div class="tf-page tf-page--after">',
+        # The prose keeps a reading measure; the facts do NOT. Left inside the
+        # 60ch column, "Nairobi to Arusha, the long way round." broke over three
+        # lines in a 150-pixel cell while two thirds of the page sat empty.
+        '<section class="tf-block"><div class="tf-read">'
+        '<p class="tf-crossing-strands">%s</p>'
+        '<p class="tf-crossing-say">%s</p>'
+        '<p class="tf-crossing-chain">%s</p></div>'
+        '%s</section>' % (strands, esc(r["say"]), chain(r, by_slug), facts),
+        '<section class="tf-block" id="map">%s</section>'
+        % routemap.build(d, by_slug, only=r["id"],
+                         title="%s, on the continent"
+                               % (r.get("short") or r["name"]),
+                         say=r["shape"],
+                         act=("See all four crossings", "/trans-afrique/crossings")),
+        onward(d),
+        '</div>',
+        close_block(d),
+    ])
+
+
+def onward(d):
+    """The three questions a reader has once they want a particular crossing,
+    each pointing at the page that answers it in full. On the long page these
+    were sections above and below; here they are the choice."""
+    rows = [("ways", "How you cross", "Private, Signature or Expedition."),
+            ("support", "Who travels with you", "Six disciplines, per route."),
+            ("fee", "What the fee covers", "And what stays yours.")]
+    return ('<section class="tf-onward"><h2 class="tf-index-h">Next</h2>'
+            '<ol class="tf-index-list">%s</ol></section>'
+            % "".join('<li><a href="/trans-afrique/%s"><b>%s</b><span>%s</span>'
+                      '<i aria-hidden="true">&rarr;</i></a></li>'
+                      % (k, esc(t), esc(sy)) for k, t, sy in rows))
+
+
+def ways_body(d, by_slug):
+    levels = "\n".join(level_card(v, i) for i, v in enumerate(d["levels"], 1))
+    return "\n".join([
+        page_top(by_id(d, "series", "ways")),
+        '<div class="tf-page tf-page--after">',
+        '<section class="tf-block" id="levels">'
+        '<div class="tf-levels">%s</div></section>' % levels,
+        next_step("Expedition support", "/trans-afrique/support",
+                  d["motto"]),
+        '</div>',
+    ])
+
+
+def support_body(d, by_slug):
+    return "\n".join([
+        page_top(by_id(d, "series", "support")),
+        '<div class="tf-page tf-page--after">',
+        # The motto is this page's headline. Printed again as .tf-motto
+        # directly under it, the same fourteen words appeared twice on one
+        # screen — the page having been assembled from the old page's blocks
+        # without noticing that one of them had been promoted.
+        '<section class="tf-block" id="team">'
+        '<p class="tf-sup-lede">%s</p>%s</section>'
+        % (esc(d["support_say"]), support_grid(d)),
+        medical_note(d),
+        next_step("What the fee includes", "/trans-afrique/fee",
+                  "What Afrinkong earns, what it arranges, and what stays yours."),
+        '</div>',
+    ])
+
+
+def fee_body(d, by_slug):
+    return "\n".join([
+        page_top(by_id(d, "series", "fee")),
+        '<div class="tf-page tf-page--after">',
+        '<section class="tf-block" id="fee">%s'
+        '<p class="tf-fine">%s</p></section>' % (money_lists(d), esc(d["fine"])),
+        '</div>',
+        close_block(d),
+    ])
 
 
 def run(countries, log=print):
+    """Write the nine pages of the series."""
     from . import plate
     d = load()
     by_slug = {c.slug: c for c in countries}
-    html = TEMPLATE % {
-        "og": plate.open_graph("Trans Afrique — Afrinkong", d["say"],
-                               "/trans-afrique"),
-        "events": plate.events_block(),
-        "hero": hero(d, by_slug),
-        "idea": idea_block(d),
-        "philosophy": philosophy_band(d),
-        "levels": "\n".join(level_card(v, i)
-                             for i, v in enumerate(d["levels"], 1)),
-        "routes": "\n".join(route_card(r, by_slug)
-                            for r in d["routes"] if not r.get("great")),
-        "great": great_block(d, by_slug),
-        "motto": esc(d["motto"]),
-        "support_title": esc(d["support_title"]),
-        "support_say": esc(d["support_say"]),
-        "support": support_grid(d),
-        "medical": medical_note(d),
-        "money": money_lists(d),
-        "map": routemap.build(d, by_slug),
-        "close": close_block(d),
-        "fine": esc(d["fine"]),
-    }
-    with open(PAGE, "w", encoding="utf-8") as fh:
-        fh.write(html)
-    log("trans-afrique: %s (%.1f KB), %d route(s), %d level(s), %s to %s"
-        % (os.path.relpath(PAGE, ROOT), len(html) / 1024.0,
+    written = []
+
+    def write(path, title, desc, url, body, active, skip="Skip to the page"):
+        html = TEMPLATE % {
+            "title": esc(title),
+            "desc": esc(desc),
+            "og": plate.open_graph(title, desc, url),
+            "events": plate.events_block(),
+            "nav": series_nav(d, active),
+            "skip": esc(skip),
+            "body": body,
+        }
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(html)
+        written.append((os.path.relpath(path, ROOT), len(html)))
+
+    write(PAGE, "Trans Afrique — Afrinkong", d["say"], "/trans-afrique",
+          overview_body(d, by_slug), "overview", "Skip to the expedition")
+
+    bodies = {"why": why_body, "crossings": crossings_body,
+              "ways": ways_body, "support": support_body, "fee": fee_body}
+    for s_ in d["series"]:
+        write(os.path.join(SUB, "%s.html" % s_["id"]),
+              "%s — Trans Afrique" % s_["title"], s_["sub"],
+              "/trans-afrique/%s" % s_["id"],
+              bodies[s_["id"]](d, by_slug), s_["id"])
+
+    for r in d["routes"]:
+        slug = SLUGS.get(r["id"], r["id"])
+        write(os.path.join(SUB, "%s.html" % slug),
+              "%s — Trans Afrique" % r["name"], r["say"], route_url(r),
+              crossing_body(d, r, by_slug), "crossings")
+
+    log("trans-afrique: %d pages, %.1f KB total, %d route(s), %d level(s), %s to %s"
+        % (len(written), sum(n for _, n in written) / 1024.0,
            len(d["routes"]), len(d["levels"]),
            money(min(v["low"] for v in d["levels"])),
            money(max(v["high"] for v in d["levels"]))))
+    for rel, n in written:
+        log("  %-38s %5.1f KB" % (rel, n / 1024.0))
     return PAGE
 
 
@@ -548,15 +857,15 @@ TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Trans Afrique &mdash; Afrinkong</title>
-<meta name="description" content="One continent, several countries, one journey that does not stop at a border. Weeks on the road with a team that stays with you.">
+<title>%(title)s</title>
+<meta name="description" content="%(desc)s">
 %(og)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/journey.css">
 <link rel="stylesheet" href="/styles/transafrique.css">
 </head>
 <body class="tf-body">
-<a class="af-skip" href="#main">Skip to the expedition</a>
+<a class="af-skip" href="#main">%(skip)s</a>
 <header class="jn-mast">
   <a class="jn-mark" href="/"><i>Afrinkong</i><b>Trans Afrique</b></a>
   <nav class="jn-routes" aria-label="Primary">
@@ -567,69 +876,10 @@ TEMPLATE = """<!DOCTYPE html>
   </nav>
   <a class="af-btn af-btn--quiet" href="/enquire">Ask about an expedition<i>&rarr;</i></a>
 </header>
+%(nav)s
 
 <main id="main">
-<!-- THE PAGE IS A JOURNEY AND THE ORDER IS THE ARGUMENT.
-     Desire, idea, trust, choice, route, flagship, practical, invitation.
-       01  the opening spread          — I want to do this
-       02  the idea                    — why a crossing at all
-       03  the team                    — this is professionally run
-       04  when the route demands more — and it is prepared for
-       05  three ways to cross         — which one am I
-       06  the crossings, on the map   — where does it go
-       07  east / west / south         — the records
-       08  the continental expedition  — the flagship, alone
-       09  what the fee is, and is not — what am I actually buying
-       10  ready to cross              — a way in, not a checkout
-     The team used to open the page because it is the strongest material on it,
-     which is exactly why it was wrong: a reader who has not been told what a
-     crossing is cannot judge whether six support domains are impressive or
-     excessive. Trust has to follow the idea, never precede it. -->
-%(hero)s
-
-<div class="tf-page">
-%(idea)s
-</div>
-
-%(philosophy)s
-
-<div class="tf-page tf-page--after">
-  <section class="tf-block" id="team">
-    <h2 class="tf-h2">%(support_title)s</h2>
-    <p class="tf-motto">%(motto)s</p>
-    <p class="tf-sup-lede">%(support_say)s</p>
-%(support)s
-%(medical)s
-  </section>
-
-  <section class="tf-block" id="levels">
-    <h2 class="tf-h2">Three ways to cross</h2>
-    <div class="tf-levels">
-%(levels)s
-    </div>
-  </section>
-
-  <section class="tf-block" id="crossings">
-    <h2 class="tf-h2">The crossings</h2>
-%(map)s
-  </section>
-
-  <section class="tf-block" id="records">
-    <div class="tf-routes">
-%(routes)s
-    </div>
-  </section>
-
-%(great)s
-
-  <section class="tf-block" id="fee">
-    <h2 class="tf-h2">What the fee is, and is not</h2>
-%(money)s
-    <p class="tf-fine">%(fine)s</p>
-  </section>
-</div>
-
-%(close)s
+%(body)s
 
 <div class="tf-page tf-page--foot">
   <footer class="jn-enq-foot">
