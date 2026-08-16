@@ -12,8 +12,15 @@
 
 /* ---- chrome -------------------------------------------------------------- */
 
+/* An ivory plate, so it states its own ink rather than inheriting the page's.
+   .jn-mark b sets no colour, which was harmless while every page carrying this
+   masthead had dark type on light paper — and invisible the moment it appeared
+   on /trans-afrique and /wonders, whose bodies are near-ivory on basalt. The
+   mark measured 1.26:1 against its own background: ivory letters on an ivory
+   bar, present in the DOM and absent from the page. */
 .jn-mast{position:sticky;top:0;z-index:40;height:var(--mast);display:flex;align-items:center;
-  gap:var(--sp-4);padding:0 28px;background:var(--c-bg);border-bottom:2px solid var(--c-primary)}
+  gap:var(--sp-4);padding:0 28px;background:var(--c-bg);color:var(--c-primary);
+  border-bottom:2px solid var(--c-primary)}
 .jn-mark{display:flex;flex-direction:column;line-height:1}
 .jn-mark i{font-family:var(--fj-mono);font-style:normal;font-size:9.5px;letter-spacing:.3em;
   text-transform:uppercase;color:var(--c-muted)}
@@ -390,6 +397,26 @@
   .jn-routes{display:none}
   .jn-mark b{font-size:17px}
   .jn-mast .af-btn{padding:11px 12px;font-size:9.5px;white-space:nowrap}
+}
+/* THE PAGE NAME LEAVES THE MASTHEAD ON A PHONE.
+   It is the one label a reader does not need — they are on the page it names —
+   and it is the only element here whose width is set by editorial copy rather
+   than by design. `The Wonders of Africa` is 221 nowrapped pixels; with the
+   call beside it the bar wanted 372 on a 320 screen and pushed the button 42px
+   off the edge, and `Trans Afrique` did the same by 10. Any page added later
+   with a longer name would have done it again, so the fix is structural rather
+   than a shorter name.
+   Afrinkong takes its place at display size, which is a better mobile masthead
+   than the two-line lockup anyway: one word, and it is the company's. */
+@media(max-width:560px){
+  .jn-mark b{display:none}
+  .jn-mark i{font-family:var(--fj-display);font-size:17px;letter-spacing:.02em;
+    text-transform:uppercase;color:var(--c-primary)}
+  /* Hiding the second line halved the link's height: one 17px line is a 17px
+     tap target, and the mark is the way home from every one of these pages.
+     The height is put back on the link rather than on the type, so the word
+     stays 17px and the thing you press is 32. */
+  .jn-mark{justify-content:center;min-height:32px}
   /* The picker keeps its own scroll on a phone too. Left to run, twenty-six
      places turn the composer into five screens and bury the journey it is
      supposed to be editing. */

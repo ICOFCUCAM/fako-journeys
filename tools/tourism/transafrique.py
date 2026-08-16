@@ -166,6 +166,66 @@ def medical_note(d):
             % (esc(m["title"]), esc(m["say"]), esc(m["but"])))
 
 
+def hero(d, by_slug):
+    """The first screen, and the one that decides whether the click felt like
+    entering something or leaving somewhere.
+
+    The homepage band hands the reader a morning: a loaded vehicle standing at
+    Amboseli before six, the mountain on the horizon, `Kenya -> Tanzania`. What
+    used to be here was type on an empty dark field, which reads as a different
+    website rather than the next frame — the momentum the band spends two
+    screens building was gone in one.
+
+    So: photograph and type side by side, the picture taking most of the width,
+    and the picture is the same journey one beat later — the same loaded vehicle
+    going, on a road that leaves the frame. The country chain continues the
+    band's two names into the whole continental crossing, which is the seam:
+    the door showed a border, the page shows the road through nine of them.
+
+    Deliberately NOT the window band again. That technique is the door's, and
+    using it twice in two clicks turns a thing that felt like cinema into a
+    thing that feels like a template.
+    """
+    h = d["hero"]
+    great = next((r for r in d["routes"] if r.get("great")), d["routes"][0])
+    chain = " ".join(
+        '<span>%s</span>' % esc(by_slug[s].name)
+        for s in great["countries"] if s in by_slug)
+    return (
+        '<section class="tf-hero">'
+        '<div class="tf-hero-say"><div class="tf-hero-in">'
+        '<span class="af-stamp">%s</span>'
+        '<h1 class="tf-h1">%s</h1>'
+        '<p class="tf-hero-sub">%s</p>'
+        '<p class="tf-hero-lede">%s</p>'
+        '<p class="tf-hero-chain">%s</p>'
+        '<a class="af-btn af-btn--solid tf-hero-go" href="#crossings">%s<i>&rarr;</i></a>'
+        '</div></div>'
+        '<figure class="tf-hero-pic">'
+        '<img src="%s" width="%d" height="%d" alt="%s" '
+        'fetchpriority="high" decoding="async" data-provider="upload">'
+        '</figure></section>'
+        % (esc(d["stamp"]), esc(d["line"]), esc(d["sub"]), esc(d["say"]),
+           chain, esc(h["act"]), esc(h["image"]), h["width"], h["height"],
+           esc(h["alt"])))
+
+
+def idea_block(d):
+    """What a crossing is, before anything about how one is run.
+
+    A reader who came through the door has been sold a morning. Putting six
+    support domains and three price bands next asks them to judge a product
+    nobody has described yet, so this describes it — in distances, which is the
+    only argument that actually lands, rather than in adjectives.
+    """
+    i = d["idea"]
+    return ('<section class="tf-block tf-idea" id="idea">'
+            '<h2 class="tf-h2">%s</h2>'
+            '<p class="tf-idea-line">%s</p>%s</section>'
+            % (esc(i["title"]), esc(i["line"]),
+               "".join('<p class="tf-idea-say">%s</p>' % esc(p) for p in i["say"])))
+
+
 def money_lists(d):
     def ul(key, title, cls=""):
         return ('<div class="tf-money-col%s"><h3 class="tf-money-h">%s</h3>'
@@ -226,10 +286,8 @@ def run(countries, log=print):
         "og": plate.open_graph("Trans Afrique — Afrinkong", d["say"],
                                "/trans-afrique"),
         "events": plate.events_block(),
-        "stamp": esc(d["stamp"]),
-        "line": esc(d["line"]),
-        "sub": esc(d["sub"]),
-        "say": esc(d["say"]),
+        "hero": hero(d, by_slug),
+        "idea": idea_block(d),
         "levels": "\n".join(level_card(v) for v in d["levels"]),
         "routes": "\n".join(route_card(r, by_slug) for r in d["routes"]),
         "motto": esc(d["motto"]),
@@ -275,17 +333,22 @@ TEMPLATE = """<!DOCTYPE html>
   <a class="af-btn af-btn--quiet" href="/enquire">Ask about an expedition<i>&rarr;</i></a>
 </header>
 
-<main class="tf-page" id="main">
-  <div class="tf-open">
-    <span class="af-stamp">%(stamp)s</span>
-    <h1 class="tf-h1">%(line)s</h1>
-    <p class="tf-sub">%(sub)s</p>
-    <p class="tf-motto">%(motto)s</p>
-    <p class="tf-lede">%(say)s</p>
-  </div>
+<main id="main">
+<!-- THE ORDER IS THE FILM, AND IT IS NOT THE ORDER THE FACTS ARRIVED IN.
+     Hero, then what a crossing is, then who travels with you, then the three
+     ways to buy it, then where it goes, then the money. Seduce, explain,
+     prove, price. The team used to come first because it is the strongest
+     material on the page, which is exactly why it was wrong: a reader who has
+     not been told what a crossing is cannot tell whether six support domains
+     are impressive or excessive. -->
+%(hero)s
+
+<div class="tf-page">
+%(idea)s
 
   <section class="tf-block" id="team">
     <h2 class="tf-h2">%(support_title)s</h2>
+    <p class="tf-motto">%(motto)s</p>
     <p class="tf-sup-lede">%(support_say)s</p>
 %(support)s
 %(medical)s
@@ -298,7 +361,7 @@ TEMPLATE = """<!DOCTYPE html>
     </div>
   </section>
 
-  <section class="tf-block">
+  <section class="tf-block" id="crossings">
     <h2 class="tf-h2">The crossings</h2>
     <div class="tf-routes">
 %(routes)s
@@ -320,6 +383,7 @@ TEMPLATE = """<!DOCTYPE html>
     <!-- gen:company -->
     <!-- /gen:company -->
   </footer>
+</div>
 </main>
 %(events)s
 </body>

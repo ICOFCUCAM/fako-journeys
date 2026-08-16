@@ -311,9 +311,21 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
    dark panel was unreadable. Re-pointing it here means the hundred-odd rules
    already written against --c-muted keep working and get the right grey for the
    surface they landed on. Any new dark panel joins this list. */
+/* .tf-hero, .tf-page and .wo-page joined late and the delay cost exactly what
+   the note above predicts: /trans-afrique and /wonders are basalt from edge to
+   edge and were still using the paper accent, so every .af-stamp on them
+   measured 2.31:1 against a 4.5 bar. It went unseen because neither page was
+   in tools/browser-checks.js either — they are in it now.
+
+   The content wrappers rather than the <body>. Both pages carry a sticky
+   masthead that is genuinely ivory, and remapping at the body would have
+   handed the light plate the dark-ground tokens: .jn-routes is written against
+   --c-muted, which would have become muted gold on cream at 2.37:1. Trading
+   one contrast failure for another is not a fix. */
 .af-zone--basalt,.af-dark,.st--now,.st-nowcard,.sx-nowsec,.sx-now,
 .wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
-.tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark,.wa-open,.wa-motion{
+.tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark,.wa-open,.wa-motion,
+.tf-hero,.tf-page,.wo-page{
   --c-accent:var(--c-accent-lit);
   /* Muted gold is where the restraint in this palette lives. It is unusable on
      paper — 2.37:1 — and excellent on forest at 6.02:1, so it appears only

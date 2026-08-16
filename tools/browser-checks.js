@@ -45,9 +45,17 @@ const SETTLE = 2600;        // ms to watch after the HTML lands
 
 /* The pages worth watching: one of each kind, not all 650. A place page and a
    portrait stand for their 571 and 21 siblings, which are built by the same
-   generator from the same template and cannot differ in layout. */
+   generator from the same template and cannot differ in layout.
+
+   /trans-afrique and /wonders were missing from this list for as long as they
+   have existed, which meant the most expensive thing the company sells and the
+   editorial collection next to it were the only two pages on the site whose
+   contrast, overflow and no-script behaviour nobody was measuring. Neither is
+   a sibling of anything — they have their own stylesheet and their own layout,
+   so nothing else in this list stands for them. */
 const PAGES = [
   '/index.html', '/atlas.html', '/journey.html', '/stories.html',
+  '/trans-afrique.html', '/wonders.html',
   '/places/index.html', '/compare.html', '/meet.html', '/404.html',
   '/portrait/kenya.html', '/places/kenya/balloon-over-the-mara.html',
   '/tourism/kenya.html', '/tourism/index.html', '/kenya.html',

@@ -9,15 +9,97 @@
 .tf-body{background:var(--fj-basalt);color:var(--fj-onbasalt)}
 .tf-page{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
 
+/* ---- the hero ------------------------------------------------------------- */
+/* THE FIRST SCREEN AFTER THE DOOR, AND ITS JOB IS CONTINUITY.
+   ---------------------------------------------------------------------------
+   The homepage band spends two screens building a morning — a loaded vehicle
+   at Amboseli before six, the mountain on the horizon, Kenya to Tanzania — and
+   this page used to answer it with type on an empty dark field. That reads as
+   a different website rather than as the next frame, and the momentum was gone
+   in one click.
+
+   So the picture takes most of the width and it is the same journey one beat
+   later: the same loaded vehicle going, dust behind it, on a road that leaves
+   the frame. Roughly a third type to two thirds photograph.
+
+   AND IT IS DELIBERATELY NOT THE WINDOW BAND AGAIN. The fixed-picture
+   technique belongs to the door. Used twice inside two clicks it stops being
+   cinema and starts being a template, and the second use is always the weaker
+   one because the reader already knows the trick.
+
+   Full-bleed, so the photograph reaches both edges of the screen the way the
+   band does. The type column is padded to land on the same left margin as
+   every paragraph below it — measured off --frame rather than guessed, so the
+   headline and the body text share one edge at every width. */
+.tf-hero{display:grid;grid-template-columns:minmax(0,37fr) minmax(0,63fr);
+  min-height:min(76svh,720px);background:var(--fj-basalt)}
+.tf-hero-say{display:flex;align-items:center;
+  padding:var(--sp-5) 40px var(--sp-5)
+          max(44px, calc((100vw - var(--frame)) / 2 + 44px))}
+.tf-hero-in{max-width:46ch;margin-left:auto}
+.tf-hero-pic{margin:0;overflow:hidden;background:var(--c-primary)}
+.tf-hero-pic img{width:100%;height:100%;object-fit:cover;display:block}
+.tf-hero-sub{margin:22px 0 0;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(17px,1.8vw,24px);line-height:1.2;color:var(--c-accent-lit)}
+.tf-hero-lede{margin:16px 0 0;font-size:clamp(15.5px,1.4vw,18px);line-height:1.6;
+  color:var(--fj-onbasalt);max-width:46ch}
+/* The chain the door started. The band shows two countries because two is what
+   is in that photograph; this shows the nine the continental crossing actually
+   takes, which is the seam — a border, then the road through nine of them.
+   Names rather than links: the hero is a statement, and nine outbound links in
+   a first screen is a menu. The routes below link every one of them. */
+.tf-hero-chain{margin:22px 0 0;display:flex;flex-wrap:wrap;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.155em;
+  text-transform:uppercase;color:var(--c-gold);line-height:1.9}
+.tf-hero-chain span+span::before{content:"\2192";margin:0 .5em;color:var(--fj-onbasalt-dim)}
+/* THE SOLID BUTTON, INVERTED FOR A DARK GROUND.
+   af-btn--solid fills with deep forest and inks in ivory, which is a call to
+   action on paper and a dark rectangle on basalt — this hero's ground is deep
+   forest mixed 95% with black, so the button was very nearly the wall.
+
+   Terracotta was the first fix and it measured 3.15:1: this block is one of the
+   dark grounds that repoints --c-accent to its lit variant, so an ivory label
+   landed on #CB6F4B and needed 4.5. Deep-forest ink on that same terracotta is
+   4.58 — over the bar by eight hundredths, which is not a margin, it is a
+   coincidence waiting for somebody to nudge a colour.
+
+   So the fill inverts instead of shifting hue: ivory ground, deep forest ink,
+   14.3:1, and it is the brightest object on a very dark page — which is what
+   the one thing to do next should be. */
+.tf-hero-go{margin-top:28px;background:var(--c-bg);border-color:var(--c-bg);
+  color:var(--c-primary)}
+.tf-hero-go:hover{background:var(--c-accent-lit);border-color:var(--c-accent-lit);
+  color:var(--c-primary)}
+
+@media(max-width:900px){
+  /* Stacked, and the photograph goes first: the whole point of this screen is
+     that the reader has not left the journey, and a wall of type above the
+     picture says they have. */
+  .tf-hero{grid-template-columns:1fr;min-height:0}
+  .tf-hero-pic{order:-1;aspect-ratio:16/10}
+  .tf-hero-say{padding:var(--sp-5) 28px}
+  .tf-hero-in{max-width:none;margin-left:0}
+}
+
 /* Widened when the headline grew. 'Don't just cross Africa. Experience it
    with a team.' at 13ch set it in eight lines down a narrow column, which
-   reads as a poem rather than a statement. */
-.tf-open{max-width:none;margin-bottom:var(--sp-7)}
+   reads as a poem rather than a statement. In the hero column it is narrower
+   again, so the size is cut with it — 88px against a 37% column would set the
+   same eight lines the 13ch measure did. */
 .tf-h1{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(38px,6vw,88px);line-height:.94;letter-spacing:-.025em;
-  color:var(--c-bg);margin:14px 0 0;max-width:19ch}
+  font-size:clamp(34px,3.9vw,58px);line-height:.96;letter-spacing:-.025em;
+  color:var(--c-bg);margin:14px 0 0}
 .tf-lede{margin-top:24px;font-size:clamp(17px,1.7vw,22px);line-height:1.5;
   color:var(--fj-onbasalt);max-width:56ch}
+
+/* ---- the idea ------------------------------------------------------------- */
+/* The argument in distances rather than adjectives, which is the only version
+   that survives a reader who has never been. */
+.tf-idea-line{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(26px,3.2vw,46px);line-height:1.02;letter-spacing:-.02em;
+  color:var(--c-bg);margin:0;max-width:18ch}
+.tf-idea-say{margin:22px 0 0;font-size:clamp(16px,1.5vw,19px);line-height:1.62;
+  color:var(--fj-onbasalt);max-width:62ch}
 
 .tf-block{margin-top:var(--sp-7)}
 .tf-h2{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
@@ -46,8 +128,6 @@
   letter-spacing:.14em;text-transform:uppercase;color:var(--c-gold);line-height:2}
 .tf-route-where a{color:inherit;border-bottom:1px solid transparent;transition:border-color .2s}
 .tf-route-where a:hover{border-color:var(--c-gold)}
-.tf-open{}
-.tf-route-where .tf-open{color:var(--fj-onbasalt-dim)}
 .tf-route-say{margin-top:14px;font-size:15.5px;line-height:1.5;
   color:var(--fj-onbasalt-dim);max-width:34ch;flex:1 1 auto}
 .tf-route-facts{margin:20px 0 0;padding-top:14px;border-top:var(--fj-rule-dark)}
