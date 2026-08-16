@@ -9,12 +9,15 @@
 .tf-body{background:var(--fj-basalt);color:var(--fj-onbasalt)}
 .tf-page{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
 
-.tf-open{max-width:34ch;margin-bottom:var(--sp-7)}
+/* Widened when the headline grew. 'Don't just cross Africa. Experience it
+   with a team.' at 13ch set it in eight lines down a narrow column, which
+   reads as a poem rather than a statement. */
+.tf-open{max-width:none;margin-bottom:var(--sp-7)}
 .tf-h1{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
   font-size:clamp(38px,6vw,88px);line-height:.94;letter-spacing:-.025em;
-  color:var(--c-bg);margin:14px 0 0;max-width:13ch}
+  color:var(--c-bg);margin:14px 0 0;max-width:19ch}
 .tf-lede{margin-top:24px;font-size:clamp(17px,1.7vw,22px);line-height:1.5;
-  color:var(--fj-onbasalt);max-width:52ch}
+  color:var(--fj-onbasalt);max-width:56ch}
 
 .tf-block{margin-top:var(--sp-7)}
 .tf-h2{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
@@ -127,3 +130,40 @@
   .tf-levels{grid-template-columns:1fr}
   .tf-money{grid-template-columns:1fr}
 }
+
+/* SOME JOURNEYS NEED A GUIDE. TRANS AFRIQUE NEEDS A TEAM.
+   The line the section turns on, so it is set at statement scale rather than
+   as copy. */
+.tf-motto{font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(20px,2.3vw,32px);line-height:1.14;color:var(--c-accent-lit);
+  max-width:30ch;margin:var(--sp-4) 0 0}
+
+/* Expedition support: six domains, and the roles inside each. Naming what is
+   covered rather than who is on the bus — which individual travels changes with
+   the route, and what has to be covered does not. */
+.tf-sup-head{margin-top:var(--sp-6)}
+.tf-sup-title{font-family:var(--fj-mono);font-size:10px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--c-accent-lit);font-weight:400;
+  border-top:2px solid var(--c-accent-fill);padding-top:18px;margin:0}
+.tf-sup-lede{margin-top:12px;font-size:15.5px;color:var(--fj-onbasalt-dim);max-width:52ch}
+.tf-support{margin-top:var(--sp-4);display:grid;gap:var(--sp-3) var(--sp-4);
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tf-sup{border-top:var(--fj-rule-dark);padding-top:16px}
+.tf-sup-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:17px;line-height:1.06;color:var(--c-bg);margin:0}
+.tf-sup-say{margin-top:9px;font-size:14.5px;line-height:1.5;color:var(--fj-onbasalt-dim)}
+.tf-sup-roles{list-style:none;margin:12px 0 0;padding:0}
+.tf-sup-roles li{font-family:var(--fj-mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-gold);padding:3px 0}
+
+/* The medical offer and its limit, in one block. The limit is not a footnote:
+   it is the sentence a traveller would be most entitled to be angry about later
+   if it were buried, so it sits directly under the offer and is marked. */
+.tf-med{margin-top:var(--sp-4);border-left:3px solid var(--c-accent-lit);
+  padding:2px 0 2px 20px;max-width:66ch}
+.tf-med-h{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-accent-lit);font-weight:400;margin:0}
+.tf-med-say{margin-top:10px;font-size:15.5px;line-height:1.55;color:var(--fj-onbasalt)}
+.tf-med-but{margin-top:10px;font-size:14px;line-height:1.6;color:var(--fj-onbasalt-dim)}
+
+@media(max-width:760px){.tf-support{grid-template-columns:1fr}}

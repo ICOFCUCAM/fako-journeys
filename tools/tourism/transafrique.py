@@ -113,6 +113,45 @@ def level_card(v):
            esc(v["days"]), band(v), esc(v["who"])))
 
 
+def support_grid(d):
+    """Six domains, not twelve job titles.
+
+    A list of people — doctor, nurse, driver, historian, chef — reads as
+    staffing. Naming what is covered reads as capability, and it is the more
+    honest shape as well: which individual travels changes with the route, while
+    what has to be covered does not. It also keeps the medical line from turning
+    the page into a medical tour, which is what a month-long expedition with a
+    doctor on it starts to sound like if the doctor is the headline.
+    """
+    out = []
+    for s_ in d["support"]:
+        roles = "".join("<li>%s</li>" % esc(r) for r in s_["roles"])
+        out.append(
+            '<article class="tf-sup" data-support="%s">'
+            '<h3 class="tf-sup-name">%s</h3>'
+            '<p class="tf-sup-say">%s</p>'
+            '<ul class="tf-sup-roles">%s</ul></article>'
+            % (esc(s_["id"]), esc(s_["name"]), esc(s_["say"]), roles))
+    return '<div class="tf-support">%s</div>' % "".join(out)
+
+
+def medical_note(d):
+    """The offer and its limit, in the same block.
+
+    An accompanying medical professional is additional support and not a
+    substitute for insurance or for local emergency services. That belongs
+    beside the offer rather than in a footnote somebody has to go looking for —
+    it is the single sentence a traveller would be most entitled to be angry
+    about later if it were buried, and insurance stays mandatory regardless,
+    which rates.json already marks as the one requirement that is never waived.
+    """
+    m = d["medical"]
+    return ('<aside class="tf-med"><h3 class="tf-med-h">%s</h3>'
+            '<p class="tf-med-say">%s</p>'
+            '<p class="tf-med-but">%s</p></aside>'
+            % (esc(m["title"]), esc(m["say"]), esc(m["but"])))
+
+
 def money_lists(d):
     def ul(key, title, cls=""):
         return ('<div class="tf-money-col%s"><h3 class="tf-money-h">%s</h3>'
@@ -128,7 +167,16 @@ def money_lists(d):
 def block_trans(countries):
     d = load()
     by_slug = {c.slug: c for c in countries}
-    out = ['<div class="tf-levels">']
+    out = ['<p class="tf-motto">%s</p>' % esc(d["motto"])]
+    # The team first. It is the reason the rest of the numbers are what they
+    # are, and putting the price above the team would have asked the reader to
+    # judge the figure before knowing what it buys.
+    out.append('<div class="tf-sup-head"><h3 class="tf-sup-title">%s</h3>'
+               '<p class="tf-sup-lede">%s</p></div>'
+               % (esc(d["support_title"]), esc(d["support_say"])))
+    out.append(support_grid(d))
+    out.append(medical_note(d))
+    out.append('<div class="tf-levels">')
     out += [level_card(v) for v in d["levels"]]
     out.append('</div>')
     out.append('<div class="tf-routes">')
@@ -160,9 +208,11 @@ def run(countries, log=print):
         "say": esc(d["say"]),
         "levels": "\n".join(level_card(v) for v in d["levels"]),
         "routes": "\n".join(route_card(r, by_slug) for r in d["routes"]),
-        "team": "\n".join(
-            '<div class="tf-team-row"><b>%s</b><span>%s</span></div>'
-            % (esc(t["who"]), esc(t["say"])) for t in d["team"]),
+        "motto": esc(d["motto"]),
+        "support_title": esc(d["support_title"]),
+        "support_say": esc(d["support_say"]),
+        "support": support_grid(d),
+        "medical": medical_note(d),
         "money": money_lists(d),
         "fine": esc(d["fine"]),
     }
@@ -206,8 +256,16 @@ TEMPLATE = """<!DOCTYPE html>
     <span class="af-stamp">%(stamp)s</span>
     <h1 class="tf-h1">%(line)s</h1>
     <p class="tf-sub">%(sub)s</p>
+    <p class="tf-motto">%(motto)s</p>
     <p class="tf-lede">%(say)s</p>
   </div>
+
+  <section class="tf-block" id="team">
+    <h2 class="tf-h2">%(support_title)s</h2>
+    <p class="tf-sup-lede">%(support_say)s</p>
+%(support)s
+%(medical)s
+  </section>
 
   <section class="tf-block">
     <h2 class="tf-h2">Three ways to cross</h2>
@@ -220,13 +278,6 @@ TEMPLATE = """<!DOCTYPE html>
     <h2 class="tf-h2">The crossings</h2>
     <div class="tf-routes">
 %(routes)s
-    </div>
-  </section>
-
-  <section class="tf-block">
-    <h2 class="tf-h2">Who travels with you</h2>
-    <div class="tf-team">
-%(team)s
     </div>
   </section>
 
