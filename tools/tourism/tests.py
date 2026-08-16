@@ -3311,6 +3311,56 @@ def main():
         # line each; if node is not installed they are reported as skipped and
         # counted as neither passed nor failed, because a check that did not run
         # is not a check that passed.
+        # -- the resolve workflow's own verdict ------------------------------------
+        # verify_resolution.py is what turns the green tick on the resolve
+        # workflow into a claim. It used to compare len(entries) before against
+        # len(entries) after and fail on a shrink, which was correct while
+        # nothing in that workflow could remove an entry — and stopped being
+        # correct the moment the audit was added to it, because quarantining
+        # moves a record out of `entries` and into `rejected`.
+        #
+        # The failure it would have caused is the quiet kind: a run that
+        # resolved thirty slots and rejected forty bad ones is the workflow
+        # working exactly as intended, and it would have reported red. Somebody
+        # would then have "fixed" it by removing the audit.
+        print("\nthe resolve workflow's own verdict")
+        vr = os.path.join(ROOT_DIR, "tools", "verify_resolution.py")
+
+        def verdict(entries, rejected, before):
+            """Run the verifier against a planted cache and return its exit."""
+            d = os.path.join(tmp, "vr")
+            os.makedirs(os.path.join(d, "tourism", "cache"), exist_ok=True)
+            os.makedirs(os.path.join(d, "tourism", "countries"), exist_ok=True)
+            rec = {"imageUrl": "https://example.test/p.jpg"}
+            with open(os.path.join(d, "tourism", "cache", "images.json"), "w") as fh:
+                json.dump({"entries": {"c/%d" % i: dict(rec) for i in range(entries)},
+                           "rejected": {"r/%d" % i: dict(rec) for i in range(rejected)}}, fh)
+            with open(os.path.join(d, "tourism", "countries", "c.json"), "w") as fh:
+                json.dump({"entries": {"s%d" % i: {} for i in range(200)}}, fh)
+            # Into tools/, not the sandbox root: the script derives the repo
+            # root from its own __file__ and one directory up, so a copy sitting
+            # at the top would read the real cache and measure nothing planted
+            # here.
+            os.makedirs(os.path.join(d, "tools"), exist_ok=True)
+            here = os.path.join(d, "tools", "verify_resolution.py")
+            shutil.copy(vr, here)
+            return subprocess.run([sys.executable, here, str(before)],
+                                  capture_output=True, text=True, cwd=d).returncode
+
+        # Thirty found, forty quarantined: fewer published than before, and a
+        # healthy run. 100+0 -> 90+40 answers 130 against 100 before.
+        check("a run that quarantines more than it finds is not a failure",
+              verdict(90, 40, 100) == 0,
+              "published fell from 100 to 90 while answered rose to 130")
+        # And the guarantee the old rule was protecting is still held, because
+        # records are only ever moved: losing one is still red.
+        check("losing a record is still a failure",
+              verdict(80, 10, 100) != 0,
+              "90 answered against 100 before")
+        check("a run that resolved nothing is still a failure",
+              verdict(100, 0, 100) != 0,
+              "nothing found and slots still empty")
+
         # -- what the browser actually does ----------------------------------------
         print("\nwhat the browser actually does")
         node = shutil.which("node")
