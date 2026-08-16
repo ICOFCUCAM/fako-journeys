@@ -509,8 +509,11 @@
    accent-lit the label measured 3.94:1 on this ground, under the 4.5 a
    nine-pixel label needs — and dimming the one item the reader is on is
    backwards anyway. Ivory ink, accent underline. */
-/* The door's bar does not stick. See series_nav() in transafrique.py. */
-.tf-series--top{position:static}
+/* The door's bar sits UNDER the band rather than over it, and sticks from
+   there. See overview_body() in transafrique.py for why it cannot be above:
+   the opening spread's headline travels the full height of a fixed picture,
+   so a bar pinned in front of it is a bar the copy slides beneath. */
+.tf-series--top{border-top:1px solid color-mix(in srgb,var(--c-bg) 14%,transparent)}
 .tf-series-mark.is-on{color:var(--c-bg);
   border-bottom:2px solid var(--c-accent);padding-bottom:4px}
 .tf-series-list{list-style:none;display:flex;flex-wrap:wrap;gap:4px 22px;
@@ -739,6 +742,40 @@
   paint-order:stroke;stroke:var(--fj-basalt);stroke-width:3.5;
   stroke-linejoin:round}
 
+/* ---- the terminus cities ------------------------------------------------ */
+/* Four of the eight route ends are cities this repository holds a real
+   position for, so those four are marked AT the city and named. The road runs
+   on to meet them, which is the journey rather than a liberty: the Continental
+   Expedition starts in Nairobi, not at Kenya's centroid. Arusha and Victoria
+   Falls have no position and keep a plain country ring instead. */
+.tf-town circle{fill:none;stroke:var(--c-bg);stroke-width:1.8;opacity:.55;
+  transition:opacity .3s ease}
+.tf-town .tf-town-pip{fill:var(--c-bg);stroke:none;opacity:.75}
+.tf-town text{font-family:var(--fj-mono);font-size:15px;letter-spacing:1.8px;
+  fill:var(--c-bg);opacity:.62;transition:opacity .3s ease;
+  paint-order:stroke;stroke:var(--fj-basalt);stroke-width:3.5;
+  stroke-linejoin:round}
+
+/* ---- the furniture ------------------------------------------------------ */
+/* What makes it a plate rather than a diagram, and every piece is a fact or a
+   derivation: the oceans and the continent are named because they are, the
+   rose points north because the projection does, and the bar is computed at
+   the latitude it is drawn at — see furniture() for why a continental scale
+   that does not say its latitude is not true anywhere in particular. */
+.tf-sea{font-family:var(--fj-mono);font-size:15px;letter-spacing:4px;
+  fill:color-mix(in srgb,var(--c-bg) 30%,transparent)}
+.tf-land{font-family:var(--fj-mono);font-size:26px;letter-spacing:16px;
+  fill:color-mix(in srgb,var(--c-gold) 34%,transparent)}
+.tf-rose line,.tf-rose circle{stroke:color-mix(in srgb,var(--c-bg) 34%,transparent);
+  stroke-width:1.4;fill:none}
+.tf-rose text{font-family:var(--fj-mono);font-size:14px;
+  fill:color-mix(in srgb,var(--c-bg) 46%,transparent)}
+.tf-scale line{stroke:color-mix(in srgb,var(--c-bg) 40%,transparent);stroke-width:1.6}
+.tf-scale text{font-family:var(--fj-mono);font-size:13px;letter-spacing:1px;
+  fill:color-mix(in srgb,var(--c-bg) 46%,transparent)}
+.tf-scale .tf-scale-at{font-size:11px;
+  fill:color-mix(in srgb,var(--c-bg) 30%,transparent)}
+
 /* ---- what selection does ------------------------------------------------ */
 /* Nothing until the script says the figure is live: with no JavaScript the
    plate shows all four roads at full strength and the panel lists all four
@@ -772,6 +809,17 @@
 .tf-atlas[data-lit="west"] .tf-name[data-in~="west"],
 .tf-atlas[data-lit="south"] .tf-name[data-in~="south"],
 .tf-atlas[data-lit="great"] .tf-name[data-in~="great"]{opacity:1}
+/* A terminus city that is not on the chosen road goes quiet with the road. */
+.tf-atlas[data-lit] .tf-town circle,
+.tf-atlas[data-lit] .tf-town text{opacity:.14}
+.tf-atlas[data-lit="east"] .tf-town[data-in~="east"] circle,
+.tf-atlas[data-lit="west"] .tf-town[data-in~="west"] circle,
+.tf-atlas[data-lit="south"] .tf-town[data-in~="south"] circle,
+.tf-atlas[data-lit="great"] .tf-town[data-in~="great"] circle{opacity:.9}
+.tf-atlas[data-lit="east"] .tf-town[data-in~="east"] text,
+.tf-atlas[data-lit="west"] .tf-town[data-in~="west"] text,
+.tf-atlas[data-lit="south"] .tf-town[data-in~="south"] text,
+.tf-atlas[data-lit="great"] .tf-town[data-in~="great"] text{opacity:1}
 
 /* ---- the panel ---------------------------------------------------------- */
 .tf-atlas-head{margin-bottom:var(--sp-4)}
@@ -853,12 +901,17 @@
   .tf-picks{columns:2;column-gap:var(--sp-4)}
   .tf-pick{break-inside:avoid}
   .tf-name{font-size:19px;letter-spacing:2px}
+  .tf-town text{font-size:18px}
 }
 /* Phone: one column, and the country names come up again because the plate is
    now 390 pixels wide rather than 700 and 15px of viewBox type is four. */
 @media(max-width:640px){
   .tf-picks{columns:1}
   .tf-name{font-size:26px;letter-spacing:2.6px;stroke-width:5}
+  .tf-town text{font-size:24px;stroke-width:5}
+  .tf-sea{font-size:22px;letter-spacing:5px}
+  .tf-land{font-size:34px;letter-spacing:20px}
+  .tf-scale text{font-size:18px}.tf-rose text{font-size:19px}
   .tf-plate-road{stroke-width:inherit}
   /* The countries come before the count of them. Wrapped the other way round
      the row read "4 COUNTRIES / Kenya, Uganda, Rwanda, Tanzania", which is the

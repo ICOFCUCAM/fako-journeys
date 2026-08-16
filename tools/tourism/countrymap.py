@@ -247,6 +247,13 @@ def km_per_unit(slug):
     return meridional * math.cos(math.radians(lat))
 
 
+def load_map_fit():
+    """The projection's k, in units per radian, for anything that needs to turn
+    a distance on this plate into kilometres. One reader of the number rather
+    than two copies of it."""
+    return ((_load()["detail"].get("fit") or {}).get("k"))
+
+
 def _clip_id(slug, kind):
     return "cm-%s-%s" % (kind, slug)
 

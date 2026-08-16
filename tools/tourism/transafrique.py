@@ -614,6 +614,14 @@ def overview_body(d, by_slug):
         # the same three things twice within one screen, which is what happens
         # when a page is split by moving blocks rather than by reading it.
         hero(d, by_slug),
+        # THE BAR GOES AFTER THE BAND ON THIS PAGE, not before it. It has to
+        # follow the reader down — that is what a series bar is for — and it
+        # cannot be pinned over the opening spread, because the headline
+        # travels the full height of a FIXED photograph and anything parked in
+        # its path is something the copy slides under. Placed here it is out of
+        # the band's way entirely and sticky from the moment the band ends,
+        # which is the first moment there is anything to navigate away from.
+        series_nav(d, "overview"),
         '<div class="tf-page">',
         # The idea, at door length: the line and one paragraph. The rest of it,
         # including the frontier logistics, is /why.
@@ -822,7 +830,7 @@ def run(countries, log=print):
             "desc": esc(desc),
             "og": plate.open_graph(title, desc, url),
             "events": plate.events_block(),
-            "nav": series_nav(d, active),
+            "nav": series_nav(d, active) if active else "",
             "skip": esc(skip),
             "body": body,
         }
@@ -831,8 +839,10 @@ def run(countries, log=print):
             fh.write(html)
         written.append((os.path.relpath(path, ROOT), len(html)))
 
+    # The overview carries its own bar inside the body, under the band; the
+    # slot above <main> stays empty there and is filled on the eight others.
     write(PAGE, "Trans Afrique — Afrinkong", d["say"], "/trans-afrique",
-          overview_body(d, by_slug), "overview", "Skip to the expedition")
+          overview_body(d, by_slug), None, "Skip to the expedition")
 
     bodies = {"why": why_body, "crossings": crossings_body,
               "ways": ways_body, "support": support_body, "fee": fee_body}

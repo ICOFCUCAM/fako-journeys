@@ -28,12 +28,18 @@ Dakar, Accra, Nairobi and Cape Town — while Arusha and Victoria Falls are not.
 Anchoring half the ends to cities and half to centroids would put city names on
 country middles, which is the one thing the rest of this site refuses to do.
 
-SO THE TERMINUS RINGS CARRY NO CITY NAME. A larger marker says "this is where
-the road starts", which is true of the country; "NAIROBI" printed on Kenya's
-centroid would be false by about two hundred kilometres. The city pair lives in
-the panel, where the route's own `shape` string says it in words and claims
-nothing about a position. What appears on the plate when a crossing is selected
-is the COUNTRY name at each node, which is exactly what the node is.
+SO A TERMINUS IS NAMED ONLY WHERE THE CITY HAS A POSITION. Each route's own
+`shape` string names its two ends — "Nairobi to Cape Town" — and four of the
+eight are in the city file: Dakar, Accra, Nairobi and Cape Town. Those four are
+drawn AT THE CITY, which is a real coordinate, and the road is extended to
+reach them, which is not a liberty but the journey: the Continental Expedition
+starts in Nairobi, not at Kenya's centroid.
+
+Arusha and Victoria Falls have no position, so East and South keep a plain ring
+on the country at that end and say the city in the panel instead. Half the map
+labelled and half not is the honest shape of what this repository knows, and it
+is visibly better than either alternative — four invented positions, or four
+real ones withheld to make the plate look consistent.
 
 THE LINES ARE CURVES, AND THE CURVE IS NOT DECORATION
 
@@ -47,11 +53,22 @@ from the segment to imply a detour that is not there.
 """
 
 import json
+import math
 import os
 
+from . import countrymap
 from .model import ROOT
 
 MAP = os.path.join(ROOT, "tourism", "map.json")
+DETAIL = os.path.join(ROOT, "tourism", "atlas-detail.json")
+
+# Where the plate's furniture sits, in viewBox units. All of it is over open
+# water or empty Sahara, checked against the drawn coastline rather than
+# eyeballed — a compass rose on top of Chad is a rose nobody trusts.
+OCEANS = ((132.0, 214.0, "Atlantic Ocean"), (905.0, 872.0, "Indian Ocean"))
+CONTINENT = (470.0, 330.0, "Africa")
+ROSE = (96.0, 806.0)
+SCALE = (56.0, 900.0, 210.0)      # x, y, drawn length in units
 
 # How wide each road is drawn. The spine is the road; South is a length of it,
 # East a shorter length again, and West is its own arc. Descending width with
@@ -64,6 +81,33 @@ ORDER = ("great", "south", "east", "west")
 def load_map():
     with open(MAP, encoding="utf-8") as fh:
         return json.load(fh)
+
+
+def cities():
+    """The thirteen places on this site that have a real position.
+
+    Four of them are Trans Afrique termini — Dakar, Accra, Nairobi and Cape
+    Town — which is why the ends of West and of the Continental Expedition can
+    be marked and named while Arusha and Victoria Falls cannot: those two are
+    not in the file, and a city label on a country centroid is wrong by a
+    couple of hundred kilometres.
+    """
+    with open(DETAIL, encoding="utf-8") as fh:
+        det = json.load(fh)
+    return {c["name"].lower(): c for c in det.get("cities") or []}
+
+
+def ends(route):
+    """The two place names in a crossing's own `shape` string.
+
+    "Nairobi to Cape Town." is the route describing itself, so the ends come
+    from the data rather than from a table somebody has to keep in step.
+    """
+    shape = (route.get("shape") or "").strip().rstrip(".")
+    if " to " not in shape:
+        return None, None
+    a, b = shape.split(" to ", 1)
+    return a.strip().strip(","), b.split(",")[0].strip()
 
 
 def _esc(v):
@@ -112,11 +156,15 @@ def plate(d, by_slug=None, only=None):
         4  a node at every country the road stops in
         5  a ring at each end of each road
         6  the country names, which appear only for the selected crossing
+        7  the furniture: two oceans, the continent, a rose and a scale
 
-    There is no graticule, no scale bar, no city, no shadow and no label that
-    is not a country on a chosen road. Everything else the file could draw was
-    left out: this plate has one job, which is to show four journeys, and a map
-    that also shows rivers is a map that shows a journey less well.
+    The furniture is what makes it a plate rather than a diagram, and every
+    piece of it is either a fact of the page or derived: the oceans and the
+    continent are named because they are, the rose points north because the
+    projection does, and the scale bar is COMPUTED at the latitude it is drawn
+    at rather than stated. There is still no graticule, no river and no city
+    that is not the end of a road — this plate has one job, and a map that
+    also shows rivers shows a journey less well.
     """
     by_slug = by_slug or {}
     m = load_map()
@@ -170,6 +218,29 @@ def plate(d, by_slug=None, only=None):
 
     # 3. The roads. Widest first and underneath, so a regional crossing reads
     #    as a length of the spine rather than a line beside it.
+    #
+    #    Where a terminus is a city we hold a position for, the road runs on to
+    #    the city. That is the journey — the Continental Expedition begins in
+    #    Nairobi and not at Kenya's centroid — so extending it is more accurate
+    #    than stopping short, not less.
+    town = cities()
+    termini = {}
+    for r in shown:
+        a, b = ends(r)
+        cc = r.get("countries") or []
+        pair = []
+        for name, slug in ((a, cc[0] if cc else None), (b, cc[-1] if cc else None)):
+            c = town.get((name or "").lower())
+            pair.append(c if (c and slug and c.get("country") == slug) else None)
+        termini[r["id"]] = pair
+    # Collected once, here, because both the town layer and the country-name
+    # layer need it and the name layer is emitted first.
+    seen = {}
+    for rid in ORDER:
+        for c in (termini.get(rid) or []):
+            if c:
+                seen.setdefault(c["slug"], [c, []])[1].append(rid)
+
     out.append('<g class="tf-plate-roads" aria-hidden="true">')
     for rid in ORDER:
         r = routes.get(rid)
@@ -178,6 +249,11 @@ def plate(d, by_slug=None, only=None):
         pts = [at[s_] for s_ in (r.get("countries") or []) if s_ in at]
         if len(pts) < 2:
             continue
+        head, tail = termini.get(rid) or (None, None)
+        if head:
+            pts = [[head["x"], head["y"]]] + pts
+        if tail:
+            pts = pts + [[tail["x"], tail["y"]]]
         path = spline(pts)
         # The halo is a wider stroke of the ground colour under the road, so a
         # narrower road crossing a wider one is separated by a hair of dark
@@ -204,8 +280,8 @@ def plate(d, by_slug=None, only=None):
         r = routes.get(rid)
         if not r:
             continue
-        ends = [s_ for s_ in (r.get("countries") or []) if s_ in at]
-        for s_ in ({ends[0], ends[-1]} if len(ends) > 1 else set(ends)):
+        stops = [s_ for s_ in (r.get("countries") or []) if s_ in at]
+        for s_ in ({stops[0], stops[-1]} if len(stops) > 1 else set(stops)):
             out.append('<circle class="tf-term" cx="%.1f" cy="%.1f" r="9.5" '
                        'data-route="%s" data-country="%s"/>'
                        % (at[s_][0], at[s_][1], rid, _esc(s_)))
@@ -214,9 +290,13 @@ def plate(d, by_slug=None, only=None):
     # 6. Country names, one per node, hidden until a crossing is chosen. Drawn
     #    for every route so that choosing one is a CSS state change and not a
     #    re-render, and so the plate is complete with scripting off.
+    # A country whose terminus city is named does not also get its country
+    # name: "NAIROBI" and "KENYA" set fourteen pixels apart is one place
+    # labelled twice, and the more precise of the two is the one to keep.
+    named_by_town = {c["country"] for c, _ in seen.values() if c.get("country")}
     out.append('<g class="tf-plate-names" aria-hidden="true">')
     for slug in sorted(crosses):
-        if slug not in at:
+        if slug not in at or slug in named_by_town:
             continue
         x, y = at[slug]
         name = (by_slug[slug].name if slug in by_slug
@@ -230,8 +310,99 @@ def plate(d, by_slug=None, only=None):
                       " ".join(crosses[slug]), "end" if west else "start",
                       _esc(name.upper())))
     out.append('</g>')
+
+    # 5b. The terminus cities we hold a position for, marked and named at the
+    #     city rather than at the country. Four of eight; the other four ends
+    #     keep the country ring and say the city in the panel.
+    # ONE MARKER PER CITY, not one per route that ends there. Nairobi is the
+    # head of both East and the Continental Expedition and Cape Town is the tail
+    # of one and the head of another, so drawing them per route stacked two
+    # identical labels on the same pixel — legible only because they were
+    # exactly on top of each other, and doubled in weight against everything
+    # else. `data-in` carries every route that uses the city, which is what the
+    # selection rules key off anyway.
+    out.append('<g class="tf-plate-towns" aria-hidden="true">')
+    for slug in sorted(seen):
+        c, rids = seen[slug]
+        # Cape Town is the southern tip with no room to its right on the plate,
+        # so its name goes above the dot; the rest read outward from it.
+        up = c["y"] > 900
+        out.append('<g class="tf-town" data-in="%s">'
+                   '<circle cx="%.1f" cy="%.1f" r="7"/>'
+                   '<circle class="tf-town-pip" cx="%.1f" cy="%.1f" r="2.6"/>'
+                   '<text x="%.1f" y="%.1f" text-anchor="%s">%s</text></g>'
+                   % (" ".join(rids), c["x"], c["y"], c["x"], c["y"],
+                      c["x"] if up else c["x"] + 14,
+                      c["y"] - 15 if up else c["y"] + 5,
+                      "middle" if up else "start",
+                      _esc(c["name"].upper())))
+    out.append('</g>')
+
+    out.append(furniture(view))
     out.append('</svg>')
     return "".join(out)
+
+
+def furniture(view):
+    """Two oceans, the continent, a north mark and a scale.
+
+    THE SCALE IS COMPUTED WHERE IT IS DRAWN, WHICH IS THE ONLY WAY A SCALE ON A
+    CONTINENTAL MAP IS TRUE. This projection draws every parallel at the length
+    of the equator, so a horizontal bar means a different distance at Cairo than
+    at Cape Town — by about a quarter across the range Africa covers. The bar
+    sits in the South Atlantic, its latitude is read off the drawn parallels the
+    same way tools/tourism/countrymap.py reads any other, and the label says
+    which latitude it is true at rather than pretending it is true everywhere.
+
+    A bar stated instead of derived is the kind of thing nobody checks and
+    everybody trusts, which is the worst combination on a page whose argument
+    is that Afrinkong knows the ground.
+    """
+    x, y, want = SCALE
+    lat = countrymap.latitude(x + want / 2, y)
+    fit = countrymap.load_map_fit()
+    km_per_unit = None
+    if fit and lat is not None:
+        km_per_unit = (6371.0 / fit) * math.cos(math.radians(lat))
+    bits = []
+    for ox, oy, name in OCEANS:
+        bits.append('<text class="tf-sea" x="%.1f" y="%.1f" '
+                    'text-anchor="middle">%s</text>' % (ox, oy, _esc(name.upper())))
+    bits.append('<text class="tf-land" x="%.1f" y="%.1f" text-anchor="middle">%s</text>'
+                % (CONTINENT[0], CONTINENT[1], _esc(CONTINENT[2].upper())))
+    rx, ry = ROSE
+    bits.append('<g class="tf-rose">'
+                '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f"/>'
+                '<circle cx="%.1f" cy="%.1f" r="15"/>'
+                '<text x="%.1f" y="%.1f" text-anchor="middle">N</text></g>'
+                % (rx, ry - 11, rx, ry + 11, rx, ry, rx, ry - 20))
+    if km_per_unit:
+        step = 500
+        while step * 4 < want * km_per_unit:
+            step *= 2
+        length = (step * 2) / km_per_unit
+        bits.append('<g class="tf-scale">'
+                    '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f"/>'
+                    '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f"/>'
+                    '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f"/>'
+                    '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f"/>'
+                    '<text x="%.1f" y="%.1f">0</text>'
+                    '<text x="%.1f" y="%.1f" text-anchor="end">%s KM</text>'
+                    '<text class="tf-scale-at" x="%.1f" y="%.1f">at %d&#176;%s</text>'
+                    '</g>'
+                    # Two labels, not three. The bar is about eighty pixels on
+                    # a desktop plate and "0 500 1000 KM" ran the middle figure
+                    # straight through the last one; the half-way tick still
+                    # marks the interval without printing a number on top of a
+                    # number.
+                    % (x, y, x + length, y,
+                       x, y - 5, x, y + 5,
+                       x + length / 2, y - 4, x + length / 2, y + 4,
+                       x + length, y - 5, x + length, y + 5,
+                       x, y - 11,
+                       x + length, y - 11, "{:,}".format(step * 2),
+                       x, y + 22, abs(round(lat)), "S" if lat < 0 else "N"))
+    return '<g class="tf-plate-furn" aria-hidden="true">%s</g>' % "".join(bits)
 
 
 def build(d, by_slug=None, only=None, act=None, title=None, say=None):
