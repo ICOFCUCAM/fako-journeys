@@ -743,7 +743,7 @@ TEMPLATE = """<!DOCTYPE html>
     <a href="/journey#/j/%(slug)s/">Build a journey</a>
     <a href="/places#%(slug)s">Every place</a>
   </nav>
-  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
 </header>
 
 <main class="po" id="main">
@@ -832,7 +832,7 @@ INDEX = """<!DOCTYPE html>
     <a href="/meet">Meet Africa</a>
     <a href="/places">Every place</a>
   </nav>
-  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
 </header>
 
 <main class="sx" id="main">

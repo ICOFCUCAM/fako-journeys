@@ -296,7 +296,7 @@ CHROME = """<header class="pl-mast">
     <a href="/journey#/j/%(slug)s/">Build a journey</a>
     <a href="/places">Every place</a>
   </nav>
-  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
 </header>"""
 
 TEMPLATE = """<!DOCTYPE html>
@@ -392,7 +392,7 @@ INDEX = """<!DOCTYPE html>
     <a href="/journey">Build a journey</a>
     <a href="/meet">Meet Africa</a>
   </nav>
-  <a class="af-btn af-btn--solid" href="/contact">Plan a journey<i>&rarr;</i></a>
+  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
 </header>
 
 <main class="pi" id="main">

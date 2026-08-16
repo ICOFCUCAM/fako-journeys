@@ -550,7 +550,7 @@ TEMPLATE = """<!DOCTYPE html>
       <a href="/meet#/%(slug)s">Meet %(name)s</a>
       <a href="/tourism/%(slug)s">All %(count)d</a>
     </nav>
-    <a class="af-btn af-btn--solid" href="/contact">Plan a journey</a>
+    <a class="af-btn af-btn--solid" href="/journey">Build a journey</a>
   </div>
 </header>
 
@@ -564,7 +564,7 @@ TEMPLATE = """<!DOCTYPE html>
         <p class="open-tag">%(tagline)s.</p>
         <p class="lede">%(summary)s</p>
         <div class="acts">
-          <a class="af-btn af-btn--solid" href="/contact">Plan a journey <i>&rarr;</i></a>
+          <a class="af-btn af-btn--solid" href="/journey">Build a journey <i>&rarr;</i></a>
           <a class="af-btn af-btn--quiet" href="#experiences">What you can do here <i>&rarr;</i></a>
         </div>
       </div>
@@ -629,7 +629,7 @@ TEMPLATE = """<!DOCTYPE html>
     <h2>Your %(name)s <em>starts here</em>.</h2>
     <p>Tell us the month, or simply the thing you want to see, and a guide who works there will answer.</p>
     <div class="acts">
-      <a class="act go" href="/contact">Plan a journey <i>&rarr;</i></a>
+      <a class="act go" href="/journey">Build a journey <i>&rarr;</i></a>
       <a class="act faint" href="/tourism/%(slug)s">See all %(count)d experiences <i>&rarr;</i></a>
     </div>
   </div>

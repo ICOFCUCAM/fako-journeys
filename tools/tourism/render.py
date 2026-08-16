@@ -116,7 +116,7 @@ def masthead(country, taxonomy):
             '      <a href="/meet">Meet Africa</a>\n'
             '      <a href="/tourism/">Every country</a>\n'
             '    </nav>\n%s'
-            '    <a class="btn" href="/contact">Plan a journey</a>\n'
+            '    <a class="btn" href="/journey">Build a journey</a>\n'
             '  </div>\n</header>'
             % (esc(country.url), esc(country.name), len(taxonomy.enabled),
                ('<a href="%s">%s home</a>' % (esc(country.url), esc(country.name)))
@@ -159,7 +159,7 @@ def footer(country, ours=None):
             '        <a href="/#window">The map</a>\n'
             '      </div>\n'
             '      <div class="fj-foot-col">\n        <b>Plan</b>\n'
-            '        <a href="/contact">Start a journey</a>\n'
+            '        <a href="/journey">Build a journey</a>\n'
             '        <a href="/contact">Contact an operator</a>\n'
             '        <a href="/#seasons">Travel seasons</a>\n'
             '      </div>\n'

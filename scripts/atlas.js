@@ -625,7 +625,10 @@
       + '<div class="at-acts">'
       + (p.url ? '<a class="af-btn af-btn--solid" href="' + esc(p.url) + '">Open '
                  + esc(p.title) + '<i>&rarr;</i></a>' : '')
-      + '<a class="af-btn af-btn--quiet" href="/contact">Begin this journey</a>'
+      /* The tunnel, seeded with the country the visitor is standing in — the
+         same #/j/<slug>/ the portraits already use. This went to /contact,
+         which threw away the country and handed them an empty message box. */
+      + '<a class="af-btn af-btn--quiet" href="/journey#/j/' + esc(slug) + '/">Build this journey</a>'
       + '<button class="af-btn af-btn--quiet" type="button" data-go="country" data-key="'
       + esc(slug) + '">All ' + c.places + ' in ' + esc(c.name) + '</button>'
       + '</div>';

@@ -211,7 +211,7 @@ TEMPLATE = """<!DOCTYPE html>
       <a href="/#window">The map</a>
       <a href="/#destinations">Destinations</a>
       <a href="/tourism/">Every country</a>
-      <a href="/contact">Plan a journey</a>
+      <a href="/journey">Build a journey</a>
     </nav>
   </div>
 </header>
