@@ -949,6 +949,33 @@ def block_maplive(countries):
     """
     with open(os.path.join(ROOT, "tourism", "map.json"), encoding="utf-8") as fh:
         m = json.load(fh)
+
+    # What each country leads on, and what its region leads on, carried onto the
+    # shape itself. Pressing WILDLIFE used to fly the map to one country and
+    # leave the other fifty-three exactly as they were, which answers "where is
+    # the single best place" — a question nobody asked — instead of "where does
+    # this come alive", which is the one on the button. Colouring needs to know
+    # each country's own claim, so the claim travels with the shape rather than
+    # in a second payload the page would have to fetch and keep in step.
+    calls = {c.slug: list(c.calls or []) for c in countries}
+    region_of = {c.slug: (c.region or "?") for c in countries}
+    tally = {}
+    for slug, ks in calls.items():
+        r = tally.setdefault(region_of[slug], {"n": 0, "lens": {}})
+        r["n"] += 1
+        for k in ks:
+            r["lens"][k] = r["lens"].get(k, 0) + 1
+    region_leads = dict(
+        (r, sorted(k for k, n in v["lens"].items() if n / float(v["n"]) >= 0.5))
+        for r, v in tally.items())
+
+    def lens_attrs(slug):
+        mine = calls.get(slug) or []
+        near = [k for k in region_leads.get(region_of.get(slug, "?"), [])
+                if k not in mine]
+        return ' data-calls="%s" data-near="%s"' % (
+            esc(" ".join(sorted(mine))), esc(" ".join(near)))
+
     out = ['<g class="wa-map-rest" aria-hidden="true">']
     for row in m.get("rest") or []:
         out.append('\n<path d="%s"><title>%s</title></path>'
@@ -961,20 +988,22 @@ def block_maplive(countries):
             hit = ('<circle class="wa-map-hit" cx="%s" cy="%s" r="%s"/>'
                    % (row["at"][0], row["at"][1], HIT_R))
         out.append('\n<a tabindex="-1" class="wa-map-live" data-tier="%s" '
-                   'data-slug="%s" data-name="%s" data-tag="%s" href="%s">'
+                   'data-slug="%s" data-name="%s" data-tag="%s"%s href="%s">'
                    '%s<path d="%s"/><title>%s &#8212; %s</title></a>'
                    % (esc(row.get("tier") or "live"), esc(row["slug"]),
-                      esc(row["name"]), esc(row["tag"]), esc(row["href"]),
+                      esc(row["name"]), esc(row["tag"]),
+                      lens_attrs(row["slug"]), esc(row["href"]),
                       hit, row["d"], esc(row["name"]), esc(row["tag"])))
     for row in sorted(m.get("marks") or [], key=lambda r: r["slug"]):
         x, y = row["at"]
         out.append('\n<a tabindex="-1" class="wa-map-live wa-map-mark" '
-                   'data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s" '
+                   'data-tier="%s" data-slug="%s" data-name="%s" data-tag="%s"%s '
                    'href="%s"><circle class="wa-map-hit" cx="%s" cy="%s" r="%s"/>'
                    '<circle cx="%s" cy="%s" r="12"/>'
                    '<title>%s &#8212; %s</title></a>'
                    % (esc(row.get("tier") or "live"), esc(row["slug"]),
-                      esc(row["name"]), esc(row["tag"]), esc(row["href"]),
+                      esc(row["name"]), esc(row["tag"]),
+                      lens_attrs(row["slug"]), esc(row["href"]),
                       x, y, row.get("r", 36), x, y,
                       esc(row["name"]), esc(row["tag"])))
     return "".join(out) + "\n"
