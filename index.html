@@ -11,7 +11,7 @@
 <meta property="og:title" content="Afrinkong — Journeys Across Africa | Cameroon, Uganda, Kenya, Tanzania, Rwanda, Namibia">
 <meta property="og:description" content="Afrinkong connects travellers with local tourism operators across Africa — Cameroon's six climates, Uganda's gorilla forests, the Serengeti and the Rift, Rwanda's thousand hills, the Namib, South Africa and Zambia. Local operators, real places, journeys made for you.">
 <meta property="og:url" content="https://afrinkong.com/">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <style>
 /* The tokens and the reset are NOT redefined here.
@@ -770,6 +770,55 @@
    viewBox flies to. A visitor who presses "East Africa" is not filtering a list;
    they are looking at East Africa. */
 .wa-regs{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid var(--c-primary)}
+/* THE WONDERS
+   ---------------------------------------------------------------------------
+   Two at hero scale, then a row of six. The experience grid directly above
+   this is eight identical tiles, and eight identical tiles under eight
+   identical tiles is the same section printed twice — the rhythm has to break
+   or the reader stops reading.
+
+   No photographs yet. Every wonder here is a real place with real pictures
+   waiting, and the moment they resolve these cards take them; until then the
+   type carries it on basalt, which is quieter than a stock photograph of
+   somewhere that might not be the place. */
+.wa-wonders .wa-head h2{max-width:26ch;font-size:clamp(32px,4vw,56px)}
+.wo-lead{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);
+  margin-top:var(--sp-5)}
+.wo-rest{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:var(--sp-3);margin-top:var(--sp-4)}
+.wo-card-in{border-top:2px solid var(--c-accent-fill);padding-top:18px;height:100%}
+.wo-card--big .wo-card-in{border-top-width:3px;padding-top:24px}
+.wo-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:22px;line-height:1.04;letter-spacing:-.005em;color:var(--c-bg);margin:0}
+.wo-card--big .wo-name{font-size:clamp(30px,3.4vw,50px);max-width:12ch}
+.wo-where{margin-top:9px;font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-gold)}
+.wo-where a{color:inherit;border-bottom:1px solid transparent;transition:border-color .2s}
+.wo-where a:hover{border-color:var(--c-gold)}
+.wo-say{margin-top:12px;font-size:15.5px;line-height:1.5;color:var(--fj-onbasalt-dim);
+  max-width:34ch}
+.wo-card--big .wo-say{font-size:clamp(17px,1.5vw,21px);max-width:26ch;
+  color:var(--fj-onbasalt)}
+
+/* How the collection is cut, said under it rather than over it: a reader wants
+   the taxonomy after seeing some of the thing, not before. */
+.wo-strands{list-style:none;margin:var(--sp-5) 0 0;padding:var(--sp-4) 0 0;
+  border-top:var(--fj-rule-dark);display:grid;gap:2px 30px;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.wo-strands li{padding:11px 0;display:grid;grid-template-columns:1fr auto;
+  grid-template-areas:"name n" "say say";align-items:baseline;column-gap:12px}
+.wo-strands b{grid-area:name;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent-lit);font-weight:400}
+.wo-strands span{grid-area:say;font-size:14px;color:var(--fj-onbasalt-dim);
+  margin-top:5px;max-width:32ch}
+.wo-strands i{grid-area:n;font-style:normal;font-family:var(--fj-mono);font-size:10px;
+  color:var(--fj-onbasalt-dim)}
+
+@media(max-width:880px){
+  .wo-lead{grid-template-columns:1fr;gap:var(--sp-3)}
+  .wo-card--big .wo-name{font-size:clamp(26px,7vw,38px)}
+}
+
 /* The descent, made legible.
    Region, country and experience are three rungs of one ladder — the continent
    narrowing to a place and then to a reason for going — and all three were set
@@ -2390,6 +2439,12 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-foot-bar a{padding-block:6px;display:inline-block}
 }
 </style>
+<meta property="og:image" content="https://afrinkong.com/images/brand/share.jpg">
+<meta name="twitter:image" content="https://afrinkong.com/images/brand/share.jpg">
+<link rel="icon" href="/images/brand/mark-32.png" sizes="32x32">
+<link rel="icon" href="/images/brand/mark-512.png" sizes="512x512">
+<link rel="apple-touch-icon" href="/images/brand/mark-180.png">
+<meta name="theme-color" content="#10251F">
 </head>
 <body>
 <a class="af-skip" href="#main">Skip to content</a>
@@ -2537,6 +2592,13 @@ window.AF = {
 <a tabindex="-1" class="wa-map-live" data-tier="live" data-slug="zimbabwe" data-name="Zimbabwe" data-tag="Great Zimbabwe and the Zambezi" data-calls="adventure history wildlife" data-near="culture" href="/zimbabwe"><path d="M673.3 829.4L650.5 826.5L646.8 824.3L646.7 821.5L634.8 818.3L630.9 812.2L631.6 805.6L626.5 804.9L625.5 800.2L613.5 793.1L611 785.6L602.8 773.5L603.1 771.3L621.5 774.5L624.5 773.5L636.1 760.3L646.3 755.8L648.5 749L658.6 744.8L666.8 744.8L667.1 749.3L676.9 749.7L685.3 754.9L697.4 758.6L696.9 778.7L692.8 786.5L694.5 788.6L693.4 792.1L695.5 799.6L689 807.9L687.8 815.9L673.3 829.4Z"/><title>Zimbabwe &#8212; Great Zimbabwe and the Zambezi</title></a>
 <a tabindex="-1" class="wa-map-live wa-map-mark" data-tier="live" data-slug="mauritius" data-name="Mauritius" data-tag="Reef, sugar and the volcanic interior" data-calls="coast food" data-near="culture nature" href="/mauritius"><circle class="wa-map-hit" cx="982.5" cy="812.8" r="9"/><circle cx="982.5" cy="812.8" r="12"/><title>Mauritius &#8212; Reef, sugar and the volcanic interior</title></a>
 <a tabindex="-1" class="wa-map-live wa-map-mark" data-tier="live" data-slug="seychelles" data-name="Seychelles" data-tag="Granite islands in the Indian Ocean" data-calls="coast" data-near="culture nature" href="/seychelles"><circle class="wa-map-hit" cx="979.6" cy="604.7" r="9"/><circle cx="979.6" cy="604.7" r="12"/><title>Seychelles &#8212; Granite islands in the Indian Ocean</title></a>
+
+
+
+
+
+
+
 
 
 
@@ -3660,6 +3722,42 @@ window.AF = {
   </div>
 </section>
 
+<!-- the wonders -->
+<section class="wa-zone is-cine basalt wa-wonders" id="wonders">
+  <div class="wa-frame">
+    <div class="wa-head">
+      <div class="wa-head-no"><b>06</b><span>The wonders</span></div>
+      <div>
+        <!-- gen:wonderslede -->
+<span class="wa-eyebrow">An Afrinkong collection of places worth crossing a continent to see</span>
+        <h2>Some places don’t need explaining. You just need to stand there.</h2>
+        <p class="wa-say">From waterfalls that disappear into the earth to deserts with no end to them, from cities carved out of rock to forests where the last of something still lives — Africa holds places that change the scale of what you thought the world was.</p>        <!-- /gen:wonderslede -->
+      </div>
+    </div>
+    <!-- gen:wonders -->
+<div class="wo-lead">
+<article class="wo-card wo-card--big" data-strand="earth"><div class="wo-card-in"><h3 class="wo-name">Victoria Falls</h3><p class="wo-where"><a href="/zambia">Zambia</a> &middot; <a href="/zimbabwe">Zimbabwe</a></p><p class="wo-say">The river does not simply fall. It disappears into the earth.</p></div></article>
+<article class="wo-card wo-card--big" data-strand="wildlife"><div class="wo-card-in"><h3 class="wo-name">The Serengeti</h3><p class="wo-where"><a href="/tanzania">Tanzania</a></p><p class="wo-say">Where the horizon moves.</p></div></article>
+</div>
+<div class="wo-rest">
+<article class="wo-card" data-strand="earth"><div class="wo-card-in"><h3 class="wo-name">Kilimanjaro</h3><p class="wo-where"><a href="/tanzania">Tanzania</a></p><p class="wo-say">Africa’s highest point, and you walk up it.</p></div></article>
+<article class="wo-card" data-strand="wildlife"><div class="wo-card-in"><h3 class="wo-name">The Okavango Delta</h3><p class="wo-where"><a href="/botswana">Botswana</a></p><p class="wo-say">A river that never reaches the sea.</p></div></article>
+<article class="wo-card" data-strand="earth"><div class="wo-card-in"><h3 class="wo-name">The Namib and Sossusvlei</h3><p class="wo-where"><a href="https://namib-skyline.vercel.app">Namibia</a></p><p class="wo-say">The oldest desert on earth, and it is still moving.</p></div></article>
+<article class="wo-card" data-strand="wildlife"><div class="wo-card-in"><h3 class="wo-name">Bwindi</h3><p class="wo-where"><a href="https://pearl-trails-uganda.vercel.app">Uganda</a></p><p class="wo-say">Forest, mist, and one of the rarest encounters left.</p></div></article>
+<article class="wo-card" data-strand="civilisations"><div class="wo-card-in"><h3 class="wo-name">The Pyramids of Giza</h3><p class="wo-where"><a href="/egypt">Egypt</a></p><p class="wo-say">Four thousand years later, still standing where they were put.</p></div></article>
+<article class="wo-card" data-strand="civilisations"><div class="wo-card-in"><h3 class="wo-name">Lalibela</h3><p class="wo-where"><a href="/ethiopia">Ethiopia</a></p><p class="wo-say">Eleven churches, cut downward into solid rock.</p></div></article>
+</div>
+<ul class="wo-strands">
+<li><b>Earth</b><span>Mountains, deserts, waterfalls, and the geology that made them.</span><i>5</i></li>
+<li><b>Wildlife</b><span>Migration, gorillas, elephants, predators, and species that live nowhere else.</span><i>7</i></li>
+<li><b>Civilisations</b><span>Ancient cities, kingdoms, archaeology, and architecture built to last.</span><i>6</i></li>
+<li><b>Ocean</b><span>Islands, reefs, and the water between them.</span><i>2</i></li>
+<li><b>Human culture</b><span>Living traditions, food, music, craft, and the communities that keep them.</span><i>3</i></li>
+</ul>    <!-- /gen:wonders -->
+    <div class="wa-acts"><a class="wa-act faint" href="/wonders">Explore all the wonders <i>&rarr;</i></a></div>
+  </div>
+</section>
+
 <!-- 03 destinations -->
 <section class="wa-zone is-atlas dust" id="destinations">
   <div class="wa-frame">
@@ -4440,6 +4538,7 @@ window.AF = {
       <a href="/atlas">The atlas of Africa</a>
       <a href="/#window">The five regions</a>
       <a href="/places">Every place</a>
+      <a href="/wonders">The wonders of Africa</a>
       <a href="/compare">Compare two countries</a>
       <a href="/#scale">The size of Africa</a>
       <a href="/tourism/">All twenty-seven categories</a>

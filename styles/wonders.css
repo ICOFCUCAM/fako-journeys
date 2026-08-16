@@ -1,0 +1,56 @@
+/* /wonders — the whole collection.
+ *
+ * The homepage shows eight of twenty-three under a button reading "Explore all
+ * the wonders". This is the page that button promises. It borrows the card from
+ * the homepage section rather than inventing a second one, so a wonder looks
+ * like itself in both places, and adds only what a full page needs: an opening,
+ * a heading per strand, and a way out at the bottom.
+ *
+ * Basalt throughout, like the homepage section. These are places you are meant
+ * to look at rather than read past, and a dark ground is what the site uses when
+ * it wants the reader to slow down.
+ */
+.wo-body{background:var(--fj-basalt);color:var(--fj-onbasalt)}
+.wo-page{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
+
+.wo-open{max-width:30ch;margin-bottom:var(--sp-7)}
+.wo-h1{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(34px,5vw,72px);line-height:.98;letter-spacing:-.02em;
+  color:var(--c-bg);margin:14px 0 0;max-width:18ch}
+.wo-lede{margin-top:22px;font-size:clamp(17px,1.6vw,21px);line-height:1.5;
+  color:var(--fj-onbasalt);max-width:46ch}
+.wo-count{margin-top:16px;font-size:14px;color:var(--fj-onbasalt-dim);max-width:52ch}
+
+.wo-strand{margin-top:var(--sp-7)}
+.wo-strand-head{border-top:2px solid var(--c-accent-fill);padding-top:20px;
+  margin-bottom:var(--sp-4);max-width:46ch}
+.wo-strand-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(26px,3vw,42px);line-height:1.02;color:var(--c-bg);margin:10px 0 0}
+.wo-strand-say{margin-top:10px;font-size:16px;color:var(--fj-onbasalt-dim);max-width:42ch}
+
+/* The strand pages reuse .wo-rest and .wo-card from the homepage section; only
+   the grid's minimum widens, because here there is a whole page to fill rather
+   than a row under two hero cards. */
+.wo-page .wo-rest{display:grid;gap:var(--sp-3);
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.wo-page .wo-card-in{border-top:2px solid var(--c-accent-fill);padding-top:18px;height:100%}
+.wo-page .wo-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:22px;line-height:1.04;color:var(--c-bg);margin:0}
+.wo-page .wo-where{margin-top:9px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--c-gold)}
+.wo-page .wo-where a{color:inherit;border-bottom:1px solid transparent;
+  transition:border-color .2s}
+.wo-page .wo-where a:hover{border-color:var(--c-gold)}
+.wo-page .wo-say{margin-top:12px;font-size:15.5px;line-height:1.5;
+  color:var(--fj-onbasalt-dim);max-width:36ch}
+
+.wo-end{margin-top:var(--sp-7);padding-top:var(--sp-5);border-top:var(--fj-rule-dark);
+  display:flex;flex-wrap:wrap;align-items:center;gap:20px 28px}
+.wo-end p{font-family:var(--fj-display);font-size:clamp(19px,2vw,27px);
+  color:var(--c-bg);margin:0;max-width:22ch}
+
+@media(max-width:760px){
+  .wo-page{padding:var(--sp-5) 18px var(--sp-6)}
+  .wo-strand{margin-top:var(--sp-6)}
+  .wo-page .wo-rest{grid-template-columns:1fr}
+}

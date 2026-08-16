@@ -28,6 +28,7 @@ import os
 import re
 
 from . import plate
+from . import wonders as _wonders
 from .model import (CATEGORY_FILE, ROOT, load_cities, load_lenses, load_moments,
                     load_motion, load_picks, load_regions, load_views, region_of)
 
@@ -62,7 +63,8 @@ REGION_GROUPS = (
     ("islands", "Islands", ("Islands",)),
 )
 
-MARKERS = ("window", "captions", "ticks", "regions", "cities", "experiences",
+MARKERS = ("wonders", "wonderslede",
+           "window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "maplive", "mapover", "claim", "months", "scale",
            "lede", "capafrica", "destlede", "readslede", "mapsvg", "citylede",
            "destinations", "operators", "picks", "plannote", "plansteps",
@@ -1947,6 +1949,8 @@ def render(countries):
         "seasons": block_seasons(seq),
         "seasonsay": block_seasonsay(seq),
         "regiontone": block_regiontone(),
+        "wonders": _wonders.block_wonders(seq),
+        "wonderslede": _wonders.block_wonderslede(seq),
     }
 
 

@@ -127,26 +127,56 @@ def plate(country, entry, aspect, label, shape=None, regions=None, ident=None,
            esc(caption), esc(country.name)))
 
 
-def open_graph(title, description, path, kind="website"):
-    """The card a shared link becomes. Absolute URLs, because a relative one in
-    an Open Graph tag is a broken image on every platform that reads it.
+def open_graph(title, description, path, kind="website", image=None):
+    """The card a shared link becomes, and the icon in the browser tab.
 
-    No image is named. Five hundred and sixty-seven of the five hundred and
-    ninety-four photographs on this site do not exist yet, and pointing every
-    social card at the one that does would be a card about Cameroon on a link
-    about Ghana. When the resolver has run, one line here gives every page its
-    own.
+    Absolute URLs, because a relative one in an Open Graph tag is a broken
+    image on every platform that reads it.
+
+    THE IMAGE
+
+    There was none, and the reason given was that most of the photographs did
+    not exist yet — pointing every card at the one that did would have made a
+    card about Cameroon on a link about Ghana. That was right at the time. It
+    left every one of fifteen hundred pages sharing as a blank rectangle, which
+    is what a link to this site looked like in a message for as long as it
+    stood.
+
+    The brand mark answers it without that risk: a share card that shows the
+    company is never wrong about the country. A page can still pass its own
+    image and override this — a place page eventually should — but the floor is
+    no longer nothing.
+
+    THE ICON
+
+    Also nothing, anywhere. The roundel scales down to a recognisable Africa at
+    32px, which is more than most marks manage, so it is the tab icon at three
+    sizes and the touch icon on a phone home screen.
     """
     base = "https://afrinkong.com"
     url = base + (path if path.startswith("/") else "/" + path)
+    card = base + (image or "/images/brand/share.jpg")
     return ("\n".join([
         '<meta property="og:type" content="%s">' % kind,
         '<meta property="og:site_name" content="Afrinkong">',
         '<meta property="og:title" content="%s">' % title,
         '<meta property="og:description" content="%s">' % description,
         '<meta property="og:url" content="%s">' % url,
-        '<meta name="twitter:card" content="summary">',
+        '<meta property="og:image" content="%s">' % card,
+        '<meta name="twitter:card" content="summary_large_image">',
+        '<meta name="twitter:image" content="%s">' % card,
         '<link rel="canonical" href="%s">' % url,
+        icons(),
+    ]))
+
+
+def icons():
+    """The tab icon and the home-screen icon, from the brand mark."""
+    return ("\n".join([
+        '<link rel="icon" href="/images/brand/mark-32.png" sizes="32x32">',
+        '<link rel="icon" href="/images/brand/mark-512.png" sizes="512x512">',
+        '<link rel="apple-touch-icon" href="/images/brand/mark-180.png">',
+        '<meta name="theme-color" content="#10251F">',
     ]))
 
 
