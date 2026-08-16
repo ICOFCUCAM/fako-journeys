@@ -34316,6 +34316,38 @@
         ]
       }
     },
+    "sao-tome-and-principe/hidden-gems": {
+      "country": "sao-tome-and-principe",
+      "category": "hidden-gems",
+      "caption": "Roca Agostinho Neto",
+      "description": "The largest plantation on the island, ruined, lived in, and quite unlike anywhere else.",
+      "provider": "unsplash",
+      "photoId": "dTa1LJAJvhI",
+      "imageUrl": "https://images.unsplash.com/photo-1621703455854-050a995b6d10",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1621703455854-050a995b6d10?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/white-and-black-remote-control-dTa1LJAJvhI",
+      "photographer": "James Yarema",
+      "photographerUrl": "https://unsplash.com/@jamesyarema",
+      "width": 4752,
+      "height": 3168,
+      "aspectRatio": 1.5,
+      "alt": "Hidden Gems in Sao Tome and Principe",
+      "query": "Sao Tome and Principe remote",
+      "queryTier": "category",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:04:39Z",
+      "verifiedAt": "2026-08-16T05:04:40Z",
+      "relevance": {
+        "score": 5.17,
+        "reasons": [
+          "names the country",
+          "category: remote,the"
+        ]
+      }
+    },
     "sao-tome-and-principe/historic-sites": {
       "country": "sao-tome-and-principe",
       "category": "historic-sites",
@@ -34665,6 +34697,38 @@
         "reasons": [
           "subject: forest,waterfall",
           "category: waterfall"
+        ]
+      }
+    },
+    "sao-tome-and-principe/why-visit": {
+      "country": "sao-tome-and-principe",
+      "category": "why-visit",
+      "caption": "Why Sao Tome and Principe",
+      "description": "Rainforest to the shore, twenty-eight endemic birds, and chocolate made where it grows.",
+      "provider": "pexels",
+      "photoId": "36184006",
+      "imageUrl": "https://images.pexels.com/photos/36184006/pexels-photo-36184006.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/36184006/pexels-photo-36184006.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-view-of-mount-agung-in-bali-indonesia-36184006/",
+      "photographer": "Tom Fisk",
+      "photographerUrl": "https://www.pexels.com/@tomfisk",
+      "width": 8640,
+      "height": 5760,
+      "aspectRatio": 1.5,
+      "alt": "a volcanic peak above rainforest and an empty beach, Sao Tome and Principe",
+      "query": "Sao Tome and Principe volcanic peak rainforest",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:04:42Z",
+      "verifiedAt": "2026-08-16T05:04:43Z",
+      "relevance": {
+        "score": 3.43,
+        "reasons": [
+          "names the country",
+          "subject: and"
         ]
       }
     },
@@ -36409,6 +36473,515 @@
         "reasons": [
           "names the country",
           "subject: beach"
+        ]
+      }
+    },
+    "sierra-leone/adventure": {
+      "country": "sierra-leone",
+      "category": "adventure",
+      "caption": "Surfing and Forest Walking",
+      "description": "Bureh has a surf club run by the village, and Tiwai has night walks for pottos.",
+      "provider": "unsplash",
+      "photoId": "r8VoOAdxRx0",
+      "imageUrl": "https://images.unsplash.com/photo-1649486116203-ba9a1e0d84a3",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1649486116203-ba9a1e0d84a3?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-man-standing-on-top-of-a-sandy-beach-r8VoOAdxRx0",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 7952,
+      "height": 5304,
+      "aspectRatio": 1.4992,
+      "alt": "surfers waiting for a set at Bureh beach, Sierra Leone",
+      "query": "Sierra Leone Bureh",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 54
+      },
+      "createdAt": "2026-08-16T05:05:01Z",
+      "verifiedAt": "2026-08-16T05:05:02Z",
+      "relevance": {
+        "score": 4.67,
+        "reasons": [
+          "subject: and,beach"
+        ]
+      }
+    },
+    "sierra-leone/beaches": {
+      "country": "sierra-leone",
+      "category": "beaches",
+      "caption": "River No. 2 and the Banana Islands",
+      "description": "White sand, forest behind, and two small islands an hour offshore with reef around them.",
+      "provider": "unsplash",
+      "photoId": "RbI3m7aE1LM",
+      "imageUrl": "https://images.unsplash.com/photo-1582617327918-4a9f2d286fda",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1582617327918-4a9f2d286fda?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/green-trees-and-brown-buildings-during-daytime-RbI3m7aE1LM",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 7952,
+      "height": 5304,
+      "aspectRatio": 1.4992,
+      "alt": "the white sand and green forest of River No. 2 beach, Sierra Leone",
+      "query": "Sierra Leone River No",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 55
+      },
+      "createdAt": "2026-08-16T05:04:57Z",
+      "verifiedAt": "2026-08-16T05:04:57Z",
+      "relevance": {
+        "score": 7.53,
+        "reasons": [
+          "names the country",
+          "subject: and,beach,green",
+          "category: beach"
+        ]
+      }
+    },
+    "sierra-leone/crafts": {
+      "country": "sierra-leone",
+      "category": "crafts",
+      "caption": "Country Cloth and Gara",
+      "description": "Hand-woven country cloth strips, and gara tie-dye in indigo and kola.",
+      "provider": "unsplash",
+      "photoId": "af41dO9TnBY",
+      "imageUrl": "https://images.unsplash.com/photo-1582617328222-c32305878dc0",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1582617328222-c32305878dc0?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/man-in-white-shirt-and-black-pants-sitting-on-yellow-van-af41dO9TnBY",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 6348,
+      "height": 4232,
+      "aspectRatio": 1.5,
+      "alt": "gara tie-dyed cloth drying in a Freetown yard, Sierra Leone",
+      "query": "Sierra Leone Freetown",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:05:08Z",
+      "verifiedAt": "2026-08-16T05:05:09Z",
+      "relevance": {
+        "score": 5.5,
+        "reasons": [
+          "names the country",
+          "subject: and,freetown",
+          "looks like 67% of a slot already filled here"
+        ]
+      }
+    },
+    "sierra-leone/culture": {
+      "country": "sierra-leone",
+      "category": "culture",
+      "caption": "Krio, and Sixteen Others",
+      "description": "Freetown was founded by freed slaves, and Krio is the language and the culture that came of it.",
+      "provider": "unsplash",
+      "photoId": "00GKTfFdjK8",
+      "imageUrl": "https://images.unsplash.com/photo-1582617327915-38767d80638c",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1582617327915-38767d80638c?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/blue-and-yellow-bus-on-road-during-daytime-00GKTfFdjK8",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 7679,
+      "height": 5119,
+      "aspectRatio": 1.5001,
+      "alt": "a Krio board house with fretwork balconies in Freetown, Sierra Leone",
+      "query": "Sierra Leone Krio Freetown",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:05:02Z",
+      "verifiedAt": "2026-08-16T05:05:03Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: and,freetown"
+        ]
+      }
+    },
+    "sierra-leone/festivals": {
+      "country": "sierra-leone",
+      "category": "festivals",
+      "caption": "Lantern Parade",
+      "description": "Illuminated floats through Freetown on the night of Independence Day.",
+      "provider": "unsplash",
+      "photoId": "VXxYTECKpkw",
+      "imageUrl": "https://images.unsplash.com/photo-1582617327865-ec9aba71af8e",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1582617327865-ec9aba71af8e?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/woman-in-blue-and-black-car-VXxYTECKpkw",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 4931,
+      "height": 3287,
+      "aspectRatio": 1.5002,
+      "alt": "illuminated lantern floats moving through Freetown at night, Sierra Leone",
+      "query": "Sierra Leone Freetown",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-16T05:05:07Z",
+      "verifiedAt": "2026-08-16T05:05:07Z",
+      "relevance": {
+        "score": 3.36,
+        "reasons": [
+          "names the country",
+          "subject: freetown",
+          "looks like 67% of a slot already filled here"
+        ]
+      }
+    },
+    "sierra-leone/food": {
+      "country": "sierra-leone",
+      "category": "food",
+      "caption": "Cassava Leaf and Country Rice",
+      "description": "Cassava leaf with palm oil, groundnut stew, and fish straight off the beach.",
+      "provider": "unsplash",
+      "photoId": "lO8CgUxfIJc",
+      "imageUrl": "https://images.unsplash.com/photo-1582617012864-13b7dfac7796",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1582617012864-13b7dfac7796?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/woman-in-white-and-black-stripe-tank-top-sitting-on-chair-lO8CgUxfIJc",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 5498,
+      "height": 3665,
+      "aspectRatio": 1.5001,
+      "alt": "Food in Sierra Leone",
+      "query": "Sierra Leone food",
+      "queryTier": "category",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:05:06Z",
+      "verifiedAt": "2026-08-16T05:05:06Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: and"
+        ]
+      }
+    },
+    "sierra-leone/heritage": {
+      "country": "sierra-leone",
+      "category": "heritage",
+      "caption": "The Cotton Tree, and What Followed",
+      "description": "Freetown grew around one tree where freed slaves gave thanks in 1792.",
+      "provider": "unsplash",
+      "photoId": "ONpJpMv6xUM",
+      "imageUrl": "https://images.unsplash.com/photo-1761666508145-c6d865defe65",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1761666508145-c6d865defe65?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/blue-auto-rickshaw-parked-near-a-large-tree-ONpJpMv6xUM",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 7251,
+      "height": 4836,
+      "aspectRatio": 1.4994,
+      "alt": "the historic Cotton Tree standing in central Freetown, Sierra Leone",
+      "query": "Sierra Leone Cotton Tree Freetown",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 45
+      },
+      "createdAt": "2026-08-16T05:05:12Z",
+      "verifiedAt": "2026-08-16T05:05:12Z",
+      "relevance": {
+        "score": 2.53,
+        "reasons": [
+          "subject: tree"
+        ]
+      }
+    },
+    "sierra-leone/hero": {
+      "country": "sierra-leone",
+      "category": "hero",
+      "caption": "The Freetown Peninsula",
+      "description": "Forested mountains dropping straight into the Atlantic, with beaches in every bay.",
+      "provider": "unsplash",
+      "photoId": "cf4WB9VlctM",
+      "imageUrl": "https://images.unsplash.com/photo-1582617327923-41cf918104bb",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1582617327923-41cf918104bb?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/woman-in-blue-dress-walking-on-sidewalk-during-daytime-cf4WB9VlctM",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 7704,
+      "height": 5136,
+      "aspectRatio": 1.5,
+      "alt": "forested hills coming down to white sand at River No. 2 beach, Sierra Leone",
+      "query": "Sierra Leone River No",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-16T05:04:43Z",
+      "verifiedAt": "2026-08-16T05:04:45Z",
+      "relevance": {
+        "score": 6.03,
+        "reasons": [
+          "names the country",
+          "subject: freetown,the"
+        ]
+      }
+    },
+    "sierra-leone/historic-sites": {
+      "country": "sierra-leone",
+      "category": "historic-sites",
+      "caption": "Bunce Island",
+      "description": "A slaving fort in the estuary, ruined and overgrown, and among the most affecting in Africa.",
+      "provider": "unsplash",
+      "photoId": "MdfqwCfUPB0",
+      "imageUrl": "https://images.unsplash.com/photo-1582617012854-7a083c0fa865",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1582617012854-7a083c0fa865?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/brown-wooden-house-near-palm-trees-during-daytime-MdfqwCfUPB0",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 7210,
+      "height": 4807,
+      "aspectRatio": 1.4999,
+      "alt": "Historic Sites in Sierra Leone",
+      "query": "Sierra Leone historic",
+      "queryTier": "category",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:05:10Z",
+      "verifiedAt": "2026-08-16T05:05:11Z",
+      "relevance": {
+        "score": 2.67,
+        "reasons": [
+          "subject: trees"
+        ]
+      }
+    },
+    "sierra-leone/lakes-rivers": {
+      "country": "sierra-leone",
+      "category": "lakes-rivers",
+      "caption": "The Moa and the Rokel",
+      "description": "The Moa runs past Tiwai, and the Rokel comes down to the estuary at Freetown.",
+      "provider": "unsplash",
+      "photoId": "mwJBLHQCerw",
+      "imageUrl": "https://images.unsplash.com/photo-1676190761881-863f026c5d8e",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1676190761881-863f026c5d8e?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-blue-boat-sitting-on-top-of-a-sandy-beach-mwJBLHQCerw",
+      "photographer": "Daniel Camejo Rodríguez",
+      "photographerUrl": "https://unsplash.com/@dcamejo",
+      "width": 3804,
+      "height": 2853,
+      "aspectRatio": 1.3333,
+      "alt": "the wide Moa river running past forested banks at Tiwai, Sierra Leone",
+      "query": "Sierra Leone Moa Tiwai",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 52
+      },
+      "createdAt": "2026-08-16T05:04:55Z",
+      "verifiedAt": "2026-08-16T05:04:55Z",
+      "relevance": {
+        "score": 4.21,
+        "reasons": [
+          "names the country",
+          "subject: river",
+          "category: river"
+        ]
+      }
+    },
+    "sierra-leone/mountains": {
+      "country": "sierra-leone",
+      "category": "mountains",
+      "caption": "Bintumani",
+      "description": "1,945 metres in the Loma range, the highest point in West Africa west of Cameroon.",
+      "provider": "pexels",
+      "photoId": "6254527",
+      "imageUrl": "https://images.pexels.com/photos/6254527/pexels-photo-6254527.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/6254527/pexels-photo-6254527.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/a-pond-near-a-forest-and-mountains-6254527/",
+      "photographer": "Akshay  Nayak",
+      "photographerUrl": "https://www.pexels.com/@dagdraumar",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "the grassy summit ridge of Mount Bintumani above cloud, Sierra Leone",
+      "query": "Sierra Leone Mount Bintumani",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 46
+      },
+      "createdAt": "2026-08-16T05:04:52Z",
+      "verifiedAt": "2026-08-16T05:04:52Z",
+      "relevance": {
+        "score": 2.03,
+        "reasons": [
+          "category: mountain"
+        ]
+      }
+    },
+    "sierra-leone/nature": {
+      "country": "sierra-leone",
+      "category": "nature",
+      "caption": "The Loma Mountains",
+      "description": "Cloud forest and montane grassland in the northeast, hardly walked at all.",
+      "provider": "unsplash",
+      "photoId": "pcNIJPMPY9M",
+      "imageUrl": "https://images.unsplash.com/photo-1632638920424-0033d03a73f6",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1632638920424-0033d03a73f6?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/a-view-of-a-city-with-a-large-body-of-water-in-the-background-pcNIJPMPY9M",
+      "photographer": "Bunting Kargbo",
+      "photographerUrl": "https://unsplash.com/@buntingamir",
+      "width": 6000,
+      "height": 4000,
+      "aspectRatio": 1.5,
+      "alt": "montane grassland and forest in the Loma mountains, Sierra Leone",
+      "query": "Sierra Leone Loma",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-16T05:04:46Z",
+      "verifiedAt": "2026-08-16T05:04:46Z",
+      "relevance": {
+        "score": 4.03,
+        "reasons": [
+          "names the country",
+          "subject: the"
+        ]
+      }
+    },
+    "sierra-leone/safari": {
+      "country": "sierra-leone",
+      "category": "safari",
+      "caption": "Forest, Not Plain",
+      "description": "Pygmy hippo, forest elephant and bongo in Gola — a forest circuit, not a savanna one.",
+      "provider": "pexels",
+      "photoId": "27413057",
+      "imageUrl": "https://images.pexels.com/photos/27413057/pexels-photo-27413057.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/27413057/pexels-photo-27413057.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/forest-27413057/",
+      "photographer": "Dinilkumar  Thottakkara Parameswaran",
+      "photographerUrl": "https://www.pexels.com/@dinilkumar-thottakkara-parameswaran-1496777345",
+      "width": 5712,
+      "height": 4284,
+      "aspectRatio": 1.3333,
+      "alt": "dense Gola rainforest canopy from a ridge, Sierra Leone",
+      "query": "Sierra Leone dense gola rainforest",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:04:51Z",
+      "verifiedAt": "2026-08-16T05:04:51Z",
+      "relevance": {
+        "score": 5.0,
+        "reasons": [
+          "subject: dense,forest"
+        ]
+      }
+    },
+    "sierra-leone/traditional-people": {
+      "country": "sierra-leone",
+      "category": "traditional-people",
+      "caption": "Mende, Temne and Krio",
+      "description": "Mende in the south, Temne in the north, and the Krio of the peninsula.",
+      "provider": "unsplash",
+      "photoId": "x7dVkzOqk2M",
+      "imageUrl": "https://images.unsplash.com/photo-1630510590518-6f07f53458e5",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1630510590518-6f07f53458e5?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/red-and-yellow-boat-on-shore-during-daytime-x7dVkzOqk2M",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 5304,
+      "height": 7952,
+      "aspectRatio": 0.667,
+      "alt": "a Mende village gathering under a large tree, Sierra Leone",
+      "query": "Sierra Leone Mende",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:05:04Z",
+      "verifiedAt": "2026-08-16T05:05:04Z",
+      "relevance": {
+        "score": 4.17,
+        "reasons": [
+          "names the country",
+          "subject: and"
+        ]
+      }
+    },
+    "sierra-leone/waterfalls": {
+      "country": "sierra-leone",
+      "category": "waterfalls",
+      "caption": "Charlotte and Bumbuna",
+      "description": "Charlotte falls in the peninsula forest, and Bumbuna on the Rokel in the interior.",
+      "provider": "unsplash",
+      "photoId": "bHSGyeDCSwk",
+      "imageUrl": "https://images.unsplash.com/photo-1582588498376-48c11c0d90b2",
+      "thumbnailUrl": "https://images.unsplash.com/photo-1582588498376-48c11c0d90b2?auto=format&fit=crop&w=400&h=300&q=70",
+      "sourceUrl": "https://unsplash.com/photos/girl-in-purple-and-blue-floral-dress-wearing-helmet-bHSGyeDCSwk",
+      "photographer": "Random Institute",
+      "photographerUrl": "https://unsplash.com/@randominstitute",
+      "width": 5304,
+      "height": 7952,
+      "aspectRatio": 0.667,
+      "alt": "the Charlotte waterfall falling through forest near Freetown, Sierra Leone",
+      "query": "Sierra Leone Charlotte Freetown",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 50
+      },
+      "createdAt": "2026-08-16T05:04:53Z",
+      "verifiedAt": "2026-08-16T05:04:54Z",
+      "relevance": {
+        "score": 6.17,
+        "reasons": [
+          "names the country",
+          "subject: and,freetown"
+        ]
+      }
+    },
+    "sierra-leone/wildlife": {
+      "country": "sierra-leone",
+      "category": "wildlife",
+      "caption": "Eleven Primates at Tiwai",
+      "description": "An island in the Moa river with one of the highest primate densities anywhere.",
+      "provider": "pexels",
+      "photoId": "34439548",
+      "imageUrl": "https://images.pexels.com/photos/34439548/pexels-photo-34439548.jpeg",
+      "thumbnailUrl": "https://images.pexels.com/photos/34439548/pexels-photo-34439548.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-monkey-in-sunlit-forest-canopy-34439548/",
+      "photographer": "Renjith Tomy Pkm",
+      "photographerUrl": "https://www.pexels.com/@renjith-tomy-pkm-138432405",
+      "width": 6144,
+      "height": 4068,
+      "aspectRatio": 1.5103,
+      "alt": "a Diana monkey in the canopy on Tiwai island, Sierra Leone",
+      "query": "Sierra Leone diana monkey canopy",
+      "queryTier": "subject",
+      "focalPoint": {
+        "x": 50,
+        "y": 48
+      },
+      "createdAt": "2026-08-16T05:04:49Z",
+      "verifiedAt": "2026-08-16T05:04:49Z",
+      "relevance": {
+        "score": 2.55,
+        "reasons": [
+          "subject: monkey"
         ]
       }
     },
