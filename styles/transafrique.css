@@ -116,6 +116,80 @@
 .tf-team-row span{font-size:15.5px;line-height:1.55;color:var(--fj-onbasalt-dim);
   max-width:46ch}
 
+/* ---- the crossings, on the continent -------------------------------------- */
+/* A DIAGRAM OF ONE ROAD SYSTEM, NOT FOUR TOUR PACKAGES.
+   ---------------------------------------------------------------------------
+   Plotted, the geometry says something the cards cannot: Trans Afrique East is
+   the first four countries of the Continental Expedition and Trans Afrique
+   South is its last five reversed. Four separate lines would have put three of
+   them on top of each other and drawn three roads where there is one.
+
+   So two roads are drawn — a spine down the east side and an arc along the
+   Atlantic — and East and South are lit as lengths of the spine when their
+   card is under the cursor or the keyboard. No script: :has() on the section
+   does it, and a browser without :has() shows the finished map rather than a
+   broken one, which is the right way round for a fallback.
+
+   Restrained means the continent is drawn in one flat tone with no borders
+   picked out, no labels on countries, no pins and no shadow. The only things
+   with any weight are the two roads and the thirteen countries they enter. */
+.tf-map{margin:0 0 var(--sp-5);display:grid;gap:var(--sp-4);
+  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:center}
+.tf-map-svg{width:100%;height:auto;display:block}
+/* Everything Afrinkong does not cross is still drawn. Thirteen countries alone
+   on a black field is a diagram; the point of putting a crossing on Africa is
+   that Africa is around it. */
+.tf-map-rest path{fill:color-mix(in srgb,var(--c-bg) 9%,transparent);stroke:none}
+.tf-map-in path{fill:color-mix(in srgb,var(--c-bg) 26%,transparent);stroke:none;
+  transition:fill .25s ease}
+.tf-map-line{fill:none;stroke:var(--c-gold);stroke-width:4.5;
+  stroke-linejoin:round;stroke-linecap:round;transition:stroke .25s ease,stroke-width .25s ease}
+/* The spine carries the weight; the arc is its equal in kind and shorter in
+   fact. East and South have no stroke at rest because the spine is already
+   drawn along them — they appear by brightening, not by arriving. */
+.tf-map-line[data-route="great"]{stroke:var(--c-gold);stroke-width:5.5}
+.tf-map-line[data-route="west"]{stroke:var(--c-gold);stroke-width:5.5}
+.tf-map-line[data-route="east"],.tf-map-line[data-route="south"]{stroke:none}
+.tf-map-nodes circle{fill:var(--c-bg);stroke:none}
+.tf-map-label{font-family:var(--fj-mono);font-size:17px;letter-spacing:2.4px;
+  fill:var(--c-gold)}
+
+/* Hovering or tabbing to a card lights its countries and its road. The
+   selector reaches from the section down into the figure, which is why the map
+   and the cards have to stay inside one .tf-block. */
+.tf-block:has(.tf-route[data-route="east"]:hover) .tf-map-line[data-route="east"],
+.tf-block:has(.tf-route[data-route="south"]:hover) .tf-map-line[data-route="south"],
+.tf-block:has(.tf-route:focus-within[data-route="east"]) .tf-map-line[data-route="east"],
+.tf-block:has(.tf-route:focus-within[data-route="south"]) .tf-map-line[data-route="south"]{
+  stroke:var(--c-bg);stroke-width:7}
+.tf-block:has(.tf-route[data-route="west"]:hover) .tf-map-line[data-route="west"],
+.tf-block:has(.tf-route[data-route="great"]:hover) .tf-map-line[data-route="great"]{
+  stroke:var(--c-bg);stroke-width:7}
+.tf-block:has(.tf-route[data-route="east"]:hover) .tf-map-in path[data-in~="east"],
+.tf-block:has(.tf-route[data-route="west"]:hover) .tf-map-in path[data-in~="west"],
+.tf-block:has(.tf-route[data-route="south"]:hover) .tf-map-in path[data-in~="south"],
+.tf-block:has(.tf-route[data-route="great"]:hover) .tf-map-in path[data-in~="great"]{
+  fill:color-mix(in srgb,var(--c-bg) 58%,transparent)}
+
+.tf-map-cap{margin:0}
+.tf-map-say{margin:0;font-size:15px;line-height:1.6;color:var(--fj-onbasalt-dim);
+  max-width:44ch}
+.tf-map-key{list-style:none;margin:var(--sp-3) 0 0;padding:0}
+.tf-map-key li{display:flex;align-items:baseline;gap:14px;padding:9px 0;
+  border-bottom:var(--fj-rule-dark)}
+/* min-width:0 so the longest name wraps instead of shouldering the count off
+   the end of its row: "Trans Afrique — The Continental Expedition" against
+   "9 countries" left them touching. */
+.tf-map-key b{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:15px;color:var(--c-bg);line-height:1.2;min-width:0}
+.tf-map-key span{margin-left:auto;flex:0 0 auto;padding-left:8px;
+  font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.155em;text-transform:uppercase;color:var(--c-gold);white-space:nowrap}
+
+@media(max-width:860px){
+  .tf-map{grid-template-columns:1fr;gap:var(--sp-3)}
+}
+
 /* The crossings. The country chain is the picture — arrows between names, which
    is what an expedition actually looks like on paper. */
 .tf-routes{display:grid;gap:var(--sp-3);

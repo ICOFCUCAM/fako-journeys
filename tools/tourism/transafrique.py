@@ -45,6 +45,7 @@ import html as html_mod
 import json
 import os
 
+from . import routemap
 from .model import ROOT
 
 DATA = os.path.join(ROOT, "tourism", "transafrique.json")
@@ -296,6 +297,7 @@ def run(countries, log=print):
         "support": support_grid(d),
         "medical": medical_note(d),
         "money": money_lists(d),
+        "map": routemap.build(d),
         "fine": esc(d["fine"]),
     }
     with open(PAGE, "w", encoding="utf-8") as fh:
@@ -363,6 +365,7 @@ TEMPLATE = """<!DOCTYPE html>
 
   <section class="tf-block" id="crossings">
     <h2 class="tf-h2">The crossings</h2>
+%(map)s
     <div class="tf-routes">
 %(routes)s
     </div>
