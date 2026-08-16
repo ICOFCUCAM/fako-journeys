@@ -29,6 +29,7 @@ import json
 import os
 
 from . import company, imaging, plate
+from . import countrymap
 from .model import ROOT, region_of
 
 SHAPES_PATH = os.path.join(ROOT, "tourism", "shapes.json")
@@ -184,6 +185,37 @@ GROUPS = (
 )
 
 
+def brief_block(country):
+    """THE LAND IN BRIEF, beside the map that produced it.
+
+    Every row is measured off the plate or read out of the border table —
+    countrymap.brief() will not return a line it cannot derive. The last row is
+    the only one from editorial copy, and it is the country's own `when`, which
+    is the fact a visitor is actually here for.
+
+    There is deliberately no population and no area in square kilometres. The
+    repository holds neither, and one invented number beside four derived ones
+    does not read as one weak line, it makes the reader stop trusting the other
+    four — and the map they came from.
+    """
+    rows = list(countrymap.brief(country.slug, country.name))
+    when = (country.when or "").strip()
+    if when:
+        rows.append(("Best time", esc(when)))
+    if not rows:
+        return ""
+    return ('<div class="ct-brief"><h3 class="ct-brief-h">The land in brief</h3>'
+            '<dl class="ct-brief-list">%s</dl></div>'
+            % "".join('<div class="ct-brief-row"><dt>%s</dt><dd>%s</dd></div>'
+                      % (esc(k), v) for k, v in rows))
+
+
+def _region_phrase(region):
+    """Four of the five region names read straight after "Also in". The fifth is
+    "Islands", and "Also in Islands" is not English."""
+    return "the islands" if (region or "").strip().lower() == "islands" else region
+
+
 def esc(v):
     return html_mod.escape(str(v if v is not None else ""), quote=True)
 
@@ -284,9 +316,36 @@ def build(country, taxonomy, countries=()):
         "operator": op,
         "hero_class": " has-shape" if hero_window else " no-shape",
         "near": near_html,
-        "near_block": ('<section class="ct-near"><div class="af-frame"><h2>Also in %s</h2>'
-                       '<div class="ct-near-row">%s</div></div></section>'
-                       % (esc(country.region), near_html)) if near_html else "",
+        # WHERE IT IS, AND WHAT IT LOOKS LIKE. Two maps and one grammar, the
+        # same on all fifty-four: a locator that answers "where in Africa",
+        # then the country cropped out of the continental projection with its
+        # true land neighbours around it, its rivers and lakes, and a scale bar
+        # derived from the projection at its own latitude. What used to stand
+        # in for geography here was a link list; the silhouette elsewhere on
+        # the site is the country renormalised into its own box, which for a
+        # small country is nine straight lines and reads as a shape rather than
+        # a place. tools/tourism/countrymap.py records every source, and says
+        # why mountains, parks and numbered route markers are not drawn: this
+        # repository has no coordinates for any of them.
+        "near_block": (
+            '<section class="ct-where"><div class="af-frame ct-where-in">'
+            '<div class="ct-where-side">'
+            '<h2 class="ct-where-h">Where it is</h2>'
+            '<p class="ct-where-line">Africa &middot; %s &middot; %s</p>'
+            '<div class="ct-where-loc">%s</div>'
+            '%s%s</div>'
+            '<figure class="ct-where-map">%s'
+            '<figcaption>%s</figcaption>'
+            '</figure></div></section>'
+            % (esc(country.region), esc(country.name),
+               countrymap.locator(country.slug, country.name),
+               brief_block(country),
+               ('<h3 class="ct-where-also">Also in %s</h3>'
+                '<div class="ct-near-row">%s</div>'
+                % (esc(_region_phrase(country.region)), near_html))
+               if near_html else "",
+               countrymap.atlas(country.slug, country.name),
+               esc(countrymap.caption(country.slug, country.name)))),
         "highlights": "\n".join(highlights),
         "reasons": "\n".join(reasons),
         "groups": "\n".join(groups),
@@ -394,6 +453,43 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
 /* The region strip: the page's one link outward, and what makes a country page
    part of an atlas rather than a leaflet. */
 .ct-note-go{white-space:nowrap;color:var(--c-accent);border-bottom:1px solid var(--c-accent)}
+/* WHERE IT IS: the locator, the atlas and the neighbours, in one section.
+   It was a row of links called "Also in East Africa", which answered the
+   question a reader has after the map rather than the one they have before it.
+   The two maps are built by tools/tourism/countrymap.py and are identical in
+   grammar on all fifty-four countries — only the geography changes. */
+.ct-where{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:var(--sp-5) 0}
+.ct-where-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);
+  gap:var(--sp-5);align-items:start}
+.ct-where-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin:0}
+.ct-where-line{margin-top:10px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.ct-where-loc{margin-top:var(--sp-3);max-width:190px}
+/* THE LAND IN BRIEF. A reading of the plate next to it, not a fact box bought
+   in from somewhere else: every row is measured off the same projection or read
+   out of the same border table, which is why there is no population and no area
+   here. Set as a definition list because that is what it is — the label is the
+   question and the value is the answer — and ruled row by row so the eye can
+   run down the answers without reading the labels twice. */
+.ct-brief{margin-top:var(--sp-4);border-top:var(--fj-rule);padding-top:14px}
+.ct-brief-h{font-family:var(--fj-mono);font-size:9.5px;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin:0}
+.ct-brief-list{margin:12px 0 0}
+.ct-brief-row{display:grid;grid-template-columns:78px minmax(0,1fr);
+  gap:14px;padding:9px 0;border-bottom:1px solid
+  color-mix(in srgb,var(--c-primary) 10%,transparent)}
+.ct-brief-row:last-child{border-bottom:0}
+.ct-brief-row dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted);padding-top:2px}
+.ct-brief-row dd{margin:0;font-size:14px;line-height:1.45;color:var(--c-primary)}
+.ct-where-also{margin-top:var(--sp-4);font-family:var(--fj-mono);font-size:9.5px;
+  font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.ct-where-also+.ct-near-row{margin-top:10px}
+.ct-where-map{margin:0;min-width:0}
+.ct-where-map figcaption{margin-top:12px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+@media(max-width:860px){.ct-where-in{grid-template-columns:minmax(0,1fr)}}
 .ct-near{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:26px 0}
 .ct-near h2{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
   text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}

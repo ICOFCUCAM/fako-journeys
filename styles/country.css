@@ -100,6 +100,43 @@
 /* The region strip: the page's one link outward, and what makes a country page
    part of an atlas rather than a leaflet. */
 .ct-note-go{white-space:nowrap;color:var(--c-accent);border-bottom:1px solid var(--c-accent)}
+/* WHERE IT IS: the locator, the atlas and the neighbours, in one section.
+   It was a row of links called "Also in East Africa", which answered the
+   question a reader has after the map rather than the one they have before it.
+   The two maps are built by tools/tourism/countrymap.py and are identical in
+   grammar on all fifty-four countries — only the geography changes. */
+.ct-where{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:var(--sp-5) 0}
+.ct-where-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);
+  gap:var(--sp-5);align-items:start}
+.ct-where-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent);margin:0}
+.ct-where-line{margin-top:10px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.ct-where-loc{margin-top:var(--sp-3);max-width:190px}
+/* THE LAND IN BRIEF. A reading of the plate next to it, not a fact box bought
+   in from somewhere else: every row is measured off the same projection or read
+   out of the same border table, which is why there is no population and no area
+   here. Set as a definition list because that is what it is — the label is the
+   question and the value is the answer — and ruled row by row so the eye can
+   run down the answers without reading the labels twice. */
+.ct-brief{margin-top:var(--sp-4);border-top:var(--fj-rule);padding-top:14px}
+.ct-brief-h{font-family:var(--fj-mono);font-size:9.5px;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin:0}
+.ct-brief-list{margin:12px 0 0}
+.ct-brief-row{display:grid;grid-template-columns:78px minmax(0,1fr);
+  gap:14px;padding:9px 0;border-bottom:1px solid
+  color-mix(in srgb,var(--c-primary) 10%,transparent)}
+.ct-brief-row:last-child{border-bottom:0}
+.ct-brief-row dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted);padding-top:2px}
+.ct-brief-row dd{margin:0;font-size:14px;line-height:1.45;color:var(--c-primary)}
+.ct-where-also{margin-top:var(--sp-4);font-family:var(--fj-mono);font-size:9.5px;
+  font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
+.ct-where-also+.ct-near-row{margin-top:10px}
+.ct-where-map{margin:0;min-width:0}
+.ct-where-map figcaption{margin-top:12px;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+@media(max-width:860px){.ct-where-in{grid-template-columns:minmax(0,1fr)}}
 .ct-near{background:var(--fj-dust);border-bottom:var(--fj-rule);padding:26px 0}
 .ct-near h2{font-family:var(--fj-mono);font-size:10px;font-weight:400;letter-spacing:.22em;
   text-transform:uppercase;color:var(--c-muted);margin-bottom:14px}

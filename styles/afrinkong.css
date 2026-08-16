@@ -497,3 +497,98 @@ html.ex-open{overflow:hidden}
    country photographs already carry. Scoped to data-illustration so it reaches
    the adopted photographs and nothing else on these pages. */
 img[data-illustration]{height:auto}
+
+
+/* ---- the country atlas ----------------------------------------------------- */
+/* TWO MAPS, ONE GRAMMAR, FIFTY-FOUR COUNTRIES.
+   Built by tools/tourism/countrymap.py, which records where every layer comes
+   from and why the layers this repository has no coordinates for — mountains,
+   parks, numbered route markers — are not drawn rather than approximated.
+
+   The locator answers "where in Africa is this" and carries no labels, no
+   water and no cities: a locator that has to be read has failed. The atlas is
+   the country cropped out of the continental projection rather than
+   renormalised into its own box, which is the whole difference between an
+   atlas plate and a silhouette — it keeps its real proportion, its real
+   orientation, and its real relationship to everything it touches. */
+.cm-loc{width:100%;height:auto;display:block}
+.cm-loc-rest path{fill:color-mix(in srgb,var(--c-primary) 12%,transparent);stroke:none}
+.cm-loc-here{fill:var(--c-accent);stroke:none}
+
+.cm-atlas{width:100%;height:auto;display:block}
+/* Sized off --u, the frame's own width in viewBox units, which the generator
+   writes onto the svg. The crop differs per country — Eswatini's frame is 60
+   units across and Algeria's 300 — so a fixed stroke is a hairline on one and a
+   rope on the other, and a fixed font size is a caption on one and a word
+   filling the map on the other. */
+/* Sea and land have to be told apart at a glance or the plate is one beige
+   field with a border network drawn on it — which is what the first version
+   was, because both were translucent washes a few per cent apart. So: the sea
+   is a real tint and the land is OPAQUE paper laid over it. That way the coast
+   is a hard edge the eye finds without being pointed at it, which is the whole
+   job of a coastline on a map of a coastal country. */
+.cm-sea{fill:color-mix(in srgb,#2C6E7F 16%,var(--c-bg));stroke:none}
+.cm-near path{fill:color-mix(in srgb,var(--c-primary) 7%,var(--c-bg));
+  stroke:color-mix(in srgb,var(--c-primary) 26%,transparent);
+  stroke-width:calc(var(--u) * .0035)}
+.cm-water .cm-river{fill:none;stroke:color-mix(in srgb,#2C6E7F 62%,transparent);
+  stroke-width:calc(var(--u) * .004);stroke-linecap:round;stroke-linejoin:round}
+.cm-water .cm-lake{fill:color-mix(in srgb,#2C6E7F 34%,var(--c-bg));stroke:none}
+/* Opaque like the land it sits in, not a wash. Left translucent it took its
+   colour from the sea rect underneath and Kenya came out grey-mauve — the
+   country reading colder than the countries around it, which is backwards. */
+.cm-here{fill:color-mix(in srgb,var(--c-accent) 15%,var(--c-bg));
+  stroke:var(--c-primary);stroke-width:calc(var(--u) * .006);stroke-linejoin:round}
+/* THE `* 1px` ON EVERY TYPE RULE IS LORE-BEARING, DO NOT TIDY IT AWAY.
+   --u is written as a bare number so the geometry properties can use it:
+   stroke-width takes a <number> in SVG, so calc(var(--u) * .006) is valid
+   there. font-size and letter-spacing take a <length>, and a unitless calc
+   result is not one — the declaration is thrown out and the text falls back to
+   the inherited 16px, which inside an svg means SIXTEEN USER UNITS, a tenth of
+   Kenya's frame. That is what made the first two renders look like headings
+   over the map, and shrinking the numbers could never have fixed it. Inside an
+   svg a CSS px IS a user unit, so `* 1px` both makes the value legal and keeps
+   it frame-relative. */
+.cm-near-name{font-family:var(--fj-mono);font-size:calc(var(--u) * .013 * 1px);
+  letter-spacing:calc(var(--u) * .0016 * 1px);
+  fill:color-mix(in srgb,var(--c-primary) 50%,transparent)}
+/* Seychelles and Mauritius: no polygon in the continental outline, so the
+   country is a marked position rather than a shape. Ringed, not dotted, so it
+   never reads as one of the cities. */
+.cm-here-pt circle{fill:var(--c-accent)}
+.cm-here-pt .cm-here-ring{fill:none;stroke:var(--c-accent);
+  stroke-width:calc(var(--u) * .004)}
+.cm-here-pt text{font-family:var(--fj-mono);font-size:calc(var(--u) * .018 * 1px);
+  letter-spacing:calc(var(--u) * .002 * 1px);fill:var(--c-primary);
+  text-anchor:middle}
+.cm-loc-here .cm-loc-ring{fill:none;stroke:var(--c-accent);stroke-width:6}
+.cm-loc-here circle{fill:var(--c-accent)}
+.cm-city circle{fill:var(--c-primary)}
+.cm-city text{font-family:var(--fj-mono);font-size:calc(var(--u) * .0135 * 1px);
+  letter-spacing:calc(var(--u) * .001 * 1px);fill:var(--c-primary)}
+.cm-scale line{stroke:var(--c-primary);stroke-width:calc(var(--u) * .004);fill:none}
+.cm-scale text{font-family:var(--fj-mono);font-size:calc(var(--u) * .0125 * 1px);
+  letter-spacing:calc(var(--u) * .001 * 1px);fill:var(--c-primary)}
+.cm-north line{stroke:var(--c-primary);stroke-width:calc(var(--u) * .004);fill:none}
+.cm-north text{font-family:var(--fj-mono);font-size:calc(var(--u) * .015 * 1px);
+  letter-spacing:0;fill:var(--c-primary)}
+/* On a dark ground the same plate inverts rather than being redrawn. */
+.af-dark .cm-sea,.tf-page .cm-sea,.wa-zone.basalt .cm-sea{
+  fill:color-mix(in srgb,#2C6E7F 30%,var(--c-primary))}
+.af-dark .cm-near path,.tf-page .cm-near path,.wa-zone.basalt .cm-near path{
+  fill:color-mix(in srgb,var(--c-bg) 9%,var(--c-primary));
+  stroke:color-mix(in srgb,var(--c-bg) 22%,transparent)}
+.af-dark .cm-here,.tf-page .cm-here,.wa-zone.basalt .cm-here{
+  fill:color-mix(in srgb,var(--c-accent-lit) 20%,transparent);stroke:var(--c-bg)}
+.af-dark .cm-near-name,.tf-page .cm-near-name,.wa-zone.basalt .cm-near-name{
+  fill:color-mix(in srgb,var(--c-bg) 52%,transparent)}
+.af-dark .cm-city circle,.af-dark .cm-city text,.af-dark .cm-scale line,
+.af-dark .cm-scale text,.af-dark .cm-north line,.af-dark .cm-north text,
+.tf-page .cm-city circle,.tf-page .cm-city text,.tf-page .cm-scale line,
+.tf-page .cm-scale text,.tf-page .cm-north line,.tf-page .cm-north text{
+  fill:var(--c-bg);stroke:var(--c-bg)}
+.af-dark .cm-scale line,.tf-page .cm-scale line,
+.af-dark .cm-north line,.tf-page .cm-north line{fill:none}
+.af-dark .cm-loc-rest path,.tf-page .cm-loc-rest path{
+  fill:color-mix(in srgb,var(--c-bg) 12%,transparent)}
+.af-dark .cm-loc-here,.tf-page .cm-loc-here{fill:var(--c-accent-lit)}
