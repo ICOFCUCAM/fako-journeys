@@ -28604,6 +28604,73 @@
    "verifiedAt": "2026-08-16T05:05:03Z",
    "width": 7679
   },
+  "sierra-leone/eco-tourism": {
+   "alt": "Group tour guide engaging with visitors outdoors, Sierra Leone",
+   "altIntended": "a community guide leading a walk on Tiwai island, Sierra Leone",
+   "aspectRatio": 1.5,
+   "caption": "Tiwai, Community-Run",
+   "category": "eco-tourism",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:47Z",
+   "description": "Eight villages own the island reserve and have done since before the war.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/37573881/pexels-photo-37573881.jpeg",
+   "photoId": "37573881",
+   "photographer": "Mico Medel",
+   "photographerUrl": "https://www.pexels.com/@micomedel",
+   "provider": "pexels",
+   "query": "Sierra Leone community guide leading",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: guide,leading"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/group-tour-guide-engaging-with-visitors-outdoors-37573881/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37573881/pexels-photo-37573881.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:09:47Z",
+   "width": 6000
+  },
+  "sierra-leone/family-community": {
+   "alt": "People riding on boat on river during daytime hWIlpY2qPE, Sierra Leone",
+   "altIntended": "a family under trees at the edge of River No. 2 beach, Sierra Leone",
+   "aspectRatio": 1.4992,
+   "caption": "Beaches With Shade",
+   "category": "family-community",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:38Z",
+   "description": "River No. 2 and Tokeh have forest behind the sand and calm water in the dry season.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 5304,
+   "imageUrl": "https://images.unsplash.com/photo-1630510590519-0976dc4cc250",
+   "photoId": "-hWIlpY2qPE",
+   "photographer": "Random Institute",
+   "photographerUrl": "https://unsplash.com/@randominstitute",
+   "provider": "unsplash",
+   "query": "Sierra Leone River No",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: river",
+     "category: people",
+     "looks like 67% of a slot already filled here"
+    ],
+    "score": 5.0
+   },
+   "sourceUrl": "https://unsplash.com/photos/people-riding-on-boat-on-river-during-daytime--hWIlpY2qPE",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1630510590519-0976dc4cc250?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:09:39Z",
+   "width": 7952
+  },
   "sierra-leone/festivals": {
    "alt": "Woman in blue and black car, Sierra Leone",
    "altIntended": "illuminated lantern floats moving through Freetown at night, Sierra Leone",
@@ -28637,6 +28704,38 @@
    "thumbnailUrl": "https://images.unsplash.com/photo-1582617327865-ec9aba71af8e?auto=format&fit=crop&w=400&h=300&q=70",
    "verifiedAt": "2026-08-16T05:05:07Z",
    "width": 4931
+  },
+  "sierra-leone/forests": {
+   "alt": "Closeup to branches of the tree, Sierra Leone",
+   "altIntended": "the closed canopy of Gola rainforest from above, Sierra Leone",
+   "aspectRatio": 1.5,
+   "caption": "Gola Rainforest",
+   "category": "forests",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:28Z",
+   "description": "The largest remaining block of Upper Guinean forest, now a transboundary park with Liberia.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/12174137/pexels-photo-12174137.jpeg",
+   "photoId": "12174137",
+   "photographer": "Alexey Demidov",
+   "photographerUrl": "https://www.pexels.com/@alexeydemidov",
+   "provider": "pexels",
+   "query": "Sierra Leone closed canopy",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: canopy"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/closeup-to-branches-of-the-tree-12174137/",
+   "thumbnailUrl": "https://images.pexels.com/photos/12174137/pexels-photo-12174137.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:09:28Z",
+   "width": 6000
   },
   "sierra-leone/heritage": {
    "alt": "Blue auto rickshaw parked near a large tree, Sierra Leone",
@@ -28702,6 +28801,39 @@
    "thumbnailUrl": "https://images.unsplash.com/photo-1582617327923-41cf918104bb?auto=format&fit=crop&w=400&h=300&q=70",
    "verifiedAt": "2026-08-16T05:04:45Z",
    "width": 7704
+  },
+  "sierra-leone/hidden-gems": {
+   "alt": "Baby turtle on sand, Sierra Leone",
+   "altIntended": "a sandbar island with palms and a fishing village in the Turtle Islands, Sierra Leone",
+   "aspectRatio": 1.4972,
+   "caption": "The Turtle Islands",
+   "category": "hidden-gems",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:50Z",
+   "description": "Eight sand islands in the far south, reachable only by boat, with no electricity.",
+   "focalPoint": {
+    "x": 50,
+    "y": 54
+   },
+   "height": 5483,
+   "imageUrl": "https://images.pexels.com/photos/10041666/pexels-photo-10041666.jpeg",
+   "photoId": "10041666",
+   "photographer": "Los Muertos Crew",
+   "photographerUrl": "https://www.pexels.com/@cristian-rojas",
+   "provider": "pexels",
+   "query": "Sierra Leone Turtle Islands",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: the,turtle",
+     "category: the"
+    ],
+    "score": 6.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/baby-turtle-on-sand-10041666/",
+   "thumbnailUrl": "https://images.pexels.com/photos/10041666/pexels-photo-10041666.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:09:50Z",
+   "width": 8209
   },
   "sierra-leone/historic-sites": {
    "alt": "Brown wooden house near palm trees during daytime, Sierra Leone",
@@ -28769,6 +28901,74 @@
    "verifiedAt": "2026-08-16T05:04:55Z",
    "width": 3804
   },
+  "sierra-leone/local-life": {
+   "alt": "A large group of people standing in a line, Sierra Leone",
+   "altIntended": "crowds and beach bars at Lumley beach on a Sunday, Sierra Leone",
+   "aspectRatio": 1.4992,
+   "caption": "Sunday at Lumley",
+   "category": "local-life",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:35Z",
+   "description": "The whole city goes to the beach, and the bars along it play until late.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4329,
+   "imageUrl": "https://images.unsplash.com/photo-1649486116210-69085e3f164a",
+   "photoId": "9LyOQWyLm0I",
+   "photographer": "Random Institute",
+   "photographerUrl": "https://unsplash.com/@randominstitute",
+   "provider": "unsplash",
+   "query": "Sierra Leone Lumley Sunday",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "category: street",
+     "looks like 67% of a slot already filled here"
+    ],
+    "score": 3.0
+   },
+   "sourceUrl": "https://unsplash.com/photos/a-large-group-of-people-standing-in-a-line-9LyOQWyLm0I",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1649486116210-69085e3f164a?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:09:36Z",
+   "width": 6490
+  },
+  "sierra-leone/luxury": {
+   "alt": "Body of water during daytime, Sierra Leone",
+   "altIntended": "a beach lodge among palms at Tokeh, Sierra Leone",
+   "aspectRatio": 1.5013,
+   "caption": "Growing",
+   "category": "luxury",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:44Z",
+   "description": "Good beach lodges on the peninsula, and Tiwai's community camp inland.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 2593,
+   "imageUrl": "https://images.unsplash.com/photo-1611395813517-41f9be5e292d",
+   "photoId": "VCsLRRvKE1c",
+   "photographer": "radwan skeiky",
+   "photographerUrl": "https://unsplash.com/@radwanskeiky",
+   "provider": "unsplash",
+   "query": "Sierra Leone Tokeh",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: tokeh",
+     "looks like 67% of a slot already filled here"
+    ],
+    "score": 2.87
+   },
+   "sourceUrl": "https://unsplash.com/photos/aerial-view-of-body-of-water-during-daytime-VCsLRRvKE1c",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1611395813517-41f9be5e292d?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:09:44Z",
+   "width": 3893
+  },
   "sierra-leone/mountains": {
    "alt": "A pond near a forest and mountains, Sierra Leone",
    "altIntended": "the grassy summit ridge of Mount Bintumani above cloud, Sierra Leone",
@@ -28799,6 +28999,70 @@
    "sourceUrl": "https://www.pexels.com/photo/a-pond-near-a-forest-and-mountains-6254527/",
    "thumbnailUrl": "https://images.pexels.com/photos/6254527/pexels-photo-6254527.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
    "verifiedAt": "2026-08-16T05:04:52Z",
+   "width": 6000
+  },
+  "sierra-leone/outdoor": {
+   "alt": "Adventurous walk on a rope bridge in the forest, Sierra Leone",
+   "altIntended": "a walker crossing montane grassland on Bintumani, Sierra Leone",
+   "aspectRatio": 1.4992,
+   "caption": "Climbing Bintumani",
+   "category": "outdoor",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:42Z",
+   "description": "Four days from Sinekoro, through forest and out onto grassland above the cloud.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 5304,
+   "imageUrl": "https://images.pexels.com/photos/38825026/pexels-photo-38825026.jpeg",
+   "photoId": "38825026",
+   "photographer": "Manass Rex",
+   "photographerUrl": "https://www.pexels.com/@manass-rex-333886502",
+   "provider": "pexels",
+   "query": "Sierra Leone walker crossing montane",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: crossing"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/adventurous-walk-on-a-rope-bridge-in-the-forest-38825026/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38825026/pexels-photo-38825026.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:09:43Z",
+   "width": 7952
+  },
+  "sierra-leone/photography": {
+   "alt": "Green tropical trees growing on hills in sundown, Sierra Leone",
+   "altIntended": "forested hills behind a beach in late afternoon light, Sierra Leone",
+   "aspectRatio": 1.5,
+   "caption": "Forest Meeting Sand",
+   "category": "photography",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:48Z",
+   "description": "The peninsula beaches in the late afternoon, when the hills behind them go blue.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/7017175/pexels-photo-7017175.jpeg",
+   "photoId": "7017175",
+   "photographer": "Ludvig Hedenborg",
+   "photographerUrl": "https://www.pexels.com/@ludvighedenborg",
+   "provider": "pexels",
+   "query": "Sierra Leone forested hills behind",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: forest,hills"
+    ],
+    "score": 3.93
+   },
+   "sourceUrl": "https://www.pexels.com/photo/green-tropical-trees-growing-on-hills-in-sundown-7017175/",
+   "thumbnailUrl": "https://images.pexels.com/photos/7017175/pexels-photo-7017175.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:09:49Z",
    "width": 6000
   },
   "sierra-leone/safari": {
@@ -28866,6 +29130,40 @@
    "verifiedAt": "2026-08-16T05:04:54Z",
    "width": 5304
   },
+  "sierra-leone/why-visit": {
+   "alt": "Brown canoe on brown sand during daytime, Sierra Leone",
+   "altIntended": "an empty white beach below forested hills at dusk, Sierra Leone",
+   "aspectRatio": 1.4992,
+   "caption": "Why Sierra Leone",
+   "category": "why-visit",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:51Z",
+   "description": "The best beaches in West Africa, with rainforest mountains standing behind them.",
+   "focalPoint": {
+    "x": 50,
+    "y": 54
+   },
+   "height": 5304,
+   "imageUrl": "https://images.unsplash.com/photo-1630510590530-ffe042121ca7",
+   "photoId": "k33898qkqxE",
+   "photographer": "Random Institute",
+   "photographerUrl": "https://unsplash.com/@randominstitute",
+   "provider": "unsplash",
+   "query": "Sierra Leone empty white beach",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: leone,sierra",
+     "looks like 67% of a slot already filled here"
+    ],
+    "score": 4.76
+   },
+   "sourceUrl": "https://unsplash.com/photos/brown-canoe-on-brown-sand-during-daytime-k33898qkqxE",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1630510590530-ffe042121ca7?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:09:52Z",
+   "width": 7952
+  },
   "sierra-leone/wildlife": {
    "alt": "Majestic monkey in sunlit forest canopy, Sierra Leone",
    "altIntended": "a Diana monkey in the canopy on Tiwai island, Sierra Leone",
@@ -28897,6 +29195,755 @@
    "thumbnailUrl": "https://images.pexels.com/photos/34439548/pexels-photo-34439548.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
    "verifiedAt": "2026-08-16T05:04:49Z",
    "width": 6144
+  },
+  "somalia/adventure": {
+   "alt": "Two ships are in the ocean near a large body of water, Somalia",
+   "altIntended": "a diver over an unfished coral reef in the Gulf of Aden, Somalia",
+   "aspectRatio": 1.4999,
+   "caption": "Diving Berbera",
+   "category": "adventure",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:12Z",
+   "description": "Unfished reefs in the Gulf of Aden, and almost no one to share them with.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4959,
+   "imageUrl": "https://images.pexels.com/photos/27534907/pexels-photo-27534907.jpeg",
+   "photoId": "27534907",
+   "photographer": "Doğan Alpaslan  Demir",
+   "photographerUrl": "https://www.pexels.com/@izafi",
+   "provider": "pexels",
+   "query": "Somalia Gulf Aden",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: gulf"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/two-ships-are-in-the-ocean-near-a-large-body-of-water-27534907/",
+   "thumbnailUrl": "https://images.pexels.com/photos/27534907/pexels-photo-27534907.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:13Z",
+   "width": 7438
+  },
+  "somalia/architecture": {
+   "alt": "Wooden carved doors of old building, Somalia",
+   "altIntended": "a carved wooden door in a coral-stone wall on the Somali coast, Somalia",
+   "aspectRatio": 0.75,
+   "caption": "Coral Stone and Carved Doors",
+   "category": "architecture",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:22Z",
+   "description": "Swahili coral-rag architecture along the southern coast, with heavy carved doors.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 8000,
+   "imageUrl": "https://images.pexels.com/photos/8218107/pexels-photo-8218107.jpeg",
+   "photoId": "8218107",
+   "photographer": "Amine EL-AQQAD",
+   "photographerUrl": "https://www.pexels.com/@amine-el-aqqad-50962045",
+   "provider": "pexels",
+   "query": "Somalia carved wooden door",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: carved,door,stone",
+     "category: building"
+    ],
+    "score": 6.5
+   },
+   "sourceUrl": "https://www.pexels.com/photo/wooden-carved-doors-of-old-building-8218107/",
+   "thumbnailUrl": "https://images.pexels.com/photos/8218107/pexels-photo-8218107.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:23Z",
+   "width": 6000
+  },
+  "somalia/beaches": {
+   "alt": "A beach with boats and people, Somalia",
+   "altIntended": "the beach and clear water at Berbera on the Gulf of Aden, Somalia",
+   "aspectRatio": 1.3333,
+   "caption": "Berbera and Beyond",
+   "category": "beaches",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:08Z",
+   "description": "Berbera's beaches on the Gulf of Aden, and a reef wall a short swim from the sand.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 3024,
+   "imageUrl": "https://images.unsplash.com/photo-1660519167902-42fa6857567c",
+   "photoId": "dlSMqiBeVxU",
+   "photographer": "Saacid Ahmed",
+   "photographerUrl": "https://unsplash.com/@saacid",
+   "provider": "unsplash",
+   "query": "Somalia Berbera Gulf",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,beach",
+     "category: beach"
+    ],
+    "score": 5.75
+   },
+   "sourceUrl": "https://unsplash.com/photos/a-beach-with-boats-and-people-dlSMqiBeVxU",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1660519167902-42fa6857567c?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:10:08Z",
+   "width": 4032
+  },
+  "somalia/cities": {
+   "alt": "Portrait of somali man in front of mogadishu mosque",
+   "altIntended": "the seafront and white buildings of Mogadishu, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Mogadishu and Hargeisa",
+   "category": "cities",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:21Z",
+   "description": "A white Indian Ocean capital rebuilding, and a highland city that has been quiet for thirty years.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4672,
+   "imageUrl": "https://images.pexels.com/photos/33290518/pexels-photo-33290518.jpeg",
+   "photoId": "33290518",
+   "photographer": "ibrahim sakhawi",
+   "photographerUrl": "https://www.pexels.com/@sakhawi",
+   "provider": "pexels",
+   "query": "Somalia Mogadishu",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: mogadishu"
+    ],
+    "score": 3.43
+   },
+   "sourceUrl": "https://www.pexels.com/photo/portrait-of-somali-man-in-front-of-mogadishu-mosque-33290518/",
+   "thumbnailUrl": "https://images.pexels.com/photos/33290518/pexels-photo-33290518.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:21Z",
+   "width": 7008
+  },
+  "somalia/crafts": {
+   "alt": "Handmade woven wicker belts, Somalia",
+   "altIntended": "the woven frame and mats of a Somali aqal nomadic house, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Weaving and Woodcarving",
+   "category": "crafts",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:18Z",
+   "description": "Aqal nomadic house frames, carved wooden headrests, and woven mats from the north.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/17682680/pexels-photo-17682680.jpeg",
+   "photoId": "17682680",
+   "photographer": "Archange Masudi",
+   "photographerUrl": "https://www.pexels.com/@masudi",
+   "provider": "pexels",
+   "query": "Somalia woven mats somali",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,mats,woven",
+     "category: handmade"
+    ],
+    "score": 6.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/handmade-woven-wicker-belts-17682680/",
+   "thumbnailUrl": "https://images.pexels.com/photos/17682680/pexels-photo-17682680.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:19Z",
+   "width": 6000
+  },
+  "somalia/culture": {
+   "alt": "Four men sit at a bus stop in white shirts, Somalia",
+   "altIntended": "men listening to a poet reciting at an evening gathering, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Poetry as the National Art",
+   "category": "culture",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:13Z",
+   "description": "Somalis are called a nation of poets, and the reputation is deserved and enforced.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4160,
+   "imageUrl": "https://images.unsplash.com/photo-1775633741123-27a20db1d75c",
+   "photoId": "OgWXxWXpc6g",
+   "photographer": "MOHAMED ABUKAR",
+   "photographerUrl": "https://unsplash.com/@koorwayne",
+   "provider": "unsplash",
+   "query": "Somalia men listening poet",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: men"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://unsplash.com/photos/four-men-sit-at-a-bus-stop-in-white-shirts-OgWXxWXpc6g",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1775633741123-27a20db1d75c?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:10:13Z",
+   "width": 6240
+  },
+  "somalia/eco-tourism": {
+   "alt": "Desert botanical garden with cacti and trees, Somalia",
+   "altIntended": "frankincense trees growing from bare limestone on a steep slope, Somalia",
+   "aspectRatio": 1.3333,
+   "caption": "Frankincense and the Land",
+   "category": "eco-tourism",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:27Z",
+   "description": "Boswellia grows on bare limestone where nothing else will, and it holds the slope together.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4284,
+   "imageUrl": "https://images.pexels.com/photos/38837953/pexels-photo-38837953.jpeg",
+   "photoId": "38837953",
+   "photographer": "Pole Oluline",
+   "photographerUrl": "https://www.pexels.com/@pole-oluline-357825046",
+   "provider": "pexels",
+   "query": "Somalia frankincense trees growing",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,trees"
+    ],
+    "score": 5.0
+   },
+   "sourceUrl": "https://www.pexels.com/photo/desert-botanical-garden-with-cacti-and-trees-38837953/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38837953/pexels-photo-38837953.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:28Z",
+   "width": 5712
+  },
+  "somalia/family-community": {
+   "alt": "The coastline at z city beach, Somalia",
+   "altIntended": "families on Lido beach in Mogadishu at the weekend, Somalia",
+   "aspectRatio": 1.4992,
+   "caption": "Beaches, and Care",
+   "category": "family-community",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:24Z",
+   "description": "Lido beach in Mogadishu fills at the weekend. Go with local advice, always.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 5304,
+   "imageUrl": "https://images.pexels.com/photos/8221590/pexels-photo-8221590.jpeg",
+   "photoId": "8221590",
+   "photographer": "Mikhail Nilov",
+   "photographerUrl": "https://www.pexels.com/@mikhail-nilov",
+   "provider": "pexels",
+   "query": "Somalia Lido Mogadishu",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,beach"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/shot-of-the-coastline-at-z-city-beach-8221590/",
+   "thumbnailUrl": "https://images.pexels.com/photos/8221590/pexels-photo-8221590.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:25Z",
+   "width": 7952
+  },
+  "somalia/festivals": {
+   "alt": "Women in pink dresses perform in a room, Somalia",
+   "altIntended": "women performing buraanbur poetry and dance at a wedding, Somalia",
+   "aspectRatio": 1.503,
+   "caption": "Weddings and Buraanbur",
+   "category": "festivals",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:17Z",
+   "description": "Buraanbur — women's poetry with drumming and dance — carries the celebration.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 4008,
+   "imageUrl": "https://images.pexels.com/photos/25204884/pexels-photo-25204884.jpeg",
+   "photoId": "25204884",
+   "photographer": "Israel Torres",
+   "photographerUrl": "https://www.pexels.com/@israwmx",
+   "provider": "pexels",
+   "query": "Somalia women performing buraanbur",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: dance,performing,women",
+     "category: dance"
+    ],
+    "score": 6.04
+   },
+   "sourceUrl": "https://www.pexels.com/photo/women-in-pink-dresses-perform-in-a-room-25204884/",
+   "thumbnailUrl": "https://images.pexels.com/photos/25204884/pexels-photo-25204884.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:18Z",
+   "width": 6024
+  },
+  "somalia/food": {
+   "alt": "Ready to eat chicken meat with rice, Somalia",
+   "altIntended": "a plate of bariis iskukaris with goat and banana, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Camel Milk and Bariis",
+   "category": "food",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:16Z",
+   "description": "Camel milk, bariis iskukaris spiced with cumin and cardamom, and Somali tea with ginger.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/16107645/pexels-photo-16107645.jpeg",
+   "photoId": "16107645",
+   "photographer": "Anthony Rahayel",
+   "photographerUrl": "https://www.pexels.com/@anthony-rahayel-125801377",
+   "provider": "pexels",
+   "query": "Somalia plate bariis iskukaris",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,plate",
+     "category: food"
+    ],
+    "score": 6.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/ready-to-eat-chicken-meat-with-rice-16107645/",
+   "thumbnailUrl": "https://images.pexels.com/photos/16107645/pexels-photo-16107645.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:17Z",
+   "width": 6000
+  },
+  "somalia/forests": {
+   "alt": "Close up of tree bark with sunlight in forest, Somalia",
+   "altIntended": "a tapped frankincense tree with resin beading on the bark, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Frankincense Country",
+   "category": "forests",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:10Z",
+   "description": "Boswellia trees on the Cal Madow slopes, tapped as they have been for four thousand years.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4012,
+   "imageUrl": "https://images.pexels.com/photos/34016678/pexels-photo-34016678.jpeg",
+   "photoId": "34016678",
+   "photographer": "Ivan Georgiev",
+   "photographerUrl": "https://www.pexels.com/@ivandesignx",
+   "provider": "pexels",
+   "query": "Somalia tapped frankincense tree",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: bark,tree",
+     "category: forest"
+    ],
+    "score": 6.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/close-up-of-tree-bark-with-sunlight-in-forest-34016678/",
+   "thumbnailUrl": "https://images.pexels.com/photos/34016678/pexels-photo-34016678.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:11Z",
+   "width": 6018
+  },
+  "somalia/hero": {
+   "alt": "Calm water in the sea, Somalia",
+   "altIntended": "an empty white sand beach on the Somali Indian Ocean coast, Somalia",
+   "aspectRatio": 1.4984,
+   "caption": "Three Thousand Kilometres",
+   "category": "hero",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:09:53Z",
+   "description": "The longest coastline on mainland Africa, most of it empty white sand.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 4912,
+   "imageUrl": "https://images.pexels.com/photos/12517510/pexels-photo-12517510.jpeg",
+   "photoId": "12517510",
+   "photographer": "Atlantic Ambience",
+   "photographerUrl": "https://www.pexels.com/@freestockpro",
+   "provider": "pexels",
+   "query": "Somalia Somali Indian Ocean",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: coast,ocean"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/calm-water-in-the-sea-12517510/",
+   "thumbnailUrl": "https://images.pexels.com/photos/12517510/pexels-photo-12517510.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:09:54Z",
+   "width": 7360
+  },
+  "somalia/hidden-gems": {
+   "alt": "Byzantine and ottoman architectural ruins in istanbul, Somalia",
+   "altIntended": "arched Ottoman-era buildings in the old town of Berbera, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Berbera's Ottoman Quarter",
+   "category": "hidden-gems",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:29Z",
+   "description": "A decaying Ottoman and colonial old town by the harbour, being slowly repaired.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/33384319/pexels-photo-33384319.jpeg",
+   "photoId": "33384319",
+   "photographer": "Cihan Çimen",
+   "photographerUrl": "https://www.pexels.com/@cihan-cimen-1725918569",
+   "provider": "pexels",
+   "query": "Somalia Ottoman-era Berbera",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: ottoman"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/byzantine-and-ottoman-architectural-ruins-in-istanbul-33384319/",
+   "thumbnailUrl": "https://images.pexels.com/photos/33384319/pexels-photo-33384319.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:29Z",
+   "width": 6000
+  },
+  "somalia/historic-sites": {
+   "alt": "Exploring ancient rock art in swat valley, Somalia",
+   "altIntended": "painted cattle and human figures on the rock shelters at Laas Geel, Somalia",
+   "aspectRatio": 1.4999,
+   "caption": "Laas Geel",
+   "category": "historic-sites",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:19Z",
+   "description": "Rock shelters near Hargeisa painted with cattle and people, five thousand years old and unfaded.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 8475,
+   "imageUrl": "https://images.pexels.com/photos/37982575/pexels-photo-37982575.jpeg",
+   "photoId": "37982575",
+   "photographer": "Amjad ali",
+   "photographerUrl": "https://www.pexels.com/@amjad-ali-2159823888",
+   "provider": "pexels",
+   "query": "Somalia Laas Geel",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: rock"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/exploring-ancient-rock-art-in-swat-valley-37982575/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37982575/pexels-photo-37982575.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:20Z",
+   "width": 12712
+  },
+  "somalia/local-life": {
+   "alt": "Stunning sunset over hargeisa somalia",
+   "altIntended": "traders and camels at the Hargeisa livestock market, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "The Camel Market",
+   "category": "local-life",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:23Z",
+   "description": "Hargeisa's livestock market on a weekday morning, and the money that moves through it.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/29248948/pexels-photo-29248948.jpeg",
+   "photoId": "29248948",
+   "photographer": "Abdulkadir Hiraabe",
+   "photographerUrl": "https://www.pexels.com/@abdulkadir-hiraabe-1539465007",
+   "provider": "pexels",
+   "query": "Somalia Hargeisa",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: hargeisa,the",
+     "looks like 100% of a slot already filled here"
+    ],
+    "score": 4.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/stunning-sunset-over-hargeisa-somalia-29248948/",
+   "thumbnailUrl": "https://images.pexels.com/photos/29248948/pexels-photo-29248948.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:24Z",
+   "width": 6000
+  },
+  "somalia/luxury": {
+   "alt": "Military officer communicating on street in hargeisa, Somalia",
+   "altIntended": "a rooftop terrace restaurant overlooking Hargeisa, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Beginning to Exist",
+   "category": "luxury",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:26Z",
+   "description": "New hotels in Hargeisa and Mogadishu, mostly for business travellers, some of them good.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/28492987/pexels-photo-28492987.jpeg",
+   "photoId": "28492987",
+   "photographer": "Abdulkadir Hiraabe",
+   "photographerUrl": "https://www.pexels.com/@abdulkadir-hiraabe-1539465007",
+   "provider": "pexels",
+   "query": "Somalia Hargeisa",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: hargeisa",
+     "looks like 100% of a slot already filled here"
+    ],
+    "score": 2.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/military-officer-communicating-on-street-in-hargeisa-28492987/",
+   "thumbnailUrl": "https://images.pexels.com/photos/28492987/pexels-photo-28492987.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:27Z",
+   "width": 6000
+  },
+  "somalia/mountains": {
+   "alt": "Green leaves of a plant, Somalia",
+   "altIntended": "juniper and cycads on the high slopes of Shimbiris, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Shimbiris",
+   "category": "mountains",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:03Z",
+   "description": "2,460 metres in the Cal Madow, the highest point, with juniper and cycads near the top.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 4160,
+   "imageUrl": "https://images.pexels.com/photos/13131059/pexels-photo-13131059.jpeg",
+   "photoId": "13131059",
+   "photographer": "Fez Brook",
+   "photographerUrl": "https://www.pexels.com/@fez-brook-1587707",
+   "provider": "pexels",
+   "query": "Somalia juniper cycads high",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: juniper"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/green-leaves-of-a-plant-13131059/",
+   "thumbnailUrl": "https://images.pexels.com/photos/13131059/pexels-photo-13131059.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:04Z",
+   "width": 6240
+  },
+  "somalia/nature": {
+   "alt": "Desert trees, Somalia",
+   "altIntended": "Nature in Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Cal Madow",
+   "category": "nature",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:09:57Z",
+   "description": "A mountain range behind Bosaso with cloud forest on top and frankincense on the slopes.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4128,
+   "imageUrl": "https://images.pexels.com/photos/28170223/pexels-photo-28170223.jpeg",
+   "photoId": "28170223",
+   "photographer": "French Sweetie",
+   "photographerUrl": "https://www.pexels.com/@french-sweetie-427070535",
+   "provider": "pexels",
+   "query": "Somalia landscape",
+   "queryTier": "category",
+   "relevance": {
+    "reasons": [
+     "subject: mountains"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/desert-trees-28170223/",
+   "thumbnailUrl": "https://images.pexels.com/photos/28170223/pexels-photo-28170223.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:09:58Z",
+   "width": 6192
+  },
+  "somalia/safari": {
+   "alt": "Vibrant yellow acacia blossoms under clear sky, Somalia",
+   "altIntended": "arid acacia scrub and open plain in the Somali interior, Somalia",
+   "aspectRatio": 1.3333,
+   "caption": "Not the Circuit",
+   "category": "safari",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:00Z",
+   "description": "There are no game lodges. The wildlife here is coastal, and the interior is for those who know it.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 7500,
+   "imageUrl": "https://images.pexels.com/photos/38449002/pexels-photo-38449002.jpeg",
+   "photoId": "38449002",
+   "photographer": "Engin Akyurt",
+   "photographerUrl": "https://www.pexels.com/@enginakyurt",
+   "provider": "pexels",
+   "query": "Somalia arid acacia scrub",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: acacia,the"
+    ],
+    "score": 5.0
+   },
+   "sourceUrl": "https://www.pexels.com/photo/vibrant-yellow-acacia-blossoms-under-clear-sky-38449002/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38449002/pexels-photo-38449002.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:01Z",
+   "width": 10000
+  },
+  "somalia/traditional-people": {
+   "alt": "Woman in traditional dress with camels in desert, Somalia",
+   "altIntended": "a Somali herder with camels on open thornbush country, Somalia",
+   "aspectRatio": 0.6653,
+   "caption": "Nomad and Pastoralist",
+   "category": "traditional-people",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:15Z",
+   "description": "Camel herding is the oldest way of life here and still a large part of the economy.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 6048,
+   "imageUrl": "https://images.pexels.com/photos/14949139/pexels-photo-14949139.jpeg",
+   "photoId": "14949139",
+   "photographer": "Aju Bhuvanendran",
+   "photographerUrl": "https://www.pexels.com/@aju-bhuvanendran-385503468",
+   "provider": "pexels",
+   "query": "Somalia somali herder camels",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: camels",
+     "category: dress,traditional"
+    ],
+    "score": 5.66
+   },
+   "sourceUrl": "https://www.pexels.com/photo/woman-in-traditional-dress-with-camels-in-desert-14949139/",
+   "thumbnailUrl": "https://images.pexels.com/photos/14949139/pexels-photo-14949139.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:16Z",
+   "width": 4024
+  },
+  "somalia/waterfalls": {
+   "alt": "A flowing river in the middle of the forest, Somalia",
+   "altIntended": "a seasonal river running full through dry country after rain, Somalia",
+   "aspectRatio": 0.6667,
+   "caption": "Seasonal, and Sudden",
+   "category": "waterfalls",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:05Z",
+   "description": "The Shabelle and Juba run south; everything else runs for a fortnight after the rains.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 6000,
+   "imageUrl": "https://images.pexels.com/photos/7905586/pexels-photo-7905586.jpeg",
+   "photoId": "7905586",
+   "photographer": "Syed Qaarif Andrabi",
+   "photographerUrl": "https://www.pexels.com/@qaarif",
+   "provider": "pexels",
+   "query": "Somalia seasonal river running",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,river"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/a-flowing-river-in-the-middle-of-the-forest-7905586/",
+   "thumbnailUrl": "https://images.pexels.com/photos/7905586/pexels-photo-7905586.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:05Z",
+   "width": 4000
+  },
+  "somalia/why-visit": {
+   "alt": "Person walking waking on beach shore, Somalia",
+   "altIntended": "a lone figure on an empty Somali beach at sunrise, Somalia",
+   "aspectRatio": 1.5085,
+   "caption": "Why Somalia",
+   "category": "why-visit",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:30Z",
+   "description": "Rock art older than the pyramids, an unfished ocean, and a poetry tradition still practised daily.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 4250,
+   "imageUrl": "https://images.pexels.com/photos/8693011/pexels-photo-8693011.jpeg",
+   "photoId": "8693011",
+   "photographer": "Игорь Кипелкин",
+   "photographerUrl": "https://www.pexels.com/@palancky",
+   "provider": "pexels",
+   "query": "Somalia lone figure empty",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: beach,lone"
+    ],
+    "score": 3.94
+   },
+   "sourceUrl": "https://www.pexels.com/photo/person-walking-waking-on-beach-shore-8693011/",
+   "thumbnailUrl": "https://images.pexels.com/photos/8693011/pexels-photo-8693011.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:30Z",
+   "width": 6411
+  },
+  "somalia/wildlife": {
+   "alt": "A group of friends playing football, Somalia",
+   "altIntended": "a Speke's gazelle on stony ground in the Somali interior, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Speke's Gazelle and the Sea",
+   "category": "wildlife",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:09:59Z",
+   "description": "Speke's gazelle and dibatag inland, and turtles, dugong and whale sharks offshore.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/5648177/pexels-photo-5648177.jpeg",
+   "photoId": "5648177",
+   "photographer": "Mo Liban",
+   "photographerUrl": "https://www.pexels.com/@mo-liban-3049584",
+   "provider": "pexels",
+   "query": "Somalia Speke's",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: and,somali"
+    ],
+    "score": 6.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/a-group-of-friends-playing-football-5648177/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5648177/pexels-photo-5648177.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:09:59Z",
+   "width": 6720
   },
   "south-africa/architecture": {
    "alt": "Vibrant urban scene in bo kaap cape town, South Africa",
@@ -29624,6 +30671,1430 @@
    "thumbnailUrl": "https://images.unsplash.com/photo-1671769940434-3a0b85595e4a?auto=format&fit=crop&w=400&h=300&q=70",
    "verifiedAt": "2026-08-14T08:37:28Z",
    "width": 4032
+  },
+  "south-sudan/adventure": {
+   "alt": "Aiplane on grass near tarmac, South Sudan",
+   "altIntended": "a light aircraft on a grass airstrip in remote grassland, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Getting to Boma",
+   "category": "adventure",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:40Z",
+   "description": "Light aircraft and then hours of track. It is expedition travel and it is honest about that.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/11833111/pexels-photo-11833111.jpeg",
+   "photoId": "11833111",
+   "photographer": "Michael Pointner",
+   "photographerUrl": "https://www.pexels.com/@michael-pointner-134459625",
+   "provider": "pexels",
+   "query": "South Sudan aircraft grass airstrip",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: aircraft,grass"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/aiplane-on-grass-near-tarmac-11833111/",
+   "thumbnailUrl": "https://images.pexels.com/photos/11833111/pexels-photo-11833111.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:40Z",
+   "width": 6000
+  },
+  "south-sudan/architecture": {
+   "alt": "Traditional thatched rooftop entrance at night, South Sudan",
+   "altIntended": "a cluster of thatched tukul houses in a South Sudanese village",
+   "aspectRatio": 0.75,
+   "caption": "Tukuls",
+   "category": "architecture",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:48Z",
+   "description": "Round mud walls, conical thatch, and a shape that has not needed improving.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 5712,
+   "imageUrl": "https://images.pexels.com/photos/35422555/pexels-photo-35422555.jpeg",
+   "photoId": "35422555",
+   "photographer": "Er. Mk Kiran.",
+   "photographerUrl": "https://www.pexels.com/@er-mk-kiran-2157501854",
+   "provider": "pexels",
+   "query": "South Sudan cluster thatched tukul",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: thatched",
+     "category: architecture"
+    ],
+    "score": 4.5
+   },
+   "sourceUrl": "https://www.pexels.com/photo/traditional-thatched-rooftop-entrance-at-night-35422555/",
+   "thumbnailUrl": "https://images.pexels.com/photos/35422555/pexels-photo-35422555.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:48Z",
+   "width": 4284
+  },
+  "south-sudan/beaches": {
+   "alt": "Nile crocodile basking on riverbank in the sunlight, South Sudan",
+   "altIntended": "a sandbar and shallow water on the White Nile near Terekeka, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "No Coast, Plenty of Water",
+   "category": "beaches",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:38Z",
+   "description": "Landlocked, but the river islands and sandbars near Terekeka do the job.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 6336,
+   "imageUrl": "https://images.pexels.com/photos/29795351/pexels-photo-29795351.jpeg",
+   "photoId": "29795351",
+   "photographer": "Caleb Falkenhagen",
+   "photographerUrl": "https://www.pexels.com/@caleb-falkenhagen-216813613",
+   "provider": "pexels",
+   "query": "South Sudan White Nile Terekeka",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nile"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/nile-crocodile-basking-on-riverbank-in-the-sunlight-29795351/",
+   "thumbnailUrl": "https://images.pexels.com/photos/29795351/pexels-photo-29795351.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:39Z",
+   "width": 9504
+  },
+  "south-sudan/culture": {
+   "alt": "Men participating in traditional fishing festival, South Sudan",
+   "altIntended": "a group of young men at a Mundari cattle camp in the evening, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Sixty-Four Peoples",
+   "category": "culture",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:41Z",
+   "description": "Dinka, Nuer, Shilluk, Bari, Azande, Mundari and fifty-eight more, in a country of twelve million.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/36200956/pexels-photo-36200956.jpeg",
+   "photoId": "36200956",
+   "photographer": "Aleekhan_photography",
+   "photographerUrl": "https://www.pexels.com/@aleekhan_photography-512723431",
+   "provider": "pexels",
+   "query": "South Sudan Mundari",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: men",
+     "category: culture"
+    ],
+    "score": 4.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/men-participating-in-traditional-fishing-festival-36200956/",
+   "thumbnailUrl": "https://images.pexels.com/photos/36200956/pexels-photo-36200956.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:41Z",
+   "width": 6720
+  },
+  "south-sudan/eco-tourism": {
+   "alt": "Mountain view beyond the green marsh, South Sudan",
+   "altIntended": "papyrus swamp and open channels in the Sudd wetland from the air, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Sudd Holds the Nile Back",
+   "category": "eco-tourism",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:52Z",
+   "description": "Half the water entering the Sudd evaporates in it. The wetland is a climate system.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/8404197/pexels-photo-8404197.jpeg",
+   "photoId": "8404197",
+   "photographer": "Beyza Eren",
+   "photographerUrl": "https://www.pexels.com/@tournesolvg",
+   "provider": "pexels",
+   "query": "South Sudan papyrus swamp open",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: the,wetland"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/mountain-view-beyond-the-green-marsh-8404197/",
+   "thumbnailUrl": "https://images.pexels.com/photos/8404197/pexels-photo-8404197.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:53Z",
+   "width": 6000
+  },
+  "south-sudan/family-community": {
+   "alt": "Diverse high school girls in classroom setting, South Sudan",
+   "altIntended": "a village school class sitting outside under a tree, South Sudan",
+   "aspectRatio": 1.498,
+   "caption": "Hard Country for It",
+   "category": "family-community",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:50Z",
+   "description": "This is not a family destination yet, and pretending otherwise would not help anyone.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4016,
+   "imageUrl": "https://images.pexels.com/photos/34211744/pexels-photo-34211744.jpeg",
+   "photoId": "34211744",
+   "photographer": "Tosin Olowoleni",
+   "photographerUrl": "https://www.pexels.com/@tosin-olowoleni-2148141635",
+   "provider": "pexels",
+   "query": "South Sudan village school class",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: class,school"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/diverse-high-school-girls-in-classroom-setting-34211744/",
+   "thumbnailUrl": "https://images.pexels.com/photos/34211744/pexels-photo-34211744.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:50Z",
+   "width": 6016
+  },
+  "south-sudan/festivals": {
+   "alt": "African drummers performing in traditional attire, South Sudan",
+   "altIntended": "traditional wrestlers and a drumming crowd at a village match, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Wrestling",
+   "category": "festivals",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:43Z",
+   "description": "Dinka and Mundari wrestling matches draw whole districts, with drumming and singing round the ring.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/38987973/pexels-photo-38987973.jpeg",
+   "photoId": "38987973",
+   "photographer": "Anchau",
+   "photographerUrl": "https://www.pexels.com/@anchau-1663967297",
+   "provider": "pexels",
+   "query": "South Sudan traditional wrestlers drumming",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: drumming,traditional",
+     "category: celebration"
+    ],
+    "score": 6.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/african-drummers-performing-in-traditional-attire-38987973/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38987973/pexels-photo-38987973.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:44Z",
+   "width": 6000
+  },
+  "south-sudan/food": {
+   "alt": "Aswan, South Sudan",
+   "altIntended": "grilled Nile perch and flatbread served on a riverbank, South Sudan",
+   "aspectRatio": 1.4993,
+   "caption": "Kisra, Asida and Fish",
+   "category": "food",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:42Z",
+   "description": "Sorghum asida, kisra flatbread, and Nile perch grilled on the bank.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 5464,
+   "imageUrl": "https://images.pexels.com/photos/27407536/pexels-photo-27407536.jpeg",
+   "photoId": "27407536",
+   "photographer": "Eslam Mohammed Abdelmaksoud",
+   "photographerUrl": "https://www.pexels.com/@eslames1",
+   "provider": "pexels",
+   "query": "South Sudan Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,nile"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/aswan-27407536/",
+   "thumbnailUrl": "https://images.pexels.com/photos/27407536/pexels-photo-27407536.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:43Z",
+   "width": 8192
+  },
+  "south-sudan/forests": {
+   "alt": "Stunning western ghats landscape in karnataka, South Sudan",
+   "altIntended": "dense rainforest canopy in the Western Equatoria forest belt, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Southern Forests",
+   "category": "forests",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:39Z",
+   "description": "Guinea-Congolian rainforest at the Congo border, with forest elephant and chimpanzee in it.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/38999700/pexels-photo-38999700.jpeg",
+   "photoId": "38999700",
+   "photographer": "Raghu's Manda",
+   "photographerUrl": "https://www.pexels.com/@raghu-s-manda-2162849670",
+   "provider": "pexels",
+   "query": "South Sudan Western Equatoria",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: the,western"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/stunning-western-ghats-landscape-in-karnataka-38999700/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38999700/pexels-photo-38999700.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:40Z",
+   "width": 6000
+  },
+  "south-sudan/heritage": {
+   "alt": "Local people sitting outdoors in village, South Sudan",
+   "altIntended": "elders sitting under a large tree at a village meeting, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Nothing on the List Yet",
+   "category": "heritage",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:46Z",
+   "description": "No World Heritage sites, and a heritage that is living rather than ruined.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/6346388/pexels-photo-6346388.jpeg",
+   "photoId": "6346388",
+   "photographer": "Mads Terkelsen",
+   "photographerUrl": "https://www.pexels.com/@mads-terkelsen-3787385",
+   "provider": "pexels",
+   "query": "South Sudan elders sitting large",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: sitting,village"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/local-people-sitting-outdoors-in-village-6346388/",
+   "thumbnailUrl": "https://images.pexels.com/photos/6346388/pexels-photo-6346388.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:46Z",
+   "width": 6000
+  },
+  "south-sudan/hero": {
+   "alt": "Closeup of a herd of cows walking on a dirt road, South Sudan",
+   "altIntended": "Mundari herders among long-horned cattle in dung smoke at dawn, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Cattle Camps at Dawn",
+   "category": "hero",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:30Z",
+   "description": "Mundari herders and their Ankole cattle in smoke from dung fires, on the White Nile.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/16815582/pexels-photo-16815582.jpeg",
+   "photoId": "16815582",
+   "photographer": "mg shotz",
+   "photographerUrl": "https://www.pexels.com/@mgshotz",
+   "provider": "pexels",
+   "query": "South Sudan Mundari",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: cattle"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/closeup-of-a-herd-of-cows-walking-on-a-dirt-road-16815582/",
+   "thumbnailUrl": "https://images.pexels.com/photos/16815582/pexels-photo-16815582.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:31Z",
+   "width": 6720
+  },
+  "south-sudan/hidden-gems": {
+   "alt": "Ruins of philae temple, South Sudan",
+   "altIntended": "the Nile running through green hills at Nimule, South Sudan",
+   "aspectRatio": 1.4984,
+   "caption": "Nimule",
+   "category": "hidden-gems",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:54Z",
+   "description": "A small park on the Ugandan border with elephant, and the Nile going through it.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4912,
+   "imageUrl": "https://images.pexels.com/photos/15131476/pexels-photo-15131476.jpeg",
+   "photoId": "15131476",
+   "photographer": "Diego F. Parra",
+   "photographerUrl": "https://www.pexels.com/@diego-f-parra-33199",
+   "provider": "pexels",
+   "query": "South Sudan Nile Nimule",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nile",
+     "category: the"
+    ],
+    "score": 4.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/ruins-of-philae-temple-15131476/",
+   "thumbnailUrl": "https://images.pexels.com/photos/15131476/pexels-photo-15131476.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:55Z",
+   "width": 7360
+  },
+  "south-sudan/historic-sites": {
+   "alt": "Three men sitting on the ground next to a river, South Sudan",
+   "altIntended": "the ruins of a colonial-era river station on the White Nile, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Lado and the Old Posts",
+   "category": "historic-sites",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:45Z",
+   "description": "The Lado Enclave, Gondokoro and the river stations of the nineteenth-century Nile expeditions.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/19820465/pexels-photo-19820465.jpeg",
+   "photoId": "19820465",
+   "photographer": "Maël  BALLAND",
+   "photographerUrl": "https://www.pexels.com/@toulouse",
+   "provider": "pexels",
+   "query": "South Sudan White Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nile,river,the"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/three-men-sitting-on-the-ground-next-to-a-river-19820465/",
+   "thumbnailUrl": "https://images.pexels.com/photos/19820465/pexels-photo-19820465.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:45Z",
+   "width": 6720
+  },
+  "south-sudan/local-life": {
+   "alt": "Pack donkey carrying plastic containers in field, South Sudan",
+   "altIntended": "a busy open-air market with cattle and traders at Terekeka, South Sudan",
+   "aspectRatio": 1.4447,
+   "caption": "Market Day at Terekeka",
+   "category": "local-life",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:49Z",
+   "description": "Cattle, sorghum, fish and tea, and the whole district in one place.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 5350,
+   "imageUrl": "https://images.pexels.com/photos/33927038/pexels-photo-33927038.jpeg",
+   "photoId": "33927038",
+   "photographer": "Becky  Awo",
+   "photographerUrl": "https://www.pexels.com/@renni",
+   "provider": "pexels",
+   "query": "South Sudan Terekeka",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: cattle,open"
+    ],
+    "score": 4.77
+   },
+   "sourceUrl": "https://www.pexels.com/photo/pack-donkey-carrying-plastic-containers-in-field-33927038/",
+   "thumbnailUrl": "https://images.pexels.com/photos/33927038/pexels-photo-33927038.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:49Z",
+   "width": 7729
+  },
+  "south-sudan/mountains": {
+   "alt": "Top view of mountains, South Sudan",
+   "altIntended": "the forested slopes of the Imatong mountains rising to Mount Kinyeti, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Imatong",
+   "category": "mountains",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:35Z",
+   "description": "Mount Kinyeti at 3,187 metres on the Ugandan border, the highest point in the country.",
+   "focalPoint": {
+    "x": 50,
+    "y": 46
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/570032/pexels-photo-570032.jpeg",
+   "photoId": "570032",
+   "photographer": "Suket Dedhia",
+   "photographerUrl": "https://www.pexels.com/@suketdedhia",
+   "provider": "pexels",
+   "query": "South Sudan Imatong Mount Kinyeti",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: mountains,the"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/top-view-of-mountains-570032/",
+   "thumbnailUrl": "https://images.pexels.com/photos/570032/pexels-photo-570032.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:35Z",
+   "width": 6000
+  },
+  "south-sudan/photography": {
+   "alt": "Herd of cattle and goats under a clear sky, South Sudan",
+   "altIntended": "sunlight through dung smoke over cattle horns at a Mundari camp, South Sudan",
+   "aspectRatio": 1.3333,
+   "caption": "Smoke and Horns",
+   "category": "photography",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:53Z",
+   "description": "A Mundari camp at first light, when the fires are lit and the light comes through them.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 6048,
+   "imageUrl": "https://images.pexels.com/photos/36280662/pexels-photo-36280662.jpeg",
+   "photoId": "36280662",
+   "photographer": "Harun Makandi",
+   "photographerUrl": "https://www.pexels.com/@harun-makandi-2144456976",
+   "provider": "pexels",
+   "query": "South Sudan Mundari",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,cattle"
+    ],
+    "score": 3.71
+   },
+   "sourceUrl": "https://www.pexels.com/photo/herd-of-cattle-and-goats-under-a-clear-sky-36280662/",
+   "thumbnailUrl": "https://images.pexels.com/photos/36280662/pexels-photo-36280662.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:54Z",
+   "width": 8064
+  },
+  "south-sudan/safari": {
+   "alt": "People and car on grassland at dusk, South Sudan",
+   "altIntended": "open grassland and scattered trees in Boma National Park, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Boma and Badingilo",
+   "category": "safari",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:34Z",
+   "description": "Two parks either side of the migration route, with almost no infrastructure and no crowds.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/16448674/pexels-photo-16448674.jpeg",
+   "photoId": "16448674",
+   "photographer": "Theo Topolevsky",
+   "photographerUrl": "https://www.pexels.com/@theo-topolevsky-299518155",
+   "provider": "pexels",
+   "query": "South Sudan Boma National Park",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: national,park",
+     "category: safari"
+    ],
+    "score": 7.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/people-and-car-on-grassland-at-dusk-16448674/",
+   "thumbnailUrl": "https://images.pexels.com/photos/16448674/pexels-photo-16448674.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:34Z",
+   "width": 6000
+  },
+  "south-sudan/traditional-people": {
+   "alt": "Portrait of nigerian man in traditional attire, South Sudan",
+   "altIntended": "a Mundari man resting against the flank of a long-horned bull, South Sudan",
+   "aspectRatio": 0.6667,
+   "caption": "The Mundari",
+   "category": "traditional-people",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:42Z",
+   "description": "Cattle are wealth, name and argument. A camp of them at dusk is unlike anything else.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 6720,
+   "imageUrl": "https://images.pexels.com/photos/37907662/pexels-photo-37907662.jpeg",
+   "photoId": "37907662",
+   "photographer": "alameen .ng",
+   "photographerUrl": "https://www.pexels.com/@alameenng",
+   "provider": "pexels",
+   "query": "South Sudan Mundari",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: against,man",
+     "category: portrait,traditional"
+    ],
+    "score": 7.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/portrait-of-nigerian-man-in-traditional-attire-37907662/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37907662/pexels-photo-37907662.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:42Z",
+   "width": 4480
+  },
+  "south-sudan/waterfalls": {
+   "alt": "Serene sky over lush green marshland, South Sudan",
+   "altIntended": "white water at the Fula rapids on the White Nile, South Sudan",
+   "aspectRatio": 0.6667,
+   "caption": "Fula Falls",
+   "category": "waterfalls",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:36Z",
+   "description": "The Nile dropping through rock at Fula, on its way north out of Uganda.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 7008,
+   "imageUrl": "https://images.pexels.com/photos/33542654/pexels-photo-33542654.jpeg",
+   "photoId": "33542654",
+   "photographer": "sadness 1225",
+   "photographerUrl": "https://www.pexels.com/@sadness-1225-2153198256",
+   "provider": "pexels",
+   "query": "South Sudan Fula White Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: water,white"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/serene-sky-over-lush-green-marshland-33542654/",
+   "thumbnailUrl": "https://images.pexels.com/photos/33542654/pexels-photo-33542654.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:36Z",
+   "width": 4672
+  },
+  "south-sudan/why-visit": {
+   "alt": "Cyclist passing by aiwerioba oguigo mansion shopping mall in benin city nigeria, South Sudan",
+   "altIntended": "a single vehicle beside an immense herd of kob on open plain, South Sudan",
+   "aspectRatio": 1.4984,
+   "caption": "Why South Sudan",
+   "category": "why-visit",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:55Z",
+   "description": "A migration to rival the Serengeti's, seen by a few dozen people a year.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4912,
+   "imageUrl": "https://images.pexels.com/photos/16114927/pexels-photo-16114927.jpeg",
+   "photoId": "16114927",
+   "photographer": "David Iloba",
+   "photographerUrl": "https://www.pexels.com/@david-iloba-28486424",
+   "provider": "pexels",
+   "query": "South Sudan single vehicle immense",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: south"
+    ],
+    "score": 3.43
+   },
+   "sourceUrl": "https://www.pexels.com/photo/cyclist-passing-by-aiwerioba-oguigo-mansion-shopping-mall-in-benin-city-nigeria-16114927/",
+   "thumbnailUrl": "https://images.pexels.com/photos/16114927/pexels-photo-16114927.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:56Z",
+   "width": 7360
+  },
+  "south-sudan/wildlife": {
+   "alt": "Herd of wildebeest standing on green grass field, South Sudan",
+   "altIntended": "a vast herd of white-eared kob crossing open grassland, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Great Kob Migration",
+   "category": "wildlife",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:32Z",
+   "description": "White-eared kob, tiang and Mongalla gazelle — counted at over a million animals.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/5521703/pexels-photo-5521703.jpeg",
+   "photoId": "5521703",
+   "photographer": "Edgar Okioga",
+   "photographerUrl": "https://www.pexels.com/@edgar-okioga-221433",
+   "provider": "pexels",
+   "query": "South Sudan vast herd white",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: herd,the"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/herd-of-wildebeest-standing-on-green-grass-field-5521703/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5521703/pexels-photo-5521703.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:33Z",
+   "width": 6000
+  },
+  "sudan/adventure": {
+   "alt": "Close up of red coral reef, Sudan",
+   "altIntended": "a dive boat anchored over a reef in the Sudanese Red Sea",
+   "aspectRatio": 1.4984,
+   "caption": "Diving and Desert Driving",
+   "category": "adventure",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:06Z",
+   "description": "Liveaboards out of Port Sudan, and four-wheel-drive routes between the pyramid fields.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4833,
+   "imageUrl": "https://images.pexels.com/photos/17875664/pexels-photo-17875664.jpeg",
+   "photoId": "17875664",
+   "photographer": "沖縄ダイビングスクール ワールドダイビング",
+   "photographerUrl": "https://www.pexels.com/@669211903",
+   "provider": "pexels",
+   "query": "Sudan Sudanese Red Sea",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: red,reef"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/close-up-of-red-coral-reef-17875664/",
+   "thumbnailUrl": "https://images.pexels.com/photos/17875664/pexels-photo-17875664.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:07Z",
+   "width": 7242
+  },
+  "sudan/architecture": {
+   "alt": "Close up of brown nubian goat resting outdoors, Sudan",
+   "altIntended": "a vaulted Nubian mud-brick house with a painted gateway, Sudan",
+   "aspectRatio": 0.6667,
+   "caption": "Mud Brick and Painted Doors",
+   "category": "architecture",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:15Z",
+   "description": "Nubian vaulted mud-brick houses with painted gates, a technique revived by Hassan Fathy.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 6000,
+   "imageUrl": "https://images.pexels.com/photos/29558160/pexels-photo-29558160.jpeg",
+   "photoId": "29558160",
+   "photographer": "Dr Photographer",
+   "photographerUrl": "https://www.pexels.com/@drphotographer152",
+   "provider": "pexels",
+   "query": "Sudan Nubian",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nubian"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/close-up-of-brown-nubian-goat-resting-outdoors-29558160/",
+   "thumbnailUrl": "https://images.pexels.com/photos/29558160/pexels-photo-29558160.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:15Z",
+   "width": 4000
+  },
+  "sudan/beaches": {
+   "alt": "Diving adventure in the red sea depths, Sudan",
+   "altIntended": "a coral wall and reef fish at Sanganeb atoll in the Red Sea, Sudan",
+   "aspectRatio": 1.773,
+   "caption": "Reefs Nobody Dives",
+   "category": "beaches",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:04Z",
+   "description": "Sanganeb atoll and Sha'ab Rumi, where Cousteau sank Conshelf II and the coral grew over it.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4512,
+   "imageUrl": "https://images.pexels.com/photos/32293259/pexels-photo-32293259.jpeg",
+   "photoId": "32293259",
+   "photographer": "Daniel Shipilov",
+   "photographerUrl": "https://www.pexels.com/@daniel-shipilov-68266946",
+   "provider": "pexels",
+   "query": "Sudan Sanganeb Red Sea",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: red,sea"
+    ],
+    "score": 4.99
+   },
+   "sourceUrl": "https://www.pexels.com/photo/diving-adventure-in-the-red-sea-depths-32293259/",
+   "thumbnailUrl": "https://images.pexels.com/photos/32293259/pexels-photo-32293259.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:05Z",
+   "width": 8000
+  },
+  "sudan/culture": {
+   "alt": "Sailing on the nile river in lush egypt, Sudan",
+   "altIntended": "a decorated Nubian house with a painted doorway on the Nile, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Nubian, Arab, Beja",
+   "category": "culture",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:08Z",
+   "description": "Nubian along the northern Nile, Beja in the Red Sea hills, and nearly six hundred groups altogether.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/31814296/pexels-photo-31814296.jpeg",
+   "photoId": "31814296",
+   "photographer": "Michelle Chadwick",
+   "photographerUrl": "https://www.pexels.com/@michelle-chadwick-2149425616",
+   "provider": "pexels",
+   "query": "Sudan Nubian Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nile",
+     "category: traditional"
+    ],
+    "score": 4.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/sailing-on-the-nile-river-in-lush-egypt-31814296/",
+   "thumbnailUrl": "https://images.pexels.com/photos/31814296/pexels-photo-31814296.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:08Z",
+   "width": 6000
+  },
+  "sudan/eco-tourism": {
+   "alt": "Tree log, Sudan",
+   "altIntended": "a tapped acacia trunk with gum arabic crystals on the bark, Sudan",
+   "aspectRatio": 1.3333,
+   "caption": "Gum Arabic and the Acacia Belt",
+   "category": "eco-tourism",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:20Z",
+   "description": "A gum tapped from wild acacia by hand, in most of the soft drinks in the world.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 6708,
+   "imageUrl": "https://images.pexels.com/photos/11825299/pexels-photo-11825299.jpeg",
+   "photoId": "11825299",
+   "photographer": "Engin Akyurt",
+   "photographerUrl": "https://www.pexels.com/@enginakyurt",
+   "provider": "pexels",
+   "query": "Sudan tapped acacia trunk",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,trunk"
+    ],
+    "score": 5.0
+   },
+   "sourceUrl": "https://www.pexels.com/photo/close-up-shot-of-tree-log-11825299/",
+   "thumbnailUrl": "https://images.pexels.com/photos/11825299/pexels-photo-11825299.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:21Z",
+   "width": 8944
+  },
+  "sudan/family-community": {
+   "alt": "Boats in sea, Sudan",
+   "altIntended": "small farms and palms on Tuti island in the Nile at Khartoum, Sudan",
+   "aspectRatio": 1.4984,
+   "caption": "The Nile at Tuti",
+   "category": "family-community",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:16Z",
+   "description": "The island in the confluence, farmed, walkable, and reached by ferry from three sides.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4912,
+   "imageUrl": "https://images.pexels.com/photos/15131486/pexels-photo-15131486.jpeg",
+   "photoId": "15131486",
+   "photographer": "Diego F. Parra",
+   "photographerUrl": "https://www.pexels.com/@diego-f-parra-33199",
+   "provider": "pexels",
+   "query": "Sudan Tuti Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nile,the"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/boats-in-sea-15131486/",
+   "thumbnailUrl": "https://images.pexels.com/photos/15131486/pexels-photo-15131486.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:17Z",
+   "width": 7360
+  },
+  "sudan/festivals": {
+   "alt": "Mesmerizing sufi whirling dervishes in motion, Sudan",
+   "altIntended": "Sufi dervishes in green and red at the Hamed al-Nil tomb, Omdurman, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Sufi Friday at Omdurman",
+   "category": "festivals",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:11Z",
+   "description": "The Hamed al-Nil tomb, every Friday at sunset, drumming and whirling for two hours.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/34578955/pexels-photo-34578955.jpeg",
+   "photoId": "34578955",
+   "photographer": "Zeynep Kahraman",
+   "photographerUrl": "https://www.pexels.com/@zeynep-kahraman-2157145452",
+   "provider": "pexels",
+   "query": "Sudan Sufi Hamed",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: dervishes,sufi"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/mesmerizing-sufi-whirling-dervishes-in-motion-34578955/",
+   "thumbnailUrl": "https://images.pexels.com/photos/34578955/pexels-photo-34578955.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:11Z",
+   "width": 6000
+  },
+  "sudan/food": {
+   "alt": "Hummus on bowls, Sudan",
+   "altIntended": "a bowl of ful medames with bread and tea on a table, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Ful and Kisra",
+   "category": "food",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:09Z",
+   "description": "Ful medames for breakfast everywhere, kisra sorghum flatbread, and coffee spiced with ginger.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4160,
+   "imageUrl": "https://images.pexels.com/photos/6252676/pexels-photo-6252676.jpeg",
+   "photoId": "6252676",
+   "photographer": "Nataliya Vaitkevich",
+   "photographerUrl": "https://www.pexels.com/@n-voitkevich",
+   "provider": "pexels",
+   "query": "Sudan bowl ful medames",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,table"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/close-up-shot-of-hummus-on-bowls-6252676/",
+   "thumbnailUrl": "https://images.pexels.com/photos/6252676/pexels-photo-6252676.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:10Z",
+   "width": 6240
+  },
+  "sudan/forests": {
+   "alt": "A close up of a tree with small fruits, Sudan",
+   "altIntended": "an acacia woodland tapped for gum arabic in central Sudan",
+   "aspectRatio": 1.3276,
+   "caption": "Acacia and Doum Palm",
+   "category": "forests",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:05Z",
+   "description": "Gum arabic comes from the acacia belt across the middle of the country. Most of the world's does.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4640,
+   "imageUrl": "https://images.pexels.com/photos/27572146/pexels-photo-27572146.jpeg",
+   "photoId": "27572146",
+   "photographer": "哲聖 林",
+   "photographerUrl": "https://www.pexels.com/@70588695",
+   "provider": "pexels",
+   "query": "Sudan acacia woodland tapped",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: acacia,and"
+    ],
+    "score": 4.99
+   },
+   "sourceUrl": "https://www.pexels.com/photo/a-close-up-of-a-tree-with-small-fruits-27572146/",
+   "thumbnailUrl": "https://images.pexels.com/photos/27572146/pexels-photo-27572146.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:06Z",
+   "width": 6160
+  },
+  "sudan/heritage": {
+   "alt": "Ancient egyptian relief of gods in temple, Sudan",
+   "altIntended": "the flat-topped Gebel Barkal with the temple ruins at its base, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Kush",
+   "category": "heritage",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:14Z",
+   "description": "Gebel Barkal was the holy mountain of two kingdoms, and the temple of Amun is cut into it.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/32706048/pexels-photo-32706048.jpeg",
+   "photoId": "32706048",
+   "photographer": "Michelle Chadwick",
+   "photographerUrl": "https://www.pexels.com/@michelle-chadwick-2149425616",
+   "provider": "pexels",
+   "query": "Sudan Gebel Barkal",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: temple"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/ancient-egyptian-relief-of-gods-in-temple-32706048/",
+   "thumbnailUrl": "https://images.pexels.com/photos/32706048/pexels-photo-32706048.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:14Z",
+   "width": 6000
+  },
+  "sudan/hero": {
+   "alt": "Beautiful palm tree sunset, Sudan",
+   "altIntended": "the Nubian pyramids of Meroe standing on desert dunes, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Pyramids of Meroe",
+   "category": "hero",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:10:57Z",
+   "description": "Two hundred of them on a ridge of sand, steeper and smaller than Egypt's, and empty.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4640,
+   "imageUrl": "https://images.pexels.com/photos/18018667/pexels-photo-18018667.jpeg",
+   "photoId": "18018667",
+   "photographer": "Moaz Tobok",
+   "photographerUrl": "https://www.pexels.com/@moaztobok",
+   "provider": "pexels",
+   "query": "Sudan Nubian Meroe",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: desert,the"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/beautiful-palm-tree-sunset-18018667/",
+   "thumbnailUrl": "https://images.pexels.com/photos/18018667/pexels-photo-18018667.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:57Z",
+   "width": 6960
+  },
+  "sudan/hidden-gems": {
+   "alt": "Nile river, Sudan",
+   "altIntended": "the ruined columns and throne hall of Old Dongola above the Nile, Sudan",
+   "aspectRatio": 1.4993,
+   "caption": "Old Dongola",
+   "category": "hidden-gems",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:22Z",
+   "description": "A Christian Nubian capital on the Nile, with a throne hall that became a mosque.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 5464,
+   "imageUrl": "https://images.pexels.com/photos/27407537/pexels-photo-27407537.jpeg",
+   "photoId": "27407537",
+   "photographer": "Eslam Mohammed Abdelmaksoud",
+   "photographerUrl": "https://www.pexels.com/@eslames1",
+   "provider": "pexels",
+   "query": "Sudan Old Dongola Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nile",
+     "category: the"
+    ],
+    "score": 4.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/nile-river-27407537/",
+   "thumbnailUrl": "https://images.pexels.com/photos/27407537/pexels-photo-27407537.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:23Z",
+   "width": 8192
+  },
+  "sudan/historic-sites": {
+   "alt": "Ancient temple in egypt, Sudan",
+   "altIntended": "the pyramid field at Nuri with the Nile beyond, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Meroe, Nuri and El-Kurru",
+   "category": "historic-sites",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:13Z",
+   "description": "Three royal cemeteries of the Kingdom of Kush, which ruled Egypt for a century.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/18934583/pexels-photo-18934583.jpeg",
+   "photoId": "18934583",
+   "photographer": "AXP Photography",
+   "photographerUrl": "https://www.pexels.com/@axp-photography-500641970",
+   "provider": "pexels",
+   "query": "Sudan Nuri Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,nile",
+     "category: ruins"
+    ],
+    "score": 6.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/ancient-temple-in-egypt-18934583/",
+   "thumbnailUrl": "https://images.pexels.com/photos/18934583/pexels-photo-18934583.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:13Z",
+   "width": 6000
+  },
+  "sudan/lakes-rivers": {
+   "alt": "A buildings and bridge near the nile river, Sudan",
+   "altIntended": "the confluence of the Blue and White Nile at Khartoum from the air, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Blue and the White",
+   "category": "lakes-rivers",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:03Z",
+   "description": "They meet at Khartoum, one clear and one brown, and you can see the line between them.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/12607744/pexels-photo-12607744.jpeg",
+   "photoId": "12607744",
+   "photographer": "Ahmed Aziz",
+   "photographerUrl": "https://www.pexels.com/@ahmed-aziz-126288236",
+   "provider": "pexels",
+   "query": "Sudan Blue White Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,blue,nile",
+     "category: river"
+    ],
+    "score": 5.43
+   },
+   "sourceUrl": "https://www.pexels.com/photo/a-buildings-and-bridge-near-the-nile-river-12607744/",
+   "thumbnailUrl": "https://images.pexels.com/photos/12607744/pexels-photo-12607744.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:04Z",
+   "width": 6000
+  },
+  "sudan/local-life": {
+   "alt": "Candid nigerian market scene with spices, Sudan",
+   "altIntended": "camels and traders at the Omdurman camel market, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Camel Market",
+   "category": "local-life",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:15Z",
+   "description": "Omdurman's camel market on a Saturday, with animals in from Kordofan and Darfur.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4160,
+   "imageUrl": "https://images.pexels.com/photos/31743744/pexels-photo-31743744.jpeg",
+   "photoId": "31743744",
+   "photographer": "Kazys Photography",
+   "photographerUrl": "https://www.pexels.com/@kazys-photography-2151238955",
+   "provider": "pexels",
+   "query": "Sudan Omdurman",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: market",
+     "category: market"
+    ],
+    "score": 4.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/candid-nigerian-market-scene-with-spices-31743744/",
+   "thumbnailUrl": "https://images.pexels.com/photos/31743744/pexels-photo-31743744.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:16Z",
+   "width": 6240
+  },
+  "sudan/luxury": {
+   "alt": "A tent and desert in the distance, Sudan",
+   "altIntended": "a tented camp on sand within sight of the Meroe pyramids, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Very Little",
+   "category": "luxury",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:19Z",
+   "description": "A handful of Red Sea liveaboards, and camps at Meroe. That is the whole of it.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/9386245/pexels-photo-9386245.jpeg",
+   "photoId": "9386245",
+   "photographer": "Hani ryad",
+   "photographerUrl": "https://www.pexels.com/@haniryad",
+   "provider": "pexels",
+   "query": "Sudan tented camp sand",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: sand"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/a-tent-and-desert-in-the-distance-9386245/",
+   "thumbnailUrl": "https://images.pexels.com/photos/9386245/pexels-photo-9386245.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:20Z",
+   "width": 6000
+  },
+  "sudan/nature": {
+   "alt": "Forest by the nile, Sudan",
+   "altIntended": "the Nile curving through desert at the great bend in northern Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Great Bend",
+   "category": "nature",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:10:58Z",
+   "description": "The Nile turns southwest for three hundred kilometres here, against every expectation.",
+   "focalPoint": {
+    "x": 50,
+    "y": 54
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/18934597/pexels-photo-18934597.jpeg",
+   "photoId": "18934597",
+   "photographer": "AXP Photography",
+   "photographerUrl": "https://www.pexels.com/@axp-photography-500641970",
+   "provider": "pexels",
+   "query": "Sudan Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nile,the"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/forest-by-the-nile-18934597/",
+   "thumbnailUrl": "https://images.pexels.com/photos/18934597/pexels-photo-18934597.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:58Z",
+   "width": 6000
+  },
+  "sudan/outdoor": {
+   "alt": "Footprints in golden beach sand at sunset, Sudan",
+   "altIntended": "footprints in sand leading up to the Meroe pyramids, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Walking Between Pyramids",
+   "category": "outdoor",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:18Z",
+   "description": "There is no fence at Meroe. You walk in off the sand and up the ridge.",
+   "focalPoint": {
+    "x": 50,
+    "y": 54
+   },
+   "height": 4160,
+   "imageUrl": "https://images.pexels.com/photos/33949846/pexels-photo-33949846.jpeg",
+   "photoId": "33949846",
+   "photographer": "Esra Erdem",
+   "photographerUrl": "https://www.pexels.com/@esrakorkmaz",
+   "provider": "pexels",
+   "query": "Sudan footprints sand leading",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: footprints,sand"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/footprints-in-golden-beach-sand-at-sunset-33949846/",
+   "thumbnailUrl": "https://images.pexels.com/photos/33949846/pexels-photo-33949846.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:18Z",
+   "width": 6240
+  },
+  "sudan/safari": {
+   "alt": "Zebra drinking water from river, Sudan",
+   "altIntended": "acacia woodland and a waterhole in Dinder National Park, Sudan",
+   "aspectRatio": 1.4992,
+   "caption": "Dinder",
+   "category": "safari",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:00Z",
+   "description": "One of Africa's oldest national parks, and one of the least visited on the continent.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4591,
+   "imageUrl": "https://images.pexels.com/photos/15994213/pexels-photo-15994213.jpeg",
+   "photoId": "15994213",
+   "photographer": "Balazs Simon",
+   "photographerUrl": "https://www.pexels.com/@balazsimon",
+   "provider": "pexels",
+   "query": "Sudan acacia woodland waterhole",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: waterhole"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/zebra-drinking-water-from-river-15994213/",
+   "thumbnailUrl": "https://images.pexels.com/photos/15994213/pexels-photo-15994213.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:01Z",
+   "width": 6883
+  },
+  "sudan/traditional-people": {
+   "alt": "Traditional tuareg attire in agadez, Sudan",
+   "altIntended": "a Nubian woman in a doorway of a brightly painted house, Sudan",
+   "aspectRatio": 0.6667,
+   "caption": "The Nubians",
+   "category": "traditional-people",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:08Z",
+   "description": "The Nubian villages along the northern Nile paint their houses, and have done for a very long time.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 6240,
+   "imageUrl": "https://images.pexels.com/photos/38108356/pexels-photo-38108356.jpeg",
+   "photoId": "38108356",
+   "photographer": "Sani Maikatanga",
+   "photographerUrl": "https://www.pexels.com/@sanimaikatanga",
+   "provider": "pexels",
+   "query": "Sudan Nubian",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: woman",
+     "category: portrait,traditional"
+    ],
+    "score": 5.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/traditional-tuareg-attire-in-agadez-38108356/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38108356/pexels-photo-38108356.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:09Z",
+   "width": 4160
+  },
+  "sudan/waterfalls": {
+   "alt": "Sailboat in water in mountains landscape, Sudan",
+   "altIntended": "white water over black granite at a Nile cataract, Sudan",
+   "aspectRatio": 0.6674,
+   "caption": "The Cataracts",
+   "category": "waterfalls",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:02Z",
+   "description": "Six of them on the Nile, rapids where the river crosses granite, and boats have to portage.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 7360,
+   "imageUrl": "https://images.pexels.com/photos/15131485/pexels-photo-15131485.jpeg",
+   "photoId": "15131485",
+   "photographer": "Diego F. Parra",
+   "photographerUrl": "https://www.pexels.com/@diego-f-parra-33199",
+   "provider": "pexels",
+   "query": "Sudan Nile",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: nile,the"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/sailboat-in-water-in-mountains-landscape-15131485/",
+   "thumbnailUrl": "https://images.pexels.com/photos/15131485/pexels-photo-15131485.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:03Z",
+   "width": 4912
+  },
+  "sudan/why-visit": {
+   "alt": "Girl with afro hair smiling, Sudan",
+   "altIntended": "a lone figure walking among the pyramids of Meroe, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Why Sudan",
+   "category": "why-visit",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:23Z",
+   "description": "More pyramids than Egypt, no queue at any of them, and a welcome people write books about.",
+   "focalPoint": {
+    "x": 50,
+    "y": 54
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/5339794/pexels-photo-5339794.jpeg",
+   "photoId": "5339794",
+   "photographer": "Aladdin Mustafa",
+   "photographerUrl": "https://www.pexels.com/@aladdin-mustafa-3566231",
+   "provider": "pexels",
+   "query": "Sudan Meroe",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: sudan"
+    ],
+    "score": 3.43
+   },
+   "sourceUrl": "https://www.pexels.com/photo/girl-with-afro-hair-smiling-5339794/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5339794/pexels-photo-5339794.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:23Z",
+   "width": 6720
+  },
+  "sudan/wildlife": {
+   "alt": "Herd of buffalo on a savannah, Sudan",
+   "altIntended": "a herd of roan antelope in Dinder National Park, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Dinder and the Red Sea",
+   "category": "wildlife",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:10:59Z",
+   "description": "Dinder on the Ethiopian border holds lion, giraffe and roan; the reefs hold everything else.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/15341664/pexels-photo-15341664.jpeg",
+   "photoId": "15341664",
+   "photographer": "Alex Levis",
+   "photographerUrl": "https://www.pexels.com/@droneafrica",
+   "provider": "pexels",
+   "query": "Sudan Dinder National Park",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: herd",
+     "category: wildlife"
+    ],
+    "score": 4.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/herd-of-buffalo-on-a-savannah-15341664/",
+   "thumbnailUrl": "https://images.pexels.com/photos/15341664/pexels-photo-15341664.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:59Z",
+   "width": 6000
   },
   "tanzania/adventure": {
    "alt": "Snow capped mountain peak under a blue sky, Tanzania",
@@ -30417,6 +32888,688 @@
    "thumbnailUrl": "https://images.pexels.com/photos/9909939/pexels-photo-9909939.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
    "verifiedAt": "2026-08-14T08:37:34Z",
    "width": 6000
+  },
+  "togo/adventure": {
+   "alt": "Woman walking on a passageway, Togo",
+   "altIntended": "a walking path through cocoa and coffee smallholdings near Kpalime, Togo",
+   "aspectRatio": 1.498,
+   "caption": "Walking Around Kpalime",
+   "category": "adventure",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:38Z",
+   "description": "Waterfalls, coffee farms, Mont Agou and the butterfly forest, all within an hour.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4016,
+   "imageUrl": "https://images.pexels.com/photos/6433765/pexels-photo-6433765.jpeg",
+   "photoId": "6433765",
+   "photographer": "ธันยกร ไกรสร",
+   "photographerUrl": "https://www.pexels.com/@tanyakorn",
+   "provider": "pexels",
+   "query": "Togo walking path cocoa",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: path,walking"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/woman-walking-on-a-passageway-6433765/",
+   "thumbnailUrl": "https://images.pexels.com/photos/6433765/pexels-photo-6433765.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:38Z",
+   "width": 6016
+  },
+  "togo/architecture": {
+   "alt": "Traditional mud hut with thatched roof, Togo",
+   "altIntended": "the sculpted mud tower and granary of a takienta house, Togo",
+   "aspectRatio": 0.75,
+   "caption": "Towers of Mud",
+   "category": "architecture",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:48Z",
+   "description": "Takienta houses with granaries on top, and German colonial stone in Lome and Aneho.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 5973,
+   "imageUrl": "https://images.pexels.com/photos/37250999/pexels-photo-37250999.jpeg",
+   "photoId": "37250999",
+   "photographer": "Bobby Dimas",
+   "photographerUrl": "https://www.pexels.com/@bobbydimas",
+   "provider": "pexels",
+   "query": "Togo sculpted mud tower",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: mud",
+     "category: architecture"
+    ],
+    "score": 4.5
+   },
+   "sourceUrl": "https://www.pexels.com/photo/traditional-mud-hut-with-thatched-roof-37250999/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37250999/pexels-photo-37250999.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:48Z",
+   "width": 4480
+  },
+  "togo/beaches": {
+   "alt": "Vibrant beach scene with fishermen in togo",
+   "altIntended": "coconut palms and Atlantic surf on the beach near Aneho, Togo",
+   "aspectRatio": 1.5,
+   "caption": "Fifty Kilometres of Coast",
+   "category": "beaches",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:35Z",
+   "description": "Palm-backed Atlantic sand from Lome east to Aneho, with a heavy swell.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/36380985/pexels-photo-36380985.jpeg",
+   "photoId": "36380985",
+   "photographer": "Barnabas Lartey-Odoi Tetteh",
+   "photographerUrl": "https://www.pexels.com/@barnabas-lartey-odoi-tetteh-483146569",
+   "provider": "pexels",
+   "query": "Togo Atlantic Aneho",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: beach",
+     "category: beach"
+    ],
+    "score": 5.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/vibrant-beach-scene-with-fishermen-in-togo-36380985/",
+   "thumbnailUrl": "https://images.pexels.com/photos/36380985/pexels-photo-36380985.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:36Z",
+   "width": 6720
+  },
+  "togo/culture": {
+   "alt": "Close up of sheep with colorful beads in outdoor setting, Togo",
+   "altIntended": "an Ewe drumming group performing in a village, Togo",
+   "aspectRatio": 1.5,
+   "caption": "Ewe, Kabye, Tem, Batammariba",
+   "category": "culture",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:39Z",
+   "description": "Ewe in the south, Kabye in the centre, Batammariba in the far northwest.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/35931231/pexels-photo-35931231.jpeg",
+   "photoId": "35931231",
+   "photographer": "Kadir Altıntaş",
+   "photographerUrl": "https://www.pexels.com/@kadirxaltintas",
+   "provider": "pexels",
+   "query": "Togo Ewe",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: group"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/close-up-of-sheep-with-colorful-beads-in-outdoor-setting-35931231/",
+   "thumbnailUrl": "https://images.pexels.com/photos/35931231/pexels-photo-35931231.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:40Z",
+   "width": 6000
+  },
+  "togo/eco-tourism": {
+   "alt": "Close up of a butterfly, Togo",
+   "altIntended": "a guide showing butterflies in the Kloto forest, Togo",
+   "aspectRatio": 1.4992,
+   "caption": "Butterflies at Kloto",
+   "category": "eco-tourism",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:52Z",
+   "description": "Over five hundred species recorded in one forest, and a local guiding tradition around them.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 5304,
+   "imageUrl": "https://images.pexels.com/photos/11669252/pexels-photo-11669252.jpeg",
+   "photoId": "11669252",
+   "photographer": "Quang Nguyen Vinh",
+   "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+   "provider": "pexels",
+   "query": "Togo guide showing butterflies",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: butterflies,forest"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/close-up-of-a-butterfly-11669252/",
+   "thumbnailUrl": "https://images.pexels.com/photos/11669252/pexels-photo-11669252.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:52Z",
+   "width": 7952
+  },
+  "togo/family-community": {
+   "alt": "Man in shirt standing by group of people, Togo",
+   "altIntended": "a family swimming in a pool below a waterfall near Kpalime, Togo",
+   "aspectRatio": 1.5723,
+   "caption": "Beach and Waterfall in a Day",
+   "category": "family-community",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:49Z",
+   "description": "Togo is narrow enough that the coast and the Kloto hills are the same short trip.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4255,
+   "imageUrl": "https://images.pexels.com/photos/16025968/pexels-photo-16025968.jpeg",
+   "photoId": "16025968",
+   "photographer": "AFRIQUE  AYELE-Y",
+   "photographerUrl": "https://www.pexels.com/@ayele-y",
+   "provider": "pexels",
+   "query": "Togo Kpalime",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "category: community"
+    ],
+    "score": 3.54
+   },
+   "sourceUrl": "https://www.pexels.com/photo/man-in-shirt-standing-by-group-of-people-16025968/",
+   "thumbnailUrl": "https://images.pexels.com/photos/16025968/pexels-photo-16025968.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:50Z",
+   "width": 6690
+  },
+  "togo/festivals": {
+   "alt": "Three stylish individuals in urban setting, Togo",
+   "altIntended": "young men wrestling at the Evala festival in Kabye country, Togo",
+   "aspectRatio": 1.498,
+   "caption": "Evala and the Voodoo Market",
+   "category": "festivals",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:42Z",
+   "description": "Kabye wrestling in July, and the Akodessewa fetish market in Lome all year.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4016,
+   "imageUrl": "https://images.pexels.com/photos/37786278/pexels-photo-37786278.jpeg",
+   "photoId": "37786278",
+   "photographer": "The Chongaiman Ace",
+   "photographerUrl": "https://www.pexels.com/@the-chongaiman-ace-1620694153",
+   "provider": "pexels",
+   "query": "Togo Evala Kabye",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,young"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/three-stylish-individuals-in-urban-setting-37786278/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37786278/pexels-photo-37786278.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:43Z",
+   "width": 6016
+  },
+  "togo/food": {
+   "alt": "Food in a bowl, Togo",
+   "altIntended": "a bowl of gboma dessi spinach stew with fufu, Togo",
+   "aspectRatio": 1.4984,
+   "caption": "Fufu and Gboma Dessi",
+   "category": "food",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:41Z",
+   "description": "Fufu with groundnut sauce, and gboma dessi — spinach stew with fish.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4912,
+   "imageUrl": "https://images.pexels.com/photos/6120241/pexels-photo-6120241.jpeg",
+   "photoId": "6120241",
+   "photographer": "Alesia  Kozik",
+   "photographerUrl": "https://www.pexels.com/@alesiakozik",
+   "provider": "pexels",
+   "query": "Togo bowl gboma dessi",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,bowl"
+    ],
+    "score": 4.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/close-up-photo-of-food-in-a-bowl-6120241/",
+   "thumbnailUrl": "https://images.pexels.com/photos/6120241/pexels-photo-6120241.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:42Z",
+   "width": 7360
+  },
+  "togo/forests": {
+   "alt": "Butterfly on a leaf, Togo",
+   "altIntended": "butterflies on a forest path in the Kloto hills, Togo",
+   "aspectRatio": 1.5,
+   "caption": "The Kloto Forest",
+   "category": "forests",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:37Z",
+   "description": "Semi-deciduous forest above Kpalime, and one of the richest butterfly sites in West Africa.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4160,
+   "imageUrl": "https://images.pexels.com/photos/5051299/pexels-photo-5051299.jpeg",
+   "photoId": "5051299",
+   "photographer": "Valeriia Miller",
+   "photographerUrl": "https://www.pexels.com/@valeriiamiller",
+   "provider": "pexels",
+   "query": "Togo butterflies forest path",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: forest,the",
+     "category: forest"
+    ],
+    "score": 6.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/butterfly-on-a-leaf-5051299/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5051299/pexels-photo-5051299.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:37Z",
+   "width": 6240
+  },
+  "togo/heritage": {
+   "alt": "Modern architectural tower against blue sky, Togo",
+   "altIntended": "a cluster of takienta tower houses among fields at Koutammakou, Togo",
+   "aspectRatio": 1.5001,
+   "caption": "Koutammakou, Listed",
+   "category": "heritage",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:45Z",
+   "description": "The Batammariba landscape has been a World Heritage site since 2004, and is still lived in.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4627,
+   "imageUrl": "https://images.pexels.com/photos/29565251/pexels-photo-29565251.jpeg",
+   "photoId": "29565251",
+   "photographer": "İrfan Simsar",
+   "photographerUrl": "https://www.pexels.com/@irfansimsar",
+   "provider": "pexels",
+   "query": "Togo cluster takienta tower",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: tower"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/modern-architectural-tower-against-blue-sky-29565251/",
+   "thumbnailUrl": "https://images.pexels.com/photos/29565251/pexels-photo-29565251.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:46Z",
+   "width": 6941
+  },
+  "togo/hero": {
+   "alt": "Bangkok city clock tower under cloudy sky, Togo",
+   "altIntended": "a Batammariba takienta tower house at Koutammakou, Togo",
+   "aspectRatio": 1.48,
+   "caption": "Koutammakou",
+   "category": "hero",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:24Z",
+   "description": "The Batammariba build towered mud houses that are fortress, granary and shrine at once.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 5481,
+   "imageUrl": "https://images.pexels.com/photos/36703705/pexels-photo-36703705.jpeg",
+   "photoId": "36703705",
+   "photographer": "Optical Chemist",
+   "photographerUrl": "https://www.pexels.com/@optical-chemist-340351297",
+   "provider": "pexels",
+   "query": "Togo batammariba takienta tower",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: tower",
+     "category: iconic"
+    ],
+    "score": 4.0
+   },
+   "sourceUrl": "https://www.pexels.com/photo/bangkok-city-clock-tower-under-cloudy-sky-36703705/",
+   "thumbnailUrl": "https://images.pexels.com/photos/36703705/pexels-photo-36703705.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:26Z",
+   "width": 8112
+  },
+  "togo/hidden-gems": {
+   "alt": "Portrait of man with short hair, Togo",
+   "altIntended": "a quiet street of faded colonial houses at Aneho, Togo",
+   "aspectRatio": 1.3465,
+   "caption": "Aneho and Lake Togo",
+   "category": "hidden-gems",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:55Z",
+   "description": "An hour east of Lome: a lagoon, a decayed colonial town, and no visitors.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4471,
+   "imageUrl": "https://images.pexels.com/photos/16026516/pexels-photo-16026516.jpeg",
+   "photoId": "16026516",
+   "photographer": "AFRIQUE  AYELE-Y",
+   "photographerUrl": "https://www.pexels.com/@ayele-y",
+   "provider": "pexels",
+   "query": "Togo Aneho",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: togo"
+    ],
+    "score": 4.47
+   },
+   "sourceUrl": "https://www.pexels.com/photo/portrait-of-man-with-short-hair-16026516/",
+   "thumbnailUrl": "https://images.pexels.com/photos/16026516/pexels-photo-16026516.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:55Z",
+   "width": 6020
+  },
+  "togo/lakes-rivers": {
+   "alt": "Scenic canoe by rocky lakeside shoreline, Togo",
+   "altIntended": "pirogues on the shallow water of Lake Togo",
+   "aspectRatio": 1.4984,
+   "caption": "Lake Togo and the Mono",
+   "category": "lakes-rivers",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:33Z",
+   "description": "A shallow lagoon behind the coast, and the Mono river marking the Benin border.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 10011,
+   "imageUrl": "https://images.pexels.com/photos/35602815/pexels-photo-35602815.jpeg",
+   "photoId": "35602815",
+   "photographer": "David Kwewum",
+   "photographerUrl": "https://www.pexels.com/@davdkuko",
+   "provider": "pexels",
+   "query": "Togo Lake Togo",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: and,water",
+     "category: water"
+    ],
+    "score": 5.43
+   },
+   "sourceUrl": "https://www.pexels.com/photo/scenic-canoe-by-rocky-lakeside-shoreline-35602815/",
+   "thumbnailUrl": "https://images.pexels.com/photos/35602815/pexels-photo-35602815.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:35Z",
+   "width": 15000
+  },
+  "togo/luxury": {
+   "alt": "Lifeguard on a cloudy beach, Togo",
+   "altIntended": "a beach hotel terrace under palms near Lome, Togo",
+   "aspectRatio": 1.4999,
+   "caption": "A Handful",
+   "category": "luxury",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:51Z",
+   "description": "Beach hotels at Lome and a few good places at Kpalime.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4411,
+   "imageUrl": "https://images.pexels.com/photos/25559796/pexels-photo-25559796.jpeg",
+   "photoId": "25559796",
+   "photographer": "Ambareesh Sridhar Photography",
+   "photographerUrl": "https://www.pexels.com/@kichu98",
+   "provider": "pexels",
+   "query": "Togo Lome",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: beach"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/lifeguard-on-a-cloudy-beach-25559796/",
+   "thumbnailUrl": "https://images.pexels.com/photos/25559796/pexels-photo-25559796.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:51Z",
+   "width": 6616
+  },
+  "togo/mountains": {
+   "alt": "Pine branch with cone in forest setting, Togo",
+   "altIntended": "the forested cone of Mont Agou above villages and farms, Togo",
+   "aspectRatio": 1.5,
+   "caption": "Mont Agou",
+   "category": "mountains",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:31Z",
+   "description": "986 metres, the highest point, walkable in a morning from Kpalime.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 5152,
+   "imageUrl": "https://images.pexels.com/photos/32186167/pexels-photo-32186167.jpeg",
+   "photoId": "32186167",
+   "photographer": "Emre Gokceoglu",
+   "photographerUrl": "https://www.pexels.com/@0ldpikes",
+   "provider": "pexels",
+   "query": "Togo forested cone mont",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: cone"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/pine-branch-with-cone-in-forest-setting-32186167/",
+   "thumbnailUrl": "https://images.pexels.com/photos/32186167/pexels-photo-32186167.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:32Z",
+   "width": 7728
+  },
+  "togo/outdoor": {
+   "alt": "The mont saint michel abbey and surrounding houses, Togo",
+   "altIntended": "the view from Mont Agou across valleys at first light, Togo",
+   "aspectRatio": 1.5,
+   "caption": "Mont Agou at Dawn",
+   "category": "outdoor",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:50Z",
+   "description": "Up before six, and Ghana visible across the valley by seven.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/13282612/pexels-photo-13282612.jpeg",
+   "photoId": "13282612",
+   "photographer": "Gérard PITOIS",
+   "photographerUrl": "https://www.pexels.com/@franckgerardpitois",
+   "provider": "pexels",
+   "query": "Togo view mont agou",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: mont"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/view-of-the-mont-saint-michel-abbey-and-surrounding-houses-13282612/",
+   "thumbnailUrl": "https://images.pexels.com/photos/13282612/pexels-photo-13282612.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:51Z",
+   "width": 6000
+  },
+  "togo/photography": {
+   "alt": "Wind sculpted sand dunes in golden hue, Togo",
+   "altIntended": "late sun on the sculpted walls of takienta houses, Togo",
+   "aspectRatio": 1.7778,
+   "caption": "Earth Architecture",
+   "category": "photography",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:53Z",
+   "description": "Koutammakou late in the day, when the mud goes gold and the granaries throw shadows.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 3780,
+   "imageUrl": "https://images.pexels.com/photos/37911378/pexels-photo-37911378.jpeg",
+   "photoId": "37911378",
+   "photographer": "Shubham Dhage",
+   "photographerUrl": "https://www.pexels.com/@shubhamdhage",
+   "provider": "pexels",
+   "query": "Togo late sun sculpted",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: sculpted",
+     "category: golden"
+    ],
+    "score": 3.79
+   },
+   "sourceUrl": "https://www.pexels.com/photo/wind-sculpted-sand-dunes-in-golden-hue-37911378/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37911378/pexels-photo-37911378.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:54Z",
+   "width": 6720
+  },
+  "togo/safari": {
+   "alt": "Cape buffalo with red billed oxpeckers in africa, Togo",
+   "altIntended": "a waterhole and buffalo tracks in a Togolese reserve",
+   "aspectRatio": 1.324,
+   "caption": "Small and Recovering",
+   "category": "safari",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:29Z",
+   "description": "The parks here are being rebuilt after decades of pressure, and the wildlife with them.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 6680,
+   "imageUrl": "https://images.pexels.com/photos/35311560/pexels-photo-35311560.jpeg",
+   "photoId": "35311560",
+   "photographer": "Derek Keats",
+   "photographerUrl": "https://www.pexels.com/@dkeats",
+   "provider": "pexels",
+   "query": "Togo waterhole buffalo tracks",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: buffalo"
+    ],
+    "score": 2.98
+   },
+   "sourceUrl": "https://www.pexels.com/photo/cape-buffalo-with-red-billed-oxpeckers-in-africa-35311560/",
+   "thumbnailUrl": "https://images.pexels.com/photos/35311560/pexels-photo-35311560.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:30Z",
+   "width": 8844
+  },
+  "togo/traditional-people": {
+   "alt": "Woman in black bikini standing on beside a bamboo fence, Togo",
+   "altIntended": "a Batammariba woman on the roof terrace of a takienta house, Togo",
+   "aspectRatio": 0.6667,
+   "caption": "The Batammariba",
+   "category": "traditional-people",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:40Z",
+   "description": "Their name means 'those who shape the earth', and the houses are the argument.",
+   "focalPoint": {
+    "x": 50,
+    "y": 48
+   },
+   "height": 6240,
+   "imageUrl": "https://images.pexels.com/photos/5465040/pexels-photo-5465040.jpeg",
+   "photoId": "5465040",
+   "photographer": "Junior Karrick DJIKOUNOU",
+   "photographerUrl": "https://www.pexels.com/@junior-karrick-djikounou-3485934",
+   "provider": "pexels",
+   "query": "Togo Batammariba",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: woman",
+     "category: portrait"
+    ],
+    "score": 4.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/woman-in-black-bikini-standing-on-beside-a-bamboo-fence-5465040/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5465040/pexels-photo-5465040.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:40Z",
+   "width": 4160
+  },
+  "togo/why-visit": {
+   "alt": "Boys running down a rural road, Togo",
+   "altIntended": "a road running north through changing country in Togo",
+   "aspectRatio": 1.5,
+   "caption": "Why Togo",
+   "category": "why-visit",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:55Z",
+   "description": "A whole cross-section of West Africa in a country you can drive in a day.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4672,
+   "imageUrl": "https://images.pexels.com/photos/17979480/pexels-photo-17979480.jpeg",
+   "photoId": "17979480",
+   "photographer": "Pexels LATAM",
+   "photographerUrl": "https://www.pexels.com/@pexels-latam-478514802",
+   "provider": "pexels",
+   "query": "Togo road running north",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: road,running"
+    ],
+    "score": 3.93
+   },
+   "sourceUrl": "https://www.pexels.com/photo/boys-running-down-a-rural-road-17979480/",
+   "thumbnailUrl": "https://images.pexels.com/photos/17979480/pexels-photo-17979480.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:56Z",
+   "width": 7008
+  },
+  "togo/wildlife": {
+   "alt": "Tall trees with big roots in forest, Togo",
+   "altIntended": "forest and grassland in Fazao-Malfakassa National Park, Togo",
+   "aspectRatio": 1.4991,
+   "caption": "Fazao-Malfakassa",
+   "category": "wildlife",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:27Z",
+   "description": "Elephant, buffalo and a great many butterflies in the largest park in the country.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 5025,
+   "imageUrl": "https://images.pexels.com/photos/5118547/pexels-photo-5118547.jpeg",
+   "photoId": "5118547",
+   "photographer": "Quang Nguyen Vinh",
+   "photographerUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+   "provider": "pexels",
+   "query": "Togo Fazao-Malfakassa National Park",
+   "queryTier": "subject",
+   "relevance": {
+    "reasons": [
+     "subject: forest,national,park"
+    ],
+    "score": 4.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/tall-trees-with-big-roots-in-forest-5118547/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5118547/pexels-photo-5118547.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:28Z",
+   "width": 7533
   },
   "tunisia/adventure": {
    "alt": "Dunes, Tunisia",
@@ -43702,6 +46855,80 @@
    "verifiedAt": "2026-08-14T07:31:11Z",
    "width": 6000
   },
+  "sierra-leone/architecture": {
+   "alt": "Two men posing on a sunny beach, Sierra Leone",
+   "altIntended": "a two-storey Krio board house with shutters and a verandah, Sierra Leone",
+   "aspectRatio": 0.667,
+   "caption": "Krio Board Houses",
+   "category": "architecture",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:33Z",
+   "description": "Timber-framed, shuttered, verandahed — an architecture that came back across the Atlantic.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 7952,
+   "imageUrl": "https://images.unsplash.com/photo-1761666508173-5db8a9cfac5a",
+   "photoId": "XVGspcHdqCI",
+   "photographer": "Random Institute",
+   "photographerUrl": "https://unsplash.com/@randominstitute",
+   "provider": "unsplash",
+   "query": "Sierra Leone Krio",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "two men posing on a sunny beach",
+    "why": "two"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: two"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://unsplash.com/photos/two-men-posing-on-a-sunny-beach-XVGspcHdqCI",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1761666508173-5db8a9cfac5a?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:09:34Z",
+   "width": 5304
+  },
+  "sierra-leone/cities": {
+   "alt": "Brown and white concrete building near body of water during daytime, Sierra Leone",
+   "altIntended": "Freetown's hills and harbour seen from above, Sierra Leone",
+   "aspectRatio": 1.4992,
+   "caption": "Freetown",
+   "category": "cities",
+   "country": "sierra-leone",
+   "createdAt": "2026-08-16T07:09:29Z",
+   "description": "Krio board houses on the hills, the estuary below, and mountains directly behind.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4954,
+   "imageUrl": "https://images.unsplash.com/photo-1630509493805-726639111b7c",
+   "photoId": "W5ydQmFhz3s",
+   "photographer": "Random Institute",
+   "photographerUrl": "https://unsplash.com/@randominstitute",
+   "provider": "unsplash",
+   "query": "Sierra Leone Freetown's",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "thin",
+    "photoSays": "brown and white concrete building near body of water during daytime",
+    "why": "1.93"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: freetown"
+    ],
+    "score": 1.93
+   },
+   "sourceUrl": "https://unsplash.com/photos/brown-and-white-concrete-building-near-body-of-water-during-daytime-W5ydQmFhz3s",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1630509493805-726639111b7c?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:09:30Z",
+   "width": 7427
+  },
   "sierra-leone/food": {
    "alt": "Woman in white and black stripe tank top sitting on chair, Sierra Leone",
    "altIntended": "Food in Sierra Leone",
@@ -43814,6 +47041,156 @@
    "thumbnailUrl": "https://images.unsplash.com/photo-1630510590518-6f07f53458e5?auto=format&fit=crop&w=400&h=300&q=70",
    "verifiedAt": "2026-08-16T05:05:04Z",
    "width": 5304
+  },
+  "somalia/heritage": {
+   "alt": "Girls posing together on sand, Somalia",
+   "altIntended": "the coral-stone ruins of an old trading house at Merca, Somalia",
+   "aspectRatio": 1.504,
+   "caption": "Ports of the Indian Ocean",
+   "category": "heritage",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:20Z",
+   "description": "Mogadishu, Merca and Barawa were trading cities when Europe had none on this ocean.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/15463258/pexels-photo-15463258.jpeg",
+   "photoId": "15463258",
+   "photographer": "Kremena Koleva",
+   "photographerUrl": "https://www.pexels.com/@kremena-koleva-446114278",
+   "provider": "pexels",
+   "query": "Somalia Merca",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "girls posing together on sand",
+    "why": "the"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: the"
+    ],
+    "score": 2.54
+   },
+   "sourceUrl": "https://www.pexels.com/photo/girls-posing-together-on-sand-15463258/",
+   "thumbnailUrl": "https://images.pexels.com/photos/15463258/pexels-photo-15463258.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:21Z",
+   "width": 6016
+  },
+  "somalia/lakes-rivers": {
+   "alt": "A black and white photo of a man holding a barbed wire fence, Somalia",
+   "altIntended": "irrigated banana plantations along the Juba river, Somalia",
+   "aspectRatio": 1.4997,
+   "caption": "The Juba and the Shabelle",
+   "category": "lakes-rivers",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:06Z",
+   "description": "Two rivers off the Ethiopian highlands that make the only irrigated farmland in the country.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 1969,
+   "imageUrl": "https://images.unsplash.com/photo-1695372999310-0561a4412a76",
+   "photoId": "z05vaxgb8MA",
+   "photographer": "The Australian War Memorial",
+   "photographerUrl": "https://unsplash.com/@australianwarmemorial",
+   "provider": "unsplash",
+   "query": "Somalia Juba",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "a black and white photo of a man holding a barbed wire fence",
+    "why": "and,the"
+   },
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: and,the",
+     "looks like 100% of a slot already filled here"
+    ],
+    "score": 2.93
+   },
+   "sourceUrl": "https://unsplash.com/photos/a-black-and-white-photo-of-a-man-holding-a-barbed-wire-fence-z05vaxgb8MA",
+   "thumbnailUrl": "https://images.unsplash.com/photo-1695372999310-0561a4412a76?auto=format&fit=crop&w=400&h=300&q=70",
+   "verifiedAt": "2026-08-16T07:10:06Z",
+   "width": 2953
+  },
+  "somalia/outdoor": {
+   "alt": "Classic black volkswagen beetle on european street, Somalia",
+   "altIntended": "a walking path through juniper forest in the Cal Madow, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Walking the Cal Madow",
+   "category": "outdoor",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:25Z",
+   "description": "Cool forest, cycads and views to the Gulf of Aden, from Erigavo.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4640,
+   "imageUrl": "https://images.pexels.com/photos/38597825/pexels-photo-38597825.jpeg",
+   "photoId": "38597825",
+   "photographer": "Guerrero De la Luz",
+   "photographerUrl": "https://www.pexels.com/@guerrero-de-la-luz-346901328",
+   "provider": "pexels",
+   "query": "Somalia Cal Madow",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "classic black volkswagen beetle on european street",
+    "why": "the"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: the"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/classic-black-volkswagen-beetle-on-european-street-38597825/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38597825/pexels-photo-38597825.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:26Z",
+   "width": 6960
+  },
+  "somalia/photography": {
+   "alt": "Rock formations under blue sky, Somalia",
+   "altIntended": "morning light on the painted rock shelter interior at Laas Geel, Somalia",
+   "aspectRatio": 1.5,
+   "caption": "Ochre on Rock",
+   "category": "photography",
+   "country": "somalia",
+   "createdAt": "2026-08-16T07:10:28Z",
+   "description": "Laas Geel in the morning, when the shelters are lit and the cattle look painted yesterday.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/12848416/pexels-photo-12848416.jpeg",
+   "photoId": "12848416",
+   "photographer": "Magali Guimarães",
+   "photographerUrl": "https://www.pexels.com/@magali-guimaraes-3411930",
+   "provider": "pexels",
+   "query": "Somalia Laas Geel",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "thin",
+    "photoSays": "rock formations under blue sky",
+    "why": "1.93"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: rock"
+    ],
+    "score": 1.93
+   },
+   "sourceUrl": "https://www.pexels.com/photo/rock-formations-under-blue-sky-12848416/",
+   "thumbnailUrl": "https://images.pexels.com/photos/12848416/pexels-photo-12848416.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:28Z",
+   "width": 6000
   },
   "south-africa/adventure": {
    "alt": "the Bloukrans bridge bungee jump on the Garden Route, South Africa",
@@ -44001,6 +47378,383 @@
    "verifiedAt": "2026-08-14T07:31:23Z",
    "width": 8184
   },
+  "south-sudan/cities": {
+   "alt": "House in the middle of the nile, South Sudan",
+   "altIntended": "the riverfront and low buildings of Juba on the White Nile, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Juba",
+   "category": "cities",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:47Z",
+   "description": "A river port that became a capital in 2011 and has been building ever since.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/27605561/pexels-photo-27605561.jpeg",
+   "photoId": "27605561",
+   "photographer": "Eslam Mohammed Abdelmaksoud",
+   "photographerUrl": "https://www.pexels.com/@eslames1",
+   "provider": "pexels",
+   "query": "South Sudan Juba White Nile",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "thin",
+    "photoSays": "house in the middle of the nile",
+    "why": "1.93"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: nile"
+    ],
+    "score": 1.93
+   },
+   "sourceUrl": "https://www.pexels.com/photo/house-in-the-middle-of-the-nile-27605561/",
+   "thumbnailUrl": "https://images.pexels.com/photos/27605561/pexels-photo-27605561.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:47Z",
+   "width": 6000
+  },
+  "south-sudan/crafts": {
+   "alt": "Adorable child in vibrant sudanese clothing, South Sudan",
+   "altIntended": "a beaded Dinka corset in red and blue on display, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Beadwork and Corsets",
+   "category": "crafts",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:44Z",
+   "description": "Dinka beaded corsets in colours that state a man's age set, and Azande basketry.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/35736606/pexels-photo-35736606.jpeg",
+   "photoId": "35736606",
+   "photographer": "Waseem Lazkani",
+   "photographerUrl": "https://www.pexels.com/@waseem-lazkani-2151148258",
+   "provider": "pexels",
+   "query": "South Sudan Dinka",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "adorable child in vibrant sudanese clothing",
+    "why": "and"
+   },
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: and"
+    ],
+    "score": 4.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/adorable-child-in-vibrant-sudanese-clothing-35736606/",
+   "thumbnailUrl": "https://images.pexels.com/photos/35736606/pexels-photo-35736606.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:45Z",
+   "width": 6720
+  },
+  "south-sudan/lakes-rivers": {
+   "alt": "Brown crocodile on green grass field, South Sudan",
+   "altIntended": "a fishing canoe on the White Nile at sunset near Juba, South Sudan",
+   "aspectRatio": 1.4984,
+   "caption": "The White Nile",
+   "category": "lakes-rivers",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:36Z",
+   "description": "It runs the length of the country and it is the reason for everything here.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4912,
+   "imageUrl": "https://images.pexels.com/photos/10544532/pexels-photo-10544532.jpeg",
+   "photoId": "10544532",
+   "photographer": "Frans van Heerden",
+   "photographerUrl": "https://www.pexels.com/@frans-van-heerden-201846",
+   "provider": "pexels",
+   "query": "South Sudan White Nile Juba",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "brown crocodile on green grass field",
+    "why": "near,the"
+   },
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: near,the",
+     "category: water"
+    ],
+    "score": 6.93
+   },
+   "sourceUrl": "https://www.pexels.com/photo/brown-crocodile-on-green-grass-field-10544532/",
+   "thumbnailUrl": "https://images.pexels.com/photos/10544532/pexels-photo-10544532.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:37Z",
+   "width": 7360
+  },
+  "south-sudan/luxury": {
+   "alt": "Kids setting up a tent, South Sudan",
+   "altIntended": "a mobile tented camp pitched on open grassland, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Two Camps",
+   "category": "luxury",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:51Z",
+   "description": "There is a mobile camp on the migration and very little else. That is the honest position.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/9303530/pexels-photo-9303530.jpeg",
+   "photoId": "9303530",
+   "photographer": "cottonbro studio",
+   "photographerUrl": "https://www.pexels.com/@cottonbro",
+   "provider": "pexels",
+   "query": "South Sudan mobile tented camp",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "photo of kids setting up a tent",
+    "why": "two"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: two"
+    ],
+    "score": 2.53
+   },
+   "sourceUrl": "https://www.pexels.com/photo/photo-of-kids-setting-up-a-tent-9303530/",
+   "thumbnailUrl": "https://images.pexels.com/photos/9303530/pexels-photo-9303530.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:52Z",
+   "width": 6000
+  },
+  "south-sudan/nature": {
+   "alt": "Woman and boy showing peace sign, South Sudan",
+   "altIntended": "papyrus and open water stretching to the horizon in the Sudd, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Sudd",
+   "category": "nature",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:31Z",
+   "description": "One of the largest wetlands on earth, where the Nile spreads out and slows almost to a stop.",
+   "focalPoint": {
+    "x": 50,
+    "y": 55
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/5339771/pexels-photo-5339771.jpeg",
+   "photoId": "5339771",
+   "photographer": "Aladdin Mustafa",
+   "photographerUrl": "https://www.pexels.com/@aladdin-mustafa-3566231",
+   "provider": "pexels",
+   "query": "South Sudan Sudd",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "woman and boy showing peace sign",
+    "why": "the"
+   },
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: the"
+    ],
+    "score": 4.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/woman-and-boy-showing-peace-sign-5339771/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5339771/pexels-photo-5339771.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:32Z",
+   "width": 6720
+  },
+  "south-sudan/outdoor": {
+   "alt": "Man in button up shirt waving sudanese flag in victory, South Sudan",
+   "altIntended": "a forest path climbing through the Imatong mountains, South Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Walking the Imatong",
+   "category": "outdoor",
+   "country": "south-sudan",
+   "createdAt": "2026-08-16T07:10:50Z",
+   "description": "Cool forest, waterfalls and Kinyeti, from Gilo. Guides are essential and available.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/5339770/pexels-photo-5339770.jpeg",
+   "photoId": "5339770",
+   "photographer": "Aladdin Mustafa",
+   "photographerUrl": "https://www.pexels.com/@aladdin-mustafa-3566231",
+   "provider": "pexels",
+   "query": "South Sudan Imatong",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "man in button up shirt waving sudanese flag in victory",
+    "why": "the"
+   },
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: the"
+    ],
+    "score": 4.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/man-in-button-up-shirt-waving-sudanese-flag-in-victory-5339770/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5339770/pexels-photo-5339770.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:10:51Z",
+   "width": 6720
+  },
+  "sudan/cities": {
+   "alt": "Street scene in luxor egypt with mosque minaret, Sudan",
+   "altIntended": "the Omdurman souk crowded with people and stalls, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Khartoum and Omdurman",
+   "category": "cities",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:14Z",
+   "description": "Two cities facing each other across the confluence, one colonial grid and one enormous souk.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4160,
+   "imageUrl": "https://images.pexels.com/photos/37559126/pexels-photo-37559126.jpeg",
+   "photoId": "37559126",
+   "photographer": "Muhammed Fatih Beki",
+   "photographerUrl": "https://www.pexels.com/@mfbeki",
+   "provider": "pexels",
+   "query": "Sudan Omdurman",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "street scene in luxor egypt with mosque minaret",
+    "why": "and"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: and",
+     "category: urban"
+    ],
+    "score": 3.43
+   },
+   "sourceUrl": "https://www.pexels.com/photo/street-scene-in-luxor-egypt-with-mosque-minaret-37559126/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37559126/pexels-photo-37559126.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:15Z",
+   "width": 6240
+  },
+  "sudan/crafts": {
+   "alt": "Colorful african building with intricate designs, Sudan",
+   "altIntended": "coiled palm-fibre baskets in bright colours at Omdurman souk, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "Basketry and Silver",
+   "category": "crafts",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:12Z",
+   "description": "Coiled palm baskets from the north, Beja swords, and silver from the Omdurman souk.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4672,
+   "imageUrl": "https://images.pexels.com/photos/30253025/pexels-photo-30253025.jpeg",
+   "photoId": "30253025",
+   "photographer": "Kaybee Photography",
+   "photographerUrl": "https://www.pexels.com/@kaybee-photography-664870201",
+   "provider": "pexels",
+   "query": "Sudan Omdurman",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "colorful african building with intricate designs",
+    "why": "and"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: and"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/colorful-african-building-with-intricate-designs-30253025/",
+   "thumbnailUrl": "https://images.pexels.com/photos/30253025/pexels-photo-30253025.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:12Z",
+   "width": 7008
+  },
+  "sudan/mountains": {
+   "alt": "Scenic black and white mountain road view, Sudan",
+   "altIntended": "the volcanic crater lake on Jebel Marra, Sudan",
+   "aspectRatio": 1.5,
+   "caption": "The Red Sea Hills and Jebel Marra",
+   "category": "mountains",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:01Z",
+   "description": "Granite hills behind Port Sudan, and a volcanic crater lake on Jebel Marra in Darfur.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 5504,
+   "imageUrl": "https://images.pexels.com/photos/34999443/pexels-photo-34999443.jpeg",
+   "photoId": "34999443",
+   "photographer": "Kirandeep Singh Walia",
+   "photographerUrl": "https://www.pexels.com/@kirandeepsingh",
+   "provider": "pexels",
+   "query": "Sudan Jebel Marra",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "scenic black and white mountain road view",
+    "why": "and"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: and",
+     "category: mountain"
+    ],
+    "score": 4.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/scenic-black-and-white-mountain-road-view-34999443/",
+   "thumbnailUrl": "https://images.pexels.com/photos/34999443/pexels-photo-34999443.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:02Z",
+   "width": 8256
+  },
+  "sudan/photography": {
+   "alt": "Ancient egyptian inscriptions, Sudan",
+   "altIntended": "long shadows across dunes below the Meroe pyramids at dawn, Sudan",
+   "aspectRatio": 1.6056,
+   "caption": "Pyramids and Dunes",
+   "category": "photography",
+   "country": "sudan",
+   "createdAt": "2026-08-16T07:11:21Z",
+   "description": "Meroe an hour after dawn, when the sand is still ridged and the shadows are long.",
+   "focalPoint": {
+    "x": 50,
+    "y": 54
+   },
+   "height": 3973,
+   "imageUrl": "https://images.pexels.com/photos/20303263/pexels-photo-20303263.jpeg",
+   "photoId": "20303263",
+   "photographer": "Александр Лич",
+   "photographerUrl": "https://www.pexels.com/@lich",
+   "provider": "pexels",
+   "query": "Sudan Meroe",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "ancient egyptian inscriptions",
+    "why": "and"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: and"
+    ],
+    "score": 2.06
+   },
+   "sourceUrl": "https://www.pexels.com/photo/ancient-egyptian-inscriptions-20303263/",
+   "thumbnailUrl": "https://images.pexels.com/photos/20303263/pexels-photo-20303263.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:22Z",
+   "width": 6379
+  },
   "tanzania/crafts": {
    "alt": "a Makonde carver working ebony wood, Tanzania",
    "aspectRatio": 1.4999,
@@ -44111,6 +47865,230 @@
    "thumbnailUrl": "https://images.pexels.com/photos/7637395/pexels-photo-7637395.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
    "verifiedAt": "2026-08-14T08:37:48Z",
    "width": 4000
+  },
+  "togo/cities": {
+   "alt": "Beach on seashore, Togo",
+   "altIntended": "the beach and palm-lined boulevard at Lome, Togo",
+   "aspectRatio": 1.5,
+   "caption": "Lome",
+   "category": "cities",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:46Z",
+   "description": "The only capital on a border, with the biggest market in the region behind the beach.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 4672,
+   "imageUrl": "https://images.pexels.com/photos/25559800/pexels-photo-25559800.jpeg",
+   "photoId": "25559800",
+   "photographer": "Ambareesh Sridhar Photography",
+   "photographerUrl": "https://www.pexels.com/@kichu98",
+   "provider": "pexels",
+   "query": "Togo Lome",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "thin",
+    "photoSays": "beach on seashore",
+    "why": "1.93"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: beach"
+    ],
+    "score": 1.93
+   },
+   "sourceUrl": "https://www.pexels.com/photo/beach-on-seashore-25559800/",
+   "thumbnailUrl": "https://images.pexels.com/photos/25559800/pexels-photo-25559800.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:47Z",
+   "width": 7008
+  },
+  "togo/crafts": {
+   "alt": "People in costumes during a parade in city, Togo",
+   "altIntended": "batik cloth drying on a line at a Kpalime workshop, Togo",
+   "aspectRatio": 1.5,
+   "caption": "Batik and Pottery",
+   "category": "crafts",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:43Z",
+   "description": "Batik and wood carving around Kpalime, and pottery from the north.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/17357005/pexels-photo-17357005.jpeg",
+   "photoId": "17357005",
+   "photographer": "Jonathan Shembere",
+   "photographerUrl": "https://www.pexels.com/@gwejeofafrica",
+   "provider": "pexels",
+   "query": "Togo Kpalime",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "people in costumes during a parade in city",
+    "why": "and"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: and"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/people-in-costumes-during-a-parade-in-city-17357005/",
+   "thumbnailUrl": "https://images.pexels.com/photos/17357005/pexels-photo-17357005.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:43Z",
+   "width": 6000
+  },
+  "togo/historic-sites": {
+   "alt": "Local market scene in jos plateau nigeria, Togo",
+   "altIntended": "a decaying German colonial building in Aneho, Togo",
+   "aspectRatio": 1.498,
+   "caption": "Aneho and the Old Coast",
+   "category": "historic-sites",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:44Z",
+   "description": "The first colonial capital, with German and Afro-Brazilian buildings going quietly to seed.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4016,
+   "imageUrl": "https://images.pexels.com/photos/36547132/pexels-photo-36547132.jpeg",
+   "photoId": "36547132",
+   "photographer": "Jagaba Denis",
+   "photographerUrl": "https://www.pexels.com/@jagaba",
+   "provider": "pexels",
+   "query": "Togo German Aneho",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "local market scene in jos plateau nigeria",
+    "why": "and"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: and"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/local-market-scene-in-jos-plateau-nigeria-36547132/",
+   "thumbnailUrl": "https://images.pexels.com/photos/36547132/pexels-photo-36547132.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:44Z",
+   "width": 6016
+  },
+  "togo/local-life": {
+   "alt": "Crowd at urban market, Togo",
+   "altIntended": "wax print cloth stacked at a stall in Lome's Grand Marche, Togo",
+   "aspectRatio": 1.5,
+   "caption": "The Grand Marche and the Nana Benz",
+   "category": "local-life",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:49Z",
+   "description": "The women who built the wax-print trade ran it from this market, and still do.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/17586367/pexels-photo-17586367.jpeg",
+   "photoId": "17586367",
+   "photographer": "Temple Maduoma",
+   "photographerUrl": "https://www.pexels.com/@temple-maduoma-268383533",
+   "provider": "pexels",
+   "query": "Togo Lome's Grand Marche",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "crowd at urban market",
+    "why": "and,the"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: and,the",
+     "category: market"
+    ],
+    "score": 6.17
+   },
+   "sourceUrl": "https://www.pexels.com/photo/crowd-at-urban-market-17586367/",
+   "thumbnailUrl": "https://images.pexels.com/photos/17586367/pexels-photo-17586367.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:49Z",
+   "width": 6000
+  },
+  "togo/nature": {
+   "alt": "Men with mud on their body, Togo",
+   "altIntended": "forested hills and a valley of cocoa near Kpalime, Togo",
+   "aspectRatio": 1.4992,
+   "caption": "The Kloto Hills",
+   "category": "nature",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:26Z",
+   "description": "Coffee and cocoa country in the southwest, forested and cool, around Kpalime.",
+   "focalPoint": {
+    "x": 50,
+    "y": 50
+   },
+   "height": 5304,
+   "imageUrl": "https://images.pexels.com/photos/17658591/pexels-photo-17658591.jpeg",
+   "photoId": "17658591",
+   "photographer": "AFRIQUE  AYELE-Y",
+   "photographerUrl": "https://www.pexels.com/@ayele-y",
+   "provider": "pexels",
+   "query": "Togo Kpalime",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "men with mud on their body",
+    "why": "the"
+   },
+   "relevance": {
+    "reasons": [
+     "names the country",
+     "subject: the"
+    ],
+    "score": 4.03
+   },
+   "sourceUrl": "https://www.pexels.com/photo/men-with-mud-on-their-body-17658591/",
+   "thumbnailUrl": "https://images.pexels.com/photos/17658591/pexels-photo-17658591.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:27Z",
+   "width": 7952
+  },
+  "togo/waterfalls": {
+   "alt": "Elegant woman in a crochet dress outdoors, Togo",
+   "altIntended": "the Womé waterfall falling into a pool in forest near Kpalime, Togo",
+   "aspectRatio": 0.6676,
+   "caption": "Kpime and Womé",
+   "category": "waterfalls",
+   "country": "togo",
+   "createdAt": "2026-08-16T07:11:32Z",
+   "description": "Two falls in the Kloto hills, both of them a short walk off the Kpalime road.",
+   "focalPoint": {
+    "x": 50,
+    "y": 52
+   },
+   "height": 6016,
+   "imageUrl": "https://images.pexels.com/photos/32019194/pexels-photo-32019194.jpeg",
+   "photoId": "32019194",
+   "photographer": "Ario Stories",
+   "photographerUrl": "https://www.pexels.com/@ario-stories-278509849",
+   "provider": "pexels",
+   "query": "Togo Womé Kpalime",
+   "queryTier": "subject",
+   "rejected": {
+    "kind": "stopword",
+    "photoSays": "elegant woman in a crochet dress outdoors",
+    "why": "and"
+   },
+   "relevance": {
+    "reasons": [
+     "subject: and"
+    ],
+    "score": 2.67
+   },
+   "sourceUrl": "https://www.pexels.com/photo/elegant-woman-in-a-crochet-dress-outdoors-32019194/",
+   "thumbnailUrl": "https://images.pexels.com/photos/32019194/pexels-photo-32019194.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-16T07:11:33Z",
+   "width": 4016
   },
   "tunisia/crafts": {
    "alt": "hand-painted Nabeul ceramics on a market stall, Tunisia",
