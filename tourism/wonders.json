@@ -10,6 +10,14 @@
  "say": "From waterfalls that disappear into the earth to deserts with no end to them, from cities carved out of rock to forests where the last of something still lives — Africa holds places that change the scale of what you thought the world was.",
  "stamp": "An Afrinkong collection of places worth crossing a continent to see",
  "act": "Explore all the wonders",
+ "close": "The continent has many ways to amaze.",
+
+ "$photos": "A wonder carries a photograph only where this repository holds one OF THAT PLACE, which is four of the twenty-three. Everything else is drawn on its strand's ground instead. Assigning the mountain-gorilla frame to Bwindi would have been the tempting version and would have been a guess: mountain gorillas live in two forests and nothing on file says which one this is. A photograph under a place name is a claim that the photograph is of that place, and it is not worth spending the reader's trust to fill a grid.",
+
+ "intro": {
+  "photo": "/images/uploads/desert-camp-sunrise-1440w.jpg", "photo_w": 1440, "photo_h": 958,
+  "photo_alt": "A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them"
+ },
 
  "strands": [
   {"id": "earth",   "name": "Earth",
@@ -27,13 +35,17 @@
  "wonders": [
   {"id": "victoria-falls", "name": "Victoria Falls", "strand": "earth",
    "countries": ["zambia", "zimbabwe"], "lead": true,
-   "say": "The river does not simply fall. It disappears into the earth."},
+   "say": "The river does not simply fall. It disappears into the earth.",
+   "photo": "/images/uploads/falls-victoria-rainbow-1600w.jpg", "photo_w": 1600, "photo_h": 900,
+   "photo_alt": "Victoria Falls seen along the gorge with a rainbow standing in the spray thrown up by the river"},
   {"id": "serengeti", "name": "The Serengeti", "strand": "wildlife",
    "countries": ["tanzania"], "lead": true,
    "say": "Where the horizon moves."},
   {"id": "kilimanjaro", "name": "Kilimanjaro", "strand": "earth",
    "countries": ["tanzania"],
-   "say": "Africa’s highest point, and you walk up it."},
+   "say": "Africa’s highest point, and you walk up it.",
+   "photo": "/images/uploads/kilimanjaro-above-the-cloud-1080w.jpg", "photo_w": 1080, "photo_h": 1621, "focal": [50, 8],
+   "photo_alt": "Kilimanjaro from the plain, its snow-capped summit standing clear above a bank of cloud, with an elephant walking across dry ground in the foreground"},
   {"id": "okavango", "name": "The Okavango Delta", "strand": "wildlife",
    "countries": ["botswana"],
    "say": "A river that never reaches the sea."},
@@ -45,7 +57,9 @@
    "say": "Forest, mist, and one of the rarest encounters left."},
   {"id": "giza", "name": "The Pyramids of Giza", "strand": "civilisations",
    "countries": ["egypt"],
-   "say": "Four thousand years later, still standing where they were put."},
+   "say": "Four thousand years later, still standing where they were put.",
+   "photo": "/images/uploads/egypt-giza-aerial-1600w.jpg", "photo_w": 1600, "photo_h": 900,
+   "photo_alt": "The pyramids of Giza from the air, the three of them on the desert plateau with the city running up to the edge of it"},
   {"id": "lalibela", "name": "Lalibela", "strand": "civilisations",
    "countries": ["ethiopia"],
    "say": "Eleven churches, cut downward into solid rock."},
@@ -60,7 +74,9 @@
    "say": "Larger than the country you live in. Probably larger than several."},
   {"id": "table-mountain", "name": "Table Mountain", "strand": "earth",
    "countries": ["south-africa"],
-   "say": "A city built at the foot of a mountain that is flat on top."},
+   "say": "A city built at the foot of a mountain that is flat on top.",
+   "photo": "/images/uploads/table-mountain-from-the-bay-1920w.jpg", "photo_w": 1920, "photo_h": 1080,
+   "photo_alt": "A flat-topped mountain and its two flanking peaks seen across a bay at sunset from rocks in the foreground, with surf breaking and a container ship at anchor"},
   {"id": "bazaruto", "name": "The Bazaruto Archipelago", "strand": "ocean",
    "countries": ["mozambique"],
    "say": "Dunes in the sea, and dugongs in the channel."},

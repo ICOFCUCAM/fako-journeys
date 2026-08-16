@@ -188,6 +188,118 @@ def medical_note(d):
                esc(m["title"]), esc(m["say"]), esc(m["but"]), m["stamp"]))
 
 
+# ---- the homepage door -----------------------------------------------------
+#
+# RESTORED. These four went out with the bathwater when hero() was rewritten
+# into the four-slide band: the generated block in index.html survived, so
+# nothing looked broken, but `build.py gateway` had been raising AttributeError
+# on block_door ever since and the door could not be regenerated at all. A
+# generator that cannot rebuild what it generated is not a generator.
+
+
+def _spread(levels):
+    """The shortest and longest a crossing runs, read off the levels.
+
+    Typed on the homepage as "14 to 60+ days" it would be a number in a second
+    place, and the ground journey has already taught this file what that costs:
+    a hero plate said $350 while the tier beside it said $650 for a fortnight,
+    because somebody changed one and not the other. So the range is read from
+    the same `days` strings the level cards print — "30 to 60+", "14 to 25",
+    "34" — and a new level or a changed length moves the homepage with it.
+    """
+    lows, highs, plus = [], [], False
+    for v in levels:
+        nums = [int(n) for n in re.findall(r"\d+", str(v.get("days") or ""))]
+        if not nums:
+            continue
+        lows.append(nums[0])
+        highs.append(nums[-1])
+        if str(v.get("days") or "").rstrip().endswith("+"):
+            plus = True
+    if not lows:
+        return ""
+    return "%d to %d%s days" % (min(lows), max(highs), "+" if plus else "")
+
+
+def door_meta(d):
+    """Shape without price, in one line.
+
+    It was three chips in a grid, each with a line icon. Two things were wrong
+    with that. The icons were decoration on a door that has a photograph doing
+    the emotional work already — and the middle chip said "15 countries, 4
+    crossings" directly above a row that names all four crossings and counts
+    every one of them, which is the same fact printed twice and the taller of
+    the two ways to print it.
+
+    Derived, never typed: length off the levels, the tiers off the level names.
+    The ground journey once shipped a $350 hero plate beside a $650 tier
+    because one figure lived in two places and only one was updated.
+    """
+    tiers = " &middot; ".join(
+        esc(v["name"].replace("Trans Afrique", "").strip()) for v in d["levels"])
+    return ('<p class="wa-door-meta"><b>%s</b><i aria-hidden="true"></i><b>%s</b></p>'
+            % (esc(_spread(d["levels"])), tiers))
+
+
+def door_index(d):
+    """The four crossings, by name, on the door.
+
+    This is what the homepage's Trans Afrique section used to carry — four
+    cards with country chains, strand lists, a line of description each and a
+    floor price — and the section is gone. Nothing was lost that a door should
+    have been saying: the cards explained a product the reader had not yet
+    decided they wanted, on a homepage, three screens after being handed a
+    photograph. What survives is the only part of it a door can use, which is
+    the answer to *where does it go*: four names and how many countries each.
+
+    They are links, so the door is a way into any one of them rather than a
+    list of things that exist. One word each, from the file rather than sliced
+    off the full name: the cards on /trans-afrique say "Trans Afrique — East",
+    and repeating that prefix four times in one row is the brand shouting its
+    own name at itself, while slicing gave "The Continental Expedition" — twice
+    the width of its three neighbours in a row built to be scanned.
+    """
+    rows = []
+    for r in d["routes"]:
+        short = r.get("short") or r["name"].split("\u2014")[-1].strip()
+        rows.append('<a href="/trans-afrique#crossings"><b>%s</b><i>%d</i></a>'
+                    % (esc(short), len(r.get("countries") or [])))
+    return ('<p class="wa-door-cross"><span>The crossings</span>%s</p>'
+            % "".join(rows))
+
+
+def block_door(countries):
+    """The homepage band's copy: a title sequence, not a paragraph.
+
+    Order is film grammar. The proposition opens cold — "Cross Africa. Don't
+    just visit it." — then a line that is pure invitation, then the name, then
+    what it is, then its shape, then where it goes. The eyebrow says "series"
+    and not "Trans Afrique" so that the title card still has somewhere to land.
+
+    It also carries what the homepage's Trans Afrique section used to say. That
+    section is deleted: four cards explaining a crossing, three screens into a
+    homepage, to somebody who had not decided they wanted one. The row of four
+    crossings at the foot of this block is the only part of it a door can use.
+
+    What it still does NOT do is explain. No support domains, no bands, no
+    lengths per crossing. The page is one click away and carries all of it.
+    """
+    d = load()
+    dr = d["door"]
+    return (
+        '<p class="wa-seam-stamp">%s</p>\n'
+        '      <h2>%s</h2>\n'
+        '      <span class="wa-seam-hr" aria-hidden="true"></span>\n'
+        '      <p class="wa-seam-say">%s</p>\n'
+        '      <p class="wa-door-mark">Trans Afrique</p>\n'
+        '      <p class="wa-door-sub">%s</p>\n'
+        '      %s\n'
+        '      %s\n'
+        '      <a class="wa-seam-go" href="/trans-afrique">%s &rarr;</a>'
+        % (esc(dr["eyebrow"]), esc(dr["line"]), esc(dr["lede"]),
+           esc(dr["sub"]), door_meta(d), door_index(d), esc(dr["act"])))
+
+
 def hero(d, by_slug):
     """The opening spread: four photographs on the fixed-window architecture.
 

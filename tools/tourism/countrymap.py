@@ -559,7 +559,7 @@ def route(slug):
     return ""
 
 
-def atlas(slug, name=None, pad=0.42):
+def atlas(slug, name=None, pad=0.42, links=None):
     """MAP B. The country, its true neighbours, its water and a real scale.
 
     Cropped out of the continental projection rather than renormalised into its
@@ -645,8 +645,22 @@ def atlas(slug, name=None, pad=0.42):
 
     # 1. Everything around it, faint. A country drawn alone is a shape; a
     #    country drawn against what it touches is a place.
-    out.append('<g class="cm-near" clip-path="url(#%s)" aria-hidden="true">' % clip)
-    out += ['<path d="%s"/>' % p for _, p in near]
+    #
+    # A neighbour we publish a page for becomes a link — the map is then a way
+    # of moving through the atlas rather than a picture of it, and it is the one
+    # kind of interactivity this data can honestly support. There is no
+    # click-a-region-to-filter here and no hover tooltip of facts, because the
+    # facts those would show do not exist: see route() below.
+    links = links or {}
+    out.append('<g class="cm-near" clip-path="url(#%s)">' % clip)
+    for s, p in near:
+        href = links.get(s)
+        if href:
+            out.append('<a class="cm-link" href="%s" data-cm="%s">'
+                       '<title>%s</title><path d="%s"/></a>'
+                       % (_esc(href), _esc(s), _esc(d["names"].get(s, s)), p))
+        else:
+            out.append('<path d="%s" aria-hidden="true"/>' % p)
     out.append('</g>')
 
     # 2. Water, clipped to the frame. Rivers and lakes are the features this
@@ -717,13 +731,17 @@ def atlas(slug, name=None, pad=0.42):
             label = label.split()[-1] if " " in label else label
             if len(label) * side * 0.013 * 0.62 > side * 0.7:
                 continue
-        labels.append((share, '<text class="cm-near-name" x="%.1f" y="%.1f" '
-                              'text-anchor="middle">%s</text>'
-                              % (cxx, cyy, _esc(label))))
+        text = ('<text class="cm-near-name" x="%.1f" y="%.1f" '
+                'text-anchor="middle">%s</text>' % (cxx, cyy, _esc(label)))
+        href = links.get(s)
+        if href:
+            text = ('<a class="cm-link" href="%s" data-cm="%s">%s</a>'
+                    % (_esc(href), _esc(s), text))
+        labels.append((share, text))
     # Six names is already a busy plate; the biggest presences earn the ink.
     labels.sort(key=lambda t: -t[0])
     if labels:
-        out.append('<g clip-path="url(#%s)" aria-hidden="true">%s</g>'
+        out.append('<g clip-path="url(#%s)">%s</g>'
                    % (clip, "".join(t[1] for t in labels[:6])))
 
     # 5. The thirteen cities that have real positions, where they fall inside.

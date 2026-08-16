@@ -152,6 +152,13 @@ def operator_block(country):
                esc(op.url), esc(op.name)))
 
 
+# Published, but with no generated landing page: Cameroon has a hand-built one
+# and the other two are not generated here. The one place that decides whether
+# /<slug> exists — write_all() skips these, and nothing on any page may link to
+# them.
+NO_PAGE = ("cameroon", "uganda", "namibia")
+
+
 def neighbours(country, countries, limit=5):
     """The other countries in this region, so a country page is part of an atlas.
 
@@ -183,6 +190,23 @@ GROUPS = (
     ("Places", ("cities", "architecture", "historic-sites", "heritage")),
     ("Ways to travel", ("adventure", "luxury", "photography", "hidden-gems")),
 )
+
+
+def _map_links(country, countries):
+    """Which countries on the plate are pages you can actually go to.
+
+    Built from the dataset rather than assumed, so a neighbour is a link exactly
+    when it has a page — the day a fifty-fourth country is published it becomes
+    clickable on every map that already shows it, and a country we do not
+    publish is drawn but not offered.
+
+    `published` is NOT the test. Three published countries have no generated
+    page — see NO_PAGE — and keying off `published` alone put a link to a
+    missing /uganda on twelve maps. Whether a page exists is decided in exactly
+    one place and both this and write_all() read it.
+    """
+    return {c.slug: "/%s" % c.slug for c in countries
+            if c.published and c.slug != country.slug and c.slug not in NO_PAGE}
 
 
 def brief_block(country):
@@ -344,7 +368,8 @@ def build(country, taxonomy, countries=()):
                 '<div class="ct-near-row">%s</div>'
                 % (esc(_region_phrase(country.region)), near_html))
                if near_html else "",
-               countrymap.atlas(country.slug, country.name),
+               countrymap.atlas(country.slug, country.name,
+                                links=_map_links(country, countries)),
                esc(countrymap.caption(country.slug, country.name)))),
         "highlights": "\n".join(highlights),
         "reasons": "\n".join(reasons),
@@ -483,6 +508,19 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
 .ct-brief-row dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--c-muted);padding-top:2px}
 .ct-brief-row dd{margin:0;font-size:14px;line-height:1.45;color:var(--c-primary)}
+/* A neighbour we publish is a link on the plate, in its shape and in its name.
+   Hover and focus lift it out of the quiet layer rather than adding anything to
+   it, so nothing moves and the map does not reflow. The focus ring is drawn as
+   a stroke because an outline on an svg child is not reliably painted. */
+.cm-link{cursor:pointer}
+.cm-link path{transition:fill .18s}
+.cm-link:hover path,.cm-link:focus-visible path{
+  fill:color-mix(in srgb,var(--c-accent) 22%,var(--c-bg))}
+.cm-link:hover .cm-near-name,.cm-link:focus-visible .cm-near-name{
+  fill:var(--c-accent)}
+.cm-link:focus-visible{outline:none}
+.cm-link:focus-visible path{stroke:var(--c-accent);
+  stroke-width:calc(var(--u) * .008)}
 .ct-where-also{margin-top:var(--sp-4);font-family:var(--fj-mono);font-size:9.5px;
   font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .ct-where-also+.ct-near-row{margin-top:10px}
@@ -607,7 +645,7 @@ STYLE_NOTE = """/* The country landing pages — /botswana, /kenya, /ghana and s
 STYLESHEET = os.path.join(ROOT, "styles", "country.css")
 
 
-def write_all(countries, taxonomy, skip=("cameroon", "uganda", "namibia"), out_dir=None, log=print):
+def write_all(countries, taxonomy, skip=NO_PAGE, out_dir=None, log=print):
     out_dir = out_dir or ROOT
     os.makedirs(os.path.dirname(STYLESHEET), exist_ok=True)
     with open(STYLESHEET, "w") as f:

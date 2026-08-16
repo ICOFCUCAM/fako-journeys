@@ -819,31 +819,129 @@
 .wa-wonders .wa-head h2{max-width:20ch;font-size:clamp(34px,4.6vw,64px);
   line-height:1.02;letter-spacing:-.02em}
 .wa-wonders .wa-say{max-width:58ch}
-/* The two leads take the width they were promised and the rest hold a four-up
-   row, so the section has a shape rather than a size. */
-.wa-wonders .wo-lead{margin-top:var(--sp-5)}
-.wa-wonders .wo-strands{margin-top:var(--sp-5)}
+/* A GALLERY, IN FOUR MOVEMENTS — intro, two featured, six supporting, close.
+   It was two large text cards over a row of four small text cards, which is a
+   contact sheet and not a gallery: nothing on it was ever the thing itself, and
+   a section arguing that some places do not need explaining had nothing on it
+   but explanation. The hierarchy is now the argument. One photograph large
+   enough to stop you, two wonders given room, then the breadth.
+
+   FIVE PHOTOGRAPHS CARRY THE WHOLE SECTION, and that is on purpose. The
+   repository holds a picture OF four of the twenty-three wonders; the rest are
+   drawn on their strand's ground, exactly as a country without a photograph is
+   drawn on its region's. Filling the grid from the general wildlife and desert
+   frames was the easy version and would have put an unplaceable photograph
+   under a named place. */
+
+/* The argument, and one picture at the size the argument deserves. Text left
+   at 40%, image right at 60% — the reverse of the usual editorial split,
+   because here the picture IS the point and the paragraph is the caption. */
+.wo-intro{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1fr);
+  gap:var(--sp-4);align-items:end;margin-top:var(--sp-5)}
+.wo-intro-shot{margin:0;order:2;aspect-ratio:16/10;overflow:hidden;
+  background:color-mix(in srgb,var(--c-bg) 8%,transparent)}
+.wo-intro-shot img{width:100%;height:100%;object-fit:cover;display:block}
+.wo-intro-say{order:1;padding-bottom:6px}
+.wo-intro-say p{font-size:clamp(17px,1.7vw,22px);line-height:1.5;
+  color:var(--fj-onbasalt);max-width:40ch;margin:0}
+.wo-intro-n{margin-top:18px !important;font-family:var(--fj-mono);
+  font-size:9.5px !important;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-gold) !important}
+
+/* The two featured. Each is a whole object rather than a heading with a rule
+   over it: a photograph where there is one, the strand's ground where there is
+   not, and the type sitting inside the frame either way so the pair balances
+   whether or not both have a picture. */
 .wo-lead{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);
   margin-top:var(--sp-5)}
-.wo-rest{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:var(--sp-3);margin-top:var(--sp-4)}
-.wo-card-in{border-top:2px solid var(--c-accent-fill);padding-top:18px;height:100%}
-.wo-card--big .wo-card-in{border-top-width:3px;padding-top:24px}
+.wa-wonders .wo-lead{margin-top:var(--sp-5)}
+.wo-feat{position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:clamp(360px,46vh,520px);overflow:hidden;
+  border-top:3px solid var(--c-accent-fill)}
+.wo-feat-shot{position:absolute;inset:0}
+.wo-feat-shot img{width:100%;height:100%;object-fit:cover;display:block}
+/* The scrim is on the frame, not the photograph: a filter on the img would
+   cost a repaint on every scroll and this section is tall. */
+.wo-feat.has-shot::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,
+    color-mix(in srgb,var(--fj-basalt) 88%,transparent) 0%,
+    color-mix(in srgb,var(--fj-basalt) 62%,transparent) 42%,
+    color-mix(in srgb,var(--fj-basalt) 12%,transparent) 100%)}
+/* The featured wonder with no photograph is a STATEMENT, not a gap. Given the
+   same treatment as its neighbour it came out an empty dark rectangle that read
+   as an image which had failed to load — the one thing a section about places
+   worth crossing a continent for cannot afford. So it is typeset instead: the
+   strand named at the top, then the line at display size doing the work the
+   photograph does opposite. Justified to the top, so the pair reads as two
+   different kinds of object rather than one good one and one broken one. */
+.wo-feat.no-shot{justify-content:center;
+  background:color-mix(in srgb,var(--c-bg) 7%,transparent)}
+.wo-feat.no-shot[data-strand="wildlife"]{
+  background:color-mix(in srgb,var(--c-gold) 15%,transparent)}
+.wo-feat.no-shot[data-strand="earth"]{
+  background:color-mix(in srgb,var(--c-accent) 16%,transparent)}
+.wo-feat.no-shot .wo-feat-in{padding-top:var(--sp-3)}
+.wo-feat-line{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(22px,2.3vw,34px);line-height:1.06;letter-spacing:-.012em;
+  color:var(--fj-onbasalt);margin-top:20px;max-width:15ch}
+.wo-feat-in{position:relative;z-index:2;padding:var(--sp-4) var(--sp-3) var(--sp-3)}
+.wo-feat-no{display:block;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.24em;color:var(--c-gold)}
+.wo-feat-no i{font-style:normal;text-transform:uppercase;letter-spacing:.2em}
+.wo-feat-no i::before{content:"\2002/\2002";opacity:.55}
+.wo-feat-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(30px,3.4vw,52px);line-height:1;letter-spacing:-.015em;
+  color:var(--c-bg);margin:10px 0 0;max-width:12ch}
+.wo-feat .wo-say{font-size:clamp(17px,1.5vw,21px);max-width:28ch;
+  color:var(--fj-onbasalt)}
+.wo-feat .wo-where{margin-top:14px}
+
+/* The supporting gallery — the wonders this repository holds a photograph of,
+   and only those. An earlier pass filled six cards regardless and drew a tinted
+   4:3 plate where the picture was missing; on the page those read as three
+   broken images rather than as a decision. A gallery holds pictures. */
+.wo-rest{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--sp-3) var(--sp-3);margin-top:var(--sp-4)}
+.wo-shot{aspect-ratio:4/3;overflow:hidden;margin-bottom:14px}
+.wo-shot img{width:100%;height:100%;object-fit:cover;display:block}
+.wo-card-in{height:100%}
+
+/* And the rest, named. Being in a list beside a photograph of somewhere else
+   is not a demotion — it is an index, and it says how much more there is
+   without pretending to show what it cannot. */
+.wo-more{margin-top:var(--sp-5);padding-top:var(--sp-4);
+  border-top:var(--fj-rule-dark)}
+.wo-more-h{font-family:var(--fj-mono);font-size:10px;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--c-gold);margin:0}
+.wo-more-list{list-style:none;margin:18px 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px 30px}
+.wo-more-list li{padding:9px 0;border-bottom:1px solid
+  color-mix(in srgb,var(--c-bg) 12%,transparent)}
+.wo-more-list b{display:block;font-family:var(--fj-display);font-weight:700;
+  text-transform:uppercase;font-size:17px;line-height:1.1;color:var(--c-bg)}
+.wo-more-list span{display:block;margin-top:5px;font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-gold)}
+.wo-more-list span a{color:inherit;border-bottom:1px solid transparent}
+.wo-more-list span a:hover{border-color:var(--c-gold)}
 .wo-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:22px;line-height:1.04;letter-spacing:-.005em;color:var(--c-bg);margin:0}
-.wo-card--big .wo-name{font-size:clamp(30px,3.4vw,50px);max-width:12ch}
+  font-size:clamp(19px,1.7vw,25px);line-height:1.04;letter-spacing:-.005em;
+  color:var(--c-bg);margin:0}
 .wo-where{margin-top:9px;font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;
   text-transform:uppercase;color:var(--c-gold)}
 .wo-where a{color:inherit;border-bottom:1px solid transparent;transition:border-color .2s}
 .wo-where a:hover{border-color:var(--c-gold)}
 .wo-say{margin-top:12px;font-size:15.5px;line-height:1.5;color:var(--fj-onbasalt-dim);
   max-width:34ch}
-.wo-card--big .wo-say{font-size:clamp(17px,1.5vw,21px);max-width:26ch;
-  color:var(--fj-onbasalt)}
 
-/* How the collection is cut, said under it rather than over it: a reader wants
-   the taxonomy after seeing some of the thing, not before. */
-.wo-strands{list-style:none;margin:var(--sp-5) 0 0;padding:var(--sp-4) 0 0;
+/* The close: one line, then how the collection is cut. Said under the gallery
+   rather than over it — a reader wants the taxonomy after seeing some of the
+   thing, not before. */
+.wo-close{margin-top:var(--sp-5)}
+.wa-wonders .wo-close{margin-top:var(--sp-5)}
+.wo-close-line{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(24px,3vw,44px);line-height:1.04;letter-spacing:-.015em;
+  color:var(--c-bg);max-width:18ch;margin:0}
+.wo-strands{list-style:none;margin:var(--sp-4) 0 0;padding:var(--sp-4) 0 0;
   border-top:var(--fj-rule-dark);display:grid;gap:2px 30px;
   grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
 .wo-strands li{padding:11px 0;display:grid;grid-template-columns:1fr auto;
@@ -855,9 +953,17 @@
 .wo-strands i{grid-area:n;font-style:normal;font-family:var(--fj-mono);font-size:10px;
   color:var(--fj-onbasalt-dim)}
 
+@media(max-width:1000px){
+  .wo-rest{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:880px){
+  .wo-intro{grid-template-columns:minmax(0,1fr);gap:var(--sp-3)}
+  .wo-intro-shot{order:1}.wo-intro-say{order:2}
   .wo-lead{grid-template-columns:1fr;gap:var(--sp-3)}
-  .wo-card--big .wo-name{font-size:clamp(26px,7vw,38px)}
+  .wo-feat{min-height:clamp(300px,52vw,420px)}
+}
+@media(max-width:560px){
+  .wo-rest{grid-template-columns:minmax(0,1fr)}
 }
 
 /* The descent, made legible.
@@ -3818,30 +3924,50 @@ window.AF = {
       <div>
         <!-- gen:wonderslede -->
 <span class="wa-eyebrow">An Afrinkong collection of places worth crossing a continent to see</span>
-        <h2>Some places don’t need explaining. You just need to stand there.</h2>
-        <p class="wa-say">From waterfalls that disappear into the earth to deserts with no end to them, from cities carved out of rock to forests where the last of something still lives — Africa holds places that change the scale of what you thought the world was.</p>        <!-- /gen:wonderslede -->
+        <h2>Some places don’t need explaining. You just need to stand there.</h2>        <!-- /gen:wonderslede -->
       </div>
     </div>
     <!-- gen:wonders -->
+<div class="wo-intro"><figure class="wo-intro-shot"><img src="/images/uploads/desert-camp-sunrise-1440w.jpg" alt="A camp of white canvas tents and a low striped awning pitched on open sand, with the sun just clear of the dunes on the horizon behind them" width="1440" height="958" loading="lazy" decoding="async" sizes="(max-width:900px) 94vw, 54vw" data-provider="upload"></figure><div class="wo-intro-say"><p>From waterfalls that disappear into the earth to deserts with no end to them, from cities carved out of rock to forests where the last of something still lives — Africa holds places that change the scale of what you thought the world was.</p><p class="wo-intro-n">23 places, across 5 strands</p></div></div>
 <div class="wo-lead">
-<article class="wo-card wo-card--big" data-strand="earth"><div class="wo-card-in"><h3 class="wo-name">Victoria Falls</h3><p class="wo-where"><a href="/zambia">Zambia</a> &middot; <a href="/zimbabwe">Zimbabwe</a></p><p class="wo-say">The river does not simply fall. It disappears into the earth.</p></div></article>
-<article class="wo-card wo-card--big" data-strand="wildlife"><div class="wo-card-in"><h3 class="wo-name">The Serengeti</h3><p class="wo-where"><a href="/tanzania">Tanzania</a></p><p class="wo-say">Where the horizon moves.</p></div></article>
+<article class="wo-feat has-shot" data-strand="earth"><div class="wo-feat-shot"><img src="/images/uploads/falls-victoria-rainbow-1600w.jpg" alt="Victoria Falls seen along the gorge with a rainbow standing in the spray thrown up by the river" width="1600" height="900" loading="lazy" decoding="async" sizes="(max-width:880px) 94vw, 47vw" data-provider="upload"></div><div class="wo-feat-in"><span class="wo-feat-no">01</span><h3 class="wo-feat-name">Victoria Falls</h3><p class="wo-say">The river does not simply fall. It disappears into the earth.</p><p class="wo-where"><a href="/zambia">Zambia</a> &middot; <a href="/zimbabwe">Zimbabwe</a></p></div></article>
+<article class="wo-feat no-shot" data-strand="wildlife"><div class="wo-feat-in"><span class="wo-feat-no">02<i>Wildlife</i></span><h3 class="wo-feat-name">The Serengeti</h3><p class="wo-feat-line">Where the horizon moves.</p><p class="wo-where"><a href="/tanzania">Tanzania</a></p></div></article>
 </div>
 <div class="wo-rest">
-<article class="wo-card" data-strand="earth"><div class="wo-card-in"><h3 class="wo-name">Kilimanjaro</h3><p class="wo-where"><a href="/tanzania">Tanzania</a></p><p class="wo-say">Africa’s highest point, and you walk up it.</p></div></article>
-<article class="wo-card" data-strand="wildlife"><div class="wo-card-in"><h3 class="wo-name">The Okavango Delta</h3><p class="wo-where"><a href="/botswana">Botswana</a></p><p class="wo-say">A river that never reaches the sea.</p></div></article>
-<article class="wo-card" data-strand="earth"><div class="wo-card-in"><h3 class="wo-name">The Namib and Sossusvlei</h3><p class="wo-where"><a href="https://namib-skyline.vercel.app">Namibia</a></p><p class="wo-say">The oldest desert on earth, and it is still moving.</p></div></article>
-<article class="wo-card" data-strand="wildlife"><div class="wo-card-in"><h3 class="wo-name">Bwindi</h3><p class="wo-where"><a href="https://pearl-trails-uganda.vercel.app">Uganda</a></p><p class="wo-say">Forest, mist, and one of the rarest encounters left.</p></div></article>
-<article class="wo-card" data-strand="civilisations"><div class="wo-card-in"><h3 class="wo-name">The Pyramids of Giza</h3><p class="wo-where"><a href="/egypt">Egypt</a></p><p class="wo-say">Four thousand years later, still standing where they were put.</p></div></article>
-<article class="wo-card" data-strand="civilisations"><div class="wo-card-in"><h3 class="wo-name">Lalibela</h3><p class="wo-where"><a href="/ethiopia">Ethiopia</a></p><p class="wo-say">Eleven churches, cut downward into solid rock.</p></div></article>
+<article class="wo-card has-shot" data-strand="earth"><div class="wo-shot"><img src="/images/uploads/kilimanjaro-above-the-cloud-1080w.jpg" alt="Kilimanjaro from the plain, its snow-capped summit standing clear above a bank of cloud, with an elephant walking across dry ground in the foreground" width="1080" height="1621" style="object-position:50% 8%" loading="lazy" decoding="async" sizes="(max-width:700px) 92vw, (max-width:1100px) 46vw, 30vw" data-provider="upload"></div><div class="wo-card-in"><h3 class="wo-name">Kilimanjaro</h3><p class="wo-where"><a href="/tanzania">Tanzania</a></p><p class="wo-say">Africa’s highest point, and you walk up it.</p></div></article>
+<article class="wo-card has-shot" data-strand="civilisations"><div class="wo-shot"><img src="/images/uploads/egypt-giza-aerial-1600w.jpg" alt="The pyramids of Giza from the air, the three of them on the desert plateau with the city running up to the edge of it" width="1600" height="900" loading="lazy" decoding="async" sizes="(max-width:700px) 92vw, (max-width:1100px) 46vw, 30vw" data-provider="upload"></div><div class="wo-card-in"><h3 class="wo-name">The Pyramids of Giza</h3><p class="wo-where"><a href="/egypt">Egypt</a></p><p class="wo-say">Four thousand years later, still standing where they were put.</p></div></article>
+<article class="wo-card has-shot" data-strand="earth"><div class="wo-shot"><img src="/images/uploads/table-mountain-from-the-bay-1920w.jpg" alt="A flat-topped mountain and its two flanking peaks seen across a bay at sunset from rocks in the foreground, with surf breaking and a container ship at anchor" width="1920" height="1080" loading="lazy" decoding="async" sizes="(max-width:700px) 92vw, (max-width:1100px) 46vw, 30vw" data-provider="upload"></div><div class="wo-card-in"><h3 class="wo-name">Table Mountain</h3><p class="wo-where"><a href="/south-africa">South Africa</a></p><p class="wo-say">A city built at the foot of a mountain that is flat on top.</p></div></article>
 </div>
+<div class="wo-more"><h3 class="wo-more-h">And 18 more</h3><ul class="wo-more-list">
+<li><b>The Okavango Delta</b><span><a href="/botswana">Botswana</a></span></li>
+<li><b>The Namib and Sossusvlei</b><span><a href="https://namib-skyline.vercel.app">Namibia</a></span></li>
+<li><b>Bwindi</b><span><a href="https://pearl-trails-uganda.vercel.app">Uganda</a></span></li>
+<li><b>Lalibela</b><span><a href="/ethiopia">Ethiopia</a></span></li>
+<li><b>The Ngorongoro Crater</b><span><a href="/tanzania">Tanzania</a></span></li>
+<li><b>The Virunga Mountains</b><span><a href="/rwanda">Rwanda</a> &middot; <a href="https://pearl-trails-uganda.vercel.app">Uganda</a> &middot; <a href="/dr-congo">DR Congo</a></span></li>
+<li><b>The Sahara</b><span><a href="/algeria">Algeria</a> &middot; <a href="/libya">Libya</a> &middot; <a href="/chad">Chad</a> &middot; <a href="/mali">Mali</a> &middot; <a href="/niger">Niger</a> &middot; <a href="/sudan">Sudan</a></span></li>
+<li><b>The Bazaruto Archipelago</b><span><a href="/mozambique">Mozambique</a></span></li>
+<li><b>The Granite Islands</b><span><a href="/seychelles">Seychelles</a></span></li>
+<li><b>Madagascar</b><span><a href="/madagascar">Madagascar</a></span></li>
+<li><b>Gorongosa</b><span><a href="/mozambique">Mozambique</a></span></li>
+<li><b>The Omo Valley</b><span><a href="/ethiopia">Ethiopia</a></span></li>
+<li><b>Great Zimbabwe</b><span><a href="/zimbabwe">Zimbabwe</a></span></li>
+<li><b>Timbuktu</b><span><a href="/mali">Mali</a></span></li>
+<li><b>Djenné</b><span><a href="/mali">Mali</a></span></li>
+<li><b>The Valley of the Kings</b><span><a href="/egypt">Egypt</a></span></li>
+<li><b>Cape Coast and Elmina</b><span><a href="/ghana">Ghana</a></span></li>
+<li><b>Robben Island</b><span><a href="/south-africa">South Africa</a></span></li>
+</ul></div>
+<div class="wo-close">
+<p class="wo-close-line">The continent has many ways to amaze.</p>
 <ul class="wo-strands">
 <li><b>Earth</b><span>Mountains, deserts, waterfalls, and the geology that made them.</span><i>5</i></li>
 <li><b>Wildlife</b><span>Migration, gorillas, elephants, predators, and species that live nowhere else.</span><i>7</i></li>
 <li><b>Civilisations</b><span>Ancient cities, kingdoms, archaeology, and architecture built to last.</span><i>6</i></li>
 <li><b>Ocean</b><span>Islands, reefs, and the water between them.</span><i>2</i></li>
 <li><b>Human culture</b><span>Living traditions, food, music, craft, and the communities that keep them.</span><i>3</i></li>
-</ul>    <!-- /gen:wonders -->
+</ul>
+</div>    <!-- /gen:wonders -->
     <div class="wa-acts"><a class="wa-act faint" href="/wonders">Explore all the wonders <i>&rarr;</i></a></div>
   </div>
 </section>

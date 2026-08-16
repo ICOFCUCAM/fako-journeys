@@ -130,6 +130,19 @@
 .ct-brief-row dt{font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--c-muted);padding-top:2px}
 .ct-brief-row dd{margin:0;font-size:14px;line-height:1.45;color:var(--c-primary)}
+/* A neighbour we publish is a link on the plate, in its shape and in its name.
+   Hover and focus lift it out of the quiet layer rather than adding anything to
+   it, so nothing moves and the map does not reflow. The focus ring is drawn as
+   a stroke because an outline on an svg child is not reliably painted. */
+.cm-link{cursor:pointer}
+.cm-link path{transition:fill .18s}
+.cm-link:hover path,.cm-link:focus-visible path{
+  fill:color-mix(in srgb,var(--c-accent) 22%,var(--c-bg))}
+.cm-link:hover .cm-near-name,.cm-link:focus-visible .cm-near-name{
+  fill:var(--c-accent)}
+.cm-link:focus-visible{outline:none}
+.cm-link:focus-visible path{stroke:var(--c-accent);
+  stroke-width:calc(var(--u) * .008)}
 .ct-where-also{margin-top:var(--sp-4);font-family:var(--fj-mono);font-size:9.5px;
   font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .ct-where-also+.ct-near-row{margin-top:10px}
