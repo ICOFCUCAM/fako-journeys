@@ -625,6 +625,56 @@ def money_lists(d):
 # second fixed band on every page of a series turns a technique into a tic.
 
 
+def trip_ld(d, r, by_slug=None):
+    """One crossing, as a TouristTrip with a real price range.
+
+    The four crossings are the most expensive and most specific thing Afrinkong
+    sells, and to anything reading this domain they were four <h1>s. A price
+    band, a duration and an itinerary of named countries all exist in
+    transafrique.json and none of it was in a form a machine could use — so
+    a query like "overland trips across Africa, three weeks" could not reach
+    the page that answers it exactly.
+
+    priceRange rather than price, because that is what is true: these are
+    quoted as bands and inventing a single figure to satisfy a schema would be
+    the tail wagging the dog. The countries come from the route's own list, so
+    the itinerary a machine reads is the itinerary the page prints.
+    """
+    days = r.get("days")
+    trip = {
+        "@type": "TouristTrip",
+        "name": r["name"],
+        "description": r.get("say") or r.get("line") or "",
+        "url": "https://afrinkong.com%s" % route_url(r),
+        "provider": {"@id": "https://afrinkong.com/#org"},
+        "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "USD",
+            "lowPrice": r["low"],
+            "highPrice": r["high"],
+            # A band is a band. There is no single figure to quote and one
+            # would have to be invented to satisfy the vocabulary.
+            "availability": "https://schema.org/PreOrder",
+        },
+    }
+    if days:
+        trip["itinerary"] = {
+            "@type": "ItemList",
+            "numberOfItems": len(r.get("countries") or []),
+            "itemListElement": [
+                # The route stores slugs; a machine wants the country's name.
+                # "kenya" is a slug and "Kenya" is a country, and the itinerary
+                # a machine reads should be the itinerary the page prints.
+                {"@type": "ListItem", "position": n + 1,
+                 "item": {"@type": "Country",
+                          "name": (by_slug or {}).get(slug).name
+                          if (by_slug or {}).get(slug)
+                          else slug.replace("-", " ").title()}}
+                for n, slug in enumerate(r.get("countries") or [])],
+        }
+    return trip
+
+
 def series_nav(d, active):
     """The bar that makes nine pages one thing.
 
@@ -928,11 +978,15 @@ def run(countries, log=print):
     by_slug = {c.slug: c for c in countries}
     written = []
 
-    def write(path, title, desc, url, body, active, skip="Skip to the page"):
+    def write(path, title, desc, url, body, active, skip="Skip to the page",
+              trip=None):
         html = TEMPLATE % {
             "title": esc(title),
             "desc": esc(desc),
-            "og": plate.open_graph(title, desc, url),
+            # The crossing pages add their own trip to the shared graph rather
+            # than emitting a second block: one graph, so the trip can name its
+            # provider by @id instead of describing the company again.
+            "og": plate.open_graph(title, desc, url, extra=trip),
             "events": plate.events_block(),
             "nav": series_nav(d, active) if active else "",
             "skip": esc(skip),
@@ -960,7 +1014,7 @@ def run(countries, log=print):
         slug = SLUGS.get(r["id"], r["id"])
         write(os.path.join(SUB, "%s.html" % slug),
               "%s — Trans Afrique" % r["name"], r["say"], route_url(r),
-              crossing_body(d, r, by_slug), "crossings")
+              crossing_body(d, r, by_slug), "crossings", trip=trip_ld(d, r, by_slug))
 
     log("trans-afrique: %d pages, %.1f KB total, %d route(s), %d level(s), %s to %s"
         % (len(written), sum(n for _, n in written) / 1024.0,

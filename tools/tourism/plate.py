@@ -127,7 +127,8 @@ def plate(country, entry, aspect, label, shape=None, regions=None, ident=None,
            esc(caption), esc(country.name)))
 
 
-def open_graph(title, description, path, kind="website", image=None):
+def open_graph(title, description, path, kind="website", image=None,
+               extra=None):
     """The card a shared link becomes, and the icon in the browser tab.
 
     Absolute URLs, because a relative one in an Open Graph tag is a broken
@@ -169,7 +170,10 @@ def open_graph(title, description, path, kind="website", image=None):
         icons(),
         # Every page that has a share card also declares who published it.
         # This is the one wiring point the whole site already passes through.
-        ld(),
+        # `extra` is whatever this page adds to that graph — a trip, a
+        # place — carried in the SAME graph so it can point at the
+        # organisation by @id instead of describing it a second time.
+        ld(extra),
     ]))
 
 
