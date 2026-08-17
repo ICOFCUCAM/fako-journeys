@@ -313,10 +313,16 @@ def accessibility():
             "Where it falls short",
             "Two things, stated rather than left to be discovered:",
             ul([
-                "The maps are drawn as SVG and carry a text description, but a "
-                "reader using a screen reader gets the summary rather than the "
-                "shape. A map is a hard thing to describe and ours is not "
-                "fully described yet.",
+                "The country maps now describe what they draw \u2014 which "
+                "countries lie on which side, how far the country spans, "
+                "whether it reaches the sea \u2014 and every word of that is "
+                "derived from the same geometry the map is drawn from. But the "
+                "direction is measured between the centres of two shapes, so "
+                "for a large neighbour it says where its bulk lies rather than "
+                "which edge it touches: Tanzania comes out south-west of "
+                "Kenya, and a geographer would say south. The alternative is a "
+                "hand-written sentence for every country and every neighbour, "
+                "which nobody would keep in step with the maps.",
                 "The journey builder is a long interactive form. It is "
                 "keyboard-operable throughout, but it has not been tested "
                 "end-to-end with a screen reader by somebody who uses one "

@@ -566,6 +566,144 @@ def route(slug):
     return ""
 
 
+COMPASS = ((22.5, "north"), (67.5, "north-east"), (112.5, "east"),
+           (157.5, "south-east"), (202.5, "south"), (247.5, "south-west"),
+           (292.5, "west"), (337.5, "north-west"), (360.0, "north"))
+
+
+def _side(dx, dy):
+    """-> which way a neighbour lies, from the vector between two centroids.
+
+    SVG y grows downward, so north is negative y. Getting that backwards would
+    put Ethiopia south of Kenya, which is the kind of error a sighted reader
+    never sees and a screen-reader user has no way to check.
+    """
+    import math
+    ang = (math.degrees(math.atan2(dx, -dy)) + 360.0) % 360.0
+    for edge, word in COMPASS:
+        if ang < edge:
+            return word
+    return "north"
+
+
+def describe(slug, name=None, near=(), vx=0.0, vy=0.0, side=0.0):
+    """A description of what the map DRAWS, for somebody who cannot see it.
+
+    The plate carried role="img" and a one-line label — "Kenya and the
+    countries it borders, with its rivers and lakes and a scale in kilometres."
+    That names the picture. It does not say a single thing the picture shows,
+    so a screen-reader user got the caption and none of the content, which is
+    the shortfall /accessibility names out loud.
+
+    Everything here is derived from the same geometry the map is drawn from:
+    which countries are on the plate, which side of this one they sit on, how
+    far it spans, whether it reaches the sea. Nothing is typed and nothing is
+    remembered. If the map changes, this changes with it.
+
+    THE DIRECTION IS CENTROID TO CENTROID, and for a large neighbour that says
+    where its MASS lies rather than which edge it touches. Tanzania comes out
+    south-west of Kenya, because most of Tanzania is; a geographer would say
+    south. That is a real limit of deriving prose from shapes and it is worth
+    knowing before somebody reports it as a bug — the alternative is a
+    hand-written sentence per country per neighbour, which is 108 sentences
+    nobody will maintain and which would drift from the map the first time the
+    shapes changed.
+    """
+    d = _load()
+    name = name or d["names"].get(slug, slug)
+    def centre(s_):
+        """visible_centre returns (None, None, 0.0) for a shape with nothing
+        inside the crop — a tuple, not None, so `if not c` waves it through
+        and the subtraction below fails. Djibouti's frame is small enough that
+        one of its neighbours clipped away to nothing, and the whole page
+        stopped building."""
+        c = visible_centre(s_, vx, vy, side)
+        if not c or c[0] is None or c[1] is None:
+            return None
+        return c
+
+    me = centre(slug)
+    bits = []
+
+    borders = set(d["nb"]["borders"].get(slug) or [])
+    placed = []
+    for s, _p in near:
+        if s not in borders:
+            continue                      # on the plate but not a neighbour
+        c = centre(s)
+        if not c or not me:
+            continue
+        placed.append((_side(c[0] - me[0], c[1] - me[1]),
+                       d["names"].get(s, s)))
+    # ONE NEIGHBOUR IS NOT A DIRECTION.
+    #
+    # Lesotho's single neighbour came out "to the north-west", which is where
+    # the bulk of South Africa lies and is a poor way of saying it is entirely
+    # enclosed by it. The Gambia's came out "to the north-east", when Senegal is
+    # on three sides of it. A compass bearing between two centroids means very
+    # little when one shape contains or wraps the other, so with one neighbour
+    # the bearing is dropped and the fact is stated instead.
+    said_locked = False
+    if len(placed) == 1:
+        only = placed[0][1]
+        if landlocked(slug):
+            bits.append("%s is landlocked, and entirely surrounded by %s."
+                        % (name, only))
+            said_locked = True
+        else:
+            bits.append("%s has one land neighbour, %s." % (name, only))
+        placed = []
+    if placed:
+        by = {}
+        for where, who in placed:
+            by.setdefault(where, []).append(who)
+        order = [w for _e, w in COMPASS]
+        said = []
+        for where in ["north", "north-east", "east", "south-east", "south",
+                      "south-west", "west", "north-west"]:
+            if where in by:
+                who = sorted(by[where])
+                said.append("%s to the %s" % (_join(who), where))
+        bits.append("%s borders %s." % (name, _join(said)))
+    elif landlocked(slug) and not said_locked:
+        bits.append("%s is landlocked." % name)
+        said_locked = True
+
+    # THE TWO ISLANDS HAVE NO NEIGHBOURS AND NO OUTLINE, so everything above
+    # produced nothing and Mauritius was left with the closing sentence and no
+    # description at all — the exact failure this function was written to end,
+    # reproduced on the two countries the map system had already had to make a
+    # special case for once.
+    isle = island(slug)
+    if isle and not bits:
+        bits.append("%s is an island in the Indian Ocean, drawn here on the "
+                    "open sea with the African mainland to the west." % name)
+
+    for label, value in brief(slug, name):
+        v = value.replace("&ndash;", "\u2013").replace("&mdash;", "\u2014")
+        if label == "Spans":
+            bits.append("It spans %s." % v)
+        elif label == "Latitude":
+            bits.append("It lies %s." % v)
+        elif label == "Sea" and value == "Has a coast":
+            bits.append("It reaches the sea.")
+        elif label == "Sea" and not said_locked:
+            bits.append("It is landlocked.")
+    if not isle:
+        # The island plates draw neither, and a description that lists what is
+        # not there is worse than a short one.
+        bits.append("Rivers and lakes are drawn where they cross the frame, "
+                    "with a scale bar in kilometres.")
+    return " ".join(bits)
+
+
+def _join(items):
+    items = list(items)
+    if len(items) < 2:
+        return items[0] if items else ""
+    return ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def atlas(slug, name=None, pad=0.42, links=None):
     """MAP B. The country, its true neighbours, its water and a real scale.
 
@@ -638,9 +776,15 @@ def atlas(slug, name=None, pad=0.42, links=None):
     # first render did. `--u` is the frame's own size and the stylesheet scales
     # off it, so one rule holds for all fifty-four.
     out = ['<svg class="cm-atlas" viewBox="%.1f %.1f %.1f %.1f" style="--u:%.2f" '
-           'role="img" aria-labelledby="cm-t-%s">' % (vx, vy, side, side, side, slug)]
+           'role="img" aria-labelledby="cm-t-%s cm-d-%s">'
+           % (vx, vy, side, side, side, slug, slug)]
     out.append('<title id="cm-t-%s">%s, with its rivers and lakes and a scale '
                'in kilometres.</title>' % (slug, _esc(caption(slug, name))))
+    # The title names the picture; the description says what is in it. Both are
+    # referenced, so a screen reader reads the short label and then the content
+    # rather than choosing one.
+    out.append('<desc id="cm-d-%s">%s</desc>'
+               % (slug, _esc(describe(slug, name, near, vx, vy, side))))
     out.append('<defs><clipPath id="%s"><rect x="%.1f" y="%.1f" width="%.1f" '
                'height="%.1f"/></clipPath></defs>' % (clip, vx, vy, side, side))
 
