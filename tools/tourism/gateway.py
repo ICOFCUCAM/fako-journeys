@@ -1810,6 +1810,21 @@ NOW_ARC = "the-table"
 NOW_ARCS = (NOW_ARC,)
 NOW_CARDS = 6
 
+# THE SIX, NAMED. Not derived, and deliberately so.
+#
+# Two rules were tried here and both were wrong in the same way. The first took
+# photographed rows in file order and shipped these six by accident. The second
+# rotated three arcs and spread five regions, and produced a technically
+# excellent strip of six unrelated pictures — a plate, a loom, a skyline, a
+# plate, a bolt of silk and a skyline — because a rule that optimises for spread
+# cannot see that six plates of food are one collection and six other things are
+# not.
+#
+# So the six are chosen and written down. What a rule cannot judge, a person
+# can, and a list of six slugs is honest about which of the two picked them.
+# Change the strip by changing this line.
+NOW_PICK = ("algeria", "angola", "benin", "botswana", "burkina-faso", "burundi")
+
 
 def now_rows(countries):
     """Which contemporary chapters the strip shows, in order.
@@ -1817,86 +1832,35 @@ def now_rows(countries):
     Pulled out of block_now so the sentence above the strip and the strip itself
     count the same thing. They did not: the section was cut from nine cards to
     six and the paragraph beside it went on saying "Nine of them here" for two
-    commits, because the cards are generated and the paragraph was typed.
+    commits, because the cards are generated and the paragraph was typed. That
+    is still what this function is for — NOW_PICK names the countries, and
+    everything the sentence claims is counted off what comes back from here.
 
-    ONE ARC, AND IT IS THE TABLE. Three arcs are marked `now` in arcs.json —
-    the table, made by hand, the city now — and for one commit this strip
-    rotated through all three, which was the wrong call. Six photographs of six
-    countries eating read as one collection; a plate, a loom, a skyline, a
-    plate, a bolt of silk and a skyline read as six unrelated pictures that
-    happen to share a row. The heading is not what holds a strip together. The
-    subject is. So the strip is the table, deliberately, and the sentence beside
-    it says so rather than promising a range it does not show.
+    ONE ARC, AND IT IS THE TABLE. Three of the eleven story arcs are marked
+    `now` in arcs.json — the table, made by hand, the city now — and the strip
+    shows one of them, on purpose. The heading is not what holds a row of six
+    photographs together. The subject is.
 
-    WHAT WAS ACTUALLY BROKEN was never the arc. It was the ORDER: the selector
-    took photographed rows in file order and shipped Algeria, Angola, Benin,
-    Botswana, Burkina Faso and Burundi — six countries deep in the A's and B's,
-    which reads as a database dump because it is one. Six of Africa's fifty-four
-    tables should look chosen.
-
-        country   never twice
-        region    a region may not take a second card until all five have one,
-                  so the strip crosses the continent rather than one corner
-        picture   a photographed row wins; a chapter with no photograph is
-                  still allowed rather than the slot going empty
-        start     each slot begins its scan a sixth of the list further on, so
-                  a deterministic rule does not collapse into the alphabet
-
-    Deterministic, and it has to be — two builds of the same data must produce
-    the same page or every rebuild is a diff.
+    A named country with no chapter in this arc raises rather than quietly
+    shipping five cards where the sentence beside them says six.
     """
     data = read_json(os.path.join(ROOT, "data", "stories.json"))
     rows = [r for r in (data.get("stories") or []) if r.get("now")]
     live = {c.slug: c for c in countries}
-    regions = load_regions()
-    where = {}
-    for c in countries:
-        key, _reg = region_of(c, regions)
-        where[c.slug] = key
+    by_country = {}
+    for r in rows:
+        if r["arc"] == NOW_ARC and r["country"] in live:
+            by_country.setdefault(r["country"], r)
 
-    here = [r for r in rows if r["arc"] == NOW_ARC and r["country"] in live]
-    if not here:
-        here = [r for r in rows if r["country"] in live]
-    # THE PHOTOGRAPH IS THE OUTER LOOP, not a sort key inside one list. Held as
-    # a single pool ordered photographs-first, the per-slot offset walks past
-    # the join on the later slots — a sixth of the way into a list that is
-    # forty-four photographs and ten plates lands in the plates by slot five —
-    # and the strip shipped with one grey card among five photographs, which is
-    # the most visible defect this section can have. Two tiers, and the second
-    # is only reached if the first cannot fill the slot at any region cap.
-    tiers = ([r for r in here if r.get("image")],
-             [r for r in here if not r.get("image")])
-
-    picked, taken, held = [], set(), {}
-    for slot in range(NOW_CARDS):
-        row = None
-        for tier in tiers:
-            if not tier:
-                continue
-            off = (len(tier) * slot) // NOW_CARDS
-            # Widen the region rule one step at a time: an unused region first,
-            # then a region holding one, then whatever is left. A country with
-            # no region (there are none, but the lookup can miss) is its own.
-            for cap in (0, 1, NOW_CARDS):
-                for n in range(len(tier)):
-                    r = tier[(off + n) % len(tier)]
-                    if r["country"] in taken:
-                        continue
-                    if held.get(where.get(r["country"], ""), 0) > cap:
-                        continue
-                    row = r
-                    break
-                if row is not None:
-                    break
-            if row is not None:
-                break
+    picked = []
+    for slug in NOW_PICK[:NOW_CARDS]:
+        row = by_country.get(slug)
         if row is None:
-            continue
+            raise ValueError(
+                "NOW_PICK names %r, which has no %r chapter among the published "
+                "countries" % (slug, NOW_ARC))
         picked.append(row)
-        taken.add(row["country"])
-        key = where.get(row["country"], "")
-        held[key] = held.get(key, 0) + 1
-    return picked[:NOW_CARDS]
+    return picked
 
 
 def block_nownote(countries):
@@ -1905,9 +1869,13 @@ def block_nownote(countries):
     Every figure is measured off the same six rows the strip is built from. A
     typed "Nine of them here" over a six-card strip is what earned that rule,
     and a sentence promising what a continent COOKS, MAKES AND BUILDS over six
-    plates of food is the same failure wearing better clothes: the strip is the
+    plates of food is the same failure in better clothes: the strip is the
     table, so the sentence says the table, and the other two contemporary arcs
     are pointed at rather than implied.
+
+    It counts no spread. It did for one commit, while the six were chosen by a
+    rule that guaranteed five regions — and a sentence may only claim what
+    something downstream keeps true. The six are named now, so the claim goes.
     """
     data = read_json(os.path.join(ROOT, "data", "stories.json"))
     now = [r for r in (data.get("stories") or []) if r.get("now")]
@@ -1915,23 +1883,15 @@ def block_nownote(countries):
     if not picked:
         return ('        <p class="wa-note">No contemporary chapters have been built '
                 'yet.</p>')
-    regions = load_regions()
-    where = {}
-    for c in countries:
-        key, _reg = region_of(c, regions)
-        where[c.slug] = key
     table = len([r for r in now if r["arc"] == NOW_ARC])
     other = len(now) - table
-    spread = len(set(where.get(r["country"], "") for r in picked))
     return ('        <p class="wa-note">%s chapters on what this continent eats, one '
             'for every country, and %s more on what it makes and builds this decade '
-            'rather than what is behind glass. %s tables here &mdash; %s countries, '
-            '%s regions, and the rest of each is on its own portrait. Not a feed and '
-            'not an events calendar &mdash; this site holds no dates and will not '
-            'invent any; these are evergreen, and they are true for longer than a '
-            'week.</p>'
-            % (_spell(table), _spell(other).lower(), _spell(len(picked)),
-               _spell(len(picked)).lower(), _spell(spread).lower()))
+            'rather than what is behind glass. %s tables here, and the rest of each '
+            'country is on its own portrait. Not a feed and not an events calendar '
+            '&mdash; this site holds no dates and will not invent any; these are '
+            'evergreen, and they are true for longer than a week.</p>'
+            % (_spell(table), _spell(other).lower(), _spell(len(picked))))
 
 
 def block_now(countries):
@@ -1946,9 +1906,10 @@ def block_now(countries):
     the dataset, so it does not pretend to be current — it is the part of the
     writing that is about now, which is a different and true claim.
 
-    Six of them, across six countries and five regions, all of them the table —
-    see now_rows for why one arc and not three. Six rather than nine because
-    this replaced a section of 984 pixels and nine cards made it 1693 — the argument does not
+    Six of them, across six countries, all of them the table and all six named
+    in NOW_PICK — see now_rows for why they are named and not derived. Six
+    rather than nine because this replaced a section of 984 pixels and nine
+    cards made it 1693 — the argument does not
     get better for being three rows tall, and this page has grown in every wave
     already.
     """
