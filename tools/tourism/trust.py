@@ -323,10 +323,17 @@ def accessibility():
                 "Kenya, and a geographer would say south. The alternative is a "
                 "hand-written sentence for every country and every neighbour, "
                 "which nobody would keep in step with the maps.",
-                "The journey builder is a long interactive form. It is "
-                "keyboard-operable throughout, but it has not been tested "
-                "end-to-end with a screen reader by somebody who uses one "
-                "daily, and until it has we will not claim that it is good.",
+                "The journey builder is a long interactive form \u2014 "
+                "seventy-six controls and a hundred and fifteen places the "
+                "keyboard can land. Walked end to end: every control has a "
+                "name, none of those hundred and fifteen stops is on something "
+                "invisible, the answer is announced rather than appearing "
+                "silently, and operating a control does not move the cursor "
+                "somewhere else. What has NOT happened is somebody who uses a "
+                "screen reader daily sitting down with it. A machine can prove "
+                "the parts are wired correctly; only a person can tell you "
+                "whether the thing is usable, and until one has we will not "
+                "claim that it is.",
             ])),
         block(
             "If something here does not work for you",
