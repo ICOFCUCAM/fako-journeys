@@ -31,16 +31,16 @@ on:
   workflow_dispatch:
     inputs:
       fetch:
-        description: "Actually ask the providers (unchecked = print the queries and stop)"
+        description: "fetch — TICK THIS to actually ask Unsplash and Pexels. Left unticked it only prints the 19 queries and stops."
         type: boolean
         required: false
         default: false
       only:
-        description: "One wonder id, e.g. timbuktu (blank = all nineteen)"
+        description: "only — one wonder id, e.g. timbuktu. Blank does all nineteen."
         required: false
         default: ""
       commit:
-        description: "Commit what was bound and staged back to this branch"
+        description: "commit — push what was bound and staged back to this branch"
         type: boolean
         required: false
         default: true
