@@ -513,7 +513,40 @@ def _pt_seg(x, y, a, b):
     return math.hypot(x - (a[0] + t * dx), y - (a[1] + t * dy))
 
 
-def locator(slug, name=None):
+def where_in_africa(slug, name=None, region=None):
+    """One sentence answering the question the locator asks in its own label.
+
+    The plate carried role="img" and aria-label="Where Kenya is in Africa",
+    which names the question and does not answer it. A sighted reader gets the
+    answer instantly — one country lit on a dim continent — and somebody
+    listening got the question read back to them.
+
+    Deliberately short, and deliberately NOT the neighbour list: the atlas plate
+    a few hundred pixels below already gives that, and repeating it would make a
+    screen reader read the borders of the same country twice on one page. This
+    says where on the continent, and whether it touches the sea.
+    """
+    d = _load()
+    name = name or d["names"].get(slug, slug)
+    where = (region or "").strip()
+    bits = ["%s lit on a map of Africa" % name]
+    # "in Islands, an island nation" says the same thing twice, and the region
+    # names in this dataset are grouping labels rather than places — "Islands"
+    # is a bucket, not somewhere you can be in. The clause below already says
+    # it better, so the region is dropped for those six.
+    if where and where.lower() != "islands":
+        bits.append(", in %s" % where)
+    if island(slug) or not (d["nb"]["borders"].get(slug) or []):
+        bits.append(", offshore in the Indian Ocean"
+                    if island(slug) else ", an island nation")
+    elif landlocked(slug):
+        bits.append(", inland with no coast")
+    else:
+        bits.append(", reaching the sea")
+    return "".join(bits) + "."
+
+
+def locator(slug, name=None, region=None):
     """MAP A. Africa in the quiet tone, this country lit.
 
     Its whole job is to answer "where in Africa is this", so it carries no
@@ -538,19 +571,21 @@ def locator(slug, name=None):
         r = float(view[2]) * 0.012
         return (
             '<svg class="cm-loc" viewBox="%s %s %s %s" role="img" '
-            'aria-label="Where %s is in Africa">'
+            'aria-label="%s">'
             '<g class="cm-loc-rest">%s</g>'
             '<g class="cm-loc-here"><circle cx="%.1f" cy="%.1f" r="%.1f"/>'
             '<circle class="cm-loc-ring" cx="%.1f" cy="%.1f" r="%.1f"/></g>'
-            '</svg>' % (view[0], view[1], view[2], view[3], name, others,
+            '</svg>' % (view[0], view[1], view[2], view[3],
+                        _esc(where_in_africa(slug, name, region)), others,
                         isl["x"], isl["y"], r * 0.42,
                         isl["x"], isl["y"], r))
     return (
         '<svg class="cm-loc" viewBox="%s %s %s %s" role="img" '
-        'aria-label="Where %s is in Africa">'
+        'aria-label="%s">'
         '<g class="cm-loc-rest">%s</g>'
         '<path class="cm-loc-here" d="%s"/>'
-        '</svg>' % (view[0], view[1], view[2], view[3], name, others, mine))
+        '</svg>' % (view[0], view[1], view[2], view[3],
+                    _esc(where_in_africa(slug, name, region)), others, mine))
 
 
 def route(slug):

@@ -381,7 +381,10 @@ def build(country, taxonomy, countries=()):
             '<figcaption>%s</figcaption>'
             '</figure></div></section>'
             % (esc(country.region), esc(country.name),
-               countrymap.locator(country.slug, country.name),
+               # The region comes from the country's own record, so the locator says
+               # "in East Africa" rather than making the reader infer it from a
+               # shape they cannot see.
+               countrymap.locator(country.slug, country.name, country.region),
                brief_block(country),
                ('<h3 class="ct-where-also">Also in %s</h3>'
                 '<div class="ct-near-row">%s</div>'
