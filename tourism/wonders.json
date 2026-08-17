@@ -67,7 +67,7 @@
    ],
    "lead": true,
    "say": "Where the horizon moves.",
-   "photo_query": "Serengeti wildebeest migration plains",
+   "photo_query": "Serengeti",
    "photo_terms": [
     "serengeti"
    ]
@@ -261,7 +261,7 @@
     "mozambique"
    ],
    "say": "Dunes in the sea, and dugongs in the channel.",
-   "photo_query": "Bazaruto Archipelago Mozambique",
+   "photo_query": "Bazaruto",
    "photo_terms": [
     "bazaruto"
    ]
@@ -316,7 +316,7 @@
     "mozambique"
    ],
    "say": "A park that was emptied by a war and is filling again.",
-   "photo_query": "Gorongosa National Park Mozambique",
+   "photo_query": "Gorongosa",
    "photo_terms": [
     "gorongosa"
    ]
@@ -342,7 +342,7 @@
     "zimbabwe"
    ],
    "say": "A city of dry stone, built without mortar, that gave a country its name.",
-   "photo_query": "Great Zimbabwe ruins dry stone",
+   "photo_query": "Great Zimbabwe",
    "photo_terms": [
     "great zimbabwe"
    ]
@@ -355,7 +355,7 @@
     "mali"
    ],
    "say": "A byword for the ends of the earth, and a library long before that.",
-   "photo_query": "Timbuktu Mali mud mosque",
+   "photo_query": "Timbuktu Mali",
    "photo_terms": [
     "timbuktu"
    ]
@@ -437,5 +437,6 @@
    "photo_source": "https://unsplash.com/photos/a-large-body-of-water-with-a-mountain-in-the-background-msPoWrlNYBY"
   }
  ],
- "$photo_search": "What to ask a provider for, per wonder with no photograph, and the words that have to appear in the photographer's OWN description before a picture is allowed to stand under that name. photo_terms is AND across entries and OR inside one, separated by a bar. It is written here rather than derived from the name because which words prove a photograph is of Great Zimbabwe is an editorial judgement: 'zimbabwe' alone is a country of 390,000 square kilometres. A wonder with no terms is staged for a person and never bound automatically."
+ "$photo_search": "What to ask a provider for, per wonder with no photograph, and the words that have to appear in the photographer's OWN description before a picture is allowed to stand under that name. photo_terms is AND across entries and OR inside one, separated by a bar. It is written here rather than derived from the name because which words prove a photograph is of Great Zimbabwe is an editorial judgement: 'zimbabwe' alone is a country of 390,000 square kilometres. A wonder with no terms is staged for a person and never bound automatically.",
+ "$photo_search_run": "FIRST RUN, 246 candidates staged for the nine still unphotographed, and not one of them named its place. Do not read that as the rule being too strict. Read what came back: Great Zimbabwe returned stone ruins in Turkiye, Spain and France, and not one photograph from Africa. Timbuktu returned mud-brick villages including one captioned 'Gidan Dan Hausa in Kano, Nigeria'. The Serengeti returned wildebeest in the Arusha and Mara regions of Tanzania, which is close and is still not the Serengeti. Loosening the terms would have put a French ruin under Great Zimbabwe and a Nigerian house under Timbuktu, and nobody would have noticed until a reader who had been to either did. Five of the nine got nothing whatever from Unsplash and only Pexels answered - serengeti, bazaruto, gorongosa, great-zimbabwe, timbuktu - which reads like the queries being over-specified rather than the archive being empty, so those five now ask for the place and nothing else. That is a hypothesis and it is untested: it needs another run of the workflow to know. If a second run still finds nothing, the answer is not a looser rule. It is that these nine want commissioned or verified photography, and until there is some they keep their numbers, which is a real design and not a hole."
 }
