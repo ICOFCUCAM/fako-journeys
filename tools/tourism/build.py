@@ -135,6 +135,17 @@ def cmd_queries(args):
     return 0
 
 
+def cmd_srcset(args):
+    """Offer the smaller photograph to the smaller screen.
+
+    Sixty uploads exist at two widths and forty-eight image tags named only the
+    larger, so a phone downloaded the 1600-wide original. A late pass over the
+    built HTML rather than six edits in six generators.
+    """
+    from tourism import srcset
+    return srcset.run(write=bool(getattr(args, "fetch", False)))
+
+
 def cmd_trust(args):
     """The pages a company owes its readers: /privacy, /terms, /accessibility.
 
@@ -837,7 +848,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "trust": cmd_trust, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "trust": cmd_trust, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
