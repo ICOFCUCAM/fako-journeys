@@ -62,6 +62,12 @@ def variants():
     return dict((k, sorted(v)) for k, v in out.items() if len(v) > 1)
 
 
+def widths_attr(key, widths):
+    """-> the srcset value for one photograph, every width it has, in order."""
+    return ", ".join("/images/uploads/%s-%dw.%s %dw" % (key[0], w, key[1], w)
+                     for w in widths)
+
+
 def offer(tag, have):
     """-> the tag with a srcset, or unchanged.
 
@@ -70,8 +76,27 @@ def offer(tag, have):
     deliberately asks for the 800 is making a choice, and this is not the place
     to overrule it.
     """
-    if "srcset" in tag.lower():
-        return tag, False
+    # A TAG THAT ALREADY HAS A SRCSET IS NOT NECESSARILY FINISHED.
+    #
+    # Twenty-four tags carried a set naming a 600 beside a 1440, which is the
+    # pairing a phone rejects — so a new 800 on disk changed nothing, because
+    # the pass skipped every tag that had any srcset at all. Rebuilt when the
+    # set on the page does not name every width that now exists.
+    existing = re.search(r'srcset="([^"]+)"', tag, re.I)
+    if existing:
+        m0 = SRC.search(tag)
+        n0 = NAMED.match(m0.group(2)) if m0 else None
+        if not n0:
+            return tag, False
+        key0 = (n0.group(1), n0.group(3))
+        widths0 = have.get(key0)
+        if not widths0:
+            return tag, False
+        listed = set(re.findall(r"-(\d+)w\.", existing.group(1)))
+        if listed == set(str(w) for w in widths0):
+            return tag, False
+        return re.sub(r'\s*srcset="[^"]*"', ' srcset="%s"' % widths_attr(key0, widths0),
+                      tag, count=1), True
     m = SRC.search(tag)
     if not m:
         return tag, False
@@ -82,9 +107,7 @@ def offer(tag, have):
     widths = have.get(key)
     if not widths or int(n.group(2)) != max(widths):
         return tag, False
-    sets = ", ".join("/images/uploads/%s-%dw.%s %dw" % (key[0], w, key[1], w)
-                     for w in widths)
-    return tag[:-1].rstrip() + ' srcset="%s">' % sets, True
+    return tag[:-1].rstrip() + ' srcset="%s">' % widths_attr(key, widths), True
 
 
 STALE = re.compile(r'\s+srcset="[^"]*"', re.I)
@@ -188,7 +211,21 @@ def missing_siblings():
             continue
         key, w = (m.group(1), m.group(3)), int(m.group(2))
         if key in have:
-            continue                       # already has a sibling
+            # HAVING A SIBLING IS NOT THE SAME AS HAVING A USEFUL ONE.
+            #
+            # Twenty-four of these were already paired before any of this ran
+            # — a 600 beside a 1440, a 600 beside a 1280 — and the pairing
+            # is exactly the one commit 28 proved a phone rejects. The 600 is
+            # under the ~780 a 390-pixel screen needs at two device pixels, so
+            # the browser skips it and takes the 1440 it was always taking. A
+            # srcset that offers only sizes nobody picks is a srcset that does
+            # nothing, and it looked like the work was already done.
+            widths = have[key]
+            if w == max(widths) and w > SIBLING and all(
+                    x >= SIBLING for x in widths if x != w) is False:
+                if not any(x >= SIBLING for x in widths if x != w):
+                    out.append((f, w, SIBLING))
+            continue
         # 900 rather than 1200. The hero window's photographs are 940 and 1024
         # wide and render at 717 device pixels at the very most — measured, on
         # a 390px phone at 3x — so they want an 800 as much as the big ones do.
