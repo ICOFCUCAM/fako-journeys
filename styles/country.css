@@ -120,6 +120,20 @@
    question and the value is the answer — and ruled row by row so the eye can
    run down the answers without reading the labels twice. */
 .ct-brief{margin-top:var(--sp-4);border-top:var(--fj-rule);padding-top:14px}
+/* The comparison, offered beside the map of where you are. Set as a door
+   rather than a link: it leads somewhere with a different shape, and a reader
+   deciding between two countries is about to do real work. */
+.ct-compare{display:block;margin-top:var(--sp-4);padding:16px 18px;
+  border-left:3px solid var(--c-accent);
+  background:color-mix(in srgb,var(--c-accent) 6%,transparent);
+  transition:background var(--t-fast) var(--ease)}
+.ct-compare:hover{background:color-mix(in srgb,var(--c-accent) 11%,transparent)}
+.ct-compare b{display:block;font-family:var(--fj-display);font-weight:700;
+  font-size:16px;line-height:1.2}
+.ct-compare:hover b{color:var(--c-accent)}
+.ct-compare span{display:block;margin-top:6px;font-size:13.5px;line-height:1.5;
+  color:var(--c-muted)}
+@media(pointer:coarse){.ct-compare{min-height:44px}}
 .ct-brief-h{font-family:var(--fj-mono);font-size:9.5px;font-weight:400;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin:0}
 .ct-brief-list{margin:12px 0 0}

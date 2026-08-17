@@ -209,6 +209,25 @@ def _map_links(country, countries):
             if c.published and c.slug != country.slug and c.slug not in NO_PAGE}
 
 
+def compare_link(country):
+    """The comparison tool, offered where the question is actually asked.
+
+    /compare works through all fifty-four on the same twenty-seven categories
+    and is the most useful thing on this site for somebody deciding between two
+    places. It had three inbound links in the entire repository — the
+    homepage, the atlas, and its own sitemap entry — so it was effectively
+    unfindable, and the one moment a reader wants it is the moment they are
+    standing on one country wondering about another.
+
+    Pre-loaded with the country they are on, because /compare reads ?a= and a
+    tool that opens empty asks the reader to do work they have already done.
+    """
+    return ('<a class="ct-compare" href="/compare?a=%s">'
+            '<b>Compare %s with another country</b>'
+            '<span>All fifty-four, worked through the same twenty-seven '
+            'categories.</span></a>' % (esc(country.slug), esc(country.name)))
+
+
 def brief_block(country):
     """THE LAND IN BRIEF, beside the map that produced it.
 
@@ -357,7 +376,7 @@ def build(country, taxonomy, countries=()):
             '<h2 class="ct-where-h">Where it is</h2>'
             '<p class="ct-where-line">Africa &middot; %s &middot; %s</p>'
             '<div class="ct-where-loc">%s</div>'
-            '%s%s</div>'
+            '%s%s%s</div>'
             '<figure class="ct-where-map">%s'
             '<figcaption>%s</figcaption>'
             '</figure></div></section>'
@@ -368,6 +387,7 @@ def build(country, taxonomy, countries=()):
                 '<div class="ct-near-row">%s</div>'
                 % (esc(_region_phrase(country.region)), near_html))
                if near_html else "",
+               compare_link(country),
                countrymap.atlas(country.slug, country.name,
                                 links=_map_links(country, countries)),
                esc(countrymap.caption(country.slug, country.name)))),
@@ -498,6 +518,20 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
    question and the value is the answer — and ruled row by row so the eye can
    run down the answers without reading the labels twice. */
 .ct-brief{margin-top:var(--sp-4);border-top:var(--fj-rule);padding-top:14px}
+/* The comparison, offered beside the map of where you are. Set as a door
+   rather than a link: it leads somewhere with a different shape, and a reader
+   deciding between two countries is about to do real work. */
+.ct-compare{display:block;margin-top:var(--sp-4);padding:16px 18px;
+  border-left:3px solid var(--c-accent);
+  background:color-mix(in srgb,var(--c-accent) 6%,transparent);
+  transition:background var(--t-fast) var(--ease)}
+.ct-compare:hover{background:color-mix(in srgb,var(--c-accent) 11%,transparent)}
+.ct-compare b{display:block;font-family:var(--fj-display);font-weight:700;
+  font-size:16px;line-height:1.2}
+.ct-compare:hover b{color:var(--c-accent)}
+.ct-compare span{display:block;margin-top:6px;font-size:13.5px;line-height:1.5;
+  color:var(--c-muted)}
+@media(pointer:coarse){.ct-compare{min-height:44px}}
 .ct-brief-h{font-family:var(--fj-mono);font-size:9.5px;font-weight:400;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin:0}
 .ct-brief-list{margin:12px 0 0}
