@@ -82,20 +82,33 @@
 .pl-sibs a:hover b{color:var(--c-accent)}
 .pl-more .af-go{margin-top:14px}
 
-.pl-foot{background:var(--plate-tone,var(--c-primary));color:var(--c-bg);
-  padding:var(--sp-5) 0}
+/* THE GROUND IS DARKENED BEFORE ANYTHING IS DIMMED ON IT.
+   This footer is painted in the country's own region tone, and everything in
+   it fades for hierarchy — .62 on the next-country links, .6 on their labels,
+   .7 on the bar. On basalt that is comfortable. On East Africa's #2B6E5E and
+   North Africa's #865A28 it is not: ivory at .62 measures 3.09:1 and 3.11:1
+   against those two, so the whole footer of every place page in two regions of
+   five sat below the 4.5 bar.
+   It went unseen because opacity is invisible to the contrast pass — getComputedStyle
+   reports the undimmed colour, which is the trap the note further down this
+   file warns about and which this footer then walked into anyway.
+   Mixing 62% of the tone with basalt keeps the region legible as a colour and
+   buys back the room: with the floor lifted to .68 the worst case across all
+   five tones is 4.62:1. Measured, not guessed. */
+.pl-foot{background:color-mix(in srgb,var(--plate-tone,var(--c-primary)) 62%,
+  var(--c-primary));color:var(--c-bg);padding:var(--sp-5) 0}
 .pl-foot-in{max-width:var(--frame);margin:0 auto;padding:0 44px}
 .pl-foot .foot-next{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;
   padding-bottom:22px;margin-bottom:22px;border-bottom:var(--fj-rule-dark)}
 .pl-foot .foot-next>span{width:100%;font-family:var(--fj-mono);font-size:9px;
-  letter-spacing:.22em;text-transform:uppercase;opacity:.6}
+  letter-spacing:.22em;text-transform:uppercase;opacity:.68}
 .pl-foot .foot-next a{font-family:var(--fj-display);font-size:19px;text-transform:uppercase;
-  opacity:.62;border-bottom:1px solid transparent}
+  opacity:.68;border-bottom:1px solid transparent}
 .pl-foot .foot-next a[data-border]{opacity:1}
 .pl-foot .foot-next a:hover{border-color:var(--c-bg)}
 .pl-foot .foot-next i{font-style:normal;font-family:var(--fj-mono);font-size:9px;
-  letter-spacing:.14em;margin-left:7px;opacity:.6}
-.pl-foot .foot-next p{width:100%;margin-top:6px;font-size:12.5px;line-height:1.6;opacity:.62}
+  letter-spacing:.14em;margin-left:7px;opacity:.68}
+.pl-foot .foot-next p{width:100%;margin-top:6px;font-size:12.5px;line-height:1.6;opacity:.68}
 .pl-foot-bar{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.16em;
   text-transform:uppercase;opacity:.7}
 .pl-foot-bar a{border-bottom:1px solid transparent}
@@ -230,4 +243,23 @@
   align-items:center;min-height:24px;border-bottom:1px solid transparent;
   transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
 .af-co-link:hover{color:var(--c-accent);border-bottom-color:var(--c-accent)}
+
+/* THE DARK-GROUND CORRECTION IS TUNED FOR BASALT, AND THIS FOOTER IS NOT
+   BASALT.
+
+   afrinkong.css lists .pl-foot among the dark grounds and re-points --c-muted
+   there to muted gold, which measures 6.02:1 on basalt and is exactly right
+   everywhere else that list is used. This footer is the one member of it whose
+   ground is not fixed: it is painted in the country's own region tone. Gold on
+   East Africa's #2B6E5E is 2.25:1 and on North Africa's #865A28 is 2.24:1, so
+   the three statements were unreadable on every place page in two regions of
+   five — which is what the contrast pass caught on a page about Kenya.
+
+   Ivory, undimmed, because there is no room for anything else: ivory itself is
+   only 5.34:1 on the East tone, so a colour a shade quieter fails as surely as
+   gold did. The quiet these want comes from size and letter-spacing, which
+   they already have, and the pointer is answered by the rule under the word
+   rather than by a lift in colour there is nowhere to go for. */
+.pl-foot .af-co-link{color:var(--c-bg)}
+.pl-foot .af-co-link:hover{color:var(--c-bg);border-bottom-color:var(--c-bg)}
 
