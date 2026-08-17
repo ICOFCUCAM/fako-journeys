@@ -678,6 +678,15 @@ def describe(slug, name=None, near=(), vx=0.0, vy=0.0, side=0.0):
     if isle and not bits:
         bits.append("%s is an island in the Indian Ocean, drawn here on the "
                     "open sea with the African mainland to the west." % name)
+    elif not bits:
+        # NO LAND BORDER AND A COAST MEANS AN ISLAND, and six of the fifty-four
+        # are: Cabo Verde, Comoros, Madagascar, Mauritius, São Tomé and
+        # Príncipe, Seychelles. Two of them have their own island plate; the
+        # other four are drawn from real polygons and so fell through every
+        # branch above. Madagascar's description opened "It spans 800 km" —
+        # a pronoun with nothing in front of it, which is the one thing a
+        # description read aloud must never do.
+        bits.append("%s is an island nation, with no land border." % name)
 
     for label, value in brief(slug, name):
         v = value.replace("&ndash;", "\u2013").replace("&mdash;", "\u2014")
