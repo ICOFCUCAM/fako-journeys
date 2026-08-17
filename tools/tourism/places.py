@@ -141,7 +141,13 @@ def page(country, place, pack, order, tax, ctx):
 
     title = "%s, %s" % (place["title"], country.name)
     return TEMPLATE % {
-        "title": esc("%s — %s | Afrinkong" % (place["title"], country.name)),
+        # The brand is worth eleven characters when there is room and nothing
+        # when there is not. Twenty-four of these ran past the sixty a result
+        # shows, half of them Central African Republic — a place name plus a
+        # twenty-four character country leaves very little for a brand nobody
+        # was going to see.
+        "title": esc(plate.fit_title(place["title"], country.name,
+                                         brand="Afrinkong")),
         "description": esc(place["text"]),
         "og": plate.open_graph(esc(title), esc(place["text"]),
                                "/places/%s/%s" % (country.slug, mine), kind="article"),

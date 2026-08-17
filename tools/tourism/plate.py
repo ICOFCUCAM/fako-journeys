@@ -134,6 +134,44 @@ def plate(country, entry, aspect, label, shape=None, regions=None, ident=None,
 META_LIMIT = 155
 
 
+# A search result shows about sixty characters of a title. Fifty-eight country
+# pages ran to a hundred and four, of which the last thirty-three were "|
+# Guided Journeys and Experiences" — identical on every one of them, never
+# visible on any of them, and pushing the only distinctive part past the cut.
+TITLE_LIMIT = 60
+
+
+def fit_title(name, line, brand="Afrinkong", limit=TITLE_LIMIT):
+    """-> "Togo — a line | Afrinkong", inside the budget, name first.
+
+    Same pecking order as fit(): the country's name is what somebody is
+    scanning for and never goes; the brand is worth keeping if it costs nine
+    characters and not if it costs thirty-three; the editorial line is trimmed
+    at a word rather than a syllable.
+
+    The brand is dropped rather than the line when both cannot fit. A result
+    reading "Togo — Fifty kilometres wide, and a different country…" tells a
+    reader what the page is; one reading "Togo — Fifty kilometres wide, and…
+    | Afrinkong" spends its last characters on a word the reader has already
+    seen in the URL.
+    """
+    name = " ".join((name or "").split())
+    line = " ".join((line or "").split())
+    tail = " | %s" % brand if brand else ""
+
+    full = "%s \u2014 %s%s" % (name, line, tail)
+    if len(full) <= limit:
+        return full
+    without = "%s \u2014 %s" % (name, line)
+    if len(without) <= limit:
+        return without
+    room = limit - len(name) - 3          # name, space, em dash, space
+    if room < 12:
+        return name[:limit]
+    clip = line[:room - 1].rsplit(" ", 1)[0].rstrip(" ,;:-\u2014")
+    return "%s \u2014 %s\u2026" % (name, clip)
+
+
 def fit(head, body, tail="", limit=META_LIMIT):
     """-> a description that fits, cut where a sentence ends rather than mid-word.
 

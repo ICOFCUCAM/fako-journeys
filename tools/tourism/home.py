@@ -345,7 +345,11 @@ def build(country, taxonomy, countries=()):
         "region": esc(country.region),
         "tagline": esc(country.tagline),
         "summary": esc(country.summary),
-        "title": esc("%s — %s | Guided Journeys and Experiences" % (country.name, country.tagline)),
+        # Fitted to the ~60 characters a search result shows. The old suffix,
+        # "| Guided Journeys and Experiences", was thirty-three characters
+        # identical across all fifty-eight of these pages: never visible, and
+        # pushing the one distinctive part of the title past the cut.
+        "title": esc(plate.fit_title(country.name, country.tagline)),
         "regionKey": esc(region_of(country)[0]),
         "og": plate.open_graph(
             esc("%s — %s | Afrinkong" % (country.name, country.tagline)),
