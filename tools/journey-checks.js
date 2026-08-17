@@ -575,5 +575,63 @@ V.sink(null);
 check('with no signal set, counting resumes',
   !V.refused() && V.track('atlas_place_opened', {country: 'kenya'}) !== null);
 
+/* ---- who the company is, and where the statements are ----------------------
+ *
+ * Two things went wrong here in the same week and neither was visible on the
+ * page anybody happened to be looking at.
+ *
+ * The three statements — privacy, terms, accessibility — are spliced into a
+ * marker that fifteen hundred pages carry, and the pass that fills that marker
+ * skipped the whole of tourism/, which is where the fifty-six country pages
+ * are written. Four more pages ended at </main> with no footer at all. So the
+ * company's legal identity and its three statements were missing from sixty
+ * pages, and every one of them reported a clean build.
+ *
+ * Checked per family rather than per page: one page out of each is enough to
+ * catch a generator that stopped emitting the block, and reading fifteen
+ * hundred files to say the same thing six times is not a better test.
+ */
+const FAMILIES = [
+  ['the homepage', 'index.html'],
+  ['a country page', path.join('tourism', 'kenya.html')],
+  ['the country index', path.join('tourism', 'index.html')],
+  ['a place page', path.join('places', 'kenya', 'balloon-over-the-mara.html')],
+  ['the places index', path.join('places', 'index.html')],
+  ['a portrait', path.join('portrait', 'kenya.html')],
+  ['the stories index', 'stories.html'],
+  ['the atlas', 'atlas.html'],
+  ['the journey builder', 'journey.html'],
+  ['the human layer', 'meet.html'],
+  ['a crossing', path.join('trans-afrique', 'west.html')],
+  ['the wonders', 'wonders.html'],
+  ['the enquiry page', 'enquire.html'],
+];
+const STATEMENTS = ['/privacy', '/terms', '/accessibility'];
+const missingCo = [], missingSt = [], missingTrail = [];
+for (const [what, rel] of FAMILIES) {
+  let html;
+  try { html = fs.readFileSync(path.join(ROOT, rel), 'utf8'); }
+  catch (e) { missingCo.push(what + ' (' + rel + ' is not there)'); continue; }
+  if (html.indexOf('Wankong LLC') < 0 || html.indexOf('af-co-brand') < 0) {
+    missingCo.push(what);
+  }
+  const absent = STATEMENTS.filter(function (href) {
+    return html.indexOf('href="' + href + '"') < 0;
+  });
+  if (absent.length) missingSt.push(what + ': ' + absent.join(' '));
+  /* The homepage is the one page with no trail, on purpose: a breadcrumb whose
+     only crumb is Home is not a trail. */
+  if (rel !== 'index.html' && html.indexOf('BreadcrumbList') < 0) {
+    missingTrail.push(what);
+  }
+}
+check('every page family says who the company is', !missingCo.length,
+  missingCo.length ? missingCo.join(', ') : FAMILIES.length + ' families');
+check('every page family reaches the three statements', !missingSt.length,
+  missingSt.length ? missingSt.join(' | ') : 'privacy, terms, accessibility');
+check('every page family below the front door carries its trail',
+  !missingTrail.length,
+  missingTrail.length ? missingTrail.join(', ') : (FAMILIES.length - 1) + ' families');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(function (l) { return l.indexOf('FAIL') === 0; }) ? 1 : 0);
