@@ -465,6 +465,47 @@ LENS_ICONS = {
     "adventure": '<path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/>',
 }
 
+# EACH GLYPH'S INK, CENTRED IN ITS OWN BOX.
+#
+# Eight drawings made one at a time are eight drawings centred by eye, and by
+# eye is not centred: measured in the browser, the ink of every one of them sat
+# below the middle of the 24-box, and the three waves of `coast` sat two whole
+# units low — 1.8px inside a 44px disc, which is exactly the kind of thing that
+# reads as "the icons are not aligned" without a reader being able to say why.
+#
+# The numbers are the measured offset from the union of each glyph's geometric
+# bounding boxes to the centre of the box, so they are corrections rather than
+# taste. Re-measure before changing a drawing:
+#
+#   union of svg.children getBBox() -> centre -> (12 - cx, 12 - cy)
+#
+# Geometric boxes, so the stroke is not counted; the stroke is the same weight
+# on every glyph, so it moves all eight equally and cancels.
+LENS_INK = {
+    "cities": (0, -0.5),
+    "wildlife": (-0.75, -0.45),
+    "culture": (0, -0.5),
+    "coast": (0, -2),
+    "nature": (0, -0.5),
+    "food": (0, -1),
+    "history": (0, -0.5),
+    "adventure": (1, 0),
+}
+
+
+def lens_icon(key):
+    """-> the glyph's markup, nudged onto the centre of its box.
+
+    A KeyError here is the point: a lens with a drawing and no measurement is a
+    glyph nobody has looked at, and it should stop the build rather than ship
+    half a pixel off in a row of eight.
+    """
+    dx, dy = LENS_INK[key]
+    if not dx and not dy:
+        return LENS_ICONS[key]
+    return ('<g transform="translate(%s %s)">%s</g>'
+            % (("%g" % dx), ("%g" % dy), LENS_ICONS[key]))
+
 
 def block_experiences(countries):
     """The picker, generated from the lenses rather than typed beside them.
@@ -497,7 +538,7 @@ def block_experiences(countries):
             '<button class="wa-tag" type="button" data-exp="%s" data-slug="%s" data-line="%s">'
             '<svg viewBox="0 0 24 24" aria-hidden="true">%s</svg>%s</button>'
             % (esc(key), esc(pick["country"]), esc(lens["line"]),
-               LENS_ICONS[key], esc(lens["title"])))
+               lens_icon(key), esc(lens["title"])))
     return "".join(out)
 
 
@@ -809,7 +850,7 @@ def block_expcards(countries):
     out = []
     for key, lens in lenses.items():
         n = sum(1 for c in countries if key in c.calls)
-        icon = LENS_ICONS[key]
+        icon = lens_icon(key)
         art = ('<span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24">%s</svg></span>'
                % icon)
         body = ('<div><b>%s</b><span>%s</span><i class="wa-exp-n">%s</i></div>'
@@ -1765,7 +1806,8 @@ def block_destinations(countries):
     return "\n".join(rows)
 
 
-NOW_ARCS = ("the-table", "made-by-hand", "the-city-now")
+NOW_ARC = "the-table"
+NOW_ARCS = (NOW_ARC,)
 NOW_CARDS = 6
 
 
@@ -1777,31 +1819,31 @@ def now_rows(countries):
     six and the paragraph beside it went on saying "Nine of them here" for two
     commits, because the cards are generated and the paragraph was typed.
 
-    THE ARC IS THE FIRST CONSTRAINT, NOT THE LAST. This function used to fill
-    the strip with photographed rows first and only then rotate the arcs, and
-    with a photograph on 109 of the 162 chapters the first pass took every slot
-    on its own. What shipped was Algeria, Angola, Benin, Botswana, Burkina Faso
-    and Burundi — six countries in file order, all six of them The table —
-    under a heading that promises what a continent COOKS, MAKES AND BUILDS. The
-    strip argued against its own sentence, and it read like an alphabetical
-    accident because it was one.
+    ONE ARC, AND IT IS THE TABLE. Three arcs are marked `now` in arcs.json —
+    the table, made by hand, the city now — and for one commit this strip
+    rotated through all three, which was the wrong call. Six photographs of six
+    countries eating read as one collection; a plate, a loom, a skyline, a
+    plate, a bolt of silk and a skyline read as six unrelated pictures that
+    happen to share a row. The heading is not what holds a strip together. The
+    subject is. So the strip is the table, deliberately, and the sentence beside
+    it says so rather than promising a range it does not show.
 
-    So the slot picks the arc, and the arc picks the row:
+    WHAT WAS ACTUALLY BROKEN was never the arc. It was the ORDER: the selector
+    took photographed rows in file order and shipped Algeria, Angola, Benin,
+    Botswana, Burkina Faso and Burundi — six countries deep in the A's and B's,
+    which reads as a database dump because it is one. Six of Africa's fifty-four
+    tables should look chosen.
 
-        arc       slot 0..5 rotate through the three, so the strip reads
-                  table, hand, city, table, hand, city
-        region    a region may not take a second card until all five have one;
-                  five regions and six cards means exactly one region doubles
-        country   never twice, whatever else is true
-        picture   a photographed row wins inside all of the above; a chapter
-                  with no photograph is still allowed rather than the slot
-                  going empty
+        country   never twice
+        region    a region may not take a second card until all five have one,
+                  so the strip crosses the continent rather than one corner
+        picture   a photographed row wins; a chapter with no photograph is
+                  still allowed rather than the slot going empty
+        start     each slot begins its scan a sixth of the list further on, so
+                  a deterministic rule does not collapse into the alphabet
 
     Deterministic, and it has to be — two builds of the same data must produce
-    the same page or every rebuild is a diff. The rotation is what stops
-    determinism collapsing into the alphabet: each arc starts a third of the way
-    further down its own candidate list, so the three do not all open at the
-    letter A.
+    the same page or every rebuild is a diff.
     """
     data = read_json(os.path.join(ROOT, "data", "stories.json"))
     rows = [r for r in (data.get("stories") or []) if r.get("now")]
@@ -1812,36 +1854,40 @@ def now_rows(countries):
         key, _reg = region_of(c, regions)
         where[c.slug] = key
 
-    # Candidates per arc, photographed first, rotated so the three arcs do not
-    # all begin at the same end of the file. Each GROUP is rotated on its own —
-    # rotating the concatenation moves the join, and a third of the way into a
-    # list that is two-thirds photographs lands in the unphotographed tail, which
-    # is how the first cut of this put two plates on the strip while thirty-five
-    # photographed city chapters sat unused.
-    def turn(seq, n):
-        return seq[(len(seq) * n) // len(NOW_ARCS):] + seq[:(len(seq) * n) // len(NOW_ARCS)]
-
-    pool = {}
-    for n, arc in enumerate(NOW_ARCS):
-        here = [r for r in rows if r["arc"] == arc and r["country"] in live]
-        pool[arc] = (turn([r for r in here if r.get("image")], n)
-                     + turn([r for r in here if not r.get("image")], n))
+    here = [r for r in rows if r["arc"] == NOW_ARC and r["country"] in live]
+    if not here:
+        here = [r for r in rows if r["country"] in live]
+    # THE PHOTOGRAPH IS THE OUTER LOOP, not a sort key inside one list. Held as
+    # a single pool ordered photographs-first, the per-slot offset walks past
+    # the join on the later slots — a sixth of the way into a list that is
+    # forty-four photographs and ten plates lands in the plates by slot five —
+    # and the strip shipped with one grey card among five photographs, which is
+    # the most visible defect this section can have. Two tiers, and the second
+    # is only reached if the first cannot fill the slot at any region cap.
+    tiers = ([r for r in here if r.get("image")],
+             [r for r in here if not r.get("image")])
 
     picked, taken, held = [], set(), {}
     for slot in range(NOW_CARDS):
-        arc = NOW_ARCS[slot % len(NOW_ARCS)]
         row = None
-        # Widen the region rule one step at a time: an unused region first, then
-        # a region holding one, then whatever is left. A country with no region
-        # (there are none, but the lookup can miss) is treated as its own.
-        for cap in (0, 1, NOW_CARDS):
-            for r in pool[arc]:
-                if r["country"] in taken:
-                    continue
-                if held.get(where.get(r["country"], ""), 0) > cap:
-                    continue
-                row = r
-                break
+        for tier in tiers:
+            if not tier:
+                continue
+            off = (len(tier) * slot) // NOW_CARDS
+            # Widen the region rule one step at a time: an unused region first,
+            # then a region holding one, then whatever is left. A country with
+            # no region (there are none, but the lookup can miss) is its own.
+            for cap in (0, 1, NOW_CARDS):
+                for n in range(len(tier)):
+                    r = tier[(off + n) % len(tier)]
+                    if r["country"] in taken:
+                        continue
+                    if held.get(where.get(r["country"], ""), 0) > cap:
+                        continue
+                    row = r
+                    break
+                if row is not None:
+                    break
             if row is not None:
                 break
         if row is None:
@@ -1856,15 +1902,15 @@ def now_rows(countries):
 def block_nownote(countries):
     """The sentence beside the strip, counting what the strip actually holds.
 
-    Every figure in it is measured off the same six rows the strip is built
-    from, including the spread — "three kinds, across five regions" is a claim
-    the selector has to keep, so it is counted here rather than typed. When the
-    selection was quietly six food chapters from six neighbouring countries this
-    sentence would have said so, and did not, because it counted only how many
-    cards there were.
+    Every figure is measured off the same six rows the strip is built from. A
+    typed "Nine of them here" over a six-card strip is what earned that rule,
+    and a sentence promising what a continent COOKS, MAKES AND BUILDS over six
+    plates of food is the same failure wearing better clothes: the strip is the
+    table, so the sentence says the table, and the other two contemporary arcs
+    are pointed at rather than implied.
     """
     data = read_json(os.path.join(ROOT, "data", "stories.json"))
-    total = len([r for r in (data.get("stories") or []) if r.get("now")])
+    now = [r for r in (data.get("stories") or []) if r.get("now")]
     picked = now_rows(countries)
     if not picked:
         return ('        <p class="wa-note">No contemporary chapters have been built '
@@ -1874,21 +1920,18 @@ def block_nownote(countries):
     for c in countries:
         key, _reg = region_of(c, regions)
         where[c.slug] = key
-    kinds = len(set(r["arc"] for r in picked))
+    table = len([r for r in now if r["arc"] == NOW_ARC])
+    other = len(now) - table
     spread = len(set(where.get(r["country"], "") for r in picked))
-    # A strip of one arc would read "one kinds of chapter". It cannot happen
-    # with three arcs and six slots, and a sentence that counts itself should
-    # not depend on that staying true.
-    word = "kinds of chapter" if kinds != 1 else "kind of chapter"
-    return ('        <p class="wa-note">%s chapters across the %s countries are about '
-            'what is cooked, made and built this decade rather than what is behind '
-            'glass. %s of them here &mdash; %s %s, %s countries, %s regions. Not a '
-            'feed and not an events calendar &mdash; this site holds no dates and '
-            'will not invent any; these are evergreen, and they are true for longer '
-            'than a week.</p>'
-            % (_spell(total), _spell(len(countries)).lower(), _spell(len(picked)),
-               _spell(kinds).lower(), word, _spell(len(picked)).lower(),
-               _spell(spread).lower()))
+    return ('        <p class="wa-note">%s chapters on what this continent eats, one '
+            'for every country, and %s more on what it makes and builds this decade '
+            'rather than what is behind glass. %s tables here &mdash; %s countries, '
+            '%s regions, and the rest of each is on its own portrait. Not a feed and '
+            'not an events calendar &mdash; this site holds no dates and will not '
+            'invent any; these are evergreen, and they are true for longer than a '
+            'week.</p>'
+            % (_spell(table), _spell(other).lower(), _spell(len(picked)),
+               _spell(len(picked)).lower(), _spell(spread).lower()))
 
 
 def block_now(countries):
@@ -1903,10 +1946,9 @@ def block_now(countries):
     the dataset, so it does not pretend to be current — it is the part of the
     writing that is about now, which is a different and true claim.
 
-    Six of them, across six countries and five regions, with the three arcs
-    alternating — see now_rows, which is where that is enforced and where it was
-    for a long time silently not. Six rather than nine because this replaced a
-    section of 984 pixels and nine cards made it 1693 — the argument does not
+    Six of them, across six countries and five regions, all of them the table —
+    see now_rows for why one arc and not three. Six rather than nine because
+    this replaced a section of 984 pixels and nine cards made it 1693 — the argument does not
     get better for being three rows tall, and this page has grown in every wave
     already.
     """

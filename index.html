@@ -2408,9 +2408,41 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 /* Eight cards that filter the grid two sections down, and nothing about them
    said they were pressable until you pressed one. A card that acts is a card
    that answers the pointer. */
-.wa-exp{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start;padding:22px 24px 20px 0;border-bottom:var(--fj-rule)}
+/* THE DISC GETS ITS OWN LINE, AND THAT IS THE ALIGNMENT FIX.
+   Beside the heading there is no honest way to align a 42px disc against an
+   18px cap: top-aligned its centre falls a line and a half below the word it
+   belongs to, centre-aligned it hangs off the top of the card, and every
+   correction is a magic number that only holds at one width. Eight of them at
+   eight different optical heights is what the row actually looked like. On its
+   own line the alignment stops being a nudge and becomes structural — every
+   disc sits on the top edge of its grid row because the row puts it there. */
+.wa-exp{display:flex;flex-direction:column;align-items:flex-start;
+  padding:26px 26px 20px 0;border-bottom:var(--fj-rule);
+  border-right:var(--fj-rule)}
+.wa-exp > div{display:flex;flex-direction:column;flex:1 1 auto;width:100%}
+/* Outlined, not eight filled black dots. At 42px solid they were the heaviest
+   thing in the section and the type was reading second; as rings they sit
+   behind the words, and the fill is freed up to do the job it should have had
+   all along — saying which one you have pressed. */
+.wa-exp .wa-ico{width:44px;height:44px;margin-bottom:16px;background:none;
+  color:var(--c-primary);
+  border:1.5px solid color-mix(in srgb,var(--c-primary) 26%,transparent);
+  transition:background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.wa-exp .wa-ico svg{width:22px;height:22px;stroke-width:1.5}
+.wa-exp:hover .wa-ico{border-color:var(--c-primary)}
+.wa-exp[aria-pressed="true"] .wa-ico{background:var(--c-accent);
+  border-color:var(--c-accent);color:var(--c-bg)}
 .wa-exp b{display:block;font-family:var(--fj-display);font-size:18px;font-weight:700;text-transform:uppercase;line-height:1.05}
-.wa-exp span{display:block;font-size:13px;color:var(--c-muted);margin-top:5px}
+/* CHILD SELECTOR, AND IT IS A BUG FIX, NOT A TIDY-UP.
+   This was `.wa-exp span`, and the icon is a <span> too. At 0,1,1 that beat
+   `.wa-ico`'s own 0,1,0, so the disc was handed display:block — which makes its
+   align-items and justify-content inert — plus the description's font size,
+   muted colour and top margin. Every glyph has been sitting hard against the
+   top-left corner of its disc, ten pixels up and ten across, for as long as the
+   section has existed. The description lives inside the div; the icon does not,
+   so saying which one is meant is the whole fix. */
+.wa-exp > div > span{display:block;font-size:13px;line-height:1.5;color:var(--c-muted);margin-top:7px;max-width:30ch}
 /* The experience blocks are controls now, not captions. Six of them name a lens
    a country can declare it leads on, so they carry the true count and set the
    filter three screens down. The other four — rainforest, adventure, cities,
@@ -2424,15 +2456,34 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-exp--all{cursor:pointer}
 .wa-exp[aria-pressed="true"]{background:var(--fj-dust)}
 .wa-exp[aria-pressed="true"] b{color:var(--c-accent)}
-.wa-exp-n{display:block;margin-top:9px;font-style:normal;font-family:var(--fj-mono);
-  font-size:8.5px;letter-spacing:.16em;line-height:1.7;text-transform:uppercase;
-  color:var(--c-muted)}
+/* THE COUNT IS THE CARD'S FLOOR, NOT THE NEXT THING AFTER THE SENTENCE.
+   The descriptions run from one line to three, so left in the flow the eight
+   counts landed at four different heights across two rows — the break that
+   reads first, before anything about the discs. Pushed to the bottom of a
+   stretched card and given a rule of its own, the eight sit on two lines that
+   run the width of the section. */
+.wa-exp-n{display:block;margin-top:auto;padding-top:13px;font-style:normal;
+  font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;line-height:1.6;
+  text-transform:uppercase;color:var(--c-muted);
+  border-top:1px solid color-mix(in srgb,var(--c-primary) 12%,transparent)}
 .wa-exp[aria-pressed="true"] .wa-exp-n{color:var(--c-accent)}
 .wa-exp{transition:background .18s,box-shadow .18s}
 .wa-exp:hover{background:color-mix(in srgb,var(--c-bg) 96%,var(--c-primary))}
-@media(max-width:1050px){.wa-exps{grid-template-columns:1fr 1fr 1fr}}
-@media(max-width:760px){.wa-exps{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.wa-exps{grid-template-columns:1fr}}
+/* Column rules, cleared on whichever card ends the row at each width — the same
+   idiom the regions, the stories and the cities already use, so the eight read
+   as one grid rather than eight things floating in a band. */
+.wa-exp:nth-child(4n){border-right:0;padding-right:0}
+@media(max-width:1050px){.wa-exps{grid-template-columns:1fr 1fr 1fr}
+  .wa-exp:nth-child(4n){border-right:var(--fj-rule);padding-right:26px}
+  .wa-exp:nth-child(3n){border-right:0;padding-right:0}}
+@media(max-width:760px){.wa-exps{grid-template-columns:1fr 1fr}
+  .wa-exp:nth-child(3n){border-right:var(--fj-rule);padding-right:26px}
+  .wa-exp:nth-child(2n){border-right:0;padding-right:0}}
+@media(max-width:520px){.wa-exps{grid-template-columns:1fr}
+  .wa-exp{border-right:0 !important;padding-right:0 !important}
+  /* One per row: the count has nothing to align with, so the rule above it is
+     just a line across a phone. */
+  .wa-exp-n{border-top:0;padding-top:0;margin-top:11px}}
 
 /* ---- the two flagship countries -------------------------------------------------- */
 .wa-flag{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--c-accent)}
@@ -3213,7 +3264,7 @@ window.AF = {
       </div>
       <div class="wa-tags-in" role="group" aria-label="Choose an experience">
       <!-- gen:experiences -->
-<button class="wa-tag" type="button" data-exp="cities" data-slug="nigeria" data-line="Where the continent is loudest, newest and most itself."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V9l5-3v15"/><path d="M14 21V4l5 3v14"/><path d="M7.5 11v0M7.5 14v0M16.5 10v0M16.5 13v0"/></svg>Cities</button><button class="wa-tag" type="button" data-exp="wildlife" data-slug="uganda" data-line="Where the animals are the reason you came."><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg>Wildlife</button><button class="wa-tag" type="button" data-exp="culture" data-slug="ghana" data-line="Kingdoms, languages, festivals and the people who keep them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg>Culture</button><button class="wa-tag" type="button" data-exp="coast" data-slug="mozambique" data-line="Atlantic, Indian Ocean, Mediterranean, and the lakes big enough to have surf."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>Coast</button><button class="wa-tag" type="button" data-exp="nature" data-slug="cameroon" data-line="Mountain, forest, desert and the country between them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/><path d="M9.5 19c0-4 2.5-6.5 6.5-7"/></svg>Nature</button><button class="wa-tag" type="button" data-exp="food" data-slug="morocco" data-line="What a country actually eats, not what it serves tourists."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg>Food</button><button class="wa-tag" type="button" data-exp="history" data-slug="egypt" data-line="Ruins, empires, and the places that remember what happened on them."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg>History</button><button class="wa-tag" type="button" data-exp="adventure" data-slug="namibia" data-line="Long roads, thin air, white water and the walk in."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg>Adventure</button>      <!-- /gen:experiences -->
+<button class="wa-tag" type="button" data-exp="cities" data-slug="nigeria" data-line="Where the continent is loudest, newest and most itself."><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(0 -0.5)"><path d="M3 21h18"/><path d="M5 21V9l5-3v15"/><path d="M14 21V4l5 3v14"/><path d="M7.5 11v0M7.5 14v0M16.5 10v0M16.5 13v0"/></g></svg>Cities</button><button class="wa-tag" type="button" data-exp="wildlife" data-slug="uganda" data-line="Where the animals are the reason you came."><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(-0.75 -0.45)"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></g></svg>Wildlife</button><button class="wa-tag" type="button" data-exp="culture" data-slug="ghana" data-line="Kingdoms, languages, festivals and the people who keep them."><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(0 -0.5)"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></g></svg>Culture</button><button class="wa-tag" type="button" data-exp="coast" data-slug="mozambique" data-line="Atlantic, Indian Ocean, Mediterranean, and the lakes big enough to have surf."><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(0 -2)"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></g></svg>Coast</button><button class="wa-tag" type="button" data-exp="nature" data-slug="cameroon" data-line="Mountain, forest, desert and the country between them."><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(0 -0.5)"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/><path d="M9.5 19c0-4 2.5-6.5 6.5-7"/></g></svg>Nature</button><button class="wa-tag" type="button" data-exp="food" data-slug="morocco" data-line="What a country actually eats, not what it serves tourists."><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(0 -1)"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></g></svg>Food</button><button class="wa-tag" type="button" data-exp="history" data-slug="egypt" data-line="Ruins, empires, and the places that remember what happened on them."><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(0 -0.5)"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></g></svg>History</button><button class="wa-tag" type="button" data-exp="adventure" data-slug="namibia" data-line="Long roads, thin air, white water and the walk in."><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(1 0)"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></g></svg>Adventure</button>      <!-- /gen:experiences -->
       </div>
       <div class="wa-answer" id="wa-answer" aria-live="polite">
         <!-- gen:picks -->
@@ -4007,14 +4058,14 @@ window.AF = {
          where it was always going. -->
     <div class="wa-exps">
       <!-- gen:expcards -->
-<button class="wa-exp" type="button" data-want="cities" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V9l5-3v15"/><path d="M14 21V4l5 3v14"/><path d="M7.5 11v0M7.5 14v0M16.5 10v0M16.5 13v0"/></svg></span><div><b>Cities</b><span>Lagos, Cape Town, Marrakech, Nairobi, Dakar, Accra</span><i class="wa-exp-n">14 of 54 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="wildlife" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></svg></span><div><b>Wildlife</b><span>Gorillas, elephants, lions, giraffes, chimpanzees, the great migration</span><i class="wa-exp-n">27 of 54 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="culture" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></svg></span><div><b>People &amp; culture</b><span>Kingdoms, markets, music, dance, craft, living traditions</span><i class="wa-exp-n">39 of 54 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="coast" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, Seychelles, Mauritius</span><i class="wa-exp-n">30 of 54 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="nature" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/><path d="M9.5 19c0-4 2.5-6.5 6.5-7"/></svg></span><div><b>Nature</b><span>Kilimanjaro, Korup, the Rwenzori, the Atlas, the Namib</span><i class="wa-exp-n">31 of 54 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="food" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></svg></span><div><b>African food</b><span>Street food, markets, coastal cuisine, home cooking, coffee</span><i class="wa-exp-n">9 of 54 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="history" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></svg></span><div><b>History</b><span>Forts, palaces, ancient cities, rock churches, sacred places</span><i class="wa-exp-n">18 of 54 countries lead on this</i></div></button>
-      <button class="wa-exp" type="button" data-want="adventure" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></svg></span><div><b>Adventure</b><span>Gravel roads, the Nile at Jinja, the falls from both sides, the long traverse</span><i class="wa-exp-n">19 of 54 countries lead on this</i></div></button>      <!-- /gen:expcards -->
+<button class="wa-exp" type="button" data-want="cities" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="translate(0 -0.5)"><path d="M3 21h18"/><path d="M5 21V9l5-3v15"/><path d="M14 21V4l5 3v14"/><path d="M7.5 11v0M7.5 14v0M16.5 10v0M16.5 13v0"/></g></svg></span><div><b>Cities</b><span>Lagos, Cape Town, Marrakech, Nairobi, Dakar, Accra</span><i class="wa-exp-n">14 of 54 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="wildlife" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="translate(-0.75 -0.45)"><circle cx="8" cy="8" r="1.6"/><circle cx="13" cy="6.5" r="1.6"/><circle cx="17.5" cy="9.5" r="1.6"/><path d="M12 12c-3 0-5 2-5 4.5S9 20 12 20s5-1 5-3.5S15 12 12 12z"/></g></svg></span><div><b>Wildlife</b><span>Gorillas, elephants, lions, giraffes, chimpanzees, the great migration</span><i class="wa-exp-n">27 of 54 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="culture" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="translate(0 -0.5)"><path d="M6 4h12v8a6 6 0 0 1-12 0z"/><circle cx="9.5" cy="10" r="1"/><circle cx="14.5" cy="10" r="1"/><path d="M10 15c1 .8 3 .8 4 0"/><path d="M12 18v3"/></g></svg></span><div><b>People &amp; culture</b><span>Kingdoms, markets, music, dance, craft, living traditions</span><i class="wa-exp-n">39 of 54 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="coast" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="translate(0 -2)"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M3 19c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></g></svg></span><div><b>Coast &amp; islands</b><span>Zanzibar, Kribi, Lamu, Seychelles, Mauritius</span><i class="wa-exp-n">30 of 54 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="nature" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="translate(0 -0.5)"><path d="M3 19h18L14 6l-3.2 5.6L9 9z"/><path d="M9.5 19c0-4 2.5-6.5 6.5-7"/></g></svg></span><div><b>Nature</b><span>Kilimanjaro, Korup, the Rwenzori, the Atlas, the Namib</span><i class="wa-exp-n">31 of 54 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="food" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="translate(0 -1)"><path d="M5 11h14a7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M12 8V5M9 8V6.5M15 8V6.5"/><path d="M4 21h16"/></g></svg></span><div><b>African food</b><span>Street food, markets, coastal cuisine, home cooking, coffee</span><i class="wa-exp-n">9 of 54 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="history" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="translate(0 -0.5)"><path d="M4 20h16M6 20V11h12v9"/><path d="M4 11 12 5l8 6"/><path d="M11 20v-4h2v4"/></g></svg></span><div><b>History</b><span>Forts, palaces, ancient cities, rock churches, sacred places</span><i class="wa-exp-n">18 of 54 countries lead on this</i></div></button>
+      <button class="wa-exp" type="button" data-want="adventure" aria-pressed="false"><span class="wa-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="translate(1 0)"><path d="M6 4h4v9l6 3v4H6z"/><path d="M10 13h3"/></g></svg></span><div><b>Adventure</b><span>Gravel roads, the Nile at Jinja, the falls from both sides, the long traverse</span><i class="wa-exp-n">19 of 54 countries lead on this</i></div></button>      <!-- /gen:expcards -->
     </div>
     <!-- Outlined, not solid. This page has two ends that deserve the strongest
      weight — the hero, where you arrive, and the enquiry, where you act —
@@ -4238,18 +4289,18 @@ window.AF = {
       <div>
         <h2>Not a <em>museum</em>.</h2>
         <!-- gen:nownote -->
-        <p class="wa-note">162 chapters across the fifty-four countries are about what is cooked, made and built this decade rather than what is behind glass. Six of them here &mdash; three kinds of chapter, six countries, five regions. Not a feed and not an events calendar &mdash; this site holds no dates and will not invent any; these are evergreen, and they are true for longer than a week.</p>
+        <p class="wa-note">Fifty-four chapters on what this continent eats, one for every country, and 108 more on what it makes and builds this decade rather than what is behind glass. Six tables here &mdash; six countries, five regions, and the rest of each is on its own portrait. Not a feed and not an events calendar &mdash; this site holds no dates and will not invent any; these are evergreen, and they are true for longer than a week.</p>
         <!-- /gen:nownote -->
       </div>
     </div>
     <div class="wa-nows">
       <!-- gen:now -->
       <a class="wa-now has-shot" href="/portrait/algeria#the-table" style="--reg-tone:#865A28"><span class="wa-now-art"><img src="https://images.pexels.com/photos/26587862/pexels-photo-26587862.jpeg" alt="Chorba, m&#x27;hadjeb, and the Friday couscous that stops the whole country." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Algeria &middot; The table</i><b>Couscous on Friday</b><p>Chorba, m&#x27;hadjeb, and the Friday couscous that stops the whole country.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/ethiopia#made-by-hand" style="--reg-tone:#2B6E5E"><span class="wa-now-art"><img src="https://images.pexels.com/photos/34416165/pexels-photo-34416165.png" alt="Handwoven shemma cotton, and Coptic crosses in silver, each region with its own shape." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Ethiopia &middot; Made by hand</i><b>Weaving and Silver</b><p>Handwoven shemma cotton, and Coptic crosses in silver, each region with its own shape.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/namibia#the-city-now" style="--reg-tone:#672E1D"><span class="wa-now-art"><img src="https://images.unsplash.com/photo-1504053587917-5f214fde5be2" alt="Windhoek on the highveld, and Swakopmund where German architecture meets Atlantic fog." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Namibia &middot; The city now</i><b>Windhoek and Swakopmund</b><p>Windhoek on the highveld, and Swakopmund where German architecture meets Atlantic fog.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/benin#the-table" style="--reg-tone:#113222"><span class="wa-now-art"><img src="https://images.pexels.com/photos/37211572/pexels-photo-37211572.jpeg" alt="Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Benin &middot; The table</i><b>Amiwo and Grilled Fish</b><p>Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/madagascar#made-by-hand" style="--reg-tone:#1A5151"><span class="wa-now-art"><img src="https://images.pexels.com/photos/9552186/pexels-photo-9552186.jpeg" alt="Wild silk lambas, raffia work, and the Zafimaniry woodcarving of the south-east." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Madagascar &middot; Made by hand</i><b>Silk, Raffia and Zafimaniry</b><p>Wild silk lambas, raffia work, and the Zafimaniry woodcarving of the south-east.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/nigeria#the-city-now" style="--reg-tone:#113222"><span class="wa-now-art"><img src="https://images.pexels.com/photos/31729398/pexels-photo-31729398.jpeg" alt="Lagos on the lagoon, purpose-built Abuja in the middle, and Kano&#x27;s thousand-year-old walls." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Nigeria &middot; The city now</i><b>Lagos, Abuja, Kano</b><p>Lagos on the lagoon, purpose-built Abuja in the middle, and Kano&#x27;s thousand-year-old walls.</p></span></a>      <!-- /gen:now -->
+      <a class="wa-now has-shot" href="/portrait/central-african-republic#the-table" style="--reg-tone:#113222"><span class="wa-now-art"><img src="https://images.pexels.com/photos/33937245/pexels-photo-33937245.jpeg" alt="Cassava as the staple, smoked fish from the river, and palm wine tapped in the forest." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Central African Republic &middot; The table</i><b>Cassava, Bushmeat and Palm Wine</b><p>Cassava as the staple, smoked fish from the river, and palm wine tapped in the forest.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/eswatini#the-table" style="--reg-tone:#672E1D"><span class="wa-now-art"><img src="https://images.pexels.com/photos/5662190/pexels-photo-5662190.jpeg" alt="Pumpkin with maize, emasi soured milk, and braai everywhere." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Eswatini &middot; The table</i><b>Sidvudvu and Emasi</b><p>Pumpkin with maize, emasi soured milk, and braai everywhere.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/madagascar#the-table" style="--reg-tone:#1A5151"><span class="wa-now-art"><img src="https://images.pexels.com/photos/26587855/pexels-photo-26587855.jpeg" alt="Rice three times a day, and romazava — beef and greens — with it." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Madagascar &middot; The table</i><b>Romazava and Rice</b><p>Rice three times a day, and romazava — beef and greens — with it.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/rwanda#the-table" style="--reg-tone:#2B6E5E"><span class="wa-now-art"><img src="https://images.pexels.com/photos/36470715/pexels-photo-36470715.jpeg" alt="Grilled goat brochettes, cassava leaf isombe, tilapia from Kivu, and some of the best coffee grown anywhere." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Rwanda &middot; The table</i><b>Brochettes and Isombe</b><p>Grilled goat brochettes, cassava leaf isombe, tilapia from Kivu, and some of the best coffee grown anywhere.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/somalia#the-table" style="--reg-tone:#2B6E5E"><span class="wa-now-art"><img src="https://images.pexels.com/photos/16107645/pexels-photo-16107645.jpeg" alt="Camel milk, bariis iskukaris spiced with cumin and cardamom, and Somali tea with ginger." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Somalia &middot; The table</i><b>Camel Milk and Bariis</b><p>Camel milk, bariis iskukaris spiced with cumin and cardamom, and Somali tea with ginger.</p></span></a>      <!-- /gen:now -->
     </div>
   </div>
 </section>
