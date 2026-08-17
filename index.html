@@ -2485,8 +2485,13 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-fork-price em{display:block;margin-top:5px;font-style:normal;
   font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.18em;
   text-transform:uppercase;color:var(--c-muted)}
+/* Spans both doors so the rule under them is one rule, but the SENTENCE is
+   capped where a sentence reads. Left to the full span it set at 173
+   characters — nearly twice the line this site holds itself to, and the gate
+   caught it the moment the fork went in. */
 .wa-fork-note{grid-column:1/-1;margin:6px 0 0;padding-top:16px;
-  border-top:var(--fj-rule);font-size:14.5px;line-height:1.6;color:var(--c-muted)}
+  border-top:var(--fj-rule);font-size:14.5px;line-height:1.6;
+  color:var(--c-muted);max-width:74ch}
 .wa-fork-note a{color:var(--c-accent);white-space:nowrap;
   border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
 .wa-fork-note a:hover{border-bottom-color:var(--c-accent)}
