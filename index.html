@@ -2151,18 +2151,47 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   text-transform:uppercase;color:var(--c-muted)}
 /* The count is the loudest thing in the cell, because the claim this section
    makes is arithmetic: no month is empty, and here is how full each one is. */
-.wa-season-n{font-family:var(--fj-display);font-size:clamp(22px,2.2vw,30px);
+.wa-season-n{display:flex;align-items:baseline;gap:9px;
+  font-family:var(--fj-display);font-size:clamp(22px,2.2vw,30px);
   font-weight:700;line-height:1;letter-spacing:-.02em;color:var(--c-ink)}
-.wa-season-who{margin:2px 0 0;font-size:13.5px;line-height:1.5;color:var(--c-muted)}
+/* The figure beside the word. The word is the site's voice and the figure is
+   what a reader compares — "Thirty-eight" and "Sixteen" are the same length on
+   the page and thirty-eight is more than twice sixteen. */
+.wa-season-n i{font-style:normal;font-family:var(--fj-mono);font-size:10px;
+  font-weight:400;letter-spacing:.14em;color:var(--c-muted)}
+/* THE SHAPE OF THE YEAR, WHICH WAS THE ONE THING THE SECTION NEVER DREW.
+   The lede says January is the busiest and April the quietest; underneath it
+   sat twelve identical cells that gave a reader no way to see it. The bar is
+   the same count as the words, measured against the fullest month, so the year
+   has a silhouette before a word of it is read. */
+.wa-season-bar{display:block;height:3px;margin-top:2px;
+  background:color-mix(in srgb,var(--c-ink) 10%,transparent)}
+.wa-season-bar>span{display:block;height:100%;background:var(--c-accent);
+  opacity:.55;transition:opacity .25s ease}
+.wa-season:hover .wa-season-bar>span{opacity:.9}
+/* The busiest month is marked, and the quietest is NOT greyed. Drawn in the
+   muted tone it read as unavailable — which is the exact opposite of what this
+   section exists to say, that no month is a bad month everywhere. The width
+   already carries "fewer"; the colour would have carried "closed". */
+.wa-season.is-top .wa-season-bar>span{opacity:.95}
+.wa-season-who{margin:6px 0 0;font-size:13.5px;line-height:1.5;color:var(--c-muted)}
 .wa-season-who a{border-bottom:1px solid var(--c-border);transition:border-color .2s,color .2s}
 .wa-season-who a:hover{color:var(--c-accent);border-bottom-color:var(--c-accent)}
 @media(max-width:900px){.wa-season-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){
   .wa-season-grid{grid-template-columns:1fr}
-  .wa-season{flex-direction:row;align-items:baseline;gap:12px;padding:14px 16px}
+  /* WRAP, or flex-basis:100% is a request nobody grants. The month, the count,
+     the bar and the country names sit in one flex row here; without wrapping,
+     the two items asking for a full line get squeezed instead of moved, and at
+     320px the measure bar came out five pixels long. */
+  .wa-season{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:8px 12px;
+    padding:14px 16px}
   .wa-season b{min-width:34px}
   .wa-season-n{font-size:20px}
-  .wa-season-who{flex-basis:100%}
+  /* The bar spans the row on a phone, under the month and its figure, rather
+     than trying to share a baseline with them. */
+  .wa-season-bar{flex-basis:100%;order:3}
+  .wa-season-who{flex-basis:100%;order:4}
 }
 
 /* COME FOR THE MOMENT — four photographs at the size a photograph needs.
@@ -2432,7 +2461,38 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 /* ---- the journey: five steps, read as a track ------------------------------------- */
 /* Four, not five. The fifth step said "Return home with more than
    photographs", which is not a step and not a claim. */
-.wa-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--c-primary)}
+/* THE FORK, ABOVE THE FOUR STEPS. Section 11 went straight into a numbered
+   list that all begins at /journey — which builds a journey inside ONE country
+   — so a reader who wants to cross several was never told the other road
+   exists. Two doors first, each carrying the SHAPE of its price rather than a
+   figure: "per vehicle, per day" against "for the whole crossing" is the
+   difference, and the numbers alone would hide it. */
+.wa-fork{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--sp-4);margin-top:var(--sp-5)}
+.wa-fork-door{border-top:3px solid var(--c-accent);padding:20px 0 4px;
+  display:block;transition:border-color .2s}
+.wa-fork-door:hover{border-top-color:var(--c-ink)}
+.wa-fork-door i{font-style:normal;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.24em;color:var(--c-accent)}
+.wa-fork-door b{display:block;margin-top:11px;font-family:var(--fj-display);
+  font-weight:700;text-transform:uppercase;font-size:clamp(20px,2.1vw,29px);
+  line-height:1.04;letter-spacing:-.015em;color:var(--c-ink)}
+.wa-fork-door p{margin-top:13px;font-size:15.5px;line-height:1.55;
+  color:var(--c-muted);max-width:34ch}
+.wa-fork-price{display:block;margin-top:18px;font-family:var(--fj-display);
+  font-weight:700;font-size:19px;color:var(--c-ink)}
+/* The unit, not the figure, is the thing a reader has to carry away. */
+.wa-fork-price em{display:block;margin-top:5px;font-style:normal;
+  font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-muted)}
+.wa-fork-note{grid-column:1/-1;margin:6px 0 0;padding-top:16px;
+  border-top:var(--fj-rule);font-size:14.5px;line-height:1.6;color:var(--c-muted)}
+.wa-fork-note a{color:var(--c-accent);white-space:nowrap;
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.wa-fork-note a:hover{border-bottom-color:var(--c-accent)}
+@media(max-width:760px){.wa-fork{grid-template-columns:minmax(0,1fr);gap:var(--sp-3)}}
+
+.wa-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--c-primary);margin-top:var(--sp-5)}
 /* Four steps numbered 01 to 04, and the numbers were the same weight as the
    labels — the same fault 134 found in the section spine, one section down. */
 .wa-step{position:relative;padding:30px 22px 24px 0}
@@ -4100,18 +4160,18 @@ window.AF = {
     </div>
     <div class="wa-season-grid">
       <!-- gen:seasons -->
-      <div class="wa-season" data-month="1"><b>Jan</b><span class="wa-season-n">Thirty-eight</span><p class="wa-season-who"><a href="/benin">Benin</a>, <a href="/burkina-faso">Burkina Faso</a> and <a href="/mali">Mali</a>, and thirty-five more</p></div>
-      <div class="wa-season" data-month="2"><b>Feb</b><span class="wa-season-n">Thirty-six</span><p class="wa-season-who"><a href="/benin">Benin</a>, <a href="/burkina-faso">Burkina Faso</a> and <a href="/mali">Mali</a>, and thirty-three more</p></div>
-      <div class="wa-season" data-month="3"><b>Mar</b><span class="wa-season-n">Twenty-seven</span><p class="wa-season-who"><a href="/south-sudan">South Sudan</a>, <a href="/cameroon">Cameroon</a> and <a href="/chad">Chad</a>, and twenty-four more</p></div>
-      <div class="wa-season" data-month="4"><b>Apr</b><span class="wa-season-n">Sixteen</span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/tunisia">Tunisia</a> and <a href="/guinea-bissau">Guinea-Bissau</a>, and thirteen more</p></div>
-      <div class="wa-season" data-month="5"><b>May</b><span class="wa-season-n">Nineteen</span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/angola">Angola</a> and <a href="/central-african-republic">Central African Republic</a>, and sixteen more</p></div>
-      <div class="wa-season" data-month="6"><b>Jun</b><span class="wa-season-n">Twenty-four</span><p class="wa-season-who"><a href="/burundi">Burundi</a>, <a href="/angola">Angola</a> and <a href="/central-african-republic">Central African Republic</a>, and twenty-one more</p></div>
-      <div class="wa-season" data-month="7"><b>Jul</b><span class="wa-season-n">Twenty-two</span><p class="wa-season-who"><a href="/burundi">Burundi</a>, <a href="/angola">Angola</a> and <a href="/eswatini">Eswatini</a>, and nineteen more</p></div>
-      <div class="wa-season" data-month="8"><b>Aug</b><span class="wa-season-n">Twenty-two</span><p class="wa-season-who"><a href="/burundi">Burundi</a>, <a href="/angola">Angola</a> and <a href="/eswatini">Eswatini</a>, and nineteen more</p></div>
-      <div class="wa-season" data-month="9"><b>Sep</b><span class="wa-season-n">Twenty-two</span><p class="wa-season-who"><a href="/burundi">Burundi</a>, <a href="/angola">Angola</a> and <a href="/eswatini">Eswatini</a>, and nineteen more</p></div>
-      <div class="wa-season" data-month="10"><b>Oct</b><span class="wa-season-n">Twenty-one</span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/tunisia">Tunisia</a> and <a href="/zambia">Zambia</a>, and eighteen more</p></div>
-      <div class="wa-season" data-month="11"><b>Nov</b><span class="wa-season-n">Thirty-two</span><p class="wa-season-who"><a href="/benin">Benin</a>, <a href="/burkina-faso">Burkina Faso</a> and <a href="/mali">Mali</a>, and twenty-nine more</p></div>
-      <div class="wa-season" data-month="12"><b>Dec</b><span class="wa-season-n">Thirty-seven</span><p class="wa-season-who"><a href="/benin">Benin</a>, <a href="/burkina-faso">Burkina Faso</a> and <a href="/mali">Mali</a>, and thirty-four more</p></div>      <!-- /gen:seasons -->
+      <div class="wa-season is-top" data-month="1"><b>Jan</b><span class="wa-season-n">Thirty-eight<i>38</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:100.0%"></span></span><p class="wa-season-who"><a href="/benin">Benin</a>, <a href="/burkina-faso">Burkina Faso</a> and <a href="/mali">Mali</a>, and thirty-five more</p></div>
+      <div class="wa-season" data-month="2"><b>Feb</b><span class="wa-season-n">Thirty-six<i>36</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:94.7%"></span></span><p class="wa-season-who"><a href="/benin">Benin</a>, <a href="/burkina-faso">Burkina Faso</a> and <a href="/mali">Mali</a>, and thirty-three more</p></div>
+      <div class="wa-season" data-month="3"><b>Mar</b><span class="wa-season-n">Twenty-seven<i>27</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:71.1%"></span></span><p class="wa-season-who"><a href="/south-sudan">South Sudan</a>, <a href="/cameroon">Cameroon</a> and <a href="/chad">Chad</a>, and twenty-four more</p></div>
+      <div class="wa-season is-low" data-month="4"><b>Apr</b><span class="wa-season-n">Sixteen<i>16</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:42.1%"></span></span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/tunisia">Tunisia</a> and <a href="/guinea-bissau">Guinea-Bissau</a>, and thirteen more</p></div>
+      <div class="wa-season" data-month="5"><b>May</b><span class="wa-season-n">Nineteen<i>19</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:50.0%"></span></span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/angola">Angola</a> and <a href="/central-african-republic">Central African Republic</a>, and sixteen more</p></div>
+      <div class="wa-season" data-month="6"><b>Jun</b><span class="wa-season-n">Twenty-four<i>24</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:63.2%"></span></span><p class="wa-season-who"><a href="/burundi">Burundi</a>, <a href="/angola">Angola</a> and <a href="/central-african-republic">Central African Republic</a>, and twenty-one more</p></div>
+      <div class="wa-season" data-month="7"><b>Jul</b><span class="wa-season-n">Twenty-two<i>22</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:57.9%"></span></span><p class="wa-season-who"><a href="/burundi">Burundi</a>, <a href="/angola">Angola</a> and <a href="/eswatini">Eswatini</a>, and nineteen more</p></div>
+      <div class="wa-season" data-month="8"><b>Aug</b><span class="wa-season-n">Twenty-two<i>22</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:57.9%"></span></span><p class="wa-season-who"><a href="/burundi">Burundi</a>, <a href="/angola">Angola</a> and <a href="/eswatini">Eswatini</a>, and nineteen more</p></div>
+      <div class="wa-season" data-month="9"><b>Sep</b><span class="wa-season-n">Twenty-two<i>22</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:57.9%"></span></span><p class="wa-season-who"><a href="/burundi">Burundi</a>, <a href="/angola">Angola</a> and <a href="/eswatini">Eswatini</a>, and nineteen more</p></div>
+      <div class="wa-season" data-month="10"><b>Oct</b><span class="wa-season-n">Twenty-one<i>21</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:55.3%"></span></span><p class="wa-season-who"><a href="/seychelles">Seychelles</a>, <a href="/tunisia">Tunisia</a> and <a href="/zambia">Zambia</a>, and eighteen more</p></div>
+      <div class="wa-season" data-month="11"><b>Nov</b><span class="wa-season-n">Thirty-two<i>32</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:84.2%"></span></span><p class="wa-season-who"><a href="/benin">Benin</a>, <a href="/burkina-faso">Burkina Faso</a> and <a href="/mali">Mali</a>, and twenty-nine more</p></div>
+      <div class="wa-season" data-month="12"><b>Dec</b><span class="wa-season-n">Thirty-seven<i>37</i></span><span class="wa-season-bar" aria-hidden="true"><span style="width:97.4%"></span></span><p class="wa-season-who"><a href="/benin">Benin</a>, <a href="/burkina-faso">Burkina Faso</a> and <a href="/mali">Mali</a>, and thirty-four more</p></div>      <!-- /gen:seasons -->
     </div>
   </div>
 </section>
@@ -4168,6 +4228,15 @@ window.AF = {
         <!-- gen:plannote -->
         <p class="wa-note">We take you anywhere on the continent: your vehicle, your driver for the whole journey, and a coordinator holding the days together. In Cameroon, Uganda and Namibia the company on the ground is ours too &mdash; we own it, and the guide on the day works for it. The other fifty-one are written up to the same twenty-seven categories, and travelled the same way.</p>        <!-- /gen:plannote -->
       </div>
+    </div>
+    <!-- TWO WAYS, BEFORE THE FOUR STEPS. Every step below begins at /journey,
+         which builds a journey inside one country; a reader who wants to cross
+         several was never told the other road exists. -->
+    <div class="wa-fork">
+      <!-- gen:planfork -->
+      <a class="wa-fork-door" href="/journey"><i>01</i><b>One country, in depth</b><p>A vehicle and a driver of your own, and days built around what you came for. Most journeys are this.</p><span class="wa-fork-price">From $450<em>per vehicle, per day</em></span></a>
+      <a class="wa-fork-door" href="/trans-afrique"><i>02</i><b>Several, by road</b><p>Four crossings, a fortnight to two months, with a team that travels the whole way.</p><span class="wa-fork-price">From $6,000<em>for the whole crossing</em></span></a>
+      <p class="wa-fork-note">The two are quoted differently &mdash; a country by the day, a crossing as a whole. <a href="/how-it-works">Both, side by side &rarr;</a></p>      <!-- /gen:planfork -->
     </div>
     <div class="wa-steps">
       <!-- gen:plansteps -->

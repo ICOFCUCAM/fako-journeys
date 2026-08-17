@@ -68,7 +68,7 @@ MARKERS = ("wonders", "wonderslede", "door",
            "window", "captions", "ticks", "regions", "cities", "experiences",
            "wants", "expcards", "mapunder", "maplive", "mapover", "claim", "months", "scale",
            "lede", "capafrica", "destlede", "readslede", "mapsvg", "citylede",
-           "destinations", "operators", "picks", "plannote", "plansteps",
+           "destinations", "operators", "picks", "plannote", "planfork", "plansteps",
            "nownote", "now", "stories", "footer", "regiontone", "feel",
            "moments", "momentsay", "seasons", "seasonsay", "motion",
            "motiontracks")
@@ -746,6 +746,16 @@ def block_seasons(countries):
     Seychelles in a way that October, when fifteen countries are open, belongs
     to nobody in particular.
     """
+    # THE SHAPE OF THE YEAR IS THE ARGUMENT AND IT WAS THE ONE THING NOT DRAWN.
+    # Twelve cells each printed a number spelled out in words — "Thirty-eight",
+    # "Sixteen" — which is the site's voice and is also unreadable as a
+    # quantity: nothing on the section showed that January is crowded and April
+    # is thin, which is exactly what the lede above it claims. Each month now
+    # carries a measure against the busiest, so the year has a silhouette before
+    # a word of it is read. The bar is the same count as the words, drawn.
+    counts = {i: sum(1 for c in countries if i in c.months) for i in range(1, 13)}
+    top = max(counts.values()) or 1
+    lo = min(n for n in counts.values() if n) if any(counts.values()) else 0
     rows = []
     for i, name in enumerate(MONTHS, 1):
         who = sorted((len(c.months), c.name, c.url) for c in countries if i in c.months)
@@ -754,11 +764,19 @@ def block_seasons(countries):
         lead = who[:3]
         rest = len(who) - len(lead)
         names = _and_list('<a href="%s">%s</a>' % (esc(u), esc(n)) for _l, n, u in lead)
+        n = len(who)
+        # The two ends of the year are marked because the lede names them, and a
+        # sentence that says "the quietest is April" beside twelve identical
+        # cells is a sentence the reader has to take on trust.
+        mark = (" is-top" if n == top else (" is-low" if n == lo else ""))
         rows.append(
-            '      <div class="wa-season" data-month="%d">'
-            '<b>%s</b><span class="wa-season-n">%s</span>'
+            '      <div class="wa-season%s" data-month="%d">'
+            '<b>%s</b>'
+            '<span class="wa-season-n">%s<i>%d</i></span>'
+            '<span class="wa-season-bar" aria-hidden="true">'
+            '<span style="width:%.1f%%"></span></span>'
             '<p class="wa-season-who">%s%s</p></div>'
-            % (i, esc(name[:3]), esc(_spell(len(who))),
+            % (mark, i, esc(name[:3]), esc(_spell(n)), n, 100.0 * n / top,
                names,
                (", and %s more" % _spell(rest).lower()) if rest else ""))
     return "\n".join(rows)
@@ -1217,6 +1235,53 @@ def block_plan(countries):
                   _and_list(['%s in %s' % (esc(c.operator.name), esc(c.name))
                              for c in ours])))
     return note, "\n".join(out)
+
+
+def block_planfork(countries):
+    """THE HOMEPAGE NEVER SAID THERE WERE TWO KINDS OF JOURNEY.
+
+    Section 11 went straight into four numbered steps that all begin at
+    /journey, which builds a journey inside ONE country. A reader who wants to
+    cross several was never told the other road exists — the door to Trans
+    Afrique is six sections earlier and says nothing about how either is
+    priced, and /how-it-works is a page nobody on the homepage was sent to.
+
+    So the section opens on the fork instead of on step one. Two ways, the
+    shape of each one's price under it, and the page that holds both.
+
+    EVERY FIGURE IS READ, NOT TYPED. The day rate comes from rates.json and the
+    lowest crossing band from transafrique.json — the same files /how-it-works
+    reads. Three copies of a price is three things to forget, and this
+    repository has been caught by exactly that before.
+    """
+    rates = read_json(os.path.join(ROOT, "tourism", "rates.json"), {})
+    tf = read_json(os.path.join(ROOT, "tourism", "transafrique.json"), {})
+    tiers = rates.get("tiers") or []
+    routes = tf.get("routes") or []
+    if not tiers or not routes:
+        return "      "
+    day = min(t["rate"] for t in tiers)
+    band = min(r["low"] for r in routes)
+    doors = [
+        ("/journey", "One country, in depth",
+         "A vehicle and a driver of your own, and days built around what you "
+         "came for. Most journeys are this.",
+         "From $%s" % "{:,}".format(int(day)), "per vehicle, per day"),
+        ("/trans-afrique", "Several, by road",
+         "%s crossings, a fortnight to two months, with a team that travels "
+         "the whole way." % _spell(len(routes)),
+         "From $%s" % "{:,}".format(int(band)), "for the whole crossing"),
+    ]
+    out = []
+    for i, (url, title, say, price, unit) in enumerate(doors, 1):
+        out.append('      <a class="wa-fork-door" href="%s"><i>%02d</i>'
+                   '<b>%s</b><p>%s</p>'
+                   '<span class="wa-fork-price">%s<em>%s</em></span></a>'
+                   % (esc(url), i, esc(title), esc(say), esc(price), esc(unit)))
+    out.append('      <p class="wa-fork-note">The two are quoted differently &mdash; '
+               'a country by the day, a crossing as a whole. '
+               '<a href="/how-it-works">Both, side by side &rarr;</a></p>')
+    return "\n".join(out)
 
 
 def block_plannote(countries):
@@ -1936,6 +2001,7 @@ def render(countries):
         "scale": block_scale(),
         "operators": block_operators(seq),
         "picks": block_picks(seq),
+        "planfork": block_planfork(seq),
         "plannote": block_plannote(seq),
         "plansteps": block_plansteps(seq),
         "nownote": block_nownote(seq),
