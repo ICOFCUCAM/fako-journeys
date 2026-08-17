@@ -153,7 +153,8 @@ def cmd_srcset(args):
     built HTML rather than six edits in six generators.
     """
     from tourism import srcset
-    return srcset.run(write=bool(getattr(args, "fetch", False)))
+    rc = srcset.make(write=bool(getattr(args, "fetch", False)))
+    return srcset.run(write=bool(getattr(args, "fetch", False))) or rc
 
 
 def cmd_trust(args):
