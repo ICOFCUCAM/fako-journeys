@@ -529,8 +529,12 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
 .ct-compare b{display:block;font-family:var(--fj-display);font-weight:700;
   font-size:16px;line-height:1.2}
 .ct-compare:hover b{color:var(--c-accent)}
+/* NOT --c-muted. Muted measures 4.51:1 on plain ivory — four hundredths
+   over AA — and this card puts a 6% accent wash behind it, which drops it to
+   4.21 and fails. The ground moved, so the ink moves with it: full ink, and the
+   hierarchy carried by size and by the heading above it instead of by colour. */
 .ct-compare span{display:block;margin-top:6px;font-size:13.5px;line-height:1.5;
-  color:var(--c-muted)}
+  color:var(--c-primary)}
 @media(pointer:coarse){.ct-compare{min-height:44px}}
 .ct-brief-h{font-family:var(--fj-mono);font-size:9.5px;font-weight:400;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);margin:0}

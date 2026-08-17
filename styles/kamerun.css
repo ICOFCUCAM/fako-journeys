@@ -420,7 +420,11 @@ ul,ol{list-style:none}
   justify-content:space-between;gap:6px 24px;
   max-width:var(--frame);margin:0 auto;padding:11px 28px;
   border-bottom:var(--fj-rule)}
-.af-operator-say{margin:0;font-size:13px;line-height:1.5;color:var(--c-muted)}
+/* Capped where a sentence reads. Left to fill the bar it ran to 184
+   characters on the two widest pages — the measure gate caught it, which is
+   what the measure gate is for. */
+.af-operator-say{margin:0;font-size:13px;line-height:1.5;color:var(--c-muted);
+  max-width:78ch}
 .af-operator-say b{font-weight:700;color:var(--c-primary)}
 .af-operator-go{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0}
 .af-operator-go a{display:inline-flex;align-items:center;min-height:24px;

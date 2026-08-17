@@ -1055,7 +1055,7 @@ function serve() {
       const page = await browser.newPage({viewport: {width: 1280, height: 900}});
       await open(page, url);
       let stops = 0;
-      const blind = [];
+      const blind = [], dim = [];
       for (let i = 0; i < TAB_STOPS; i++) {
         await page.keyboard.press('Tab');
         const seen = await page.evaluate(() => {
@@ -1069,15 +1069,58 @@ function serve() {
             node = node.parentElement;
           }
           const box = el.getBoundingClientRect();
+          /* AND CAN THE RING BE SEEN WHERE IT LANDED.
+             The ring is drawn in two tones — a pale outline and a dark halo
+             — because this site has two grounds and no single colour clears
+             3:1 on both. It passes if EITHER tone contrasts with whatever is
+             actually behind the control, which is not the colour the
+             stylesheet names: it is the first opaque background above it. */
+          const cs = getComputedStyle(el);
+          const parse = (v) => {
+            const m = String(v).match(
+              /rgba?\(([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,/\s]+([\d.]+))?/);
+            return m ? [+m[1] / 255, +m[2] / 255, +m[3] / 255,
+                        m[4] === undefined ? 1 : +m[4]] : null;
+          };
+          const lum = (c) => {
+            const f = (x) => x <= 0.03928 ? x / 12.92
+                                          : Math.pow((x + 0.055) / 1.055, 2.4);
+            return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+          };
+          const ratio = (a, b) => {
+            const la = lum(a), lb = lum(b);
+            return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+          };
+          let bg = null, walk = el;
+          while (walk && walk !== document.documentElement) {
+            const c = parse(getComputedStyle(walk).backgroundColor);
+            if (c && c[3] > 0.95) { bg = c; break; }
+            walk = walk.parentElement;
+          }
+          if (!bg) bg = parse(getComputedStyle(document.body).backgroundColor)
+                        || [1, 1, 1, 1];
+          let best = null;
+          const drawn = cs.outlineStyle !== 'none'
+                        && parseFloat(cs.outlineWidth) > 0;
+          if (drawn) {
+            const o = parse(cs.outlineColor);
+            if (o) best = ratio(o, bg);
+            const hm = (cs.boxShadow || '').match(/rgba?\([^)]*\)/);
+            const h = hm ? parse(hm[0]) : null;
+            if (h) best = Math.max(best === null ? 0 : best, ratio(h, bg));
+          }
           return {
-            hidden: opacity < 0.05 || getComputedStyle(el).visibility === 'hidden',
+            hidden: opacity < 0.05 || cs.visibility === 'hidden',
             real: box.width > 1 && box.height > 1,
+            ring: best === null ? null : +best.toFixed(2),
             what: el.tagName + '.' + String(el.className).slice(0, 20)
           };
         });
         if (!seen) continue;
         stops++;
         if (seen.hidden && seen.real) blind.push(seen.what);
+        if (!seen.hidden && seen.real && seen.ring !== null && seen.ring < 3)
+          dim.push(seen.what + ' ' + seen.ring + ':1');
       }
       await page.close();
       check(url + ' never puts the focus ring on something invisible',
@@ -1085,6 +1128,15 @@ function serve() {
             blind.length ? blind.length + ' of ' + stops + ' stops: '
               + [...new Set(blind)].slice(0, 2).join(' | ')
             : stops + ' stops, all visible');
+      /* 1.4.11 wants 3:1 for a focus indicator. A ring nobody can see against
+         the ground it landed on is the same failure as no ring at all, and it
+         is invisible to every other pass here — the contrast pass reads
+         text, and this is not text. */
+      check(url + ' draws a focus ring you can see against its own ground',
+            !dim.length,
+            dim.length ? dim.length + ' of ' + stops + ' under 3:1: '
+              + [...new Set(dim)].slice(0, 3).join(' | ')
+            : stops + ' stops, every ring at 3:1 or better');
     }
 
     /* ---- pass six: what a finger can hit --------------------------------- */
