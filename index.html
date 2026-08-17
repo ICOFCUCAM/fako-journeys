@@ -2521,7 +2521,15 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    The section that needs these names now defines them itself, above. */
 
 /* ---- stories ---------------------------------------------------------------------- */
-.wa-stories{display:grid;grid-template-columns:2fr 1fr 1fr;gap:0;border-top:2px solid var(--c-primary)}
+/* SIX CARDS, NINE CELLS, AND THREE OF THEM WERE EMPTY. The lead spanned two
+   rows of a three-row grid while carrying one heading and one line, so its
+   column had a hole under it the size of a card; the reading room then landed
+   alone in the last row with two empty cells beside it. Now the lead runs the
+   full height of column one — which is what "lead" was supposed to mean — the
+   four regional stories fill columns two and three, and the reading room takes
+   the last row across both. Nine cells, six cards, nothing empty. */
+.wa-stories{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:0;
+  border-top:2px solid var(--c-primary)}
 /* The stories were flat cards on a flat ground. They lift on hover like the
    city plates do, so the two collections on this page behave the same way. */
 .wa-story:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(6,18,14,.16)}
@@ -2539,17 +2547,35 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);
   border-bottom:2px solid var(--c-accent);padding-bottom:3px}
 .wa-story:hover .wa-story-go{color:var(--c-accent)}
-.wa-story--all{background:var(--fj-dust)}
+.wa-story--all{background:var(--fj-dust);padding-left:28px}
 @media(pointer:coarse){.wa-story{min-height:44px}}
 .wa-story:nth-child(3),.wa-story:nth-child(5){border-right:0;padding-right:0}
-.wa-story.wide{grid-column:span 1;grid-row:span 2}
+/* The lead runs TWO rows, not three. Three left four hundred pixels of nothing
+   under two lines of type — a hole that reads as a bug however deliberate the
+   grid is — and the reading room is a better closing object as a full-width
+   band than as a card wedged into the corner. Two rows of stories, then one
+   band across all three columns. */
+.wa-story.wide{grid-column:1;grid-row:1 / span 2;display:flex;
+  flex-direction:column}
+.wa-story.wide .wa-story-go{margin-top:auto}
+.wa-story--all{grid-column:1 / -1;border-right:0}
 .wa-story i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-story h3{font-size:clamp(21px,2.4vw,30px);margin:12px 0 9px}
 .wa-story p{font-size:14.5px;color:var(--c-muted)}
-.wa-story.wide h3{font-size:clamp(26px,3.4vw,44px)}
-@media(max-width:900px){.wa-stories{grid-template-columns:1fr 1fr}.wa-story:nth-child(3),.wa-story:nth-child(5){border-right:var(--fj-rule);padding-right:28px}
-  .wa-story:nth-child(2n){border-right:0;padding-right:0}.wa-story.wide{grid-row:span 1}}
-@media(max-width:560px){.wa-stories{grid-template-columns:1fr}.wa-story{border-right:0 !important;padding-right:0 !important}}
+/* The lead is the one story set at display size, and it now has two rows of
+   column to fill rather than one. */
+.wa-story.wide h3{font-size:clamp(28px,3.8vw,50px)}
+.wa-story.wide p{font-size:16px;max-width:32ch}
+@media(max-width:900px){.wa-stories{grid-template-columns:1fr 1fr}
+  .wa-story:nth-child(3),.wa-story:nth-child(5){border-right:var(--fj-rule);padding-right:28px}
+  .wa-story:nth-child(2n){border-right:0;padding-right:0}
+  /* Two columns: the explicit placement above would strand the lead in a
+     column of its own for three rows. Back to the flow. */
+  .wa-story.wide{grid-column:auto;grid-row:auto}
+  .wa-story--all{grid-column:1 / -1}}
+@media(max-width:560px){.wa-stories{grid-template-columns:1fr}
+  .wa-story{border-right:0 !important;padding-right:0 !important}
+  .wa-story--all{grid-column:1;padding-left:20px}}
 
 /* ---- the map, as the hero window ---------------------------------------------------
    Real Natural Earth boundaries, projected at build time by tools/africa_map.py and
