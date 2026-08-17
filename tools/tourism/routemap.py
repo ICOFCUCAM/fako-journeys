@@ -141,6 +141,52 @@ def spline(pts, tension=0.62):
     return " ".join(d)
 
 
+def describe(d, shown, by_slug, only=None):
+    """What the crossings plate DRAWS, for somebody who cannot see it.
+
+    The plate already had a good <title>, and a title is a label: it names the
+    picture and names the four roads. It does not say how long any of them
+    takes, how many countries it crosses, or that the map carries oceans, a
+    compass and a scale — so a reader using a screen reader was told the map
+    existed and given none of its content, which is the same shortfall the
+    country plates had until commit 17.
+
+    Generated from transafrique.json, so a fifth crossing describes itself the
+    day it is added and a changed duration changes this sentence with it. The
+    hand-written title above still says "the Continental Expedition running
+    from Kenya to South Africa" and will go on saying it whatever the data
+    does; that is worth knowing and is why nothing here is typed.
+    """
+    def named(slugs):
+        return [by_slug[s_].name if s_ in by_slug
+                else s_.replace("-", " ").title() for s_ in (slugs or [])]
+
+    bits = []
+    if only is None:
+        bits.append("A map of Africa with %d crossings drawn on it."
+                    % len(shown))
+    for r in shown:
+        who = named(r.get("countries"))
+        span = "%s days" % r["days"] if r.get("days") else "an open length"
+        # A COLON, NOT A DASH. Every route is called "Trans Afrique — East",
+        # so a dash before the country list gave "Trans Afrique dash East runs
+        # twenty-one days through four countries dash Kenya" when read aloud:
+        # the same mark doing two different jobs in one sentence.
+        bits.append("%s runs %s through %d countr%s: %s."
+                    % (r.get("name") or r.get("id"), span, len(who),
+                       "y" if len(who) == 1 else "ies", _join(who)))
+    bits.append("The oceans either side are named, a compass rose gives north, "
+                "and a scale bar gives distance in kilometres.")
+    return " ".join(bits)
+
+
+def _join(items):
+    items = list(items)
+    if len(items) < 2:
+        return items[0] if items else ""
+    return ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def plate(d, by_slug=None, only=None):
     """The cartographic object: continent, roads, nodes, names.
 
@@ -185,7 +231,7 @@ def plate(d, by_slug=None, only=None):
             crosses.setdefault(s_, []).append(r["id"])
 
     out = ['<svg class="tf-plate-svg" viewBox="%s %s %s %s" role="img" '
-           'aria-labelledby="tf-plate-t">' % tuple(view)]
+           'aria-labelledby="tf-plate-t tf-plate-d">' % tuple(view)]
     if only is None:
         out.append('<title id="tf-plate-t">Africa, with the four Trans Afrique '
                    'crossings drawn on it: the Continental Expedition running '
@@ -201,6 +247,8 @@ def plate(d, by_slug=None, only=None):
                       _esc(", ".join((by_slug[s_].name if s_ in by_slug
                                       else s_.replace("-", " ").title())
                                      for s_ in (one.get("countries") or [])))))
+    out.append('<desc id="tf-plate-d">%s</desc>'
+               % _esc(describe(d, shown, by_slug, only)))
 
     # 1 + 2. The continent. Borders are drawn on the crossed countries only:
     # picking every border out turns the plate into an atlas index, and picking
