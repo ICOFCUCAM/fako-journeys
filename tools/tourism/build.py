@@ -157,6 +157,18 @@ def cmd_srcset(args):
     return srcset.run(write=bool(getattr(args, "fetch", False))) or rc
 
 
+def cmd_trails(args):
+    """Put the breadcrumb trail on the five hand-written pages.
+
+    The 1,589 generated pages get theirs from open_graph, which knows the
+    address it is building at. These five predate the generators and are still
+    written by hand, so their trail is grafted onto the graph already in the
+    file. Idempotent: a page that has one is skipped.
+    """
+    from tourism import plate
+    return plate.graft_trails(write=True)
+
+
 def cmd_trust(args):
     """The pages a company owes its readers: /privacy, /terms, /accessibility.
 
@@ -764,6 +776,8 @@ def cmd_all(args):
     print()
     cmd_sidebyside(args)
     print()
+    cmd_trails(args)
+    print()
     # LAST, AND IT HAS TO BE LAST.
     #
     # srcset rewrites built HTML, so every generator above wipes it — a
@@ -884,7 +898,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "trust": cmd_trust, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "trust": cmd_trust, "trails": cmd_trails, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,

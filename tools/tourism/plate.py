@@ -301,6 +301,10 @@ def open_graph(title, description, path, kind="website", image=None,
     base = "https://afrinkong.com"
     url = base + (path if path.startswith("/") else "/" + path)
     card = base + (image or "/images/brand/share.jpg")
+    graph = list(extra if isinstance(extra, list) else [extra]) if extra else []
+    crumbs = trail(path, title)
+    if crumbs:
+        graph.append(crumbs)
     return ("\n".join([
         '<meta property="og:type" content="%s">' % kind,
         '<meta property="og:site_name" content="Afrinkong">',
@@ -316,9 +320,203 @@ def open_graph(title, description, path, kind="website", image=None,
         # This is the one wiring point the whole site already passes through.
         # `extra` is whatever this page adds to that graph — a trip, a
         # place — carried in the SAME graph so it can point at the
-        # organisation by @id instead of describing it a second time.
-        ld(extra),
+        # organisation by @id instead of describing it a second time. The
+        # trail joins them there for the same reason: one graph, one place a
+        # reader has to look.
+        ld(graph or None),
     ]))
+
+
+CRUMB_SECTIONS = {
+    "tourism": ("Every country", "/tourism/"),
+    "places": ("Every place", "/places"),
+    "portrait": ("Stories", "/stories"),
+    "trans-afrique": ("Trans Afrique", "/trans-afrique"),
+}
+
+_NAMES = {}
+
+
+def _country_names():
+    """-> {slug: name}, read once, for the middle crumb of a place page.
+
+    Only the name is wanted, so this reads the country files directly rather
+    than through load_countries(): that builds fifty-five Country objects with
+    their entries, caches and images attached, and this needs one string from
+    each.
+    """
+    if _NAMES:
+        return _NAMES
+    import json as _json
+    d = os.path.join(ROOT, "tourism", "countries")
+    try:
+        files = sorted(os.listdir(d))
+    except OSError:
+        return _NAMES
+    for f in files:
+        if not f.endswith(".json") or f.startswith("_"):
+            continue
+        try:
+            with open(os.path.join(d, f), encoding="utf-8") as fh:
+                raw = _json.load(fh)
+        except (OSError, ValueError):
+            continue
+        if raw.get("name"):
+            _NAMES[raw.get("slug") or f[:-5]] = raw["name"]
+    return _NAMES
+
+
+def _leaf(title):
+    """-> the page's own name, without the brand and without entities.
+
+    Some callers pass a title through esc() and some do not, so this arrives
+    as either `Côte d'Ivoire` or `C&#xf4;te d&#x27;Ivoire`. Unescaped here
+    because the result goes into JSON, where an HTML entity is six literal
+    characters and not an apostrophe.
+
+    The brand comes off because it is already on the trail: a crumb reading
+    "Zimbabwe: a portrait — Afrinkong" under a crumb reading "Home" says the
+    company's name twice and the page's name once.
+    """
+    t = html_mod.unescape(title)
+    for tail in (" — Afrinkong", " – Afrinkong", " - Afrinkong"):
+        if t.endswith(tail):
+            t = t[:-len(tail)]
+            break
+    return t.strip()
+
+
+def trail(path, title):
+    """-> a BreadcrumbList for this page, or None for the front door.
+
+    WHAT THIS IS FOR
+
+    Fifteen hundred and ninety-four pages, four levels deep at the deepest, and
+    nothing anywhere said how one page sat under another. A result for a place
+    page showed the raw address — afrinkong.com › places › zimbabwe ›
+    victoria-falls — spelled out in slugs, because that is what a search engine
+    falls back to when the page does not tell it the trail in words.
+
+    The trail is derived from the address rather than passed in by sixteen
+    callers, because the address is already the hierarchy: it is how the site
+    is laid out on disk, it is what the canonical says, and a trail that
+    disagreed with the URL would be the wrong trail.
+
+    THE COUNTRY CRUMB ON A PLACE PAGE
+
+    /places/zimbabwe/victoria-falls sits under Zimbabwe, and Zimbabwe's page is
+    /tourism/zimbabwe. Crossing from one section into another looks odd written
+    down and is right: the parent of a place in Zimbabwe is Zimbabwe, not the
+    index of every place in Africa. It is only added when that country page
+    exists, because a crumb pointing at a 404 is worse than a shorter trail.
+    """
+    parts = [p for p in path.strip("/").split("/") if p]
+    if not parts:
+        return None
+    here = "/" + "/".join(parts)
+    crumbs = [("Home", "/")]
+    sec = CRUMB_SECTIONS.get(parts[0])
+    if sec and sec[1].rstrip("/") != here.rstrip("/"):
+        crumbs.append(sec)
+    leaf = _leaf(title)
+    # A CRUMB IS NOT A TITLE.
+    #
+    # A page title has to stand alone in a tab and in a result, so it carries
+    # the country and often the count: "Zimbabwe — all 18 experiences",
+    # "Victoria Falls, Zimbabwe". A crumb is read along a line that already
+    # says where it is, so it wants the shortest true name — and on a country
+    # page that name is known exactly, rather than trimmed out of a sentence.
+    known = _country_names().get(parts[1]) if len(parts) > 1 else None
+    if len(parts) == 2 and parts[0] in ("tourism", "portrait") and known:
+        leaf = known
+    if sec and len(crumbs) > 1:
+        # The crossing pages title themselves "Trans Afrique — West — Trans
+        # Afrinkong", which is the right title for a tab and reads on a trail
+        # as the series name three crumbs from the series crumb. Whatever the
+        # crumb above already says, this one does not need to repeat.
+        for sep in (" — ", " – ", ": "):
+            if leaf.startswith(sec[0] + sep):
+                leaf = leaf[len(sec[0] + sep):]
+            if leaf.endswith(sep + sec[0]):
+                leaf = leaf[:-len(sep + sec[0])]
+        leaf = leaf.strip()
+    if parts[0] == "places" and len(parts) == 3:
+        if known and os.path.exists(
+                os.path.join(ROOT, "tourism", parts[1] + ".html")):
+            crumbs.append((known, "/tourism/" + parts[1]))
+            if leaf.endswith(", " + known):
+                leaf = leaf[:-len(", " + known)]
+    crumbs.append((leaf, here))
+    base = "https://afrinkong.com"
+    return {
+        "@type": "BreadcrumbList",
+        "@id": base + here + "#trail",
+        "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": n,
+             "item": base + u}
+            for i, (n, u) in enumerate(crumbs)],
+    }
+
+
+HANDWRITTEN = {
+    "about.html": ("/about", "The operator"),
+    "contact.html": ("/contact", "Contact"),
+    "pricing.html": ("/pricing", "Rates and fees"),
+    "services.html": ("/services", "Circuits and experiences"),
+    "cameroon.html": ("/cameroon", "Cameroon"),
+}
+
+
+def graft_trails(write=False, log=print):
+    """Put the trail on the five pages no generator writes.
+
+    Every page that goes through open_graph gets its trail from the address it
+    was built at. Five do not go through it at all — they were written by hand
+    before any of the generators existed and are still maintained that way, and
+    they are five of the site's most linked pages.
+
+    They each carry the organisation graph as a literal string in the file, so
+    this reads that block, adds the trail to it, and writes it back. Where the
+    graph already carries a trail nothing matches and nothing is written, which
+    is what makes it safe to run on every build.
+
+    NOT 404, AND NOT THE CONTACT SHEET. Both carry noindex: a trail is a thing
+    said to a search engine, and neither page is talking to one. Their names in
+    a result would be the two names this site least wants in a result.
+    """
+    import json as _json
+    import re as _re
+    block = _re.compile(r'(<script type="application/ld\+json">)(.*?)(</script>)',
+                        _re.S)
+    done = 0
+    for name, (path, leaf) in sorted(HANDWRITTEN.items()):
+        full = os.path.join(ROOT, name)
+        try:
+            with open(full, encoding="utf-8") as fh:
+                src = fh.read()
+        except OSError:
+            log("  %-18s not here" % name)
+            continue
+        m = block.search(src)
+        if not m:
+            log("  %-18s carries no graph to add to" % name)
+            continue
+        doc = _json.loads(m.group(2).replace("<\\/", "</"))
+        graph = doc.get("@graph")
+        if graph is None or any(g.get("@type") == "BreadcrumbList" for g in graph):
+            continue
+        graph.append(trail(path, leaf))
+        body = _json.dumps(doc, ensure_ascii=False,
+                           separators=(",", ":")).replace("</", "<\\/")
+        out = src[:m.start()] + m.group(1) + body + m.group(3) + src[m.end():]
+        done += 1
+        log("  %-18s Home › %s" % (name, leaf))
+        if write:
+            with open(full, "w", encoding="utf-8") as fh:
+                fh.write(out)
+    log("%s a trail onto %d hand-written page(s)"
+        % ("put" if write else "WOULD put", done))
+    return 0
 
 
 def icons():
