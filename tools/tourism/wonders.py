@@ -279,6 +279,34 @@ def block_wonderslede(countries):
             % (esc(d["stamp"]), esc(d["line"])))
 
 
+def photo_note(d):
+    """Why some of them are photographs and some are numbers, on the page.
+
+    tourism/wonders.json has said it since the collection shipped: a photograph
+    under a place name is a claim that the photograph is OF that place, and
+    this repository can only stand behind the ones it has. That sentence lived
+    in a data file. On the page a reader saw fifteen photographs and eight
+    numbered entries and had no way to know whether that was restraint or an
+    unfinished job.
+
+    Two automated searches have now put the case beyond argument, and the
+    examples are better than any explanation: asked for Great Zimbabwe the
+    archives returned stone ruins in Turkiye, Spain and France; asked for
+    Bazaruto they returned sand dunes in Brazil. Both were refused.
+
+    Counted off the collection so it cannot drift from it.
+    """
+    shot = len([w for w in d["wonders"] if w.get("photo")])
+    rest = len(d["wonders"]) - shot
+    if not rest:
+        return ""
+    return ("%d of them are photographed. The other %d are numbered instead, "
+            "because a photograph under a place name is a claim that the "
+            "photograph is of that place &mdash; and we would rather show you "
+            "a number than something that is somewhere else."
+            % (shot, rest))
+
+
 def counts():
     d = load()
     return len(d["wonders"]), len(d["strands"])
@@ -351,6 +379,7 @@ def run(countries, log=print):
         "line": esc(d["line"]),
         "say": esc(d["say"]),
         "n": len(d["wonders"]),
+        "shots": photo_note(d),
         "strands": "\n".join(groups),
     }
     with open(PAGE, "w", encoding="utf-8") as fh:
@@ -405,6 +434,15 @@ TEMPLATE = """<!DOCTYPE html>
       <p class="wo-lede">%(say)s</p>
       <p class="wo-count">%(n)d places, and the list is ours &mdash; there is no
         official ranking of African wonders and this is not pretending to be one.</p>
+      <!-- WHY EIGHT OF THEM ARE NUMBERS AND NOT PHOTOGRAPHS.
+           The page has always been honest about this in the repository and
+           never on the page. A reader saw fifteen photographs and eight
+           numbered entries and had no way to tell whether that was a design or
+           a page half-built. It is a design, it has a reason, and the reason
+           is the most creditable thing about the collection — so it is said
+           here rather than left in a comment nobody reads. Counted, not typed:
+           see photo_note(). -->
+      <p class="wo-count wo-count--shots">%(shots)s</p>
       <nav class="wo-index" aria-label="The five strands, with what is in each">
 %(index)s
       </nav>
