@@ -2558,7 +2558,19 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-story.wide{grid-column:1;grid-row:1 / span 2;display:flex;
   flex-direction:column}
 .wa-story.wide .wa-story-go{margin-top:auto}
-.wa-story--all{grid-column:1 / -1;border-right:0}
+/* THE BAND SPANS THREE COLUMNS, SO ITS PROSE NEEDS A MEASURE OF ITS OWN.
+   Left to fill the row it ran to 165 characters — nobody's reading line, and
+   the one thing the contrast-and-measure gate catches on this page. Heading and
+   sentence sit side by side instead, each capped where it reads, which is also
+   the right shape for a band: a closing object, not a stretched card. */
+.wa-story--all{grid-column:1 / -1;border-right:0;display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 48px;
+  align-content:start}
+.wa-story--all i{grid-column:1;grid-row:1}
+.wa-story--all h3{grid-column:1;grid-row:2;max-width:16ch}
+.wa-story--all p{grid-column:2;grid-row:1 / span 3;align-self:center;
+  font-size:16px;max-width:46ch}
+.wa-story--all .wa-story-go{grid-column:1;grid-row:3;justify-self:start}
 .wa-story i{display:block;font-style:normal;font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted)}
 .wa-story h3{font-size:clamp(21px,2.4vw,30px);margin:12px 0 9px}
 .wa-story p{font-size:14.5px;color:var(--c-muted)}
@@ -2572,7 +2584,11 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   /* Two columns: the explicit placement above would strand the lead in a
      column of its own for three rows. Back to the flow. */
   .wa-story.wide{grid-column:auto;grid-row:auto}
-  .wa-story--all{grid-column:1 / -1}}
+  /* Two columns of grid is already narrow enough that the band's own two
+     columns would leave two words a line. Back to the flow, with the measure
+     kept on the sentence. */
+  .wa-story--all{grid-column:1 / -1;display:block}
+  .wa-story--all h3,.wa-story--all p{max-width:46ch}}
 @media(max-width:560px){.wa-stories{grid-template-columns:1fr}
   .wa-story{border-right:0 !important;padding-right:0 !important}
   .wa-story--all{grid-column:1;padding-left:20px}}
@@ -4222,18 +4238,18 @@ window.AF = {
       <div>
         <h2>Not a <em>museum</em>.</h2>
         <!-- gen:nownote -->
-        <p class="wa-note">162 chapters across the fifty-four countries are about what is cooked, made and built this decade rather than what is behind glass. Six of them here. Not a feed and not an events calendar &mdash; this site holds no dates and will not invent any; these are evergreen, and they are true for longer than a week.</p>
+        <p class="wa-note">162 chapters across the fifty-four countries are about what is cooked, made and built this decade rather than what is behind glass. Six of them here &mdash; three kinds of chapter, six countries, five regions. Not a feed and not an events calendar &mdash; this site holds no dates and will not invent any; these are evergreen, and they are true for longer than a week.</p>
         <!-- /gen:nownote -->
       </div>
     </div>
     <div class="wa-nows">
       <!-- gen:now -->
       <a class="wa-now has-shot" href="/portrait/algeria#the-table" style="--reg-tone:#865A28"><span class="wa-now-art"><img src="https://images.pexels.com/photos/26587862/pexels-photo-26587862.jpeg" alt="Chorba, m&#x27;hadjeb, and the Friday couscous that stops the whole country." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Algeria &middot; The table</i><b>Couscous on Friday</b><p>Chorba, m&#x27;hadjeb, and the Friday couscous that stops the whole country.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/angola#the-table" style="--reg-tone:#672E1D"><span class="wa-now-art"><img src="https://images.pexels.com/photos/9670687/pexels-photo-9670687.jpeg" alt="Funge with muamba de galinha, calulu with dried fish, and Portuguese pastries after." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Angola &middot; The table</i><b>Funge, Muamba and Calulu</b><p>Funge with muamba de galinha, calulu with dried fish, and Portuguese pastries after.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/ethiopia#made-by-hand" style="--reg-tone:#2B6E5E"><span class="wa-now-art"><img src="https://images.pexels.com/photos/34416165/pexels-photo-34416165.png" alt="Handwoven shemma cotton, and Coptic crosses in silver, each region with its own shape." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Ethiopia &middot; Made by hand</i><b>Weaving and Silver</b><p>Handwoven shemma cotton, and Coptic crosses in silver, each region with its own shape.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/namibia#the-city-now" style="--reg-tone:#672E1D"><span class="wa-now-art"><img src="https://images.unsplash.com/photo-1504053587917-5f214fde5be2" alt="Windhoek on the highveld, and Swakopmund where German architecture meets Atlantic fog." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Namibia &middot; The city now</i><b>Windhoek and Swakopmund</b><p>Windhoek on the highveld, and Swakopmund where German architecture meets Atlantic fog.</p></span></a>
       <a class="wa-now has-shot" href="/portrait/benin#the-table" style="--reg-tone:#113222"><span class="wa-now-art"><img src="https://images.pexels.com/photos/37211572/pexels-photo-37211572.jpeg" alt="Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Benin &middot; The table</i><b>Amiwo and Grilled Fish</b><p>Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/botswana#the-table" style="--reg-tone:#672E1D"><span class="wa-now-art"><img src="https://images.pexels.com/photos/15022727/pexels-photo-15022727.jpeg" alt="Slow-pounded beef and sorghum porridge, and braai wherever there is a fire." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Botswana &middot; The table</i><b>Seswaa and Bogobe</b><p>Slow-pounded beef and sorghum porridge, and braai wherever there is a fire.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/burkina-faso#the-table" style="--reg-tone:#113222"><span class="wa-now-art"><img src="https://images.pexels.com/photos/33490824/pexels-photo-33490824.jpeg" alt="To — millet paste with sauce — and riz gras cooked in tomato and oil." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Burkina Faso &middot; The table</i><b>To and Riz Gras</b><p>To — millet paste with sauce — and riz gras cooked in tomato and oil.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/burundi#the-table" style="--reg-tone:#2B6E5E"><span class="wa-now-art"><img src="https://images.pexels.com/photos/34206384/pexels-photo-34206384.jpeg" alt="Beans and plantain, ugali, and mukeke — a Tanganyika fish grilled on the beach." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Burundi &middot; The table</i><b>Beans, Ugali and Mukeke</b><p>Beans and plantain, ugali, and mukeke — a Tanganyika fish grilled on the beach.</p></span></a>      <!-- /gen:now -->
+      <a class="wa-now has-shot" href="/portrait/madagascar#made-by-hand" style="--reg-tone:#1A5151"><span class="wa-now-art"><img src="https://images.pexels.com/photos/9552186/pexels-photo-9552186.jpeg" alt="Wild silk lambas, raffia work, and the Zafimaniry woodcarving of the south-east." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Madagascar &middot; Made by hand</i><b>Silk, Raffia and Zafimaniry</b><p>Wild silk lambas, raffia work, and the Zafimaniry woodcarving of the south-east.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/nigeria#the-city-now" style="--reg-tone:#113222"><span class="wa-now-art"><img src="https://images.pexels.com/photos/31729398/pexels-photo-31729398.jpeg" alt="Lagos on the lagoon, purpose-built Abuja in the middle, and Kano&#x27;s thousand-year-old walls." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Nigeria &middot; The city now</i><b>Lagos, Abuja, Kano</b><p>Lagos on the lagoon, purpose-built Abuja in the middle, and Kano&#x27;s thousand-year-old walls.</p></span></a>      <!-- /gen:now -->
     </div>
   </div>
 </section>

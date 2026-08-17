@@ -1776,48 +1776,119 @@ def now_rows(countries):
     count the same thing. They did not: the section was cut from nine cards to
     six and the paragraph beside it went on saying "Nine of them here" for two
     commits, because the cards are generated and the paragraph was typed.
+
+    THE ARC IS THE FIRST CONSTRAINT, NOT THE LAST. This function used to fill
+    the strip with photographed rows first and only then rotate the arcs, and
+    with a photograph on 109 of the 162 chapters the first pass took every slot
+    on its own. What shipped was Algeria, Angola, Benin, Botswana, Burkina Faso
+    and Burundi — six countries in file order, all six of them The table —
+    under a heading that promises what a continent COOKS, MAKES AND BUILDS. The
+    strip argued against its own sentence, and it read like an alphabetical
+    accident because it was one.
+
+    So the slot picks the arc, and the arc picks the row:
+
+        arc       slot 0..5 rotate through the three, so the strip reads
+                  table, hand, city, table, hand, city
+        region    a region may not take a second card until all five have one;
+                  five regions and six cards means exactly one region doubles
+        country   never twice, whatever else is true
+        picture   a photographed row wins inside all of the above; a chapter
+                  with no photograph is still allowed rather than the slot
+                  going empty
+
+    Deterministic, and it has to be — two builds of the same data must produce
+    the same page or every rebuild is a diff. The rotation is what stops
+    determinism collapsing into the alphabet: each arc starts a third of the way
+    further down its own candidate list, so the three do not all open at the
+    letter A.
     """
     data = read_json(os.path.join(ROOT, "data", "stories.json"))
     rows = [r for r in (data.get("stories") or []) if r.get("now")]
     live = {c.slug: c for c in countries}
-    picked, taken = [], set()
+    regions = load_regions()
+    where = {}
+    for c in countries:
+        key, _reg = region_of(c, regions)
+        where[c.slug] = key
 
-    def take(r):
-        picked.append(r)
-        taken.add(r["country"])
+    # Candidates per arc, photographed first, rotated so the three arcs do not
+    # all begin at the same end of the file. Each GROUP is rotated on its own —
+    # rotating the concatenation moves the join, and a third of the way into a
+    # list that is two-thirds photographs lands in the unphotographed tail, which
+    # is how the first cut of this put two plates on the strip while thirty-five
+    # photographed city chapters sat unused.
+    def turn(seq, n):
+        return seq[(len(seq) * n) // len(NOW_ARCS):] + seq[:(len(seq) * n) // len(NOW_ARCS)]
 
-    # One card per country, without exception. Letting the photographed ones in
-    # first put Cameroon and Uganda on this strip three times each — the two
-    # countries whose over-promotion is the reason the section they replaced was
-    # removed. So a country with a photograph gets that arc, and one card.
-    for r in rows:
-        if r.get("image") and r["country"] in live and r["country"] not in taken:
-            take(r)
-    i = 0
-    while len(picked) < NOW_CARDS and i < 200:
-        arc = NOW_ARCS[i % len(NOW_ARCS)]
-        i += 1
-        for r in rows:
-            if r["arc"] == arc and r["country"] in live and r["country"] not in taken:
-                take(r)
+    pool = {}
+    for n, arc in enumerate(NOW_ARCS):
+        here = [r for r in rows if r["arc"] == arc and r["country"] in live]
+        pool[arc] = (turn([r for r in here if r.get("image")], n)
+                     + turn([r for r in here if not r.get("image")], n))
+
+    picked, taken, held = [], set(), {}
+    for slot in range(NOW_CARDS):
+        arc = NOW_ARCS[slot % len(NOW_ARCS)]
+        row = None
+        # Widen the region rule one step at a time: an unused region first, then
+        # a region holding one, then whatever is left. A country with no region
+        # (there are none, but the lookup can miss) is treated as its own.
+        for cap in (0, 1, NOW_CARDS):
+            for r in pool[arc]:
+                if r["country"] in taken:
+                    continue
+                if held.get(where.get(r["country"], ""), 0) > cap:
+                    continue
+                row = r
                 break
+            if row is not None:
+                break
+        if row is None:
+            continue
+        picked.append(row)
+        taken.add(row["country"])
+        key = where.get(row["country"], "")
+        held[key] = held.get(key, 0) + 1
     return picked[:NOW_CARDS]
 
 
 def block_nownote(countries):
-    """The sentence beside the strip, counting what the strip actually holds."""
+    """The sentence beside the strip, counting what the strip actually holds.
+
+    Every figure in it is measured off the same six rows the strip is built
+    from, including the spread — "three kinds, across five regions" is a claim
+    the selector has to keep, so it is counted here rather than typed. When the
+    selection was quietly six food chapters from six neighbouring countries this
+    sentence would have said so, and did not, because it counted only how many
+    cards there were.
+    """
     data = read_json(os.path.join(ROOT, "data", "stories.json"))
     total = len([r for r in (data.get("stories") or []) if r.get("now")])
-    shown = len(now_rows(countries))
-    if not shown:
+    picked = now_rows(countries)
+    if not picked:
         return ('        <p class="wa-note">No contemporary chapters have been built '
                 'yet.</p>')
+    regions = load_regions()
+    where = {}
+    for c in countries:
+        key, _reg = region_of(c, regions)
+        where[c.slug] = key
+    kinds = len(set(r["arc"] for r in picked))
+    spread = len(set(where.get(r["country"], "") for r in picked))
+    # A strip of one arc would read "one kinds of chapter". It cannot happen
+    # with three arcs and six slots, and a sentence that counts itself should
+    # not depend on that staying true.
+    word = "kinds of chapter" if kinds != 1 else "kind of chapter"
     return ('        <p class="wa-note">%s chapters across the %s countries are about '
             'what is cooked, made and built this decade rather than what is behind '
-            'glass. %s of them here. Not a feed and not an events calendar &mdash; '
-            'this site holds no dates and will not invent any; these are evergreen, '
-            'and they are true for longer than a week.</p>'
-            % (_spell(total), _spell(len(countries)).lower(), _spell(shown)))
+            'glass. %s of them here &mdash; %s %s, %s countries, %s regions. Not a '
+            'feed and not an events calendar &mdash; this site holds no dates and '
+            'will not invent any; these are evergreen, and they are true for longer '
+            'than a week.</p>'
+            % (_spell(total), _spell(len(countries)).lower(), _spell(len(picked)),
+               _spell(kinds).lower(), word, _spell(len(picked)).lower(),
+               _spell(spread).lower()))
 
 
 def block_now(countries):
@@ -1832,10 +1903,12 @@ def block_now(countries):
     the dataset, so it does not pretend to be current — it is the part of the
     writing that is about now, which is a different and true claim.
 
-    Six of them, across six countries, with the three arcs alternating. Six
-    rather than nine because this replaced a section of 984 pixels and nine cards
-    made it 1693 — the argument does not get better for being three rows tall,
-    and this page has grown in every wave already.
+    Six of them, across six countries and five regions, with the three arcs
+    alternating — see now_rows, which is where that is enforced and where it was
+    for a long time silently not. Six rather than nine because this replaced a
+    section of 984 pixels and nine cards made it 1693 — the argument does not
+    get better for being three rows tall, and this page has grown in every wave
+    already.
     """
     picked = now_rows(countries)
     if not picked:
