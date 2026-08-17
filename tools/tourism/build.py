@@ -776,6 +776,31 @@ def cmd_all(args):
     print()
     cmd_sidebyside(args)
     print()
+    # SIX GENERATORS WERE NOT IN "ALL", AND ONE OF THEM IS THE COMPANY.
+    #
+    # `all` promises everything that turns the dataset into pages, and it built
+    # the country pages, the gateway, the atlas, the journey, the places and
+    # the stories — and not the crossings, the wonders, how-it-works, the three
+    # statements, the enquiry form or the company line. Anyone running `all`
+    # after editing tourism/company.json got a clean build and an unchanged
+    # footer on fifteen hundred pages, which is the worst shape a build can be
+    # in: it reports success and it is out of date.
+    #
+    # `company` runs after every generator that writes a page, because it fills
+    # a marker those generators emit. A rebuild that ran it first would splice
+    # the line into pages that were about to be overwritten.
+    cmd_transafrique(args)
+    print()
+    cmd_wonders(args)
+    print()
+    cmd_twoways(args)
+    print()
+    cmd_trust(args)
+    print()
+    cmd_enquire(args)
+    print()
+    cmd_company(args)
+    print()
     cmd_trails(args)
     print()
     # LAST, AND IT HAS TO BE LAST.
