@@ -505,6 +505,46 @@ def colophon_foot(here=None):
             '</footer>' % links)
 
 
+PRELOAD = ('<link rel="preload" href="/fonts/archivo-narrow-latin.woff2" '
+           'as="font" type="font/woff2" crossorigin>')
+
+
+def graft_preload(write=False, log=print):
+    """Put the font preload on the pages whose head is not built by icons().
+
+    Six pages write their own head — the gateway and the five hand-written
+    ones — so the line added to icons() reached 1,588 pages and missed the
+    homepage, which is the one page every visitor sees first and the one where
+    a headline reflowing on arrival is most expensive.
+
+    Keyed on the manifest link rather than on a list of files: any page that
+    has been given the icon block has been given it in the same shape, and a
+    page that gains one later gets the preload without anybody remembering.
+    Idempotent — a page that already names the file is skipped.
+    """
+    tag = '<link rel="manifest" href="/site.webmanifest">'
+    done = 0
+    for base, dirs, files in os.walk(ROOT):
+        dirs[:] = [d for d in dirs
+                   if d not in ("node_modules", ".git", "incoming", "tools")
+                   and not d.startswith(".")]
+        for name in sorted(files):
+            if not name.endswith(".html"):
+                continue
+            full = os.path.join(base, name)
+            with open(full, encoding="utf-8") as fh:
+                src = fh.read()
+            if tag not in src or "archivo-narrow-latin.woff2" in src:
+                continue
+            done += 1
+            if write:
+                with open(full, "w", encoding="utf-8") as fh:
+                    fh.write(src.replace(tag, tag + "\n" + PRELOAD, 1))
+    log("%s the display face preload onto %d page(s)"
+        % ("put" if write else "WOULD put", done))
+    return 0
+
+
 HANDWRITTEN = {
     "about.html": ("/about", "The operator"),
     "contact.html": ("/contact", "Contact"),
@@ -586,6 +626,21 @@ def icons():
         '<link rel="apple-touch-icon" href="/images/brand/mark-180.png">',
         '<link rel="manifest" href="/site.webmanifest">',
         '<meta name="theme-color" content="#10251F">',
+        # THE ONE FILE WORTH ASKING FOR EARLY.
+        #
+        # The display face is discovered only when the browser has parsed
+        # afrinkong.css, matched a rule, and found a character that needs it —
+        # three steps after the HTML arrives, by which time the first paint has
+        # already happened in the fallback. Preloading moves the request to the
+        # same moment as the stylesheet's, so the swap lands within the first
+        # paint rather than visibly after it.
+        #
+        # The latin subset only. latin-ext carries the accents in a handful of
+        # country names and is fetched on demand by the pages that need it;
+        # preloading a file most pages never touch is how a preload turns into
+        # a cost.
+        '<link rel="preload" href="/fonts/archivo-narrow-latin.woff2" '
+        'as="font" type="font/woff2" crossorigin>',
     ]))
 
 

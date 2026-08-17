@@ -157,16 +157,17 @@ def cmd_srcset(args):
     return srcset.run(write=bool(getattr(args, "fetch", False))) or rc
 
 
-def cmd_trails(args):
-    """Put the breadcrumb trail on the five hand-written pages.
+def cmd_graft(args):
+    """The head blocks a page cannot get from the generator that made it.
 
-    The 1,589 generated pages get theirs from open_graph, which knows the
-    address it is building at. These five predate the generators and are still
-    written by hand, so their trail is grafted onto the graph already in the
-    file. Idempotent: a page that has one is skipped.
+    Six pages write their own head — the gateway and the five hand-written
+    ones — and every improvement to the shared head has to be carried to them
+    by hand or not at all. These passes carry it: the breadcrumb trail onto
+    the graph already in the file, and the display face preload after the
+    manifest link. Both are idempotent, so they run on every build.
     """
     from tourism import plate
-    return plate.graft_trails(write=True)
+    return plate.graft_trails(write=True) or plate.graft_preload(write=True)
 
 
 def cmd_trust(args):
@@ -801,7 +802,7 @@ def cmd_all(args):
     print()
     cmd_company(args)
     print()
-    cmd_trails(args)
+    cmd_graft(args)
     print()
     # LAST, AND IT HAS TO BE LAST.
     #
@@ -923,7 +924,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "trust": cmd_trust, "trails": cmd_trails, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,

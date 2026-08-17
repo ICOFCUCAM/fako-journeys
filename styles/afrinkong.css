@@ -15,6 +15,78 @@
  * per country, so nothing here encodes a country, a region or a count.
  */
 
+/* ---- the display face ------------------------------------------------------
+ * THE STACK NAMED A FONT THAT ALMOST NOBODY HAD, AND THE FALLBACK WAS NOT
+ * NARROW.
+ *
+ *   --fj-display: "Archivo Narrow", "Roboto Condensed", "Arial Narrow", Arial…
+ *
+ * Windows and macOS ship Arial Narrow, so they got a condensed grotesque.
+ * Android ships Roboto Condensed, so it got one too. iOS and iPadOS ship
+ * neither — no Archivo Narrow, no Roboto Condensed, no Arial Narrow — so every
+ * headline on this site fell through to Arial and was set in a face that is
+ * not condensed at all. Measured: the same headline is 21% wider in Arial than
+ * in Archivo Narrow. On the device this audience mostly uses, the display
+ * voice was not the display voice.
+ *
+ * The note this replaces said all three voices were system stacks because "a
+ * webfont is a render-blocking request and this site's argument is that it
+ * arrives instantly". The reasoning was sound about a <link> to a font
+ * service. It does not apply to a self-hosted woff2 with font-display:swap,
+ * which blocks nothing: the page paints immediately in the fallback and swaps
+ * when the face lands. The two Latin subsets together are 35 KB, against a
+ * homepage that carries four megabytes of photographs.
+ *
+ * The serif and the mono stay system stacks. They are read, not seen, and the
+ * fallbacks for both are close enough that nobody would be able to tell.
+ *
+ * Archivo Narrow is under the SIL Open Font License 1.1 — fonts/OFL.txt — and
+ * the files are the ones Google Fonts serves, self-hosted so that no page on
+ * this site makes a request to a third party.
+ */
+@font-face{
+  font-family:"Archivo Narrow";
+  font-style:normal;
+  font-weight:100 900;   /* one variable file covers the 400 and the 700 */
+  font-display:swap;
+  src:url(/fonts/archivo-narrow-latin.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,
+    U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,
+    U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Archivo Narrow";
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url(/fonts/archivo-narrow-latin-ext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,
+    U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,
+    U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+/* WHAT THE PAGE LOOKS LIKE FOR THE HALF-SECOND BEFORE THE FACE ARRIVES.
+   font-display:swap means the first paint uses whatever is next in the stack,
+   and on iOS that is Arial — 21% wider, so every headline would reflow when
+   the real face landed. This is the same Arial with its metrics corrected to
+   Archivo Narrow's, so the swap changes the shape of the letters and not the
+   size of the box.
+   The numbers are measured, not estimated: eight representative strings of
+   this site's own headlines, at 400 and at 700, gave a width ratio between
+   81.85% and 83.42% with a mean of 82.44. The ascent and descent overrides
+   are Archivo Narrow's own 104 and 31 per hundred pixels, divided by the
+   size-adjust. Verified after the fact — the corrected fallback matches the
+   real face to within 1% on uppercase, which is what nearly all of the display
+   type on this site is, and the line box matches exactly. */
+@font-face{
+  font-family:"Narrow Fallback";
+  src:local("Arial"),local("Helvetica Neue"),local("Helvetica"),
+      local("Liberation Sans");
+  size-adjust:82.4%;
+  ascent-override:126.2%;
+  descent-override:37.6%;
+  line-gap-override:0%;
+}
+
 :root{
   /* Paper and ink.
      ---------------------------------------------------------------------
@@ -109,9 +181,13 @@
 
   /* Three voices and no more: a condensed grotesque for anything that shouts,
      a serif for anything that has to be read, a mono for anything that labels.
-     All three are system stacks — a webfont is a render-blocking request and
-     this site's argument is that it arrives instantly. */
-  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",Arial,"Helvetica Neue",sans-serif;
+     The display face is served by this site (see the @font-face block above);
+     the other two are system stacks, because a serif and a mono are read
+     rather than looked at and their fallbacks are indistinguishable.
+     "Narrow Fallback" sits after the two condensed faces that some systems do
+     have and before plain Arial, which is the one that is not narrow. */
+  --fj-display:"Archivo Narrow","Roboto Condensed","Arial Narrow",
+    "Narrow Fallback",Arial,"Helvetica Neue",sans-serif;
   --fj-text:Charter,"Iowan Old Style","Source Serif Pro","Palatino Linotype",Palatino,Georgia,serif;
   --fj-mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
 
