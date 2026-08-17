@@ -12,18 +12,26 @@ in `tourism/wonders.json`, with `photo_w`, `photo_h` and a
 
 ## The Serengeti
 
-Asked for: `Serengeti wildebeest migration plains` — needs all of: `serengeti`
+Asked for: `Serengeti` — needs all of: `serengeti`
 
 | | named | photographer | said |
 |---|---|---|---|
-| ![](https://images.pexels.com/photos/5521703/pexels-photo-5521703.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Edgar Okioga](https://www.pexels.com/@edgar-okioga-221433) | Massive herd of wildebeests migrating across the African savanna. |
-| ![](https://images.pexels.com/photos/15373901/pexels-photo-15373901.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Alex Levis](https://www.pexels.com/@droneafrica) | A herd of wildebeest grazing in the savanna of Arusha Region, Tanzania under a vast sky. |
-| ![](https://images.pexels.com/photos/33650634/pexels-photo-33650634.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Alex Ning](https://www.pexels.com/@alex-ning-523843601) | A lone wildebeest roams the vast savanna of Tanzania, capturing the essence of African wildlife. |
-| ![](https://images.pexels.com/photos/15815055/pexels-photo-15815055.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Hugo Sykes](https://www.pexels.com/@hugosykes) | A herd of wildebeests crossing a body of water in the Mara Region, Tanzania. |
-| ![](https://images.pexels.com/photos/15815060/pexels-photo-15815060.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Hugo Sykes](https://www.pexels.com/@hugosykes) | Vast herd of wildebeests and zebras during migration in Mara, Tanzania, showcasing wildlife diversity. |
-| ![](https://images.pexels.com/photos/34113908/pexels-photo-34113908.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Charmain Jansen van Rensburg](https://www.pexels.com/@charmain) | Two wildebeests camouflaged in tall golden grass, displaying natural wildlife behavior. |
+| ![](https://images.unsplash.com/photo-1707410436272-1bcc71ecafb3?auto=format&fit=crop&w=400&h=300&q=70) | no | [Tanzania Wild Sky](https://unsplash.com/@tanzania_wild_sky) | three hot air balloons flying over a river Miracle Experience Balloon Safaris |
+| ![](https://images.unsplash.com/photo-1564101160531-4838e8a5f4e7?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Jorge Tung](https://unsplash.com/@jorgetung) | herd of bulls Great wildebeest migration crossing Mara river at Serengeti National Park - Tanzania |
+| ![](https://images.unsplash.com/photo-1580145575237-75fec2a0320b?auto=format&fit=crop&w=400&h=300&q=70) | no | [Dawn Westveld](https://unsplash.com/@dawnw73) | herd of elephants on green grass field during daytime Wildebeest Migration |
+| ![](https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Hu Chen](https://unsplash.com/@huchenme) | brown tree on surrounded by brown grass during golden hour Sunset in Serengeti |
+| ![](https://images.unsplash.com/photo-1516628368662-4220aaf9339d?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Hu Chen](https://unsplash.com/@huchenme) | cheetah resting on grasses Cheetah @ Serengeti |
+| ![](https://images.unsplash.com/photo-1516497084411-042e90c17be1?auto=format&fit=crop&w=400&h=300&q=70) | no | [Hu Chen](https://unsplash.com/@huchenme) | white SUV passing through herd of buffaloes during daytime |
+| ![](https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Hu Chen](https://unsplash.com/@huchenme) | man riding on gray car during sunset Runrise in Serengeti |
+| ![](https://images.unsplash.com/photo-1707410436230-d4b2fba910e7?auto=format&fit=crop&w=400&h=300&q=70) | no | [Tanzania Wild Sky](https://unsplash.com/@tanzania_wild_sky) | two giraffes walking in a field with a hot air balloon Miracle Experience Balloon Safaris |
 | ![](https://images.pexels.com/photos/30705108/pexels-photo-30705108.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Hugo Sykes](https://www.pexels.com/@hugosykes) | A lone wildebeest stands in the expansive green savannah of Narok, Kenya. |
-| ![](https://images.pexels.com/photos/35981576/pexels-photo-35981576.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Charmain Jansen van Rensburg](https://www.pexels.com/@charmain) | A lone wildebeest stands gracefully in the savannah, highlighting its natural habitat. |
+| ![](https://images.pexels.com/photos/9185413/pexels-photo-9185413.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | **yes** | [Ákos Helgert](https://www.pexels.com/@akos-helgert-82252426) | A solitary wildebeest stands in the vast Serengeti grasslands, captured in natural daylight. |
+| ![](https://images.pexels.com/photos/15341664/pexels-photo-15341664.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Alex Levis](https://www.pexels.com/@droneafrica) | A herd of wildebeests resting on dry grass in Tanzania's savannah, capturing wildlife harmony. |
+| ![](https://images.pexels.com/photos/1931293/pexels-photo-1931293.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Africa Nature Photography](https://www.pexels.com/@africanaturephotography) | A majestic lioness rests on a tree branch in the wild African savanna. |
+| ![](https://images.pexels.com/photos/39034102/pexels-photo-39034102.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Laura Phillips](https://www.pexels.com/@laura-phillips-776558712) | A large herd of zebras grazing on the lush savanna grasslands of Tanzania. |
+| ![](https://images.pexels.com/photos/9185432/pexels-photo-9185432.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | **yes** | [Ákos Helgert](https://www.pexels.com/@akos-helgert-82252426) | Elephants and zebras grazing together under a blue sky in Serengeti, Tanzania. |
+| ![](https://images.pexels.com/photos/33650634/pexels-photo-33650634.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Alex Ning](https://www.pexels.com/@alex-ning-523843601) | A lone wildebeest roams the vast savanna of Tanzania, capturing the essence of African wildlife. |
+| ![](https://images.pexels.com/photos/9185426/pexels-photo-9185426.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Ákos Helgert](https://www.pexels.com/@akos-helgert-82252426) | A herd of African elephants (Loxodonta africana) roaming the Tanzanian savannah under a bright sky. |
 
 ## The Okavango Delta
 
@@ -182,18 +190,19 @@ Ouargla |
 
 ## The Bazaruto Archipelago
 
-Asked for: `Bazaruto Archipelago Mozambique` — needs all of: `bazaruto`
+Asked for: `Bazaruto` — needs all of: `bazaruto`
 
 | | named | photographer | said |
 |---|---|---|---|
-| ![](https://images.pexels.com/photos/1450356/pexels-photo-1450356.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Asad Photo Maldives](https://www.pexels.com/@asadphoto) | Stunning aerial photograph of vibrant coral reefs and atolls in a clear blue tropical ocean. |
-| ![](https://images.pexels.com/photos/1450358/pexels-photo-1450358.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Asad Photo Maldives](https://www.pexels.com/@asadphoto) | Stunning aerial view of tropical islands surrounded by azure waters, perfect for dream vacations. |
-| ![](https://images.pexels.com/photos/7425282/pexels-photo-7425282.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Dominik Ruhl](https://www.pexels.com/@dominikruhl) | Stunning aerial shot capturing the vibrant turquoise waters and beautiful sandbars around Mauritius. |
-| ![](https://images.pexels.com/photos/1450355/pexels-photo-1450355.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Asad Photo Maldives](https://www.pexels.com/@asadphoto) | A breathtaking aerial view of tropical islands and azure blue waters, showcasing stunning natural beauty. |
+| ![](https://images.unsplash.com/photo-1666778439853-540bae64fa9f?auto=format&fit=crop&w=400&h=300&q=70) | no | [Pat Sakellari](https://unsplash.com/@patsakellari) | a boat on the water A dhow sailing into the sunset. |
 | ![](https://images.pexels.com/photos/19548579/pexels-photo-19548579.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [alexandre saraiva carniato](https://www.pexels.com/@alexandre-saraiva-carniato-583650) | Capture of a serene sand dune overlooking the ocean in Mataraca, Brazil. |
-| ![](https://images.pexels.com/photos/25232952/pexels-photo-25232952.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Niyi David](https://www.pexels.com/@niyi-david-993686808) | Peaceful seaside scene with a boat and pier during a golden sunset in Catembe, Maputo. |
-| ![](https://images.pexels.com/photos/13594041/pexels-photo-13594041.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Francisco Inoque](https://www.pexels.com/@francisco-inoque-34808736) | A serene portrait of a calico cat lounging outdoors in Mozambique. |
-| ![](https://images.pexels.com/photos/1450341/pexels-photo-1450341.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Asad Photo Maldives](https://www.pexels.com/@asadphoto) | Stunning aerial view of a tropical archipelago with turquoise waters and scattered clouds. |
+| ![](https://images.pexels.com/photos/37270326/pexels-photo-37270326.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Leandro Bezerra](https://www.pexels.com/@leandrobez) | Captivating view of sand dunes and ocean at Rio Grande do Norte, Brazil's scenic coast. |
+| ![](https://images.pexels.com/photos/30532086/pexels-photo-30532086.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Guilherme Braga](https://www.pexels.com/@guilherme-braga-2149268042) | Beautiful tropical beach scene with palm trees and sandy dunes under a cloudy sky. |
+| ![](https://images.pexels.com/photos/15215649/pexels-photo-15215649.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [정규송 Nui MALAMA](https://www.pexels.com/@nui-malama-169330637) | A tranquil beach scene in South Korea with sand and sea under a clear sky. |
+| ![](https://images.pexels.com/photos/16116492/pexels-photo-16116492.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Willian Justen de Vasconcellos](https://www.pexels.com/@willianjusten) | A serene aerial view of a boat by the shore in Playa del Carmen, Mexico. |
+| ![](https://images.pexels.com/photos/23947414/pexels-photo-23947414.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Nuno Magalhães](https://www.pexels.com/@nuno-magalhaes-1241549) | An old wooden boat lies abandoned on a serene sandy beach with a vast ocean view. |
+| ![](https://images.pexels.com/photos/20282151/pexels-photo-20282151.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Vinicius A. Nascimento](https://www.pexels.com/@vinixhc) | A tranquil sunset view of a beach in João Pessoa, featuring umbrellas and people relaxing. |
+| ![](https://images.pexels.com/photos/13781677/pexels-photo-13781677.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Cesar Ricciulli](https://www.pexels.com/@cesar-ricciulli-219259195) | Tranquil scene with a boat on the ocean, blue sky, and fluffy clouds, capturing peaceful nature. |
 
 ## The Granite Islands
 
@@ -243,18 +252,18 @@ Asked for: `Madagascar baobab avenue` — needs all of: `madagascar`
 
 ## Gorongosa
 
-Asked for: `Gorongosa National Park Mozambique` — needs all of: `gorongosa`
+Asked for: `Gorongosa` — needs all of: `gorongosa`
 
 | | named | photographer | said |
 |---|---|---|---|
-| ![](https://images.pexels.com/photos/9041577/pexels-photo-9041577.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Kadin  Eksteen](https://www.pexels.com/@kadin-eksteen-85582952) | Waterbuck standing amidst tall grass in a wildlife reserve, showcasing its impressive antlers. |
-| ![](https://images.pexels.com/photos/750537/pexels-photo-750537.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Adriaan Greyling](https://www.pexels.com/@monkeytactics) | A close-up of a gazelle standing amidst dry grass in the wild, showcasing wildlife beauty. |
-| ![](https://images.pexels.com/photos/7103387/pexels-photo-7103387.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Valerie Sutton](https://www.pexels.com/@valerie-sutton-34163824) | A herd of impalas grazing peacefully in a vibrant green field. |
-| ![](https://images.pexels.com/photos/15341664/pexels-photo-15341664.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Alex Levis](https://www.pexels.com/@droneafrica) | A herd of wildebeests resting on dry grass in Tanzania's savannah, capturing wildlife harmony. |
-| ![](https://images.pexels.com/photos/16444288/pexels-photo-16444288.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Keegan Checks](https://www.pexels.com/@keeganjchecks) | A majestic giraffe walks among lush greenery in the African savanna, showcasing serene wildlife beauty. |
-| ![](https://images.pexels.com/photos/15373900/pexels-photo-15373900.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Alex Levis](https://www.pexels.com/@droneafrica) | A wildebeest (Connochaetes) grazing in the Arusha Region of Tanzania, showcasing the wild beauty of African savannah. |
-| ![](https://images.pexels.com/photos/9185426/pexels-photo-9185426.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Ákos Helgert](https://www.pexels.com/@akos-helgert-82252426) | A herd of African elephants (Loxodonta africana) roaming the Tanzanian savannah under a bright sky. |
-| ![](https://images.pexels.com/photos/30239042/pexels-photo-30239042.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Chané Bruwer](https://www.pexels.com/@chane-bruwer-424963865) | A captivating shot of a rhino in its natural habitat at Kruger National Park, South Africa. |
+| ![](https://images.pexels.com/photos/19391168/pexels-photo-19391168.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Tom Fisk](https://www.pexels.com/@tomfisk) | Beautiful view of marshy wetlands in Weaver, MN, under dramatic clouds. |
+| ![](https://images.pexels.com/photos/33621858/pexels-photo-33621858.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [K](https://www.pexels.com/@kelly) | Stunning sunrise in the African savanna, showcasing a lone leafless tree and warm hues. |
+| ![](https://images.pexels.com/photos/16444298/pexels-photo-16444298.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Keegan Checks](https://www.pexels.com/@keeganjchecks) | A carabao wandering through a vibrant, green, wooded landscape, showcasing nature's tranquility. |
+| ![](https://images.pexels.com/photos/1130440/pexels-photo-1130440.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Danne](https://www.pexels.com/@sonneblom) | A herd of wildebeests stands in a grassy savanna surrounded by trees during daylight. |
+| ![](https://images.pexels.com/photos/13742523/pexels-photo-13742523.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Tom Fisk](https://www.pexels.com/@tomfisk) | Aerial view of lush green fields under a cloudy sky in rural Minnesota, USA. |
+| ![](https://images.pexels.com/photos/29973777/pexels-photo-29973777.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Caleb Falkenhagen](https://www.pexels.com/@caleb-falkenhagen-216813613) | Close-up of a majestic antelope resting in the grasslands of Africa, showcasing wildlife beauty. |
+| ![](https://images.pexels.com/photos/16444296/pexels-photo-16444296.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Keegan Checks](https://www.pexels.com/@keeganjchecks) | A lone kudu walking gracefully through a vibrant African savannah surrounded by lush greenery. |
+| ![](https://images.pexels.com/photos/30938670/pexels-photo-30938670.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Leandro Bezerra](https://www.pexels.com/@leandrobez) | Expansive view of large tree in Viamão, Brazil, under clear blue sky. |
 
 ## The Omo Valley
 
@@ -274,33 +283,43 @@ Asked for: `Omo Valley Ethiopia` — needs all of: `omo`
 
 ## Great Zimbabwe
 
-Asked for: `Great Zimbabwe ruins dry stone` — needs all of: `great zimbabwe`
+Asked for: `Great Zimbabwe` — needs all of: `great zimbabwe`
 
 | | named | photographer | said |
 |---|---|---|---|
-| ![](https://images.pexels.com/photos/27897862/pexels-photo-27897862.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Zülfü Demir📸](https://www.pexels.com/@zlfdmr23) | An abandoned stone structure amidst a rocky landscape in Çermik, Türkiye. |
-| ![](https://images.pexels.com/photos/37897004/pexels-photo-37897004.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Vero Zanellato](https://www.pexels.com/@veronicazanellato) | Black and white photo of an ancient stone ruin in a desolate desert setting with dramatic sky. |
-| ![](https://images.pexels.com/photos/33682400/pexels-photo-33682400.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Antonio Garcia Prats](https://www.pexels.com/@antonio-garcia-prats-1579305) | Explore the timeless beauty of ancient ruins in Puerto Real, Andalusia, Spain. |
-| ![](https://images.pexels.com/photos/36540889/pexels-photo-36540889.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Raymond Petrik](https://www.pexels.com/@raymond-petrik-1448389535) | Weathered stone artifacts among vegetation in a natural outdoor setting, showcasing historical textures. |
+| ![](https://images.unsplash.com/photo-1642085732669-2b869acec5a1?auto=format&fit=crop&w=400&h=300&q=70) | no | [Rutendo Petros](https://unsplash.com/@ru_petros) | a grassy field with a mountain in the background |
+| ![](https://images.unsplash.com/photo-1655981654045-5c45b14f3bc2?auto=format&fit=crop&w=400&h=300&q=70) | no | [Ajeet Panesar](https://unsplash.com/@ajeetpanesarphotography) | a rocky hillside with a stone wall |
+| ![](https://images.unsplash.com/photo-1611067523512-e0d4abd25f39?auto=format&fit=crop&w=400&h=300&q=70) | no | [Datingjungle](https://unsplash.com/@datingjungle) | waterfalls near green trees during daytime The magnificent waterfalls of Victoria in Zimbabwe. |
+| ![](https://images.unsplash.com/photo-1643231939579-7df8aa7a7f9c?auto=format&fit=crop&w=400&h=300&q=70) | no | [Sean Nyatsine](https://unsplash.com/@seannyyyee) | a large waterfall with water pouring out of it Waterfall |
+| ![](https://images.unsplash.com/photo-1759163150873-aa9e3b4f0698?auto=format&fit=crop&w=400&h=300&q=70) | no | [Ed Wingate](https://unsplash.com/@ed_wingate) | Sunrise over a misty waterfall canyon with lush greenery. Victoria Falls Waterfall. |
+| ![](https://images.unsplash.com/photo-1759164882609-58b00ec3b09a?auto=format&fit=crop&w=400&h=300&q=70) | no | [Ed Wingate](https://unsplash.com/@ed_wingate) | Victoria falls at sunrise with lush green foliage Victoria Falls Waterfall. |
+| ![](https://images.unsplash.com/photo-1759169202397-a98b82665b5e?auto=format&fit=crop&w=400&h=300&q=70) | no | [Ed Wingate](https://unsplash.com/@ed_wingate) | Waterfall cascading over rocky cliffs with a lone person observing. Local tribesman fishing with a net on a stick at the top of Victoria Falls during sunset. |
+| ![](https://images.unsplash.com/photo-1759164558339-9bd93d1125bf?auto=format&fit=crop&w=400&h=300&q=70) | no | [Ed Wingate](https://unsplash.com/@ed_wingate) | Waterfall cascading down a rocky cliff at sunset. Victoria Falls Waterfall. |
+| ![](https://images.pexels.com/photos/31728432/pexels-photo-31728432.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Omar Ramadan](https://www.pexels.com/@omar-ramadan-1739260) | Low angle view of a pyramid's stone structure with clouds in the sky. |
+| ![](https://images.pexels.com/photos/5267251/pexels-photo-5267251.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Roger Brown](https://www.pexels.com/@roger-brown-3435524) | A striking side profile of a Southern yellow-billed hornbill in natural habitat. |
+| ![](https://images.pexels.com/photos/6416415/pexels-photo-6416415.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Quang Nguyen Vinh](https://www.pexels.com/@quang-nguyen-vinh-222549) | From below of rough massive rocky cliff with green trees growing on top in mountainous valley against blue sky on sunny day |
+| ![](https://images.pexels.com/photos/11756810/pexels-photo-11756810.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Elizabeth Lizzie](https://www.pexels.com/@owayn) | A dentist wearing protective gear performs a procedure on a patient in a Zimbabwe clinic. |
+| ![](https://images.pexels.com/photos/30927978/pexels-photo-30927978.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Didi Lecatompessy](https://www.pexels.com/@didi-lecatompessy-2149441489) | Peaceful landscape in East Nusa Tenggara, Indonesia with vibrant sky and trees. |
 | ![](https://images.pexels.com/photos/22938560/pexels-photo-22938560.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Jean-Paul Wettstein](https://www.pexels.com/@jean-paul-wettstein-677916508) | Black and white photo of historic stone structures in Gordes, France. |
 | ![](https://images.pexels.com/photos/38039233/pexels-photo-38039233.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Reinhard Bruckner](https://www.pexels.com/@bruggi) | Explore the ancient Nuraghe ruins set against a vibrant blue sky in the Mediterranean landscape. |
-| ![](https://images.pexels.com/photos/33608290/pexels-photo-33608290.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Antonio Garcia Prats](https://www.pexels.com/@antonio-garcia-prats-1579305) | A historic stone wall and gate in Cádiz, Andalucía, showcasing ancient architecture. |
-| ![](https://images.pexels.com/photos/31028162/pexels-photo-31028162.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Sami  Aksu](https://www.pexels.com/@sami-aksu-48867324) | Explore the ancient stone pillars and ruins at Göbeklitepe, a historical site in Şanlıurfa, Turkey. |
+| ![](https://images.pexels.com/photos/6416417/pexels-photo-6416417.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Quang Nguyen Vinh](https://www.pexels.com/@quang-nguyen-vinh-222549) | Low angle of lush green trees growing near massive rocky plateau against cloudless blue sky on sunny day |
 
 ## Timbuktu
 
-Asked for: `Timbuktu Mali mud mosque` — needs all of: `timbuktu`
+Asked for: `Timbuktu Mali` — needs all of: `timbuktu`
 
 | | named | photographer | said |
 |---|---|---|---|
-| ![](https://images.pexels.com/photos/14145503/pexels-photo-14145503.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Marcia Salido](https://www.pexels.com/@marcia-salido-346903577) | High angle view of an ancient mud-brick village showcasing traditional architecture. |
-| ![](https://images.pexels.com/photos/15535550/pexels-photo-15535550.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Denys Gromov](https://www.pexels.com/@jdgromov) | View of traditional mud houses in a desert village during the day. |
+| ![](https://images.unsplash.com/photo-1640339524585-61bf39f1352f?auto=format&fit=crop&w=400&h=300&q=70) | no | [Christian Jaberg](https://unsplash.com/@chrigu13) | a piece of luggage sitting on top of a sandy beach US aid |
+| ![](https://images.unsplash.com/photo-1640339524623-cd8c9706f862?auto=format&fit=crop&w=400&h=300&q=70) | no | [Christian Jaberg](https://unsplash.com/@chrigu13) | a view of a body of water through a magnifying glass Niger, Fluss |
 | ![](https://images.pexels.com/photos/30312009/pexels-photo-30312009.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [奇 徐](https://www.pexels.com/@267676596) | Explore a historical mud brick village under a clear sky, showcasing traditional architecture. |
-| ![](https://images.pexels.com/photos/15535537/pexels-photo-15535537.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Denys Gromov](https://www.pexels.com/@jdgromov) | Explore the rustic charm of traditional mud-walled desert village architecture. |
-| ![](https://images.pexels.com/photos/31603813/pexels-photo-31603813.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Bilkisu Rufai](https://www.pexels.com/@bilkisu-rufai-2151033059) | Explore the historical Gidan Dan Hausa in Kano, Nigeria, showcasing traditional architecture. |
-| ![](https://images.pexels.com/photos/38762954/pexels-photo-38762954.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Rowan  S](https://www.pexels.com/@rowan-s-2162046574) | Outdoor view of a traditional adobe building showcasing Middle Eastern architectural style. |
-| ![](https://images.pexels.com/photos/20102591/pexels-photo-20102591.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Сергей Сёмин](https://www.pexels.com/@3096301) | A sunlit view of ancient adobe structures and a wooden cart, depicting historical architecture. |
-| ![](https://images.pexels.com/photos/15535518/pexels-photo-15535518.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Denys Gromov](https://www.pexels.com/@jdgromov) | Vintage mud brick building with arched windows and tower reflector of desert architecture. |
+| ![](https://images.pexels.com/photos/14992419/pexels-photo-14992419.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [DeLuca G](https://www.pexels.com/@deluca-g-412104326) | Serene aerial shot of Mali Iž island reflecting on the Adriatic Sea with a cloudy sky. |
+| ![](https://images.pexels.com/photos/38307877/pexels-photo-38307877.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [mg shotz](https://www.pexels.com/@mgshotz) | Colorful architectural details of a mosque in Kano, Nigeria, showcasing its vibrant design. |
+| ![](https://images.pexels.com/photos/31633698/pexels-photo-31633698.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [mg shotz](https://www.pexels.com/@mgshotz) | Men in traditional attire outside a decorated African building featuring geometric designs. |
+| ![](https://images.pexels.com/photos/31633706/pexels-photo-31633706.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [mg shotz](https://www.pexels.com/@mgshotz) | Two men in vibrant traditional African attire pose outdoors, showcasing cultural fashion. |
+| ![](https://images.pexels.com/photos/28074366/pexels-photo-28074366.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Abubakar  Ogaji](https://www.pexels.com/@abubakar-ogaji-1105433220) | A young boy stands in a dusty village, holding a tire, against mud walls. |
+| ![](https://images.pexels.com/photos/28074367/pexels-photo-28074367.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [Abubakar  Ogaji](https://www.pexels.com/@abubakar-ogaji-1105433220) | A woman in traditional attire carrying a basket in a desert village setting. |
+| ![](https://images.pexels.com/photos/31633703/pexels-photo-31633703.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [mg shotz](https://www.pexels.com/@mgshotz) | Two men in vibrant traditional attire attend a cultural event outdoors. |
 
 ## Djenné
 
@@ -332,6 +351,7 @@ Asked for: `Valley of the Kings Luxor Egypt` — needs all of: `valley of the ki
 | | named | photographer | said |
 |---|---|---|---|
 | ![](https://images.unsplash.com/photo-1632944398987-494eebe663be?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Dmitrii Zhodzishskii](https://unsplash.com/@dmitrii_zhodzishskii) | a long hallway with paintings on the walls Tomb KV9 in Egypt's Valley of the Kings for Pharaohs Ramesses V and VI |
+| ![](https://images.unsplash.com/photo-1632944511358-0753f3f61283?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Dmitrii Zhodzishskii](https://unsplash.com/@dmitrii_zhodzishskii) | a room that has some paintings on the walls Tomb KV9 in Egypt's Valley of the Kings for Pharaohs Ramesses V and VI |
 | ![](https://images.unsplash.com/photo-1622962522220-0d9e0d29d62d?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Siddhesh Mangela](https://unsplash.com/@siddacool) | brown concrete building under blue sky during daytime Gaint door covered in Hieroglyphs
 
 Medinet Habu, Luxor, Egypt |
@@ -340,7 +360,6 @@ Medinet Habu, Luxor, Egypt |
 | ![](https://images.unsplash.com/photo-1667765912995-07c5b404888a?auto=format&fit=crop&w=400&h=300&q=70) | no | [maud](https://unsplash.com/@mformaud) | hot air balloons in the sky View on the Theban mountain, from the West bank at sunrise. credit @mformaud |
 | ![](https://images.unsplash.com/photo-1696269061408-9e8572651ca3?auto=format&fit=crop&w=400&h=300&q=70) | no | [Joe deSousa](https://unsplash.com/@mustangjoe) | a bunch of hot air balloons flying in the sky |
 | ![](https://images.unsplash.com/photo-1685616075808-04bb9db4ea1c?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Wendy Morris](https://unsplash.com/@wendy20) | a group of hot air balloons flying in the sky Hot air balloons over the Valley of the Kings at sunrise |
-| ![](https://images.unsplash.com/photo-1648139210431-f5a62bc3f126?auto=format&fit=crop&w=400&h=300&q=70) | **yes** | [Michael Starkie](https://unsplash.com/@starkie_pics) | a woman standing on a bridge in an egyptian temple An Egyptian woman in a hat stands Inside a pharaoh’s tomb in Luxor, Egypt. |
 | ![](https://images.pexels.com/photos/18934704/pexels-photo-18934704.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | no | [AXP Photography](https://www.pexels.com/@axp-photography-500641970) | Vibrant frescoes and hieroglyphics inside an ancient Egyptian tomb showcasing historic art and culture. |
 | ![](https://images.pexels.com/photos/18934665/pexels-photo-18934665.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | **yes** | [AXP Photography](https://www.pexels.com/@axp-photography-500641970) | Explore the mesmerizing artistry of ancient Egyptian tomb paintings in Luxor's Valley of the Kings. |
 | ![](https://images.pexels.com/photos/15131579/pexels-photo-15131579.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300) | **yes** | [Diego F. Parra](https://www.pexels.com/@diego-f-parra-33199) | Breathtaking aerial shot of Luxor desert terrain showcasing ancient ruins at sunset. |

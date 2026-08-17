@@ -70,7 +70,15 @@
    "photo_query": "Serengeti",
    "photo_terms": [
     "serengeti"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1564101160531-4838e8a5f4e7",
+   "photo_w": 4170,
+   "photo_h": 3128,
+   "photo_alt": "Great wildebeest migration crossing Mara river at Serengeti National Park - Tanzania",
+   "photo_provider": "unsplash",
+   "photo_by": "Jorge Tung",
+   "photo_by_url": "https://unsplash.com/@jorgetung",
+   "photo_source": "https://unsplash.com/photos/herd-of-bulls-1pZJqQlgpsY"
   },
   {
    "id": "kilimanjaro",
@@ -234,7 +242,7 @@
    "photo": "https://images.unsplash.com/photo-1629052141421-b1d61ae82949",
    "photo_w": 4032,
    "photo_h": 3024,
-   "photo_alt": "Desert under blue sky during daytime, Algeria Desert - Sahara Ouargla",
+   "photo_alt": "Algeria Desert - Sahara Ouargla",
    "photo_provider": "unsplash",
    "photo_by": "Nessereddine OUCHENE",
    "photo_by_url": "https://unsplash.com/@nassro36",
@@ -281,7 +289,7 @@
    "photo": "https://images.unsplash.com/photo-1553829176-61484f865ac3",
    "photo_w": 4032,
    "photo_h": 3024,
-   "photo_alt": "Large rocks on the Island, la digue, seychelles",
+   "photo_alt": "La digue, seychelles",
    "photo_provider": "unsplash",
    "photo_by": "Christian Cacciamani",
    "photo_by_url": "https://unsplash.com/@cacciahands",
@@ -409,7 +417,7 @@
    "photo": "https://images.unsplash.com/photo-1651860282137-a59f01d2db7b",
    "photo_w": 4128,
    "photo_h": 3096,
-   "photo_alt": "A beach with a lighthouse, Cape Coast slavery castle Ghana",
+   "photo_alt": "Cape Coast slavery castle Ghana",
    "photo_provider": "unsplash",
    "photo_by": "Andrew Molo",
    "photo_by_url": "https://unsplash.com/@molosocial",
