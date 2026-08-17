@@ -1,0 +1,125 @@
+name: Photographs for the wonders
+
+# Ask Unsplash and Pexels for the nineteen wonders that have no photograph.
+#
+# This runs here rather than on a developer machine for the same reason the
+# image resolver and the footage staging do: api.unsplash.com and
+# api.pexels.com are refused by the agent proxy's egress policy, and the keys
+# are secrets that belong in Actions rather than in a shell history.
+#
+# Secrets used — either alone is enough, both is better:
+#   UNSPLASH_ACCESS_KEY   your Unsplash *Access Key* (never the Secret key)
+#   PEXELS_API_KEY        your Pexels API key
+#
+# WHAT IT WILL AND WILL NOT DO
+#
+# It binds a photograph to a wonder ONLY when the photographer's own
+# description contains that wonder's `photo_terms` — the words written down in
+# tourism/wonders.json that count as naming the place. Everything else is
+# staged in incoming/ with a contact sheet for somebody to look at.
+#
+# That is not caution for its own sake. Keyword search knows what a picture was
+# tagged with, not where it was taken: ask for "Timbuktu" and a share of what
+# comes back is Morocco. A photograph under a place name is a claim that the
+# photograph is of that place, and this repository has decided that claim is
+# worth more than a filled grid.
+#
+# Start with fetch unchecked. It prints every query it would send and stops,
+# which costs nothing and no API quota.
+
+on:
+  workflow_dispatch:
+    inputs:
+      fetch:
+        description: "Actually ask the providers (unchecked = print the queries and stop)"
+        type: boolean
+        required: false
+        default: false
+      only:
+        description: "One wonder id, e.g. timbuktu (blank = all nineteen)"
+        required: false
+        default: ""
+      commit:
+        description: "Commit what was bound and staged back to this branch"
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tourism-wonders-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  wonders:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check at least one provider key is configured
+        if: ${{ inputs.fetch }}
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: |
+          if [ -z "$UNSPLASH_ACCESS_KEY" ] && [ -z "$PEXELS_API_KEY" ]; then
+            echo "Neither UNSPLASH_ACCESS_KEY nor PEXELS_API_KEY is set."
+            echo "Settings -> Secrets and variables -> Actions -> New repository secret."
+            exit 1
+          fi
+
+      - name: Ask for the photographs
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: |
+          python3 tools/tourism/build.py wondershots \
+            ${{ inputs.fetch && '--fetch' || '' }} \
+            ${{ inputs.only != '' && format('--only {0}', inputs.only) || '' }}
+
+      - name: Rebuild the page and the homepage gallery
+        if: ${{ inputs.fetch }}
+        run: |
+          python3 tools/tourism/build.py wonders
+          python3 tools/tourism/build.py gateway
+
+      # The same two gates every other change to this repository passes. A
+      # photograph arriving from an API is still a photograph that has to be
+      # sized, boxed and described before it goes on a page.
+      - name: Verify
+        if: ${{ inputs.fetch }}
+        run: |
+          python3 tools/tourism/build.py verify
+          node tools/journey-checks.js
+
+      - name: Upload the contact sheet
+        if: ${{ inputs.fetch }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: wonders-contact-sheet
+          path: |
+            incoming/wonders-contact-sheet.md
+            incoming/wonders-candidates.json
+          if-no-files-found: ignore
+
+      - name: Commit
+        if: ${{ inputs.fetch && inputs.commit }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A tourism/wonders.json incoming wonders.html index.html
+          if git diff --cached --quiet; then
+            echo "nothing was bound and nothing was staged"
+            exit 0
+          fi
+          git commit -m "Photographs for the wonders, from Unsplash and Pexels
+
+          Bound only where the photographer's own description names the place;
+          everything else staged in incoming/ with a contact sheet."
+          git push

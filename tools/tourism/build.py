@@ -135,6 +135,19 @@ def cmd_queries(args):
     return 0
 
 
+def cmd_wondershots(args):
+    """Photographs for the nineteen wonders that have none.
+
+    Dry by default: it prints every query it would send and stops. --fetch is
+    what actually asks, and it belongs on a runner — api.unsplash.com and
+    api.pexels.com are refused by the agent proxy's egress policy and the keys
+    are repository secrets.
+    """
+    from tourism import wondershots
+    return wondershots.run(fetch=bool(getattr(args, "fetch", False)),
+                           only=(getattr(args, "only", "") or None))
+
+
 def cmd_resolve(args):
     tax, countries, cache = dataset(args.country)
     cats = [c for c in tax.enabled if not args.category or c["id"] == args.category]
@@ -811,7 +824,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
@@ -845,6 +858,9 @@ def main():
                    help="intake: the folder of uploaded images (default incoming/)")
     p.add_argument("--describe", action="store_true",
                    help="intake: ask the vision model what each upload shows")
+    p.add_argument("--fetch", action="store_true",
+                   help="wondershots: actually ask the providers. Without it "
+                        "the command prints the queries and sends nothing")
     p.add_argument("--query", help="footage: comma-separated search terms")
     p.add_argument("--list", dest="list_only", action="store_true",
                    help="footage: show what is already staged")
