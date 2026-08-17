@@ -171,11 +171,24 @@ def open_graph(title, description, path, kind="website", image=None):
 
 
 def icons():
-    """The tab icon and the home-screen icon, from the brand mark."""
+    """The tab icon, the home-screen icon, and the manifest.
+
+    The manifest is what turns four icon files into an identity: saved to a
+    phone's home screen this site was previously called whatever the <title>
+    happened to say on the page somebody saved, opened in a browser chrome that
+    contradicted its own theme colour, and offered no way in but the front
+    door. It is named, scoped, themed, and carries three shortcuts to the three
+    things people arrive for.
+
+    Every icon it lists is a file that exists. A manifest naming an icon that is
+    not there is worse than none: the browser falls back silently and nobody
+    ever finds out.
+    """
     return ("\n".join([
         '<link rel="icon" href="/images/brand/mark-32.png" sizes="32x32">',
         '<link rel="icon" href="/images/brand/mark-512.png" sizes="512x512">',
         '<link rel="apple-touch-icon" href="/images/brand/mark-180.png">',
+        '<link rel="manifest" href="/site.webmanifest">',
         '<meta name="theme-color" content="#10251F">',
     ]))
 

@@ -1,0 +1,31 @@
+{
+ "$says": "Afrinkong's web app manifest. Nothing here is aspirational: every icon listed is a file that exists in images/brand/, and the two colours are the same tokens the stylesheet uses — --fj-basalt for the ground the site starts on, and the ivory it reads on. A manifest naming an icon that is not there is worse than no manifest, because the browser silently falls back and nobody finds out.",
+ "name": "Afrinkong — journeys across Africa",
+ "short_name": "Afrinkong",
+ "description": "An atlas of all fifty-four African countries, journeys built around what you came for, and crossings that run the length of a continent.",
+ "id": "/",
+ "start_url": "/",
+ "scope": "/",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#10251F",
+ "theme_color": "#10251F",
+ "lang": "en",
+ "dir": "ltr",
+ "categories": ["travel", "lifestyle", "education"],
+ "icons": [
+  {"src": "/images/brand/mark-32.png", "sizes": "32x32", "type": "image/png"},
+  {"src": "/images/brand/mark-180.png", "sizes": "180x180", "type": "image/png"},
+  {"src": "/images/brand/mark-512.png", "sizes": "512x512", "type": "image/png"},
+  {"src": "/images/brand/mark-512.png", "sizes": "512x512", "type": "image/png",
+   "purpose": "maskable"}
+ ],
+ "shortcuts": [
+  {"name": "Build a journey", "short_name": "Journey", "url": "/journey",
+   "description": "Say what you want out of it and the days are built around that."},
+  {"name": "The Atlas", "short_name": "Atlas", "url": "/atlas",
+   "description": "All fifty-four countries, drawn."},
+  {"name": "Trans Afrique", "short_name": "Crossings", "url": "/trans-afrique",
+   "description": "Four ways across a continent, by road."}
+ ]
+}
