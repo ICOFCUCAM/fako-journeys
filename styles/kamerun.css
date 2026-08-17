@@ -405,3 +405,31 @@ ul,ol{list-style:none}
   .fj-slip-more,.fj-way a{display:inline-block;padding-top:6px;padding-bottom:8px}
   .fj-foot-bar a{padding-block:6px;display:inline-block}
 }
+
+/* ---- the boundary between two companies on one domain ----------------------
+ * These pages are Kamerun's and the domain is Afrinkong's. Without a line
+ * saying so, a reader arriving from the atlas met a price list belonging to a
+ * company they had never heard of at an address belonging to one they had —
+ * which is the exact moment somebody decides a site is not to be trusted.
+ *
+ * Quiet on purpose. It is orientation, not an announcement: it sits under the
+ * masthead in mono at nine pixels, says the relationship once, and gets out of
+ * the way of the operator's own page.
+ */
+.af-operator-bar{display:flex;flex-wrap:wrap;align-items:baseline;
+  justify-content:space-between;gap:6px 24px;
+  max-width:var(--frame);margin:0 auto;padding:11px 28px;
+  border-bottom:var(--fj-rule)}
+.af-operator-say{margin:0;font-size:13px;line-height:1.5;color:var(--c-muted)}
+.af-operator-say b{font-weight:700;color:var(--c-primary)}
+.af-operator-go{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0}
+.af-operator-go a{display:inline-flex;align-items:center;min-height:24px;
+  font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent);
+  transition:border-color var(--t-fast) var(--ease)}
+.af-operator-go a:hover{border-bottom-color:var(--c-accent)}
+@media(max-width:760px){
+  .af-operator-bar{padding:10px 18px}
+  .af-operator-say{font-size:12.5px}
+}
