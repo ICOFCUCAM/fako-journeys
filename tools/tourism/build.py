@@ -135,6 +135,16 @@ def cmd_queries(args):
     return 0
 
 
+def _reoffer():
+    """Re-apply srcset after a generator has rewritten pages.
+
+    Called by the commands that rebuild HTML on their own — running `build.py
+    wonders` should not quietly cost a phone the smaller photographs.
+    """
+    from tourism import srcset
+    srcset.run(write=True, log=lambda *a: None)
+
+
 def cmd_srcset(args):
     """Offer the smaller photograph to the smaller screen.
 
@@ -269,6 +279,8 @@ def cmd_render(args):
         print("  wrote %s" % os.path.relpath(p, ROOT))
     if blocked:
         print("  BLOCKED (incomplete, not published): %s" % ", ".join(blocked))
+    _reoffer()
+
     return 0
 
 
@@ -358,6 +370,8 @@ def cmd_wonders(args):
     from tourism import wonders
     from tourism.model import load_countries
     wonders.run([c for c in load_countries() if c.published])
+    _reoffer()
+
     return 0
 
 
@@ -366,6 +380,8 @@ def cmd_transafrique(args):
     from tourism import transafrique
     from tourism.model import load_countries
     transafrique.run([c for c in load_countries() if c.published])
+    _reoffer()
+
     return 0
 
 
@@ -429,6 +445,8 @@ def cmd_places(args):
     from tourism import places
     tax, countries, _cache = dataset()
     places.run(countries, tax)
+    _reoffer()
+
     return 0
 
 
@@ -453,6 +471,8 @@ def cmd_story(args):
     from tourism import story
     tax, countries, _cache = dataset()
     story.run(countries, tax)
+    _reoffer()
+
     return 0
 
 
@@ -476,6 +496,8 @@ def cmd_gateway(args):
     from tourism import gateway
     _tax, countries, _cache = dataset()
     gateway.run(countries)
+    _reoffer()
+
     return 0
 
 
@@ -653,6 +675,8 @@ def cmd_homes(args):
     tax, countries, _cache = dataset(args.country)
     written = home.write_all(countries, tax)
     print("\n%d country home page(s)" % len(written))
+    _reoffer()
+
     return 0
 
 
@@ -738,6 +762,17 @@ def cmd_all(args):
     cmd_story(args)
     print()
     cmd_sidebyside(args)
+    print()
+    # LAST, AND IT HAS TO BE LAST.
+    #
+    # srcset rewrites built HTML, so every generator above wipes it — a
+    # rebuild of one page silently undid the change and nobody would find out
+    # until a phone downloaded three megabytes it did not need. Running it here
+    # is what stops "offer the smaller file" being a thing somebody has to
+    # remember. It is idempotent, so running it again costs a scan and changes
+    # nothing.
+    from tourism import srcset as _srcset
+    _srcset.run(write=True, log=lambda *a: None)
     print()
     rc = cmd_verify(args) or rc
     cmd_report(args)
