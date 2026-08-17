@@ -2226,13 +2226,20 @@ def marker(name, close=False):
     return "<!-- %sgen:%s -->" % (slash, name)
 
 
-def splice(src, blocks):
+def splice(src, blocks, check=True):
     """Replace between each pair of markers. Missing markers are an error, not a
     silent no-op: a marker that got lost in an edit would otherwise mean a
-    section quietly stopped tracking the dataset."""
-    missing = [name for name in MARKERS if marker(name) not in src]
-    if missing:
-        raise ValueError("index.html is missing markers: %s" % ", ".join(missing))
+    section quietly stopped tracking the dataset.
+
+    `check` is off when splicing the stylesheet, which holds one marker and not
+    the other forty — the completeness check belongs to the page.
+    """
+    if check:
+        # The CSS markers are checked against the stylesheet, not the page.
+        missing = [name for name in MARKERS
+                   if name not in CSS_MARKERS and marker(name) not in src]
+        if missing:
+            raise ValueError("index.html is missing markers: %s" % ", ".join(missing))
     for name, body in blocks.items():
         # THIS HAS TO BE IDEMPOTENT, AND FOR A LONG TIME IT WAS NOT.
         #
@@ -2271,15 +2278,33 @@ def splice(src, blocks):
     return src
 
 
+# The homepage's CSS lives in its own file now, so the one generated CSS block
+# lives there too. Splicing writes to whichever file holds each marker rather
+# than assuming both are in index.html — which they were, for as long as the
+# stylesheet was a 180 KB <style> element.
+SHEET = os.path.join(ROOT, "styles", "gateway.css")
+
+
 def run(countries, page=None, log=print):
     page = page or PAGE
     with open(page) as fh:
         src = fh.read()
-    out = splice(src, render(countries))
+    blocks = render(countries)
+    html_blocks = dict((k, v) for k, v in blocks.items() if k not in CSS_MARKERS)
+    css_blocks = dict((k, v) for k, v in blocks.items() if k in CSS_MARKERS)
+    out = splice(src, html_blocks)
     changed = out != src
     if changed:
         with open(page, "w") as fh:
             fh.write(out)
+    if css_blocks:
+        with open(SHEET) as fh:
+            sheet_src = fh.read()
+        sheet_out = splice(sheet_src, css_blocks, check=False)
+        if sheet_out != sheet_src:
+            with open(SHEET, "w") as fh:
+                fh.write(sheet_out)
+            changed = True
     write_table_deck(countries, log=log)
     seq = ordered(countries)
     log("%s %d countries (%d with an operator of ours) into %s"
