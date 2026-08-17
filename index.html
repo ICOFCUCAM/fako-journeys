@@ -953,6 +953,23 @@ window.AF = {
 
   function run(){ fit(); align(); reserve(); }
   run();
+  /* AND AGAIN WHEN THE FACE ARRIVES.
+     The fit is a measurement of one particular face: probe AFRICA at 200px,
+     divide the column by the width that came back, set that size. Run once, it
+     is a measurement of whatever face was loaded at that instant — and the
+     display face is served by this site with font-display:swap, so for the
+     first moments of a cold load that is the fallback and not Archivo Narrow.
+     The headline was then sized for a face the reader would not be looking at
+     a moment later, and stayed that way until something resized the window.
+     Caught at 1920x540, where it left the headline filling 103% of its column.
+
+     document.fonts.ready settles after every face the first layout asked for
+     has either loaded or failed, so this fires once, late, and is a no-op on a
+     warm cache where the fit was already right. align() and reserve() go with
+     it because both measure the headline's own metrics. */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(run).catch(function(){});
+  }
   addEventListener('resize', function(){
     if (queued) return;
     queued = true;
