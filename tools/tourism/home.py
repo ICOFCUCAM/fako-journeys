@@ -351,9 +351,13 @@ def build(country, taxonomy, countries=()):
             esc("%s — %s | Afrinkong" % (country.name, country.tagline)),
             esc(country.summary), "/%s" % country.slug),
         "nextTo": next_to(country),
-        "description": esc("%s: %s Twenty-seven kinds of experience, from wildlife and mountains "
-                           "to culture, food and heritage, with local guides."
-                           % (country.name, country.summary)),
+        # Fitted to what a search result actually shows. This was name +
+        # summary + a hundred characters of boilerplate with no budget, so on
+        # the countries with the best summaries the sentence was cut mid-word.
+        "description": esc(plate.fit(
+            "%s:" % country.name, country.summary,
+            "Twenty-seven kinds of experience, from wildlife and mountains to "
+            "culture, food and heritage, with local guides.")),
         "hero_window": hero_window,
         "calendar": cal,
         "operator": op,

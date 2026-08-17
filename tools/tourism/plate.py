@@ -127,6 +127,83 @@ def plate(country, entry, aspect, label, shape=None, regions=None, ident=None,
            esc(caption), esc(country.name)))
 
 
+# A search result shows about 155 characters of a description and throws the
+# rest away. Measured across the site, 125 pages were over 160 and the worst was
+# 411 — two and a half times the budget, so two thirds of a carefully written
+# sentence was being cut mid-word in the one place it was meant to be read.
+META_LIMIT = 155
+
+
+def fit(head, body, tail="", limit=META_LIMIT):
+    """-> a description that fits, cut where a sentence ends rather than mid-word.
+
+    Three parts, and they are dropped in order of how much they are worth:
+
+        head   the country or place name. Never dropped — it is what the
+               reader is scanning the result for.
+        body   the editorial sentence, and the only part that differs between
+               pages. Kept as whole sentences for as long as they fit, and
+               failing that trimmed to a word boundary with an ellipsis.
+        tail   the boilerplate. Identical on every page of a family, so it adds
+               nothing a search engine can tell apart, and it is the first
+               thing to go when the budget is tight.
+
+    The old shape was head + body + tail with no budget at all, which meant a
+    long body pushed the tail past the cut on the pages where the body was
+    already good, and left it in on the pages where the body was thin.
+    """
+    head = " ".join((head or "").split())
+    body = " ".join((body or "").split())
+    tail = " ".join((tail or "").split())
+    room = limit - len(head)
+    if room <= 0:
+        return head[:limit].rstrip()
+
+    if len(body) + (1 + len(tail) if tail else 0) <= room:
+        return (head + " " + body + ((" " + tail) if tail else "")).strip()
+
+    if len(body) <= room:                       # body fits, tail does not
+        return (head + " " + body).strip()
+
+    # Keep whole sentences while they fit. Joined with a space, because
+    # _sentence_end returns the index just past the full stop and the space
+    # that followed it is on the other side of the cut — without this the
+    # result read "From the Atlantic to the Indian Ocean.From rainforest to
+    # savanna.", which is worse than the overlong sentence it replaced.
+    kept, rest = [], body
+    used = 0
+    while True:
+        cut = _sentence_end(rest)
+        if cut <= 0 or used + cut + (1 if kept else 0) > room:
+            break
+        kept.append(rest[:cut].strip())
+        used += cut + (1 if len(kept) > 1 else 0)
+        rest = rest[cut:].lstrip()
+    out = " ".join(kept).strip()
+    if out:
+        # Room left over and more to say: add a clipped fragment rather than
+        # stopping short. One sentence of a three-sentence description is a
+        # thin result when eighty characters of budget are going unused.
+        spare = room - len(out) - 1
+        if rest and spare > 30:
+            clip = rest[:spare - 1].rsplit(" ", 1)[0].rstrip(" ,;:-")
+            if clip:
+                out = out + " " + clip + "\u2026"
+        return (head + " " + out).strip()
+
+    # Not even one sentence fits: trim to a word, and say so with an ellipsis
+    # rather than stopping mid-word as the untrimmed version did.
+    clip = body[:max(0, room - 1)].rsplit(" ", 1)[0].rstrip(" ,;:-")
+    return (head + " " + clip + "\u2026").strip()
+
+
+def _sentence_end(text):
+    """-> index just past the first sentence, or 0 if there is not one."""
+    import re as _re
+    m = _re.search(r"[.!?](?=\s|$)", text)
+    return m.end() if m else 0
+
+
 def open_graph(title, description, path, kind="website", image=None,
                extra=None):
     """The card a shared link becomes, and the icon in the browser tab.

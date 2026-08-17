@@ -982,11 +982,14 @@ def run(countries, log=print):
               trip=None):
         html = TEMPLATE % {
             "title": esc(title),
-            "desc": esc(desc),
+            # Fitted to the ~155 characters a search result shows. The
+            # overview's own `say` runs to four sentences and 220 characters,
+            # which is a fine paragraph and a truncated snippet.
+            "desc": esc(plate.fit("", desc)),
             # The crossing pages add their own trip to the shared graph rather
             # than emitting a second block: one graph, so the trip can name its
             # provider by @id instead of describing the company again.
-            "og": plate.open_graph(title, desc, url, extra=trip),
+            "og": plate.open_graph(title, plate.fit("", desc), url, extra=trip),
             "events": plate.events_block(),
             "nav": series_nav(d, active) if active else "",
             "skip": esc(skip),

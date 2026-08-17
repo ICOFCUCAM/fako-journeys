@@ -27,6 +27,7 @@ def alt_for(country, entry):
     if entry.image and entry.image.get("alt") and not getattr(entry, "photo", None):
         return entry.image["alt"]
     return validate.alt_text(country, entry)
+from . import plate
 from .model import ROOT
 
 OUT_DIR = os.path.join(ROOT, "tourism")
@@ -540,7 +541,11 @@ def render_country(country, taxonomy, shell):
     return PAGE % {
         "title": esc("%s — all %d experiences | Afrinkong"
                      % (country.name, len(taxonomy.enabled))),
-        "description": esc(country.summary or (hero.description if hero else country.name)),
+        # Same budget as every other family. country.summary is editorial and
+        # varies from a clause to a paragraph, so it is fitted rather than
+        # trusted to be short.
+        "description": esc(plate.fit(
+            "", country.summary or (hero.description if hero else country.name))),
         "links": shell.links,
         "country": esc(country.name),
         "path": "/tourism/%s" % esc(country.slug),

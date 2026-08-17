@@ -539,6 +539,10 @@ def portrait(country, pack, arcs, ctx):
              % (country.name, len(sections),
                 (" — " + ", ".join(named)) if named else "", country.name))
 
+    # Fitted to the ~155 characters a search result shows. The blurb names
+    # every section of the portrait, so on the countries with the most written
+    # about them it was the longest — and the most truncated.
+    blurb = plate.fit("", blurb)
     return stories, TEMPLATE % {
         "title": esc("%s: a portrait — Afrinkong" % country.name),
         "description": esc(blurb),
