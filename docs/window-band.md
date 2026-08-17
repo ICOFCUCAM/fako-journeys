@@ -514,3 +514,38 @@ that is indistinguishable from a clean one. Count the lines:
 node tools/browser-checks.js > gate.out 2>&1
 grep -c '^PASS' gate.out; grep '^FAIL' gate.out
 ```
+
+## The two Kamerun pages keep their CSS inline, on purpose
+
+`cameroon.html` and `contact.html` carry 35 KB and 30 KB of CSS in a `<style>`
+block. Every other page on this site loads its stylesheet from a file, and
+commit 07 moved the homepage's 180 KB out for exactly the reason you would
+expect: a document is not cacheable, so every visit re-downloads every rule.
+
+Moving these two was attempted three times and reverted three times.
+
+**Merging into `kamerun.css` moves 455 elements.** Those two pages do not load
+`kamerun.css` at all, and its rules are not the ones they use — they are a
+*variant*. About ninety per cent of the selectors match by name and carry
+different values. Appending only what `kamerun.css` lacked produced a page that
+looked almost right, which is the worst possible outcome.
+
+**Extracting each page's CSS verbatim to its own file still moves 363 and 201
+elements**, measured against a baseline noise of 5. This is the part worth
+recording, because it is genuinely strange and cost the most time:
+
+- the extracted CSS is **byte-identical** to the inline block it replaced;
+- the `<link>` sits in the same cascade position the `<style>` did;
+- every element is **identical in width, height, display and grid**;
+- `document.documentElement.scrollHeight` is **identical** (12269px);
+- `window.scrollY` is 0 on both.
+
+Yet one plate sits 16px higher and everything after it follows. Identical
+sizes, identical page height, different positions in the flow. I could not
+account for it, and shipping a change to two live pages on the theory that the
+measurement is wrong is not a trade worth making for 65 KB on two of 1,591
+pages.
+
+A fourth attempt should start by explaining the 16px, not by trying a fourth
+arrangement of the same files. Until then the duplication stays, and it is
+cheaper than the risk.
