@@ -213,6 +213,7 @@ def render(countries, taxonomy):
     return TEMPLATE % {
         "events": plate.events_block(),
         "explore": plate.explore_block(),
+        "foot": plate.colophon_foot("/journey"),
         "og": plate.open_graph('Build a journey — Afrinkong', 'Four questions, then one country, a journey shaped inside it, and the company that would run it.', '/journey'),
         "data": json.dumps(data, separators=(",", ":"), sort_keys=True),
         "wants": want_cards(data),
@@ -470,6 +471,7 @@ TEMPLATE = """<!DOCTYPE html>
       destination page, and <a href="/enquire">a person</a> will do the rest.</p>
   </noscript>
 </main>
+%(foot)s
 
 <script type="application/json" id="jn-data">%(data)s</script>
 %(events)s

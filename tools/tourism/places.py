@@ -205,6 +205,7 @@ def index(rows, ctx):
                     "jump": ('<nav class="pi-jump" aria-label="Jump to a country">%s</nav>'
                              % jump),
                     "explore": plate.explore_block(),
+                    "foot": plate.colophon_foot("/places"),
                     "og": plate.open_graph("Every place — Afrinkong",
                                            "%d places across %d countries, each with its "
                                            "own page." % (total, len(rows)), "/places")}
@@ -438,6 +439,7 @@ INDEX = """<!DOCTYPE html>
 %(blocks)s
 </main>
 %(explore)s
+%(foot)s
 </body>
 </html>
 """

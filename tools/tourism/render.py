@@ -167,6 +167,16 @@ def footer(country, ours=None):
             '    </div>\n'
             '    <div class="fj-foot-bar">Afrinkong &middot; %s &middot; Every picture on this page '
             'is credited to the photographer who took it</div>\n'
+            # WHO THIS IS, ON THE FIFTY-SIX PAGES THAT DID NOT SAY.
+            #
+            # The legal name, the jurisdiction, the registration number and the
+            # three statements reach fifteen hundred pages through this marker
+            # and reached none of the country pages, which are the deepest part
+            # of the site and the ones a search result lands on. The company
+            # was named in the JSON-LD here, which is to say it was told to
+            # machines and not to readers.
+            '    <p class="fj-foot-co"><!-- gen:company -->\n'
+            '    <!-- /gen:company --></p>\n'
             '  </div>\n</footer>'
             % (who, esc(country.name), esc(country.url),
                "Every country" if not country.slug else "Destination page",

@@ -339,6 +339,7 @@ def render(countries, taxonomy):
     return TEMPLATE % {
         "events": plate.events_block(),
         "explore": plate.explore_block(),
+        "foot": plate.colophon_foot("/atlas"),
         "og": plate.open_graph('The Atlas — Afrinkong', 'Africa as the interface. Continent, region, country, place — and who can take you there.', '/atlas'),
         "map": map_svg(geo, sp),
         "spine": json.dumps(sp, separators=(",", ":"), sort_keys=True),
@@ -459,6 +460,7 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="at-pane" data-pane="place"></div>
   </aside>
 </main>
+%(foot)s
 
 <script type="application/json" id="at-spine">%(spine)s</script>
 %(events)s

@@ -217,6 +217,7 @@ def render(countries, taxonomy):
     return TEMPLATE % {
         "events": plate.events_block(),
         "explore": plate.explore_block(),
+        "foot": plate.colophon_foot("/meet"),
         "og": plate.open_graph('Meet Africa — Afrinkong', 'Seven questions, asked of twenty-two countries. The same question changes its answer at every border.', '/meet'),
         "doors": door_list(data),
         "strip": country_strip(data),
@@ -325,6 +326,7 @@ TEMPLATE = """<!DOCTYPE html>
       page, where all twenty-seven headings are written out in full.</p>
   </noscript>
 </main>
+%(foot)s
 
 <script type="application/json" id="mt-people">%(people)s</script>
 <script type="application/json" id="mt-voices">%(voices)s</script>

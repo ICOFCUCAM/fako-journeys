@@ -371,7 +371,7 @@ textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
    --c-muted, which would have become muted gold on cream at 2.37:1. Trading
    one contrast failure for another is not a fix. */
 .af-zone--basalt,.af-dark,.st--now,.st-nowcard,.sx-nowsec,.sx-now,
-.wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
+.wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,.af-foot,
 .tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark,.wa-open,.wa-motion,
 .tf-hero,.tf-page,.wo-page{
   --c-accent:var(--c-accent-lit);
@@ -685,7 +685,7 @@ img[data-illustration]{height:auto}
      rectangle on paper. This is the same list the light/dark token swap uses
      further up the file, pointed the other way. */
   .af-zone--basalt,.af-dark,.st--now,.st-nowcard,.sx-nowsec,.sx-now,
-  .wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
+  .wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,.af-foot,
   .tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark,.wa-open,.wa-motion,
   .tf-hero,.tf-page,.tf-close,.wo-page,.wo-body,.tr-body{
     background:#fff !important;color:#111 !important}
@@ -763,3 +763,58 @@ img[data-illustration]{height:auto}
   .af-operator-bar{padding:10px 18px}
   .af-operator-say{font-size:12.5px}
 }
+
+/* ---- the colophon, and the footer four pages did not have ----------------- */
+/* THE COLOPHON RULE WAS WRITTEN THREE TIMES AND REACHED NEITHER OF THE PAGES
+   THAT NEEDED IT MOST.
+   Identical copies of `.af-co-link` live in places.css, journey.css and (scoped
+   to .wa-foot) gateway.css. /atlas, /meet, /journey and /places load none of
+   the first two, so the day those pages gained a colophon the three statements
+   would have rendered as default browser links — underlined blue, on basalt.
+   Canonical here, in the sheet every page on the site already links. The two
+   copies stay where they are only as ground-specific overrides. */
+.af-co-links{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:10px}
+.af-co-link{font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-muted);display:inline-flex;
+  align-items:center;min-height:24px;border-bottom:1px solid transparent;
+  transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.af-co-link:hover{color:var(--c-accent);border-bottom-color:var(--c-accent)}
+.af-co-brand{font-weight:700}
+.af-co-where{display:block;margin-top:5px;text-transform:none}
+
+/* /atlas, /meet, /journey and /places ended at </main>: no footer, no way
+   onward, and no statement anywhere on the page of who the company is. Basalt
+   rather than a country tone, because none of the four is about one country
+   and a fixed ground is one the dark-surface tokens are already right for. */
+.af-foot{background:var(--fj-basalt);color:var(--fj-onbasalt);
+  margin-top:var(--sp-7);padding:var(--sp-6) 0 var(--sp-5)}
+.af-foot-in{max-width:var(--frame);margin:0 auto;padding:0 44px}
+.af-foot-brand{display:inline-block;font-family:var(--fj-display);font-size:26px;
+  font-weight:700;text-transform:uppercase;color:var(--c-bg)}
+.af-foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;
+  font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
+.af-foot-nav{display:flex;flex-wrap:wrap;gap:6px 26px;margin-top:var(--sp-5);
+  padding-top:20px;border-top:var(--fj-rule-dark)}
+.af-foot-nav a{display:inline-flex;align-items:center;min-height:28px;
+  font-size:14.5px;color:var(--fj-onbasalt-dim);
+  border-bottom:1px solid transparent;transition:color var(--t-fast) var(--ease)}
+.af-foot-nav a:hover{color:var(--c-bg)}
+.af-foot-co{margin-top:22px;padding-top:18px;border-top:var(--fj-rule-dark);
+  font-family:var(--fj-mono);font-size:9px;letter-spacing:.12em;line-height:1.7;
+  color:var(--fj-onbasalt-dim)}
+.af-foot-co b{font-weight:400;color:var(--c-bg)}
+.af-foot-co .af-co-brand{font-weight:700;color:var(--c-bg)}
+/* On basalt the paper grey is 2.31:1. The dark-ground list below re-points
+   --c-muted to gold for exactly this reason, and .af-foot joins it. */
+.af-foot .af-co-link{color:var(--fj-onbasalt-dim)}
+.af-foot .af-co-link:hover{color:var(--c-bg);border-bottom-color:var(--c-accent)}
+@media(max-width:560px){.af-foot-in{padding:0 20px}}
+
+/* The country pages have a footer and had no colophon in it: the company was
+   named in their JSON-LD, which is to say to machines and not to readers. */
+.fj-foot-co{margin-top:0;padding:0 0 26px;font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.12em;line-height:1.7;color:var(--fj-onbasalt-dim)}
+.fj-foot-co b{font-weight:400;color:var(--c-bg)}
+.fj-foot-co .af-co-brand{font-weight:700;color:var(--c-bg)}
+.fj-foot .af-co-link{color:var(--fj-onbasalt-dim)}
+.fj-foot .af-co-link:hover{color:var(--c-bg);border-bottom-color:var(--c-accent)}

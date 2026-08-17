@@ -45,7 +45,19 @@ DATA = os.path.join(ROOT, "tourism", "company.json")
 # operator's own credentials — the MINTOUL licence, the Mount Cameroon
 # Ecotourism Organisation — which are true, local, and theirs. Replacing them
 # with a Delaware registration would swap real local facts for a foreign one.
-SKIP = {"node_modules", ".git", "tourism"}
+# "tourism" WAS IN HERE, AND IT IS WHERE FIFTY-SIX PAGES LIVE.
+#
+# tourism/ is both the dataset (countries/*.json, regions.json, categories.json)
+# and the output directory for the country pages, which is why it was skipped:
+# there is no point walking a few hundred JSON files looking for HTML. The cost
+# of that shortcut was that the fifty-six country pages could never receive the
+# company line however loudly they asked for it — and once they carried the
+# marker the run reported success and wrote nothing, which is the failure mode
+# that is hardest to notice.
+#
+# pages() only opens files ending in .html, so listing the JSON alongside them
+# costs a directory read and nothing else.
+SKIP = {"node_modules", ".git"}
 
 
 def esc(v):

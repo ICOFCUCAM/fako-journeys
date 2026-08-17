@@ -458,6 +458,53 @@ def trail(path, title):
     }
 
 
+FOOT_LINKS = (
+    ("/atlas", "The atlas"),
+    ("/places", "Every place"),
+    ("/stories", "Stories"),
+    ("/tourism/", "Every country"),
+    ("/journey", "Build a journey"),
+    ("/enquire", "Begin a journey"),
+)
+
+
+def colophon_foot(here=None):
+    """The last thing on a page: where else to go, and who this is.
+
+    FOUR PAGES ENDED AT </main>.
+
+    /atlas, /meet, /journey and /places each stopped dead: no footer, no way
+    onward, and — the part that matters — no statement anywhere on the page of
+    who the company is. The legal name, the jurisdiction, the registration
+    number and the three statements are on fifteen hundred pages of this site
+    and were on none of those four, which are between them the pages a visitor
+    is on when they are closest to enquiring.
+
+    The company line comes from the same marker every other page uses, so it is
+    written once in tourism/company.json and cannot drift from the other
+    fifteen hundred. `here` drops the link to the page you are already on
+    rather than offering it back.
+
+    Basalt, and not the country tone the place pages use: this footer appears
+    on pages that are not about one country, and a fixed ground is a ground the
+    dark-surface tokens are already correct for.
+    """
+    links = "".join(
+        '<a href="%s">%s</a>' % (h, esc(n))
+        for h, n in FOOT_LINKS
+        if not here or h.rstrip("/") != here.rstrip("/"))
+    return ('<footer class="af-foot">\n'
+            '  <div class="af-foot-in">\n'
+            '    <a class="af-foot-brand" href="/">Afrinkong'
+            '<span>Journeys across Africa</span></a>\n'
+            '    <nav class="af-foot-nav" aria-label="Elsewhere on this site">'
+            '%s</nav>\n'
+            '    <p class="af-foot-co"><!-- gen:company -->\n'
+            '    <!-- /gen:company --></p>\n'
+            '  </div>\n'
+            '</footer>' % links)
+
+
 HANDWRITTEN = {
     "about.html": ("/about", "The operator"),
     "contact.html": ("/contact", "Contact"),
