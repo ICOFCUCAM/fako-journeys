@@ -221,6 +221,37 @@
   font-variant-numeric:tabular-nums}
 .tf-level-who{margin-top:12px;font-size:13.5px;color:var(--fj-onbasalt-dim)}
 
+/* CHOOSING ONE IS A LINK, AND THE WHOLE CARD IS THAT LINK.
+   The three were read-only columns with no way out of them: a reader who had
+   decided had to scroll past all three, find the enquiry in the footer and
+   start again in their own words. The action carries the choice — its name,
+   length and band pre-written into the enquiry letter — so deciding and asking
+   are one gesture.
+
+   The anchor is a real link at the foot with a sentence for its name, stretched
+   over the card by a pseudo-element. The other way round — a card-shaped <a>
+   wrapping four paragraphs — makes the accessible name four paragraphs long,
+   which is how a screen reader reads out an entire tier before saying "link". */
+.tf-level{cursor:pointer;transition:border-color .2s ease,background .2s ease}
+.tf-level-go{margin-top:auto;padding-top:20px;
+  display:inline-flex;align-items:center;min-height:24px;gap:9px;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-accent-lit);align-self:flex-start}
+.tf-level-go::after{content:"";position:absolute;inset:0;z-index:1}
+.tf-level-go i{font-style:normal;transition:transform .2s ease}
+/* The hover and focus states are on the CARD, because the card is the target.
+   A hover that only lights the sentence at the bottom tells the reader the
+   sentence is clickable and the four inches above it are not. */
+.tf-level:hover{border-top-color:var(--c-accent-lit);
+  background:color-mix(in srgb,var(--c-bg) 4%,transparent)}
+.tf-level:hover .tf-level-go i{transform:translateX(4px)}
+.tf-level:has(.tf-level-go:focus-visible){outline:2px solid var(--c-accent-lit);
+  outline-offset:6px}
+.tf-level-go:focus-visible{outline:none}
+/* The recommended card already carries a flag in the top right; the action
+   line is where the eye lands last, so it gets the emphasis instead. */
+.tf-level.is-rec .tf-level-go{color:var(--c-bg)}
+
 /* The lenses a crossing leads on, under the country chain. */
 .tf-route-strands{margin-top:9px;font-family:var(--fj-mono);font-size:9px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-accent-lit)}

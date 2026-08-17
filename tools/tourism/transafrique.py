@@ -71,6 +71,13 @@ def load():
         return json.load(fh)
 
 
+def _q(text):
+    """Percent-encode a letter for ?journey=. quote() with no safe characters,
+    so newlines and the en dashes in a band survive the round trip."""
+    import urllib.parse
+    return urllib.parse.quote(text, safe="")
+
+
 def money(n):
     return "${:,}".format(int(n))
 
@@ -120,6 +127,35 @@ def route_card(r, by_slug):
            esc(r["say"]), facts, esc(route_url(r))))
 
 
+def level_letter(v):
+    """The enquiry a traveller sends when they choose this way of crossing.
+
+    /enquire reads ?journey= and drops it into the box rather than a hidden
+    field, so what is written here is a LETTER the traveller can read, cut and
+    argue with before it goes. That is the reason it is written in the first
+    person and left unfinished at the dates: an enquiry nobody can edit before
+    sending is a form pretending to be a letter.
+
+    Every figure is the level's own. Nothing here commits Afrinkong to a price —
+    the band is quoted as the band the page already prints, and the site's
+    standing promise is that the figure is confirmed in writing before anything
+    is held.
+    """
+    bits = ["I would like to talk about %s." % v["name"],
+            "",
+            v["line"],
+            "",
+            "Length: %s days" % v["days"],
+            "Journey fee: %s to %s" % (money(v["low"]), money(v["high"]))]
+    if v.get("seats"):
+        bits.append("Seats: %d on each departure" % v["seats"])
+    bits += ["",
+             "My dates are:",
+             "How many of us:",
+             "What I want out of it:"]
+    return "\n".join(bits)
+
+
 def level_card(v, n=0):
     """A way of crossing a continent, not a row in a pricing table.
 
@@ -129,9 +165,22 @@ def level_card(v, n=0):
     because the figure is the product. Here the figure is a consequence of the
     product, and putting it first would invite somebody to choose a crossing
     the way they choose a subscription.
+
+    CHOOSING ONE IS A LINK, NOT A STATE. The three used to be three read-only
+    columns with no way out of them: a reader who had decided had to scroll
+    past all three, find the enquiry in the footer and start again in their own
+    words. The card now carries the choice through — its own name, length and
+    band, pre-written into the enquiry letter — so deciding and asking are one
+    gesture instead of two screens apart.
+
+    The action is a real link at the foot AND the whole card is clickable
+    through it, which is the accessible way round: one link with a sentence for
+    its name, stretched over the card, rather than a card-shaped anchor
+    wrapping four paragraphs that a screen reader then has to read as a name.
     """
     seats = ('<p class="tf-level-seats">%d seats on each departure</p>'
              % v["seats"]) if v.get("seats") else ""
+    href = "/enquire?journey=%s" % _q(level_letter(v))
     return (
         '<article class="tf-level%s" data-level="%s">'
         '<p class="tf-level-no">%02d</p>'
@@ -142,10 +191,13 @@ def level_card(v, n=0):
         '<div><dt>Length</dt><dd>%s days</dd></div>'
         '<div><dt>Journey fee</dt><dd>%s</dd></div>'
         '</dl>'
-        '<p class="tf-level-who">%s</p></article>'
+        '<p class="tf-level-who">%s</p>'
+        '<a class="tf-level-go" href="%s">Choose %s<i>&rarr;</i></a>'
+        '</article>'
         % (" is-rec" if v.get("recommended") else "", esc(v["id"]), n,
            esc(v["name"]), esc(v["line"]), esc(v["say"]), seats,
-           esc(v["days"]), band(v), esc(v["who"])))
+           esc(v["days"]), band(v), esc(v["who"]),
+           esc(href), esc(v["name"].replace("Trans Afrique", "").strip())))
 
 
 def support_grid(d):
@@ -449,7 +501,31 @@ def great_block(d, by_slug):
            esc(r["shape"]), esc(r["days"]), band(r)))
 
 
-def close_block(d):
+def route_letter(r, by_slug=None):
+    """The enquiry a traveller sends when they have chosen a crossing.
+
+    Same shape as level_letter: a letter in the first person, left unfinished
+    at the dates, that /enquire drops into a box the traveller can edit before
+    it goes.
+    """
+    by_slug = by_slug or {}
+    names = [by_slug[s].name if s in by_slug else s.replace("-", " ").title()
+             for s in (r.get("countries") or [])]
+    return "\n".join([
+        "I would like to talk about %s." % r["name"],
+        "",
+        r.get("shape") or "",
+        "Countries: %s" % ", ".join(names),
+        "Length: %s days" % r["days"],
+        "Journey fee: %s to %s" % (money(r["low"]), money(r["high"])),
+        "",
+        "My dates are:",
+        "How many of us:",
+        "How I want to travel it (Private, Signature or Expedition):",
+    ])
+
+
+def close_block(d, r=None, by_slug=None):
     """A way in, not a checkout.
 
     The page used to end like an article — one sentence and one link. Two
@@ -457,13 +533,35 @@ def close_block(d):
     wants a crossing built around them, and somebody who wants to be told which
     of ours fits. Neither of them is Buy Now, which would be the wrong verb for
     a five-figure month that is quoted in writing before anything is held.
+
+    THE PRIMARY BUTTON USED TO SEND EVERYONE TO /journey, INCLUDING FROM A
+    CROSSING'S OWN PAGE. /journey builds a journey inside ONE country — it ranks
+    the fifty-four and returns one. A reader who had just read the East crossing
+    end to end and pressed "Build my crossing" was dropped into the other tunnel
+    entirely and had to start again. On a crossing's page the button now carries
+    that crossing into the enquiry, named, with its countries, length and band
+    already written; everywhere else it goes to the four crossings, which is the
+    choice that has to happen before an enquiry means anything.
     """
     c = d["close"]
+    if r is not None:
+        acts_data = [
+            {"label": "Ask about %s" % (r.get("short") or r["name"]),
+             "href": "/enquire?journey=%s" % _q(route_letter(r, by_slug)),
+             "solid": True},
+            {"label": "See all four crossings", "href": "/trans-afrique/crossings"},
+        ]
+    else:
+        acts_data = [
+            {"label": "Choose a crossing", "href": "/trans-afrique/crossings",
+             "solid": True},
+            {"label": "Ask about a private expedition", "href": "/enquire"},
+        ]
     acts = "".join(
         '<a class="af-btn %s" href="%s">%s<i>&rarr;</i></a>'
         % ("tf-close-go" if a_.get("solid") else "tf-close-alt",
            esc(a_["href"]), esc(a_["label"]))
-        for a_ in c["acts"])
+        for a_ in acts_data)
     return ('<section class="tf-close" id="begin">'
             '<img class="tf-close-pic" src="%s" width="%d" height="%d" alt="%s" '
             'loading="lazy" decoding="async" data-provider="upload">'
@@ -757,7 +855,7 @@ def crossing_body(d, r, by_slug):
                          act=("See all four crossings", "/trans-afrique/crossings")),
         onward(d),
         '</div>',
-        close_block(d),
+        close_block(d, r, by_slug),
     ])
 
 
