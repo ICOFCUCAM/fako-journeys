@@ -224,7 +224,16 @@ def sitemap(rows, ctx):
             "/about", "/pricing", "/services",
             # The wonders, which the homepage sends people to by name, and
             # the fork between the two things Afrinkong sells.
-            "/wonders", "/how-it-works"]
+            "/wonders", "/how-it-works",
+            # The statements. Linked from the foot of 1,528 pages, so a crawler
+            # reaches them anyway — but a privacy notice that has to be
+            # discovered by crawling is one nobody can be pointed AT, and these
+            # are the three pages most likely to be asked for by name.
+            "/privacy", "/terms", "/accessibility",
+            # /enquire was never here, which is a strange page to leave out of
+            # a sitemap: it is the address every other page is trying to send
+            # somebody to.
+            "/enquire"]
     # Trans Afrique, read off its own data so a tenth page lists itself. The
     # series was never in here at all — not even /trans-afrique, the most
     # expensive thing on the site — and splitting one page into nine turned one

@@ -5,7 +5,11 @@
 # two rules below keep crawlers out of payloads that are data rather than pages,
 # because indexing a 160 KB JSON index helps nobody and answers no query.
 #
-# The 644 addresses worth crawling are all in the sitemap.
+# Every address worth crawling is in the sitemap — 1592 of them, which is
+# every page on this site bar one: tourism/compare.html carries noindex
+# and is linked from nowhere, being a development artifact rather than a
+# page. A number typed into a comment goes stale; this one said 644 while
+# the sitemap held 1592.
 
 User-agent: *
 Allow: /
