@@ -167,6 +167,9 @@ def open_graph(title, description, path, kind="website", image=None):
         '<meta name="twitter:image" content="%s">' % card,
         '<link rel="canonical" href="%s">' % url,
         icons(),
+        # Every page that has a share card also declares who published it.
+        # This is the one wiring point the whole site already passes through.
+        ld(),
     ]))
 
 
@@ -191,6 +194,90 @@ def icons():
         '<link rel="manifest" href="/site.webmanifest">',
         '<meta name="theme-color" content="#10251F">',
     ]))
+
+
+ORG_ID = "https://afrinkong.com/#org"
+SITE_ID = "https://afrinkong.com/#site"
+
+
+def organisation_ld():
+    """Who Afrinkong is, in the one vocabulary a machine reads.
+
+    Fifty-four portrait pages carried an Article each and nothing anywhere said
+    what the SITE was or who stood behind it. A search engine, an assistant or
+    a model reading this domain could tell you a great deal about Djibouti and
+    could not tell you that Afrinkong is a travel company, that it is a trading
+    name of a Delaware LLC, or where its registration number is — all of
+    which is printed in the footer of thirteen hundred pages in prose, which is
+    exactly the form a machine cannot use.
+
+    THE ADDRESS IS THE REGISTERED OFFICE AND IS TYPED AS ONE. company.json is
+    emphatic that 8 The Green is a registered-agent address shared by a great
+    many companies and must never be presented as somewhere to visit. Schema.org
+    has no "registered office" address type, so it goes in as the organisation's
+    `address` — which is correct — and the operating truth is carried by
+    `areaServed` and by not inventing a telephone number for a door that has
+    nobody behind it. No `openingHours`, no `geo`, no `telephone`.
+
+    Two objects with stable ids, so everything else on the site can point at
+    them by reference instead of repeating them: the organisation, and the
+    website it publishes. The portrait pages carry an Article block of their
+    own alongside this one — several blocks per page is ordinary and they
+    are merged by anything that reads them, which is precisely why the ids are
+    stable: the Article names its publisher by @id rather than describing the
+    company a second time and slightly differently.
+    """
+    from .company import load as load_company
+    d = load_company()
+    o = d["office"]
+    org = {
+        "@type": "TravelAgency",
+        "@id": ORG_ID,
+        "name": d["brand"],
+        "legalName": d["legal"],
+        "url": "https://afrinkong.com/",
+        "logo": "https://afrinkong.com/images/brand/mark-512.png",
+        "image": "https://afrinkong.com/images/brand/share.jpg",
+        "description": ("Afrinkong arranges journeys across Africa: time in "
+                        "one country, priced per day, and crossings of several, "
+                        "priced whole."),
+        "identifier": {"@type": "PropertyValue",
+                       "name": "Registration number",
+                       "value": d["registration"]},
+        "address": {"@type": "PostalAddress",
+                    "streetAddress": o["street"],
+                    "addressLocality": o["city"],
+                    "addressRegion": o["region"],
+                    "postalCode": o["postcode"],
+                    "addressCountry": "US"},
+        "areaServed": {"@type": "Place", "name": "Africa"},
+        "knowsAbout": ["Travel in Africa", "Safari", "Overland journeys",
+                       "African cities", "African cuisine"],
+    }
+    site = {
+        "@type": "WebSite",
+        "@id": SITE_ID,
+        "url": "https://afrinkong.com/",
+        "name": "Afrinkong",
+        "publisher": {"@id": ORG_ID},
+        "inLanguage": "en",
+    }
+    return {"@context": "https://schema.org", "@graph": [org, site]}
+
+
+def ld(extra=None):
+    """-> one <script> carrying the organisation, the site, and whatever this
+    page adds to them. Anything page-specific goes in the SAME graph rather
+    than a second block where it can be dropped independently."""
+    import json as _json
+    doc = organisation_ld()
+    if extra:
+        doc["@graph"].extend(extra if isinstance(extra, list) else [extra])
+    # </script> inside a JSON string would end the block early. It cannot
+    # happen with this data and it is one character to make it impossible.
+    body = _json.dumps(doc, ensure_ascii=False, separators=(",", ":"))
+    body = body.replace("</", "<\\/")
+    return '<script type="application/ld+json">%s</script>' % body
 
 
 def events_block(path=None):
