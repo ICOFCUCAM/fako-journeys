@@ -151,8 +151,46 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 
 /* ---- accessibility ------------------------------------------------------- */
 /* A visible focus ring on keyboard focus only. The site is dense with links;
-   without this, tabbing through it is invisible. */
-:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
+   without this, tabbing through it is invisible.
+ *
+ * TWO TONES, BECAUSE NO SINGLE COLOUR CAN PASS ON BOTH GROUNDS.
+ *
+ * This was one 2px ring in --c-accent. Measured in a browser against the
+ * colour actually behind each control, on nine pages:
+ *
+ *   .af-skip on every dark page      2.26:1
+ *   .af-btn, .at-modeb, .at-surprise 2.26:1
+ *   .wa-act, .wa-reg on the homepage 1.00:1   — the ring WAS its ground
+ *
+ * WCAG 1.4.11 wants 3:1 for a focus indicator. The dark accent is 6.21:1 on
+ * ivory and 2.26:1 on basalt, and it is re-pointed to the lighter accent only
+ * inside a list of dark containers — so whether a control passed depended on
+ * whether it happened to sit inside one, which is not a system.
+ *
+ * There is no single colour that works: ivory is 14:1 on basalt and 1:1 on
+ * ivory; the gold is 6:1 on basalt and 2.4:1 on paper. So the ring is drawn
+ * twice — a pale inner ring and a dark outer one — and whichever ground
+ * it lands on, one of the two is in full contrast against it. This is the
+ * ordinary answer to a ring that must work on an unknown background and it is
+ * why operating systems draw theirs the same way.
+ */
+:focus-visible{outline:2px solid var(--c-bg);outline-offset:2px;
+  box-shadow:0 0 0 4px var(--c-primary)}
+/* THE HALO HAS TO OUTWEIGH A COMPONENT'S OWN box-shadow.
+   Several components use box-shadow as a border substitute — .sx-mo and
+   .sx-portrait draw their 1px rule that way — at the same specificity as
+   the rule above and in a stylesheet that loads after it, so they silently
+   erased the focus halo and left a pale ring on pale paper at 1.38:1. Named
+   with their element, these are 0,1,1 and win, and a component would now have
+   to reach 0,2,0 to take the ring away by accident. */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,
+textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--c-bg);outline-offset:2px;
+  box-shadow:0 0 0 4px var(--c-primary)}
+/* Three components replace the ring with an indicator of their own — a
+   rectangle around a point on a map is not where the place is. They opt out of
+   both tones, or the halo would put back the rectangle they removed. */
+.ex-bar input:focus,.at-c:focus,.wa-map-city:focus{box-shadow:none}
 
 .af-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--c-primary);
   color:var(--c-bg);padding:12px 18px;font-family:var(--fj-mono);font-size:11px;
