@@ -186,11 +186,21 @@ h1,h2,h3,h4{font-family:var(--fj-display);font-weight:700;line-height:1.02;
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,
 textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
   outline:2px solid var(--c-bg);outline-offset:2px;
-  box-shadow:0 0 0 4px var(--c-primary)}
+  /* !important, and specificity alone genuinely cannot do this.
+     box-shadow is this codebase's underline: `.st-stand a` draws its rule with
+     `inset 0 -1px 0 var(--c-border)` and `.st--now .st-stand a` overrides that
+     again — 0,1,1 and 0,2,1, in a file that loads after this one. Any
+     selector strong enough to beat every such rule would have to be guessed at
+     and re-guessed each time somebody adds another. The gate found thirteen of
+     seventy-nine stops on one portrait page with the halo replaced by a sand
+     underline at 1.38:1, and four with no halo at all at 1:1.
+     A decorative shadow suppressed for as long as a control has keyboard focus
+     is the correct trade; the underline comes straight back when focus leaves. */
+  box-shadow:0 0 0 4px var(--c-primary) !important}
 /* Three components replace the ring with an indicator of their own — a
    rectangle around a point on a map is not where the place is. They opt out of
    both tones, or the halo would put back the rectangle they removed. */
-.ex-bar input:focus,.at-c:focus,.wa-map-city:focus{box-shadow:none}
+.ex-bar input:focus,.at-c:focus,.wa-map-city:focus{box-shadow:none !important}
 
 .af-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--c-primary);
   color:var(--c-bg);padding:12px 18px;font-family:var(--fj-mono);font-size:11px;
@@ -714,4 +724,42 @@ img[data-illustration]{height:auto}
 
   /* Motion has no meaning on paper and reveal-on-scroll would print blank. */
   *{transition:none !important;animation:none !important;opacity:1 !important}
+}
+
+/* ---- the boundary between two companies on one domain ----------------------
+ * MOVED HERE FROM kamerun.css, AND THE MOVE IS THE FIX.
+ *
+ * This bar marks where Afrinkong ends and its operator begins, so it belongs
+ * to neither brand's stylesheet — it belongs to the file both of them load.
+ * In kamerun.css it reached /about, /pricing and /services and missed
+ * /cameroon and /contact, which do not load that file: those two carry their
+ * CSS inline. So on the operator's own landing page and on its enquiry page
+ * — the two where a reader is most likely to be about to spend money with
+ * somebody whose name does not match the domain — the bar has been
+ * completely unstyled since it shipped. Plain text at the full width of the
+ * page, which the measure gate reported as 184 characters.
+ *
+ * It also explains why the max-width added to fix that measure did nothing:
+ * it was added to a file those two pages never read.
+ */
+.af-operator-bar{display:flex;flex-wrap:wrap;align-items:baseline;
+  justify-content:space-between;gap:6px 24px;
+  max-width:var(--frame);margin:0 auto;padding:11px 28px;
+  border-bottom:var(--fj-rule)}
+/* Capped where a sentence reads. Left to fill the bar it ran to 184
+   characters on the two widest pages — the measure gate caught it, which is
+   what the measure gate is for. */
+.af-operator-say{margin:0;font-size:13px;line-height:1.5;color:var(--c-muted);
+  max-width:78ch}
+.af-operator-say b{font-weight:700;color:var(--c-primary)}
+.af-operator-go{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0}
+.af-operator-go a{display:inline-flex;align-items:center;min-height:24px;
+  font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);
+  border-bottom:1px solid color-mix(in srgb,var(--c-accent) 40%,transparent);
+  transition:border-color var(--t-fast) var(--ease)}
+.af-operator-go a:hover{border-bottom-color:var(--c-accent)}
+@media(max-width:760px){
+  .af-operator-bar{padding:10px 18px}
+  .af-operator-say{font-size:12.5px}
 }
