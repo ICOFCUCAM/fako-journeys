@@ -2382,6 +2382,34 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-now-say p{margin-top:9px;font-size:14.5px;line-height:1.55;color:var(--fj-onbasalt-dim)}
 .wa-now:hover .wa-now-say b{color:var(--c-accent)}
 @media(pointer:coarse){.wa-now{min-height:44px}}
+/* ---- the strip turning over ------------------------------------------------
+   OPACITY AND A SHORT RISE, NOTHING ELSE. The photograph and the caption fade
+   together and the caption lifts a few pixels behind it, so a card reads as
+   one thing changing rather than two. The transform is on the caption inside
+   the card, never on an ancestor of the hero's fixed picture — a transform up
+   there would make a containing block and the fixed-window band would quietly
+   stop working. */
+.wa-now-art img,.wa-now-say{transition:opacity .34s var(--ease,ease),
+  transform .34s var(--ease,ease)}
+.wa-now.is-turning .wa-now-art img{opacity:0}
+.wa-now.is-turning .wa-now-say{opacity:0;transform:translateY(7px)}
+/* The control only exists once the script has something to control, so it is
+   built in the script and styled here. */
+.wa-now-turn{margin:18px 0 0;display:flex;justify-content:flex-end}
+.wa-now-hold{display:inline-flex;align-items:center;gap:9px;min-height:32px;
+  padding:6px 2px;background:none;border:0;cursor:pointer;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);
+  transition:color var(--t-fast) var(--ease)}
+.wa-now-hold:hover{color:var(--c-bg)}
+@media(pointer:coarse){.wa-now-hold{min-height:44px}}
+.wa-now-hold i{display:block;width:9px;height:11px;background:currentColor;
+  /* two bars while it is running, one triangle once it is held */
+  clip-path:polygon(0 0,35% 0,35% 100%,0 100%,0 0,65% 0,100% 0,100% 100%,65% 100%)}
+.wa-now-hold[aria-pressed="true"] i{clip-path:polygon(0 0,100% 50%,0 100%)}
+@media(prefers-reduced-motion:reduce){
+  .wa-now-art img,.wa-now-say{transition:none}
+  .wa-now.is-turning .wa-now-say{transform:none}}
 @media(max-width:900px){.wa-nows{grid-template-columns:1fr 1fr}}
 /* The phone composition, which is not the desktop one in one column. Stacked
    four-by-three cards ran this section to three and a half phone screens — more
@@ -4289,18 +4317,18 @@ window.AF = {
       <div>
         <h2>Not a <em>museum</em>.</h2>
         <!-- gen:nownote -->
-        <p class="wa-note">Fifty-four chapters on what this continent eats, one for every country, and 108 more on what it makes and builds this decade rather than what is behind glass. Six tables here, and the rest of each country is on its own portrait. Not a feed and not an events calendar &mdash; this site holds no dates and will not invent any; these are evergreen, and they are true for longer than a week.</p>
+        <p class="wa-note">Fifty-four chapters on what this continent eats, one for every country, and 108 more on what it makes and builds this decade rather than what is behind glass. Six tables at a time here, turning through the forty-four that have been photographed, and the rest of each country is on its own portrait. Not a feed and not an events calendar &mdash; this site holds no dates and will not invent any; these are evergreen, and they are true for longer than a week.</p>
         <!-- /gen:nownote -->
       </div>
     </div>
-    <div class="wa-nows">
+    <div class="wa-nows" data-table>
       <!-- gen:now -->
-      <a class="wa-now has-shot" href="/portrait/algeria#the-table" style="--reg-tone:#865A28"><span class="wa-now-art"><img src="https://images.pexels.com/photos/26587862/pexels-photo-26587862.jpeg" alt="Chorba, m&#x27;hadjeb, and the Friday couscous that stops the whole country." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Algeria &middot; The table</i><b>Couscous on Friday</b><p>Chorba, m&#x27;hadjeb, and the Friday couscous that stops the whole country.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/angola#the-table" style="--reg-tone:#672E1D"><span class="wa-now-art"><img src="https://images.pexels.com/photos/9670687/pexels-photo-9670687.jpeg" alt="Funge with muamba de galinha, calulu with dried fish, and Portuguese pastries after." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Angola &middot; The table</i><b>Funge, Muamba and Calulu</b><p>Funge with muamba de galinha, calulu with dried fish, and Portuguese pastries after.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/benin#the-table" style="--reg-tone:#113222"><span class="wa-now-art"><img src="https://images.pexels.com/photos/37211572/pexels-photo-37211572.jpeg" alt="Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Benin &middot; The table</i><b>Amiwo and Grilled Fish</b><p>Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/botswana#the-table" style="--reg-tone:#672E1D"><span class="wa-now-art"><img src="https://images.pexels.com/photos/15022727/pexels-photo-15022727.jpeg" alt="Slow-pounded beef and sorghum porridge, and braai wherever there is a fire." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Botswana &middot; The table</i><b>Seswaa and Bogobe</b><p>Slow-pounded beef and sorghum porridge, and braai wherever there is a fire.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/burkina-faso#the-table" style="--reg-tone:#113222"><span class="wa-now-art"><img src="https://images.pexels.com/photos/33490824/pexels-photo-33490824.jpeg" alt="To — millet paste with sauce — and riz gras cooked in tomato and oil." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Burkina Faso &middot; The table</i><b>To and Riz Gras</b><p>To — millet paste with sauce — and riz gras cooked in tomato and oil.</p></span></a>
-      <a class="wa-now has-shot" href="/portrait/burundi#the-table" style="--reg-tone:#2B6E5E"><span class="wa-now-art"><img src="https://images.pexels.com/photos/34206384/pexels-photo-34206384.jpeg" alt="Beans and plantain, ugali, and mukeke — a Tanganyika fish grilled on the beach." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Burundi &middot; The table</i><b>Beans, Ugali and Mukeke</b><p>Beans and plantain, ugali, and mukeke — a Tanganyika fish grilled on the beach.</p></span></a>      <!-- /gen:now -->
+      <a class="wa-now has-shot" href="/portrait/algeria#the-table" style="--reg-tone:#865A28" data-slot="0"><span class="wa-now-art"><img src="https://images.pexels.com/photos/26587862/pexels-photo-26587862.jpeg" alt="Chorba, m&#x27;hadjeb, and the Friday couscous that stops the whole country." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Algeria &middot; The table</i><b>Couscous on Friday</b><p>Chorba, m&#x27;hadjeb, and the Friday couscous that stops the whole country.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/angola#the-table" style="--reg-tone:#672E1D" data-slot="1"><span class="wa-now-art"><img src="https://images.pexels.com/photos/9670687/pexels-photo-9670687.jpeg" alt="Funge with muamba de galinha, calulu with dried fish, and Portuguese pastries after." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Angola &middot; The table</i><b>Funge, Muamba and Calulu</b><p>Funge with muamba de galinha, calulu with dried fish, and Portuguese pastries after.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/benin#the-table" style="--reg-tone:#113222" data-slot="2"><span class="wa-now-art"><img src="https://images.pexels.com/photos/37211572/pexels-photo-37211572.jpeg" alt="Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Benin &middot; The table</i><b>Amiwo and Grilled Fish</b><p>Amiwo — maize with tomato and chicken — and fish straight off the Grand-Popo beach.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/botswana#the-table" style="--reg-tone:#672E1D" data-slot="3"><span class="wa-now-art"><img src="https://images.pexels.com/photos/15022727/pexels-photo-15022727.jpeg" alt="Slow-pounded beef and sorghum porridge, and braai wherever there is a fire." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Botswana &middot; The table</i><b>Seswaa and Bogobe</b><p>Slow-pounded beef and sorghum porridge, and braai wherever there is a fire.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/burkina-faso#the-table" style="--reg-tone:#113222" data-slot="4"><span class="wa-now-art"><img src="https://images.pexels.com/photos/33490824/pexels-photo-33490824.jpeg" alt="To — millet paste with sauce — and riz gras cooked in tomato and oil." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Burkina Faso &middot; The table</i><b>To and Riz Gras</b><p>To — millet paste with sauce — and riz gras cooked in tomato and oil.</p></span></a>
+      <a class="wa-now has-shot" href="/portrait/burundi#the-table" style="--reg-tone:#2B6E5E" data-slot="5"><span class="wa-now-art"><img src="https://images.pexels.com/photos/34206384/pexels-photo-34206384.jpeg" alt="Beans and plantain, ugali, and mukeke — a Tanganyika fish grilled on the beach." width="800" height="600" loading="lazy" decoding="async"></span><span class="wa-now-say"><i>Burundi &middot; The table</i><b>Beans, Ugali and Mukeke</b><p>Beans and plantain, ugali, and mukeke — a Tanganyika fish grilled on the beach.</p></span></a>      <!-- /gen:now -->
     </div>
   </div>
 </section>
@@ -5007,6 +5035,7 @@ window.AF = {
 </script>
 <script src="/scripts/story-search.js" defer></script>
 <script src="/scripts/explore.js" defer></script>
+<script src="/scripts/table.js" defer></script>
 </body>
 </html>
 

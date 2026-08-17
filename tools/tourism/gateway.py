@@ -1825,6 +1825,27 @@ NOW_CARDS = 6
 # Change the strip by changing this line.
 NOW_PICK = ("algeria", "angola", "benin", "botswana", "burkina-faso", "burundi")
 
+# WHO COMES ROUND NEXT, AND IN WHAT ORDER.
+#
+# The strip shows six of fifty-four tables, which meant forty-eight countries
+# cooked for nobody. They rotate now, and the order they arrive in is the same
+# kind of decision NOW_PICK is: a continent's best-known kitchens should not
+# have to wait for the alphabet to reach them. These come round first, then
+# everything else in file order.
+#
+# A slug here that is not a published country with a photographed chapter is
+# skipped rather than raised on — this is a running order, not a promise that
+# every name in it has a picture yet.
+NOW_NEXT = ("cameroon", "nigeria", "ghana", "senegal", "ethiopia", "morocco",
+            "south-africa", "kenya", "tanzania", "egypt", "cote-divoire",
+            "tunisia", "mali", "uganda", "mozambique", "madagascar")
+
+# Seconds one card holds before the next takes its place, and how long the
+# whole strip takes to turn over once. One card at a time, never all six: six
+# photographs changing together is a slideshow, and one changing while five
+# hold still is a page that is alive.
+NOW_HOLD = 4.0
+
 
 def now_rows(countries):
     """Which contemporary chapters the strip shows, in order.
@@ -1863,6 +1884,93 @@ def now_rows(countries):
     return picked
 
 
+TABLE_DECK = os.path.join(ROOT, "data", "table.json")
+
+
+def table_deck(countries):
+    """-> six running orders, one per card, no country in two of them.
+
+    The strip holds six of the continent's fifty-four tables. Standing still,
+    that meant forty-eight countries cooked for nobody — including Cameroon and
+    Nigeria, which is an odd pair to leave out of a row about African food. So
+    each card keeps its own deck and turns over to the next country in it.
+
+    SIX DISJOINT DECKS, NOT ONE SHARED ONE. Every card drawing from a common
+    pool eventually shows Ghana twice in the same row, and two identical
+    photographs side by side reads as a bug however briefly it lasts. Dealing
+    the countries out round-robin makes a duplicate impossible rather than
+    unlikely, which is the difference between a rule and a hope.
+
+    Frame nought of each deck is that card's NOW_PICK country, so the deck the
+    script starts from is the strip the server already sent — the first turn is
+    a change, not a correction.
+
+    Photographed chapters only. A card that rotated to a grey plate would be
+    the section briefly getting worse on a timer.
+    """
+    data = read_json(os.path.join(ROOT, "data", "stories.json"))
+    live = {c.slug: c for c in countries}
+    regions = load_regions()
+    rows = {}
+    for r in (data.get("stories") or []):
+        if (r.get("now") and r["arc"] == NOW_ARC and r.get("image")
+                and r["country"] in live and r["country"] not in rows):
+            rows[r["country"]] = r
+
+    order = [s for s in NOW_PICK if s in rows]
+    for slug in NOW_NEXT:
+        if slug in rows and slug not in order:
+            order.append(slug)
+    for slug in rows:
+        if slug not in order:
+            order.append(slug)
+
+    decks = [[] for _ in range(NOW_CARDS)]
+    for n, slug in enumerate(order):
+        r = rows[slug]
+        c = live[slug]
+        key, _reg = region_of(c, regions)
+        decks[n % NOW_CARDS].append({
+            "country": slug,
+            "name": r["countryName"],
+            "arc": r["arcTitle"],
+            "title": r["title"],
+            "text": r["text"],
+            "url": r["url"],
+            "image": r["image"],
+            "tone": (regions.get(key).tone if regions.get(key) else ""),
+        })
+    return decks
+
+
+def write_table_deck(countries, log=print):
+    """The decks as a file the page fetches when the strip comes into view.
+
+    Inline it would be ten kilobytes of JSON in every homepage, carried by
+    every reader including the ones who never scroll that far. Fetched on
+    approach it costs nothing until the section is nearly on screen, which is
+    the same argument the photographs already make with loading="lazy".
+    """
+    decks = table_deck(countries)
+    doc = {
+        "$made": "tools/tourism/build.py gateway",
+        "$says": ("One running order per card in the homepage's table strip. "
+                  "Frame nought of each is what the server already sent, so "
+                  "the first turn is a change rather than a correction. The "
+                  "decks share no country, which is what makes a duplicate "
+                  "impossible rather than unlikely."),
+        "hold": NOW_HOLD,
+        "decks": decks,
+    }
+    with open(TABLE_DECK, "w", encoding="utf-8") as fh:
+        json.dump(doc, fh, ensure_ascii=False, indent=1, sort_keys=True)
+        fh.write("\n")
+    log("table deck: %d countries across %d cards -> %s"
+        % (sum(len(d) for d in decks), len(decks),
+           os.path.relpath(TABLE_DECK, ROOT)))
+    return decks
+
+
 def block_nownote(countries):
     """The sentence beside the strip, counting what the strip actually holds.
 
@@ -1876,6 +1984,11 @@ def block_nownote(countries):
     It counts no spread. It did for one commit, while the six were chosen by a
     rule that guaranteed five regions — and a sentence may only claim what
     something downstream keeps true. The six are named now, so the claim goes.
+
+    It does claim the turn, because something downstream keeps that true: the
+    count of countries the decks can reach is read off the decks themselves.
+    Without the script the strip holds on its first six and the sentence is
+    still not lying — six tables at a time is what a reader sees either way.
     """
     data = read_json(os.path.join(ROOT, "data", "stories.json"))
     now = [r for r in (data.get("stories") or []) if r.get("now")]
@@ -1885,13 +1998,19 @@ def block_nownote(countries):
                 'yet.</p>')
     table = len([r for r in now if r["arc"] == NOW_ARC])
     other = len(now) - table
+    # What the strip can actually reach, not what exists: a chapter with no
+    # photograph is not in any deck, so counting all fifty-four here would be
+    # the sentence promising countries the strip will never turn to.
+    shot = sum(len(d) for d in table_deck(countries))
     return ('        <p class="wa-note">%s chapters on what this continent eats, one '
             'for every country, and %s more on what it makes and builds this decade '
-            'rather than what is behind glass. %s tables here, and the rest of each '
+            'rather than what is behind glass. %s tables at a time here, turning '
+            'through the %s that have been photographed, and the rest of each '
             'country is on its own portrait. Not a feed and not an events calendar '
             '&mdash; this site holds no dates and will not invent any; these are '
             'evergreen, and they are true for longer than a week.</p>'
-            % (_spell(table), _spell(other).lower(), _spell(len(picked))))
+            % (_spell(table), _spell(other).lower(), _spell(len(picked)),
+               _spell(shot).lower()))
 
 
 def block_now(countries):
@@ -1920,18 +2039,18 @@ def block_now(countries):
     regions = load_regions()
 
     out = []
-    for r in picked:
+    for n, r in enumerate(picked):
         c = live[r["country"]]
         key, _reg = region_of(c, regions)
         art = ('<img src="%s" alt="%s" width="800" height="600" loading="lazy" '
                'decoding="async">' % (esc(r["image"]), esc(r["text"]))) if r.get("image") else (
               '<span class="wa-now-plate" aria-hidden="true"></span>')
         out.append(
-            '      <a class="wa-now%s" href="%s" style="--reg-tone:%s">'
+            '      <a class="wa-now%s" href="%s" style="--reg-tone:%s" data-slot="%d">'
             '<span class="wa-now-art">%s</span>'
             '<span class="wa-now-say"><i>%s &middot; %s</i><b>%s</b><p>%s</p></span></a>'
             % (" has-shot" if r.get("image") else "", esc(r["url"]),
-               esc((regions.get(key).tone if regions.get(key) else "")), art,
+               esc((regions.get(key).tone if regions.get(key) else "")), n, art,
                esc(r["countryName"]), esc(r["arcTitle"]), esc(r["title"]), esc(r["text"])))
     return "\n".join(out)
 
@@ -2161,6 +2280,7 @@ def run(countries, page=None, log=print):
     if changed:
         with open(page, "w") as fh:
             fh.write(out)
+    write_table_deck(countries, log=log)
     seq = ordered(countries)
     log("%s %d countries (%d with an operator of ours) into %s"
         % ("rewrote" if changed else "no change:", len(seq),
