@@ -65,7 +65,17 @@
       </div>
     </div>
 
-    <form class="jn-enq-form" id="say" data-lead-mailto="hello@afrinkong.com" data-lead-form
+    <!-- THE FORM HAS AN ACTION NOW, AND IT IS NOT DECORATION.
+         With scripting off, a form with no action posts to its own URL: the
+         page reloaded, the fields came back as a query string, and the enquiry
+         was gone. Silently. On the one page this whole site exists to reach.
+         A mailto action is imperfect — support varies and some browsers
+         warn — but "opens something the visitor can see and cancel" beats
+         "looks like it worked and did not". The script still intercepts and
+         does the better job whenever it is there. -->
+    <form class="jn-enq-form" id="say" method="post" enctype="text/plain"
+      action="mailto:hello@afrinkong.com?subject=A%20journey%20built%20on%20afrinkong.com"
+      data-lead-mailto="hello@afrinkong.com" data-lead-form
       data-lead-success="Thank you — your journey has reached us. We will come back within one working day with what can be arranged on your dates and the figure in writing."
       data-lead-error="That did not send. Please write to hello@afrinkong.com directly and paste your journey in — it is the text in the box below.">
       <div class="jn-enq-row">
@@ -83,7 +93,23 @@
       </div>
       <button class="af-btn af-btn--solid" type="submit">Send this journey<i>&rarr;</i></button>
       <p class="jn-enq-fine">Your details stay with us. No mailing list, no
-        agents, nothing forwarded to third parties.</p>
+        agents, nothing forwarded to third parties &mdash;
+        <a href="/privacy">what we hold, and what we do not</a>.</p>
+      <!-- THE WAY OUT WHEN THE SEND BUTTON CANNOT WORK.
+           Pressing send hands the letter to the visitor's mail application. On
+           a machine with none configured — a shared desktop, a locked-down
+           laptop, a browser where webmail was never registered as the handler
+           — nothing at all happens, and the visitor has no way of knowing
+           that is what went wrong. So the address is printed where they can
+           see it before they press anything, and the letter can be lifted in
+           one press. Two ways to send the same thing is not clutter on the
+           only page that converts. -->
+      <p class="jn-enq-alt">Nothing happened when you pressed send? Your
+        browser has no mail application set up. Write to
+        <a href="mailto:hello@afrinkong.com">hello@afrinkong.com</a> and paste your journey in
+        &mdash; it is the text in the box above.
+        <button class="jn-enq-copy" type="button" data-copy-journey hidden>Copy
+          my journey</button></p>
       <p class="jn-enq-flash" data-lead-success-msg></p>
       <p class="jn-enq-flash" data-lead-error-msg></p>
     </form>
@@ -109,6 +135,23 @@
     box.setAttribute('placeholder', 'Tell us where you want to go, roughly how '
       + 'long you have and what you want out of it — or build one first at '
       + '/journey and it will arrive here already written.');
+  }
+  /* The copy button only exists where the clipboard does, which is why it
+     ships hidden and is revealed here rather than being disabled on arrival.
+     A control that is visible and does nothing is worse than one that is not
+     there: the address beside it works either way. */
+  var copy = document.querySelector('[data-copy-journey]');
+  if (copy && navigator.clipboard) {
+    copy.hidden = false;
+    copy.addEventListener('click', function () {
+      var box = document.querySelector('[data-journey-box]');
+      if (!box || !box.value) return;
+      navigator.clipboard.writeText(box.value).then(function () {
+        copy.textContent = 'Copied — now paste it into an email';
+      }, function () {
+        copy.textContent = 'Could not copy — select the text above';
+      });
+    });
   }
   document.querySelectorAll('[data-lead-form]').forEach(function(fm){
     fm.addEventListener('submit', function(e){

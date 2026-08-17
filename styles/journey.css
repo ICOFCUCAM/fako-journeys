@@ -692,6 +692,25 @@
    Muted until pointed at: this is the strip a reader consults deliberately,
    not one that should compete with the journey above it. */
 .af-co-links{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:10px}
+
+/* The second way to send. Quieter than the button but not hidden: somebody
+   reads this only when the first way has failed them, and at that moment it
+   needs to be findable rather than tasteful. */
+.jn-enq-alt{margin-top:14px;font-size:13.5px;line-height:1.6;color:var(--c-muted);
+  max-width:62ch}
+.jn-enq-alt a{color:var(--c-accent);border-bottom:1px solid
+  color-mix(in srgb,var(--c-accent) 40%,transparent)}
+.jn-enq-alt a:hover{border-bottom-color:var(--c-accent)}
+.jn-enq-copy{display:inline-flex;align-items:center;min-height:32px;
+  margin-left:6px;padding:5px 12px;background:none;cursor:pointer;
+  font-family:var(--fj-mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-accent);
+  border:1px solid color-mix(in srgb,var(--c-accent) 45%,transparent);
+  transition:background var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.jn-enq-copy:hover{border-color:var(--c-accent);
+  background:color-mix(in srgb,var(--c-accent) 8%,transparent)}
+@media(pointer:coarse){.jn-enq-copy{min-height:44px}}
+
 .af-co-link{font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;
   text-transform:uppercase;color:var(--c-muted);display:inline-flex;
   align-items:center;min-height:24px;border-bottom:1px solid transparent;
