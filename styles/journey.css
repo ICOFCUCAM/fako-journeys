@@ -688,6 +688,17 @@
 .jn-enq-foot b{font-weight:400;color:var(--c-fg)}
 .jn-enq-foot .af-co-where{display:block;margin-top:5px;text-transform:none}
 
+/* The three statements, at the foot of every page that names the company.
+   Muted until pointed at: this is the strip a reader consults deliberately,
+   not one that should compete with the journey above it. */
+.af-co-links{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:10px}
+.af-co-link{font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-muted);display:inline-flex;
+  align-items:center;min-height:24px;border-bottom:1px solid transparent;
+  transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.af-co-link:hover{color:var(--c-accent);border-bottom-color:var(--c-accent)}
+
+
 @media(max-width:900px){
   .jn-enq-grid{grid-template-columns:1fr;gap:var(--sp-5)}
 }

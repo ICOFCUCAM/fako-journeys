@@ -67,6 +67,16 @@ def where(d, join=", "):
          "%s %s" % (o["region"], o["postcode"]), o["country"]])
 
 
+# The statements, in the order a reader wants them: what you hold about me,
+# what I am agreeing to, and can I use this. Cookies is not among them and that
+# is not an omission — there are none, and a cookie page on a site with no
+# cookies is a page written to look compliant rather than to be read. The fact
+# lives in /privacy where somebody looking for it will actually find it.
+COLOPHON_LINKS = (("/privacy", "Privacy"),
+                  ("/terms", "Terms"),
+                  ("/accessibility", "Accessibility"))
+
+
 def block_company(d):
     """One line, for the bar at the bottom of a footer."""
     o = d["office"]
@@ -80,21 +90,42 @@ def block_company(d):
         # registration detail rather than a door to knock on — and the label
         # was the loudest thing in the quietest part of the page.
         '<span class="af-co-where">%s &middot; %s, %s %s</span>'
+        # THE STATEMENTS GO HERE, NOT ONLY IN THE COLOPHON. The colophon is on
+        # one page; this marker is on 1,528, which is the difference between a
+        # privacy notice that exists and one a reader can reach from wherever
+        # they happen to be standing.
+        '<span class="af-co-links">%s</span>'
         % (esc(d["brand"]), esc(d["legal"]), esc(d["jurisdiction"]),
            esc(d["registration"]), esc(o["street"]),
-           esc(o["city"]), esc(o["region"]), esc(o["postcode"])))
+           esc(o["city"]), esc(o["region"]), esc(o["postcode"]),
+           colophon_links()))
+
+
+def colophon_links():
+    return "".join('<a class="af-co-link" href="%s">%s</a>' % (h, esc(n))
+                   for h, n in COLOPHON_LINKS)
+
+
 
 
 def block_colophon(d):
-    """The last line on the page: whose copyright, and nothing else.
+    """The last line on the page: whose copyright, and where the statements are.
 
-    Privacy, Terms and Cookies are not here. /privacy, /terms and /cookies do
-    not exist, and a colophon that links to three 404s is less trustworthy than
-    one that stays quiet — this is the strip a reader checks when they want to
-    know who they are dealing with, so it is the worst possible place to be
-    caught out. Write the pages and this will carry them.
+    This used to be the copyright alone, and said why in a docstring: the three
+    pages did not exist, and a colophon linking to three 404s is less
+    trustworthy than one that stays quiet — this being the strip a reader
+    checks when they want to know who they are dealing with, and so the worst
+    possible place to be caught out.
+
+    They exist now. Thirteen hundred pages gain the link in one build, which is
+    the whole reason the colophon was generated rather than typed into each
+    footer by hand.
     """
-    return '&copy; %d %s' % (d["colophon"]["since"], esc(d["legal"]))
+    links = "".join(
+        '<a class="af-co-link" href="%s">%s</a>' % (href, esc(name))
+        for href, name in COLOPHON_LINKS)
+    return ('&copy; %d %s<span class="af-co-links">%s</span>'
+            % (d["colophon"]["since"], esc(d["legal"]), links))
 
 
 def block_whopays(d):

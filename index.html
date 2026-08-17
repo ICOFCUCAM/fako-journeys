@@ -2821,6 +2821,14 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-foot-atlas a{font-size:14.5px;color:var(--fj-onbasalt-dim);transition:color .2s}
 .wa-foot-atlas a:hover{color:var(--c-bg)}
 .wa-foot-rights{display:block;margin-bottom:7px}
+/* On basalt the muted grey of the light footers is not readable, so the links
+   take the on-basalt dim and lift to full ivory. Same object, own ground. */
+.wa-foot .af-co-links{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:10px}
+.wa-foot .af-co-link{font-family:var(--fj-mono);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim);display:inline-flex;
+  align-items:center;min-height:24px;border-bottom:1px solid transparent;
+  transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.wa-foot .af-co-link:hover{color:var(--c-bg);border-bottom-color:var(--c-accent)}
 @media(max-width:900px){.wa-foot-atlas{gap:6px 16px}}
 .wa-foot-brand{font-family:var(--fj-display);font-size:26px;font-weight:700;text-transform:uppercase;color:var(--c-bg)}
 .wa-foot-brand span{display:block;font-family:var(--fj-mono);font-size:9.5px;font-weight:400;letter-spacing:.28em;color:var(--c-accent);margin-top:7px}
@@ -4956,9 +4964,9 @@ window.AF = {
     </nav>
     <div class="wa-foot-bar wa-frame" style="padding-left:0;padding-right:0">
       <span class="wa-foot-rights"><!-- gen:colophon -->
-&copy; 2026 Wankong LLC      <!-- /gen:colophon --></span>
+&copy; 2026 Wankong LLC<span class="af-co-links"><a class="af-co-link" href="/privacy">Privacy</a><a class="af-co-link" href="/terms">Terms</a><a class="af-co-link" href="/accessibility">Accessibility</a></span>      <!-- /gen:colophon --></span>
       <!-- gen:company -->
-<span class="af-co-brand">Afrinkong</span> is a trading name of <b>Wankong LLC</b> &middot; Delaware, USA &middot; Registration No. 10588061<span class="af-co-where">8 The Green, Suite B &middot; Dover, Delaware 19901</span>      <!-- /gen:company -->
+<span class="af-co-brand">Afrinkong</span> is a trading name of <b>Wankong LLC</b> &middot; Delaware, USA &middot; Registration No. 10588061<span class="af-co-where">8 The Green, Suite B &middot; Dover, Delaware 19901</span><span class="af-co-links"><a class="af-co-link" href="/privacy">Privacy</a><a class="af-co-link" href="/terms">Terms</a><a class="af-co-link" href="/accessibility">Accessibility</a></span>      <!-- /gen:company -->
     </div>
   </div>
 </footer>
