@@ -31,7 +31,9 @@ of, which is true and is also the most useful thing it can say.
 
 import html as html_mod
 
-from .model import load_regions, region_of
+import os
+
+from .model import ROOT, load_regions, region_of
 
 
 def esc(v):
@@ -39,6 +41,32 @@ def esc(v):
 
 
 # ---- the window ------------------------------------------------------------------
+
+
+# The largest the window's photograph is ever painted, measured in a browser:
+# 328 CSS pixels on a desktop and 239 on a 390-pixel phone, which at three
+# device pixels is 717. An 800-wide file covers every case with room to spare.
+WINDOW_DEVICE_PX = 800
+
+
+def window_size(href):
+    """-> the same photograph at a width the window can actually use.
+
+    SVG <image> has no srcset. It takes one URL and paints it into a fixed box,
+    so the responsive pass that fixed every <img> on the site could do nothing
+    here — and the hero was serving 1200-wide files into a box that is 328
+    pixels across on a desktop and 239 on a phone. Four hundred and eighty
+    pixels of photograph per country, decoded and thrown away.
+
+    Falls back to what it was given: a country whose 800 has not been made yet
+    keeps its original rather than pointing at a file that does not exist.
+    """
+    import re as _re
+    m = _re.match(r"^(/images/uploads/.+)-(\d+)w\.(jpg|jpeg|png|webp)$", href or "")
+    if not m or int(m.group(2)) <= WINDOW_DEVICE_PX:
+        return href
+    want = "%s-%dw.%s" % (m.group(1), WINDOW_DEVICE_PX, m.group(3))
+    return want if os.path.exists(os.path.join(ROOT, want.lstrip("/"))) else href
 
 
 def window_svg(shape, name, image=None, alt=None, ident="w", classes="af-window-svg"):
@@ -56,6 +84,7 @@ def window_svg(shape, name, image=None, alt=None, ident="w", classes="af-window-
     label = alt if (image and alt) else "The outline of %s" % name
     art = ""
     if image:
+        image = window_size(image)
         art = ('<image clip-path="url(#%s)" href="%s" x="0" y="0" width="%s" '
                'height="%s" preserveAspectRatio="xMidYMid slice"/>'
                % (esc(ident), esc(image), shape["w"], shape["h"]))

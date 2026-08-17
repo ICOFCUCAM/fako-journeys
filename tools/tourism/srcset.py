@@ -189,7 +189,10 @@ def missing_siblings():
         key, w = (m.group(1), m.group(3)), int(m.group(2))
         if key in have:
             continue                       # already has a sibling
-        if w >= 1200:
+        # 900 rather than 1200. The hero window's photographs are 940 and 1024
+        # wide and render at 717 device pixels at the very most — measured, on
+        # a 390px phone at 3x — so they want an 800 as much as the big ones do.
+        if w >= 900:
             out.append((f, w, SIBLING))
     return out
 
