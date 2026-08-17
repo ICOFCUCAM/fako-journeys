@@ -100,7 +100,15 @@
    "photo_query": "Okavango Delta aerial channels",
    "photo_terms": [
     "okavango"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1722645148077-a7f99c8bcef2",
+   "photo_w": 6000,
+   "photo_h": 4000,
+   "photo_alt": "An aerial view of a river running through a lush green field flying over the Okavango Delta Botswana",
+   "photo_provider": "unsplash",
+   "photo_by": "Sheila C",
+   "photo_by_url": "https://unsplash.com/@qld_traveller",
+   "photo_source": "https://unsplash.com/photos/an-aerial-view-of-a-river-running-through-a-lush-green-field-jk_2Ak2z3JY"
   },
   {
    "id": "namib",
@@ -113,7 +121,15 @@
    "photo_query": "Sossusvlei Namib desert dunes",
    "photo_terms": [
     "sossusvlei|namib"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1639402479478-f5e7881c0ccc",
+   "photo_w": 6938,
+   "photo_h": 3903,
+   "photo_alt": "A group of sand dunes with a blue sky in the background Namib desert, home of the largest dunes in the world",
+   "photo_provider": "unsplash",
+   "photo_by": "Andrew Svk",
+   "photo_by_url": "https://unsplash.com/@andrew_svk",
+   "photo_source": "https://unsplash.com/photos/a-group-of-sand-dunes-with-a-blue-sky-in-the-background-0s9oD70F-l4"
   },
   {
    "id": "bwindi",
@@ -152,7 +168,15 @@
    "photo_query": "Lalibela rock-hewn church Ethiopia",
    "photo_terms": [
     "lalibela"
-   ]
+   ],
+   "photo": "https://images.pexels.com/photos/7438884/pexels-photo-7438884.jpeg",
+   "photo_w": 6000,
+   "photo_h": 4000,
+   "photo_alt": "Stunning view of a rock-hewn church in Lalibela, Ethiopia, showcasing its architectural brilliance.",
+   "photo_provider": "pexels",
+   "photo_by": "Estella",
+   "photo_by_url": "https://www.pexels.com/@estella-44057930",
+   "photo_source": "https://www.pexels.com/photo/family-visiting-one-of-the-rock-hewn-churches-in-lalibela-7438884/"
   },
   {
    "id": "ngorongoro",
@@ -165,7 +189,15 @@
    "photo_query": "Ngorongoro Crater Tanzania",
    "photo_terms": [
     "ngorongoro"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1619022894036-f987144cb43a",
+   "photo_w": 4333,
+   "photo_h": 2889,
+   "photo_alt": "Brown and white deer on green grass field during daytime Caracal hunting birds in Ngorongoro Crater, Tanzania",
+   "photo_provider": "unsplash",
+   "photo_by": "Dmitrii Zhodzishskii",
+   "photo_by_url": "https://unsplash.com/@dmitrii_zhodzishskii",
+   "photo_source": "https://unsplash.com/photos/brown-and-white-deer-on-green-grass-field-during-daytime-uG50pFav8tI"
   },
   {
    "id": "virunga",
@@ -198,7 +230,15 @@
    "photo_query": "Sahara desert dunes Algeria",
    "photo_terms": [
     "sahara"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1629052141421-b1d61ae82949",
+   "photo_w": 4032,
+   "photo_h": 3024,
+   "photo_alt": "Desert under blue sky during daytime Algeria Desert - Sahara Ouargla",
+   "photo_provider": "unsplash",
+   "photo_by": "Nessereddine OUCHENE",
+   "photo_by_url": "https://unsplash.com/@nassro36",
+   "photo_source": "https://unsplash.com/photos/desert-under-blue-sky-during-daytime-EelPTLM8OcA"
   },
   {
    "id": "table-mountain",
@@ -237,7 +277,15 @@
    "photo_query": "Seychelles granite boulders beach",
    "photo_terms": [
     "seychelles"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1553829176-61484f865ac3",
+   "photo_w": 4032,
+   "photo_h": 3024,
+   "photo_alt": "Large rocks on the Island la digue, seychelles",
+   "photo_provider": "unsplash",
+   "photo_by": "Christian Cacciamani",
+   "photo_by_url": "https://unsplash.com/@cacciahands",
+   "photo_source": "https://unsplash.com/photos/large-rocks-on-the-island-jPmurJKSL_0"
   },
   {
    "id": "madagascar",
@@ -250,7 +298,15 @@
    "photo_query": "Madagascar baobab avenue",
    "photo_terms": [
     "madagascar"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1570742544137-3a469196c32b",
+   "photo_w": 3847,
+   "photo_h": 2570,
+   "photo_alt": "Avenue of the Baobabs, Madagascar during day Beautiful alley of baobabs during sunrise in Morondava, Madagascar.",
+   "photo_provider": "unsplash",
+   "photo_by": "Yasmine Arfaoui",
+   "photo_by_url": "https://unsplash.com/@yasmine_photo",
+   "photo_source": "https://unsplash.com/photos/avenue-of-the-baobabs-madagascar-during-day-G40jEUyEsEk"
   },
   {
    "id": "gorongosa",
@@ -328,7 +384,15 @@
    "photo_query": "Valley of the Kings Luxor Egypt",
    "photo_terms": [
     "valley of the kings|luxor"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1632944398987-494eebe663be",
+   "photo_w": 6086,
+   "photo_h": 4057,
+   "photo_alt": "A long hallway with paintings on the walls Tomb KV9 in Egypt's Valley of the Kings for Pharaohs Ramesses V and VI",
+   "photo_provider": "unsplash",
+   "photo_by": "Dmitrii Zhodzishskii",
+   "photo_by_url": "https://unsplash.com/@dmitrii_zhodzishskii",
+   "photo_source": "https://unsplash.com/photos/a-long-hallway-with-paintings-on-the-walls-5aEHOQrb2Qk"
   },
   {
    "id": "elmina",
@@ -341,7 +405,15 @@
    "photo_query": "Cape Coast Castle Ghana",
    "photo_terms": [
     "cape coast|elmina"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1651860282137-a59f01d2db7b",
+   "photo_w": 4128,
+   "photo_h": 3096,
+   "photo_alt": "A beach with a lighthouse Cape Coast slavery castle Ghana",
+   "photo_provider": "unsplash",
+   "photo_by": "Andrew Molo",
+   "photo_by_url": "https://unsplash.com/@molosocial",
+   "photo_source": "https://unsplash.com/photos/a-beach-with-a-lighthouse-xB_6jCXUa34"
   },
   {
    "id": "robben-island",
@@ -354,7 +426,15 @@
    "photo_query": "Robben Island Cape Town",
    "photo_terms": [
     "robben"
-   ]
+   ],
+   "photo": "https://images.unsplash.com/photo-1636212962845-da175a828551",
+   "photo_w": 4139,
+   "photo_h": 2754,
+   "photo_alt": "A large body of water with a mountain in the background Cape Town as seen from Robben Island",
+   "photo_provider": "unsplash",
+   "photo_by": "katsuma tanaka",
+   "photo_by_url": "https://unsplash.com/@kt2080",
+   "photo_source": "https://unsplash.com/photos/a-large-body-of-water-with-a-mountain-in-the-background-msPoWrlNYBY"
   }
  ],
  "$photo_search": "What to ask a provider for, per wonder with no photograph, and the words that have to appear in the photographer's OWN description before a picture is allowed to stand under that name. photo_terms is AND across entries and OR inside one, separated by a bar. It is written here rather than derived from the name because which words prove a photograph is of Great Zimbabwe is an editorial judgement: 'zimbabwe' alone is a country of 390,000 square kilometres. A wonder with no terms is staged for a person and never bound automatically."
