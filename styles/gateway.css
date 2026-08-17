@@ -206,7 +206,7 @@
    at. The clamps are floors for the phone, where a strict ratio would take the
    promise line down to 14px, and they are the value with scripting off. */
 .wa-h1-rest{display:block;line-height:1;letter-spacing:-.015em;margin-top:.12em;
-  font-size:clamp(26px, calc(var(--fj-h1, 3.6vw) * .244), 63px);
+  font-size:clamp(26px, calc(var(--fj-h1, 3.6vw) * .244), 74px);
   margin-left:-.0577em}
 
 /* Optical alignment, measured rather than eyeballed.
@@ -402,8 +402,8 @@
    and the headline at its largest, so the map's caption was at its smallest
    relative to it exactly where the map is at its biggest. */
 .wa-win-cap b{display:block;font-family:var(--fj-display);font-weight:700;
-  text-transform:uppercase;line-height:1.02;margin-top:8px;
-  font-size:clamp(26px, calc(var(--fj-h1, 2.9vw) * .178), 46px)}
+  text-transform:uppercase;line-height:1.02;margin-top:4px;
+  font-size:clamp(26px, calc(var(--fj-h1, 2.9vw) * .178), 54px)}
 /* Two names are long enough to take a second line, and because all fifty-five
    captions share one box a second line for one of them is a second line for all
    of them — which put the readout forty pixels below the hero the day Central
@@ -412,9 +412,9 @@
    above does. gateway.py measures the name and writes data-long; nothing here
    has to know which countries they are. */
 .wa-win-cap[data-long] b{
-  font-size:clamp(20px, calc(var(--fj-h1, 2.9vw) * .124), 32px)}
+  font-size:clamp(20px, calc(var(--fj-h1, 2.9vw) * .124), 38px)}
 .wa-win-cap[data-long="24"] b{
-  font-size:clamp(18px, calc(var(--fj-h1, 2.9vw) * .108), 28px)}
+  font-size:clamp(18px, calc(var(--fj-h1, 2.9vw) * .108), 33px)}
 /* Balanced, because it is a caption of one or two lines and its second line
    was a widow: at 390 it broke 99% / 8% — one word, "here.", alone under a full
    line — and at 360 84% / 33%. A caption under a map is read as a shape before
