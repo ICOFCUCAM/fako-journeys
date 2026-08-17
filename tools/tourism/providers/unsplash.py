@@ -66,6 +66,13 @@ class Unsplash(Provider):
                 "width": p.get("width"),
                 "height": p.get("height"),
                 # what the picture says it is — the relevance scorer reads this
+                # The blob below is for MATCHING — more words, better recall.
+                # `wrote` is the photographer's own sentence and nothing else,
+                # because alt_description is generated and sometimes wrong:
+                # it called a caracal in the Ngorongoro Crater "brown and white
+                # deer on green grass field". Matching wants every word; alt
+                # text wants only the words a person chose.
+                "wrote": (p.get("description") or "").strip(),
                 "text": " ".join(filter(None, [
                     p.get("alt_description"), p.get("description"),
                     ((p.get("location") or {}).get("name")),

@@ -61,6 +61,9 @@ class Pexels(Provider):
                 "photographerUrl": p.get("photographer_url"),
                 "width": p.get("width"),
                 "height": p.get("height"),
+                # Pexels has one string and it is the uploader's own, so the
+                # blob and the human sentence are the same thing here.
+                "wrote": (p.get("alt") or "").strip(),
                 "text": p.get("alt") or "",
             }))
         return out

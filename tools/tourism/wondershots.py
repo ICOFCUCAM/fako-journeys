@@ -61,9 +61,19 @@ def load():
         return json.load(fh)
 
 
-def missing(d):
-    """-> the wonders with no photograph, in the order the page prints them."""
-    return [w for w in d["wonders"] if not w.get("photo")]
+def missing(d, force=False):
+    """-> the wonders this run should go looking for.
+
+    With `force`, the ones a PROVIDER bound are searched again too — never the
+    ones a person uploaded. `photo_provider` is the whole distinction: an
+    upload is somebody's decision and a search result is this file's, and only
+    one of those is safe to overwrite without being asked.
+    """
+    out = [w for w in d["wonders"] if not w.get("photo")]
+    if force:
+        out = [w for w in d["wonders"]
+               if not w.get("photo") or w.get("photo_provider")]
+    return out
 
 
 def terms(w):
@@ -105,10 +115,10 @@ def names_it(said, w):
                for t in need)
 
 
-def plan(d):
+def plan(d, force=False):
     """-> what would be asked for, without asking. Printed by the dry run."""
     out = []
-    for w in missing(d):
+    for w in missing(d, force=force):
         out.append({
             "id": w["id"],
             "name": w["name"],
@@ -150,9 +160,52 @@ def search(w, usable, log=print):
                 "width": c.get("width") or 0,
                 "height": c.get("height") or 0,
                 "said": said,
+                "wrote": (c.get("wrote") or "").strip(),
                 "names_it": names_it(said, w),
             })
     return found
+
+
+def alt_from(c, w):
+    """The alt text: what a PERSON wrote about this photograph, tidied.
+
+    Two things had to be separated to get this right, and the first cut of this
+    file did neither.
+
+    THE BLOB IS FOR MATCHING, NOT FOR READING. Unsplash returns a generated
+    `alt_description` as well as the photographer's `description`, and the
+    provider glues them together with the location and the tags — correctly,
+    because more words means better recall when we are asking whether this
+    picture names Ngorongoro. Used as alt text the same blob opens with a
+    machine's guess: the caracal photograph came out "Brown and white deer on
+    green grass field", which is wrong twice over, since the photographer had
+    written "Caracal hunting birds in Ngorongoro Crater" and there are no deer
+    in Africa. A sighted reader sees the mismatch. A screen-reader user is
+    simply told there is a deer.
+
+    AND STOCK FILLER IS NOISE TWICE. "Stunning view of a rock-hewn church" —
+    a screen reader has already announced that this is an image, so "view of"
+    is the second time in one breath.
+
+    Falls back to the blob when nobody wrote anything, and to the wonder's own
+    name when even that is empty, because an empty alt on a content image is
+    the one outcome worse than an imperfect one.
+    """
+    from .resolve import photo_alt as tidy
+    said = " ".join((c.get("wrote") or "").split())
+    if not said:
+        said = " ".join((c.get("said") or "").split())
+    if not said:
+        return w["name"]
+    # tidy() also names the country when the sentence does not; these sentences
+    # are about a named place rather than a country, so it is called with a
+    # stand-in whose name is already in the text and cannot be appended twice.
+    class _Named(object):
+        name = ""
+        adjective = ""
+    said = tidy(said, _Named()) or said
+    said = " ".join(said.split()).strip(" ,;")
+    return said[:1].upper() + said[1:] if said else w["name"]
 
 
 def bind(w, c):
@@ -163,8 +216,7 @@ def bind(w, c):
     w["photo"] = c["imageUrl"]
     w["photo_w"] = int(c["width"] or 1600)
     w["photo_h"] = int(c["height"] or 900)
-    said = " ".join((c.get("said") or "").split())
-    w["photo_alt"] = said[:1].upper() + said[1:] if said else w["name"]
+    w["photo_alt"] = alt_from(c, w)
     w["photo_provider"] = c["provider"]
     w["photo_by"] = c.get("photographer") or ""
     w["photo_by_url"] = c.get("photographerUrl") or ""
@@ -205,17 +257,19 @@ def sheet(rows, d):
     return "\n".join(out) + "\n"
 
 
-def run(fetch=False, only=None, log=print):
+def run(fetch=False, only=None, force=False, log=print):
     d = load()
-    want = missing(d)
+    want = missing(d, force=force)
     if only:
         want = [w for w in want if w["id"] == only]
         if not want:
             log("no wonder with id %r is missing a photograph" % only)
             return 2
 
-    log("%d of %d wonders have no photograph."
-        % (len(missing(d)), len(d["wonders"])))
+    log("%d of %d wonders have no photograph.%s"
+        % (len(missing(d)), len(d["wonders"]),
+           "  Re-doing %d already bound by a provider." % (len(want) - len(missing(d)))
+           if force else ""))
     no_terms = [w["name"] for w in want if not terms(w)]
     if no_terms:
         log("\n%d have no photo_terms and can only ever be staged, never bound:"
@@ -225,7 +279,7 @@ def run(fetch=False, only=None, log=print):
 
     if not fetch:
         log("\nDRY RUN — nothing was asked for. What it would send:\n")
-        for p in plan(d):
+        for p in plan(d, force=force):
             log("  %-28s  %-42s  needs all of: %s"
                 % (p["name"], '"%s"' % p["query"],
                    ", ".join(p["terms"]) or "— (stage only)"))

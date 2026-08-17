@@ -35,8 +35,13 @@ on:
         type: boolean
         required: false
         default: false
+      force:
+        description: "force — also re-do the wonders a provider already bound (never the four uploads). Use after changing a query or a term."
+        type: boolean
+        required: false
+        default: false
       only:
-        description: "only — one wonder id, e.g. timbuktu. Blank does all nineteen."
+        description: "only — one wonder id, e.g. timbuktu. Blank does all of them."
         required: false
         default: ""
       commit:
@@ -81,6 +86,7 @@ jobs:
         run: |
           python3 tools/tourism/build.py wondershots \
             ${{ inputs.fetch && '--fetch' || '' }} \
+            ${{ inputs.force && '--force' || '' }} \
             ${{ inputs.only != '' && format('--only {0}', inputs.only) || '' }}
 
       - name: Rebuild the page and the homepage gallery

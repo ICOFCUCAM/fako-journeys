@@ -145,7 +145,8 @@ def cmd_wondershots(args):
     """
     from tourism import wondershots
     return wondershots.run(fetch=bool(getattr(args, "fetch", False)),
-                           only=(getattr(args, "only", "") or None))
+                           only=(getattr(args, "only", "") or None),
+                           force=bool(getattr(args, "force", False)))
 
 
 def cmd_resolve(args):
