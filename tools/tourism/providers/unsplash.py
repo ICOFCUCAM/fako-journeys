@@ -73,6 +73,11 @@ class Unsplash(Provider):
                 # deer on green grass field". Matching wants every word; alt
                 # text wants only the words a person chose.
                 "wrote": (p.get("description") or "").strip(),
+                # What the machine saw, kept apart from both. It is not
+                # trustworthy on its own — it called a caracal a deer — but it
+                # is the only text that describes the FRAME when the
+                # photographer typed nothing but a place name.
+                "saw": (p.get("alt_description") or "").strip(),
                 "text": " ".join(filter(None, [
                     p.get("alt_description"), p.get("description"),
                     ((p.get("location") or {}).get("name")),

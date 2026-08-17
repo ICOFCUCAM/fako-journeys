@@ -64,6 +64,7 @@ class Pexels(Provider):
                 # Pexels has one string and it is the uploader's own, so the
                 # blob and the human sentence are the same thing here.
                 "wrote": (p.get("alt") or "").strip(),
+                "saw": "",
                 "text": p.get("alt") or "",
             }))
         return out

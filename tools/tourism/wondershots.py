@@ -166,6 +166,23 @@ def search(w, usable, log=print):
     return found
 
 
+# Words that turn a pile of nouns into a sentence. A photographer's caption is
+# either a description — "flying over the Okavango Delta", "caracal hunting
+# birds in Ngorongoro Crater" — or a label, and no label contains any of these.
+# Counting words does not separate them: "Algeria Desert - Sahara Ouargla" is
+# five and describes nothing.
+SENTENCE_WORDS = ("a", "an", "the", "in", "on", "of", "at", "to", "with",
+                  "over", "under", "from", "into", "across", "along", "and",
+                  "during", "near", "above", "behind", "between", "seen",
+                  "looking", "taken", "against", "beside", "through")
+
+
+def reads_as_sentence(said):
+    """-> True if a person wrote prose here rather than a place name."""
+    words = [x.strip(".,;:-—()[]").lower() for x in (said or "").split()]
+    return any(w in SENTENCE_WORDS for w in words)
+
+
 def alt_from(c, w):
     """The alt text: what a PERSON wrote about this photograph, tidied.
 
@@ -192,7 +209,19 @@ def alt_from(c, w):
     the one outcome worse than an imperfect one.
     """
     from .resolve import photo_alt as tidy
-    said = " ".join((c.get("wrote") or "").split())
+    wrote = " ".join((c.get("wrote") or "").split())
+    saw = " ".join((c.get("saw") or "").split())
+    if wrote and not reads_as_sentence(wrote):
+        # A LABEL IS NOT A DESCRIPTION. Plenty of photographers type a place
+        # and stop — "Algeria Desert - Sahara Ouargla", "La digue, seychelles"
+        # — and preferring that over everything else traded a wrong alt for an
+        # uninformative one, which is not obviously the better bargain: a
+        # screen-reader user is told where the picture was taken and nothing
+        # about what is in it. So the machine's sentence comes back, in front,
+        # where the person wrote no sentence of their own to displace it.
+        said = ", ".join(x for x in (saw, wrote) if x)
+    else:
+        said = wrote
     if not said:
         said = " ".join((c.get("said") or "").split())
     if not said:
