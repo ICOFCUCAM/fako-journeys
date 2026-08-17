@@ -28,10 +28,17 @@
 
 /* ---- the opening --------------------------------------------------------- */
 
-.mt-open{max-width:64ch;padding-bottom:var(--sp-5);border-bottom:2px solid var(--c-primary)}
+/* THE CAP BELONGS ON THE PROSE, NOT ON THE BLOCK.
+   This was `.mt-open{max-width:64ch}`, and 64 characters of the sixteen-pixel
+   body font is 544 pixels — which is what the h1 got, though it asks for 810
+   at the 104 pixels it is actually set in. A `ch` measure on a wrapper is
+   measured in the WRAPPER's font, so it silently overrules every measure
+   inside it and squeezes the largest type on the page hardest. Same fault
+   found on /wonders and /places; fixed the same way in all three. */
+.mt-open{padding-bottom:var(--sp-5);border-bottom:2px solid var(--c-primary)}
 .mt-h1{font-size:clamp(44px,7vw,104px);line-height:.9;margin:12px 0 0;letter-spacing:-.02em;
-  max-width:14ch}
-.mt-lede{margin-top:22px;font-size:18px;color:var(--c-muted)}
+  max-width:14ch;text-wrap:balance}
+.mt-lede{margin-top:22px;font-size:18px;color:var(--c-muted);max-width:64ch}
 
 /* ---- the two columns ----------------------------------------------------- */
 

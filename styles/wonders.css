@@ -13,20 +13,93 @@
 .wo-body{background:var(--fj-basalt);color:var(--fj-onbasalt)}
 .wo-page{max-width:var(--frame);margin:0 auto;padding:var(--sp-6) 44px var(--sp-7)}
 
-.wo-open{max-width:30ch;margin-bottom:var(--sp-7)}
+/* ---- the opening -----------------------------------------------------------
+ * A CAP IN ch ON A PARENT IS MEASURED IN THE PARENT'S FONT.
+ *
+ * This block was `.wo-open{max-width:30ch}`, and the h1 inside it is set at
+ * clamp(34px,5vw,72px). Thirty characters of the sixteen-pixel body font is
+ * about four hundred pixels, so a seventy-two pixel headline was being poured
+ * into a four-hundred-pixel column: one word to a line, nine lines deep, the
+ * collection pushed clean off the first screen and two thirds of a very large
+ * dark page left empty. The lede's own 46ch and the count's 52ch never applied
+ * either — both are wider than the parent, so the parent won and all three sat
+ * in the same narrow gutter.
+ *
+ * The rule now: a measure belongs on the element whose type it is measuring,
+ * never on a wrapper holding two different sizes of type.
+ */
+/* THE STATEMENT RUNS ACROSS THE TOP, the supporting material sits under it.
+   Putting the headline in a column was the first fix and it was the same
+   mistake in a better disguise: a sixty-three character sentence in a
+   seven-hundred pixel column at eighty-six pixels is eight lines, which is a
+   paragraph pretending to be a headline. Given the frame it reads in three. */
+.wo-open{margin-bottom:var(--sp-6)}
 .wo-h1{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(34px,5vw,72px);line-height:.98;letter-spacing:-.02em;
-  color:var(--c-bg);margin:14px 0 0;max-width:18ch}
-.wo-lede{margin-top:22px;font-size:clamp(17px,1.6vw,21px);line-height:1.5;
+  font-size:clamp(36px,5.4vw,84px);line-height:.96;letter-spacing:-.025em;
+  color:var(--c-bg);margin:14px 0 0;max-width:26ch;text-wrap:balance}
+/* auto then 1fr, so the lede's row is only as tall as the lede. Two auto rows
+   stretched to match the contents page beside them and dropped the count a
+   hundred and fifty pixels below the sentence it belongs to. */
+.wo-open-aside{margin-top:var(--sp-5);display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-rows:auto 1fr;gap:var(--sp-4) var(--sp-6);align-items:start}
+.wo-lede{grid-column:1;margin:0;font-size:clamp(17px,1.5vw,21px);line-height:1.5;
   color:var(--fj-onbasalt);max-width:46ch}
-.wo-count{margin-top:16px;font-size:14px;color:var(--fj-onbasalt-dim);max-width:52ch}
+.wo-count{grid-column:1;grid-row:2;align-self:start;margin:0;font-size:14px;
+  line-height:1.55;color:var(--fj-onbasalt-dim);max-width:48ch}
 
-.wo-strand{margin-top:var(--sp-7)}
-.wo-strand-head{border-top:2px solid var(--c-accent-fill);padding-top:20px;
-  margin-bottom:var(--sp-4);max-width:46ch}
+/* THE CONTENTS PAGE. Twenty-three entries in five groups had no way in but
+   scrolling, and the space this fills is the space the broken headline was
+   leaving empty — so the fix and the upgrade are the same object. Name, count
+   and the sentence, because a column of five words would have been a menu. */
+.wo-index{grid-column:2;grid-row:1 / span 2;margin:0;
+  border-top:2px solid var(--c-accent-fill)}
+.wo-ix{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;
+  padding:14px 0;border-bottom:var(--fj-rule-dark);
+  transition:padding-left var(--t-fast) var(--ease)}
+.wo-ix:hover{padding-left:10px}
+.wo-ix b{font-family:var(--fj-display);font-weight:700;font-size:19px;
+  text-transform:uppercase;color:var(--c-bg)}
+.wo-ix:hover b{color:var(--c-gold)}
+.wo-ix i{grid-column:2;grid-row:1;font-style:normal;font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);
+  white-space:nowrap}
+.wo-ix span{grid-column:1 / -1;font-size:14px;line-height:1.5;
+  color:var(--fj-onbasalt-dim)}
+
+/* ---- the sticky strand bar -------------------------------------------------
+   Twenty-three entries is a long way back to the contents page. Basalt behind
+   it on purpose: a translucent bar over photographs is a bar you cannot read
+   the moment a pale sky scrolls under it. */
+.wo-bar{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;
+  align-items:baseline;gap:6px 22px;padding:12px 0;
+  background:var(--fj-basalt);border-top:2px solid var(--c-accent-fill);
+  border-bottom:var(--fj-rule-dark)}
+.wo-bar-t{font-family:var(--fj-mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--fj-onbasalt-dim)}
+.wo-bar-l{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:baseline}
+.wo-bar a{display:inline-flex;align-items:baseline;gap:6px;min-height:24px;
+  font-family:var(--fj-display);font-weight:700;font-size:14px;
+  text-transform:uppercase;color:var(--fj-onbasalt);
+  border-bottom:2px solid transparent;transition:color var(--t-fast) var(--ease),
+  border-color var(--t-fast) var(--ease)}
+.wo-bar a:hover{color:var(--c-bg);border-bottom-color:var(--c-gold)}
+.wo-bar a i{font-style:normal;font-family:var(--fj-mono);font-size:9px;
+  letter-spacing:.14em;color:var(--c-gold)}
+
+/* ---- a strand --------------------------------------------------------------
+   scroll-margin so a jump from the bar does not park the heading underneath
+   the bar that did the jumping. */
+.wo-strand{margin-top:var(--sp-6);scroll-margin-top:64px}
+.wo-strand-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:12px var(--sp-5);align-items:end;
+  border-top:2px solid var(--c-accent-fill);padding-top:20px;
+  margin-bottom:var(--sp-4)}
 .wo-strand-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(26px,3vw,42px);line-height:1.02;color:var(--c-bg);margin:10px 0 0}
-.wo-strand-say{margin-top:10px;font-size:16px;color:var(--fj-onbasalt-dim);max-width:42ch}
+  font-size:clamp(30px,4vw,58px);line-height:1;letter-spacing:-.02em;
+  color:var(--c-bg);margin:10px 0 0}
+.wo-strand-say{margin:0 0 4px;font-size:16px;line-height:1.5;
+  color:var(--fj-onbasalt-dim);max-width:44ch}
 
 /* The strand pages reuse .wo-rest and .wo-card from the homepage section; only
    the grid's minimum widens, because here there is a whole page to fill rather
@@ -43,6 +116,33 @@
 /* The rule reads as a caption line under the photograph and as the card's own
    top edge without one, which is why it is on the text and not on the article. */
 .wo-page .wo-card-in{border-top:2px solid var(--c-accent-fill);padding-top:18px;height:100%}
+/* THE NUMBER IS WHAT NINETEEN OF THEM HAVE INSTEAD OF A PHOTOGRAPH.
+   Four of the twenty-three are photographed. The other nineteen were cards
+   with the picture missing, which reads as a page that failed to load however
+   well the type inside is set. Numbered, they are entries in a collection
+   rather than cards that lack something — and the four with photographs keep
+   the number too, small, so the count runs unbroken from 01 to 23. */
+.wo-page .wo-no{display:block;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.2em;color:var(--c-gold);margin-bottom:9px}
+/* THE NUMBER TAKES THE PHOTOGRAPH'S BOX, WHICH IS WHAT MAKES THE ROW A ROW.
+   Left to size itself, a card with no picture came out half the height of one
+   with a picture, the grid tracked to the tallest, and a strand of five opened
+   with two plates, two short entries and a hole the size of a card. Given the
+   same 4:3 box the photographs sit in, every card in a row is the same height
+   and the numbers line up across the page — which is the only reason a
+   catalogue numbers anything. */
+.wo-page .wo-card.no-shot .wo-no{display:flex;align-items:flex-end;
+  aspect-ratio:4/3;margin-bottom:14px;padding:0 0 12px 2px;
+  font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(44px,5vw,76px);letter-spacing:-.03em;line-height:.82;
+  color:color-mix(in srgb,var(--c-bg) 18%,transparent);
+  /* No rule of its own. The card's own top rule lands directly beneath this
+     box, and two lines two pixels apart is not a border, it is a mistake. */
+  transition:color var(--t-fast) var(--ease)}
+.wo-page .wo-card.no-shot:hover .wo-no{
+  color:color-mix(in srgb,var(--c-gold) 70%,transparent)}
+.wo-page .wo-no,.wo-page .wo-name{transition:color var(--t-fast) var(--ease)}
+.wo-page .wo-card:hover .wo-name{color:var(--c-gold)}
 .wo-page .wo-name{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
   font-size:22px;line-height:1.04;color:var(--c-bg);margin:0}
 .wo-page .wo-where{margin-top:9px;font-family:var(--fj-mono);font-size:9px;
@@ -53,13 +153,30 @@
 .wo-page .wo-say{margin-top:12px;font-size:15.5px;line-height:1.5;
   color:var(--fj-onbasalt-dim);max-width:36ch}
 
-.wo-end{margin-top:var(--sp-7);padding-top:var(--sp-5);border-top:var(--fj-rule-dark);
-  display:flex;flex-wrap:wrap;align-items:center;gap:20px 28px}
-.wo-end p{font-family:var(--fj-display);font-size:clamp(19px,2vw,27px);
-  color:var(--c-bg);margin:0;max-width:22ch}
+/* The close was a sentence and a button on one line. Twenty-three places is a
+   long read to end on a single line of type. */
+.wo-end{margin-top:var(--sp-7);padding-top:var(--sp-5);
+  border-top:2px solid var(--c-accent-fill)}
+.wo-end-h{font-family:var(--fj-display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(26px,3.4vw,50px);line-height:1;letter-spacing:-.02em;
+  color:var(--c-bg);margin:0;max-width:18ch}
+.wo-end-say{margin:18px 0 0;font-size:17px;line-height:1.55;
+  color:var(--fj-onbasalt-dim);max-width:50ch}
+.wo-end-acts{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
 
+@media(max-width:980px){
+  /* One column before the headline and the contents page start fighting for
+     the same forty characters. */
+  .wo-open-aside{grid-template-columns:minmax(0,1fr);gap:var(--sp-4)}
+  .wo-lede,.wo-count{grid-column:1}
+  .wo-index{grid-column:1;grid-row:auto}
+  .wo-strand-head{grid-template-columns:minmax(0,1fr);align-items:start}
+}
 @media(max-width:760px){
   .wo-page{padding:var(--sp-5) 18px var(--sp-6)}
-  .wo-strand{margin-top:var(--sp-6)}
+  .wo-strand{margin-top:var(--sp-6);scroll-margin-top:96px}
   .wo-page .wo-rest{grid-template-columns:1fr}
+  /* The bar wraps to two lines on a phone, and a two-line sticky bar eats a
+     third of a small screen. It scrolls away with the page instead. */
+  .wo-bar{position:static}
 }

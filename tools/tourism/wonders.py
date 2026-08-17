@@ -105,7 +105,7 @@ def shot(w, sizes, klass="wo-shot"):
                pos, esc(sizes)))
 
 
-def card(w, by_slug):
+def card(w, by_slug, n=None):
     """A supporting wonder, on the homepage gallery and on every strand of
     /wonders. Image-led where there is an image; the type is the same either
     way, so a strand that is half photographed still reads as one grid.
@@ -113,18 +113,29 @@ def card(w, by_slug):
     It used to take a `big` flag for the two leads. They have their own shape
     now — see feature() — and a flag that nothing passes is a second design
     still sitting in the file pretending to be reachable.
+
+    THE NUMBER IS WHAT NINETEEN OF THEM HAVE INSTEAD OF A PHOTOGRAPH. Four of
+    the twenty-three are photographed, so on /wonders the other nineteen were
+    cards with the picture missing — and a card with a hole where its picture
+    goes reads as a page that failed to load, however carefully the type inside
+    it is set. Numbered, they stop being cards that lack something and become
+    entries in a numbered collection, which is what twenty-three chosen places
+    actually are. The homepage gallery passes no number and is unchanged.
     """
+    no = ('<span class="wo-no" aria-hidden="true">%s</span>'
+          % esc("%02d" % n)) if n else ""
     return (
         '<article class="wo-card%s" data-strand="%s">'
         '%s'
         '<div class="wo-card-in">'
+        '%s'
         '<h3 class="wo-name">%s</h3>'
         '<p class="wo-where">%s</p>'
         '<p class="wo-say">%s</p>'
         '</div></article>'
         % (" has-shot" if w.get("photo") else " no-shot", esc(w["strand"]),
            shot(w, "(max-width:700px) 92vw, (max-width:1100px) 46vw, 30vw"),
-           esc(w["name"]), where(w, by_slug), esc(w["say"])))
+           no, esc(w["name"]), where(w, by_slug), esc(w["say"])))
 
 
 def feature(w, by_slug, n):
@@ -288,21 +299,50 @@ def run(countries, log=print):
     from . import company, plate
     d = load()
     by_slug = {c.slug: c for c in countries}
-    groups = []
+    # ONE RUNNING NUMBER DOWN THE WHOLE PAGE, not one per strand. Restarting at
+    # 01 in every strand would make five short lists; running 01 to 23 makes one
+    # collection that happens to be grouped, which is the claim the page opens
+    # with. It is also the only reason the numbers are worth printing: a reader
+    # who sees 17 knows there are six to go.
+    groups, index, no = [], [], 0
     for st in d["strands"]:
         mine = [w for w in d["wonders"] if w["strand"] == st["id"]]
         if not mine:
             continue
+        shots = sum(1 for w in mine if w.get("photo"))
+        body = []
+        for w in mine:
+            no += 1
+            body.append(card(w, by_slug, no))
         groups.append(
             '<section class="wo-strand" id="%s">'
-            '<div class="wo-strand-head"><span class="af-stamp">%s</span>'
-            '<h2 class="wo-strand-h">%s</h2><p class="wo-strand-say">%s</p></div>'
+            '<div class="wo-strand-head">'
+            '<div class="wo-strand-no"><span class="af-stamp">%s</span>'
+            '<h2 class="wo-strand-h">%s</h2></div>'
+            '<p class="wo-strand-say">%s</p></div>'
             '<div class="wo-rest">%s</div></section>'
             % (esc(st["id"]), esc("%d in this strand" % len(mine)),
-               esc(st["name"]), esc(st["say"]),
-               "".join(card(w, by_slug) for w in mine)))
+               esc(st["name"]), esc(st["say"]), "".join(body)))
+        # The index carries the count and the sentence, so it answers "what is
+        # in there" rather than only "where is it" — a list of five words would
+        # have been a menu, and this page needs a contents page.
+        index.append(
+            '<a class="wo-ix" href="#%s"><b>%s</b><i>%s</i><span>%s</span></a>'
+            % (esc(st["id"]), esc(st["name"]),
+               esc("%d place%s" % (len(mine), "" if len(mine) == 1 else "s")),
+               esc(st["say"])))
+        _ = shots
+
+    bar = "".join(
+        '<a href="#%s">%s<i>%s</i></a>'
+        % (esc(st["id"]), esc(st["name"]),
+           esc(str(len([w for w in d["wonders"] if w["strand"] == st["id"]]))))
+        for st in d["strands"]
+        if [w for w in d["wonders"] if w["strand"] == st["id"]])
 
     html = TEMPLATE % {
+        "index": "".join(index),
+        "bar": bar,
         "og": plate.open_graph(
             "The Wonders of Africa — Afrinkong",
             d["say"], "/wonders"),
@@ -347,17 +387,44 @@ TEMPLATE = """<!DOCTYPE html>
 </header>
 
 <main class="wo-page" id="main">
+  <!-- THE OPENING IS TWO COLUMNS, AND IT HAD TO BECOME TWO.
+       It was one block capped at 30ch, and a cap in ch on the PARENT is
+       measured in the parent's font — sixteen pixels — so a headline set at
+       seventy-two was being poured into a four-hundred-pixel column. It broke
+       one word to a line, ran nine lines deep, pushed the collection off the
+       first screen entirely and left two thirds of a very large dark page
+       empty. The headline has its own measure now, at its own size, and what
+       fills the space beside it is the thing a page of twenty-three entries
+       most needed and did not have: a contents page. -->
   <div class="wo-open">
-    <span class="af-stamp">%(stamp)s</span>
-    <h1 class="wo-h1">%(line)s</h1>
-    <p class="wo-lede">%(say)s</p>
-    <p class="wo-count">%(n)d places, and the list is ours &mdash; there is no
-      official ranking of African wonders and this is not pretending to be one.</p>
+    <div class="wo-open-say">
+      <span class="af-stamp">%(stamp)s</span>
+      <h1 class="wo-h1">%(line)s</h1>
+    </div>
+    <div class="wo-open-aside">
+      <p class="wo-lede">%(say)s</p>
+      <p class="wo-count">%(n)d places, and the list is ours &mdash; there is no
+        official ranking of African wonders and this is not pretending to be one.</p>
+      <nav class="wo-index" aria-label="The five strands, with what is in each">
+%(index)s
+      </nav>
+    </div>
   </div>
+  <!-- Compact and sticky, because twenty-three entries is a long way to scroll
+       back to the contents page above. Same links, said shorter. -->
+  <nav class="wo-bar" aria-label="Jump to a strand">
+    <span class="wo-bar-t">The strands</span>
+    <span class="wo-bar-l">%(bar)s</span>
+  </nav>
 %(strands)s
   <div class="wo-end">
-    <p>Any of them can be the reason for the journey.</p>
-    <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
+    <p class="wo-end-h">Any of them can be the reason for the journey.</p>
+    <p class="wo-end-say">Name one and we will build the days around it &mdash;
+      what it costs, what else is near it, and when it is worth going.</p>
+    <div class="wo-end-acts">
+      <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
+      <a class="af-btn af-btn--quiet" href="/enquire">Ask us about one<i>&rarr;</i></a>
+    </div>
   </div>
   <footer class="jn-enq-foot">
     <!-- gen:company -->
