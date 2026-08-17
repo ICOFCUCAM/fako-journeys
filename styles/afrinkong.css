@@ -630,3 +630,88 @@ img[data-illustration]{height:auto}
 .af-dark .cm-loc-rest path,.tf-page .cm-loc-rest path{
   fill:color-mix(in srgb,var(--c-bg) 12%,transparent)}
 .af-dark .cm-loc-here,.tf-page .cm-loc-here{fill:var(--c-accent-lit)}
+
+
+/* ---- paper ----------------------------------------------------------------
+ * WHAT HAPPENS WHEN SOMEBODY PRINTS THIS.
+ *
+ * Two of fourteen stylesheets had print rules, and neither was one of the ones
+ * people print. A traveller printing a crossing's itinerary, a country
+ * portrait or a page of rates to take to somebody got: a basalt page, which is
+ * to say a black rectangle costing most of a cartridge, with a sticky masthead
+ * stamped across the top of every sheet and every link's destination lost.
+ *
+ * THE TOKENS DO THE WORK. Every surface on this site is written against
+ * --c-bg, --c-primary, --c-muted and the basalt pair, so re-pointing those six
+ * for print turns every dark page light without touching a single component
+ * rule. That is the entire return on having had a token system: one block here
+ * corrects fourteen stylesheets, including the four written after it.
+ */
+@media print {
+  :root{
+    --c-bg:#fff;
+    --c-primary:#111;
+    --c-muted:#444;
+    --c-border:#bbb;
+    --fj-basalt:#fff;
+    --fj-onbasalt:#111;
+    --fj-onbasalt-dim:#444;
+    /* Burnt sienna prints as mud on a monochrome printer and as an expensive
+       flat on a colour one. Darkened, it stays legible either way. */
+    --c-accent:#6E3220;
+    --c-accent-fill:#6E3220;
+    --c-accent-lit:#6E3220;
+    --c-gold:#5a4a2e;
+    --fj-rule:1px solid #bbb;
+    --fj-rule-dark:1px solid #bbb;
+  }
+  body{background:#fff;color:#111}
+
+  /* THE DARK SURFACES, BY NAME. Re-pointing --fj-basalt whitens everything
+     painted with it, but several surfaces are painted with --c-primary
+     directly — which is the INK token and cannot be turned white without
+     taking the text with it. Measured in print emulation, .wa-open, .tf-close
+     and .pl-foot were still coming out at 0.006 luminance, which is a black
+     rectangle on paper. This is the same list the light/dark token swap uses
+     further up the file, pointed the other way. */
+  .af-zone--basalt,.af-dark,.st--now,.st-nowcard,.sx-nowsec,.sx-now,
+  .wa-zone.basalt,.wa-foot,.fj-zone.basalt,.fj-foot,.foot,.pl-foot,
+  .tq-hero,.tq-band,.fj-transect-step.lv6,.ct-dark,.at-dark,.wa-open,.wa-motion,
+  .tf-hero,.tf-page,.tf-close,.wo-page,.wo-body,.tr-body{
+    background:#fff !important;color:#111 !important}
+
+  /* Chrome that means nothing on paper. A sticky masthead prints on top of
+     the first line of every sheet, and a skip link is a link to a place the
+     reader is already looking at. */
+  /* !important, and it is earned. The mastheads are declared display:flex in
+     journey.css and the others, which load AFTER this file at the same
+     specificity — so a plain display:none here loses every tie and the
+     sticky bar prints across the top of sheet one. This is the case the
+     keyword exists for. */
+  .af-skip,.jn-mast,.wa-mast,.at-mast,.pl-mast,.mt-mast,.fj-mast,.mast,
+  .wo-bar,.pi-jump,.tf-series,.wa-now-turn,.jn-enq-copy,.ex-bar,
+  .af-btn,.wa-act,.at-surprise,.at-modeb{display:none !important}
+
+  /* position:fixed prints once, at the top of the first sheet, over whatever
+     is there. The band's photograph is decoration; on paper it is a hazard. */
+  .wa-seam-pic,.wa-win-fixed,[style*="position:fixed"]{display:none}
+  .wa-seam,.wa-open{clip-path:none}
+
+  /* A printed link whose destination is invisible is a dead end on paper.
+     Internal ones are expanded to a full URL; a reader with a sheet of paper
+     has no site to be relative to. */
+  main a[href^="/"]::after{content:" (afrinkong.com" attr(href) ")";
+    font-size:.82em;color:#555;word-break:break-all}
+  main a[href^="http"]::after{content:" (" attr(href) ")";
+    font-size:.82em;color:#555;word-break:break-all}
+  main a[href^="#"]::after,main a[href^="mailto"]::after{content:""}
+
+  /* Nothing splits across a sheet if it can be helped, and no heading is left
+     stranded at the foot of one. */
+  figure,article,.tr-block,.wo-card,.ct-compare,.hw-step{break-inside:avoid}
+  h1,h2,h3{break-after:avoid}
+  img{max-width:100%;height:auto}
+
+  /* Motion has no meaning on paper and reveal-on-scroll would print blank. */
+  *{transition:none !important;animation:none !important;opacity:1 !important}
+}
