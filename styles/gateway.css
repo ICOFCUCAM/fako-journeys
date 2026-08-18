@@ -3297,7 +3297,18 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    object, same meaning, ninety degrees round. */
 @media(max-width:900px){
   .wa-fund-pic{min-height:0;margin:0 calc(50% - 50vw) clamp(26px,4vw,40px)}
-  .wa-fund-pic img{min-height:0;aspect-ratio:16/10;height:auto}
+  /* Wider than tall once it is stacked. At 900 a 16/10 plate is five hundred
+     and sixty pixels of photograph before a word is read and the section came
+     to 2226 — taller at 900 than at 390, which is the wrong way round for a
+     layout that is supposed to be getting simpler. 2/1 at tablet widths and
+     16/10 kept for the phone, where the plate is the first thing and can
+     afford to be. */
+  .wa-fund-pic img{min-height:0;aspect-ratio:2/1;height:auto}
+}
+@media(max-width:560px){
+  .wa-fund-pic img{aspect-ratio:16/10}
+}
+@media(max-width:900px){
   .wa-fund-inset{width:clamp(130px,30vw,200px);margin-top:clamp(22px,4vw,34px)}
   .wa-fund-pic figcaption{top:auto;bottom:9%;right:auto;left:6%;
     max-width:22ch;font-size:14px}
