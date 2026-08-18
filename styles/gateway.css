@@ -3354,7 +3354,17 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-pic img{aspect-ratio:16/10}
 }
 @media(max-width:900px){
-  .wa-fund-inset{width:clamp(130px,30vw,200px);margin-top:clamp(22px,4vw,34px)}
+  /* THE NOTE WAS AS NARROW AS THE MAP, BECAUSE IT WAS INSIDE IT.
+     The width was put on the figure, so the caption inherited it: at 390 the
+     inset is 130px and the note ran "NAIROBI — CAPE TOWN" over two lines and
+     "9 COUNTRIES · 35 TO 45 DAYS" over two more — four lines of a legend
+     hyphenating itself beside a map the size of a postage stamp.
+
+     The width belongs to the drawing. The figure takes the column and the note
+     with it, and the map gets a measure of its own that is larger than the one
+     it had at every width in this band. */
+  .wa-fund-inset{width:auto;margin-top:clamp(22px,4vw,34px)}
+  .wa-fund-map{width:clamp(150px,42vw,240px)}
   /* NOT back onto the photograph, and IN THE FLOW.
      Two bugs in one rule, both from the note's old life printed across the
      plate. It was still being positioned over the photograph below 900, where
@@ -3428,6 +3438,9 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-sub{grid-area:sub}
   .wa-fund-inset{grid-area:map;align-self:start;
     width:clamp(200px,30vw,280px);margin-top:0}
+  /* The phone rule gives the drawing its own measure inside a figure that
+     takes the column. Here the figure IS the measure, so the drawing fills it. */
+  .wa-fund-map{width:100%}
 }
 
 /* THE ROAD STANDS UP, BUT THE MOVEMENTS STAYED IN A PHONE'S WIDTH.
