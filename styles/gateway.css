@@ -3197,7 +3197,13 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-fund-pic figcaption{position:absolute;left:0;right:0;top:calc(100% + 18px);
   font-family:var(--fj-text,Georgia,serif);font-style:italic;
   font-size:clamp(14px,1.25vw,17.5px);line-height:1.44;color:var(--c-primary);
-  text-align:left;max-width:34ch;padding-left:clamp(16px,3vw,44px)}
+  /* No authored break. It carried one from the wide layout, where the note sits
+     in a 34ch column beside the plate and two lines fall where the break was
+     put. Stacked at 768 the same break left the word "today" alone on a line of
+     its own under a line half the measure. Balanced instead, so the two lines
+     even themselves at whatever width the note is given. */
+  text-align:left;max-width:34ch;padding-left:clamp(16px,3vw,44px);
+  text-wrap:balance}
 .wa-fund-pic figcaption:before{content:"";display:block;width:56px;height:1px;
   background:var(--c-accent);margin-bottom:12px}
 
@@ -3341,8 +3347,13 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 
      Static here. The plate is first in the column and the note follows it, in
      the flow, which is the only arrangement that cannot collide with anything. */
-  .wa-fund-pic figcaption{position:static;max-width:34ch;font-size:14.5px;
-    padding-left:0;margin-top:18px}
+  /* 34ch is a content-box measure and this element carries 88px of padding
+     once it is bled, so the note came out three lines of a hundred and ten
+     pixels — a measure narrower than the map beside it. The padding is doing
+     the constraining here; the measure is lifted and balance evens what is
+     left. */
+  .wa-fund-pic figcaption{position:static;max-width:46ch;font-size:14.5px;
+    margin-top:18px}
   /* The claim comes after the photograph on a phone: image first, then argument.
      align-items has to be restated. The two-column rule sets it to center for
      the grid, where it means vertical; in a flex COLUMN the cross axis is
