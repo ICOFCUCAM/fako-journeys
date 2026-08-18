@@ -3062,7 +3062,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-hr{grid-area:rule}
   .wa-fund-lead{grid-area:lead}
   .wa-fund-sub{grid-area:sub}
-  .wa-fund-map{grid-area:map;align-self:start;margin-top:0}
+  .wa-fund-inset{grid-area:map;align-self:start;margin-top:0}
 }
 
 .wa-fund-eye{display:flex;align-items:baseline;gap:16px;margin:0 0 22px}
@@ -3132,8 +3132,26 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    ground and this is now a printed object rather than an overlay: no shadow, no
    scrim, no filter, and therefore nothing on this page that could ever become a
    containing block for a fixed descendant. */
-.wa-fund-map{display:block;width:clamp(150px,17vw,230px);height:auto;
-  margin:clamp(26px,3.4vw,44px) 0 0;overflow:visible}
+/* One element in the grid cell, not two. The map and its caption were both
+   assigned grid-area:map and a grid area is a cell, not a flow — so they were
+   stacked on top of each other and the caption printed across South Africa. */
+.wa-fund-inset{margin:clamp(26px,3.4vw,44px) 0 0;
+  width:clamp(150px,17vw,230px)}
+.wa-fund-map{display:block;width:100%;height:auto;overflow:visible}
+/* The chart's own caption, set as a chart's caption is: the thing's name at
+   reading weight, its two ends under it, and the measures last and smallest.
+   The name is trimmed of its series prefix here rather than in the generator,
+   because "Trans Afrique — " is true and is also the six words before the six
+   that matter at this size. */
+.wa-fund-map-say{margin:14px 0 0}
+.wa-fund-map-say b{display:block;font-family:var(--fj-display);font-weight:700;
+  font-size:15px;line-height:1.12;letter-spacing:-.008em;text-transform:uppercase;
+  color:var(--c-primary)}
+.wa-fund-map-say span{display:block;font-family:var(--fj-mono);font-size:10.5px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--c-accent);margin-top:6px}
+.wa-fund-map-say i{display:block;font-style:normal;font-family:var(--fj-mono);
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--c-muted);margin-top:5px}
 .wa-fund-coast{fill:color-mix(in srgb,var(--c-primary) 7%,transparent);
   stroke:color-mix(in srgb,var(--c-primary) 62%,transparent);
   stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
@@ -3143,9 +3161,13 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    point, and at 230px the route is what has to survive. */
 .wa-fund-road{fill:none;stroke:var(--c-accent);stroke-width:4;
   stroke-dasharray:6 7;stroke-linecap:round;vector-effect:non-scaling-stroke}
+/* The start is a small solid mark; the arrival is a ring, which is how a chart
+   distinguishes where a journey begins from where it is going. The ring is
+   drawn in the page's own ground so it reads as a hole in the terracotta
+   rather than as a second colour. */
 .wa-fund-node{fill:var(--c-accent)}
-.wa-fund-node.is-end{fill:var(--c-accent);stroke:var(--c-bg);stroke-width:4;
-  vector-effect:non-scaling-stroke}
+.wa-fund-node.is-end{fill:var(--c-accent);stroke:var(--c-dust,var(--fj-dust));
+  stroke-width:5;vector-effect:non-scaling-stroke}
 
 /* THE NOTE COMES OFF THE PHOTOGRAPH, AND THE SUITE IS WHY.
    It was ivory italic laid over the sky with a text-shadow under it, which is
@@ -3237,7 +3259,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 @media(max-width:900px){
   .wa-fund-pic{min-height:0;margin:0 calc(50% - 50vw) clamp(26px,4vw,40px)}
   .wa-fund-pic img{min-height:0;aspect-ratio:16/10;height:auto}
-  .wa-fund-map{width:clamp(130px,30vw,200px);margin-top:clamp(22px,4vw,34px)}
+  .wa-fund-inset{width:clamp(130px,30vw,200px);margin-top:clamp(22px,4vw,34px)}
   .wa-fund-pic figcaption{top:auto;bottom:9%;right:auto;left:6%;
     max-width:22ch;font-size:14px}
   /* the claim comes after the photograph on a phone: image first, then argument */

@@ -2237,25 +2237,53 @@ def block_fundmap():
     # squiggle in the middle of a continent and says nothing about scale. This
     # one runs the length of Africa, which is the whole argument of the section
     # it sits in, and it is also the largest thing this company sells.
-    leg = _trans.load()
-    leg = ([r for r in leg["routes"] if r["id"] == "great"] or [{}])[0]
-    leg = leg.get("countries") or []
+    great = ([r for r in _trans.load()["routes"] if r["id"] == "great"]
+             or [{}])[0]
+    leg = great.get("countries") or []
     pts = [at[s_] for s_ in leg if s_ in at]
     road = _routemap.spline(pts) if len(pts) > 2 else ""
 
-    out = ['<svg class="wa-fund-map" viewBox="%s" aria-hidden="true" '
+    out = ['<figure class="wa-fund-inset">',
+           '<svg class="wa-fund-map" viewBox="%s" aria-hidden="true" '
            'preserveAspectRatio="xMidYMid meet">'
            % " ".join(str(v) for v in d["fit"]["view"])]
     for p in coast:
         out.append('<path class="wa-fund-coast" d="%s"/>' % p)
     if road:
         out.append('<path class="wa-fund-road" d="%s"/>' % road)
+    # TWO NODES, NOT NINE, AND THEIR RADII ARE IN THE VIEWBOX'S UNITS.
+    # A circle's r does not take vector-effect, so r="6" in a thousand-unit box
+    # drawn at two hundred and thirty pixels is one and a half screen pixels —
+    # which is why the first cut of this had nine nodes nobody could see. At a
+    # radius you can see, nine of them along a route this length merge into a
+    # caterpillar and the dashes stop reading as a road.
+    #
+    # So the dashes carry the middle and the nodes mark the two ends, which is
+    # what the caption names: Nairobi and Cape Town. 16 and 30 give roughly four
+    # and eight screen pixels at the desktop size and scale down with the map.
     for i, xy in enumerate(pts):
-        last = i == len(pts) - 1
+        if i not in (0, len(pts) - 1):
+            continue
+        last = i > 0
         out.append('<circle class="wa-fund-node%s" cx="%.1f" cy="%.1f" r="%s"/>'
                    % (" is-end" if last else "", xy[0], xy[1],
-                      "10" if last else "6"))
+                      "30" if last else "16"))
     out.append("</svg>")
+
+    # THE MAP SAYS WHAT IT IS DRAWING, OR IT IS A SHAPE.
+    # An unlabelled continent with a dotted line on it is decoration — the
+    # reader has no way to know whether the line is a real route or a squiggle
+    # somebody liked, which is exactly the difference this section is claiming.
+    # Named, it becomes a chart: the longest journey this company sells, its two
+    # ends, and how many borders it crosses. All three read out of the data.
+    ends = _routemap.ends(great) if great else ("", "")
+    out.append(
+        '<figcaption class="wa-fund-map-say"><b>%s</b>'
+        '<span>%s &mdash; %s</span>'
+        '<i>%d countries &middot; %s days</i></figcaption></figure>'
+        % (esc((great.get("name", "") or "").split("\u2014")[-1].strip()),
+           esc(ends[0]), esc(ends[1]),
+           len(pts), esc(great.get("days", ""))))
     return "".join(out)
 
 
