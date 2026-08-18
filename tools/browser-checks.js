@@ -1381,6 +1381,65 @@ function serve() {
     }
 
     /* ---- pass two: with scripting off ---------------------------------- */
+    /* ---- the width hints stay true ---------------------------------------
+     *
+     * data/sizes.json is a measurement, and a measurement of a layout goes
+     * stale the moment the layout moves. `sizes` is the one attribute where
+     * stale is not merely wasteful: promise a photograph less room than it
+     * takes and the browser fetches a file too small for the box, paints it
+     * soft, and never revisits the decision — on a site whose entire argument
+     * is its photographs.
+     *
+     * So the promise is checked against the paint. For every image carrying a
+     * hint, the hint is resolved the way the browser resolves it — first
+     * clause whose media condition matches — and compared with what the
+     * element actually measures. Under is a failure. Over is the direction
+     * this is allowed to be wrong in.
+     */
+    for (const [url, w] of [['/index.html', 1440], ['/index.html', 390],
+                            ['/tourism/kenya.html', 1440],
+                            ['/tourism/index.html', 768]]) {
+      const sz = await browser.newPage({viewport: {width: w, height: 900}});
+      await open(sz, url);
+      await sz.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await sz.waitForTimeout(700);
+      const short = await sz.evaluate(() => {
+        const px = (hint) => {
+          const m = String(hint).trim().match(/^([\d.]+)(px|vw)$/);
+          if (!m) return null;
+          return m[2] === 'vw' ? innerWidth * parseFloat(m[1]) / 100 : parseFloat(m[1]);
+        };
+        const resolve = (v) => {
+          for (const part of v.split(',')) {
+            const t = part.trim();
+            const m = t.match(/^\((.+)\)\s+(\S+)$/);
+            if (!m) return px(t);
+            if (matchMedia('(' + m[1] + ')').matches) return px(m[2]);
+          }
+          return null;
+        };
+        const bad = [];
+        for (const img of document.images) {
+          const v = img.getAttribute('sizes');
+          if (!v || !img.getAttribute('srcset')) continue;
+          const promised = resolve(v);
+          const painted = img.getBoundingClientRect().width;
+          if (promised === null || !painted) continue;
+          /* Two per cent, for sub-pixel layout and a rounded vw. */
+          if (promised < painted * 0.98) {
+            bad.push((img.currentSrc || img.src).split('/').pop().slice(0, 30)
+                     + ' promised ' + Math.round(promised)
+                     + ' takes ' + Math.round(painted));
+          }
+        }
+        return bad;
+      });
+      check('no photograph is promised less room than it takes, ' + url + ' at ' + w,
+            !short.length, short.length ? short.slice(0, 2).join(' | ')
+                                        : 'every hint covers the paint');
+      await sz.close();
+    }
+
     const off = await browser.newContext({viewport: {width: 1280, height: 900},
                                           javaScriptEnabled: false});
     for (const url of PAGES) {

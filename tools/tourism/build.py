@@ -157,6 +157,24 @@ def cmd_srcset(args):
     return srcset.run(write=bool(getattr(args, "fetch", False))) or rc
 
 
+def cmd_sizeattr(args):
+    """Tell the browser how wide each photograph will be, from a measurement.
+
+    The widths live in data/sizes.json and are produced by
+
+        node tools/tourism/measure_sizes.js > data/sizes.json
+
+    which lays every page family out at twelve viewport widths in a real
+    browser and writes down what it got. That takes minutes, so it is a
+    deliberate act after a layout change rather than part of every build; this
+    pass is the cheap half and runs every time. A measurement that has gone
+    stale is caught rather than applied: each tag's src has to match the src
+    that was measured at that position, or it is left alone.
+    """
+    from tourism import sizes_attr
+    return sizes_attr.run(write=bool(getattr(args, "fetch", False)))
+
+
 def cmd_graft(args):
     """The head blocks a page cannot get from the generator that made it.
 
@@ -814,6 +832,12 @@ def cmd_all(args):
     # nothing.
     from tourism import srcset as _srcset
     _srcset.run(write=True, log=lambda *a: None)
+    # And after srcset, because this writes the hint that decides WHICH of the
+    # widths srcset just offered the browser will take. Offering three files
+    # and saying nothing about the box means the largest is chosen every time,
+    # which is most of srcset's benefit given away at the last step.
+    from tourism import sizes_attr as _sizes
+    _sizes.run(write=True, log=lambda *a: None)
     print()
     rc = cmd_verify(args) or rc
     cmd_report(args)
@@ -924,7 +948,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
