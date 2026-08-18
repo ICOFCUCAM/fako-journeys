@@ -279,6 +279,86 @@ pages.forEach(function ([name, html]) {
                 : 'balance, deposit, withdraw, wallet, interest, savings — each denied or absent');
 });
 
+/* THE DISCLOSURE IS TRUE, NECESSARY, AND MUST NOT BE THE LOUDEST THING HERE.
+ *
+ * An earlier version of this page put "nothing is charged and nothing is held"
+ * in the second sentence of the hero and gave a whole section, headed "What
+ * this is not", to four things the product does not do — a fifth of the copy
+ * and one of three headings. All of it accurate, and all of it drowning the
+ * proposition the page exists to make.
+ *
+ * Word count is the wrong measure, because a sentence about park fees is
+ * pricing rather than compliance. What matters is where the words are set. So
+ * this asserts the register: the display type, the hero and the figures carry
+ * the journey, and the disclosure lives in the fine and muted classes with the
+ * rest of the supporting information. */
+const LOUD = [
+  ['<h1>', /<h1[^>]*>([\s\S]*?)<\/h1>/g],
+  ['a heading', /<h2[^>]*>([\s\S]*?)<\/h2>/g],
+  ['the hero sentence', /<p class="jf-sub">([\s\S]*?)<\/p>/g],
+  ['the destination', /<p class="jf-where"[^>]*>([\s\S]*?)<\/p>/g],
+  ['the month', /<p class="jf-when"[^>]*>([\s\S]*?)<\/p>/g],
+];
+const DISCLOSURE =
+  /\bhold\b|\bholds\b|\bheld\b|\bowed\b|\binterest\b|\bdeposit|\bbalance\b|\bwithdraw|\blocked\b|not a quotation/i;
+
+/* Landing page only, and that is the whole point rather than a convenience.
+   /journey-fund is the experience: somebody arrives wanting Africa and the
+   proposition has to reach them before the terms do. The other two pages are
+   reference — a reader opens "how it works" or "questions" precisely to read
+   about where the money sits, and a heading there reading "Will Afrinkong ever
+   hold the money?" is that page doing its job. Applying this rule to them
+   would force vaguer answers on the only pages that exist to be clear. */
+[['/journey-fund', page]].forEach(function ([name, html]) {
+  const loud = [];
+  LOUD.forEach(function ([what, re]) {
+    let m;
+    re.lastIndex = 0;
+    while ((m = re.exec(html))) {
+      const t = m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (DISCLOSURE.test(t)) loud.push(what + ': "' + t.slice(0, 56) + '"');
+    }
+  });
+  check(name + ': the disclosure is never set in display type',
+    loud.length === 0,
+    loud.length ? loud.join(' | ')
+                : 'headings, hero and figures carry the journey; the disclosure is fine print');
+});
+
+/* A heading that names what the product is not. The information belongs on
+   /journey-fund/how-it-works, which is a page somebody chooses to open. */
+check('no section on the landing page is headed by what this is not',
+  !/<h2[^>]*>[^<]*\b(not|isn|no)\b/i.test(page),
+  'the three headings are the proposition, the tracks and the plan');
+
+/* PHASE 0 HAS NO FUND. The product is called the Journey Fund and what a
+   traveller actually has is a PLAN — a target, a month and an intended
+   contribution, with no money anywhere. If the interface ever says "balance"
+   or "saved so far" it is describing something that does not exist, and it
+   will describe it in exactly the words Phase 1 will need for something that
+   does. The two must never share a vocabulary.
+
+   Not applied to /journey-fund/questions, where "Nothing here is an account, a
+   deposit, a balance or an investment" is the sentence that makes the promise
+   rather than one that breaks it. The denial-aware vocabulary check above
+   already covers that page. */
+const HELD_WORDS =
+  /\bbalance\b|saved so far|\bso far\b|your funds|\bin your fund\b|amount saved|current balance|\bwe hold your\b/i;
+[['/journey-fund', page],
+ ['/journey-fund/how-it-works', pages[1][1]]].forEach(function ([name, html]) {
+  const hit = HELD_WORDS.exec(words(html));
+  check(name + ': never names an amount as though it were being held',
+    !hit,
+    hit ? 'says "' + hit[0] + '"' : 'target, plan and planned contribution — never a balance');
+});
+
+check('the planner calls what the traveller has a plan, not a fund',
+  /id="plan-h"[^>]*>[^<]*journey plan/i.test(page)
+    && /Journey target/.test(page)
+    && /planned monthly contribution|Planned contribution/i.test(page + fs.readFileSync(
+         path.join(ROOT, 'scripts', 'fund.js'), 'utf8')),
+  'Journey Fund is the product; a journey plan is what you make with it');
+
 /* A percentage has no legitimate denial use: the product measures progress in
    days of journey, so a digit next to a per-cent sign is always the mistake. */
 pages.forEach(function ([name, html]) {

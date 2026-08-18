@@ -263,7 +263,7 @@ def block_sum(money):
     return (
         '<div><span>%s, %d days</span><span>%s</span></div>'
         '<div><span>%s</span><span>%s</span></div>'
-        '<div class="jf-rule"><span>The journey</span><b>%s</b></div>'
+        '<div class="jf-rule"><span>Journey target</span><b>%s</b></div>'
         % (esc(tier["name"]), days, rates.money(ground),
            esc(money["arrival"]["name"]), rates.money(arrival),
            rates.money(ground + arrival)))
@@ -288,32 +288,6 @@ def block_places(countries, regions, first=None):
         out.append('<option value="%s"%s>%s</option>'
                    % (esc(c.slug), sel, esc(c.name)))
     return "".join(out)
-
-
-def block_nots():
-    """What this is not.
-
-    Every reader arrives having used something that did do these things, and
-    answering that unasked is cheaper and more convincing than being asked. It
-    is also the most precise statement of the product available: a list of the
-    things a savings app does, each one declined.
-    """
-    nots = (
-        ("We hold nothing",
-         "No account, no balance, no card on file, nothing charged. Your money "
-         "stays where it already is."),
-        ("There is no interest",
-         "None is paid, offered or implied. Afrinkong is a travel company and "
-         "nothing on this page is a financial product."),
-        ("Nothing is locked",
-         "There is nothing to lock. You are making a plan, and a plan you stop "
-         "keeping costs you nothing to stop."),
-        ("No percentages",
-         "Progress here is measured in days of journey covered, because that "
-         "is the thing you are actually buying."),
-    )
-    return "".join('<div class="jf-not"><b>%s</b><span>%s</span></div>'
-                   % (esc(a), esc(b)) for a, b in nots)
 
 
 # --- the three pages ---------------------------------------------------------
@@ -341,7 +315,6 @@ def render_landing(countries, regions, crossings, money, co):
         "tiers": block_tiers(money),
         "days": block_days(money),
         "sum": block_sum(money),
-        "nots": block_nots(),
         "n": len(data["countries"]),
         "crossings": len(data["routes"]),
     }
@@ -450,10 +423,9 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
 <main>
   <section class="jf-frame jf-open">
     <h1>Your journey can start long before you leave.</h1>
-    <p class="jf-sub">Choose where, choose when, and this page will tell you
-      what the journey costs and what reaching it would have to look like
-      month by month. Nothing is charged and nothing is held &mdash; the
-      arithmetic is the product.</p>
+    <p class="jf-sub">Choose where, and choose when. This page works out what
+      the journey costs, and what the months between now and then would have to
+      look like to reach it.</p>
     <figure class="jf-shot">
       <img src="%(shot)s-1600w.jpg" width="%(shot_w)d" height="%(shot_h)d"
         alt="%(shot_alt)s" decoding="async" fetchpriority="high"
@@ -469,7 +441,7 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
   </section>
 
   <section class="jf-frame jf-planner" id="plan" aria-labelledby="plan-h">
-    <h2 class="af-stamp" id="plan-h">Work out what it would take</h2>
+    <h2 class="af-stamp" id="plan-h">Your journey plan</h2>
     <div class="jf-est">
       <form class="jf-form" id="jf-form" novalidate>
         <fieldset class="jf-ask">
@@ -511,25 +483,27 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
       </form>
 
       <div class="jf-work">
-        <p class="jf-where" id="jf-where">Kenya</p>
+        <p class="af-stamp jf-plan-eye">The plan</p>
+        <p class="jf-where" id="jf-where">Uganda</p>
         <p class="jf-when" id="jf-when">Choose a month</p>
         <div class="jf-sum" id="jf-sum" aria-live="polite">%(sum)s</div>
-        <p class="jf-said" id="jf-said" aria-live="polite">With scripting on, this becomes
-          <b>what you would put aside</b> each month to reach that journey.</p>
+        <p class="jf-said" id="jf-said" aria-live="polite">With scripting on,
+          this becomes your <b>planned monthly contribution</b> &mdash; what
+          reaching that journey would take, month by month.</p>
         <div class="jf-reach" id="jf-reach" hidden></div>
         <p class="jf-fine">Park and conservation fees, permits and entrance
           charges are settled by us at cost and are <b>not</b> in this figure.
           They depend on the itinerary, and a gorilla permit alone can be more
           than a day of the journey.</p>
-        <p class="jf-fine">This is an estimate against today&rsquo;s rate card,
-          not a quotation. Nothing here is charged, held or owed.</p>
+        <p class="jf-fine">An estimate against today&rsquo;s rate card, not a
+          quotation.</p>
       </div>
     </div>
 
     <div class="jf-keep">
-      <p>Afrinkong holds no money. If you want to come back to this plan, it
-        can be kept in this browser and nowhere else &mdash; no account, no
-        email, nothing sent anywhere.</p>
+      <p>Come back to this plan whenever you like: it can be kept in this
+        browser and nowhere else &mdash; no account, no email, nothing sent
+        anywhere, and no money held by us.</p>
       <div class="jf-acts">
         <button class="af-btn" type="button" id="jf-keep">Keep this plan</button>
         <a class="af-btn af-btn--solid" href="/enquire" id="jf-send">Talk to us about it<i>&rarr;</i></a>
@@ -539,11 +513,12 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
   </section>
 
   <section class="jf-frame jf-close">
-    <h2 class="af-stamp">What this is not</h2>
-    <div class="jf-nots">%(nots)s</div>
-    <p class="jf-fine jf-more">More on all of it in
-      <a href="/journey-fund/how-it-works">how it works</a> and the
-      <a href="/journey-fund/questions">questions people ask</a>.</p>
+    <p class="jf-note">Afrinkong holds none of this money &mdash; it stays in
+      your own account and nothing is charged, now or later, until you decide
+      to travel. <a href="/journey-fund/how-it-works">How it works</a> says
+      where it sits and what happens if you stop, and the
+      <a href="/journey-fund/questions">questions people ask</a> covers the
+      rest.</p>
   </section>
 </main>
 %(foot)s

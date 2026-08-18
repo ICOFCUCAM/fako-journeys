@@ -291,14 +291,22 @@
 .jf-q .jf-hold{font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
   text-transform:uppercase;color:var(--c-accent);display:block;margin-bottom:9px}
 
-/* ---- what this is not ---------------------------------------------------
-   A list of things the product deliberately does not do, set as plainly as
-   the things it does. It exists because every reader arrives having used
-   something that did do them, and answering that unasked is cheaper than
-   being asked. */
-.jf-nots{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:2px;margin-top:26px}
-.jf-not{border:1px solid var(--c-border);padding:18px 18px 16px}
-.jf-not b{display:block;font-family:var(--fj-display);font-size:16px;
-  font-weight:700;line-height:1.14;margin-bottom:7px}
-.jf-not span{display:block;font-size:14px;line-height:1.5;color:var(--c-muted)}
+/* ---- the closing note --------------------------------------------------
+   What used to be a section headed "What this is not", with four cards
+   answering four things the product does not do. It was a fifth of the page
+   and one of its three headings, on a page whose proposition is that a
+   journey can start long before you leave.
+
+   The information has not gone anywhere — it is all on
+   /journey-fund/how-it-works, which is where somebody who wants it goes, and
+   it is still on this page in one line. What changed is that it no longer
+   competes with the journey for the reader's attention. Supporting
+   information, set as supporting information. */
+.jf-note{margin:0;font-size:14.5px;line-height:1.6;color:var(--c-muted);
+  max-width:64ch;padding-top:24px;border-top:1px solid var(--c-border)}
+.jf-note a{color:var(--c-accent)}
+
+/* The label above the destination. "The plan" rather than "the fund", because
+   in this phase there is no fund — nothing is held, and the vocabulary has to
+   carry that distinction where a reader will actually meet it. */
+.jf-plan-eye{margin:0 0 10px;color:var(--c-muted)}

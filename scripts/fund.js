@@ -166,10 +166,10 @@
     sumEl.innerHTML = p.band
       ? row(p.countries + ' countries, ' + p.days + ' days',
             F.money(p.low) + ' to ' + F.money(p.high))
-        + total('Planning against', F.money(p.plan))
+        + total('Journey target', F.money(p.plan))
       : row(p.tierName + ', ' + p.days + ' days', F.money(p.ground))
         + row('Airport arrival coordination', F.money(p.arrival))
-        + total('The journey', F.money(p.total));
+        + total('Journey target', F.money(p.total));
 
     var months = F.monthsAhead(s.month, new Date());
     var r = F.rhythm(p.plan, months, s.rhythm);
@@ -194,8 +194,8 @@
 
     /* The month is the subject and the money is the predicate, which is the
        whole argument of this product expressed as grammar. */
-    saidEl.innerHTML = '<b>' + F.money(r.per) + '</b> put aside over '
-      + r.every + ' reaches it.';
+    saidEl.innerHTML = 'Planned contribution: <b>' + F.money(r.per)
+      + '</b>, over ' + r.every + '.';
 
     if (r.per > F.CEILING) show(F.doors(D, p, months, s));
   }
