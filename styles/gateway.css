@@ -3137,7 +3137,11 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    stacked on top of each other and the caption printed across South Africa. */
 .wa-fund-inset{margin:clamp(26px,3.4vw,44px) 0 0;
   width:clamp(150px,17vw,230px)}
-.wa-fund-map{display:block;width:100%;height:auto;overflow:visible}
+/* Clipped, because the box is now cut to Africa and the coast path it is drawn
+   from carries Turkey, the Levant and Arabia along with it. Those are correct
+   on the hero, where the whole projection is on screen; in a 230px inset of
+   one continent they are three shapes with no business being there. */
+.wa-fund-map{display:block;width:100%;height:auto;overflow:hidden}
 /* The chart's own caption, set as a chart's caption is: the thing's name at
    reading weight, its two ends under it, and the measures last and smallest.
    The name is trimmed of its series prefix here rather than in the generator,

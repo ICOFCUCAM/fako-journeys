@@ -2243,10 +2243,32 @@ def block_fundmap():
     pts = [at[s_] for s_ in leg if s_ in at]
     road = _routemap.spline(pts) if len(pts) > 2 else ""
 
+    # THE BOX IS CUT TO THE DRAWING, NOT INHERITED FROM THE HERO.
+    # The projection's own view is 1000x1060 and covers the Atlantic, the Red
+    # Sea and a good deal of Europe, because the hero's map needs all of that.
+    # Reused here it meant Africa occupied about three fifths of a 230px box
+    # and the caption sat forty pixels below a drawing that had stopped — the
+    # inset looked small and loose for no reason a reader could see.
+    #
+    # So the box is the bounding box of what is actually drawn, taken from the
+    # coordinates in the paths themselves plus the route, with a small margin
+    # so the coastline is not flush against the edge. Nothing is hard-coded:
+    # change the projection and the crop follows it.
+    # Africa's extent, and not the coastline's. The longest coast path is one
+    # combined outline that carries Turkey, the Levant and Arabia with it, so
+    # its bounding box is very nearly the projection's own and cropping to it
+    # crops to nothing. The fifty-two country polygons are Africa exactly.
+    nums = re.findall(r"-?\d+(?:\.\d+)?",
+                      " ".join(c["d"] for c in m["live"]))
+    xs = [float(v) for v in nums[0::2]]
+    ys = [float(v) for v in nums[1::2]]
+    pad = 18.0
+    x0, y0 = min(xs) - pad, min(ys) - pad
+    box = "%.1f %.1f %.1f %.1f" % (x0, y0, max(xs) - x0 + pad, max(ys) - y0 + pad)
+
     out = ['<figure class="wa-fund-inset">',
            '<svg class="wa-fund-map" viewBox="%s" aria-hidden="true" '
-           'preserveAspectRatio="xMidYMid meet">'
-           % " ".join(str(v) for v in d["fit"]["view"])]
+           'preserveAspectRatio="xMidYMid meet">' % box]
     for p in coast:
         out.append('<path class="wa-fund-coast" d="%s"/>' % p)
     if road:
