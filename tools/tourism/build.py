@@ -184,7 +184,7 @@ def cmd_focal(args):
     """
     from tourism import focal
     return focal.run(write=bool(getattr(args, "fetch", False)),
-                     limit=int(getattr(args, "n", 0) or 0) or None)
+                     limit=int(getattr(args, "limit", 0) or 0) or None)
 
 
 def cmd_graft(args):
@@ -1017,6 +1017,21 @@ def main():
     p.add_argument("--only", help="one slot id, page or category")
     p.add_argument("-n", type=int, default=1,
                    help="candidates to generate per slot (default 1)")
+    # ITS OWN FLAG, BECAUSE -n ALREADY MEANT SOMETHING AND MEANT IT BY DEFAULT.
+    #
+    # `focal` was wired to -n when this parser rejected --limit, and -n is the
+    # generate command's "candidates per slot" with a default of 1. So the crop
+    # pass, run with no flags at all, read exactly one photograph out of 149,
+    # wrote one cache entry, and reported success — twice, on two runs, in two
+    # seconds each.
+    #
+    # It cost two wrong diagnoses before the step's own duration gave it away:
+    # a run that had genuinely been refused 148 times could not have finished
+    # in two seconds with a two-second retry on every failure. Reusing a flag
+    # that already has a non-zero default is a way of passing an argument
+    # nobody wrote.
+    p.add_argument("--limit", type=int, default=0,
+                   help="stop after N items (focal); 0 means all of them")
     p.add_argument("--dry-run", action="store_true",
                    help="show what would happen; send nothing, write nothing")
     p.add_argument("--from", dest="source_dir", default="incoming",
