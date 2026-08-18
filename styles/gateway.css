@@ -617,14 +617,32 @@
   vector-effect:non-scaling-stroke;
   stroke-linejoin:round;transition:fill .2s}
 /* The engraved coast, drawn from the survey rather than faked by stroking the
-   countries harder — which only makes every border heavier. It used to be deep
-   ink, because the land was pale and the sea was dark and ink was the only way
-   to separate them. Now both sides are ink, and the separation has to be the
-   light: an ivory hairline at just over half strength, wider than any internal
-   boundary, so the coast is the strongest line on the sheet and the continent
-   is visible without being filled. */
-.wa-map-coast path{fill:none;stroke:color-mix(in srgb,var(--c-ink) 62%, transparent);
-  stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+   countries harder — which only makes every border heavier.
+
+   IT IS THE ONLY THING THAT DRAWS THE LAND THAT IS NOT AFRICA, AND IT WAS
+   DRAWING IT IN BLACK ON BLACK. This layer carries all eighteen coastlines in
+   the view, not only the continent's: Iberia, Italy, Greece, Turkey, Cyprus,
+   the Levant, Arabia. Africa has fills behind it — fifty-two country polygons
+   in terracotta — so ink there reads as an engraved edge, which is what it was
+   chosen for. Everything above and east of the Mediterranean has no fill at
+   all. `.wa-map-rest` holds a single path, so for that half of the map the
+   coast is not the edge of the drawing, it *is* the drawing. Deep ink at 62%
+   against a deep forest sea measures 1.06:1, and at that number the drawing
+   does not exist: the Mediterranean read as the top of the image rather than
+   as a sea with a far side, and Israel, Lebanon and the whole Levant were not
+   on the map at all.
+
+   The line goes to ivory for exactly the reason the fills stayed terracotta —
+   contrast is against what a thing is drawn on, and these two halves are drawn
+   on opposite grounds. Over the sea, ivory at 58% is the only version of this
+   line that exists. Over terracotta it lands as a pale rim, which is what a
+   printed chart does at a coast in any case, and it does not compete with the
+   internal borders because those are thinner and stay where they were.
+
+   Narrower with it, 1.6 rather than 2: a line that is finally visible does not
+   need the weight it was carrying while it was trying to be. */
+.wa-map-coast path{fill:none;stroke:color-mix(in srgb,var(--c-bg) 58%, transparent);
+  stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
 /* AN OPERATOR OF OURS HAS TO READ AGAINST THE GROUND IT IS ON.
    The tier is deep forest, and the hero's ground is deep forest, so Namibia,
    Cameroon and Uganda were drawn as holes in the continent — 1.1:1 against the
