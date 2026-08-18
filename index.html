@@ -1822,7 +1822,20 @@ window.AF = {
     if (!shots.length) return;
     var still = matchMedia('(prefers-reduced-motion: reduce)');
     var track = (picks[0] && picks[0].dataset.track) || shots[0].dataset.track;
-    var at = 0, timer = null, seen = true, paused = false;
+    /* FALSE, AND IT WAS TRUE.
+       The observer below turns this on when the band is actually in view, and
+       run() does nothing at all while it is off — no clock, no play(), no
+       fetch. Starting it at `true` meant the rail ran from the moment the
+       script did, and run() calls play() on the current clip, which is how a
+       3.9 MB film started downloading on page load with the band twelve
+       hundred pixels below the fold. Measured: 6.60 MB on a phone's first
+       screen, of which 3.9 MB was a video nobody had scrolled to.
+       The observer fires immediately with the element's real state, so `false`
+       costs nothing when the band IS in view. Where there is no observer at
+       all it stays true — an old browser gets the film rather than a rail that
+       never starts. */
+    var at = 0, timer = null, paused = false;
+    var seen = !('IntersectionObserver' in window);
 
     function ofTrack() {
       return shots.filter(function (s) { return s.dataset.track === track; });
@@ -1867,18 +1880,23 @@ window.AF = {
         if (on) { poster(v); v.currentTime = 0; }
         else { v.pause(); }
       });
-      /* The first shot of a track is eager; the next one is fetched now so the
-         cross-fade has something to fade to. A clip gets the same treatment —
-         it starts arriving one turn early, so the shot before it pays for the
-         wait instead of the visitor watching a poster frame sit still. */
+    }
+    /* THE NEXT SHOT ARRIVES ONE TURN EARLY, AND NOT BEFORE THE BAND IS SEEN.
+       Fetching the next shot while the current one holds is what stops the
+       visitor watching an empty window — but it used to happen inside show(),
+       and show(0) runs at start-up whatever the band is doing. So shot two's
+       clip began downloading on page load with the band twelve hundred pixels
+       below the fold: 2.2 MB, on top of the 3.9 MB that `seen` starting true
+       was already costing. It belongs in run(), under the same guards that
+       decide whether anything moves at all. */
+    function arm() {
+      var list = ofTrack();
+      if (!list.length) return;
       var next = list[(at + 1) % list.length];
-      /* One turn early, so the cross-fade has something to fade to and the
-         wait is paid for by the shot before it rather than by the visitor
-         watching an empty window. */
-      picture(next && next.querySelector('img[data-src]'));
-      var nv = next && next.querySelector('video');
+      if (!next) return;
+      picture(next.querySelector('img[data-src]'));
+      var nv = next.querySelector('video');
       if (nv) { poster(nv); if (nv.preload !== 'auto') { nv.preload = 'auto'; nv.load(); } }
-
     }
     function tick() { show(at + 1); run(); }
     /* WHAT DRIVES THE RAIL FORWARD, AND WHY IT IS NOT ONE CLOCK
@@ -1905,6 +1923,7 @@ window.AF = {
          the band far up the page, which is the battery this section was
          supposed to save, and meant the page never stopped fetching. */
       if (paused || !seen || still.matches) { if (v) v.pause(); return; }
+      arm();
       if (v) {
         /* The markup asks for no video at all, so the fetch starts here:
            play() on a preload="none" element loads it. Not load(), which
