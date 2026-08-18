@@ -160,6 +160,35 @@ jobs:
           # lose the run.
           python3 tools/tourism/build.py audit --force
 
+      - name: Move the hard crops off dead centre
+        run: |
+          # A HUNDRED AND SIXTY-EIGHT SLOTS CROPPED AT 50,50.
+          #
+          # validate.py has warned about this for as long as it has existed:
+          # hero, panoramic and portrait boxes throw away most of the frame, and
+          # fifty per cent is not a decision about a photograph, it is the
+          # absence of one — in a tall portrait box it is the setting most
+          # likely to take the top off whatever the picture is of.
+          #
+          # It runs HERE and not on a developer's machine because it has to read
+          # the photographs, and they live on the providers' CDNs. The
+          # environment this was written in denies images.pexels.com outright,
+          # so the pass reports "could not be read" for every slot and does
+          # nothing. This runner has the same network access the resolver needs
+          # and is the only place the work can happen.
+          #
+          # After the audit, so a photograph about to be quarantined is not
+          # measured first; before `all`, so the pages render with the crops the
+          # step just chose. Only slots still sitting on dead centre are
+          # touched, so anything set by hand survives every run.
+          #
+          # What it cannot do is see. There is no face detector here: it finds
+          # where the DETAIL is, damps that 55% back towards the middle, clamps
+          # it inside 30-70 and declines to write a shift smaller than five
+          # points. See tools/tourism/focal.py.
+          pip install --quiet Pillow
+          python3 tools/tourism/build.py focal --fetch
+
       - name: Rebuild pages and validate
         run: |
           # `all` runs validate, render, homes, gateway, verify and report — the

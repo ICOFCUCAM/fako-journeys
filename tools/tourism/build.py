@@ -175,6 +175,18 @@ def cmd_sizeattr(args):
     return sizes_attr.run(write=bool(getattr(args, "fetch", False)))
 
 
+def cmd_focal(args):
+    """Move the hard-cropping slots off dead centre, from the photograph.
+
+    A hundred and sixty-eight hero, panoramic and portrait slots sat at 50,50,
+    which is not a decision about a photograph but the absence of one. See
+    tools/tourism/focal.py, including what it can and cannot know.
+    """
+    from tourism import focal
+    return focal.run(write=bool(getattr(args, "fetch", False)),
+                     limit=int(getattr(args, "n", 0) or 0) or None)
+
+
 def cmd_graft(args):
     """The head blocks a page cannot get from the generator that made it.
 
@@ -948,7 +960,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
