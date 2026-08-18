@@ -67,11 +67,11 @@ Uganda                    27/27        26/27        OK
 Zambia                    27/27        27/27        OK
 Zimbabwe                  27/27        26/27        OK
 
-0 error(s), 225 warning(s)
+0 error(s), 208 warning(s)
   WARN  x92   portrait crop left on dead centre
-  WARN  x63   panoramic crop left on dead centre
+  WARN  x50   panoramic crop left on dead centre
   WARN  x42   image unresolved
   WARN  x13   matched on a broadened query
-  WARN  x13   hero crop left on dead centre
+  WARN  x9    hero crop left on dead centre
   WARN  x2    alt text is only the country name
 ```

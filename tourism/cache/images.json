@@ -46558,41 +46558,41 @@
    "width": 6016
   },
   "benin/cities": {
-   "alt": "Woman selling vegetables on a market on a street, Benin",
-   "altIntended": "Colorful street market scene in Lagos, Nigeria, featuring a woman selling vegetables and yams., Benin",
-   "aspectRatio": 1.4984,
+   "alt": "Black and white street scene in bustling market, Benin",
+   "altIntended": "Monochrome photo capturing daily life in a vibrant street market with people and traditional structures., Benin",
+   "aspectRatio": 1.4,
    "caption": "Cotonou, Porto-Novo, Abomey",
    "category": "cities",
    "country": "benin",
-   "createdAt": "2026-08-18T07:36:24Z",
+   "createdAt": "2026-08-18T07:42:50Z",
    "description": "A port that never stops, a colonial capital, and the seat of a kingdom.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 4912,
-   "imageUrl": "https://images.pexels.com/photos/14881680/pexels-photo-14881680.jpeg",
-   "photoId": "14881680",
-   "photographer": "David Iloba",
-   "photographerUrl": "https://www.pexels.com/@david-iloba-28486424",
+   "height": 5152,
+   "imageUrl": "https://images.pexels.com/photos/33690926/pexels-photo-33690926.jpeg",
+   "photoId": "33690926",
+   "photographer": "Fabnel LDN",
+   "photographerUrl": "https://www.pexels.com/@fabnel-ldn-2147803336",
    "provider": "pexels",
    "query": "Benin Dantokpa Cotonou",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "woman selling vegetables on a market on a street",
-    "why": "1.93"
+    "photoSays": "black and white street scene in bustling market",
+    "why": "1.80"
    },
    "relevance": {
     "reasons": [
      "subject: market"
     ],
-    "score": 1.93
+    "score": 1.8
    },
-   "sourceUrl": "https://www.pexels.com/photo/woman-selling-vegetables-on-a-market-on-a-street-14881680/",
-   "thumbnailUrl": "https://images.pexels.com/photos/14881680/pexels-photo-14881680.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:26Z",
-   "width": 7360
+   "sourceUrl": "https://www.pexels.com/photo/black-and-white-street-scene-in-bustling-market-33690926/",
+   "thumbnailUrl": "https://images.pexels.com/photos/33690926/pexels-photo-33690926.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:51Z",
+   "width": 7213
   },
   "benin/forests": {
    "alt": "tall trees and a shrine in the sacred forest of Kpasse at Ouidah, Benin",
@@ -46992,41 +46992,41 @@
    "width": 6720
   },
   "burkina-faso/cities": {
-   "alt": "Northern nigeria, Burkina Faso",
-   "altIntended": "Colorful building with intricate patterns in an urban Nigerian setting, showcasing unique architecture and street life., Burkina Faso",
+   "alt": "A building with a large sign on it, Burkina Faso",
+   "altIntended": "Rustic architectural facade under blue sky in sunlit city environment., Burkina Faso",
    "aspectRatio": 1.5,
    "caption": "Ouagadougou and Bobo-Dioulasso",
    "category": "cities",
    "country": "burkina-faso",
-   "createdAt": "2026-08-18T07:36:26Z",
+   "createdAt": "2026-08-18T07:42:51Z",
    "description": "A capital that fills for FESPACO, and a second city with the country's best music.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/28122985/pexels-photo-28122985.jpeg",
-   "photoId": "28122985",
-   "photographer": "Abubakar  Ogaji",
-   "photographerUrl": "https://www.pexels.com/@abubakar-ogaji-1105433220",
+   "height": 5152,
+   "imageUrl": "https://images.pexels.com/photos/27935637/pexels-photo-27935637.jpeg",
+   "photoId": "27935637",
+   "photographer": "Iklima Babangida",
+   "photographerUrl": "https://www.pexels.com/@sunshineinapod",
    "provider": "pexels",
    "query": "Burkina Faso Grande Mosquee Bobo-Dioulasso",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "northern nigeria",
+    "photoSays": "a building with a large sign on it",
     "why": "1.43"
    },
    "relevance": {
     "reasons": [
-     "category: urban"
+     "category: city"
     ],
     "score": 1.43
    },
-   "sourceUrl": "https://www.pexels.com/photo/northern-nigeria-28122985/",
-   "thumbnailUrl": "https://images.pexels.com/photos/28122985/pexels-photo-28122985.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:26Z",
-   "width": 6000
+   "sourceUrl": "https://www.pexels.com/photo/a-building-with-a-large-sign-on-it-27935637/",
+   "thumbnailUrl": "https://images.pexels.com/photos/27935637/pexels-photo-27935637.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:51Z",
+   "width": 7728
   },
   "burkina-faso/crafts": {
    "alt": "a tall painted Bwa plank mask with geometric patterns, Burkina Faso",
@@ -47137,21 +47137,21 @@
    "width": 6000
   },
   "burkina-faso/why-visit": {
-   "alt": "Blue light on people on concert, Burkina Faso",
-   "altIntended": "A diverse audience in masks attentively watching a concert under blue lights., Burkina Faso",
+   "alt": "People praying in a stadium, Burkina Faso",
+   "altIntended": "A diverse crowd participates in an indoor religious gathering, with some wearing face masks., Burkina Faso",
    "aspectRatio": 1.5,
    "caption": "Why Burkina Faso",
    "category": "why-visit",
    "country": "burkina-faso",
-   "createdAt": "2026-08-18T07:36:27Z",
+   "createdAt": "2026-08-18T07:42:51Z",
    "description": "The masks, the music and the cinema, in a country that has never traded on scenery.",
    "focalPoint": {
     "x": 50,
     "y": 48
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/15325476/pexels-photo-15325476.jpeg",
-   "photoId": "15325476",
+   "imageUrl": "https://images.pexels.com/photos/14373431/pexels-photo-14373431.jpeg",
+   "photoId": "14373431",
    "photographer": "Luis Quintero",
    "photographerUrl": "https://www.pexels.com/@jibarofoto",
    "provider": "pexels",
@@ -47159,18 +47159,18 @@
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "blue light on people on concert",
+    "photoSays": "people praying in a stadium",
     "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "subject: watching"
+     "subject: crowd"
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/blue-light-on-people-on-concert-15325476/",
-   "thumbnailUrl": "https://images.pexels.com/photos/15325476/pexels-photo-15325476.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:27Z",
+   "sourceUrl": "https://www.pexels.com/photo/people-praying-in-a-stadium-14373431/",
+   "thumbnailUrl": "https://images.pexels.com/photos/14373431/pexels-photo-14373431.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:51Z",
    "width": 6000
   },
   "burundi/adventure": {
@@ -47246,41 +47246,41 @@
    "width": 6422
   },
   "burundi/why-visit": {
-   "alt": "Abandoned boats on beach, Burundi",
-   "altIntended": "Weathered fishing boats resting on a rocky beach by the sea under a cloudy sky., Burundi",
-   "aspectRatio": 1.504,
+   "alt": "Small boat navigating vibrant turquoise waters, Burundi",
+   "altIntended": "Three individuals in a wooden boat paddling through clear turquoise ocean under a bright sky., Burundi",
+   "aspectRatio": 1.5,
    "caption": "Why Burundi",
    "category": "why-visit",
    "country": "burundi",
-   "createdAt": "2026-08-18T07:36:27Z",
+   "createdAt": "2026-08-18T07:42:51Z",
    "description": "The Nile's furthest source, the royal drums, and a lake almost nobody visits.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/26382562/pexels-photo-26382562.jpeg",
-   "photoId": "26382562",
-   "photographer": "Vika Glitter",
-   "photographerUrl": "https://www.pexels.com/@vika-glitter-392079",
+   "height": 4386,
+   "imageUrl": "https://images.pexels.com/photos/32806077/pexels-photo-32806077.jpeg",
+   "photoId": "32806077",
+   "photographer": "Edouard MIHIGO",
+   "photographerUrl": "https://www.pexels.com/@edouard-mihigo-129683048",
    "provider": "pexels",
    "query": "Burundi Lake Tanganyika",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "abandoned boats on beach",
+    "photoSays": "small boat navigating vibrant turquoise waters",
     "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "subject: fishing"
+     "subject: boat"
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/abandoned-boats-on-beach-26382562/",
-   "thumbnailUrl": "https://images.pexels.com/photos/26382562/pexels-photo-26382562.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:28Z",
-   "width": 6016
+   "sourceUrl": "https://www.pexels.com/photo/small-boat-navigating-vibrant-turquoise-waters-32806077/",
+   "thumbnailUrl": "https://images.pexels.com/photos/32806077/pexels-photo-32806077.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:51Z",
+   "width": 6579
   },
   "cabo-verde/food": {
    "alt": "a bowl of cachupa with sausage and egg, Cabo Verde",
@@ -47574,41 +47574,41 @@
    "width": 7210
   },
   "cabo-verde/photography": {
-   "alt": "Majestic view of volcano in santa ana el salvador, Cabo Verde",
-   "altIntended": "A breathtaking view of the lush landscape and volcano under a dramatic cloudy sky in Santa Ana, El Salvador., Cabo Verde",
-   "aspectRatio": 1.3333,
+   "alt": "A rocky ground and hills in distance, Cabo Verde",
+   "altIntended": "Rugged volcanic terrain under a bright sky in Lanzarote's unique landscape., Cabo Verde",
+   "aspectRatio": 1.5,
    "caption": "Volcano and Vine",
    "category": "photography",
    "country": "cabo-verde",
-   "createdAt": "2026-08-18T07:36:28Z",
+   "createdAt": "2026-08-18T07:42:51Z",
    "description": "Cha das Caldeiras at first light, with vines growing in black ash under the cone.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 4284,
-   "imageUrl": "https://images.pexels.com/photos/38212171/pexels-photo-38212171.jpeg",
-   "photoId": "38212171",
-   "photographer": "Diego Lopez",
-   "photographerUrl": "https://www.pexels.com/@disalomo",
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/20183260/pexels-photo-20183260.jpeg",
+   "photoId": "20183260",
+   "photographer": "Matthias Groeneveld",
+   "photographerUrl": "https://www.pexels.com/@matthiasgroeneveld",
    "provider": "pexels",
    "query": "Cabo Verde Fogo",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "majestic view of volcano in santa ana el salvador",
-    "why": "1.71"
+    "photoSays": "a rocky ground and hills in distance",
+    "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "subject: volcano"
+     "subject: volcanic"
     ],
-    "score": 1.71
+    "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/majestic-view-of-volcano-in-santa-ana-el-salvador-38212171/",
-   "thumbnailUrl": "https://images.pexels.com/photos/38212171/pexels-photo-38212171.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:29Z",
-   "width": 5712
+   "sourceUrl": "https://www.pexels.com/photo/a-rocky-ground-and-hills-in-distance-20183260/",
+   "thumbnailUrl": "https://images.pexels.com/photos/20183260/pexels-photo-20183260.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:51Z",
+   "width": 6000
   },
   "cabo-verde/traditional-people": {
    "alt": "musicians playing batuko drums on Santiago, Cabo Verde",
@@ -47939,29 +47939,29 @@
    "width": 6000
   },
   "cameroon/photography": {
-   "alt": "Lush greenery with misty mountain backdrop, Cameroon",
-   "altIntended": "Photography in Cameroon",
-   "aspectRatio": 1.4993,
+   "alt": "Scenic landscape during rain, Cameroon",
+   "altIntended": "Captivating view of storm clouds over rolling hills during sunset, creating a dramatic and scenic landscape., Cameroon",
+   "aspectRatio": 1.498,
    "caption": "Cloud on the Rainforest",
    "category": "photography",
    "country": "cameroon",
-   "createdAt": "2026-08-18T07:36:30Z",
+   "createdAt": "2026-08-18T07:42:51Z",
    "description": "Wet season cloud sitting on the forest above Buea, and dry season light on the Mandara spires — two countries, one lens.",
    "focalPoint": {
     "x": 50,
     "y": 48
    },
-   "height": 5464,
-   "imageUrl": "https://images.pexels.com/photos/30644562/pexels-photo-30644562.jpeg",
-   "photoId": "30644562",
-   "photographer": "Mohan Nannapaneni",
-   "photographerUrl": "https://www.pexels.com/@mnannapaneni",
+   "height": 4016,
+   "imageUrl": "https://images.pexels.com/photos/13258133/pexels-photo-13258133.jpeg",
+   "photoId": "13258133",
+   "photographer": "Connor Scott McManus",
+   "photographerUrl": "https://www.pexels.com/@connorscottmcmanus",
    "provider": "pexels",
-   "query": "Cameroon scenic",
-   "queryTier": "category",
+   "query": "Cameroon cloud rain",
+   "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "lush greenery with misty mountain backdrop",
+    "photoSays": "scenic landscape during rain",
     "why": "1.43"
    },
    "relevance": {
@@ -47970,10 +47970,10 @@
     ],
     "score": 1.43
    },
-   "sourceUrl": "https://www.pexels.com/photo/lush-greenery-with-misty-mountain-backdrop-30644562/",
-   "thumbnailUrl": "https://images.pexels.com/photos/30644562/pexels-photo-30644562.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:31Z",
-   "width": 8192
+   "sourceUrl": "https://www.pexels.com/photo/scenic-landscape-during-rain-13258133/",
+   "thumbnailUrl": "https://images.pexels.com/photos/13258133/pexels-photo-13258133.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:51Z",
+   "width": 6016
   },
   "cameroon/traditional-people": {
    "alt": "a Mafa farmer on the terraced slopes of the Mandara mountains, Cameroon",
@@ -48775,41 +48775,41 @@
    "width": 8640
   },
   "comoros/why-visit": {
-   "alt": "Hill on sea coastline, Comoros",
-   "altIntended": "Beautiful coastal landscape with lush greenery and clear blue waters, perfect for nature travel inspiration., Comoros",
+   "alt": "A group of people in a small boat on the water, Comoros",
+   "altIntended": "Fishermen in a small boat on the Nile River during a vibrant sunset. Perfect for travel or cultural content., Comoros",
    "aspectRatio": 1.5,
    "caption": "Why Comoros",
    "category": "why-visit",
    "country": "comoros",
-   "createdAt": "2026-08-18T07:36:33Z",
+   "createdAt": "2026-08-18T07:42:51Z",
    "description": "An active volcano, a living fossil, and a Swahili stone town nobody visits.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/25033683/pexels-photo-25033683.jpeg",
-   "photoId": "25033683",
-   "photographer": "Paulo gustavo Modesto",
-   "photographerUrl": "https://www.pexels.com/@paulo-gustavo-modesto-1241776887",
+   "height": 4480,
+   "imageUrl": "https://images.pexels.com/photos/19820488/pexels-photo-19820488.jpeg",
+   "photoId": "19820488",
+   "photographer": "Maël  BALLAND",
+   "photographerUrl": "https://www.pexels.com/@toulouse",
    "provider": "pexels",
    "query": "Comoros Grande Comore",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "hill on sea coastline",
-    "why": "1.43"
+    "photoSays": "a group of people in a small boat on the water",
+    "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "category: inspiration"
+     "subject: sunset"
     ],
-    "score": 1.43
+    "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/hill-on-sea-coastline-25033683/",
-   "thumbnailUrl": "https://images.pexels.com/photos/25033683/pexels-photo-25033683.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:33Z",
-   "width": 6000
+   "sourceUrl": "https://www.pexels.com/photo/a-group-of-people-in-a-small-boat-on-the-water-19820488/",
+   "thumbnailUrl": "https://images.pexels.com/photos/19820488/pexels-photo-19820488.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:51Z",
+   "width": 6720
   },
   "congo/adventure": {
    "alt": "a pirogue moving up a narrow forest river in Odzala, Congo",
@@ -48848,21 +48848,21 @@
    "width": 7952
   },
   "congo/cities": {
-   "alt": "Traffic jam on a street, Congo",
-   "altIntended": "A busy urban street during evening with vehicles and pedestrians., Congo",
-   "aspectRatio": 1.4994,
+   "alt": "Cameroon reunification monument in yaounde, Congo",
+   "altIntended": "The Reunification Monument in Yaoundé, Cameroon showcasing urban beauty., Congo",
+   "aspectRatio": 1.3334,
    "caption": "Brazzaville and Pointe-Noire",
    "category": "cities",
    "country": "congo",
-   "createdAt": "2026-08-18T07:36:34Z",
+   "createdAt": "2026-08-18T07:42:52Z",
    "description": "A river capital looking across at Kinshasa, and an Atlantic oil port with the beaches.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 5110,
-   "imageUrl": "https://images.pexels.com/photos/17234882/pexels-photo-17234882.jpeg",
-   "photoId": "17234882",
+   "height": 5845,
+   "imageUrl": "https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg",
+   "photoId": "17290980",
    "photographer": "K",
    "photographerUrl": "https://www.pexels.com/@kelly",
    "provider": "pexels",
@@ -48870,19 +48870,19 @@
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "traffic jam on a street",
-    "why": "1.43"
+    "photoSays": "cameroon reunification monument in yaounde",
+    "why": "1.21"
    },
    "relevance": {
     "reasons": [
      "category: urban"
     ],
-    "score": 1.43
+    "score": 1.21
    },
-   "sourceUrl": "https://www.pexels.com/photo/traffic-jam-on-a-street-17234882/",
-   "thumbnailUrl": "https://images.pexels.com/photos/17234882/pexels-photo-17234882.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:34Z",
-   "width": 7662
+   "sourceUrl": "https://www.pexels.com/photo/cameroon-reunification-monument-in-yaounde-17290980/",
+   "thumbnailUrl": "https://images.pexels.com/photos/17290980/pexels-photo-17290980.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:52Z",
+   "width": 7794
   },
   "congo/crafts": {
    "alt": "a flat round Teke mask with geometric carving, Congo",
@@ -49287,41 +49287,41 @@
    "width": 4000
   },
   "cote-divoire/why-visit": {
-   "alt": "Concrete road in between green trees, Côte d'Ivoire",
-   "altIntended": "Curvy countryside road with lush greenery overlooking a coastal city skyline under overcast skies., Côte d'Ivoire",
-   "aspectRatio": 1.5007,
+   "alt": "A traffic sign by the seaside, Côte d'Ivoire",
+   "altIntended": "Coastal road with yellow chevron traffic sign and blue ocean horizon., Côte d'Ivoire",
+   "aspectRatio": 1.5116,
    "caption": "The Engine of the Region",
    "category": "why-visit",
    "country": "cote-divoire",
-   "createdAt": "2026-08-18T07:36:34Z",
+   "createdAt": "2026-08-18T07:42:52Z",
    "description": "The largest economy in francophone West Africa, and the easiest of them to travel.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4018,
-   "imageUrl": "https://images.pexels.com/photos/14577969/pexels-photo-14577969.jpeg",
-   "photoId": "14577969",
-   "photographer": "Vincent Nguyen",
-   "photographerUrl": "https://www.pexels.com/@vincentfotos",
+   "height": 4371,
+   "imageUrl": "https://images.pexels.com/photos/8876674/pexels-photo-8876674.jpeg",
+   "photoId": "8876674",
+   "photographer": "SpotwizardLee",
+   "photographerUrl": "https://www.pexels.com/@spotwizardlee-35777904",
    "provider": "pexels",
    "query": "Côte d'Ivoire coastal highway running",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "concrete road in between green trees",
-    "why": "1.93"
+    "photoSays": "a traffic sign by the seaside",
+    "why": "1.94"
    },
    "relevance": {
     "reasons": [
      "subject: coastal"
     ],
-    "score": 1.93
+    "score": 1.94
    },
-   "sourceUrl": "https://www.pexels.com/photo/concrete-road-in-between-green-trees-14577969/",
-   "thumbnailUrl": "https://images.pexels.com/photos/14577969/pexels-photo-14577969.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:35Z",
-   "width": 6030
+   "sourceUrl": "https://www.pexels.com/photo/a-traffic-sign-by-the-seaside-8876674/",
+   "thumbnailUrl": "https://images.pexels.com/photos/8876674/pexels-photo-8876674.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:52Z",
+   "width": 6607
   },
   "cote-divoire/wildlife": {
    "alt": "dense rainforest canopy at Taï national park, Côte d'Ivoire",
@@ -49397,41 +49397,41 @@
    "width": 6590
   },
   "djibouti/cities": {
-   "alt": "Nouakchott mauritania cityscape, Djibouti",
-   "altIntended": "Nouakchott, Mauritania, showcasing urban sprawl under a bright blue sky., Djibouti",
-   "aspectRatio": 1.7778,
+   "alt": "The port during sunset, Djibouti",
+   "altIntended": "Beautiful sunset view over the harbor of Novorossiysk, showcasing the vibrant sea and skyline., Djibouti",
+   "aspectRatio": 1.5,
    "caption": "Djibouti City",
    "category": "cities",
    "country": "djibouti",
-   "createdAt": "2026-08-18T07:36:35Z",
+   "createdAt": "2026-08-18T07:42:52Z",
    "description": "A French-Arab port city with a covered market, and the Horn's busiest container terminal.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 4536,
-   "imageUrl": "https://images.pexels.com/photos/33952949/pexels-photo-33952949.jpeg",
-   "photoId": "33952949",
-   "photographer": "laye Photographe",
-   "photographerUrl": "https://www.pexels.com/@laye-photographe-1913410511",
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/8444335/pexels-photo-8444335.jpeg",
+   "photoId": "8444335",
+   "photographer": "Sergey Filippov",
+   "photographerUrl": "https://www.pexels.com/@now1993",
    "provider": "pexels",
    "query": "Djibouti Djibouti City",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "aerial view of nouakchott mauritania cityscape",
-    "why": "1.79"
+    "photoSays": "the port during sunset",
+    "why": "1.43"
    },
    "relevance": {
     "reasons": [
-     "category: urban"
+     "category: skyline"
     ],
-    "score": 1.79
+    "score": 1.43
    },
-   "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-nouakchott-mauritania-cityscape-33952949/",
-   "thumbnailUrl": "https://images.pexels.com/photos/33952949/pexels-photo-33952949.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:36Z",
-   "width": 8064
+   "sourceUrl": "https://www.pexels.com/photo/the-port-during-sunset-8444335/",
+   "thumbnailUrl": "https://images.pexels.com/photos/8444335/pexels-photo-8444335.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:52Z",
+   "width": 6000
   },
   "djibouti/crafts": {
    "alt": "A man riding a camel in the desert, Djibouti",
@@ -49731,40 +49731,40 @@
    "width": 6016
   },
   "dr-congo/cities": {
-   "alt": "Coastal city and lake, DR Congo",
-   "altIntended": "A vibrant coastal city bordered by a tranquil lake and dense forest., DR Congo",
+   "alt": "Bustling african city scene with orange rooftops, DR Congo",
+   "altIntended": "Vibrant urban scene with people around orange-roofed buildings against a hilly backdrop., DR Congo",
    "aspectRatio": 1.5,
    "caption": "Kinshasa and Lubumbashi",
    "category": "cities",
    "country": "dr-congo",
-   "createdAt": "2026-08-18T07:36:37Z",
+   "createdAt": "2026-08-18T07:42:52Z",
    "description": "One of the largest cities in Africa, facing Brazzaville, and the mining capital in the south.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/35642878/pexels-photo-35642878.jpeg",
-   "photoId": "35642878",
-   "photographer": "Nothing Ahead",
-   "photographerUrl": "https://www.pexels.com/@ian-panelo",
+   "imageUrl": "https://images.pexels.com/photos/30751493/pexels-photo-30751493.jpeg",
+   "photoId": "30751493",
+   "photographer": "Mad Knoxx Deluxe",
+   "photographerUrl": "https://www.pexels.com/@madknoxxdeluxe",
    "provider": "pexels",
    "query": "DR Congo Kinshasa Congo",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "scenic aerial view of coastal city and lake",
+    "photoSays": "bustling african city scene with orange rooftops",
     "why": "1.43"
    },
    "relevance": {
     "reasons": [
-     "category: city"
+     "category: urban"
     ],
     "score": 1.43
    },
-   "sourceUrl": "https://www.pexels.com/photo/scenic-aerial-view-of-coastal-city-and-lake-35642878/",
-   "thumbnailUrl": "https://images.pexels.com/photos/35642878/pexels-photo-35642878.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:38Z",
+   "sourceUrl": "https://www.pexels.com/photo/bustling-african-city-scene-with-orange-rooftops-30751493/",
+   "thumbnailUrl": "https://images.pexels.com/photos/30751493/pexels-photo-30751493.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:52Z",
    "width": 6000
   },
   "dr-congo/crafts": {
@@ -50139,21 +50139,21 @@
    "width": 3456
   },
   "dr-congo/why-visit": {
-   "alt": "Silhouette of a climber on a rocky wall in damascus, DR Congo",
-   "altIntended": "A striking silhouette of a climber rappelling down a rocky wall against a bright sky in Damascus, Syria., DR Congo",
+   "alt": "Silhouette of a mountain climber against the sun, DR Congo",
+   "altIntended": "A dramatic silhouette of a climber scaling a mountain at twilight., DR Congo",
    "aspectRatio": 1.5,
    "caption": "Why DR Congo",
    "category": "why-visit",
    "country": "dr-congo",
-   "createdAt": "2026-08-18T07:36:38Z",
+   "createdAt": "2026-08-18T07:42:52Z",
    "description": "A lava lake, mountain gorillas, glaciers on the equator, and the okapi.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
    "height": 4128,
-   "imageUrl": "https://images.pexels.com/photos/37516173/pexels-photo-37516173.jpeg",
-   "photoId": "37516173",
+   "imageUrl": "https://images.pexels.com/photos/37516166/pexels-photo-37516166.jpeg",
+   "photoId": "37516166",
    "photographer": "Baraa Obied",
    "photographerUrl": "https://www.pexels.com/@baraa-obied-2157551361",
    "provider": "pexels",
@@ -50161,7 +50161,7 @@
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "silhouette of a climber on a rocky wall in damascus",
+    "photoSays": "silhouette of a mountain climber against the sun",
     "why": "1.93"
    },
    "relevance": {
@@ -50170,9 +50170,9 @@
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/silhouette-of-a-climber-on-a-rocky-wall-in-damascus-37516173/",
-   "thumbnailUrl": "https://images.pexels.com/photos/37516173/pexels-photo-37516173.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:38Z",
+   "sourceUrl": "https://www.pexels.com/photo/silhouette-of-a-mountain-climber-against-the-sun-37516166/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37516166/pexels-photo-37516166.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:53Z",
    "width": 6192
   },
   "dr-congo/wildlife": {
@@ -50846,41 +50846,41 @@
    "width": 8064
   },
   "eritrea/photography": {
-   "alt": "Bustling street scene with rickshaws and pedestrians, Eritrea",
-   "altIntended": "Street view with rickshaws and locals against a scenic mountain backdrop., Eritrea",
+   "alt": "Silhouette of trees during sunset, Eritrea",
+   "altIntended": "Enchanting sunset view in Barcelona with palm silhouettes and curved road., Eritrea",
    "aspectRatio": 1.5,
    "caption": "Deco in Low Light",
    "category": "photography",
    "country": "eritrea",
-   "createdAt": "2026-08-18T07:36:39Z",
+   "createdAt": "2026-08-18T07:42:53Z",
    "description": "Asmara's facades in the late afternoon, when the plaster goes warm and the streets empty.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 4416,
-   "imageUrl": "https://images.pexels.com/photos/37090653/pexels-photo-37090653.jpeg",
-   "photoId": "37090653",
-   "photographer": "Isaac Naph",
-   "photographerUrl": "https://www.pexels.com/@isaac-naph-567522839",
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/10936418/pexels-photo-10936418.jpeg",
+   "photoId": "10936418",
+   "photographer": "Татьяна Щебланова",
+   "photographerUrl": "https://www.pexels.com/@81016976",
    "provider": "pexels",
-   "query": "Eritrea Asmara",
+   "query": "Eritrea late sun curved",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "bustling street scene with rickshaws and pedestrians",
-    "why": "1.43"
+    "photoSays": "silhouette of trees during sunset",
+    "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "category: scenic"
+     "subject: curved"
     ],
-    "score": 1.43
+    "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/bustling-street-scene-with-rickshaws-and-pedestrians-37090653/",
-   "thumbnailUrl": "https://images.pexels.com/photos/37090653/pexels-photo-37090653.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:40Z",
-   "width": 6624
+   "sourceUrl": "https://www.pexels.com/photo/silhouette-of-trees-during-sunset-10936418/",
+   "thumbnailUrl": "https://images.pexels.com/photos/10936418/pexels-photo-10936418.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:53Z",
+   "width": 6000
   },
   "eritrea/safari": {
    "alt": "Man riding a camel, Eritrea",
@@ -51480,67 +51480,66 @@
    "width": 6000
   },
   "ethiopia/photography": {
-   "alt": "Waqrapukara in cusco peru, Ethiopia",
-   "altIntended": "Lush green mountains with rocky formations under overcast skies, offering a striking scenic view., Ethiopia",
+   "alt": "Mountains, Ethiopia",
+   "altIntended": "Breathtaking mist enveloping steep mountains, creating a dramatic and mystical landscape., Ethiopia",
    "aspectRatio": 1.5,
    "caption": "Faces and Escarpments",
    "category": "photography",
    "country": "ethiopia",
-   "createdAt": "2026-08-18T07:36:40Z",
+   "createdAt": "2026-08-18T07:42:53Z",
    "description": "The light at four thousand metres, and portraiture that has to be asked for properly.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/20043916/pexels-photo-20043916.png",
-   "photoId": "20043916",
-   "photographer": "Tatsu T.",
-   "photographerUrl": "https://www.pexels.com/@tatsu-t-804693629",
+   "imageUrl": "https://images.pexels.com/photos/15146655/pexels-photo-15146655.jpeg",
+   "photoId": "15146655",
+   "photographer": "Artem Zhukov",
+   "photographerUrl": "https://www.pexels.com/@artemioz",
    "provider": "pexels",
-   "query": "Ethiopia Simien",
+   "query": "Ethiopia cloud escarpment edge",
    "queryTier": "subject",
    "rejected": {
-    "kind": "elsewhere",
-    "photoSays": "low angle shot of waqrapukara in cusco peru",
-    "why": "peru"
+    "kind": "thin",
+    "photoSays": "view of mountains",
+    "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "subject: mountains",
-     "category: scenic"
+     "subject: mountains"
     ],
-    "score": 3.43
+    "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/low-angle-shot-of-waqrapukara-in-cusco-peru-20043916/",
-   "thumbnailUrl": "https://images.pexels.com/photos/20043916/pexels-photo-20043916.png?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:41Z",
+   "sourceUrl": "https://www.pexels.com/photo/view-of-mountains-15146655/",
+   "thumbnailUrl": "https://images.pexels.com/photos/15146655/pexels-photo-15146655.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:53Z",
    "width": 6000
   },
   "gabon/cities": {
-   "alt": "Abandoned buildings and benches, Gabon",
-   "altIntended": "Abandoned urban structure with benches and a streetlight, featuring graffiti., Gabon",
-   "aspectRatio": 1.498,
+   "alt": "Bridge across river in front of large factory buil, Gabon",
+   "altIntended": "A modern bridge over a river with an industrial building in the background under a cloudy sky, showcasing urban architecture., Gabon",
+   "aspectRatio": 1.5,
    "caption": "Libreville and Port-Gentil",
    "category": "cities",
    "country": "gabon",
-   "createdAt": "2026-08-18T07:36:41Z",
+   "createdAt": "2026-08-18T07:42:53Z",
    "description": "An Atlantic capital, and an oil town on an island at the Ogooue delta.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 4016,
-   "imageUrl": "https://images.pexels.com/photos/10437761/pexels-photo-10437761.jpeg",
-   "photoId": "10437761",
-   "photographer": "Lucas Oliveira",
-   "photographerUrl": "https://www.pexels.com/@cais",
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/18435362/pexels-photo-18435362.jpeg",
+   "photoId": "18435362",
+   "photographer": "Jean Marc Bonnel",
+   "photographerUrl": "https://www.pexels.com/@jean-marc-bonnel-387362531",
    "provider": "pexels",
    "query": "Gabon Libreville",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "abandoned buildings and benches",
+    "photoSays": "bridge across river in front of large factory buil",
     "why": "1.43"
    },
    "relevance": {
@@ -51549,10 +51548,10 @@
     ],
     "score": 1.43
    },
-   "sourceUrl": "https://www.pexels.com/photo/abandoned-buildings-and-benches-10437761/",
-   "thumbnailUrl": "https://images.pexels.com/photos/10437761/pexels-photo-10437761.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:42Z",
-   "width": 6016
+   "sourceUrl": "https://www.pexels.com/photo/bridge-across-river-in-front-of-large-factory-buil-18435362/",
+   "thumbnailUrl": "https://images.pexels.com/photos/18435362/pexels-photo-18435362.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:53Z",
+   "width": 6000
   },
   "gabon/crafts": {
    "alt": "Traditional african cultural ceremony gathering, Gabon",
@@ -51852,41 +51851,41 @@
    "width": 10667
   },
   "gabon/why-visit": {
-   "alt": "Man walking along mangrove forest edge, Gabon",
-   "altIntended": "A person strolls along the boundary of a dense mangrove forest, captured in natural daylight., Gabon",
-   "aspectRatio": 1.5,
+   "alt": "African elephant in natural habitat at dusk, Gabon",
+   "altIntended": "Lone African elephant in savannah grasslands at dusk, portraying natural wildlife and serenity., Gabon",
+   "aspectRatio": 1.4001,
    "caption": "Why Gabon",
    "category": "why-visit",
    "country": "gabon",
-   "createdAt": "2026-08-18T07:36:42Z",
+   "createdAt": "2026-08-18T07:42:53Z",
    "description": "The only place in the world where forest elephants walk out onto an ocean beach.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4480,
-   "imageUrl": "https://images.pexels.com/photos/37052241/pexels-photo-37052241.jpeg",
-   "photoId": "37052241",
-   "photographer": "HONG SON",
-   "photographerUrl": "https://www.pexels.com/@hson",
+   "height": 5669,
+   "imageUrl": "https://images.pexels.com/photos/30221305/pexels-photo-30221305.jpeg",
+   "photoId": "30221305",
+   "photographer": "Vince Pictures",
+   "photographerUrl": "https://www.pexels.com/@vince-pictures-2148675359",
    "provider": "pexels",
    "query": "Gabon Atlantic Loango",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "man walking along mangrove forest edge",
-    "why": "1.93"
+    "photoSays": "african elephant in natural habitat at dusk",
+    "why": "1.80"
    },
    "relevance": {
     "reasons": [
-     "subject: forest"
+     "subject: elephant"
     ],
-    "score": 1.93
+    "score": 1.8
    },
-   "sourceUrl": "https://www.pexels.com/photo/man-walking-along-mangrove-forest-edge-37052241/",
-   "thumbnailUrl": "https://images.pexels.com/photos/37052241/pexels-photo-37052241.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:42Z",
-   "width": 6720
+   "sourceUrl": "https://www.pexels.com/photo/african-elephant-in-natural-habitat-at-dusk-30221305/",
+   "thumbnailUrl": "https://images.pexels.com/photos/30221305/pexels-photo-30221305.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:53Z",
+   "width": 7937
   },
   "gabon/wildlife": {
    "alt": "Old wooden house with food cooking inside, Gabon",
@@ -52038,29 +52037,29 @@
    "width": 6000
   },
   "gambia/lakes-rivers": {
-   "alt": "Ferry deck view with safety equipment and open sea, The Gambia",
-   "altIntended": "Scenic view from a ferry deck showcasing safety equipment and the vast open sea under a clear sky., The Gambia",
+   "alt": "Passenger ferry with blue accents on water, The Gambia",
+   "altIntended": "Side view of a passenger ferry with blue accents, showcasing people onboard and lifeboats., The Gambia",
    "aspectRatio": 1.5,
    "caption": "The Gambia Itself",
    "category": "lakes-rivers",
    "country": "gambia",
-   "createdAt": "2026-08-18T07:36:42Z",
+   "createdAt": "2026-08-18T07:42:53Z",
    "description": "Tidal for half its length, and every town on it is a landing.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4160,
-   "imageUrl": "https://images.pexels.com/photos/39038837/pexels-photo-39038837.jpeg",
-   "photoId": "39038837",
-   "photographer": "İrfan Simsar",
-   "photographerUrl": "https://www.pexels.com/@irfansimsar",
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/38414151/pexels-photo-38414151.jpeg",
+   "photoId": "38414151",
+   "photographer": "Nothing Ahead",
+   "photographerUrl": "https://www.pexels.com/@ian-panelo",
    "provider": "pexels",
    "query": "The Gambia ferry crossing gambia",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "ferry deck view with safety equipment and open sea",
+    "photoSays": "passenger ferry with blue accents on water",
     "why": "1.93"
    },
    "relevance": {
@@ -52069,10 +52068,10 @@
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/ferry-deck-view-with-safety-equipment-and-open-sea-39038837/",
-   "thumbnailUrl": "https://images.pexels.com/photos/39038837/pexels-photo-39038837.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:43Z",
-   "width": 6240
+   "sourceUrl": "https://www.pexels.com/photo/passenger-ferry-with-blue-accents-on-water-38414151/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38414151/pexels-photo-38414151.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:53Z",
+   "width": 6000
   },
   "gambia/local-life": {
    "alt": "Women walking on road and carrying buckets with wood on heads, The Gambia",
@@ -52745,41 +52744,41 @@
    "width": 4928
   },
   "guinea/cities": {
-   "alt": "Vintage architecture with green arched windows in vietnam, Guinea",
-   "altIntended": "Arched windows with green frames and intricate designs on interior walls in Ho Chi Minh City., Guinea",
+   "alt": "99 domes mosque in makassar indonesia, Guinea",
+   "altIntended": "A stunning low-angle view of the 99 Domes Mosque in Makassar, showcasing intricate architectural patterns., Guinea",
    "aspectRatio": 1.5,
    "caption": "Conakry",
    "category": "cities",
    "country": "guinea",
-   "createdAt": "2026-08-18T07:36:46Z",
+   "createdAt": "2026-08-18T07:42:54Z",
    "description": "A capital on a peninsula, with the Grande Mosquee and the sea on both sides.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 4160,
-   "imageUrl": "https://images.pexels.com/photos/34371430/pexels-photo-34371430.jpeg",
-   "photoId": "34371430",
-   "photographer": "Budi N",
-   "photographerUrl": "https://www.pexels.com/@budi-n-2148616512",
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/13373196/pexels-photo-13373196.jpeg",
+   "photoId": "13373196",
+   "photographer": "Fatur Rachman",
+   "photographerUrl": "https://www.pexels.com/@fatur-rachman-297996475",
    "provider": "pexels",
-   "query": "Guinea Grande Mosquee Conakry",
+   "query": "Guinea grande mosquee low",
    "queryTier": "subject",
    "rejected": {
     "kind": "elsewhere",
-    "photoSays": "vintage architecture with green arched windows in vietnam",
-    "why": "vietnam"
+    "photoSays": "99 domes mosque in makassar indonesia",
+    "why": "indonesia"
    },
    "relevance": {
     "reasons": [
-     "category: city"
+     "subject: low"
     ],
-    "score": 1.43
+    "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/vintage-architecture-with-green-arched-windows-in-vietnam-34371430/",
-   "thumbnailUrl": "https://images.pexels.com/photos/34371430/pexels-photo-34371430.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:47Z",
-   "width": 6240
+   "sourceUrl": "https://www.pexels.com/photo/99-domes-mosque-in-makassar-indonesia-13373196/",
+   "thumbnailUrl": "https://images.pexels.com/photos/13373196/pexels-photo-13373196.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:54Z",
+   "width": 6000
   },
   "guinea/crafts": {
    "alt": "Cute guinea pig resting on straw bedding",
@@ -52895,41 +52894,41 @@
    "width": 6720
   },
   "guinea/photography": {
-   "alt": "Stunning rock formation in bauchi nigeria, Guinea",
-   "altIntended": "A beautiful rocky landscape in Bauchi, Nigeria with clear water and open sky., Guinea",
-   "aspectRatio": 1.5,
+   "alt": "Verdant waterfall cliffs in hawaii, Guinea",
+   "altIntended": "Lush green cliffs with waterfalls, showcasing Hawaii's natural beauty., Guinea",
+   "aspectRatio": 1.3333,
    "caption": "Cliffs and Water",
    "category": "photography",
    "country": "guinea",
-   "createdAt": "2026-08-18T07:36:47Z",
+   "createdAt": "2026-08-18T07:42:54Z",
    "description": "The Fouta escarpments in the hour after the rain stops, when everything is running.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 5152,
-   "imageUrl": "https://images.pexels.com/photos/31580556/pexels-photo-31580556.jpeg",
-   "photoId": "31580556",
-   "photographer": "Ahbee Photography",
-   "photographerUrl": "https://www.pexels.com/@ahbee-photography-463652994",
+   "height": 6048,
+   "imageUrl": "https://images.pexels.com/photos/35433555/pexels-photo-35433555.jpeg",
+   "photoId": "35433555",
+   "photographer": "Ruyel",
+   "photographerUrl": "https://www.pexels.com/@ruyel-2158524378",
    "provider": "pexels",
-   "query": "Guinea Fouta Djallon",
+   "query": "Guinea cliffs multiple waterfalls",
    "queryTier": "subject",
    "rejected": {
-    "kind": "thin",
-    "photoSays": "stunning rock formation in bauchi nigeria",
-    "why": "1.93"
+    "kind": "elsewhere",
+    "photoSays": "aerial view of verdant waterfall cliffs in hawaii",
+    "why": "hawaii"
    },
    "relevance": {
     "reasons": [
-     "subject: water"
+     "subject: cliffs,waterfalls"
     ],
-    "score": 1.93
+    "score": 3.71
    },
-   "sourceUrl": "https://www.pexels.com/photo/stunning-rock-formation-in-bauchi-nigeria-31580556/",
-   "thumbnailUrl": "https://images.pexels.com/photos/31580556/pexels-photo-31580556.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:48Z",
-   "width": 7728
+   "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-verdant-waterfall-cliffs-in-hawaii-35433555/",
+   "thumbnailUrl": "https://images.pexels.com/photos/35433555/pexels-photo-35433555.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:54Z",
+   "width": 8064
   },
   "guinea/waterfalls": {
    "alt": "Guinea fowl and geese in rustic barnyard setting",
@@ -53418,21 +53417,21 @@
    "width": 6000
   },
   "liberia/why-visit": {
-   "alt": "Fishermen bringing boat ashore on sunny beach, Liberia",
-   "altIntended": "Fishermen haul a wooden boat onto a sandy beach under a cloudy sky., Liberia",
+   "alt": "Fishermen handling net on coastal beach, Liberia",
+   "altIntended": "African fishermen manage nets on a sunny beach, showcasing local fishing culture., Liberia",
    "aspectRatio": 1.5,
    "caption": "Why Liberia",
    "category": "why-visit",
    "country": "liberia",
-   "createdAt": "2026-08-18T07:36:48Z",
+   "createdAt": "2026-08-18T07:42:54Z",
    "description": "The best surf in West Africa, and the forest the pygmy hippo has left.",
    "focalPoint": {
     "x": 50,
     "y": 54
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/38823254/pexels-photo-38823254.jpeg",
-   "photoId": "38823254",
+   "imageUrl": "https://images.pexels.com/photos/38823269/pexels-photo-38823269.jpeg",
+   "photoId": "38823269",
    "photographer": "Isiaka D. Massalay",
    "photographerUrl": "https://www.pexels.com/@isiaka-d-massalay-1755193956",
    "provider": "pexels",
@@ -53440,7 +53439,7 @@
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "fishermen bringing boat ashore on sunny beach",
+    "photoSays": "fishermen handling net on coastal beach",
     "why": "1.93"
    },
    "relevance": {
@@ -53449,46 +53448,46 @@
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/fishermen-bringing-boat-ashore-on-sunny-beach-38823254/",
-   "thumbnailUrl": "https://images.pexels.com/photos/38823254/pexels-photo-38823254.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:49Z",
+   "sourceUrl": "https://www.pexels.com/photo/fishermen-handling-net-on-coastal-beach-38823269/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38823269/pexels-photo-38823269.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:54Z",
    "width": 6000
   },
   "libya/cities": {
-   "alt": "Interior of the library in the topkapi palace in istanbul turkey, Libya",
-   "altIntended": "Explore the ornate Ottoman library with Islamic art and plush seating in Istanbul's Topkapi Palace., Libya",
-   "aspectRatio": 1.5,
+   "alt": "Izmir clock tower konak square in the konak district of izmir turkey, Libya",
+   "altIntended": "Close-up of the intricately designed Izmir Clock Tower showcasing its ornate Islamic architecture., Libya",
+   "aspectRatio": 1.3333,
    "caption": "Tripoli and Benghazi",
    "category": "cities",
    "country": "libya",
-   "createdAt": "2026-08-18T07:36:49Z",
+   "createdAt": "2026-08-18T07:42:54Z",
    "description": "An Ottoman medina inside Italian arcades in Tripoli, and Benghazi rebuilding.",
    "focalPoint": {
     "x": 50,
     "y": 48
    },
-   "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/19879892/pexels-photo-19879892.jpeg",
-   "photoId": "19879892",
-   "photographer": "Sümeyye  Başbil",
-   "photographerUrl": "https://www.pexels.com/@sumeyyebasbil",
+   "height": 4500,
+   "imageUrl": "https://images.pexels.com/photos/22951516/pexels-photo-22951516.jpeg",
+   "photoId": "22951516",
+   "photographer": "Esra Nur Kalay",
+   "photographerUrl": "https://www.pexels.com/@esranurkalay",
    "provider": "pexels",
    "query": "Libya Ottoman Tripoli",
    "queryTier": "subject",
    "rejected": {
     "kind": "elsewhere",
-    "photoSays": "interior of the library in the topkapi palace in istanbul turkey",
+    "photoSays": "izmir clock tower konak square in the konak district of izmir turkey",
     "why": "turkey"
    },
    "relevance": {
     "reasons": [
-     "subject: ottoman"
+     "subject: clock,tower"
     ],
-    "score": 1.93
+    "score": 3.71
    },
-   "sourceUrl": "https://www.pexels.com/photo/interior-of-the-library-in-the-topkapi-palace-in-istanbul-turkey-19879892/",
-   "thumbnailUrl": "https://images.pexels.com/photos/19879892/pexels-photo-19879892.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:49Z",
+   "sourceUrl": "https://www.pexels.com/photo/izmir-clock-tower-konak-square-in-the-konak-district-of-izmir-turkey-22951516/",
+   "thumbnailUrl": "https://images.pexels.com/photos/22951516/pexels-photo-22951516.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:54Z",
    "width": 6000
   },
   "libya/crafts": {
@@ -53790,41 +53789,41 @@
    "width": 4160
   },
   "malawi/cities": {
-   "alt": "Enugu city with landscape and buildings, Malawi",
-   "altIntended": "Enugu, Nigeria showcasing urban landscape, lush greenery, and residential structures., Malawi",
-   "aspectRatio": 1.8552,
+   "alt": "Lush landscape in morogoro tanzania, Malawi",
+   "altIntended": "Green Morogoro Region in Tanzania showcasing lush landscapes and urban structures., Malawi",
+   "aspectRatio": 1.7778,
    "caption": "Lilongwe and Blantyre",
    "category": "cities",
    "country": "malawi",
-   "createdAt": "2026-08-18T07:36:50Z",
+   "createdAt": "2026-08-18T07:42:54Z",
    "description": "A quiet capital, and an older commercial city with the country's first church in it.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 3908,
-   "imageUrl": "https://images.pexels.com/photos/38099166/pexels-photo-38099166.jpeg",
-   "photoId": "38099166",
-   "photographer": "Chukwuemeka Joel",
-   "photographerUrl": "https://www.pexels.com/@chukwuemeka-joel-246988808",
+   "height": 4536,
+   "imageUrl": "https://images.pexels.com/photos/37386895/pexels-photo-37386895.jpeg",
+   "photoId": "37386895",
+   "photographer": "Alex Levis",
+   "photographerUrl": "https://www.pexels.com/@droneafrica",
    "provider": "pexels",
    "query": "Malawi Blantyre",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "aerial view of enugu city with landscape and buildings",
-    "why": "1.89"
+    "photoSays": "aerial view of lush landscape in morogoro tanzania",
+    "why": "1.79"
    },
    "relevance": {
     "reasons": [
      "category: urban"
     ],
-    "score": 1.89
+    "score": 1.79
    },
-   "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-enugu-city-with-landscape-and-buildings-38099166/",
-   "thumbnailUrl": "https://images.pexels.com/photos/38099166/pexels-photo-38099166.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:51Z",
-   "width": 7250
+   "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-lush-landscape-in-morogoro-tanzania-37386895/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37386895/pexels-photo-37386895.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:54Z",
+   "width": 8064
   },
   "malawi/forests": {
    "alt": "Scenic mountain landscape in cordoba argentina, Malawi",
@@ -53864,29 +53863,29 @@
    "width": 6000
   },
   "malawi/lakes-rivers": {
-   "alt": "African elephant in natural habitat by water, Malawi",
-   "altIntended": "Majestic African elephant standing in water, surrounded by reed and vegetation, showcasing nature's beauty., Malawi",
-   "aspectRatio": 1.498,
+   "alt": "The river, Malawi",
+   "altIntended": "Hippopotamus grazing by a riverbank with birds, surrounded by lush trees and calm water., Malawi",
+   "aspectRatio": 1.499,
    "caption": "The Shire",
    "category": "lakes-rivers",
    "country": "malawi",
-   "createdAt": "2026-08-18T07:36:50Z",
+   "createdAt": "2026-08-18T07:42:54Z",
    "description": "The lake's only outlet, running south through Liwonde to the Zambezi.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4016,
-   "imageUrl": "https://images.pexels.com/photos/30108255/pexels-photo-30108255.jpeg",
-   "photoId": "30108255",
-   "photographer": "Kabwe Kabwe",
-   "photographerUrl": "https://www.pexels.com/@kabwe-kabwe-2148456407",
+   "height": 4409,
+   "imageUrl": "https://images.pexels.com/photos/750535/pexels-photo-750535.jpeg",
+   "photoId": "750535",
+   "photographer": "Adriaan Greyling",
+   "photographerUrl": "https://www.pexels.com/@monkeytactics",
    "provider": "pexels",
    "query": "Malawi Shire Liwonde",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "african elephant in natural habitat by water",
+    "photoSays": "scenic view of the river",
     "why": "1.43"
    },
    "relevance": {
@@ -53895,10 +53894,10 @@
     ],
     "score": 1.43
    },
-   "sourceUrl": "https://www.pexels.com/photo/african-elephant-in-natural-habitat-by-water-30108255/",
-   "thumbnailUrl": "https://images.pexels.com/photos/30108255/pexels-photo-30108255.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:50Z",
-   "width": 6016
+   "sourceUrl": "https://www.pexels.com/photo/scenic-view-of-the-river-750535/",
+   "thumbnailUrl": "https://images.pexels.com/photos/750535/pexels-photo-750535.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:54Z",
+   "width": 6609
   },
   "malawi/nature": {
    "alt": "Empty road among trees in countryside, Malawi",
@@ -53975,41 +53974,41 @@
    "width": 6240
   },
   "malawi/photography": {
-   "alt": "Big rocks near the sea, Malawi",
-   "altIntended": "A tranquil seascape featuring coastal rocks under a bright blue sky with clouds., Malawi",
-   "aspectRatio": 1.5,
+   "alt": "Colorful african cichlids swimming in aquarium, Malawi",
+   "altIntended": "Vibrant African cichlids swimming in a clear aquarium, showcasing natural beauty., Malawi",
+   "aspectRatio": 1.501,
    "caption": "Clear Water and Granite",
    "category": "photography",
    "country": "malawi",
-   "createdAt": "2026-08-18T07:36:51Z",
+   "createdAt": "2026-08-18T07:42:54Z",
    "description": "The lake in September, when the water is at its clearest and the boulders go down twenty metres.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/8860793/pexels-photo-8860793.jpeg",
-   "photoId": "8860793",
-   "photographer": "Никита Ходяков",
-   "photographerUrl": "https://www.pexels.com/@83497880",
+   "height": 4040,
+   "imageUrl": "https://images.pexels.com/photos/31479653/pexels-photo-31479653.jpeg",
+   "photoId": "31479653",
+   "photographer": "Jean-Paul Wettstein",
+   "photographerUrl": "https://www.pexels.com/@jean-paul-wettstein-677916508",
    "provider": "pexels",
    "query": "Malawi Lake Malawi",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "photo of big rocks near the sea",
+    "photoSays": "colorful african cichlids swimming in aquarium",
     "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "subject: blue"
+     "subject: clear"
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/photo-of-big-rocks-near-the-sea-8860793/",
-   "thumbnailUrl": "https://images.pexels.com/photos/8860793/pexels-photo-8860793.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:51Z",
-   "width": 6000
+   "sourceUrl": "https://www.pexels.com/photo/colorful-african-cichlids-swimming-in-aquarium-31479653/",
+   "thumbnailUrl": "https://images.pexels.com/photos/31479653/pexels-photo-31479653.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:54Z",
+   "width": 6064
   },
   "mali/adventure": {
    "alt": "Ancient stone structures at gobeklitepe, Mali",
@@ -54123,40 +54122,40 @@
    "width": 6146
   },
   "mali/lakes-rivers": {
-   "alt": "Black and white sailboat on open sea, Mali",
-   "altIntended": "A vintage sailboat sailing on the open water, captured in black and white photography., Mali",
+   "alt": "Black and white sailboat team preparing to launch, Mali",
+   "altIntended": "Sailing team collaborating to launch a boat with Mr. Bricolage branded sail., Mali",
    "aspectRatio": 1.5,
    "caption": "The Niger and Lake Debo",
    "category": "lakes-rivers",
    "country": "mali",
-   "createdAt": "2026-08-18T07:36:52Z",
+   "createdAt": "2026-08-18T07:42:54Z",
    "description": "Pinasses working the river between Mopti and Timbuktu, and the inland delta spreading behind them.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/28719460/pexels-photo-28719460.jpeg",
-   "photoId": "28719460",
-   "photographer": "Richard REVEL",
-   "photographerUrl": "https://www.pexels.com/@hermaion",
+   "imageUrl": "https://images.pexels.com/photos/38613832/pexels-photo-38613832.jpeg",
+   "photoId": "38613832",
+   "photographer": "Noe Garde",
+   "photographerUrl": "https://www.pexels.com/@noe-garde-2150865147",
    "provider": "pexels",
    "query": "Mali loaded pinasse sail",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "black and white sailboat on open sea",
-    "why": "1.43"
+    "photoSays": "black and white sailboat team preparing to launch",
+    "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "category: water"
+     "subject: sail"
     ],
-    "score": 1.43
+    "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/black-and-white-sailboat-on-open-sea-28719460/",
-   "thumbnailUrl": "https://images.pexels.com/photos/28719460/pexels-photo-28719460.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:52Z",
+   "sourceUrl": "https://www.pexels.com/photo/black-and-white-sailboat-team-preparing-to-launch-38613832/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38613832/pexels-photo-38613832.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:54Z",
    "width": 6000
   },
   "mali/mountains": {
@@ -54234,66 +54233,66 @@
    "width": 6192
   },
   "mali/photography": {
-   "alt": "A boy stands in front of a mud house, Mali",
-   "altIntended": "A young boy stands in a dusty village, holding a tire, against mud walls., Mali",
+   "alt": "Close up of mud and puddles, Mali",
+   "altIntended": "A peaceful view of coastal mudflats with rippling water patterns during low tide in Taiwan., Mali",
    "aspectRatio": 1.5,
    "caption": "Mud and Long Shadows",
    "category": "photography",
    "country": "mali",
-   "createdAt": "2026-08-18T07:36:52Z",
+   "createdAt": "2026-08-18T07:42:55Z",
    "description": "Djenne an hour before sunset, when the toron beams throw stripes down the wall.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/28074366/pexels-photo-28074366.jpeg",
-   "photoId": "28074366",
-   "photographer": "Abubakar  Ogaji",
-   "photographerUrl": "https://www.pexels.com/@abubakar-ogaji-1105433220",
+   "imageUrl": "https://images.pexels.com/photos/7008759/pexels-photo-7008759.jpeg",
+   "photoId": "7008759",
+   "photographer": "Across Wong",
+   "photographerUrl": "https://www.pexels.com/@across-wong-32250484",
    "provider": "pexels",
-   "query": "Mali Djenne's",
+   "query": "Mali low sun mud",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "a boy stands in front of a mud house",
+    "photoSays": "close up of mud and puddles",
     "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "subject: mud"
+     "subject: low"
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/a-boy-stands-in-front-of-a-mud-house-28074366/",
-   "thumbnailUrl": "https://images.pexels.com/photos/28074366/pexels-photo-28074366.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:53Z",
+   "sourceUrl": "https://www.pexels.com/photo/close-up-of-mud-and-puddles-7008759/",
+   "thumbnailUrl": "https://images.pexels.com/photos/7008759/pexels-photo-7008759.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:55Z",
    "width": 6000
   },
   "mali/why-visit": {
-   "alt": "Grayscale photo of a person sitting at the beach, Mali",
-   "altIntended": "A lone person sits on the vast sandy beach of Ilhéus under a cloudy sky, captured in black and white., Mali",
-   "aspectRatio": 1.5,
+   "alt": "Person walking on a body of water, Mali",
+   "altIntended": "Lone person walking in a misty, monochrome landscape across a tranquil water body. Reflection adds depth., Mali",
+   "aspectRatio": 1.498,
    "caption": "Why Mali",
    "category": "why-visit",
    "country": "mali",
-   "createdAt": "2026-08-18T07:36:53Z",
+   "createdAt": "2026-08-18T07:42:55Z",
    "description": "Because Djenne, Timbuktu and the Dogon country are three of the great sights of Africa.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
-   "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/10541746/pexels-photo-10541746.jpeg",
-   "photoId": "10541746",
-   "photographer": "Murillo Molissani",
-   "photographerUrl": "https://www.pexels.com/@murillohm",
+   "height": 4016,
+   "imageUrl": "https://images.pexels.com/photos/7492706/pexels-photo-7492706.jpeg",
+   "photoId": "7492706",
+   "photographer": "Michael Bayazidi",
+   "photographerUrl": "https://www.pexels.com/@michaelbayazidi",
    "provider": "pexels",
-   "query": "Mali lone figure",
+   "query": "Mali lone figure front",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "grayscale photo of a person sitting at the beach",
+    "photoSays": "person walking on a body of water",
     "why": "1.93"
    },
    "relevance": {
@@ -54302,10 +54301,10 @@
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/grayscale-photo-of-a-person-sitting-at-the-beach-10541746/",
-   "thumbnailUrl": "https://images.pexels.com/photos/10541746/pexels-photo-10541746.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:54Z",
-   "width": 6000
+   "sourceUrl": "https://www.pexels.com/photo/person-walking-on-a-body-of-water-7492706/",
+   "thumbnailUrl": "https://images.pexels.com/photos/7492706/pexels-photo-7492706.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:55Z",
+   "width": 6016
   },
   "mauritania/architecture": {
    "alt": "Traditional african building with vibrant colors, Mauritania",
@@ -54718,40 +54717,40 @@
    "width": 6240
   },
   "mauritius/cities": {
-   "alt": "Street market scene with colorful suitcases displayed, Mauritius",
-   "altIntended": "Vibrant street scene featuring people browsing colorful suitcases at an outdoor market stall., Mauritius",
+   "alt": "Recife brazil city skyline, Mauritius",
+   "altIntended": "Recife's waterfront architecture showcasing historic and modern buildings under a partly cloudy sky., Mauritius",
    "aspectRatio": 1.5,
    "caption": "Port Louis",
    "category": "cities",
    "country": "mauritius",
-   "createdAt": "2026-08-18T07:36:54Z",
+   "createdAt": "2026-08-18T07:42:55Z",
    "description": "A working port and capital, with a market, a waterfront and the Champ de Mars.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/34629892/pexels-photo-34629892.jpeg",
-   "photoId": "34629892",
-   "photographer": "Jahra Tasfia Reza",
-   "photographerUrl": "https://www.pexels.com/@jahratreza",
+   "imageUrl": "https://images.pexels.com/photos/17298658/pexels-photo-17298658.jpeg",
+   "photoId": "17298658",
+   "photographer": "Victor Cayke",
+   "photographerUrl": "https://www.pexels.com/@vikeph",
    "provider": "pexels",
    "query": "Mauritius Port Louis",
    "queryTier": "subject",
    "rejected": {
-    "kind": "thin",
-    "photoSays": "street market scene with colorful suitcases displayed",
-    "why": "1.93"
+    "kind": "elsewhere",
+    "photoSays": "recife brazil city skyline",
+    "why": "brazil"
    },
    "relevance": {
     "reasons": [
-     "subject: market"
+     "subject: waterfront"
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/street-market-scene-with-colorful-suitcases-displayed-34629892/",
-   "thumbnailUrl": "https://images.pexels.com/photos/34629892/pexels-photo-34629892.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:54Z",
+   "sourceUrl": "https://www.pexels.com/photo/recife-brazil-city-skyline-17298658/",
+   "thumbnailUrl": "https://images.pexels.com/photos/17298658/pexels-photo-17298658.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:55Z",
    "width": 6000
   },
   "mauritius/historic-sites": {
@@ -55747,41 +55746,42 @@
    "width": 6048
   },
   "rwanda/photography": {
-   "alt": "A silhouette of a mountain range, Rwanda",
-   "altIntended": "Serene sunrise over mist-covered mountains in Vaniyambalam, showcasing nature's beauty., Rwanda",
-   "aspectRatio": 1.5,
+   "alt": "Golden monkeys in natural habitat close up, Rwanda",
+   "altIntended": "Close-up of rare golden monkeys in their natural habitat, showcasing their unique features., Rwanda",
+   "aspectRatio": 1.25,
    "caption": "Mist on the Volcanoes",
    "category": "photography",
    "country": "rwanda",
-   "createdAt": "2026-08-18T07:36:55Z",
+   "createdAt": "2026-08-18T07:42:55Z",
    "description": "The Virunga chain clears for about an hour after dawn, and the terraces below hold the light for longer.",
    "focalPoint": {
     "x": 50,
     "y": 46
    },
-   "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/10590310/pexels-photo-10590310.jpeg",
-   "photoId": "10590310",
-   "photographer": "Rajesh Raj",
-   "photographerUrl": "https://www.pexels.com/@rajeshx8",
+   "height": 5304,
+   "imageUrl": "https://images.pexels.com/photos/37461208/pexels-photo-37461208.jpeg",
+   "photoId": "37461208",
+   "photographer": "Mad Knoxx Deluxe",
+   "photographerUrl": "https://www.pexels.com/@madknoxxdeluxe",
    "provider": "pexels",
    "query": "Rwanda Virunga",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "a silhouette of a mountain range",
-    "why": "1.93"
+    "photoSays": "golden monkeys in natural habitat close up",
+    "why": "1.11"
    },
    "relevance": {
     "reasons": [
-     "subject: mist"
+     "category: golden",
+     "crop discards 46% of the frame"
     ],
-    "score": 1.93
+    "score": 1.11
    },
-   "sourceUrl": "https://www.pexels.com/photo/a-silhouette-of-a-mountain-range-10590310/",
-   "thumbnailUrl": "https://images.pexels.com/photos/10590310/pexels-photo-10590310.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:56Z",
-   "width": 6000
+   "sourceUrl": "https://www.pexels.com/photo/golden-monkeys-in-natural-habitat-close-up-37461208/",
+   "thumbnailUrl": "https://images.pexels.com/photos/37461208/pexels-photo-37461208.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:55Z",
+   "width": 6630
   },
   "rwanda/wildlife": {
    "alt": "a mountain gorilla family on the slopes of Volcanoes National Park, Rwanda",
@@ -56050,58 +56050,58 @@
    "width": 6240
   },
   "sao-tome-and-principe/photography": {
-   "alt": "Bay on tropical sea shore, Sao Tome and Principe",
-   "altIntended": "Photography in Sao Tome and Principe",
+   "alt": "Majestic volcano at dusk over calm ocean, Sao Tome and Principe",
+   "altIntended": "Silhouette of a volcano at dusk with a serene ocean in the foreground, capturing tranquility., Sao Tome and Principe",
    "aspectRatio": 1.5,
    "caption": "Volcano and Canopy",
    "category": "photography",
    "country": "sao-tome-and-principe",
-   "createdAt": "2026-08-18T07:36:58Z",
+   "createdAt": "2026-08-18T07:42:55Z",
    "description": "Cao Grande through cloud in the early morning, from the road below it.",
    "focalPoint": {
     "x": 50,
     "y": 48
    },
-   "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/24875995/pexels-photo-24875995.jpeg",
-   "photoId": "24875995",
-   "photographer": "Paulo gustavo Modesto",
-   "photographerUrl": "https://www.pexels.com/@paulo-gustavo-modesto-1241776887",
+   "height": 4160,
+   "imageUrl": "https://images.pexels.com/photos/34393063/pexels-photo-34393063.jpeg",
+   "photoId": "34393063",
+   "photographer": "Francesco Ungaro",
+   "photographerUrl": "https://www.pexels.com/@francesco-ungaro",
    "provider": "pexels",
-   "query": "Sao Tome and Principe scenic",
-   "queryTier": "category",
+   "query": "Sao Tome and Principe Pico Cao Grande",
+   "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "bay on tropical sea shore",
-    "why": "1.43"
+    "photoSays": "majestic volcano at dusk over calm ocean",
+    "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "category: golden"
+     "subject: volcano"
     ],
-    "score": 1.43
+    "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/bay-on-tropical-sea-shore-24875995/",
-   "thumbnailUrl": "https://images.pexels.com/photos/24875995/pexels-photo-24875995.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:59Z",
-   "width": 6000
+   "sourceUrl": "https://www.pexels.com/photo/majestic-volcano-at-dusk-over-calm-ocean-34393063/",
+   "thumbnailUrl": "https://images.pexels.com/photos/34393063/pexels-photo-34393063.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:55Z",
+   "width": 6240
   },
   "sao-tome-and-principe/why-visit": {
-   "alt": "Majestic volcanic mountain landscape scene, Sao Tome and Principe",
-   "altIntended": "Breathtaking view of a lush green landscape with a majestic volcanic mountain under a cloudy sky., Sao Tome and Principe",
+   "alt": "Volcanic mountain and lush forest, Sao Tome and Principe",
+   "altIntended": "Lush green forest with a prominent volcanic mountain under a blue sky with clouds., Sao Tome and Principe",
    "aspectRatio": 1.5,
    "caption": "Why Sao Tome and Principe",
    "category": "why-visit",
    "country": "sao-tome-and-principe",
-   "createdAt": "2026-08-18T07:36:59Z",
+   "createdAt": "2026-08-18T07:42:55Z",
    "description": "Rainforest to the shore, twenty-eight endemic birds, and chocolate made where it grows.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/29943338/pexels-photo-29943338.jpeg",
-   "photoId": "29943338",
+   "imageUrl": "https://images.pexels.com/photos/29943339/pexels-photo-29943339.jpeg",
+   "photoId": "29943339",
    "photographer": "Gotta Be Worth It",
    "photographerUrl": "https://www.pexels.com/@myersmc16",
    "provider": "pexels",
@@ -56109,7 +56109,7 @@
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "majestic volcanic mountain landscape scene",
+    "photoSays": "stunning view of volcanic mountain and lush forest",
     "why": "1.93"
    },
    "relevance": {
@@ -56118,9 +56118,9 @@
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/majestic-volcanic-mountain-landscape-scene-29943338/",
-   "thumbnailUrl": "https://images.pexels.com/photos/29943338/pexels-photo-29943338.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:36:59Z",
+   "sourceUrl": "https://www.pexels.com/photo/stunning-view-of-volcanic-mountain-and-lush-forest-29943339/",
+   "thumbnailUrl": "https://images.pexels.com/photos/29943339/pexels-photo-29943339.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:55Z",
    "width": 6000
   },
   "senegal/architecture": {
@@ -56306,41 +56306,41 @@
    "width": 4016
   },
   "senegal/why-visit": {
-   "alt": "A woman standing beside a lifeguard post, Senegal",
-   "altIntended": "Why Visit This Country in Senegal",
-   "aspectRatio": 1.5,
+   "alt": "Stones on sandy beach, Senegal",
+   "altIntended": "Sunny day on a tropical beach with palm trees, sandy coast, and rocky shoreline., Senegal",
+   "aspectRatio": 1.4984,
    "caption": "The Easy Door to West Africa",
    "category": "why-visit",
    "country": "senegal",
-   "createdAt": "2026-08-18T07:37:01Z",
+   "createdAt": "2026-08-18T07:42:55Z",
    "description": "Stable, straightforward, six hours from Europe, and the friendliest reputation on the coast.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4160,
-   "imageUrl": "https://images.pexels.com/photos/14786121/pexels-photo-14786121.jpeg",
-   "photoId": "14786121",
-   "photographer": "Serg Alesenko",
-   "photographerUrl": "https://www.pexels.com/@sergk1",
+   "height": 4912,
+   "imageUrl": "https://images.pexels.com/photos/15533213/pexels-photo-15533213.jpeg",
+   "photoId": "15533213",
+   "photographer": "Petr Ganaj",
+   "photographerUrl": "https://www.pexels.com/@ganajp",
    "provider": "pexels",
-   "query": "Senegal travel",
-   "queryTier": "category",
+   "query": "Senegal Atlantic Dakar",
+   "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "a woman standing beside a lifeguard post",
+    "photoSays": "stones on sandy beach",
     "why": "1.93"
    },
    "relevance": {
     "reasons": [
-     "subject: dakar"
+     "subject: coast"
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/a-woman-standing-beside-a-lifeguard-post-14786121/",
-   "thumbnailUrl": "https://images.pexels.com/photos/14786121/pexels-photo-14786121.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:37:01Z",
-   "width": 6240
+   "sourceUrl": "https://www.pexels.com/photo/stones-on-sandy-beach-15533213/",
+   "thumbnailUrl": "https://images.pexels.com/photos/15533213/pexels-photo-15533213.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:55Z",
+   "width": 7360
   },
   "seychelles/forests": {
    "alt": "coco de mer palms in the Vallée de Mai, Seychelles",
@@ -56676,29 +56676,29 @@
    "width": 6016
   },
   "somalia/lakes-rivers": {
-   "alt": "A green banana plant, Somalia",
-   "altIntended": "A vibrant banana cluster on a plantation in Kiambu County, Kenya, exuding a tropical essence., Somalia",
-   "aspectRatio": 1.503,
+   "alt": "Lush banana plantation path under clear sky, Somalia",
+   "altIntended": "A serene pathway through a thriving banana plantation on a sunny day., Somalia",
+   "aspectRatio": 1.504,
    "caption": "The Juba and the Shabelle",
    "category": "lakes-rivers",
    "country": "somalia",
-   "createdAt": "2026-08-18T07:37:01Z",
+   "createdAt": "2026-08-18T07:42:55Z",
    "description": "Two rivers off the Ethiopian highlands that make the only irrigated farmland in the country.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4024,
-   "imageUrl": "https://images.pexels.com/photos/15914440/pexels-photo-15914440.jpeg",
-   "photoId": "15914440",
-   "photographer": "Collines Omondi",
-   "photographerUrl": "https://www.pexels.com/@qolloe",
+   "height": 4000,
+   "imageUrl": "https://images.pexels.com/photos/38126165/pexels-photo-38126165.jpeg",
+   "photoId": "38126165",
+   "photographer": "Valeria Drozdova",
+   "photographerUrl": "https://www.pexels.com/@valeria-drozdova-2148646707",
    "provider": "pexels",
    "query": "Somalia irrigated banana plantations",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "photo of a green banana plant",
+    "photoSays": "lush banana plantation path under clear sky",
     "why": "1.93"
    },
    "relevance": {
@@ -56707,10 +56707,10 @@
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/photo-of-a-green-banana-plant-15914440/",
-   "thumbnailUrl": "https://images.pexels.com/photos/15914440/pexels-photo-15914440.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:37:02Z",
-   "width": 6048
+   "sourceUrl": "https://www.pexels.com/photo/lush-banana-plantation-path-under-clear-sky-38126165/",
+   "thumbnailUrl": "https://images.pexels.com/photos/38126165/pexels-photo-38126165.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:55Z",
+   "width": 6016
   },
   "somalia/outdoor": {
    "alt": "Classic black volkswagen beetle on european street, Somalia",
@@ -56750,29 +56750,29 @@
    "width": 6960
   },
   "somalia/photography": {
-   "alt": "Rock formations under blue sky, Somalia",
-   "altIntended": "Explore Bahia's stunning rock formations in a lush, green landscape beneath a bright sky., Somalia",
-   "aspectRatio": 1.5,
+   "alt": "Close up of a rough concrete surface, Somalia",
+   "altIntended": "Black and white photo of ancient rock art depicting human figures on a textured surface., Somalia",
+   "aspectRatio": 1.504,
    "caption": "Ochre on Rock",
    "category": "photography",
    "country": "somalia",
-   "createdAt": "2026-08-18T07:37:02Z",
+   "createdAt": "2026-08-18T07:42:56Z",
    "description": "Laas Geel in the morning, when the shelters are lit and the cattle look painted yesterday.",
    "focalPoint": {
     "x": 50,
     "y": 50
    },
    "height": 4000,
-   "imageUrl": "https://images.pexels.com/photos/12848416/pexels-photo-12848416.jpeg",
-   "photoId": "12848416",
-   "photographer": "Magali Guimarães",
-   "photographerUrl": "https://www.pexels.com/@magali-guimaraes-3411930",
+   "imageUrl": "https://images.pexels.com/photos/16144326/pexels-photo-16144326.jpeg",
+   "photoId": "16144326",
+   "photographer": "Ulrick Trappschuh",
+   "photographerUrl": "https://www.pexels.com/@ulrick-t",
    "provider": "pexels",
-   "query": "Somalia Laas Geel",
+   "query": "Somalia painted rock shelter",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "rock formations under blue sky",
+    "photoSays": "close up of a rough concrete surface",
     "why": "1.93"
    },
    "relevance": {
@@ -56781,10 +56781,10 @@
     ],
     "score": 1.93
    },
-   "sourceUrl": "https://www.pexels.com/photo/rock-formations-under-blue-sky-12848416/",
-   "thumbnailUrl": "https://images.pexels.com/photos/12848416/pexels-photo-12848416.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:37:02Z",
-   "width": 6000
+   "sourceUrl": "https://www.pexels.com/photo/close-up-of-a-rough-concrete-surface-16144326/",
+   "thumbnailUrl": "https://images.pexels.com/photos/16144326/pexels-photo-16144326.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:56Z",
+   "width": 6016
   },
   "south-africa/adventure": {
    "alt": "the Bloukrans bridge bungee jump on the Garden Route, South Africa",
@@ -58379,41 +58379,41 @@
    "width": 8000
   },
   "zimbabwe/photography": {
-   "alt": "Cattle near water and trees, Zimbabwe",
-   "altIntended": "A herd of cattle stirs up dust as they gather by a water source, surrounded by nature., Zimbabwe",
-   "aspectRatio": 1.5,
+   "alt": "A lioness walking on a grassy field, Zimbabwe",
+   "altIntended": "A majestic lioness walks gracefully in Tsavo's golden savanna, Kenya., Zimbabwe",
+   "aspectRatio": 1.4999,
    "caption": "Albida Light",
    "category": "photography",
    "country": "zimbabwe",
-   "createdAt": "2026-08-18T07:37:04Z",
+   "createdAt": "2026-08-18T07:42:56Z",
    "description": "The winterthorn cathedrals of Mana Pools, in dust and low sun, are photographed everywhere.",
    "focalPoint": {
     "x": 50,
     "y": 52
    },
-   "height": 4160,
-   "imageUrl": "https://images.pexels.com/photos/18217150/pexels-photo-18217150.jpeg",
-   "photoId": "18217150",
-   "photographer": "Zeynep Sude  Emek",
-   "photographerUrl": "https://www.pexels.com/@zeynep-sude-emek-193601188",
+   "height": 4225,
+   "imageUrl": "https://images.pexels.com/photos/5044026/pexels-photo-5044026.jpeg",
+   "photoId": "5044026",
+   "photographer": "Vishva Patel",
+   "photographerUrl": "https://www.pexels.com/@beatz",
    "provider": "pexels",
    "query": "Zimbabwe Mana Pools",
    "queryTier": "subject",
    "rejected": {
     "kind": "thin",
-    "photoSays": "cattle near water and trees",
-    "why": "1.93"
+    "photoSays": "a lioness walking on a grassy field",
+    "why": "1.43"
    },
    "relevance": {
     "reasons": [
-     "subject: dust"
+     "category: golden"
     ],
-    "score": 1.93
+    "score": 1.43
    },
-   "sourceUrl": "https://www.pexels.com/photo/cattle-near-water-and-trees-18217150/",
-   "thumbnailUrl": "https://images.pexels.com/photos/18217150/pexels-photo-18217150.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
-   "verifiedAt": "2026-08-18T07:37:04Z",
-   "width": 6240
+   "sourceUrl": "https://www.pexels.com/photo/a-lioness-walking-on-a-grassy-field-5044026/",
+   "thumbnailUrl": "https://images.pexels.com/photos/5044026/pexels-photo-5044026.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=400&h=300",
+   "verifiedAt": "2026-08-18T07:42:56Z",
+   "width": 6337
   },
   "zimbabwe/why-visit": {
    "alt": "a professional guide leading walkers through Mana Pools, Zimbabwe",

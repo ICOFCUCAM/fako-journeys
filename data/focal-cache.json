@@ -1,3 +1,187 @@
 {
- "algeria/waterfalls": {}
+ "algeria/architecture": {},
+ "algeria/photography": {
+  "y": 57
+ },
+ "algeria/waterfalls": {},
+ "angola/architecture": {},
+ "angola/cities": {
+  "y": 56
+ },
+ "benin/architecture": {},
+ "benin/traditional-people": {},
+ "burkina-faso/architecture": {},
+ "burkina-faso/hero": {},
+ "burkina-faso/traditional-people": {},
+ "burundi/architecture": {},
+ "burundi/cities": {},
+ "burundi/hero": {
+  "y": 56
+ },
+ "burundi/traditional-people": {},
+ "burundi/waterfalls": {},
+ "cabo-verde/architecture": {},
+ "cabo-verde/cities": {
+  "y": 58
+ },
+ "cabo-verde/lakes-rivers": {},
+ "cabo-verde/waterfalls": {},
+ "central-african-republic/architecture": {},
+ "central-african-republic/cities": {},
+ "central-african-republic/traditional-people": {},
+ "central-african-republic/waterfalls": {},
+ "chad/architecture": {},
+ "chad/cities": {},
+ "chad/photography": {},
+ "chad/waterfalls": {},
+ "chad/why-visit": {
+  "y": 56
+ },
+ "comoros/architecture": {},
+ "comoros/cities": {},
+ "comoros/hero": {},
+ "comoros/photography": {
+  "y": 55
+ },
+ "comoros/waterfalls": {},
+ "congo/architecture": {},
+ "congo/traditional-people": {},
+ "cote-divoire/architecture": {},
+ "cote-divoire/waterfalls": {},
+ "djibouti/architecture": {},
+ "djibouti/traditional-people": {},
+ "djibouti/why-visit": {},
+ "dr-congo/architecture": {},
+ "dr-congo/traditional-people": {},
+ "egypt/architecture": {},
+ "egypt/photography": {},
+ "equatorial-guinea/architecture": {},
+ "equatorial-guinea/cities": {},
+ "equatorial-guinea/traditional-people": {},
+ "equatorial-guinea/waterfalls": {},
+ "eritrea/architecture": {},
+ "eritrea/cities": {},
+ "eritrea/hero": {},
+ "eritrea/why-visit": {},
+ "eswatini/architecture": {},
+ "eswatini/cities": {},
+ "eswatini/hero": {},
+ "eswatini/waterfalls": {},
+ "eswatini/why-visit": {
+  "y": 58
+ },
+ "ethiopia/hero": {},
+ "ethiopia/traditional-people": {},
+ "ethiopia/waterfalls": {},
+ "ethiopia/why-visit": {},
+ "gabon/architecture": {},
+ "gambia/architecture": {},
+ "gambia/cities": {},
+ "ghana/architecture": {},
+ "ghana/waterfalls": {},
+ "guinea-bissau/architecture": {},
+ "guinea-bissau/cities": {},
+ "guinea/architecture": {},
+ "guinea/hero": {},
+ "guinea/traditional-people": {},
+ "guinea/waterfalls": {},
+ "guinea/why-visit": {
+  "y": 56
+ },
+ "lesotho/architecture": {},
+ "lesotho/cities": {},
+ "lesotho/photography": {
+  "y": 55
+ },
+ "lesotho/waterfalls": {},
+ "liberia/architecture": {},
+ "liberia/cities": {},
+ "liberia/hero": {},
+ "liberia/photography": {},
+ "liberia/traditional-people": {},
+ "libya/architecture": {},
+ "libya/photography": {},
+ "madagascar/architecture": {},
+ "madagascar/cities": {},
+ "madagascar/traditional-people": {},
+ "madagascar/waterfalls": {},
+ "madagascar/why-visit": {},
+ "malawi/architecture": {},
+ "malawi/waterfalls": {},
+ "mali/architecture": {},
+ "mali/cities": {},
+ "mali/hero": {
+  "x": 39
+ },
+ "mali/waterfalls": {},
+ "mauritania/architecture": {},
+ "mauritania/photography": {},
+ "mauritius/architecture": {},
+ "mauritius/lakes-rivers": {},
+ "mauritius/traditional-people": {},
+ "mauritius/waterfalls": {},
+ "morocco/architecture": {},
+ "morocco/photography": {
+  "y": 60
+ },
+ "morocco/traditional-people": {},
+ "morocco/waterfalls": {},
+ "morocco/why-visit": {},
+ "mozambique/architecture": {},
+ "mozambique/waterfalls": {},
+ "namibia/architecture": {},
+ "namibia/photography": {},
+ "namibia/traditional-people": {},
+ "namibia/waterfalls": {},
+ "niger/cities": {},
+ "nigeria/architecture": {},
+ "nigeria/waterfalls": {},
+ "nigeria/why-visit": {
+  "y": 57
+ },
+ "sao-tome-and-principe/architecture": {},
+ "sao-tome-and-principe/cities": {},
+ "sao-tome-and-principe/traditional-people": {},
+ "sao-tome-and-principe/waterfalls": {},
+ "senegal/architecture": {},
+ "senegal/traditional-people": {},
+ "senegal/waterfalls": {},
+ "seychelles/architecture": {},
+ "seychelles/waterfalls": {},
+ "seychelles/why-visit": {},
+ "sierra-leone/architecture": {},
+ "sierra-leone/cities": {
+  "y": 58
+ },
+ "sierra-leone/traditional-people": {},
+ "sierra-leone/waterfalls": {},
+ "somalia/architecture": {},
+ "somalia/cities": {},
+ "somalia/traditional-people": {},
+ "south-sudan/architecture": {},
+ "south-sudan/cities": {},
+ "south-sudan/hero": {},
+ "sudan/architecture": {},
+ "sudan/cities": {
+  "y": 57
+ },
+ "sudan/lakes-rivers": {},
+ "togo/architecture": {},
+ "togo/hero": {
+  "y": 58
+ },
+ "togo/photography": {},
+ "tunisia/architecture": {},
+ "tunisia/hero": {},
+ "tunisia/photography": {
+  "y": 57
+ },
+ "tunisia/traditional-people": {},
+ "tunisia/waterfalls": {},
+ "zimbabwe/architecture": {},
+ "zimbabwe/hero": {
+  "y": 57
+ },
+ "zimbabwe/traditional-people": {},
+ "zimbabwe/waterfalls": {}
 }
