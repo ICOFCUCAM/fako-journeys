@@ -3444,6 +3444,30 @@ def main():
                 verdict, name, detail = (line.split("\t") + ["", ""])[:3]
                 check(name, verdict == "PASS", detail)
 
+        # -- the two absolutes -----------------------------------------------------
+        # The design blueprint's two absolutes, measured rather than remembered.
+        # They are separate from the browser checks above because those measure
+        # whether a page works and these measure whether it is the page the
+        # direction asked for — a page can be perfectly accessible, perfectly
+        # stable and still be the tourism marketplace the blueprint exists to
+        # delete. Both suites read the same rendered DOM and answer different
+        # questions about it.
+        print("\nthe design absolutes")
+        script = os.path.join(ROOT_DIR, "tools", "design-checks.js")
+        if not node:
+            print("  SKIPPED: node is not installed; the design checks did not run")
+        else:
+            proc = subprocess.run([node, script], capture_output=True, text=True,
+                                  cwd=ROOT_DIR)
+            lines = [l for l in proc.stdout.splitlines() if "\t" in l]
+            if not lines:
+                check("the design checks ran", False,
+                      (proc.stderr or "no output").strip().splitlines()[-1][:90]
+                      if (proc.stderr or "").strip() else "no output")
+            for line in lines:
+                verdict, name, detail = (line.split("\t") + ["", ""])[:3]
+                check(name, verdict == "PASS", detail)
+
         print("\nlinks")
         script = os.path.join(ROOT_DIR, "tools", "link-checks.js")
         if not node:

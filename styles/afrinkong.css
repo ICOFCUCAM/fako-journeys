@@ -135,6 +135,21 @@
      written gets the right one without a second rule. */
   --c-accent-lit:#CB6F4B;
 
+  /* OURS. THE THREE COUNTRIES WE RUN OURSELVES.
+     Deep burgundy, and the one colour on this site that names a fact about the
+     company rather than a state of the interface. It was already doing this
+     job correctly on the atlas — pale land, white borders, three countries in
+     burgundy — and it is written down here so the same fact is the same colour
+     on the hero map, on the key, on the trust block and anywhere else the
+     three appear. It is not a region tone, it is not an accent, and nothing
+     else may use it.
+
+     On paper it is used as given. On a basalt ground it has to be lifted with
+     sand to clear the land it sits inside — 1.42:1 above a destination — which
+     is the same rule the land ladder itself follows: a tier has to contrast
+     with what it is drawn on, and the hue is what carries the meaning. */
+  --c-ours:#672E1D;
+
   /* Muted gold does not work on paper — 2.37:1 — and is excellent on forest
      at 6.02:1. It is the metadata voice on every dark ground, and a fill
      (never a text colour) on light ones. Restraint is the point: it appears

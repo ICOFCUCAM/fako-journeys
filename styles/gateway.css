@@ -102,19 +102,45 @@
 .wa-open{position:relative;background:var(--c-primary);color:var(--c-bg)}
 /* The calls, which were forest on ivory and cannot be forest on forest. */
 .wa-open .wa-act{border-color:var(--c-gold);color:var(--c-bg)}
-.wa-open .wa-act.go{background:var(--c-accent);border-color:var(--c-accent);
-  color:var(--c-primary)}
-.wa-open .wa-act.go:hover{background:var(--c-bg);border-color:var(--c-bg)}
+/* THE PRIMARY CALL IS A BORDER, NOT A BLOCK.
+   It was a solid terracotta slab, which is the single loudest object on the
+   page and the reason the whole hero read as a landing page rather than as a
+   printed opening. A filled accent button asks to be clicked; a bordered one
+   states that it can be. The difference matters here because the hero is not
+   selling a click, it is establishing that somebody has thought about this.
+
+   So the primary call becomes ivory — a full-weight ivory rule at 1.5px around
+   ivory type on the forest ground, against the gold hairline the secondary
+   calls carry. The two are told apart by weight and colour of line, not by one
+   being a poster and the other being text. On hover it fills ivory and the
+   type goes forest: the invert happens on intent, where a fill is a response
+   rather than a permanent shout. */
+.wa-open .wa-act.go{background:transparent;border-color:var(--c-bg);
+  border-width:1.5px;color:var(--c-bg)}
+.wa-open .wa-act.go:hover,.wa-open .wa-act.go:focus-visible{
+  background:var(--c-bg);border-color:var(--c-bg);color:var(--c-primary)}
 /* .wa-open's faint and plain variants went with the second and third hero
    calls. The unscoped .wa-act.faint / .plain below are still in use further
    down the page and stay. */
 /* The rails: rules that were ink on paper become paper on ink. */
 .wa-open .wa-regs,.wa-open .wa-ticks{border-color:var(--c-bg)}
 .wa-open .wa-reg,.wa-open .wa-tick{color:var(--c-bg);border-right-color:var(--fj-rule-dark)}
-.wa-open .wa-reg[aria-pressed="true"]{background:var(--c-accent);color:var(--c-primary)}
+/* With the continent and the primary call both off terracotta, the pressed
+   region tab was the last accent block left in the hero — and being the only
+   one made it the loudest object on the first screen. A rail tab is not the
+   most important thing on this page. It takes the same mark the tick rail
+   below it already takes: the ground and the type swap, and state is ivory. */
+.wa-open .wa-reg[aria-pressed="true"]{background:var(--c-bg);color:var(--c-primary)}
 .wa-open .wa-tick[aria-current]{background:var(--c-bg);color:var(--c-primary)}
 .wa-open .wa-lens,.wa-open .wa-tags-in{border-color:var(--fj-rule-dark)}
 .wa-open .wa-tag{color:var(--c-bg);border-color:var(--fj-rule-dark)}
+/* The lens rail takes the same mark as the region rail above it. Two rails
+   sitting one on top of the other, both saying "this one is on", were saying
+   it in two different languages — ivory in the first, a terracotta slab in the
+   second — and the slab won, so the loudest thing in the hero was whichever
+   experience the reader last pressed. State in this section is ivory. */
+.wa-open .wa-tag[data-on]{background:var(--c-bg);color:var(--c-primary);
+  border-color:var(--c-bg)}
 .wa-open .wa-terrain span{border-color:color-mix(in srgb,var(--c-gold) 42%,transparent)}
 /* The readout. Its name is the one place ivory has to be at display size. */
 /* On the dark ground every swatch takes the ivory ring the map's countries
@@ -438,7 +464,11 @@
   letter-spacing:.155em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
 .wa-win-key span[data-tier="ours"]::before{background:var(--c-tier-ours)}
-.wa-win-key span[data-tier="live"]::before{background:var(--c-accent-fill)}
+.wa-win-key span[data-tier="live"]::before{background:var(--fj-land-1)}
+/* A ten-pixel square of ink on ink is a square nobody can find, so the key's
+   swatches carry the same hairline the countries carry. The key describes the
+   map; it does not get its own brighter version of it. */
+.wa-win-key span::before{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-bg) 34%,transparent)}
 .wa-win-line{min-height:22px;margin-bottom:10px;font-size:14.5px;color:var(--c-accent);max-width:60em}
 
 /* The map is the signature, and it says three things.
@@ -499,14 +529,78 @@
    2.28:1 — still half again the contrast the coastline has against the page,
    so the reading order is unchanged: destinations first, then the continent,
    then the sea. Taking the land darker than this closes that gap. */
-:root{--c-land:color-mix(in srgb, var(--c-sand) 85%, var(--c-accent));
-  /* Deep forest with enough gold in it to exist on a deep forest ground. Pure
-     --c-primary is the tier's colour and measures 1.00:1 against the hero, so
-     the three countries we run were literally holes in the continent. Derived
-     rather than picked, like --c-land: 76% forest is 1.51:1 against the ground
-     — above the 1.35 the coastline holds — 6.52:1 against the land beside it,
-     and still 2.86:1 darker than a destination, so the three tiers stay three. */
-  --c-tier-ours:color-mix(in srgb, var(--c-primary) 76%, var(--c-gold))}
+/* SUPERSEDED ABOVE. THE MAP IS NO LONGER A HUE ARGUMENT, IT IS AN INK LADDER.
+   Everything up to here solved the right problem the wrong way: it kept adding
+   pigment until each tier could be told apart from the last. The end of that
+   road was a continent filled flat terracotta — fifty-odd countries carrying
+   the one colour the rest of the site spends on a single word or a single
+   control. An accent that covers half the viewport is not an accent, it is the
+   ground, and the page then has no accent left to spend anywhere.
+
+   So the tiers stop being colours and become quantities of light on the one
+   ink the hero is already printed in. The map never changes hue; it changes
+   how much of the paper shows through. That is how a printed atlas has always
+   marked what it wants you to look at, and it survives being read by somebody
+   who cannot separate hues at all.
+
+   The light is mixed in from sand, not from the page's ivory. Ivory is neutral
+   and forest is a desaturated green, so lightening one with the other walks
+   the land up a grey-green line and arrives at wet pavement — which is exactly
+   what the first cut of this ladder rendered, and it read as a screenshot of a
+   map rather than as a map. Sand carries the warmth the rest of the page is
+   printed on, so the same four steps come out as a land tint instead.
+
+   Four steps, measured against the hero ground (#10251F):
+
+     land-0   no destination here          1.22:1   a silhouette, nothing more
+     hush     a destination the lens passed over
+                                           1.46:1   above that — never greyed
+     land-1   a destination, at rest, and a destination whose region answers
+                                           1.43:1   above that
+     land-2   this answers what you asked  2.02:1   above that again — the top
+
+   Each ratio is against the step below it, so the ladder is legible rung by
+   rung rather than only end to end; land-1 against the bare ground is 2.02:1
+   and land-2 is 4.20:1.
+
+   The rung that had to be widened is hush→land-1. Under a lens the continent
+   splits three ways — leads it, its region does, written up here too — and the
+   first cut of this put the bottom two 1.20:1 apart, which is not a difference,
+   it is a rendering artefact. They are the two rungs a reader is most likely to
+   need to tell apart, because they are the two that mean "not quite what you
+   asked for" and "not what you asked for", and those are different answers.
+   The heaviest border still rides on `leads` as the cue that is not colour.
+
+   Those numbers were set at 768px, not at 1440. The map is a fifth of the
+   first screen on a desktop and most of it on a tablet, and a land tone that
+   reads as a printed tint at the small size reads as a pale grey slab at the
+   large one — the coast and fifty borders stop darkening it once the shape is
+   big enough for the fills to win. The rule is that the widest rendering sets
+   the ceiling: pick the tone where the continent is largest, then check it is
+   still findable where it is smallest.
+
+   `ours` is deliberately not a fourth rung. Owning the company somewhere is a
+   different axis from how much a traveller was asking about it, and stacking
+   it on the brightness ladder says the wrong thing — that we run more of the
+   places you want. It is separated by hue instead: deep burgundy, --c-ours,
+   the site's one colour that names a fact about the company. Lifted with sand
+   so it clears the land it sits inside (1.42:1 above a destination, and still
+   below a lens answer, so asking a question still wins the eye), and kept
+   under a gold keel as the cue that is not colour. Three countries, and the
+   only place on the map where hue means anything. That is the correct size
+   for a colour to be doing work at.
+
+   Terracotta is gone from the map entirely. It is demoted to what it is good
+   at — a two-pixel stroke under the pointer, a city dot — where it is smaller
+   than a button and reads as a mark on the sheet rather than as the sheet. */
+:root{--fj-land-0:color-mix(in srgb, var(--c-primary) 90%, var(--c-sand));
+  --fj-land-1:color-mix(in srgb, var(--c-primary) 75%, var(--c-sand));
+  --fj-land-2:color-mix(in srgb, var(--c-primary) 48%, var(--c-sand));
+  /* The step `open` falls to under a lens: still lit, still a destination, one
+     rung down from rest rather than greyed out. No country is ever told no. */
+  --fj-land-hush:color-mix(in srgb, var(--c-primary) 86%, var(--c-sand));
+  --c-land:var(--fj-land-0);
+  --c-tier-ours:color-mix(in srgb, var(--c-ours) 74%, var(--c-sand))}
 /* INK AND PIGMENT, NOT UI FILLS.
    The countries were flat polygons with a 1px white stroke, which is what makes
    a map read as a political infographic rather than as a printed object. Three
@@ -532,18 +626,28 @@
 .wa-win-state .wa-map-svg{filter:drop-shadow(0 2px 2px rgba(6,18,14,.55))
                                  drop-shadow(0 14px 30px rgba(6,18,14,.45))}
 .wa-map-rest,.wa-map-live{filter:url(#fj-ink)}
+/* Ivory at 46% was right when the land was a pale sand and the border had to
+   cut into it. Against the ink ladder the same line is the brightest thing in
+   the country, and fifty of them turn the continent into a wireframe. At 22%
+   the boundary is a fact you can find when you look for it and not a structure
+   you see first — which is the correct order for a border on a map whose
+   argument is where we go, not who governs what. */
 .wa-win-state .wa-map-rest path{fill:var(--c-land);
-  stroke:color-mix(in srgb,var(--c-bg) 46%, transparent);stroke-width:.75;
+  stroke:color-mix(in srgb,var(--c-bg) 22%, transparent);stroke-width:.75;
   vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .wa-win-state .wa-map-live path,.wa-win-state .wa-map-live circle{
-  stroke:color-mix(in srgb,var(--c-bg) 46%, transparent);stroke-width:.75;
+  stroke:color-mix(in srgb,var(--c-bg) 22%, transparent);stroke-width:.75;
   vector-effect:non-scaling-stroke;
   stroke-linejoin:round;transition:fill .2s}
 /* The engraved coast, drawn from the survey rather than faked by stroking the
-   countries harder — which only makes every border heavier. Deep ink at low
-   opacity, wider than any internal boundary. */
-.wa-map-coast path{fill:none;stroke:color-mix(in srgb,var(--c-ink) 62%, transparent);
-  stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+   countries harder — which only makes every border heavier. It used to be deep
+   ink, because the land was pale and the sea was dark and ink was the only way
+   to separate them. Now both sides are ink, and the separation has to be the
+   light: an ivory hairline at just over half strength, wider than any internal
+   boundary, so the coast is the strongest line on the sheet and the continent
+   is visible without being filled. */
+.wa-map-coast path{fill:none;stroke:color-mix(in srgb,var(--c-bg) 58%, transparent);
+  stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
 /* AN OPERATOR OF OURS HAS TO READ AGAINST THE GROUND IT IS ON.
    The tier is deep forest, and the hero's ground is deep forest, so Namibia,
    Cameroon and Uganda were drawn as holes in the continent — 1.1:1 against the
@@ -627,7 +731,7 @@
 .wa-map-rose text{font-family:var(--fj-mono);font-size:17px;letter-spacing:.1em;
   text-anchor:middle;fill:color-mix(in srgb,var(--c-gold) 70%, transparent);stroke:none}
 .wa-win-state .wa-map-live[data-tier="live"] path,
-.wa-win-state .wa-map-live[data-tier="live"] circle{fill:var(--c-accent-fill)}
+.wa-win-state .wa-map-live[data-tier="live"] circle{fill:var(--fj-land-1)}
 .wa-win-state .wa-map-live[data-tier="ours"] path,
 .wa-win-state .wa-map-live[data-tier="ours"] circle{fill:var(--c-tier-ours)}
 
@@ -652,13 +756,13 @@
    to answer a question that was not about it. */
 .wa-win-state .wa-map-live[data-want="leads"][data-tier="live"] path,
 .wa-win-state .wa-map-live[data-want="leads"][data-tier="live"] circle{
-  fill:var(--c-accent-fill)}
+  fill:var(--fj-land-2)}
 .wa-win-state .wa-map-live[data-want="region"][data-tier="live"] path,
 .wa-win-state .wa-map-live[data-want="region"][data-tier="live"] circle{
-  fill:color-mix(in srgb, var(--c-accent-fill) 62%, var(--c-land))}
+  fill:var(--fj-land-1)}
 .wa-win-state .wa-map-live[data-want="open"][data-tier="live"] path,
 .wa-win-state .wa-map-live[data-want="open"][data-tier="live"] circle{
-  fill:color-mix(in srgb, var(--c-accent-fill) 12%, var(--c-land))}
+  fill:var(--fj-land-hush)}
 
 /* And a cue that is not colour.
    Three tints of one hue is a category encoding that fails for anybody who
@@ -678,21 +782,26 @@
    three-tone argument (the continent, a destination here, an operator of ours)
    collapsed to two under the pointer.
 
-   Both tiers now move within themselves — the destination to burnt sienna as
-   before, the operator to a forest warmed a third of the way toward it — and
-   the thing that actually says "this one" is the stroke, which goes from the
-   page's ivory to the accent at two pixels and is the same signal on all three
-   tiers, including on a country with no fill of its own. */
+   Both tiers now move within themselves and the thing that actually says "this
+   one" is the stroke, which goes from the page's ivory to the accent at two
+   pixels and is the same signal on all three tiers, including on a country
+   with no fill of its own.
+
+   On the ink ladder the fill change goes away entirely. A hovered country
+   rises one rung — the same amount, from wherever it was — and terracotta is
+   left to do the only thing it should do on a map this size: draw the
+   two-pixel line around the one country under the pointer. That line is
+   smaller than a button. The fill never was. */
 .wa-win-state .wa-map-live:hover path,.wa-win-state .wa-map-live:focus path,
 .wa-win-state .wa-map-live.on path,.wa-win-state .wa-map-live:hover circle,
 .wa-win-state .wa-map-live.on circle{stroke:var(--c-accent);stroke-width:2}
 .wa-win-state .wa-map-live[data-tier="live"]:hover path,
 .wa-win-state .wa-map-live[data-tier="live"].on path,
 .wa-win-state .wa-map-live[data-tier="live"]:hover circle,
-.wa-win-state .wa-map-live[data-tier="live"].on circle{fill:var(--c-accent)}
+.wa-win-state .wa-map-live[data-tier="live"].on circle{fill:var(--fj-land-2)}
 .wa-win-state .wa-map-live[data-tier="ours"]:hover path,
 .wa-win-state .wa-map-live[data-tier="ours"].on path{
-  fill:color-mix(in srgb, var(--c-primary) 66%, var(--c-accent))}
+  fill:color-mix(in srgb, var(--c-ours) 58%, var(--c-sand))}
 .wa-win-state .wa-map-live{cursor:pointer}
 /* HOVER IS AN ELEVATION, NOT A REPAINT.
    Pointing at a country repainted its fill, which on a three-tier map means the
@@ -727,7 +836,13 @@
 .wa-scale-land{fill:color-mix(in srgb,var(--c-primary) 13%,transparent)}
 .wa-scale-in{opacity:0;transition:opacity var(--t-mid) var(--ease)}
 .wa-scale-in[data-on]{opacity:1}
-.wa-scale-in path{fill:var(--c-accent);fill-opacity:.86}
+/* The true-size overlay was the largest single terracotta shape on the site —
+   a country-sized accent fill making an argument that does not need colour to
+   land. An atlas prints this comparison in the darkest ink it has, laid over
+   the pale land, because the whole point is a silhouette: the reader is meant
+   to see the outline of somewhere they already know sitting inside Africa. Ink
+   does that better than pigment and costs the page nothing. */
+.wa-scale-in path{fill:var(--c-primary);fill-opacity:.82}
 .wa-scale-btns{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--c-accent)}
 /* The true-size comparison is the page's one piece of argument-by-geometry and
    its controls were the quietest thing in the section. They take the weight the
@@ -1032,11 +1147,10 @@
    and a dimmed operator still looks like an operator. One step, the same size
    for both, and the map keeps three colours instead of growing a fifth. */
 .wa-map-live[data-dim][data-tier="live"] path,
-.wa-map-live[data-dim][data-tier="live"] circle{
-  fill:color-mix(in srgb, var(--c-accent-fill) 34%, var(--c-land))}
+.wa-map-live[data-dim][data-tier="live"] circle{fill:var(--fj-land-hush)}
 .wa-map-live[data-dim][data-tier="ours"] path,
 .wa-map-live[data-dim][data-tier="ours"] circle{
-  fill:color-mix(in srgb, var(--c-primary) 30%, var(--c-land))}
+  fill:color-mix(in srgb, var(--c-ours) 84%, var(--c-sand))}
 .wa-map-live path,.wa-map-live circle{transition:fill var(--t-fast) var(--ease)}
 .wa-win-state .wa-map-svg{transition:none}
 .wa-terrain{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px 6px;margin-top:2px}
@@ -2730,10 +2844,18 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    an attribute and an element. A three-class selector loses to that however
    late it appears, so the hit circle came out filled — a 26px terracotta disc
    with the real mark drawn on top of it, which is a bullseye, not an island. */
+/* And the same arithmetic one attribute higher. The lens rules carry two
+   attributes — [data-want][data-tier] — which outranks a three-class selector
+   however late it appears, so pressing a lens put the discs back: six pale
+   bullseyes over the islands and one over Dakar, each with the real mark drawn
+   on top of it. Matched at four, and later, so it holds in every state the
+   continent can be in. */
 .wa-win-state .wa-map-live circle.wa-map-hit,
 .wa-win-state .wa-map-live:hover circle.wa-map-hit,
 .wa-win-state .wa-map-live:focus circle.wa-map-hit,
-.wa-win-state .wa-map-live.on circle.wa-map-hit{fill:transparent;stroke:none}
+.wa-win-state .wa-map-live.on circle.wa-map-hit,
+.wa-win-state .wa-map-live[data-want] circle.wa-map-hit,
+.wa-win-state .wa-map-live[data-dim] circle.wa-map-hit{fill:transparent;stroke:none}
 .wa-win-state .wa-map-mark circle{stroke-width:1.5}
 
 /* ---- the directory ----------------------------------------------------------------- */
