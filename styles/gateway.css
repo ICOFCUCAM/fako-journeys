@@ -3412,6 +3412,28 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
     width:clamp(200px,30vw,280px);margin-top:0}
 }
 
+/* THE ROAD STANDS UP, BUT THE MOVEMENTS STAYED IN A PHONE'S WIDTH.
+   Rotating the road at 900 was right and the consequence was not measured: the
+   four movements kept the phone's stacking, name over sentence, so a name at
+   36px and a sentence of nine words ran down the left third of an 812px frame
+   with the other two thirds empty for the whole height of the road.
+
+   Beside each other instead, on the same rail. The number sits over the name in
+   a fixed left track and the sentence takes the rest of the line, its first
+   line landing level with the name — which is how a timeline is set in a book,
+   and the only arrangement that uses the width without cutting the road into
+   columns. Below 680 it goes back to stacking, because there the left track
+   would leave the sentence a measure narrower than the phone gives it. */
+@media(min-width:680px) and (max-width:900px){
+  .wa-fund-move{display:grid;
+    grid-template-columns:minmax(0,clamp(150px,22vw,200px)) minmax(0,1fr);
+    column-gap:clamp(24px,4vw,44px);
+    grid-template-areas:"num ." "name say"}
+  .wa-fund-move i{grid-area:num}
+  .wa-fund-move b{grid-area:name;margin-bottom:0}
+  .wa-fund-move span{grid-area:say;align-self:start;max-width:46ch}
+}
+
 /* THE CLAIM IS SET FOR A COLUMN IT NO LONGER STANDS IN.
    Above 900 the headline shares the frame with the photograph and its 5.4vw is
    measured against that half. Below 900 the photograph moves above it and the
