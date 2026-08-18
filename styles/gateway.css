@@ -3093,15 +3093,27 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-fund-node.is-end{fill:var(--c-accent);stroke:var(--c-bg);stroke-width:4;
   vector-effect:non-scaling-stroke}
 
-/* The note in the traveller's voice. Italic serif over the photograph, at the
-   size of an aside rather than a caption — a second register on the page, which
-   is what makes it read as a journal rather than as alt text. */
-.wa-fund-pic figcaption{position:absolute;right:clamp(16px,4vw,58px);top:13%;
-  font-family:var(--fj-text,var(--fj-serif,Georgia,serif));font-style:italic;
-  font-size:clamp(14px,1.3vw,18px);line-height:1.42;color:var(--c-bg);
-  text-shadow:0 1px 14px rgba(6,18,14,.72);max-width:19ch;text-align:left}
-.wa-fund-pic figcaption:after{content:"";display:block;width:74px;height:1px;
-  background:color-mix(in srgb,var(--c-bg) 70%,transparent);margin-top:12px}
+/* THE NOTE COMES OFF THE PHOTOGRAPH, AND THE SUITE IS WHY.
+   It was ivory italic laid over the sky with a text-shadow under it, which is
+   the oldest trick there is and measured 1.36:1 against 4.5 needed. The shadow
+   is not contrast; it is a hope that the pixel behind the letter is dark, and
+   on this frame the pixel behind the letter is a pale morning sky.
+
+   There is no honest fix that keeps it there. A scrim is a gradient, a plate
+   behind it is a card, and moving it to the tarmac still leaves text over an
+   image with no guaranteed ground — which is exactly what the check is
+   conservative about, and correctly.
+
+   So it sits under the plate instead, right-aligned to the photograph's own
+   edge, in ink on the page's ground. That is where a journal puts a marginal
+   note anyway: beside the plate, not printed across it. It gains 11:1 and
+   loses nothing but the trick. */
+.wa-fund-pic figcaption{position:absolute;left:0;right:0;top:calc(100% + 18px);
+  font-family:var(--fj-text,Georgia,serif);font-style:italic;
+  font-size:clamp(14px,1.25vw,17.5px);line-height:1.44;color:var(--c-primary);
+  text-align:left;max-width:34ch;padding-left:clamp(16px,3vw,44px)}
+.wa-fund-pic figcaption:before{content:"";display:block;width:56px;height:1px;
+  background:var(--c-accent);margin-bottom:12px}
 
 /* ---- THE ROAD, AND THE FOUR ------------------------------------------------ */
 .wa-fund-arc{position:relative;margin-top:clamp(44px,5.5vw,84px)}
