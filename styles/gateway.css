@@ -464,7 +464,7 @@
   letter-spacing:.155em;text-transform:uppercase;color:var(--c-muted)}
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
 .wa-win-key span[data-tier="ours"]::before{background:var(--c-tier-ours)}
-.wa-win-key span[data-tier="live"]::before{background:var(--fj-land-1)}
+.wa-win-key span[data-tier="live"]::before{background:var(--c-accent-fill)}
 /* A ten-pixel square of ink on ink is a square nobody can find, so the key's
    swatches carry the same hairline the countries carry. The key describes the
    map; it does not get its own brighter version of it. */
@@ -529,78 +529,55 @@
    2.28:1 — still half again the contrast the coastline has against the page,
    so the reading order is unchanged: destinations first, then the continent,
    then the sea. Taking the land darker than this closes that gap. */
-/* SUPERSEDED ABOVE. THE MAP IS NO LONGER A HUE ARGUMENT, IT IS AN INK LADDER.
-   Everything up to here solved the right problem the wrong way: it kept adding
-   pigment until each tier could be told apart from the last. The end of that
-   road was a continent filled flat terracotta — fifty-odd countries carrying
-   the one colour the rest of the site spends on a single word or a single
-   control. An accent that covers half the viewport is not an accent, it is the
-   ground, and the page then has no accent left to spend anywhere.
+/* THE LADDER THAT WAS BUILT HERE, AND WHY IT IS NOT HERE.
+   The design blueprint names this map by hand — "never a fill larger than a
+   button, and never a continent" — and the argument is good: an accent that
+   covers half the viewport is not an accent, it is the ground, and the page
+   then has no accent left to spend anywhere. So the whole map was rebuilt on
+   the other principle. The tiers stopped being colours and became quantities
+   of light on the ink the hero is already printed in: four rungs mixed from
+   forest toward sand, an ivory hairline for the coast, terracotta demoted to a
+   two-pixel stroke under the pointer. It was measured, tuned twice — once
+   because mixing toward ivory arrives at wet pavement, once because a tone
+   picked at 1440 is a pale slab at 768 where the map is most of the screen —
+   and rendered at every width.
 
-   So the tiers stop being colours and become quantities of light on the one
-   ink the hero is already printed in. The map never changes hue; it changes
-   how much of the paper shows through. That is how a printed atlas has always
-   marked what it wants you to look at, and it survives being read by somebody
-   who cannot separate hues at all.
+   Then both maps were put side by side and looked at, and the company chose
+   this one. That is the right way round. A design document is an argument, and
+   an argument that cannot survive being tested against the thing itself is not
+   one worth keeping; the blueprint's own method section says every page was
+   opened in a browser and looked at, and this is that method applied to the
+   blueprint. The sentence about continents stands everywhere else on the site.
+   It is overruled here, once, on the object it was written about, by the
+   people whose company it is.
 
-   The light is mixed in from sand, not from the page's ivory. Ivory is neutral
-   and forest is a desaturated green, so lightening one with the other walks
-   the land up a grey-green line and arrives at wet pavement — which is exactly
-   what the first cut of this ladder rendered, and it read as a screenshot of a
-   map rather than as a map. Sand carries the warmth the rest of the page is
-   printed on, so the same four steps come out as a land tint instead.
+   What the ladder was right about is kept. The true-size overlay in the scale
+   section is basalt rather than terracotta — it is a silhouette of somewhere
+   the reader already knows and ink draws that better than pigment. The hero's
+   primary call is a bordered ivory rule rather than a filled slab. Both rails
+   mark state in ivory rather than each in a different colour. Those were never
+   the map, and none of them were what was preferred back.
 
-   Four steps, measured against the hero ground (#10251F):
+   The exemption is recorded in tools/design-checks.js, scoped to this one
+   selector on this one surface, so it stays visible in every run rather than
+   becoming a rule quietly nobody keeps. Everything below is the palette as it
+   was before the ladder, unchanged, and the derivations above it still hold.
 
-     land-0   no destination here          1.22:1   a silhouette, nothing more
-     hush     a destination the lens passed over
-                                           1.46:1   above that — never greyed
-     land-1   a destination, at rest, and a destination whose region answers
-                                           1.43:1   above that
-     land-2   this answers what you asked  2.02:1   above that again — the top
-
-   Each ratio is against the step below it, so the ladder is legible rung by
-   rung rather than only end to end; land-1 against the bare ground is 2.02:1
-   and land-2 is 4.20:1.
-
-   The rung that had to be widened is hush→land-1. Under a lens the continent
-   splits three ways — leads it, its region does, written up here too — and the
-   first cut of this put the bottom two 1.20:1 apart, which is not a difference,
-   it is a rendering artefact. They are the two rungs a reader is most likely to
-   need to tell apart, because they are the two that mean "not quite what you
-   asked for" and "not what you asked for", and those are different answers.
-   The heaviest border still rides on `leads` as the cue that is not colour.
-
-   Those numbers were set at 768px, not at 1440. The map is a fifth of the
-   first screen on a desktop and most of it on a tablet, and a land tone that
-   reads as a printed tint at the small size reads as a pale grey slab at the
-   large one — the coast and fifty borders stop darkening it once the shape is
-   big enough for the fills to win. The rule is that the widest rendering sets
-   the ceiling: pick the tone where the continent is largest, then check it is
-   still findable where it is smallest.
-
-   `ours` is deliberately not a fourth rung. Owning the company somewhere is a
-   different axis from how much a traveller was asking about it, and stacking
-   it on the brightness ladder says the wrong thing — that we run more of the
-   places you want. It is separated by hue instead: deep burgundy, --c-ours,
-   the site's one colour that names a fact about the company. Lifted with sand
-   so it clears the land it sits inside (1.42:1 above a destination, and still
-   below a lens answer, so asking a question still wins the eye), and kept
-   under a gold keel as the cue that is not colour. Three countries, and the
-   only place on the map where hue means anything. That is the correct size
-   for a colour to be doing work at.
-
-   Terracotta is gone from the map entirely. It is demoted to what it is good
-   at — a two-pixel stroke under the pointer, a city dot — where it is smaller
-   than a button and reads as a mark on the sheet rather than as the sheet. */
-:root{--fj-land-0:color-mix(in srgb, var(--c-primary) 90%, var(--c-sand));
-  --fj-land-1:color-mix(in srgb, var(--c-primary) 75%, var(--c-sand));
-  --fj-land-2:color-mix(in srgb, var(--c-primary) 48%, var(--c-sand));
-  /* The step `open` falls to under a lens: still lit, still a destination, one
-     rung down from rest rather than greyed out. No country is ever told no. */
-  --fj-land-hush:color-mix(in srgb, var(--c-primary) 86%, var(--c-sand));
-  --c-land:var(--fj-land-0);
-  --c-tier-ours:color-mix(in srgb, var(--c-ours) 74%, var(--c-sand))}
+   ---------------------------------------------------------------------------
+   One thing from the rebuild is a real fix and stays, further down: the lens
+   rules carry two attributes, which outranks the three-class rule that hides
+   the countries' hit circles, so pressing a lens put six pale bullseyes over
+   the islands and one over Dakar. That was true before the ladder too — the
+   discs were terracotta rather than pale — and nobody had seen it because
+   nobody had looked at the map with a lens pressed. Matched at four now. */
+:root{--c-land:color-mix(in srgb, var(--c-sand) 85%, var(--c-accent));
+  /* Deep forest with enough gold in it to exist on a deep forest ground. Pure
+     --c-primary is the tier's colour and measures 1.00:1 against the hero, so
+     the three countries we run were literally holes in the continent. Derived
+     rather than picked, like --c-land: 76% forest is 1.51:1 against the ground
+     — above the 1.35 the coastline holds — 6.52:1 against the land beside it,
+     and still 2.86:1 darker than a destination, so the three tiers stay three. */
+  --c-tier-ours:color-mix(in srgb, var(--c-primary) 76%, var(--c-gold))}
 /* INK AND PIGMENT, NOT UI FILLS.
    The countries were flat polygons with a 1px white stroke, which is what makes
    a map read as a political infographic rather than as a printed object. Three
@@ -633,10 +610,10 @@
    you see first — which is the correct order for a border on a map whose
    argument is where we go, not who governs what. */
 .wa-win-state .wa-map-rest path{fill:var(--c-land);
-  stroke:color-mix(in srgb,var(--c-bg) 22%, transparent);stroke-width:.75;
+  stroke:color-mix(in srgb,var(--c-bg) 46%, transparent);stroke-width:.75;
   vector-effect:non-scaling-stroke;stroke-linejoin:round}
 .wa-win-state .wa-map-live path,.wa-win-state .wa-map-live circle{
-  stroke:color-mix(in srgb,var(--c-bg) 22%, transparent);stroke-width:.75;
+  stroke:color-mix(in srgb,var(--c-bg) 46%, transparent);stroke-width:.75;
   vector-effect:non-scaling-stroke;
   stroke-linejoin:round;transition:fill .2s}
 /* The engraved coast, drawn from the survey rather than faked by stroking the
@@ -646,8 +623,8 @@
    light: an ivory hairline at just over half strength, wider than any internal
    boundary, so the coast is the strongest line on the sheet and the continent
    is visible without being filled. */
-.wa-map-coast path{fill:none;stroke:color-mix(in srgb,var(--c-bg) 58%, transparent);
-  stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.wa-map-coast path{fill:none;stroke:color-mix(in srgb,var(--c-ink) 62%, transparent);
+  stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
 /* AN OPERATOR OF OURS HAS TO READ AGAINST THE GROUND IT IS ON.
    The tier is deep forest, and the hero's ground is deep forest, so Namibia,
    Cameroon and Uganda were drawn as holes in the continent — 1.1:1 against the
@@ -731,7 +708,7 @@
 .wa-map-rose text{font-family:var(--fj-mono);font-size:17px;letter-spacing:.1em;
   text-anchor:middle;fill:color-mix(in srgb,var(--c-gold) 70%, transparent);stroke:none}
 .wa-win-state .wa-map-live[data-tier="live"] path,
-.wa-win-state .wa-map-live[data-tier="live"] circle{fill:var(--fj-land-1)}
+.wa-win-state .wa-map-live[data-tier="live"] circle{fill:var(--c-accent-fill)}
 .wa-win-state .wa-map-live[data-tier="ours"] path,
 .wa-win-state .wa-map-live[data-tier="ours"] circle{fill:var(--c-tier-ours)}
 
@@ -756,13 +733,13 @@
    to answer a question that was not about it. */
 .wa-win-state .wa-map-live[data-want="leads"][data-tier="live"] path,
 .wa-win-state .wa-map-live[data-want="leads"][data-tier="live"] circle{
-  fill:var(--fj-land-2)}
+  fill:var(--c-accent-fill)}
 .wa-win-state .wa-map-live[data-want="region"][data-tier="live"] path,
 .wa-win-state .wa-map-live[data-want="region"][data-tier="live"] circle{
-  fill:var(--fj-land-1)}
+  fill:color-mix(in srgb, var(--c-accent-fill) 62%, var(--c-land))}
 .wa-win-state .wa-map-live[data-want="open"][data-tier="live"] path,
 .wa-win-state .wa-map-live[data-want="open"][data-tier="live"] circle{
-  fill:var(--fj-land-hush)}
+  fill:color-mix(in srgb, var(--c-accent-fill) 12%, var(--c-land))}
 
 /* And a cue that is not colour.
    Three tints of one hue is a category encoding that fails for anybody who
@@ -798,10 +775,10 @@
 .wa-win-state .wa-map-live[data-tier="live"]:hover path,
 .wa-win-state .wa-map-live[data-tier="live"].on path,
 .wa-win-state .wa-map-live[data-tier="live"]:hover circle,
-.wa-win-state .wa-map-live[data-tier="live"].on circle{fill:var(--fj-land-2)}
+.wa-win-state .wa-map-live[data-tier="live"].on circle{fill:var(--c-accent)}
 .wa-win-state .wa-map-live[data-tier="ours"]:hover path,
 .wa-win-state .wa-map-live[data-tier="ours"].on path{
-  fill:color-mix(in srgb, var(--c-ours) 58%, var(--c-sand))}
+  fill:color-mix(in srgb, var(--c-primary) 66%, var(--c-accent))}
 .wa-win-state .wa-map-live{cursor:pointer}
 /* HOVER IS AN ELEVATION, NOT A REPAINT.
    Pointing at a country repainted its fill, which on a three-tier map means the
@@ -1147,10 +1124,11 @@
    and a dimmed operator still looks like an operator. One step, the same size
    for both, and the map keeps three colours instead of growing a fifth. */
 .wa-map-live[data-dim][data-tier="live"] path,
-.wa-map-live[data-dim][data-tier="live"] circle{fill:var(--fj-land-hush)}
+.wa-map-live[data-dim][data-tier="live"] circle{
+  fill:color-mix(in srgb, var(--c-accent-fill) 34%, var(--c-land))}
 .wa-map-live[data-dim][data-tier="ours"] path,
 .wa-map-live[data-dim][data-tier="ours"] circle{
-  fill:color-mix(in srgb, var(--c-ours) 84%, var(--c-sand))}
+  fill:color-mix(in srgb, var(--c-primary) 30%, var(--c-land))}
 .wa-map-live path,.wa-map-live circle{transition:fill var(--t-fast) var(--ease)}
 .wa-win-state .wa-map-svg{transition:none}
 .wa-terrain{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px 6px;margin-top:2px}

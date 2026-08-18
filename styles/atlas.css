@@ -50,14 +50,7 @@
 .at-c path,.at-c circle{fill:rgba(190,85,39,.42);stroke:var(--c-bg);stroke-width:1.1;
   vector-effect:non-scaling-stroke;
   transition:fill var(--t-mid) var(--ease),opacity var(--t-mid) var(--ease)}
-/* Ours is deep burgundy, not the accent, and it is the same deep burgundy on
-   the hero map, in the key and anywhere else the three appear. This map was
-   right about the idea before the token existed — it has always been the one
-   place on the site where colour named a fact about the company rather than a
-   state of the interface — and it was drawing that fact in burnt sienna, which
-   is the colour everything else on the site uses for a label or a link. One
-   fact, one colour, written down once in afrinkong.css. */
-.at-c[data-tier="ours"] path,.at-c[data-tier="ours"] circle{fill:var(--c-ours)}
+.at-c[data-tier="ours"] path,.at-c[data-tier="ours"] circle{fill:var(--c-accent)}
 .at-c:hover path,.at-c:hover circle,.at-c:focus-visible path,.at-c:focus-visible circle{
   fill:var(--c-primary)}
 .at-c{cursor:pointer}
@@ -117,7 +110,7 @@
 .at-web line[data-lit]{stroke:var(--c-accent);stroke-opacity:.9;stroke-width:2}
 .at-web circle{fill:var(--c-bg);stroke:var(--c-primary);stroke-width:1.4;
   vector-effect:non-scaling-stroke}
-.at-web circle[data-tier="ours"]{fill:var(--c-ours);stroke:var(--c-ours)}
+.at-web circle[data-tier="ours"]{fill:var(--c-accent);stroke:var(--c-accent)}
 .at-web circle[data-lit]{fill:var(--c-primary);stroke:var(--c-primary)}
 .at-web circle[data-dim]{opacity:.28}
 /* In links mode the land itself steps back to a whisper: the network is the

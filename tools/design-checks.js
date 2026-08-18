@@ -88,6 +88,29 @@ const WIDTHS = [[390, 844], [768, 1024], [1440, 900]];
    is a debt, not a target: it is what that surface measured on the day its
    step in the blueprint had not been taken yet. When a surface is rebuilt its
    number goes to 0 and stays there. */
+/* A ruled exception, not a hole in the rule.
+ *
+ * The hero continent is the object the blueprint names by hand — "never a fill
+ * larger than a button, and never a continent" — and it is drawn in terracotta
+ * anyway, because both renderings were built, put side by side and looked at,
+ * and this is the one the company chose. That is a decision the direction does
+ * not get to overrule; a design document is an argument, and an argument that
+ * survives being tested against the thing itself is the only kind worth having.
+ *
+ * What it does not get to do is disappear. Written here it stays visible in
+ * every run, it is scoped to the one selector on the one surface rather than
+ * loosening the predicate for everybody, and the day the map changes again
+ * this line is what says the exemption is spent. An unrecorded exception is
+ * how a rule stops being a rule; a recorded one is how a rule survives being
+ * overruled once.
+ */
+const WAIVED = [
+  {url: '/index.html', sel: 'path.',
+   why: 'the hero continent — terracotta chosen over the ink ladder, 18 August'},
+  {url: '/index.html', sel: 'circle.',
+   why: 'the island marks, which carry the continent’s own tier colour'}
+];
+
 const SURFACES = [
   {url: '/index.html',              name: 'the homepage',        cards: 4},
   {url: '/trans-afrique.html',      name: 'Trans Afrique',       cards: 2},
@@ -314,14 +337,24 @@ const SCAN = `(function(){
         await ctx.close();
       }
 
-      const biggest = fills[0];
-      check('no accent fill larger than a button on ' + surface.name,
-        fills.length === 0,
-        biggest
-          ? fills.length + ' at 390/768/1440 — largest ' + biggest.sel + ' '
+      /* Split into what has been argued about and what has not. The waived
+         ones are still counted and still printed — an exception nobody can see
+         in the output is the same as no rule at all. */
+      const waivers = WAIVED.filter(w => w.url === surface.url);
+      const waived = fills.filter(f => waivers.some(w => w.sel === f.sel));
+      const loose = fills.filter(f => !waivers.some(w => w.sel === f.sel));
+      const biggest = loose[0];
+      check('no unwaived accent fill larger than a button on ' + surface.name,
+        loose.length === 0,
+        (biggest
+          ? loose.length + ' at 390/768/1440 — largest ' + biggest.sel + ' '
             + biggest.w + '×' + biggest.h + ' (' + biggest.area + 'px²) '
             + biggest.how + ' at ' + biggest.at
-          : 'three widths, nothing painted over ' + BUTTON + 'px²');
+          : 'three widths, nothing painted over ' + BUTTON + 'px²')
+        + (waived.length
+            ? ' — ' + waived.length + ' waived: '
+              + waivers.map(w => w.why).join('; ')
+            : ''));
 
       check('nothing new is a card on ' + surface.name,
         cards <= surface.cards,
