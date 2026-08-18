@@ -3382,6 +3382,25 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-move[data-at="4"]:before{top:26px;left:-2px}
   .wa-fund-move span{max-width:38ch}
 }
+/* THE CLAIM IS SET FOR A COLUMN IT NO LONGER STANDS IN.
+   Above 900 the headline shares the frame with the photograph and its 5.4vw is
+   measured against that half. Below 900 the photograph moves above it and the
+   claim inherits the whole frame — but not the size. At 900 the longest line
+   came to 388px inside 812px of measure: a display claim using forty-eight per
+   cent of the page it was given, which reads as a heading that was scaled down
+   rather than one that was set.
+
+   The size is solved from the measure instead of guessed at a viewport
+   fraction. This face sets the claim's longest line at eight times its font
+   size, and the target is eighty per cent of the frame's inside width, so
+   size = 0.8 * (100vw - 88px) / 8 — the calc below, exactly. Eighty rather
+   than ninety-five because the last line is the shortest and a claim pushed to
+   the very edge leaves a ragged right that has nowhere to go. The clamp ends
+   are only guards; the calc lands inside them at every width in the band, and
+   its bottom meets the phone rule's 44 at 560 without a step. */
+@media(min-width:561px) and (max-width:900px){
+  .wa-fund h2{font-size:clamp(44px,calc(10vw - 8.8px),82px)}
+}
 @media(max-width:560px){
   .wa-fund-pic figcaption{padding-inline:20px}
   .wa-fund h2{font-size:clamp(30px,8.6vw,44px)}
