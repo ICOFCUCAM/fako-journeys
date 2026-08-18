@@ -388,11 +388,40 @@ def cmd_scaffold(args):
 
 
 def cmd_audit(args):
-    """Check every resolved photograph against what the provider says it shows."""
+    """Check every resolved photograph against what the provider says it shows.
+
+    THE EXIT CODE MEANS "SOMETHING IS STILL WRONG", NOT "SOMETHING WAS WRONG".
+
+    Without --force this only looks, so anything it finds is outstanding and a
+    non-zero exit is the whole point: a red check, and a person to look at it.
+
+    With --force the finding has already been acted on. The records are moved
+    to the quarantine, the slots fall back to the country plate, and the cache
+    is written before this returns — so there is nothing left for anybody to
+    do, and reporting failure is reporting a problem the same command just
+    fixed.
+
+    That distinction cost a resolve run. The workflow treats a non-zero audit
+    as fatal — deliberately, because committing photographs nobody has checked
+    is the exact thing the step exists to prevent — so a run that resolved for
+    two minutes, correctly rejected 45 photographs (a lioness in Kenya filed
+    as Zimbabwe, a concrete surface as Somali rock art, aquarium cichlids as
+    Malawi's lakes) and rewrote 325 alt texts then skipped every remaining
+    step, including the commit, and threw all of it away. The audit doing its
+    job looked identical to the audit being unable to run.
+
+    A crash still fails: it raises, and that propagates on its own.
+    """
     from tourism import audit
     found = audit.run(only=(args.country or "").strip().lower() or None,
                       force=bool(args.force))
-    return 1 if sum(len(v) for v in found.values()) else 0
+    n = sum(len(v) for v in found.values())
+    if getattr(args, "force", False):
+        if n:
+            print("\n%d quarantined and written. Nothing is outstanding, so this "
+                  "exits 0 — see the note in cmd_audit." % n)
+        return 0
+    return 1 if n else 0
 
 
 def cmd_enquire(args):

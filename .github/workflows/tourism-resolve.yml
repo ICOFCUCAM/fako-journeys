@@ -158,6 +158,24 @@ jobs:
           # run, the alternative is committing photographs nobody has checked,
           # which is the exact outcome this step exists to prevent. Better to
           # lose the run.
+          #
+          # "CANNOT RUN" — WHICH IS NOT WHAT THE CODE MEANT UNTIL RUN #49.
+          #
+          # cmd_audit returned non-zero whenever it FOUND anything, --force or
+          # not, and --force is the mode that acts on the finding: the records
+          # are quarantined, the slots fall back to the country plate, the
+          # cache is written. So the audit succeeding and the audit being
+          # unable to run looked identical from here, and the first run on a
+          # branch with a working provider key resolved for two minutes,
+          # correctly rejected 45 photographs — a lioness in Kenya filed as
+          # Zimbabwe, a concrete surface as Somali rock art, aquarium cichlids
+          # as Malawi's lakes — rewrote 325 alt texts from what the
+          # photographs actually show, and then skipped every step below,
+          # including the commit, and threw all of it away.
+          #
+          # With --force the command now exits 0 when it has written the
+          # quarantine, because nothing is outstanding. A crash still raises
+          # and still stops the job, which is what this comment always meant.
           python3 tools/tourism/build.py audit --force
 
       - name: Move the hard crops off dead centre
