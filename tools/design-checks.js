@@ -303,6 +303,58 @@ const SCAN = `(function(){
     fills.sort(function(a,b){ return b.area - a.area; });
     return {fills: fills, cards: cards, worst: worst};
   };
+
+  /* ABSOLUTE THREE — NO LINE OF TYPE REACHES THE WINDOW'S EDGE.
+     Pictures bleed on this site and words do not. The frame's padding is the
+     margin of the whole document and a line that starts outside it does not
+     read as a deliberate exception; it reads as a bug, because on every other
+     line the reader has met, it was one.
+
+     Measured on the text, not on the box. This section deliberately bleeds the
+     photograph's own <figure> to the window and hands its caption the frame's
+     padding back by hand, so the caption's ELEMENT begins at x=0 at every
+     width below 900 while its TEXT begins at 44 with everything else. A
+     predicate written against getBoundingClientRect calls that a defect at
+     five widths and is wrong at all five — which is exactly what a scratch
+     sweep did before this was written, and why the check that survives is the
+     one that walks text nodes and reads their Range rectangles.
+
+     Scoped to the section rather than the document: a site-wide version of
+     this would need a waiver list for every deliberate bleed on eight
+     surfaces, and a rule with a waiver list per surface is a rule nobody
+     reads. Here it guards the one composition that bleeds a box carrying
+     words. */
+  window.__inset = function(sel){
+    var sec = document.querySelector(sel);
+    if(!sec) return {ok:false, why:'no ' + sel + ' on the page'};
+    var frame = sec.querySelector('.wa-frame') || sec;
+    var fb = frame.getBoundingClientRect(), fcs = getComputedStyle(frame);
+    var left  = fb.left  + parseFloat(fcs.paddingLeft);
+    var right = fb.right - parseFloat(fcs.paddingRight);
+    var bad = [], lines = 0;
+    var tw = document.createTreeWalker(sec, NodeFilter.SHOW_TEXT);
+    var n;
+    while((n = tw.nextNode())){
+      if(!n.nodeValue.trim()) continue;
+      var host = n.parentElement;
+      if(!host || !shown(host)) continue;
+      if(host.closest('svg')) continue;      /* map labels live in viewBox units */
+      var rg = document.createRange();
+      rg.selectNodeContents(n);
+      var rects = rg.getClientRects();
+      for(var j = 0; j < rects.length; j++){
+        var rc = rects[j];
+        if(rc.width < 1 && rc.height < 1) continue;
+        lines++;
+        if(rc.left < left - 1 || rc.right > right + 1){
+          bad.push(name(host) + ' ' + Math.round(rc.left) + '..'
+            + Math.round(rc.right));
+        }
+      }
+    }
+    return {ok: bad.length === 0, lines: lines, bad: bad.slice(0,3),
+      count: bad.length, left: Math.round(left), right: Math.round(right)};
+  };
 }())`;
 
 (async function () {
@@ -362,6 +414,36 @@ const SCAN = `(function(){
           + (worst ? ' — largest ' + worst.sel : '')
           + (cards < surface.cards
               ? ' — lower the allowance in tools/design-checks.js' : ''));
+    }
+
+    /* Absolute three, over the section's own bands rather than the three
+       widths above: the composition changes shape at 560, 680, 900 and 1100
+       and the bled figure only exists below 900, so the widths that matter are
+       the ones either side of each of those. */
+    {
+      const bands = [320, 390, 560, 680, 768, 900, 1100, 1440];
+      const trouble = [];
+      let lines = 0;
+      for (const w of bands) {
+        const ctx = await browser.newContext({viewport: {width: w, height: 900}});
+        const page = await ctx.newPage();
+        await page.goto('http://127.0.0.1:' + PORT + '/index.html',
+          {waitUntil: 'load'});
+        await page.waitForTimeout(700);
+        await page.addScriptTag({content: SCAN});
+        const r = await page.evaluate('__inset(".wa-fund")');
+        lines += r.lines || 0;
+        if (!r.ok) {
+          trouble.push(w + ': ' + (r.why || r.count + ' outside '
+            + r.left + '..' + r.right + ' — ' + r.bad.join(', ')));
+        }
+        await ctx.close();
+      }
+      check('no line of type reaches the window on the journey fund door',
+        trouble.length === 0,
+        trouble.length ? trouble.join(' | ')
+          : lines + ' text rectangles across eight widths, every one inside '
+            + 'the frame');
     }
   } catch (e) {
     check('the design checks ran', false, String(e.message).slice(0, 90));

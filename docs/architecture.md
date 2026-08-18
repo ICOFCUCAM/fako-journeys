@@ -84,8 +84,10 @@ node tools/link-checks.js                 3 checks over 76,954 links
 node tools/browser-checks.js              243 checks in a real browser
 node tools/fund-checks.js                 64 checks — the estimator's
                                           arithmetic and the promises it makes
-node tools/design-checks.js               16 checks — the design blueprint's
-                                          two absolutes, at 390/768/1440
+node tools/design-checks.js               17 checks — the design blueprint's
+                                          two absolutes at 390/768/1440, and
+                                          no line of type at the window's edge
+                                          across the fund door's eight bands
 ```
 
 `design-checks.js` answers a different question from `browser-checks.js`. That
