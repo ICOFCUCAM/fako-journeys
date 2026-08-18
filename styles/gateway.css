@@ -3264,12 +3264,23 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   color:var(--c-primary);max-width:26ch;text-wrap:balance}
 
 /* ---- THE CLOSE ------------------------------------------------------------- */
+/* THE CLOSE IS SET AGAINST THE ROAD, NOT AGAINST THE PAGE.
+   The strapline and the call were centred on the frame while everything above
+   them — the claim, the prose, the four movements — is set left. Centred type
+   under a left-set composition reads as a different page's footer, and it is
+   the one place a reader has to be told what to do next.
+
+   They sit on the frame's centre still, because a close wants to be the one
+   symmetrical moment after four screens of asymmetry, but the rule under the
+   strapline is now the width of the strapline itself rather than a fixed 360.
+   A rule that is wider or narrower than the words above it is a rule that was
+   not measured against them. */
 .wa-fund-strap{margin:clamp(48px,6vw,88px) 0 0;font-family:var(--fj-mono);
   font-size:clamp(10.5px,1.05vw,13px);letter-spacing:.22em;text-transform:uppercase;
-  color:var(--c-primary);text-align:center;max-width:none}
-.wa-fund-strap:after{content:"";display:block;width:min(360px,58%);height:1px;
-  background:color-mix(in srgb,var(--c-primary) 34%,transparent);
-  margin:18px auto 0}
+  color:var(--c-primary);text-align:center;max-width:none;
+  display:flex;flex-direction:column;align-items:center;gap:18px}
+.wa-fund-strap:after{content:"";display:block;width:100%;height:1px;
+  background:color-mix(in srgb,var(--c-primary) 34%,transparent)}
 /* Bordered, not filled. A solid slab here would be the loudest object in a
    section whose whole argument is patience, and the border is the same weight
    the claim's rule carries. */
@@ -3330,8 +3341,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 }
 @media(max-width:560px){
   .wa-fund h2{font-size:clamp(30px,8.6vw,44px)}
-  .wa-fund-strap{text-align:left}
-  .wa-fund-strap:after{margin-left:0}
+  .wa-fund-strap{text-align:left;align-items:flex-start}
   .wa-fund-go{margin-left:0;width:100%;text-align:center}
 }
 
