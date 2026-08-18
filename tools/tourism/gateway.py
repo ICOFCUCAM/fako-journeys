@@ -724,11 +724,29 @@ def block_motion():
                             esc(s.get("photo") or ""), esc(s.get("alt") or ""),
                             esc(web), esc(s["clip"])))
             else:
-                media = ('<img src="%s" width="%d" height="%d" alt="%s" '
-                         'loading="%s" decoding="async" data-provider="upload">'
-                         % (esc(s["photo"]), int(s.get("photo_w") or 0),
+                # THE SAME CARE AS THE POSTER ABOVE, AND IT TOOK LONGER TO GET.
+                #
+                # These twenty-five carried a real src and loading="lazy", and
+                # the script promotes the next one to eager as the rail turns —
+                # which is the right shape and does nothing at all, because
+                # lazy only defers an image that is out of view and all
+                # twenty-five are stacked in the same window. Measured on a
+                # phone: forty-seven photographs fetched before a visitor
+                # scrolls, and twenty-five of them are these. Seven megabytes
+                # to show one picture.
+                #
+                # So a deferred shot carries no src at all, exactly like the
+                # deferred posters, and show() hands it one when its turn comes
+                # round. width and height stay, so the box is the right shape
+                # before the picture is in it. With no script the rail cannot
+                # advance anyway, so the twenty-four that never appear are
+                # twenty-four nobody could have seen.
+                media = ('<img %s="%s" width="%d" height="%d" alt="%s" '
+                         '%sdecoding="async" data-provider="upload">'
+                         % ("src" if first else "data-src", esc(s["photo"]),
+                            int(s.get("photo_w") or 0),
                             int(s.get("photo_h") or 0), esc(s.get("alt") or ""),
-                            "eager" if first else "lazy"))
+                            'loading="eager" ' if first else ""))
             frames.append(
                 '      <figure class="wa-mo-shot" data-track="%s"%s>%s'
                 '<figcaption>%s</figcaption></figure>'

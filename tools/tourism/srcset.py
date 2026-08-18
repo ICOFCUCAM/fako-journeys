@@ -44,7 +44,12 @@ from .model import ROOT
 UPLOADS = os.path.join(ROOT, "images", "uploads")
 NAMED = re.compile(r"^(.+)-(\d+)w\.(jpg|jpeg|png|webp)$")
 IMG = re.compile(r"<img\b[^>]*>", re.I)
-SRC = re.compile(r'src="(/images/uploads/([^"]+))"')
+SRC = re.compile(r'(?<!-)src="(/images/uploads/([^"]+))"')
+# A shot the rail has not reached yet carries data-src and no src, so that the
+# browser does not fetch twenty-five pictures to show one. It still wants the
+# set of widths written down — the script moves both across when the turn comes
+# — so the same rule applies one attribute over.
+DEFERRED = re.compile(r'data-src="(/images/uploads/([^"]+))"')
 
 
 def variants():
@@ -82,9 +87,9 @@ def offer(tag, have):
     # pairing a phone rejects — so a new 800 on disk changed nothing, because
     # the pass skipped every tag that had any srcset at all. Rebuilt when the
     # set on the page does not name every width that now exists.
-    existing = re.search(r'srcset="([^"]+)"', tag, re.I)
+    existing = re.search(r'(?:data-)?srcset="([^"]+)"', tag, re.I)
     if existing:
-        m0 = SRC.search(tag)
+        m0 = SRC.search(tag) or DEFERRED.search(tag)
         n0 = NAMED.match(m0.group(2)) if m0 else None
         if not n0:
             return tag, False
@@ -95,9 +100,15 @@ def offer(tag, have):
         listed = set(re.findall(r"-(\d+)w\.", existing.group(1)))
         if listed == set(str(w) for w in widths0):
             return tag, False
-        return re.sub(r'\s*srcset="[^"]*"', ' srcset="%s"' % widths_attr(key0, widths0),
+        which = "data-srcset" if 'data-srcset="' in tag else "srcset"
+        return re.sub(r'\s*(?:data-)?srcset="[^"]*"',
+                      ' %s="%s"' % (which, widths_attr(key0, widths0)),
                       tag, count=1), True
     m = SRC.search(tag)
+    attr = "srcset"
+    if not m:
+        m = DEFERRED.search(tag)
+        attr = "data-srcset"
     if not m:
         return tag, False
     n = NAMED.match(m.group(2))
@@ -107,10 +118,11 @@ def offer(tag, have):
     widths = have.get(key)
     if not widths or int(n.group(2)) != max(widths):
         return tag, False
-    return tag[:-1].rstrip() + ' srcset="%s">' % widths_attr(key, widths), True
+    return (tag[:-1].rstrip() + ' %s="%s">' % (attr, widths_attr(key, widths)),
+            True)
 
 
-STALE = re.compile(r'\s+srcset="[^"]*"', re.I)
+STALE = re.compile(r'\s+(?:data-)?srcset="[^"]*"', re.I)
 
 
 def drop_stale(tag):
@@ -121,7 +133,7 @@ def drop_stale(tag):
     nothing, and show no image at all. Anything that rewrites the set of files
     on disk has to be able to clean up after itself.
     """
-    m = re.search(r'srcset="([^"]+)"', tag, re.I)
+    m = re.search(r'(?:data-)?srcset="([^"]+)"', tag, re.I)
     if not m:
         return tag, False
     for part in m.group(1).split(","):
