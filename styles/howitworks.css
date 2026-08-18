@@ -115,3 +115,14 @@
   .hw-step{grid-template-columns:minmax(0,1fr)}
   .hw-step dd{grid-column:1;text-align:left}
 }
+
+/* ---- the one photograph on this page ------------------------------------
+   A page of prices and ladders, and nowhere in it the thing being bought.
+   Full measure, 3:2, and no border: it is a plate, not a card. The caption
+   sits under it in the metadata voice rather than over it, because this
+   photograph has nothing to hide behind a tint. */
+.hw-plate{margin:var(--sp-6,64px) 0 0;padding:0}
+.hw-plate img{display:block;width:100%;height:auto;background:var(--c-sand)}
+.hw-plate figcaption{margin-top:14px;font-family:var(--fj-text);font-size:15px;
+  line-height:1.55;color:var(--c-muted);max-width:58ch}
+@media(max-width:760px){.hw-plate{margin-top:44px}}
