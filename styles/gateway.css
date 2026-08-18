@@ -3279,8 +3279,15 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   border:1.5px solid var(--c-primary);padding:17px 34px;text-decoration:none;
   transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
 .wa-fund-go i{font-style:normal;margin-left:11px}
-.wa-fund-go:hover,.wa-fund-go:focus-visible{background:var(--c-primary);
-  color:var(--c-bg)}
+.wa-fund-go:hover{background:var(--c-primary);color:var(--c-bg)}
+/* FOCUS IS NOT HOVER, AND THIS CALL HAD THEM AS THE SAME THING.
+   A keyboard reader arriving here got exactly what a mouse hovering gets: the
+   fill inverts, and nothing says which of the two happened. On a bordered
+   control the fill IS the hover, so focus has to be something else — a ring
+   outside the border, in the accent, with the ground unchanged. That way a
+   reader who tabs to it and a reader who points at it are told apart, and a
+   reader who tabs to it and then hovers gets both without either being lost. */
+.wa-fund-go:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
 
 /* ---- 900 AND BELOW: THE ROAD ROTATES --------------------------------------
    A horizontal road with four stops has the same failure as four columns — on a
