@@ -1370,7 +1370,10 @@ window.AF = {
     <div class="wa-fund-arc">
       <svg class="wa-fund-line" viewBox="0 0 1200 120" preserveAspectRatio="none"
            aria-hidden="true">
-        <path d="M0 74 C 150 44, 260 106, 420 78 S 700 38, 860 82 S 1090 104, 1200 60"/>
+        <!-- pathLength="1" normalises the geometry so the dash maths is a
+             fraction rather than a number somebody has to measure and keep in
+             step with the curve. -->
+        <path pathLength="1" d="M0 74 C 150 44, 260 106, 420 78 S 700 38, 860 82 S 1090 104, 1200 60"/>
       </svg>
       <ol class="wa-fund-moves">
         <li class="wa-fund-move" data-at="1">

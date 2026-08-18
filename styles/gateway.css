@@ -3199,8 +3199,34 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-fund-line{position:absolute;top:0;left:0;width:100%;height:120px;
   overflow:visible;pointer-events:none}
 .wa-fund-line path{fill:none;stroke:var(--c-primary);stroke-width:1.4;
-  vector-effect:non-scaling-stroke;
-  stroke-dasharray:var(--fj-road, none);stroke-dashoffset:var(--fj-road-at, 0)}
+  vector-effect:non-scaling-stroke}
+
+/* THE ROAD DRAWS, AND IT IS THE ONLY THING IN THIS SECTION THAT MOVES.
+   The direction promised this and the stylesheet declared two custom
+   properties for it that nothing ever set — dead code, and the kind that reads
+   as a feature until somebody looks.
+
+   It is done on a scroll timeline rather than a clock, because the road's
+   subject is the passage of time and time here is the reader's, not a
+   designer's three hundred milliseconds. The path carries pathLength="1", so
+   the dash is a fraction and no number has to be kept in step with the curve.
+
+   Behind @supports on purpose: a browser without scroll-driven animations gets
+   the road already complete, which is the correct page rather than a degraded
+   one — and it is the same page reduced-motion gets. There is no state in
+   which this section is missing its road. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes wa-fund-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+    .wa-fund-line path{stroke-dasharray:1;stroke-dashoffset:1;
+      animation:wa-fund-draw linear forwards;
+      animation-timeline:view();
+      /* Finished by the time the strip is halfway up the viewport, so a reader
+         who scrolls at any normal speed meets a road that has already arrived
+         rather than one still catching up with them. */
+      animation-range:entry 10% cover 46%}
+  }
+}
 
 .wa-fund-moves{list-style:none;margin:0;padding:0;
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
@@ -3289,5 +3315,5 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    It is the only animation in the section. Reduced motion yields it complete
    rather than yielding a degraded page. */
 @media(prefers-reduced-motion:reduce){
-  .wa-fund-line path{stroke-dasharray:none;stroke-dashoffset:0}
+  .wa-fund-line path{stroke-dasharray:none;stroke-dashoffset:0;animation:none}
 }
