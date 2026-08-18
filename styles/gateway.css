@@ -3071,8 +3071,27 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    the two columns finish together at every width they share. */
 .wa-fund-pic{position:relative;margin:0;min-height:clamp(300px,42vw,520px);
   align-self:stretch}
+/* THE CROP IS HELD, NOT LEFT TO THE DEFAULT.
+   object-fit:cover with no object-position centres the crop, and this frame is
+   1600x1067 landing in a box that gets narrower and taller as the viewport
+   widens — so at 1920 the centre crop cut through the wing mirror and pushed
+   the road's vanishing point off to the left, which is the one thing in the
+   photograph that has to survive. The subject of this plate is a road running
+   away from the reader.
+
+   Four positions were rendered at 1920 and compared rather than reasoned about.
+   62 and 72 both cut the mirror to a dark sliver at the left edge, which reads
+   as a smudge on the print — worse than centring it, because a thing half
+   cropped is a mistake and a thing fully cropped is a decision. 40 keeps the
+   mirror whole as a foreground frame, holds the road's vanishing point inside
+   the box, and puts the walking family at the optical centre. It is the only
+   one of the four in which the photograph is still taken from inside a vehicle,
+   which is the whole reason this frame and not another.
+
+   Vertically 58% keeps the horizon above centre, where a road photograph wants
+   it. */
 .wa-fund-pic img{width:100%;height:100%;object-fit:cover;display:block;
-  min-height:clamp(300px,42vw,520px)}
+  object-position:40% 58%;min-height:clamp(300px,42vw,520px)}
 
 /* THE CONTINENT, DRAWN OVER THE PHOTOGRAPH.
    Outline only, at a hairline, so the road runs through the country instead of
