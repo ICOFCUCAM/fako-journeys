@@ -421,8 +421,9 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
 <a class="af-skip" href="#plan">Skip to the planner</a>
 """ + MAST + """
 <main>
-  <section class="jf-frame jf-open">
-    <h1>Your journey can start long before you leave.</h1>
+  <section class="jf-frame jf-open jf-move" id="dream" aria-labelledby="m1">
+    <p class="af-stamp jf-move-n"><b>01</b> Dream</p>
+    <h1 id="m1">Your journey can start long before you leave.</h1>
     <p class="jf-sub">Choose where, and choose when. This page works out what
       the journey costs, and what the months between now and then would have to
       look like to reach it.</p>
@@ -435,15 +436,11 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
     </figure>
   </section>
 
-  <section class="jf-frame" aria-labelledby="three">
-    <h2 class="af-stamp" id="three">What a journey is ready on</h2>
-    <div class="jf-tracks">%(tracks)s</div>
-  </section>
-
-  <section class="jf-frame jf-planner" id="plan" aria-labelledby="plan-h">
-    <h2 class="af-stamp" id="plan-h">Your journey plan</h2>
-    <div class="jf-est">
-      <form class="jf-form" id="jf-form" novalidate>
+  <form class="jf-form" id="jf-form" novalidate>
+    <section class="jf-frame jf-move" id="choose" aria-labelledby="m2">
+      <p class="af-stamp jf-move-n"><b>02</b> Choose</p>
+      <h2 class="af-stamp" id="m2">Where, and when</h2>
+      <div class="jf-two">
         <fieldset class="jf-ask">
           <legend>Where</legend>
           <div class="jf-chips" id="jf-kind" role="group" aria-label="A country or a crossing">
@@ -455,16 +452,6 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
           <select id="jf-place" name="place" class="jf-select">%(places)s</select>
         </fieldset>
 
-        <fieldset class="jf-ask" id="jf-days-ask">
-          <legend>How long</legend>
-          <div class="jf-chips" role="group" aria-label="How many days">%(days)s</div>
-        </fieldset>
-
-        <fieldset class="jf-ask" id="jf-tier-ask">
-          <legend>Which journey</legend>
-          <div class="jf-tiers" role="group" aria-label="Which journey">%(tiers)s</div>
-        </fieldset>
-
         <fieldset class="jf-ask">
           <legend>When</legend>
           <label class="af-stamp jf-lab" for="jf-month">The month you would go</label>
@@ -472,44 +459,68 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
             <option value="">Any month from three months out</option>
           </select>
         </fieldset>
-
-        <fieldset class="jf-ask">
-          <legend>How often</legend>
-          <div class="jf-chips" role="group" aria-label="How often">
-            <label class="jf-chip"><input type="radio" name="jf-rhythm" value="monthly" checked><span>Every month</span></label>
-            <label class="jf-chip"><input type="radio" name="jf-rhythm" value="quarterly"><span>Every three months</span></label>
-          </div>
-        </fieldset>
-      </form>
-
-      <div class="jf-work">
-        <p class="af-stamp jf-plan-eye">The plan</p>
-        <p class="jf-where" id="jf-where">Uganda</p>
-        <p class="jf-when" id="jf-when">Choose a month</p>
-        <div class="jf-sum" id="jf-sum" aria-live="polite">%(sum)s</div>
-        <p class="jf-said" id="jf-said" aria-live="polite">With scripting on,
-          this becomes your <b>planned monthly contribution</b> &mdash; what
-          reaching that journey would take, month by month.</p>
-        <div class="jf-reach" id="jf-reach" hidden></div>
-        <p class="jf-fine">Park and conservation fees, permits and entrance
-          charges are settled by us at cost and are <b>not</b> in this figure.
-          They depend on the itinerary, and a gorilla permit alone can be more
-          than a day of the journey.</p>
-        <p class="jf-fine">An estimate against today&rsquo;s rate card, not a
-          quotation.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="jf-keep">
-      <p>Come back to this plan whenever you like: it can be kept in this
-        browser and nowhere else &mdash; no account, no email, nothing sent
-        anywhere, and no money held by us.</p>
-      <div class="jf-acts">
-        <button class="af-btn" type="button" id="jf-keep">Keep this plan</button>
-        <a class="af-btn af-btn--solid" href="/enquire" id="jf-send">Talk to us about it<i>&rarr;</i></a>
+    <section class="jf-frame jf-planner jf-move" id="plan" aria-labelledby="plan-h">
+      <p class="af-stamp jf-move-n"><b>03</b> Build</p>
+      <h2 class="af-stamp" id="plan-h">Your journey plan</h2>
+      <div class="jf-est">
+        <div class="jf-asks">
+          <fieldset class="jf-ask" id="jf-days-ask">
+            <legend>How long</legend>
+            <div class="jf-chips" role="group" aria-label="How many days">%(days)s</div>
+          </fieldset>
+
+          <fieldset class="jf-ask" id="jf-tier-ask">
+            <legend>Which journey</legend>
+            <div class="jf-tiers" role="group" aria-label="Which journey">%(tiers)s</div>
+          </fieldset>
+
+          <fieldset class="jf-ask">
+            <legend>How often</legend>
+            <div class="jf-chips" role="group" aria-label="How often">
+              <label class="jf-chip"><input type="radio" name="jf-rhythm" value="monthly" checked><span>Every month</span></label>
+              <label class="jf-chip"><input type="radio" name="jf-rhythm" value="quarterly"><span>Every three months</span></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="jf-work">
+          <p class="af-stamp jf-plan-eye">The plan</p>
+          <p class="jf-where" id="jf-where">Uganda</p>
+          <p class="jf-when" id="jf-when">Choose a month</p>
+          <div class="jf-sum" id="jf-sum" aria-live="polite">%(sum)s</div>
+          <p class="jf-said" id="jf-said" aria-live="polite">With scripting on,
+            this becomes your <b>planned monthly contribution</b> &mdash; what
+            reaching that journey would take, month by month.</p>
+          <div class="jf-reach" id="jf-reach" hidden></div>
+          <p class="jf-fine">Park and conservation fees, permits and entrance
+            charges are settled by us at cost and are <b>not</b> in this figure.
+            They depend on the itinerary, and a gorilla permit alone can be more
+            than a day of the journey.</p>
+          <p class="jf-fine">An estimate against today&rsquo;s rate card, not a
+            quotation.</p>
+        </div>
       </div>
-      <p class="jf-kept-note" id="jf-kept" hidden></p>
-    </div>
+
+      <div class="jf-keep">
+        <p>Come back to this plan whenever you like: it can be kept in this
+          browser and nowhere else &mdash; no account, no email, nothing sent
+          anywhere, and no money held by us.</p>
+        <div class="jf-acts">
+          <button class="af-btn" type="button" id="jf-keep">Keep this plan</button>
+          <a class="af-btn af-btn--solid" href="/enquire" id="jf-send">Talk to us about it<i>&rarr;</i></a>
+        </div>
+        <p class="jf-kept-note" id="jf-kept" hidden></p>
+      </div>
+    </section>
+  </form>
+
+  <section class="jf-frame jf-move" id="ready" aria-labelledby="m4">
+    <p class="af-stamp jf-move-n"><b>04</b> Journey</p>
+    <h2 class="af-stamp" id="m4">What a journey is ready on</h2>
+    <div class="jf-tracks">%(tracks)s</div>
   </section>
 
   <section class="jf-frame jf-close">

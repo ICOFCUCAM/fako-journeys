@@ -3054,9 +3054,48 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    whole section has been building to and the four words above it are already
    set louder than it is. It closes the distance between the idea and the door
    below it, which is why the call's top margin comes off. */
-.wa-arc-name{margin:34px 0 0;font-size:19px;line-height:1.5;color:var(--c-bg);
-  max-width:44ch}
-.wa-arc-name + .wa-arc-go{margin-top:20px}
+/* .wa-arc-name is gone with the sentence it styled. It named the product in
+   the position where nothing else did; the eyebrow and the masthead route both
+   name it now, and a rule with no element left is how a stylesheet starts
+   growing things nobody can delete because nobody can prove they are unused. */
+
+/* THE SECTION MOVED GROUND, AND EVERY COLOUR IN IT WAS A DARK-GROUND COLOUR.
+   Ivory names, ivory sentence, gold ordinals, an ivory-filled call: all of it
+   correct on basalt and all of it somewhere between 1.2:1 and 1.5:1 on dust.
+   Moving a section is not only moving its markup — a component that was only
+   ever drawn on one ground carries that ground's palette inside it, and this
+   is the bill for that.
+
+   The inversion is stated once, scoped to the ground rather than to the
+   section, so if this ever goes back onto basalt the rules below simply stop
+   applying and the originals above are still there and still right.
+
+   The ordinal is the one that could not simply flip. Gold is the label colour
+   on every dark band on this site and measures 1.53:1 on dust, so it goes to
+   burnt sienna — 4.64:1 at 10px, and the same colour every other ordinal on a
+   light ground already uses, which is why it does not read as a new idea. */
+.wa-zone.dust.wa-before .wa-arc li:before{color:var(--c-accent)}
+.wa-zone.dust.wa-before .wa-arc b{color:var(--c-primary)}
+/* Not --c-muted here. It measures 4.50:1 on dust, which passes by five
+   thousandths, and a number that close to the line is a number that has
+   already failed twice in this file when a token moved underneath it. Deep
+   forest is 10.57:1 and the hierarchy is carried by size and weight, which is
+   where it should have been carried in the first place. */
+.wa-zone.dust.wa-before .wa-arc span{color:var(--c-primary)}
+/* The call inverts with everything else: basalt fill, ivory type — which is
+   what a primary action on a light ground already is elsewhere on this page,
+   so it arrives looking like the rest of the site rather than like this
+   section's own invention. */
+.wa-zone.dust .wa-arc-go{color:var(--c-bg);background:var(--c-primary)}
+.wa-zone.dust .wa-arc-go:hover{background:var(--c-accent)}
+
+/* The supporting line, which is new: one sentence between the heading and the
+   paragraph, at the lede's size rather than the paragraph's, because it is the
+   argument and the paragraph is the explanation of it. */
+.wa-lead-say{margin:14px 0 0;font-family:var(--fj-display);font-weight:500;
+  font-size:clamp(19px,1.7vw,23px);line-height:1.25;letter-spacing:-.008em;
+  color:var(--c-primary);max-width:30ch}
+.wa-lead-say + .wa-note{margin-top:14px}
 
 .wa-arc-go{display:inline-block;margin-top:38px;font-family:var(--fj-mono);
   font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;

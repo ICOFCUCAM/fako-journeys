@@ -154,6 +154,53 @@
 }
 @media(prefers-reduced-motion:reduce){.jf-work{position:static}}
 
+/* ---- the four movements -------------------------------------------------
+   Dream, Choose, Build, Journey are the page's spine rather than four words
+   printed on it, which means they have to be legible as structure before a
+   word of them is read: a rule across the top of each, an ordinal that
+   continues from the one above, and enough air between them that they read as
+   four things and not as one page with subheadings.
+
+   The ordinal is set beside the name rather than above it. Stacked, four
+   movements produce four two-line stacks and the page starts to look like a
+   numbered list of features; on one line it reads as a chapter mark, which is
+   what it is. */
+/* The air belongs to the mark, not to the section as well. Both carried it in
+   the first cut and the gap between a photograph and the movement under it came
+   out at a hundred and fifty pixels of nothing. */
+.jf-move{padding-top:0}
+.jf-move-n{display:flex;align-items:baseline;gap:12px;margin:0 0 18px;
+  padding-top:clamp(18px,2.4vw,28px);margin-top:clamp(52px,6.5vw,96px);
+  border-top:2px solid var(--c-primary)}
+.jf-move-n b{font-family:var(--fj-display);font-size:26px;font-weight:700;
+  line-height:.85;letter-spacing:-.03em;color:var(--c-accent)}
+/* The opening movement sits directly under the masthead, which is its own
+   rule; a second one twelve pixels below reads as a mistake rather than as a
+   chapter mark. */
+.jf-open .jf-move-n{margin-top:clamp(22px,3vw,34px)}
+
+/* A MOVEMENT'S HEADING IS A HEADING, NOT A THIRD LABEL.
+   af-stamp is the page's small mono uppercase voice and the h2s were wearing
+   it, which was fine when there was one of them and nothing above it. Under a
+   movement mark it produced three small uppercase lines stacked — 02 CHOOSE,
+   then WHERE AND WHEN, then the WHERE legend — all the same size, all the same
+   case, and no way to tell which was the heading. The stamp names the
+   movement; the heading is the question, and it is set like one. */
+.jf-move > h1,.jf-move > h2{font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(30px,4vw,52px);line-height:1.02;letter-spacing:-.024em;
+  text-transform:none;color:var(--c-primary);margin:0 0 clamp(22px,3vw,36px);
+  max-width:20ch;text-wrap:balance}
+
+/* Choose is two questions, so it is set as two. Stacked they read as the top
+   of a form; side by side they read as a pair, which is what the movement is
+   named for — where, and when, and nothing else until those are answered. */
+.jf-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(24px,3.5vw,52px);align-items:start}
+@media(max-width:760px){.jf-two{grid-template-columns:1fr;gap:28px}}
+/* The questions column of the planner. It used to be the <form> itself; the
+   form now spans two movements, so the grid child it left behind is named. */
+.jf-asks{min-width:0}
+
 .jf-ask{border:0;margin:0 0 28px;padding:0}
 .jf-ask:last-of-type{margin-bottom:0}
 .jf-ask legend{font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;
