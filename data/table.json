@@ -25,63 +25,73 @@
    },
    {
     "arc": "The table",
-    "country": "tanzania",
-    "image": "https://images.pexels.com/photos/13675824/pexels-photo-13675824.png",
-    "name": "Tanzania",
-    "text": "Cloves and cardamom from the Zanzibar plantations, grilled seafood at Forodhani, and ugali everywhere else.",
-    "title": "Spice, Ugali, Urojo",
-    "tone": "#2B6E5E",
-    "url": "/portrait/tanzania#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "madagascar",
-    "image": "https://images.pexels.com/photos/26587855/pexels-photo-26587855.jpeg",
-    "name": "Madagascar",
-    "text": "Rice three times a day, and romazava — beef and greens — with it.",
-    "title": "Romazava and Rice",
-    "tone": "#1A5151",
-    "url": "/portrait/madagascar#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "dr-congo",
-    "image": "https://images.pexels.com/photos/33896073/pexels-photo-33896073.jpeg",
-    "name": "DR Congo",
-    "text": "Cassava fufu, pondu cassava leaf, and fish steamed in leaves over a fire.",
-    "title": "Fufu, Pondu and Liboke",
-    "tone": "#113222",
-    "url": "/portrait/dr-congo#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "libya",
-    "image": "https://images.pexels.com/photos/20089305/pexels-photo-20089305.jpeg",
-    "name": "Libya",
-    "text": "Bazin with lamb and paprika, couscous on Fridays, and shorba on the table all Ramadan.",
-    "title": "Bazin and Bsisa",
-    "tone": "#865A28",
-    "url": "/portrait/libya#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "sao-tome-and-principe",
-    "image": "https://images.pexels.com/photos/4078086/pexels-photo-4078086.jpeg",
-    "name": "Sao Tome and Principe",
-    "text": "Calulu — fish stewed with okra and palm oil — and chocolate made where the beans grow.",
-    "title": "Calulu and Chocolate",
-    "tone": "#1A5151",
-    "url": "/portrait/sao-tome-and-principe#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "zambia",
-    "image": "https://images.pexels.com/photos/38347620/pexels-photo-38347620.jpeg",
-    "name": "Zambia",
-    "text": "Maize nshima with relish, dried kapenta from the lakes, and fresh bream out of the Zambezi.",
-    "title": "Nshima and Kapenta",
+    "country": "south-africa",
+    "image": "https://images.pexels.com/photos/29132438/pexels-photo-29132438.jpeg",
+    "name": "South Africa",
+    "text": "Fire is a national institution; Durban curry and Cape Malay bobotie came from two very different arrivals.",
+    "title": "Braai, Bunny Chow, Curry",
     "tone": "#672E1D",
-    "url": "/portrait/zambia#the-table"
+    "url": "/portrait/south-africa#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "mali",
+    "image": "https://images.pexels.com/photos/36304641/pexels-photo-36304641.jpeg",
+    "name": "Mali",
+    "text": "Groundnut stew, and Nile perch grilled whole on the riverbank at Mopti.",
+    "title": "Tigadege Na and Capitaine",
+    "tone": "#113222",
+    "url": "/portrait/mali#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "chad",
+    "image": "https://images.pexels.com/photos/19142282/pexels-photo-19142282.jpeg",
+    "name": "Chad",
+    "text": "Millet boule with sauce, and Nile perch off the Chari grilled on the bank.",
+    "title": "Boule and Grilled Capitaine",
+    "tone": "#113222",
+    "url": "/portrait/chad#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "eritrea",
+    "image": "https://images.pexels.com/photos/6434584/pexels-photo-6434584.jpeg",
+    "name": "Eritrea",
+    "text": "Eritrean stews on injera, and an Italian coffee culture that never left.",
+    "title": "Injera, Zigni and Macchiato",
+    "tone": "#2B6E5E",
+    "url": "/portrait/eritrea#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "lesotho",
+    "image": "https://images.pexels.com/photos/25856933/pexels-photo-25856933.jpeg",
+    "name": "Lesotho",
+    "text": "Maize papa with wild greens, and motoho — fermented sorghum drink.",
+    "title": "Papa, Moroho and Motoho",
+    "tone": "#672E1D",
+    "url": "/portrait/lesotho#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "namibia",
+    "image": "https://images.unsplash.com/photo-1693921148355-1aa9512c7b20",
+    "name": "Namibia",
+    "text": "Game meat over coals, biltong on every counter, and German bread that is actually German.",
+    "title": "Braai and Biltong",
+    "tone": "#672E1D",
+    "url": "/portrait/namibia#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "somalia",
+    "image": "https://images.pexels.com/photos/16107645/pexels-photo-16107645.jpeg",
+    "name": "Somalia",
+    "text": "Camel milk, bariis iskukaris spiced with cumin and cardamom, and Somali tea with ginger.",
+    "title": "Camel Milk and Bariis",
+    "tone": "#2B6E5E",
+    "url": "/portrait/somalia#the-table"
    }
   ],
   [
@@ -107,23 +117,33 @@
    },
    {
     "arc": "The table",
-    "country": "egypt",
-    "image": "https://images.pexels.com/photos/35549688/pexels-photo-35549688.jpeg",
-    "name": "Egypt",
-    "text": "Breakfast is ful and bread; lunch is koshary; both are older than most cuisines.",
-    "title": "Ful, Koshary and Bread",
-    "tone": "#865A28",
-    "url": "/portrait/egypt#the-table"
+    "country": "kenya",
+    "image": "https://images.pexels.com/photos/9833512/pexels-photo-9833512.jpeg",
+    "name": "Kenya",
+    "text": "Goat roasted over charcoal, maize meal, sukuma wiki, and coastal biryani that came in by dhow.",
+    "title": "Nyama Choma and Ugali",
+    "tone": "#2B6E5E",
+    "url": "/portrait/kenya#the-table"
    },
    {
     "arc": "The table",
-    "country": "central-african-republic",
-    "image": "https://images.pexels.com/photos/33937245/pexels-photo-33937245.jpeg",
-    "name": "Central African Republic",
-    "text": "Cassava as the staple, smoked fish from the river, and palm wine tapped in the forest.",
-    "title": "Cassava, Bushmeat and Palm Wine",
-    "tone": "#113222",
-    "url": "/portrait/central-african-republic#the-table"
+    "country": "uganda",
+    "image": "https://images.pexels.com/photos/4618015/pexels-photo-4618015.jpeg",
+    "name": "Uganda",
+    "text": "Steamed green banana with groundnut sauce, chicken cooked in banana leaf, and an egg rolled in a chapati on every corner.",
+    "title": "Rolex, Matoke, Luwombo",
+    "tone": "#2B6E5E",
+    "url": "/portrait/uganda#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "comoros",
+    "image": "https://images.pexels.com/photos/24246112/pexels-photo-24246112.jpeg",
+    "name": "Comoros",
+    "text": "Lobster off the reef, pilao rice with cardamom, and vanilla and clove in everything.",
+    "title": "Langouste and Pilao",
+    "tone": "#1A5151",
+    "url": "/portrait/comoros#the-table"
    },
    {
     "arc": "The table",
@@ -137,33 +157,33 @@
    },
    {
     "arc": "The table",
-    "country": "malawi",
-    "image": "https://images.pexels.com/photos/30085243/pexels-photo-30085243.jpeg",
-    "name": "Malawi",
-    "text": "Nsima with relish, and chambo — a lake cichlid — grilled whole on the shore.",
-    "title": "Nsima and Chambo",
-    "tone": "#672E1D",
-    "url": "/portrait/malawi#the-table"
+    "country": "liberia",
+    "image": "https://images.pexels.com/photos/6659897/pexels-photo-6659897.jpeg",
+    "name": "Liberia",
+    "text": "Palm butter soup, cassava fufu, and a jollof Liberians will argue about at length.",
+    "title": "Jollof, Palm Butter and Fufu",
+    "tone": "#113222",
+    "url": "/portrait/liberia#the-table"
    },
    {
     "arc": "The table",
-    "country": "seychelles",
-    "image": "https://images.pexels.com/photos/29796600/pexels-photo-29796600.jpeg",
-    "name": "Seychelles",
-    "text": "Grilled fish, coconut curry, breadfruit, and a chilli sauce that is not a suggestion.",
-    "title": "Fish, Coconut and Chilli",
-    "tone": "#1A5151",
-    "url": "/portrait/seychelles#the-table"
+    "country": "niger",
+    "image": "https://images.pexels.com/photos/19687409/pexels-photo-19687409.jpeg",
+    "name": "Niger",
+    "text": "Millet paste with sauce, and kilishi — beef dried thin and spiced, the best in the region.",
+    "title": "Millet, Djerma Rice and Kilishi",
+    "tone": "#113222",
+    "url": "/portrait/niger#the-table"
    },
    {
     "arc": "The table",
-    "country": "zimbabwe",
-    "image": "https://images.pexels.com/photos/38330332/pexels-photo-38330332.jpeg",
-    "name": "Zimbabwe",
-    "text": "Sadza with relish, and meat over coals wherever there is a fire and company.",
-    "title": "Sadza and Braai",
-    "tone": "#672E1D",
-    "url": "/portrait/zimbabwe#the-table"
+    "country": "south-sudan",
+    "image": "https://images.pexels.com/photos/27407536/pexels-photo-27407536.jpeg",
+    "name": "South Sudan",
+    "text": "Sorghum asida, kisra flatbread, and Nile perch grilled on the bank.",
+    "title": "Kisra, Asida and Fish",
+    "tone": "#2B6E5E",
+    "url": "/portrait/south-sudan#the-table"
    }
   ],
   [
@@ -189,23 +209,33 @@
    },
    {
     "arc": "The table",
-    "country": "cote-divoire",
-    "image": "https://images.pexels.com/photos/6872184/pexels-photo-6872184.jpeg",
-    "name": "Côte d'Ivoire",
-    "text": "Attiéké with grilled fish, and kedjenou slow-cooked in a sealed pot.",
-    "title": "Attiéké and Kedjenou",
-    "tone": "#113222",
-    "url": "/portrait/cote-divoire#the-table"
+    "country": "tanzania",
+    "image": "https://images.pexels.com/photos/13675824/pexels-photo-13675824.png",
+    "name": "Tanzania",
+    "text": "Cloves and cardamom from the Zanzibar plantations, grilled seafood at Forodhani, and ugali everywhere else.",
+    "title": "Spice, Ugali, Urojo",
+    "tone": "#2B6E5E",
+    "url": "/portrait/tanzania#the-table"
    },
    {
     "arc": "The table",
-    "country": "chad",
-    "image": "https://images.pexels.com/photos/19142282/pexels-photo-19142282.jpeg",
-    "name": "Chad",
-    "text": "Millet boule with sauce, and Nile perch off the Chari grilled on the bank.",
-    "title": "Boule and Grilled Capitaine",
+    "country": "mozambique",
+    "image": "https://images.pexels.com/photos/29309713/pexels-photo-29309713.jpeg",
+    "name": "Mozambique",
+    "text": "Prawns with peri-peri, and matapa — cassava leaf and coconut — with rice.",
+    "title": "Peri-Peri and Matapa",
+    "tone": "#672E1D",
+    "url": "/portrait/mozambique#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "congo",
+    "image": "https://images.pexels.com/photos/34463121/pexels-photo-34463121.jpeg",
+    "name": "Congo",
+    "text": "Cassava leaf, and chicken in palm nut sauce — the dish of both Congos.",
+    "title": "Saka-Saka and Poulet Moambe",
     "tone": "#113222",
-    "url": "/portrait/chad#the-table"
+    "url": "/portrait/congo#the-table"
    },
    {
     "arc": "The table",
@@ -219,23 +249,33 @@
    },
    {
     "arc": "The table",
-    "country": "mauritius",
-    "image": "https://images.pexels.com/photos/36879484/pexels-photo-36879484.jpeg",
-    "name": "Mauritius",
-    "text": "Dholl puri off a street cart, rougaille at home, and a fish vindaye that is entirely local.",
-    "title": "Dholl Puri and Rougaille",
-    "tone": "#1A5151",
-    "url": "/portrait/mauritius#the-table"
+    "country": "libya",
+    "image": "https://images.pexels.com/photos/20089305/pexels-photo-20089305.jpeg",
+    "name": "Libya",
+    "text": "Bazin with lamb and paprika, couscous on Fridays, and shorba on the table all Ramadan.",
+    "title": "Bazin and Bsisa",
+    "tone": "#865A28",
+    "url": "/portrait/libya#the-table"
    },
    {
     "arc": "The table",
-    "country": "somalia",
-    "image": "https://images.pexels.com/photos/16107645/pexels-photo-16107645.jpeg",
-    "name": "Somalia",
-    "text": "Camel milk, bariis iskukaris spiced with cumin and cardamom, and Somali tea with ginger.",
-    "title": "Camel Milk and Bariis",
+    "country": "rwanda",
+    "image": "https://images.pexels.com/photos/36470715/pexels-photo-36470715.jpeg",
+    "name": "Rwanda",
+    "text": "Grilled goat brochettes, cassava leaf isombe, tilapia from Kivu, and some of the best coffee grown anywhere.",
+    "title": "Brochettes and Isombe",
     "tone": "#2B6E5E",
-    "url": "/portrait/somalia#the-table"
+    "url": "/portrait/rwanda#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "sudan",
+    "image": "https://images.pexels.com/photos/6252676/pexels-photo-6252676.jpeg",
+    "name": "Sudan",
+    "text": "Ful medames for breakfast everywhere, kisra sorghum flatbread, and coffee spiced with ginger.",
+    "title": "Ful and Kisra",
+    "tone": "#865A28",
+    "url": "/portrait/sudan#the-table"
    }
   ],
   [
@@ -261,23 +301,33 @@
    },
    {
     "arc": "The table",
-    "country": "mali",
-    "image": "https://images.pexels.com/photos/36304641/pexels-photo-36304641.jpeg",
-    "name": "Mali",
-    "text": "Groundnut stew, and Nile perch grilled whole on the riverbank at Mopti.",
-    "title": "Tigadege Na and Capitaine",
-    "tone": "#113222",
-    "url": "/portrait/mali#the-table"
+    "country": "egypt",
+    "image": "https://images.pexels.com/photos/35549688/pexels-photo-35549688.jpeg",
+    "name": "Egypt",
+    "text": "Breakfast is ful and bread; lunch is koshary; both are older than most cuisines.",
+    "title": "Ful, Koshary and Bread",
+    "tone": "#865A28",
+    "url": "/portrait/egypt#the-table"
    },
    {
     "arc": "The table",
-    "country": "comoros",
-    "image": "https://images.pexels.com/photos/24246112/pexels-photo-24246112.jpeg",
-    "name": "Comoros",
-    "text": "Lobster off the reef, pilao rice with cardamom, and vanilla and clove in everything.",
-    "title": "Langouste and Pilao",
+    "country": "madagascar",
+    "image": "https://images.pexels.com/photos/26587855/pexels-photo-26587855.jpeg",
+    "name": "Madagascar",
+    "text": "Rice three times a day, and romazava — beef and greens — with it.",
+    "title": "Romazava and Rice",
     "tone": "#1A5151",
-    "url": "/portrait/comoros#the-table"
+    "url": "/portrait/madagascar#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "djibouti",
+    "image": "https://images.pexels.com/photos/17743312/pexels-photo-17743312.jpeg",
+    "name": "Djibouti",
+    "text": "Spiced rice with lamb, and whole fish baked in a Yemeni clay oven on the coast.",
+    "title": "Skoudehkaris and Yemeni Fish",
+    "tone": "#2B6E5E",
+    "url": "/portrait/djibouti#the-table"
    },
    {
     "arc": "The table",
@@ -291,23 +341,33 @@
    },
    {
     "arc": "The table",
-    "country": "namibia",
-    "image": "https://images.unsplash.com/photo-1693921148355-1aa9512c7b20",
-    "name": "Namibia",
-    "text": "Game meat over coals, biltong on every counter, and German bread that is actually German.",
-    "title": "Braai and Biltong",
+    "country": "malawi",
+    "image": "https://images.pexels.com/photos/30085243/pexels-photo-30085243.jpeg",
+    "name": "Malawi",
+    "text": "Nsima with relish, and chambo — a lake cichlid — grilled whole on the shore.",
+    "title": "Nsima and Chambo",
     "tone": "#672E1D",
-    "url": "/portrait/namibia#the-table"
+    "url": "/portrait/malawi#the-table"
    },
    {
     "arc": "The table",
-    "country": "south-sudan",
-    "image": "https://images.pexels.com/photos/27407536/pexels-photo-27407536.jpeg",
-    "name": "South Sudan",
-    "text": "Sorghum asida, kisra flatbread, and Nile perch grilled on the bank.",
-    "title": "Kisra, Asida and Fish",
-    "tone": "#2B6E5E",
-    "url": "/portrait/south-sudan#the-table"
+    "country": "sao-tome-and-principe",
+    "image": "https://images.pexels.com/photos/4078086/pexels-photo-4078086.jpeg",
+    "name": "Sao Tome and Principe",
+    "text": "Calulu — fish stewed with okra and palm oil — and chocolate made where the beans grow.",
+    "title": "Calulu and Chocolate",
+    "tone": "#1A5151",
+    "url": "/portrait/sao-tome-and-principe#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "togo",
+    "image": "https://images.pexels.com/photos/6120241/pexels-photo-6120241.jpeg",
+    "name": "Togo",
+    "text": "Fufu with groundnut sauce, and gboma dessi — spinach stew with fish.",
+    "title": "Fufu and Gboma Dessi",
+    "tone": "#113222",
+    "url": "/portrait/togo#the-table"
    }
   ],
   [
@@ -323,63 +383,83 @@
    },
    {
     "arc": "The table",
-    "country": "morocco",
-    "image": "https://images.pexels.com/photos/2291602/pexels-photo-2291602.jpeg",
-    "name": "Morocco",
-    "text": "Slow-cooked tagine, bread baked in the neighbourhood oven, and tea poured from height.",
-    "title": "Tagine, Bread and Mint",
-    "tone": "#865A28",
-    "url": "/portrait/morocco#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "uganda",
-    "image": "https://images.pexels.com/photos/4618015/pexels-photo-4618015.jpeg",
-    "name": "Uganda",
-    "text": "Steamed green banana with groundnut sauce, chicken cooked in banana leaf, and an egg rolled in a chapati on every corner.",
-    "title": "Rolex, Matoke, Luwombo",
+    "country": "ethiopia",
+    "image": "https://images.pexels.com/photos/25856928/pexels-photo-25856928.jpeg",
+    "name": "Ethiopia",
+    "text": "Sourdough injera under everything, and fasting food that has made vegans of visitors.",
+    "title": "Injera and Doro Wat",
     "tone": "#2B6E5E",
-    "url": "/portrait/uganda#the-table"
+    "url": "/portrait/ethiopia#the-table"
    },
    {
     "arc": "The table",
-    "country": "congo",
-    "image": "https://images.pexels.com/photos/34463121/pexels-photo-34463121.jpeg",
-    "name": "Congo",
-    "text": "Cassava leaf, and chicken in palm nut sauce — the dish of both Congos.",
-    "title": "Saka-Saka and Poulet Moambe",
+    "country": "cote-divoire",
+    "image": "https://images.pexels.com/photos/6872184/pexels-photo-6872184.jpeg",
+    "name": "Côte d'Ivoire",
+    "text": "Attiéké with grilled fish, and kedjenou slow-cooked in a sealed pot.",
+    "title": "Attiéké and Kedjenou",
     "tone": "#113222",
-    "url": "/portrait/congo#the-table"
+    "url": "/portrait/cote-divoire#the-table"
    },
    {
     "arc": "The table",
-    "country": "lesotho",
-    "image": "https://images.pexels.com/photos/25856933/pexels-photo-25856933.jpeg",
-    "name": "Lesotho",
-    "text": "Maize papa with wild greens, and motoho — fermented sorghum drink.",
-    "title": "Papa, Moroho and Motoho",
+    "country": "cabo-verde",
+    "image": "https://images.pexels.com/photos/38016551/pexels-photo-38016551.jpeg",
+    "name": "Cabo Verde",
+    "text": "Cachupa — the slow-cooked maize and bean stew — and grogue distilled from cane.",
+    "title": "Cachupa and Grogue",
+    "tone": "#1A5151",
+    "url": "/portrait/cabo-verde#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "dr-congo",
+    "image": "https://images.pexels.com/photos/33896073/pexels-photo-33896073.jpeg",
+    "name": "DR Congo",
+    "text": "Cassava fufu, pondu cassava leaf, and fish steamed in leaves over a fire.",
+    "title": "Fufu, Pondu and Liboke",
+    "tone": "#113222",
+    "url": "/portrait/dr-congo#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "guinea-bissau",
+    "image": "https://images.pexels.com/photos/36857725/pexels-photo-36857725.jpeg",
+    "name": "Guinea-Bissau",
+    "text": "Rice from the paddies, cashew as the whole export economy, and Portuguese coffee.",
+    "title": "Rice, Cashew and Bica",
+    "tone": "#113222",
+    "url": "/portrait/guinea-bissau#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "mauritania",
+    "image": "https://images.pexels.com/photos/7656387/pexels-photo-7656387.jpeg",
+    "name": "Mauritania",
+    "text": "Fish and rice from the river south, and the three-glass tea ceremony everywhere.",
+    "title": "Thieboudienne and Three Teas",
+    "tone": "#113222",
+    "url": "/portrait/mauritania#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "seychelles",
+    "image": "https://images.pexels.com/photos/29796600/pexels-photo-29796600.jpeg",
+    "name": "Seychelles",
+    "text": "Grilled fish, coconut curry, breadfruit, and a chilli sauce that is not a suggestion.",
+    "title": "Fish, Coconut and Chilli",
+    "tone": "#1A5151",
+    "url": "/portrait/seychelles#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "zambia",
+    "image": "https://images.pexels.com/photos/38347620/pexels-photo-38347620.jpeg",
+    "name": "Zambia",
+    "text": "Maize nshima with relish, dried kapenta from the lakes, and fresh bream out of the Zambezi.",
+    "title": "Nshima and Kapenta",
     "tone": "#672E1D",
-    "url": "/portrait/lesotho#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "niger",
-    "image": "https://images.pexels.com/photos/19687409/pexels-photo-19687409.jpeg",
-    "name": "Niger",
-    "text": "Millet paste with sauce, and kilishi — beef dried thin and spiced, the best in the region.",
-    "title": "Millet, Djerma Rice and Kilishi",
-    "tone": "#113222",
-    "url": "/portrait/niger#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "sudan",
-    "image": "https://images.pexels.com/photos/6252676/pexels-photo-6252676.jpeg",
-    "name": "Sudan",
-    "text": "Ful medames for breakfast everywhere, kisra sorghum flatbread, and coffee spiced with ginger.",
-    "title": "Ful and Kisra",
-    "tone": "#865A28",
-    "url": "/portrait/sudan#the-table"
+    "url": "/portrait/zambia#the-table"
    }
   ],
   [
@@ -395,63 +475,83 @@
    },
    {
     "arc": "The table",
-    "country": "kenya",
-    "image": "https://images.pexels.com/photos/9833512/pexels-photo-9833512.jpeg",
-    "name": "Kenya",
-    "text": "Goat roasted over charcoal, maize meal, sukuma wiki, and coastal biryani that came in by dhow.",
-    "title": "Nyama Choma and Ugali",
-    "tone": "#2B6E5E",
-    "url": "/portrait/kenya#the-table"
+    "country": "morocco",
+    "image": "https://images.pexels.com/photos/2291602/pexels-photo-2291602.jpeg",
+    "name": "Morocco",
+    "text": "Slow-cooked tagine, bread baked in the neighbourhood oven, and tea poured from height.",
+    "title": "Tagine, Bread and Mint",
+    "tone": "#865A28",
+    "url": "/portrait/morocco#the-table"
    },
    {
     "arc": "The table",
-    "country": "mozambique",
-    "image": "https://images.pexels.com/photos/29309713/pexels-photo-29309713.jpeg",
-    "name": "Mozambique",
-    "text": "Prawns with peri-peri, and matapa — cassava leaf and coconut — with rice.",
-    "title": "Peri-Peri and Matapa",
+    "country": "tunisia",
+    "image": "https://images.pexels.com/photos/30893317/pexels-photo-30893317.jpeg",
+    "name": "Tunisia",
+    "text": "Friday couscous, brik straight out of the pan, and harissa on everything.",
+    "title": "Couscous, Brik and Harissa",
+    "tone": "#865A28",
+    "url": "/portrait/tunisia#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "central-african-republic",
+    "image": "https://images.pexels.com/photos/33937245/pexels-photo-33937245.jpeg",
+    "name": "Central African Republic",
+    "text": "Cassava as the staple, smoked fish from the river, and palm wine tapped in the forest.",
+    "title": "Cassava, Bushmeat and Palm Wine",
+    "tone": "#113222",
+    "url": "/portrait/central-african-republic#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "equatorial-guinea",
+    "image": "https://images.pexels.com/photos/11434408/pexels-photo-11434408.jpeg",
+    "name": "Equatorial Guinea",
+    "text": "Pepper soup with fish, and malamba — palm wine sweetened with cane.",
+    "title": "Pepe Soup and Malamba",
+    "tone": "#113222",
+    "url": "/portrait/equatorial-guinea#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "guinea",
+    "image": "https://images.pexels.com/photos/6950752/pexels-photo-6950752.jpeg",
+    "name": "Guinea",
+    "text": "Rice with palm oil and fish, and the sour milk and maize of the Fouta.",
+    "title": "Riz Gras and Fouti",
+    "tone": "#113222",
+    "url": "/portrait/guinea#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "mauritius",
+    "image": "https://images.pexels.com/photos/36879484/pexels-photo-36879484.jpeg",
+    "name": "Mauritius",
+    "text": "Dholl puri off a street cart, rougaille at home, and a fish vindaye that is entirely local.",
+    "title": "Dholl Puri and Rougaille",
+    "tone": "#1A5151",
+    "url": "/portrait/mauritius#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "sierra-leone",
+    "image": "https://images.pexels.com/photos/1895023/pexels-photo-1895023.jpeg",
+    "name": "Sierra Leone",
+    "text": "Cassava leaf with palm oil, groundnut stew, and fish straight off the beach.",
+    "title": "Cassava Leaf and Country Rice",
+    "tone": "#113222",
+    "url": "/portrait/sierra-leone#the-table"
+   },
+   {
+    "arc": "The table",
+    "country": "zimbabwe",
+    "image": "https://images.pexels.com/photos/38330332/pexels-photo-38330332.jpeg",
+    "name": "Zimbabwe",
+    "text": "Sadza with relish, and meat over coals wherever there is a fire and company.",
+    "title": "Sadza and Braai",
     "tone": "#672E1D",
-    "url": "/portrait/mozambique#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "djibouti",
-    "image": "https://images.pexels.com/photos/17743312/pexels-photo-17743312.jpeg",
-    "name": "Djibouti",
-    "text": "Spiced rice with lamb, and whole fish baked in a Yemeni clay oven on the coast.",
-    "title": "Skoudehkaris and Yemeni Fish",
-    "tone": "#2B6E5E",
-    "url": "/portrait/djibouti#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "liberia",
-    "image": "https://images.pexels.com/photos/6659897/pexels-photo-6659897.jpeg",
-    "name": "Liberia",
-    "text": "Palm butter soup, cassava fufu, and a jollof Liberians will argue about at length.",
-    "title": "Jollof, Palm Butter and Fufu",
-    "tone": "#113222",
-    "url": "/portrait/liberia#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "rwanda",
-    "image": "https://images.pexels.com/photos/36470715/pexels-photo-36470715.jpeg",
-    "name": "Rwanda",
-    "text": "Grilled goat brochettes, cassava leaf isombe, tilapia from Kivu, and some of the best coffee grown anywhere.",
-    "title": "Brochettes and Isombe",
-    "tone": "#2B6E5E",
-    "url": "/portrait/rwanda#the-table"
-   },
-   {
-    "arc": "The table",
-    "country": "togo",
-    "image": "https://images.pexels.com/photos/6120241/pexels-photo-6120241.jpeg",
-    "name": "Togo",
-    "text": "Fufu with groundnut sauce, and gboma dessi — spinach stew with fish.",
-    "title": "Fufu and Gboma Dessi",
-    "tone": "#113222",
-    "url": "/portrait/togo#the-table"
+    "url": "/portrait/zimbabwe#the-table"
    }
   ]
  ],
