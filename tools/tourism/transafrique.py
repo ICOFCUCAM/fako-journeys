@@ -737,6 +737,31 @@ def page_top(s_, eyebrow=None, line=None, sub=None):
                esc(sub if sub is not None else s_.get("sub"))))
 
 
+def fund_line(say, where=""):
+    """The Journey Fund, offered once at the foot of a page, as a sentence.
+
+    The four crossing pages have carried one of these since they were written
+    and the other six pages had none, which meant a reader who came in through
+    the idea, the ways, the support or the fee — the four pages that actually
+    explain what a crossing is — reached the end having understood the thing
+    and been told nothing about how anyone affords it.
+
+    It is a sentence rather than a card or a banner on purpose, and the
+    existing crossing-page line is the precedent: the fund is never the subject
+    of a section here, only a line inside one about travel. It also says no
+    figure. This is the most expensive thing Afrinkong sells and every one of
+    these pages already carries its price; a second number arriving under it
+    reads as a payment plan, which is exactly what Phase 0 is not.
+
+    `say` is written per page, because a line that lands after the fee is not
+    the line that lands after the medical cover, and one sentence repeated six
+    times is what a banner is.
+    """
+    href = "/journey-fund" + ("?journey=%s" % esc(where) if where else "")
+    return ('<p class="tf-kept">%s &mdash; '
+            '<a href="%s">start planning your journey</a>.</p>' % (say, href))
+
+
 def next_step(label, href, say=""):
     """One way on, at the foot of a page. A page in a series that ends without
     one has handed the reader back to the browser's Back button."""
@@ -795,6 +820,12 @@ def overview_body(d, by_slug):
                   "Why it has to be driven, what changes on the way, and why "
                   "nobody assembles a month like this from home."),
         series_index(d),
+        # The overview earns its line last, under the index of everything the
+        # series holds — after four thousand pixels of what a crossing is, and
+        # after the reader has been shown where to go next. Any higher and it
+        # would be arriving before the thing it is about.
+        fund_line("A crossing is a journey most people decide on long before "
+                  "they take it"),
         '</div>',
         close_block(d),
     ])
@@ -836,6 +867,8 @@ def why_body(d, by_slug):
         '<p class="tf-say">%s</p></section>' % esc(i["tail"]),
         next_step("The crossings", "/trans-afrique/crossings",
                   "Four ways across, drawn on the continent."),
+        fund_line("A journey worth taking is worth preparing for, and a "
+                  "crossing is worth preparing for a long time"),
         '</div>',
     ])
 
@@ -863,6 +896,8 @@ def crossings_body(d, by_slug):
         % routemap.build(d, by_slug),
         next_step("Ways to travel", "/trans-afrique/ways",
                   "The same roads, run three ways."),
+        fund_line("Any of the four is a journey you can begin preparing "
+                  "for before you have chosen between them"),
         '</div>',
     ])
 
@@ -955,6 +990,8 @@ def ways_body(d, by_slug):
         '<div class="tf-page tf-page--after">',
         '<section class="tf-block" id="levels">'
         '<div class="tf-levels">%s</div></section>' % levels,
+        fund_line("Whichever of the three, it is a journey most people "
+                  "reach by deciding on it early"),
         next_step("Expedition support", "/trans-afrique/support",
                   d["motto"]),
         '</div>',
@@ -975,6 +1012,8 @@ def support_body(d, by_slug):
         medical_note(d),
         next_step("What the fee includes", "/trans-afrique/fee",
                   "What Afrinkong earns, what it arranges, and what stays yours."),
+        fund_line("Six disciplines take time to assemble, which is the "
+                  "argument for choosing your dates a long way out"),
         '</div>',
     ])
 
@@ -988,6 +1027,8 @@ def fee_body(d, by_slug):
         # The one page on the site that holds both price shapes side by side.
         # A reader who has just read a five-figure band is exactly the reader
         # who needs to know that a single country is quoted a different way.
+        fund_line("A crossing is roughly two years of preparing for it, "
+                  "and the preparing is the part you can start today"),
         next_step("How Afrinkong prices both", "/how-it-works",
                   "A crossing is quoted whole. Time in one country is quoted "
                   "per day. Both, side by side, and why they differ."),

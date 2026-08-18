@@ -28,6 +28,7 @@ import os
 import re
 
 from . import plate
+from . import routemap as _routemap
 from . import transafrique as _trans
 from . import wonders as _wonders
 from .model import (CATEGORY_FILE, ROOT, load_cities, load_lenses, load_moments,
@@ -2200,6 +2201,64 @@ def block_footer(countries):
         % ("\n".join(regions), "\n".join(lenses), plan_links))
 
 
+def block_fundmap():
+    """Africa, with one real crossing drawn down it, for the Journey Fund door.
+
+    THE REFERENCE DREW A ROUTE. THIS DRAWS *THE* ROUTE.
+
+    A dotted line wandering down a continent is the easiest thing in the world
+    to fake, and a faked one is worth nothing here: the argument of this section
+    is that the journey being prepared for is a real one somebody can actually
+    book. So the line is the East crossing — Kenya, Uganda, Rwanda, Tanzania —
+    curved between those four countries' own centroids, which are the same
+    numbers the atlas and the crossing pages position everything else from. Move
+    a border in the dataset and this line moves with it.
+
+    The coastline is the mainland outline the hero already carries, plus
+    Madagascar, at the same projection and the same viewBox — so this and the
+    hero are the same Africa rather than two drawings of one.
+
+    Outline only, and deliberately: there is a photograph behind it, and the
+    point of a hairline continent is that the road runs through the country
+    instead of over a printed shape of it.
+
+    The two coast paths are taken by length rather than by index. The order the
+    projection emits them in is not a promise it has ever made.
+    """
+    d = _detail()
+    m = _routemap.load_map()
+    at = dict((c["slug"], c["at"]) for c in m["live"])
+
+    coast = sorted(d["coast"], key=len, reverse=True)[:2]
+
+    # The Continental Expedition — Nairobi to Cape Town, nine countries — and
+    # not the East crossing, which was the first choice here. East spans four
+    # adjacent countries around one lake; drawn at two hundred pixels it is a
+    # squiggle in the middle of a continent and says nothing about scale. This
+    # one runs the length of Africa, which is the whole argument of the section
+    # it sits in, and it is also the largest thing this company sells.
+    leg = _trans.load()
+    leg = ([r for r in leg["routes"] if r["id"] == "great"] or [{}])[0]
+    leg = leg.get("countries") or []
+    pts = [at[s_] for s_ in leg if s_ in at]
+    road = _routemap.spline(pts) if len(pts) > 2 else ""
+
+    out = ['<svg class="wa-fund-map" viewBox="%s" aria-hidden="true" '
+           'preserveAspectRatio="xMidYMid meet">'
+           % " ".join(str(v) for v in d["fit"]["view"])]
+    for p in coast:
+        out.append('<path class="wa-fund-coast" d="%s"/>' % p)
+    if road:
+        out.append('<path class="wa-fund-road" d="%s"/>' % road)
+    for i, xy in enumerate(pts):
+        last = i == len(pts) - 1
+        out.append('<circle class="wa-fund-node%s" cx="%.1f" cy="%.1f" r="%s"/>'
+                   % (" is-end" if last else "", xy[0], xy[1],
+                      "10" if last else "6"))
+    out.append("</svg>")
+    return "".join(out)
+
+
 def render(countries):
     seq = ordered(countries)
     shape_by_slug = shapes()
@@ -2247,6 +2306,7 @@ def render(countries):
         "wonders": _wonders.block_wonders(seq),
         "wonderslede": _wonders.block_wonderslede(seq),
         "door": _trans.block_door(seq),
+        "fundmap": block_fundmap(),
     }
 
 

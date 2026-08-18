@@ -22,6 +22,32 @@ countries without fetching twenty-two files.
 
 Nothing here books anything, quotes a price, or claims availability. The engine
 proposes a shape and hands it to a person who lives there.
+
+OUTSTANDING: THIS PAGE HAS NO MAP, AND THE EXPERIENCE IT WAS SPECIFIED AS NEEDS
+ONE. Written down here rather than left as an intention, because the page reads
+as finished and is not, and every audit so far has had to rediscover it.
+
+Measured, not asserted: journey.html ships at 121 KB with zero <svg> and zero
+<path> elements in it. The four steps are a text tunnel — eight elements hidden
+until scripting advances them, which is also why the page renders 232 words to a
+visitor who has not interacted and to anything that does not run JavaScript.
+
+The specified experience is:
+
+    question -> geographic response -> question -> geographic response
+             -> the finished journey, drawn
+
+That is, every answer should land on the continent: choosing an intention should
+light the countries that answer it, choosing a country should fly to it, adding
+a stage should draw it, and the last screen should be the journey as a route on
+a map rather than as a list of names. The geometry already exists and is already
+proven twice over — tools/africa_map.py projects it, the hero draws all
+fifty-four from it, and the four crossing pages each draw fifty-five paths of it
+— so this is a wiring problem and a design problem, not a data problem.
+
+Until that is built, this page should be described as a working four-step
+questionnaire that returns a country, which is what it is, and not as the
+map-based journey builder, which is what it is not.
 """
 
 import html as html_mod

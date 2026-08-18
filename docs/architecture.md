@@ -141,3 +141,27 @@ The resolve workflow is the one that matters, and it has now run: 1,416 of
 1,458 slots are filled, and the crops have been decided. Forty-two slots remain
 — the tail where search returns nothing the audit will accept — and they render
 as designed plates rather than as damage.
+
+## What is specified and not built
+
+One item, recorded here because the page it concerns reads as finished and is
+not, and three separate audits have had to rediscover it.
+
+**The Journey Builder has no map.** `/journey` ships at 121 KB with **zero
+`<svg>` and zero `<path>`** in it. What exists is a four-step questionnaire —
+eight elements hidden until scripting advances them, which is also why the page
+renders 232 words to a visitor who has not interacted with it — and it works.
+What was specified is:
+
+    question -> geographic response -> question -> geographic response
+             -> the finished journey, drawn
+
+Every answer landing on the continent: an intention lighting the countries that
+answer it, a country flown to, a stage drawn, and a last screen that is the
+journey as a route rather than as a list of names. The geometry for it already
+exists and is proven twice — `tools/africa_map.py` projects it, the hero draws
+all fifty-four from it, and each crossing page draws fifty-five paths of it — so
+this is a wiring and design problem, not a data one.
+
+Until it is built, `/journey` should be described as a questionnaire that
+returns a country, not as a map-based journey builder.
