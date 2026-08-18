@@ -44,6 +44,22 @@ from .model import ROOT
 DATA = os.path.join(ROOT, "data", "sizes.json")
 IMG = re.compile(r"<img\b[^>]*>", re.I)
 HAS_SIZES = re.compile(r'\ssizes="[^"]*"', re.I)
+# WHAT THIS PASS WROTE, AND SO WHAT IT IS ALLOWED TO TAKE BACK.
+#
+# A hint is only true of the photograph it was measured against. Three resolve
+# runs replaced hundreds of photographs, the src guard correctly refused to
+# vouch for the new ones — and left the old hint sitting on the tag, because
+# this pass could write and overwrite and had no way to withdraw. Two images on
+# /tourism/kenya were promised 368 pixels and painted at 563, which is a
+# photograph fetched too small and shown soft. The width check caught it, which
+# is the whole reason that check exists.
+#
+# The marker is what makes withdrawal safe. Generators write their own `sizes`
+# on some tags and those are none of this pass's business; only a tag carrying
+# this attribute was written here, and only that one is stripped when the
+# measurement no longer covers it.
+MINE = ' data-sizes="fit"'
+HAS_MINE = re.compile(r'\sdata-sizes="fit"', re.I)
 HAS_SRCSET = re.compile(r'\ssrcset="[^"]*"', re.I)
 
 # Room for the layout to move without the hint becoming a lie. A scrollbar is
@@ -166,6 +182,19 @@ def worth_it(v):
     return not all(part.strip().endswith("100vw") for part in v.split(","))
 
 
+def withdraw(tag):
+    """-> the tag with this pass's own hint removed, if it has one.
+
+    Called wherever the measurement cannot vouch for the tag: no record at this
+    position, or a src that does not match the one measured there. Leaving the
+    old hint is the failure mode this exists to prevent — it is a promise about
+    a photograph that is no longer in the slot.
+    """
+    if not HAS_MINE.search(tag):
+        return tag
+    return HAS_SIZES.sub("", HAS_MINE.sub("", tag, count=1), count=1)
+
+
 def run(write=False, log=print):
     doc = load()
     if not doc:
@@ -199,7 +228,7 @@ def run(write=False, log=print):
                 return tag
             rec = per.get(str(idx[0]))
             if not rec:
-                return tag
+                return withdraw(tag)
             # And the src is checked, not trusted. Positions line up only while
             # the page has the same images in the same order as when it was
             # measured; a rebuild that adds one would otherwise apply every
@@ -211,14 +240,19 @@ def run(write=False, log=print):
             # every photograph the resolver had placed and matched only the
             # uploads. Fifty-one images on /tourism became one.
             if not got or html_mod.unescape(got.group(1)) != rec.get("src"):
-                return tag
+                return withdraw(tag)
             v = value(rec.get("at") or {})
             if not worth_it(v):
-                return tag
+                return withdraw(tag)
             n[0] += 1
-            if HAS_SIZES.search(tag):
-                return HAS_SIZES.sub(' sizes="%s"' % v, tag, count=1)
-            return tag[:-1].rstrip() + ' sizes="%s">' % v
+            out = tag
+            if HAS_SIZES.search(out):
+                out = HAS_SIZES.sub(' sizes="%s"' % v, out, count=1)
+            else:
+                out = out[:-1].rstrip() + ' sizes="%s">' % v
+            if not HAS_MINE.search(out):
+                out = out[:-1].rstrip() + MINE + ">"
+            return out
 
         out = IMG.sub(swap, src)
         if n[0]:
