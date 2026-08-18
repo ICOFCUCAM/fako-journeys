@@ -3382,6 +3382,36 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-move[data-at="4"]:before{top:26px;left:-2px}
   .wa-fund-move span{max-width:38ch}
 }
+/* THE SPLIT UNDER THE RULE COMES BACK AT TABLET WIDTHS.
+   Above 1100 the prose and the map share the column, because two paragraphs 30
+   and 40 characters wide were never going to use it all. Stacked, the same
+   thing is true and worse: at 900 the photograph is gone from beside the text,
+   so lede, sub and a 200px map ran down the left of a 812px frame and six
+   hundred pixels of the section were empty from the rule to the road.
+
+   The same two-track split, then, in the band where the frame is wide enough
+   to carry it — 680 up, because below that the prose track falls under the
+   measure the sub was set for and two narrow columns are worse than one wide
+   one. Written as a media list beside the 1100 rule rather than duplicated:
+   one grid, declared once, for both places it is right.
+
+   The 900 rule sets the inset's width and top margin for the stacked column it
+   used to sit in; this block comes after it and restates both for the track it
+   sits in here. */
+@media(min-width:680px) and (max-width:900px){
+  .wa-fund-say{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);
+    column-gap:clamp(24px,3vw,44px);align-items:start;
+    grid-template-rows:auto auto auto auto auto 1fr;
+    grid-template-areas:"eye eye" "claim claim" "rule rule" "lead map" "sub map" ". map"}
+  .wa-fund-eye{grid-area:eye}
+  .wa-fund h2{grid-area:claim}
+  .wa-fund-hr{grid-area:rule}
+  .wa-fund-lead{grid-area:lead}
+  .wa-fund-sub{grid-area:sub}
+  .wa-fund-inset{grid-area:map;align-self:start;
+    width:clamp(200px,30vw,280px);margin-top:0}
+}
+
 /* THE CLAIM IS SET FOR A COLUMN IT NO LONGER STANDS IN.
    Above 900 the headline shares the frame with the photograph and its 5.4vw is
    measured against that half. Below 900 the photograph moves above it and the
