@@ -1224,32 +1224,41 @@ def block_plan(countries):
     counted from operators.json, so the promise cannot outgrow the company.
     """
     ours = [c for c in countries if c.operator]
-    host = ([c for c in ours if c.operator.url.startswith("/")] or ours)[0]
-    rest = len(countries) - len(ours)
-    names = _and_list([c.name for c in ours])
 
-    # THREE THINGS THAT ARE NOT THE SAME THING, AND THIS SENTENCE KEEPS THEM APART.
-    #   we own the company        3   Cameroon, Uganda, Namibia
-    #   we have written it up    19   the rest of the atlas
-    #   we can book it           54   the continent, through local partners
-    # Collapsing any two of those is the overclaim this page has already been
-    # corrected for once: 038 deleted "meet the local operator responsible for
-    # your destination" because there were three operators for twenty-two
-    # countries. Coverage is a real and much larger claim than ownership, and it
-    # is worth making — but as its own clause, not by widening the first one.
-    # The clause this replaces ended "booked through somebody else, which we
-    # say before you write, not after" — a disclosure worn as a virtue, in the
-    # sentence that is supposed to make somebody want to go. What is true and
-    # stronger: the ground journey is ours on all fifty-four, and in three the
-    # company on the ground is ours as well. The ownership claim stays exactly
-    # as narrow as it was; it is the coverage claim that has grown, and it is
-    # the one worth leading with.
-    note = ('We take you anywhere on the continent: your vehicle, your driver '
-            'for the whole journey, and a coordinator holding the days '
-            'together. In %s the company on the ground is ours too &mdash; we '
-            'own it, and the guide on the day works for it. The other %s are '
-            'written up to the same twenty-seven categories, and travelled the '
-            'same way.' % (names, _spell(rest).lower()))
+    # WRITTEN BY THE OWNER, AND THE NOTE BELOW IS WHY IT READS AS IT DOES.
+    #
+    # What stood here counted the company out loud: your vehicle, your driver,
+    # a coordinator, then "in Cameroon, Uganda and Namibia the company on the
+    # ground is ours too", then the other fifty-one written up the same way. A
+    # long comment sat above it insisting those three claims — we own it, we
+    # have written it up, we can book it — be kept apart, because an earlier
+    # version of this page had collapsed them into an overclaim and had to be
+    # corrected.
+    #
+    # This replaces it at the owner's direction. It is softer and it counts
+    # nothing, which means it also cannot overclaim: "experienced local teams"
+    # is true of all fifty-four without asserting who owns them, and the
+    # coordinator is now offered rather than promised, which is the more honest
+    # shape for something that depends on what a journey is worth.
+    #
+    # THE OWNERSHIP CLAIM IS NOT LOST WITH IT. It is made twice more on this
+    # page, in the places where it is evidence rather than decoration: the
+    # operator cards name the three companies with their bases and the years
+    # they started, and the third step of how-it-works says it again beside the
+    # enquiry button. Both count from operators.json, so neither can outgrow
+    # the company.
+    #
+    # Two paragraphs rather than one, because that is how it was written — a
+    # standalone opening line and then the body. Both carry .wa-note, so the
+    # second inherits the same measure and the same 16px gap the stylesheet
+    # already gives; nothing new was added to the stylesheet for this.
+    note = ('We take you anywhere on the continent.',
+            'Your journey is supported from beginning to end with dedicated '
+            'transport and a professional driver. For those who want it, a '
+            'journey coordinator can accompany the journey throughout, while '
+            'experienced local teams bring the knowledge, relationships and '
+            'practical understanding needed at every border, on every road and '
+            'in every destination.')
 
     steps = [
         ('/journey', 'Discover',
@@ -1344,7 +1353,8 @@ def block_planfork(countries):
 
 
 def block_plannote(countries):
-    return '        <p class="wa-note">%s</p>' % block_plan(countries)[0]
+    return "\n".join('        <p class="wa-note">%s</p>' % part
+                     for part in block_plan(countries)[0])
 
 
 def block_plansteps(countries):
