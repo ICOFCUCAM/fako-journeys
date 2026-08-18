@@ -3042,7 +3042,12 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   text-transform:uppercase;color:var(--c-muted)}
 
 .wa-fund h2{font-family:var(--fj-display);font-weight:700;
-  font-size:clamp(34px,5.4vw,74px);line-height:1.0;letter-spacing:-.032em;
+  /* The cap was 74 and the frame is 1240, so from about 1370 up the headline
+     stopped growing while everything around it kept going and the claim got
+     quietly smaller relative to the page it is making. 92 is the largest size
+     at which the authored line "CAN START LONG" still clears the column at
+     1240 — measured, not guessed, and the reason the cap is not simply higher. */
+  font-size:clamp(34px,5.4vw,92px);line-height:1.0;letter-spacing:-.032em;
   text-transform:uppercase;color:var(--c-primary);margin:0;max-width:none}
 .wa-fund h2 em{font-style:normal;color:var(--c-accent)}
 
