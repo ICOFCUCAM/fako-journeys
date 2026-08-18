@@ -3343,9 +3343,21 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
      the flow, which is the only arrangement that cannot collide with anything. */
   .wa-fund-pic figcaption{position:static;max-width:34ch;font-size:14.5px;
     padding-left:0;margin-top:18px}
-  /* the claim comes after the photograph on a phone: image first, then argument */
-  .wa-fund-top{display:flex;flex-direction:column}
+  /* The claim comes after the photograph on a phone: image first, then argument.
+     align-items has to be restated. The two-column rule sets it to center for
+     the grid, where it means vertical; in a flex COLUMN the cross axis is
+     horizontal, so the same declaration centred the whole claim in its
+     container — the eyebrow, headline and prose started at 218 while the road
+     below them started at 44, and the offset grew with the viewport because it
+     is half the difference between the text's shrink-to-fit width and the
+     frame. A base rule that changes meaning when display changes. */
+  .wa-fund-top{display:flex;flex-direction:column;align-items:stretch}
   .wa-fund-pic{order:-1}
+  /* The plate is bled past the frame, so anything inside it inherits that and
+     the note was starting at the viewport's own edge while every other line on
+     the screen was inset. Given the frame's padding back, by hand, because the
+     element it sits in no longer has any. */
+  .wa-fund-pic figcaption{padding-inline:44px}
 
   .wa-fund-line{display:none}
   .wa-fund-arc:before{content:"";position:absolute;left:4px;top:8px;bottom:8px;
@@ -3360,6 +3372,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-move span{max-width:38ch}
 }
 @media(max-width:560px){
+  .wa-fund-pic figcaption{padding-inline:20px}
   .wa-fund h2{font-size:clamp(30px,8.6vw,44px)}
   .wa-fund-strap{text-align:left;align-items:flex-start}
   .wa-fund-go{margin-left:0;width:100%;text-align:center}
