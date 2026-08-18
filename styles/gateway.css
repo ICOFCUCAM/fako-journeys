@@ -3331,8 +3331,18 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 }
 @media(max-width:900px){
   .wa-fund-inset{width:clamp(130px,30vw,200px);margin-top:clamp(22px,4vw,34px)}
-  .wa-fund-pic figcaption{top:auto;bottom:9%;right:auto;left:6%;
-    max-width:22ch;font-size:14px}
+  /* NOT back onto the photograph, and IN THE FLOW.
+     Two bugs in one rule, both from the note's old life printed across the
+     plate. It was still being positioned over the photograph below 900, where
+     at 320 it was illegible against a pale sky and covering the road. And it
+     was still absolute, which in a stacked flex column means it hangs below
+     the plate over whatever comes next — so once it came off the photograph it
+     landed on top of the eyebrow instead.
+
+     Static here. The plate is first in the column and the note follows it, in
+     the flow, which is the only arrangement that cannot collide with anything. */
+  .wa-fund-pic figcaption{position:static;max-width:34ch;font-size:14.5px;
+    padding-left:0;margin-top:18px}
   /* the claim comes after the photograph on a phone: image first, then argument */
   .wa-fund-top{display:flex;flex-direction:column}
   .wa-fund-pic{order:-1}
