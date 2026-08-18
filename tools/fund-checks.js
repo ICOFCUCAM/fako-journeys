@@ -411,6 +411,20 @@ check('the money is set in the reading ink, on every ground',
     && contrast('#171A17', SAND) > 10,
   contrast('#171A17', SAND).toFixed(1) + ':1 on sand, unaffected by the region');
 
+/* THE FOCUS RING MUST NOT LAND ON SOMETHING INVISIBLE THAT HAS REAL SIZE.
+ *
+ * The radio inputs were hidden with opacity:0 at 100% x 100% of their label,
+ * which is invisible AND full-sized — so a sighted keyboard user got a ring
+ * drawn around nothing, twelve times out of seventy-eight stops. The visible
+ * indicator on the sibling span was already right; the rectangle underneath it
+ * was not. The browser suite caught it. This asserts the shape of the fix so
+ * the next hidden control cannot reintroduce it. */
+const hidden = css.match(/\{[^}]*opacity:\s*0[^.\d][^}]*\}/g) || [];
+const fat = hidden.filter(r => !/width:\s*1px/.test(r) || !/height:\s*1px/.test(r));
+check('no control is hidden at full size, only at 1px',
+  fat.length === 0,
+  fat.length ? fat[0].slice(0, 70) : hidden.length + ' hidden controls, all 1px');
+
 check('nothing on these pages animates on arrival',
   !/@keyframes/.test(css) && !/animation\s*:/.test(css),
   'the only transition is on :hover, which is a response rather than a display');
