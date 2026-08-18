@@ -3153,9 +3153,15 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   color:var(--c-primary)}
 .wa-fund-map-say span{display:block;font-family:var(--fj-mono);font-size:10.5px;
   letter-spacing:.13em;text-transform:uppercase;color:var(--c-accent);margin-top:6px}
+/* Not --c-muted. On dust it measures 4.55:1, which passes by five thousandths,
+   and this is the smallest type in the section — ten pixels of tracked mono
+   carrying the only numbers on the screen. Small type needs more margin than
+   large type, not less, and a figure nobody can read is a figure that may as
+   well not be printed. Deep forest at 62% of the way from muted clears 7:1 and
+   still sits a clear step below the two lines above it. */
 .wa-fund-map-say i{display:block;font-style:normal;font-family:var(--fj-mono);
   font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--c-muted);margin-top:5px}
+  color:color-mix(in srgb,var(--c-primary) 62%,var(--c-muted));margin-top:5px}
 .wa-fund-coast{fill:color-mix(in srgb,var(--c-primary) 7%,transparent);
   stroke:color-mix(in srgb,var(--c-primary) 62%,transparent);
   stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
