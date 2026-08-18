@@ -2989,6 +2989,12 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-before .wa-arc li{counter-increment:step;position:relative;
   padding:26px 26px 24px 0;border-right:1px solid var(--fj-rule)}
 .wa-before .wa-arc li:last-child{border-right:0;padding-right:0}
+/* Each column began exactly where the previous column's rule is drawn, so 02,
+   03 and 04 sat on the line — and 01 looked right only because there is
+   nothing to its left, which is why it read as correct at a glance and wrong
+   in a screenshot. The rule belongs to the gap between two columns, not to the
+   first character of the second one. */
+.wa-before .wa-arc li:not(:first-child){padding-left:26px}
 .wa-before .wa-arc li:before{content:counter(step,decimal-leading-zero);display:block;
   font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
   color:var(--c-gold);margin-bottom:14px}
@@ -3005,7 +3011,11 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 @media(max-width:900px){
   .wa-before .wa-arc{grid-template-columns:1fr 1fr}
   .wa-before .wa-arc li{padding:22px 22px 20px 0}
-  .wa-before .wa-arc li:nth-child(2n){border-right:0;padding-right:0}
+  /* Two columns: the item that starts a row has no rule to its left and takes
+     no inset, the item that follows one takes the inset. */
+  .wa-before .wa-arc li:not(:first-child){padding-left:0}
+  .wa-before .wa-arc li:nth-child(2n){border-right:0;padding-right:0;
+    padding-left:22px}
   .wa-before .wa-arc li:nth-child(-n+2){border-bottom:1px solid var(--fj-rule)}
   .wa-before .wa-arc li:not(:last-child):after{display:none}
 }
@@ -3013,9 +3023,22 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-before .wa-arc{grid-template-columns:1fr}
   .wa-before .wa-arc li{border-right:0;padding:20px 0 18px;
     border-bottom:1px solid var(--fj-rule)}
+  /* One column, no vertical rules, nothing to inset from. Stated because the
+     inset above outranks the shorthand here and would otherwise survive. */
+  .wa-before .wa-arc li:not(:first-child){padding-left:0}
   .wa-before .wa-arc li:last-child{border-bottom:0}
   .wa-before .wa-arc span{max-width:none}
 }
+
+/* The name, said once, in the voice the section is already speaking in. Serif
+   rather than the display face, because it is a sentence and not a heading;
+   at the lede's size rather than the caption's, because it is the line the
+   whole section has been building to and the four words above it are already
+   set louder than it is. It closes the distance between the idea and the door
+   below it, which is why the call's top margin comes off. */
+.wa-arc-name{margin:34px 0 0;font-size:19px;line-height:1.5;color:var(--c-bg);
+  max-width:44ch}
+.wa-arc-name + .wa-arc-go{margin-top:20px}
 
 .wa-arc-go{display:inline-block;margin-top:38px;font-family:var(--fj-mono);
   font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
