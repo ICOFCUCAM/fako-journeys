@@ -103,6 +103,16 @@
     return (y - now.getFullYear()) * 12 + (m - 1 - now.getMonth());
   }
 
+  /* A rhythm needs at least two payments to be a rhythm. One is a purchase.
+     The first version returned {n: 1, every: 'one payment'} for anything three
+     to five months out on the quarterly setting, so the page cheerfully
+     reported "$14,200 put aside over one payment reaches it" — which is
+     arithmetically true, useless as advice, and a direct contradiction of what
+     this product is for. Driving the real page found it; no unit test did,
+     because every test asked about a horizon long enough for the bug to hide
+     behind. */
+  var LEAST = 2;
+
   /* -> {per, n, every} or {problem} — never an error and never a refusal.
      A month too close is a fact about the month, not a mistake by the reader,
      and the sentence the page prints says so. */
@@ -111,13 +121,13 @@
     if (months <= 0) return { problem: 'toosoon' };
     if (kind === 'quarterly') {
       var n = Math.floor(months / 3);
-      if (n < 1) return { problem: 'toosoonquarterly' };
+      if (n < LEAST) return { problem: 'toosoonquarterly' };
       return {
         per: plan / n, n: n,
-        every: n === 1 ? 'one payment'
-                       : n + ' payments, one every three months'
+        every: n + ' payments, one every three months'
       };
     }
+    if (months < LEAST) return { problem: 'toosoon' };
     return { per: plan / months, n: months, every: months + ' months' };
   }
 

@@ -81,16 +81,25 @@
   /* ---- what the browser writes ------------------------------------------- */
 
   function fillPlaces(kind) {
+    /* The chosen destination survives the list being rebuilt. Without this the
+       server-rendered selection is thrown away on the first call and the page
+       silently reverts to whatever sorts first, which is how it came to open
+       on Algeria. */
+    var was = placeSel.value;
     var list = kind === 'crossing' ? D.routes : D.countries;
     var frag = document.createDocumentFragment();
+    var has = false;
     for (var i = 0; i < list.length; i++) {
       var o = document.createElement('option');
       o.value = list[i].s;
       o.textContent = list[i].n;
+      if (o.value === was) has = true;
       frag.appendChild(o);
     }
     placeSel.textContent = '';
     placeSel.appendChild(frag);
+    if (has) placeSel.value = was;
+    else if (kind !== 'crossing' && D.first) placeSel.value = D.first;
     whereFine.textContent = kind === 'crossing'
       ? D.routes.length + ' crossings, each priced whole rather than by the day.'
       : D.countries.length + ' countries, priced per vehicle per day.';
@@ -167,8 +176,13 @@
     reachEl.hidden = true;
 
     if (r.problem === 'toosoonquarterly') {
-      saidEl.textContent = 'Fewer than three months away — every month is the '
-        + 'only rhythm that reaches it.';
+      /* Not "you cannot" — what would work instead. Under six months there is
+         room for one quarterly payment, and one payment is a purchase rather
+         than a rhythm, so the honest answer is the other rhythm or a later
+         month. */
+      saidEl.textContent = 'Too close for a quarterly rhythm — that would be a '
+        + 'single payment rather than something put aside. Every month reaches '
+        + 'it, or choose a later month.';
       show(F.doors(D, p, months, s));
       return;
     }
@@ -188,7 +202,13 @@
 
   function show(doors) {
     if (!doors.length) return;
-    reachEl.innerHTML = '<b>Or</b>' + doors.join(', or ') + '.';
+    /* "Or" was the label, which read as a shrug above a list. The heading of
+       this box should say what the box is for, and what it is for is naming
+       the shapes of journey that the arithmetic does reach — a question about
+       the journey rather than about the reader. */
+    reachEl.innerHTML = '<b>What would reach it</b>'
+      + doors.join(', or ').replace(/^./, function (c) { return c.toUpperCase(); })
+      + '.';
     reachEl.hidden = false;
   }
 

@@ -61,6 +61,7 @@ HOW = os.path.join(DIR, "how-it-works.html")
 ASKED = os.path.join(DIR, "questions.html")
 
 CROSSINGS = os.path.join(ROOT, "tourism", "transafrique.json")
+PICKS = os.path.join(ROOT, "tourism", "picks.json")
 
 # The photograph. Already placed, already optimised, already carrying a written
 # alt text on the Trans Afrique pages — a convoy on a road at dusk. The
@@ -142,9 +143,37 @@ def payload(countries, regions, crossings, money):
         "arrival": money["arrival"]["rate"],
         "default": {"tier": money["default_tier"], "days": money["default_days"]},
         "countries": places,
+        "first": opens_on(countries),
         "routes": routes,
         "tones": tone,
     }
+
+
+def opens_on(countries):
+    """Which destination the estimator shows before anybody has chosen one.
+
+    It was whichever country sorts first alphabetically, which is Algeria — a
+    real country, a real journey, and a completely arbitrary answer to "what
+    does Africa cost". A page that opens on an accident is a page that has not
+    decided anything.
+
+    So it opens on the site's own editorial lead for wildlife, which
+    tourism/picks.json names, and which is also one of the three countries
+    where the ground operation is Afrinkong's own. The worked example is
+    therefore a journey the company runs end to end, chosen by the file that
+    already exists to make that kind of choice. Change the pick and this
+    changes with it.
+    """
+    try:
+        with open(PICKS, encoding="utf-8") as fh:
+            picks = json.load(fh)
+        want = (picks.get("wildlife") or {}).get("country")
+    except (IOError, ValueError, AttributeError):
+        want = None
+    have = {c.slug for c in countries if c.published and c.slug}
+    if want in have:
+        return want
+    return sorted(have)[0] if have else ""
 
 
 def _route_region(route, countries, regions):
@@ -240,7 +269,7 @@ def block_sum(money):
            rates.money(ground + arrival)))
 
 
-def block_places(countries, regions):
+def block_places(countries, regions, first=None):
     """The fifty-four, as real options in the HTML.
 
     The first version left this select empty and let the script fill it, which
@@ -255,7 +284,9 @@ def block_places(countries, regions):
     out = []
     for c in sorted([c for c in countries if c.published and c.slug],
                     key=lambda c: c.name):
-        out.append('<option value="%s">%s</option>' % (esc(c.slug), esc(c.name)))
+        sel = ' selected' if c.slug == first else ''
+        out.append('<option value="%s"%s>%s</option>'
+                   % (esc(c.slug), sel, esc(c.name)))
     return "".join(out)
 
 
@@ -305,7 +336,7 @@ def render_landing(countries, regions, crossings, money, co):
         "shot_alt": esc(SHOT_ALT),
         "shot_w": SHOT_W,
         "shot_h": SHOT_H,
-        "places": block_places(countries, regions),
+        "places": block_places(countries, regions, data["first"]),
         "tracks": block_tracks(),
         "tiers": block_tiers(money),
         "days": block_days(money),

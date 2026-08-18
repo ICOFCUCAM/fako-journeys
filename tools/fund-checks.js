@@ -83,6 +83,30 @@ check('the payload carries the rate card version',
   typeof D.v === 'string' && D.v.length === 12,
   D.v);
 
+/* The estimator opened on Algeria for as long as the list was alphabetical and
+   nobody had decided anything. It now opens on the site's own editorial lead,
+   and both the payload and the server-rendered HTML have to agree — a default
+   that only one of them knows about is a page that changes under the reader
+   the moment scripting arrives. */
+const PICKS = JSON.parse(
+  fs.readFileSync(path.join(ROOT, 'tourism', 'picks.json'), 'utf8'));
+check('the estimator opens on a destination the dataset chose, not the alphabet',
+  D.first === PICKS.wildlife.country
+    && D.countries[0].s !== D.first,
+  D.first + ', from picks.json — not ' + D.countries[0].s);
+
+check('the server-rendered select agrees with the payload',
+  new RegExp('<option value="' + D.first + '" selected>').test(page)
+    && (page.match(/ selected>/g) || []).length === 1,
+  'one selected option, and it is ' + D.first);
+
+/* Fifty-four real options, so the control the page is built around is not
+   empty for a reader without scripting. */
+check('every destination is in the HTML, not only in the payload',
+  (page.match(/<option value="[a-z-]+"( selected)?>/g) || []).length
+    >= D.countries.length,
+  D.countries.length + ' countries rendered as options');
+
 check('the payload is small enough to be on a first screen',
   m[1].length < 12000,
   (m[1].length / 1024).toFixed(1) + ' KB');
@@ -145,6 +169,29 @@ check('a month too close is a problem named, not an exception',
   F.rhythm(4750, 0, 'monthly').problem === 'toosoon'
     && F.rhythm(4750, 2, 'quarterly').problem === 'toosoonquarterly'
     && F.rhythm(4750, null, 'monthly').problem === 'nomonth');
+
+/* A rhythm needs at least two payments to be a rhythm. Driving the real page
+   found it reporting "$14,200 put aside over one payment reaches it" for
+   anything three to five months out on quarterly — arithmetically true and a
+   contradiction of what the product is for. Every horizon that can produce a
+   single payment is asserted here, because the earlier tests all used horizons
+   long enough for the bug to hide behind. */
+const singles = [3, 4, 5].filter(m => {
+  const r = F.rhythm(4750, m, 'quarterly');
+  return !r.problem && r.n < 2;
+}).concat([1].filter(m => {
+  const r = F.rhythm(4750, m, 'monthly');
+  return !r.problem && r.n < 2;
+}));
+check('one payment is never offered as a rhythm',
+  singles.length === 0,
+  singles.length ? 'still single at ' + singles.join(', ') + ' months'
+                 : 'quarterly under six months and monthly under two are named as problems');
+
+check('the smallest real rhythm still works',
+  F.rhythm(4750, 6, 'quarterly').n === 2
+    && F.rhythm(4750, 3, 'monthly').n === 3,
+  'two quarterly payments at six months, three monthly at three');
 
 check('no interest, growth or return is ever applied',
   F.rhythm(4750, 24, 'monthly').per * 24 === 4750,

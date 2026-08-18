@@ -64,12 +64,20 @@
 .jf-mark b{display:block;font-family:var(--fj-display);font-weight:700;
   font-size:21px;line-height:1.05;letter-spacing:-.01em}
 .jf-routes{display:flex;gap:20px;flex-wrap:wrap;margin-left:auto}
-.jf-routes a{font-family:var(--fj-mono);font-size:11px;letter-spacing:.14em;
+/* inline-block and vertical padding, measured rather than guessed: an 11px
+   mono line box is 18 pixels tall, and WCAG 2.2 asks 24 of anything that is
+   not a link inside a sentence. These are navigation, so the exemption does
+   not apply to them. 6px each side takes it to 30 without moving the masthead,
+   because the padding sits inside a row whose height the brand mark sets. */
+.jf-routes a{display:inline-block;padding:6px 0;
+  font-family:var(--fj-mono);font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--c-muted);text-decoration:none}
 .jf-routes a:hover{color:var(--c-accent)}
 @media(max-width:760px){
-  .jf-mast{padding:16px 22px;gap:14px}
-  .jf-routes{margin-left:0;width:100%;gap:14px}
+  .jf-mast{padding:16px 22px;gap:10px}
+  /* Wider gaps on a phone, because two 30px targets 14px apart are one target
+     to a thumb. */
+  .jf-routes{margin-left:0;width:100%;gap:4px 20px}
 }
 
 /* ---- the frame ----------------------------------------------------------- */
