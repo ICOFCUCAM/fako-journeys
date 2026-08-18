@@ -1381,6 +1381,51 @@ function serve() {
     }
 
     /* ---- pass two: with scripting off ---------------------------------- */
+    /* ---- what the first screen costs -------------------------------------
+     *
+     * A budget, because the number this protects was earned by finding one
+     * component that fetched twenty-five photographs to show one, and nothing
+     * would have caught it coming back. Every check in this file is about what
+     * the page looks like; none of them was about what it weighs, and the
+     * homepage weighed 12.29 MB on a phone before anybody scrolled.
+     *
+     * Measured the way a visitor arrives: cold, no scroll, at three device
+     * pixels, which is what the iPhone this audience mostly uses asks for.
+     *
+     * The homepage measures 4.37 MB, of which 1.26 MB is the film behind the
+     * hero — that one is genuinely on the first screen and is the site's
+     * signature, so it stays. The ceiling is set about a third above what each
+     * page costs today: a tripwire for a component that starts fetching
+     * everything, not a target to optimise against.
+     */
+    for (const [url, w, dpr, capMB] of [['/index.html', 390, 3, 6.0],
+                                        ['/trans-afrique.html', 390, 3, 3.5],
+                                        ['/cameroon.html', 390, 3, 2.5],
+                                        ['/index.html', 1440, 2, 6.0]]) {
+      const ctx = await browser.newContext({viewport: {width: w, height: 844},
+                                            deviceScaleFactor: dpr});
+      const wp = await ctx.newPage();
+      let bytes = 0;
+      const counted = new Set();
+      wp.on('response', r => {
+        const u = r.url();
+        if (counted.has(u)) return;
+        counted.add(u);
+        const n = Number(r.headers()['content-length'] || 0);
+        if (n > 0) bytes += n;
+      });
+      try {
+        await wp.goto(base + url, {waitUntil: "load", timeout: 60000});
+        await wp.waitForTimeout(2500);
+      } catch (e) { /* reported by the size below */ }
+      const mb = bytes / 1048576;
+      check('the first screen of ' + url + ' at ' + w + '/' + dpr + 'x stays under '
+            + capMB + ' MB',
+            mb > 0 && mb <= capMB,
+            mb.toFixed(2) + ' MB over ' + counted.size + ' request(s)');
+      await ctx.close();
+    }
+
     /* ---- the width hints stay true ---------------------------------------
      *
      * data/sizes.json is a measurement, and a measurement of a layout goes
