@@ -3426,6 +3426,24 @@ def main():
                 verdict, name, detail = (line.split("\t") + ["", ""])[:3]
                 check(name, verdict == "PASS", detail)
 
+        print("\njourney fund")
+        script = os.path.join(ROOT_DIR, "tools", "fund-checks.js")
+        if not node:
+            print("  SKIPPED: node is not installed; the fund checks did not run")
+        elif not os.path.exists(os.path.join(ROOT_DIR, "journey-fund.html")):
+            print("  SKIPPED: journey-fund.html is not built; run build.py fund")
+        else:
+            proc = subprocess.run([node, script], capture_output=True, text=True,
+                                  cwd=ROOT_DIR)
+            lines = [l for l in proc.stdout.splitlines() if "\t" in l]
+            if not lines:
+                check("the journey fund checks ran", False,
+                      (proc.stderr or "no output").strip().splitlines()[-1][:90]
+                      if (proc.stderr or "").strip() else "no output")
+            for line in lines:
+                verdict, name, detail = (line.split("\t") + ["", ""])[:3]
+                check(name, verdict == "PASS", detail)
+
         print("\nlinks")
         script = os.path.join(ROOT_DIR, "tools", "link-checks.js")
         if not node:

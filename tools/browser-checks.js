@@ -66,6 +66,13 @@ const PAGES = [
   // The fork between the two things Afrinkong sells. It is the one page a
   // reader may have open beside a spreadsheet, so it is gated like the rest.
   '/how-it-works.html',
+  // The Journey Fund. Its own stylesheet and its own layout, so nothing else
+  // in this list stands for it — and the landing page is the one page on the
+  // site whose accent colour is set at run time from the destination, which
+  // means its contrast is the only contrast here that a stylesheet alone
+  // cannot predict. The two question pages share a shape, so one of them
+  // represents both.
+  '/journey-fund.html', '/journey-fund/how-it-works.html',
   '/portrait/kenya.html', '/places/kenya/balloon-over-the-mara.html',
   '/tourism/kenya.html', '/tourism/index.html', '/kenya.html',
   '/cameroon.html', '/contact.html', '/about.html', '/pricing.html',

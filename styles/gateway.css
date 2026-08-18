@@ -1665,7 +1665,7 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 .wa-head h2 em{font-style:normal;color:var(--c-accent)}
 @media(max-width:880px){.wa-zone{padding:62px 0}.wa-head{grid-template-columns:1fr;gap:18px;margin-bottom:34px}}
 
-/* FIVE WAYS FOR A SECTION TO BEHAVE
+/* SIX WAYS FOR A SECTION TO BEHAVE
    Twelve numbered sections all built the same way — 88px of air, a number in a
    150px column, a headline beside it — read as twelve of the same thing, and a
    reader scrolling learns after the third that the fourth holds nothing new.
@@ -1681,10 +1681,11 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
      is-atlas   Atlas.        Look something up.  Tight, ruled, reference type.
      is-read    Editorial.    Read this.          Asymmetric, a measure to read.
      is-quiet   Philosophical. Sit with it.       Most air of all, type alone.
+     is-kept    Held.         Nothing to do yet.  Narrow, left, smallest type.
 
-   The five are distinguished by measurements a reader feels rather than names
+   The six are distinguished by measurements a reader feels rather than names
    they can see: padding runs 68px to 168px, and the headline clamp runs from
-   26px to 72px. */
+   22px to 72px. */
 
 /* A — CINEMATIC. The two sections that ask you to imagine something rather than
    choose something. The number goes above the headline instead of beside it,
@@ -1752,6 +1753,34 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   line-height:1.16;margin-left:auto;margin-right:auto}
 .wa-zone.is-quiet .wa-note{max-width:44ch;margin-left:auto;margin-right:auto}
 
+/* F — HELD. The register for something that exists and is not asking to be
+   acted on yet: a journey being built toward rather than booked.
+
+   It would have been easy to make this "is-quiet with more air", and that
+   would have been wrong. Quiet is a pause in the middle of a page that is
+   otherwise selling — centred, generous, the reader's eye held still. Held is
+   the opposite gesture. It sits to the left, narrow, at the smallest headline
+   on the site, with a rule that starts under the number and stops well short
+   of the measure: a note kept in a margin, not an announcement.
+
+   The distinguishing measurement is the headline, which tops out at 34px where
+   every other mode's floor is 26px and cine's ceiling is 72px. A reader cannot
+   name the mode and can feel that this section is not addressing them the way
+   the others are. */
+.wa-zone.is-kept{padding:112px 0}
+.wa-zone.is-kept .wa-head{grid-template-columns:1fr;gap:14px;margin-bottom:34px;
+  max-width:46ch}
+.wa-zone.is-kept .wa-head-no{display:flex;align-items:baseline;gap:12px;
+  border-top:none;padding-top:0}
+.wa-zone.is-kept .wa-head-no b{font-size:20px}
+.wa-zone.is-kept .wa-head-no span{margin-top:0}
+.wa-zone.is-kept .wa-head h2{font-size:clamp(22px,2.6vw,34px);max-width:24ch;
+  line-height:1.14;letter-spacing:-.01em}
+.wa-zone.is-kept .wa-head h2:after{content:"";display:block;width:64px;
+  height:1px;margin-top:22px;background:var(--fj-rule)}
+.wa-zone.is-kept .wa-note{max-width:46ch}
+.wa-zone.is-kept .wa-say{max-width:46ch}
+
 /* On a phone the five collapse towards each other, because 168px of air above a
    40px headline is a screen and a half of nothing on a 390px screen. They keep
    their order of magnitude — quiet is still the most generous, discovery still
@@ -1765,6 +1794,9 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   .wa-zone.is-atlas{padding:56px 0}
   .wa-zone.is-atlas .wa-head{padding-bottom:16px;margin-bottom:22px}
   .wa-zone.is-quiet{padding:92px 0}
+  .wa-zone.is-kept{padding:64px 0}
+  .wa-zone.is-kept .wa-head{margin-bottom:24px}
+  .wa-zone.is-kept .wa-head h2:after{margin-top:16px}
 }
 
 /* ---- the icon medallion ---------------------------------------------------------
