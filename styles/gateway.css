@@ -2992,113 +2992,214 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-foot-bar a{padding-block:6px;display:inline-block}
 }
 
-/* ---- BEFORE YOU GO: the four words a journey passes through -------------------
-   Dream, Choose, Build, Journey. A numbered list because it IS a sequence —
-   the one place on this page where numbered markers carry information rather
-   than decorate it, since the order is the argument.
+/* ---- 06 THE JOURNEY FUND: a road, and four things standing beside it ------
+   This block replaced a four-column grid, and the grid is the thing worth
+   describing because it is what everything here exists to avoid.
 
-   Four columns that collapse to two and then to one. The number is set in the
-   gold that the basalt sections already use for their labels, at a size that
-   reads as an ordinal rather than as a statistic: this section has no figures
-   in it and should not appear to. */
-.wa-before .wa-arc{display:grid;grid-template-columns:repeat(4,1fr);gap:0;
-  counter-reset:step;list-style:none;margin:0;padding:0;
-  border-top:1px solid var(--fj-rule)}
-.wa-before .wa-arc li{counter-increment:step;position:relative;
-  padding:26px 26px 24px 0;border-right:1px solid var(--fj-rule)}
-.wa-before .wa-arc li:last-child{border-right:0;padding-right:0}
-/* Each column began exactly where the previous column's rule is drawn, so 02,
-   03 and 04 sat on the line — and 01 looked right only because there is
-   nothing to its left, which is why it read as correct at a glance and wrong
-   in a screenshot. The rule belongs to the gap between two columns, not to the
-   first character of the second one. */
-.wa-before .wa-arc li:not(:first-child){padding-left:26px}
-.wa-before .wa-arc li:before{content:counter(step,decimal-leading-zero);display:block;
-  font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
-  color:var(--c-gold);margin-bottom:14px}
-.wa-before .wa-arc b{display:block;font-family:var(--fj-display);font-weight:700;
-  font-size:clamp(21px,2.4vw,30px);line-height:1.02;letter-spacing:-.018em;
-  text-transform:uppercase;color:var(--c-bg);margin-bottom:10px}
-.wa-before .wa-arc span{display:block;font-size:14.5px;line-height:1.55;
-  color:var(--fj-onbasalt-dim);max-width:34ch}
-/* An arrow between the four, drawn rather than typed: a character would be
-   read aloud and would be one more thing to translate. */
-.wa-before .wa-arc li:not(:last-child):after{content:"";position:absolute;
-  right:-4px;top:32px;width:8px;height:8px;border-top:1px solid var(--c-gold);
-  border-right:1px solid var(--c-gold);transform:rotate(45deg)}
+   Four equal columns, each with a rule over it, an ordinal, a name and a
+   paragraph, is a feature grid. It reads as one whatever words are inside it,
+   because equal treatment asserts equal meaning — and a longing, a decision,
+   two years and a departure are not four comparable things. Given identical
+   boxes the reader compares them instead of travelling through them.
+
+   THE MECHANISM THAT REPLACES IT. There is no grid. One curve crosses the whole
+   frame and each movement is pushed down by its own amount, so the four names
+   sit at four different heights and no row can be read out of them. The offsets
+   are the curve's own y at each movement's x, rounded — which is why they are
+   four unrelated numbers rather than a scale.
+
+   Nothing in the strip carries a border. What separates the four is distance
+   along a road, which is the only separator this section is entitled to. */
+.wa-fund .wa-frame{position:relative}
+/* 50vw counts the scrollbar and the frame's content box does not, so the bleed
+   overshoots by half a scrollbar and the document picks up a horizontal scroll.
+   Clipped rather than solved with a magic number: clip does not create a
+   containing block for fixed descendants, so it cannot reach the window band. */
+.wa-fund{overflow-x:clip}
+
+/* THE CLAIM AND THE BLEED.
+   Type left, photograph right and running off the viewport edge — not to the
+   frame, past it. The gutter between them is zero on purpose: a gap would make
+   them two panels, and the composition depends on the image arriving as the
+   page's right-hand edge rather than as an illustration beside the text. */
+.wa-fund-top{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);
+  gap:clamp(20px,3vw,44px);align-items:center;
+  /* Out to the viewport's right edge, exactly. 50% is half this element's own
+     containing block — the frame's content box — and 50vw is half the window,
+     so the difference is precisely the distance from the frame's edge to the
+     window's, at every width, with no token to keep in step with .wa-frame.
+     The first cut of this guessed at a --fj-frame variable that does not exist
+     and fell back to a number that was wrong by sixty pixels. */
+  margin-right:calc(50% - 50vw)}
 @media(max-width:900px){
-  .wa-before .wa-arc{grid-template-columns:1fr 1fr}
-  .wa-before .wa-arc li{padding:22px 22px 20px 0}
-  /* Two columns: the item that starts a row has no rule to its left and takes
-     no inset, the item that follows one takes the inset. */
-  .wa-before .wa-arc li:not(:first-child){padding-left:0}
-  .wa-before .wa-arc li:nth-child(2n){border-right:0;padding-right:0;
-    padding-left:22px}
-  .wa-before .wa-arc li:nth-child(-n+2){border-bottom:1px solid var(--fj-rule)}
-  .wa-before .wa-arc li:not(:last-child):after{display:none}
+  .wa-fund-top{grid-template-columns:1fr;gap:0;margin-right:0}
+}
+
+.wa-fund-eye{display:flex;align-items:baseline;gap:16px;margin:0 0 22px}
+.wa-fund-eye b{font-family:var(--fj-display);font-size:30px;font-weight:700;
+  line-height:.8;letter-spacing:-.03em;color:var(--c-accent)}
+.wa-fund-eye span{font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--c-muted)}
+
+.wa-fund h2{font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(34px,5.4vw,74px);line-height:1.0;letter-spacing:-.032em;
+  text-transform:uppercase;color:var(--c-primary);margin:0;max-width:none}
+.wa-fund h2 em{font-style:normal;color:var(--c-accent)}
+
+/* A short rule with a diamond on it, under the claim. It is the one piece of
+   ornament in the section and it earns its place by marking where the display
+   type stops and the reading type starts — a job a gap does less clearly at
+   this scale. */
+.wa-fund-hr{display:block;position:relative;width:132px;height:1px;
+  background:var(--c-primary);margin:clamp(22px,3vw,34px) 0}
+.wa-fund-hr:after{content:"";position:absolute;right:-5px;top:-4px;width:9px;
+  height:9px;background:var(--c-accent);transform:rotate(45deg)}
+
+.wa-fund-lead{font-family:var(--fj-display);font-weight:600;
+  font-size:clamp(19px,1.8vw,24px);line-height:1.22;letter-spacing:-.008em;
+  color:var(--c-primary);margin:0 0 10px;max-width:30ch}
+.wa-fund-sub{font-size:16.5px;line-height:1.55;color:var(--c-muted);
+  margin:0;max-width:40ch}
+
+/* THE PHOTOGRAPH. No border, no radius, no frame — it is the edge of the page.
+   The height is tied to the type beside it rather than to an aspect ratio, so
+   the two columns finish together at every width they share. */
+.wa-fund-pic{position:relative;margin:0;min-height:clamp(300px,42vw,520px);
+  align-self:stretch}
+.wa-fund-pic img{width:100%;height:100%;object-fit:cover;display:block;
+  min-height:clamp(300px,42vw,520px)}
+
+/* THE CONTINENT, DRAWN OVER THE PHOTOGRAPH.
+   Outline only, at a hairline, so the road runs through the country instead of
+   over a printed shape of it. It is the same projection and the same viewBox as
+   the hero's map — one Africa on this page, not two drawings of one. */
+/* An inset on the page's own ground, in the left column's empty half — the
+   reasoning is in the HTML beside it. Basalt outline, because dust is a light
+   ground and this is now a printed object rather than an overlay: no shadow, no
+   scrim, no filter, and therefore nothing on this page that could ever become a
+   containing block for a fixed descendant. */
+.wa-fund-map{display:block;width:clamp(150px,17vw,230px);height:auto;
+  margin:clamp(26px,3.4vw,44px) 0 0;overflow:visible}
+.wa-fund-coast{fill:color-mix(in srgb,var(--c-primary) 7%,transparent);
+  stroke:color-mix(in srgb,var(--c-primary) 62%,transparent);
+  stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+/* The road is the East crossing, dashed, drawn from the four countries' own
+   centroids. Dashed because it is a journey not yet taken. It is the loudest
+   thing in the inset on purpose — the continent is context, the route is the
+   point, and at 230px the route is what has to survive. */
+.wa-fund-road{fill:none;stroke:var(--c-accent);stroke-width:4;
+  stroke-dasharray:6 7;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.wa-fund-node{fill:var(--c-accent)}
+.wa-fund-node.is-end{fill:var(--c-accent);stroke:var(--c-bg);stroke-width:4;
+  vector-effect:non-scaling-stroke}
+
+/* The note in the traveller's voice. Italic serif over the photograph, at the
+   size of an aside rather than a caption — a second register on the page, which
+   is what makes it read as a journal rather than as alt text. */
+.wa-fund-pic figcaption{position:absolute;right:clamp(16px,4vw,58px);top:13%;
+  font-family:var(--fj-text,var(--fj-serif,Georgia,serif));font-style:italic;
+  font-size:clamp(14px,1.3vw,18px);line-height:1.42;color:var(--c-bg);
+  text-shadow:0 1px 14px rgba(6,18,14,.72);max-width:19ch;text-align:left}
+.wa-fund-pic figcaption:after{content:"";display:block;width:74px;height:1px;
+  background:color-mix(in srgb,var(--c-bg) 70%,transparent);margin-top:12px}
+
+/* ---- THE ROAD, AND THE FOUR ------------------------------------------------ */
+.wa-fund-arc{position:relative;margin-top:clamp(44px,5.5vw,84px)}
+/* One path, not four connectors, because it is one road. It is stretched with
+   preserveAspectRatio="none" so it always spans the frame; a road that ends
+   before the last movement is a road that has stopped being the argument. */
+.wa-fund-line{position:absolute;top:0;left:0;width:100%;height:120px;
+  overflow:visible;pointer-events:none}
+.wa-fund-line path{fill:none;stroke:var(--c-primary);stroke-width:1.4;
+  vector-effect:non-scaling-stroke;
+  stroke-dasharray:var(--fj-road, none);stroke-dashoffset:var(--fj-road-at, 0)}
+
+.wa-fund-moves{list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(14px,2vw,34px)}
+/* The four offsets, solved rather than eyeballed. Each is the cubic's y where
+   it crosses that column's left edge, minus the node's radius so the node sits
+   centred ON the line instead of near it: 74.0, 84.6, 54.5, 92.1 less 4.5.
+   The first cut of these was guessed and every node missed the road, which is
+   the one thing this composition cannot get wrong — the road is what replaces
+   the grid, and a road that does not touch what it connects is decoration.
+   Change the path above and these must be re-solved with it. */
+.wa-fund-move[data-at="1"]{margin-top:70px}
+.wa-fund-move[data-at="2"]{margin-top:80px}
+.wa-fund-move[data-at="3"]{margin-top:50px}
+.wa-fund-move[data-at="4"]{margin-top:88px}
+.wa-fund-move{position:relative;padding-top:26px}
+/* The node where the road passes. The last one is terracotta and larger: it is
+   an arrival, and the only place in this section colour means anything. */
+.wa-fund-move:before{content:"";position:absolute;top:0;left:0;width:9px;
+  height:9px;border-radius:50%;background:var(--c-primary)}
+.wa-fund-move[data-at="4"]:before{width:13px;height:13px;top:-2px;
+  background:var(--c-accent)}
+.wa-fund-move i{display:block;font-style:normal;font-family:var(--fj-mono);
+  font-size:11px;letter-spacing:.2em;color:var(--c-accent);margin-bottom:7px}
+.wa-fund-move b{display:block;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(24px,2.7vw,36px);line-height:1;letter-spacing:-.022em;
+  text-transform:uppercase;color:var(--c-primary);margin-bottom:9px}
+.wa-fund-move span{display:block;font-size:14.5px;line-height:1.5;
+  color:var(--c-primary);max-width:26ch}
+
+/* ---- THE CLOSE ------------------------------------------------------------- */
+.wa-fund-strap{margin:clamp(48px,6vw,88px) 0 0;font-family:var(--fj-mono);
+  font-size:clamp(10.5px,1.05vw,13px);letter-spacing:.22em;text-transform:uppercase;
+  color:var(--c-primary);text-align:center;max-width:none}
+.wa-fund-strap:after{content:"";display:block;width:min(360px,58%);height:1px;
+  background:color-mix(in srgb,var(--c-primary) 34%,transparent);
+  margin:18px auto 0}
+/* Bordered, not filled. A solid slab here would be the loudest object in a
+   section whose whole argument is patience, and the border is the same weight
+   the claim's rule carries. */
+.wa-fund-go{display:block;width:max-content;max-width:100%;margin:26px auto 0;
+  font-family:var(--fj-mono);font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-primary);
+  border:1.5px solid var(--c-primary);padding:17px 34px;text-decoration:none;
+  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+.wa-fund-go i{font-style:normal;margin-left:11px}
+.wa-fund-go:hover,.wa-fund-go:focus-visible{background:var(--c-primary);
+  color:var(--c-bg)}
+
+/* ---- 900 AND BELOW: THE ROAD ROTATES --------------------------------------
+   A horizontal road with four stops has the same failure as four columns — on a
+   phone it becomes four rows and the road disappears. So it does not become
+   four rows. The curve is dropped and the line stands up: a hairline down the
+   left edge with the movements hanging off it to the right, nodes intact. Same
+   object, same meaning, ninety degrees round. */
+@media(max-width:900px){
+  .wa-fund-pic{min-height:0;margin:0 calc(50% - 50vw) clamp(26px,4vw,40px)}
+  .wa-fund-pic img{min-height:0;aspect-ratio:16/10;height:auto}
+  .wa-fund-map{width:clamp(130px,30vw,200px);margin-top:clamp(22px,4vw,34px)}
+  .wa-fund-pic figcaption{top:auto;bottom:9%;right:auto;left:6%;
+    max-width:22ch;font-size:14px}
+  /* the claim comes after the photograph on a phone: image first, then argument */
+  .wa-fund-top{display:flex;flex-direction:column}
+  .wa-fund-pic{order:-1}
+
+  .wa-fund-line{display:none}
+  .wa-fund-arc:before{content:"";position:absolute;left:4px;top:8px;bottom:8px;
+    width:1.4px;background:var(--c-primary)}
+  .wa-fund-moves{grid-template-columns:1fr;gap:0}
+  .wa-fund-move,
+  .wa-fund-move[data-at="1"],.wa-fund-move[data-at="2"],
+  .wa-fund-move[data-at="3"],.wa-fund-move[data-at="4"]{
+    margin-top:0;padding:22px 0 22px 30px}
+  .wa-fund-move:before{top:28px;left:0}
+  .wa-fund-move[data-at="4"]:before{top:26px;left:-2px}
+  .wa-fund-move span{max-width:38ch}
 }
 @media(max-width:560px){
-  .wa-before .wa-arc{grid-template-columns:1fr}
-  .wa-before .wa-arc li{border-right:0;padding:20px 0 18px;
-    border-bottom:1px solid var(--fj-rule)}
-  /* One column, no vertical rules, nothing to inset from. Stated because the
-     inset above outranks the shorthand here and would otherwise survive. */
-  .wa-before .wa-arc li:not(:first-child){padding-left:0}
-  .wa-before .wa-arc li:last-child{border-bottom:0}
-  .wa-before .wa-arc span{max-width:none}
+  .wa-fund h2{font-size:clamp(30px,8.6vw,44px)}
+  .wa-fund-strap{text-align:left}
+  .wa-fund-strap:after{margin-left:0}
+  .wa-fund-go{margin-left:0;width:100%;text-align:center}
 }
 
-/* The name, said once, in the voice the section is already speaking in. Serif
-   rather than the display face, because it is a sentence and not a heading;
-   at the lede's size rather than the caption's, because it is the line the
-   whole section has been building to and the four words above it are already
-   set louder than it is. It closes the distance between the idea and the door
-   below it, which is why the call's top margin comes off. */
-/* .wa-arc-name is gone with the sentence it styled. It named the product in
-   the position where nothing else did; the eyebrow and the masthead route both
-   name it now, and a rule with no element left is how a stylesheet starts
-   growing things nobody can delete because nobody can prove they are unused. */
-
-/* THE SECTION MOVED GROUND, AND EVERY COLOUR IN IT WAS A DARK-GROUND COLOUR.
-   Ivory names, ivory sentence, gold ordinals, an ivory-filled call: all of it
-   correct on basalt and all of it somewhere between 1.2:1 and 1.5:1 on dust.
-   Moving a section is not only moving its markup — a component that was only
-   ever drawn on one ground carries that ground's palette inside it, and this
-   is the bill for that.
-
-   The inversion is stated once, scoped to the ground rather than to the
-   section, so if this ever goes back onto basalt the rules below simply stop
-   applying and the originals above are still there and still right.
-
-   The ordinal is the one that could not simply flip. Gold is the label colour
-   on every dark band on this site and measures 1.53:1 on dust, so it goes to
-   burnt sienna — 4.64:1 at 10px, and the same colour every other ordinal on a
-   light ground already uses, which is why it does not read as a new idea. */
-.wa-zone.dust.wa-before .wa-arc li:before{color:var(--c-accent)}
-.wa-zone.dust.wa-before .wa-arc b{color:var(--c-primary)}
-/* Not --c-muted here. It measures 4.50:1 on dust, which passes by five
-   thousandths, and a number that close to the line is a number that has
-   already failed twice in this file when a token moved underneath it. Deep
-   forest is 10.57:1 and the hierarchy is carried by size and weight, which is
-   where it should have been carried in the first place. */
-.wa-zone.dust.wa-before .wa-arc span{color:var(--c-primary)}
-/* The call inverts with everything else: basalt fill, ivory type — which is
-   what a primary action on a light ground already is elsewhere on this page,
-   so it arrives looking like the rest of the site rather than like this
-   section's own invention. */
-.wa-zone.dust .wa-arc-go{color:var(--c-bg);background:var(--c-primary)}
-.wa-zone.dust .wa-arc-go:hover{background:var(--c-accent)}
-
-/* The supporting line, which is new: one sentence between the heading and the
-   paragraph, at the lede's size rather than the paragraph's, because it is the
-   argument and the paragraph is the explanation of it. */
-.wa-lead-say{margin:14px 0 0;font-family:var(--fj-display);font-weight:500;
-  font-size:clamp(19px,1.7vw,23px);line-height:1.25;letter-spacing:-.008em;
-  color:var(--c-primary);max-width:30ch}
-.wa-lead-say + .wa-note{margin-top:14px}
-
-.wa-arc-go{display:inline-block;margin-top:38px;font-family:var(--fj-mono);
-  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--c-primary);background:var(--c-bg);padding:14px 22px;
-  text-decoration:none;transition:background var(--t-fast) var(--ease)}
-.wa-arc-go:hover{background:var(--c-gold)}
+/* The road draws once, on scroll, because its subject is the passage of time.
+   It is the only animation in the section. Reduced motion yields it complete
+   rather than yielding a degraded page. */
+@media(prefers-reduced-motion:reduce){
+  .wa-fund-line path{stroke-dasharray:none;stroke-dashoffset:0}
+}
