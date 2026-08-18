@@ -415,7 +415,14 @@ def hero(d, by_slug):
         '<h1 class="tf-h1">%s</h1>'
         '<p class="tf-band-sub">%s</p>'
         '<p class="tf-band-chain">%s</p>'
-        '<a class="af-btn tf-band-go" href="#crossings">%s<i>&rarr;</i></a>'
+        # /trans-afrique/crossings, not #crossings. There is no element with
+        # that id on this page and there never was, so the hero's only call to
+        # action — the button under the headline, on the page that sells the
+        # most expensive thing this company offers — did nothing at all when
+        # anybody pressed it. Found by checking every fragment on the site
+        # against the ids of the page it points at; it was the only one.
+        '<a class="af-btn tf-band-go" href="/trans-afrique/crossings">'
+        '%s<i>&rarr;</i></a>'
         '</div></div></section>'
         % (len(slides), pics, esc(h["mark"]), esc(d["stamp"]), esc(d["line"]),
            esc(h.get("sub") or d["sub"]), chain, esc(h["act"])))

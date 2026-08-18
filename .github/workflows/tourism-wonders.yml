@@ -103,6 +103,7 @@ jobs:
         run: |
           python3 tools/tourism/build.py verify
           node tools/journey-checks.js
+          node tools/link-checks.js
 
       - name: Upload the contact sheet
         if: ${{ inputs.fetch }}

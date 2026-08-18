@@ -3426,6 +3426,22 @@ def main():
                 verdict, name, detail = (line.split("\t") + ["", ""])[:3]
                 check(name, verdict == "PASS", detail)
 
+        print("\nlinks")
+        script = os.path.join(ROOT_DIR, "tools", "link-checks.js")
+        if not node:
+            print("  SKIPPED: node is not installed; the link checks did not run")
+        else:
+            proc = subprocess.run([node, script], capture_output=True, text=True,
+                                  cwd=ROOT_DIR)
+            lines = [l for l in proc.stdout.splitlines() if "\t" in l]
+            if not lines:
+                check("the link checks ran", False,
+                      (proc.stderr or "no output").strip().splitlines()[-1][:90]
+                      if (proc.stderr or "").strip() else "no output")
+            for line in lines:
+                verdict, name, detail = (line.split("\t") + ["", ""])[:3]
+                check(name, verdict == "PASS", detail)
+
     finally:
         httpd.shutdown()
         shutil.rmtree(tmp, ignore_errors=True)
