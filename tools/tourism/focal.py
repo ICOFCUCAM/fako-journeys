@@ -130,9 +130,62 @@ def source_url(rec):
     return u
 
 
-def run(write=False, log=print, limit=None):
+# A BROWSER'S USER AGENT, AND A PAUSE BETWEEN FETCHES.
+#
+# The first run of this on a runner read one photograph out of 149 and was
+# refused the other 148 — in four seconds, which is far too fast to be
+# timeouts and exactly right for a CDN answering "no" 148 times. One request
+# succeeded and then the burst was cut off, which is what rate limiting looks
+# like from the inside.
+#
+# So: a real User-Agent, because "afrinkong-focal" is the sort of string a CDN
+# declines on sight; a fifth of a second between requests, which costs half a
+# minute over the whole set and is nothing next to the two minutes the resolver
+# already spends; and one retry after a longer wait, because the second refusal
+# is the one worth believing.
+AGENT = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+         "Chrome/126.0 Safari/537.36")
+PAUSE = 0.2
+RETRY_AFTER = 2.0
+
+
+def fetch(url, role):
+    """-> ({"x":..} or {}, None) on success, or (None, why) — with the reason.
+
+    THE REASON IS THE POINT. The first version logged str(exc) truncated to 44
+    characters and counted the rest, so a run that was refused 148 times said
+    "148 could not be read" and nothing about 403, 429 or DNS. A pass that
+    cannot say why it did nothing cannot be fixed from its own output, which is
+    the whole reason this returns the status rather than a bool.
+    """
     import io
+    import time
+    import urllib.error
     import urllib.request
+    if not url:
+        return None, "no imageUrl on the record"
+    for attempt in (0, 1):
+        try:
+            from PIL import Image
+            req = urllib.request.Request(url, headers={
+                "User-Agent": AGENT,
+                "Accept": "image/avif,image/webp,image/jpeg,image/png,*/*",
+            })
+            with urllib.request.urlopen(req, timeout=25) as r:
+                im = Image.open(io.BytesIO(r.read()))
+                im.load()
+            return (propose(im, role) or {}), None
+        except urllib.error.HTTPError as exc:
+            why = "HTTP %s" % exc.code
+        except Exception as exc:                # noqa: BLE001 — fetch or decode
+            why = type(exc).__name__ + ": " + str(exc)[:40]
+        if attempt == 0:
+            time.sleep(RETRY_AFTER)
+    return None, why
+
+
+def run(write=False, log=print, limit=None):
+    import time
 
     from .cache import load as load_cache
     from .model import attach_cache, load_countries, load_taxonomy
@@ -160,24 +213,25 @@ def run(write=False, log=print, limit=None):
         return 0
 
     moved, held, failed = [], 0, 0
+    reasons = {}
+    fetched = 0
     for c, cid, role, rec in todo:
         key = "%s/%s" % (c.slug, cid)
         got = seen.get(key)
         if got is None:
             url = source_url(rec)
-            try:
-                from PIL import Image
-                req = urllib.request.Request(url, headers={"User-Agent": "afrinkong-focal"})
-                with urllib.request.urlopen(req, timeout=25) as r:
-                    im = Image.open(io.BytesIO(r.read()))
-                    im.load()
-                got = propose(im, role) or {}
-            except Exception as exc:            # noqa: BLE001 — any fetch or decode
+            got, why = fetch(url, role)
+            if got is None:
                 failed += 1
-                log("  %-34s %s" % (key, str(exc)[:44]))
+                reasons[why] = reasons.get(why, 0) + 1
+                if failed <= 6:
+                    log("  %-34s %s" % (key, why))
                 continue
             seen[key] = got
             _save(seen)
+            fetched += 1
+            # Paced, not hammered. See AGENT above.
+            time.sleep(PAUSE)
         if not got:
             held += 1
             continue
@@ -228,6 +282,10 @@ def run(write=False, log=print, limit=None):
     log("%s %d crop(s); %d left on centre because the detail was already there"
         "%s" % ("moved" if write else "WOULD move", len(moved), held,
                 "; %d could not be read" % failed if failed else ""))
+    if reasons:
+        log("why they could not be read: %s"
+            % ", ".join("%s x%d" % kv for kv in
+                        sorted(reasons.items(), key=lambda kv: -kv[1])))
     if not write:
         log("dry run. Add --fetch to write it.")
     return 0
