@@ -1,5 +1,5 @@
 {
- "$says": "Afrinkong's web app manifest. Nothing here is aspirational: every icon listed is a file that exists in images/brand/, and the two colours are the same tokens the stylesheet uses — --fj-basalt for the ground the site starts on, and the ivory it reads on. A manifest naming an icon that is not there is worse than no manifest, because the browser silently falls back and nobody finds out.",
+ "$says": "Afrinkong's web app manifest. Nothing here is aspirational: every icon listed is a file that exists in images/brand/, and the two colours are the same tokens the stylesheet uses — --fj-basalt for the ground the site starts on, and the ivory it reads on. A manifest naming an icon that is not there is worse than no manifest, because the browser silently falls back and nobody finds out. The maskable icon is its own file and not a second listing of the square one: a launcher crops a maskable icon to whatever shape it likes, most often a circle of 80% of the width, and the mark runs from 24 to 500 of 512 — so the same file listed twice meant the compass points and the west coast were cut off on every Android home screen. mark-maskable-512.png is that mark scaled inside the safe circle on the brand ground, which is what background_color already says the launcher should put behind it.",
  "name": "Afrinkong — journeys across Africa",
  "short_name": "Afrinkong",
  "description": "An atlas of all fifty-four African countries, journeys built around what you came for, and crossings that run the length of a continent.",
@@ -17,8 +17,8 @@
   {"src": "/images/brand/mark-32.png", "sizes": "32x32", "type": "image/png"},
   {"src": "/images/brand/mark-180.png", "sizes": "180x180", "type": "image/png"},
   {"src": "/images/brand/mark-512.png", "sizes": "512x512", "type": "image/png"},
-  {"src": "/images/brand/mark-512.png", "sizes": "512x512", "type": "image/png",
-   "purpose": "maskable"}
+  {"src": "/images/brand/mark-maskable-512.png", "sizes": "512x512",
+   "type": "image/png", "purpose": "maskable"}
  ],
  "shortcuts": [
   {"name": "Build a journey", "short_name": "Journey", "url": "/journey",

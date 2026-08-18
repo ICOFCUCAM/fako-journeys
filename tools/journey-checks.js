@@ -633,5 +633,43 @@ check('every page family below the front door carries its trail',
   !missingTrail.length,
   missingTrail.length ? missingTrail.join(', ') : (FAMILIES.length - 1) + ' families');
 
+/* ---- the manifest names files that exist ----------------------------------
+ *
+ * The manifest says so itself — "a manifest naming an icon that is not there
+ * is worse than no manifest, because the browser silently falls back and
+ * nobody finds out" — and nothing enforced it. Same for the shortcuts, which
+ * are three links into the site from a phone's home screen and would fail
+ * silently at exactly the moment somebody is trying to come back.
+ */
+let man = null;
+try { man = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.webmanifest'), 'utf8')); }
+catch (e) { check('the manifest parses', false, String(e.message).slice(0, 70)); }
+if (man) {
+  const goneIcons = (man.icons || []).filter(function (i) {
+    return !fs.existsSync(path.join(ROOT, String(i.src || '').replace(/^\//, '')));
+  }).map(function (i) { return i.src; });
+  check('every icon the manifest names is a file that exists', !goneIcons.length,
+    goneIcons.length ? goneIcons.join(', ') : (man.icons || []).length + ' icons');
+
+  /* A maskable icon is cropped by the launcher — most often to a circle of 80%
+     of the width — so listing the square mark twice hands Android an icon with
+     its edges cut off. The two purposes have to be two different files. */
+  const square = (man.icons || []).filter(function (i) { return !i.purpose || i.purpose === 'any'; })
+                                  .map(function (i) { return i.src; });
+  const masked = (man.icons || []).filter(function (i) { return String(i.purpose || '').indexOf('maskable') >= 0; })
+                                  .map(function (i) { return i.src; });
+  const shared = masked.filter(function (x) { return square.indexOf(x) >= 0; });
+  check('the maskable icon is not the square one listed twice', !shared.length,
+    shared.length ? shared.join(', ') : (masked[0] || 'no maskable icon declared'));
+
+  const goneLinks = (man.shortcuts || []).map(function (s2) { return s2.url; }).filter(function (u) {
+    const rel = String(u || '').replace(/^\//, '') || 'index';
+    return !fs.existsSync(path.join(ROOT, rel + '.html'))
+        && !fs.existsSync(path.join(ROOT, rel, 'index.html'));
+  });
+  check('every home-screen shortcut goes somewhere', !goneLinks.length,
+    goneLinks.length ? goneLinks.join(', ') : (man.shortcuts || []).length + ' shortcuts');
+}
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(function (l) { return l.indexOf('FAIL') === 0; }) ? 1 : 0);
