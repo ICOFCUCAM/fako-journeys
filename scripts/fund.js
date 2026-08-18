@@ -291,9 +291,49 @@
 
   /* ---- wiring ------------------------------------------------------------ */
 
+  /* WHAT THE JOURNEY BUILDER HANDS OVER.
+     A traveller who pressed "build toward this journey" has already answered
+     three of the five questions on this page, and asking them again would be
+     the page admitting it had not been listening. Only the shape travels —
+     place, tier, days — and every value is checked against the payload before
+     it is used, because a query string is something anybody can write.
+     It takes precedence over a plan kept in this browser: the journey just
+     built is the more recent intention. */
+  function carried() {
+    var q = {};
+    (location.search || '').replace(/^\?/, '').split('&').forEach(function (pair) {
+      var i = pair.indexOf('=');
+      if (i > 0) {
+        try { q[pair.slice(0, i)] = decodeURIComponent(pair.slice(i + 1)); }
+        catch (e) { /* a broken escape is simply not carried */ }
+      }
+    });
+    var took = false;
+    if (q.journey && F.routeOf(D, q.journey)) {
+      check('jf-kind', 'crossing');
+      fillPlaces('crossing');
+      placeSel.value = q.journey;
+      took = true;
+    } else if (q.place && F.countryOf(D, q.place)) {
+      check('jf-kind', 'country');
+      fillPlaces('country');
+      placeSel.value = q.place;
+      took = true;
+    }
+    if (q.tier && form.querySelector('input[name="jf-tier"][value="' + q.tier + '"]')) {
+      check('jf-tier', q.tier);
+      took = true;
+    }
+    if (q.days && D.days.indexOf(parseInt(q.days, 10)) >= 0) {
+      check('jf-days', q.days);
+      took = true;
+    }
+    return took;
+  }
+
   fillPlaces('country');
   fillMonths();
-  restore();
+  if (!carried()) restore();
 
   form.addEventListener('change', function (e) {
     if (e.target && e.target.name === 'jf-kind') fillPlaces(e.target.value);

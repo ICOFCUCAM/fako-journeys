@@ -2873,3 +2873,52 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-win-go{padding-top:6px;padding-bottom:8px}
   .wa-foot-bar a{padding-block:6px;display:inline-block}
 }
+
+/* ---- BEFORE YOU GO: the four words a journey passes through -------------------
+   Dream, Choose, Build, Journey. A numbered list because it IS a sequence —
+   the one place on this page where numbered markers carry information rather
+   than decorate it, since the order is the argument.
+
+   Four columns that collapse to two and then to one. The number is set in the
+   gold that the basalt sections already use for their labels, at a size that
+   reads as an ordinal rather than as a statistic: this section has no figures
+   in it and should not appear to. */
+.wa-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  counter-reset:step;list-style:none;margin:0;padding:0;
+  border-top:1px solid var(--fj-rule)}
+.wa-steps li{counter-increment:step;position:relative;
+  padding:26px 26px 24px 0;border-right:1px solid var(--fj-rule)}
+.wa-steps li:last-child{border-right:0;padding-right:0}
+.wa-steps li:before{content:counter(step,decimal-leading-zero);display:block;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
+  color:var(--c-gold);margin-bottom:14px}
+.wa-steps b{display:block;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(21px,2.4vw,30px);line-height:1.02;letter-spacing:-.018em;
+  text-transform:uppercase;color:var(--c-bg);margin-bottom:10px}
+.wa-steps span{display:block;font-size:14.5px;line-height:1.55;
+  color:var(--fj-onbasalt-dim);max-width:34ch}
+/* An arrow between the four, drawn rather than typed: a character would be
+   read aloud and would be one more thing to translate. */
+.wa-steps li:not(:last-child):after{content:"";position:absolute;
+  right:-4px;top:32px;width:8px;height:8px;border-top:1px solid var(--c-gold);
+  border-right:1px solid var(--c-gold);transform:rotate(45deg)}
+@media(max-width:900px){
+  .wa-steps{grid-template-columns:1fr 1fr}
+  .wa-steps li{padding:22px 22px 20px 0}
+  .wa-steps li:nth-child(2n){border-right:0;padding-right:0}
+  .wa-steps li:nth-child(-n+2){border-bottom:1px solid var(--fj-rule)}
+  .wa-steps li:not(:last-child):after{display:none}
+}
+@media(max-width:560px){
+  .wa-steps{grid-template-columns:1fr}
+  .wa-steps li{border-right:0;padding:20px 0 18px;
+    border-bottom:1px solid var(--fj-rule)}
+  .wa-steps li:last-child{border-bottom:0}
+  .wa-steps span{max-width:none}
+}
+
+.wa-steps-go{display:inline-block;margin-top:38px;font-family:var(--fj-mono);
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-primary);background:var(--c-bg);padding:14px 22px;
+  text-decoration:none;transition:background var(--t-fast) var(--ease)}
+.wa-steps-go:hover{background:var(--c-gold)}
