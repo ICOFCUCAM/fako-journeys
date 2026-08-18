@@ -3035,6 +3035,36 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-top{grid-template-columns:1fr;gap:0;margin-right:0}
 }
 
+/* THE COLUMN SPLITS UNDER THE RULE, AND ONLY THERE.
+   The claim wants the full column: a headline at 92px with authored breaks has
+   nowhere else to go. Everything under the rule is 30 and 40 characters wide,
+   which is correct for reading and leaves half the column empty — at 1920 that
+   was five hundred and twenty pixels of nothing beside two short paragraphs,
+   with the map pushed below them into more of it.
+
+   So the column is one track above the rule and two under it: prose left, map
+   right, sharing the space the prose was never going to use. The measure does
+   not change; the emptiness does. Above 1100 only, because below it the two
+   tracks would each be too narrow to be either. */
+@media(min-width:1100px){
+  .wa-fund-say{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);
+    column-gap:clamp(28px,3vw,56px);align-items:start;
+    /* The last row is empty on the prose side and carries the map's overhang.
+       Without it the map spans the lede's row and the sub's row, both auto, and
+       two hundred and fifty pixels of map get shared between two paragraphs
+       that wanted fourteen pixels between them — which pushed them apart into
+       what looked like two unrelated blocks. The slack has to go somewhere; it
+       goes below the prose rather than inside it. */
+    grid-template-rows:auto auto auto auto auto 1fr;
+    grid-template-areas:"eye eye" "claim claim" "rule rule" "lead map" "sub map" ". map"}
+  .wa-fund-eye{grid-area:eye}
+  .wa-fund h2{grid-area:claim}
+  .wa-fund-hr{grid-area:rule}
+  .wa-fund-lead{grid-area:lead}
+  .wa-fund-sub{grid-area:sub}
+  .wa-fund-map{grid-area:map;align-self:start;margin-top:0}
+}
+
 .wa-fund-eye{display:flex;align-items:baseline;gap:16px;margin:0 0 22px}
 .wa-fund-eye b{font-family:var(--fj-display);font-size:30px;font-weight:700;
   line-height:.8;letter-spacing:-.03em;color:var(--c-accent)}
