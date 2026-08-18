@@ -332,6 +332,7 @@ CRUMB_SECTIONS = {
     "places": ("Every place", "/places"),
     "portrait": ("Stories", "/stories"),
     "trans-afrique": ("Trans Afrique", "/trans-afrique"),
+    "journey-fund": ("The Journey Fund", "/journey-fund"),
 }
 
 _NAMES = {}
@@ -464,6 +465,7 @@ FOOT_LINKS = (
     ("/stories", "Stories"),
     ("/tourism/", "Every country"),
     ("/journey", "Build a journey"),
+    ("/journey-fund", "The Journey Fund"),
     ("/enquire", "Begin a journey"),
 )
 

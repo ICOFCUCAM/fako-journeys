@@ -73,6 +73,49 @@ def money(n):
     return "${:,}".format(int(n))
 
 
+def priced(d):
+    """-> the subtree of this file that can put a figure on a page.
+
+    Everything else in rates.json is prose: the names, the lines, the reasons,
+    the paragraph about who feeds the driver. Those can be rewritten all day
+    without any journey being worth a different amount. This is the part that
+    cannot.
+
+    Sorted and canonical so that two runs over the same numbers agree, and so
+    that reordering a list in the file — which changes nothing anybody pays —
+    does not read as a price change.
+    """
+    return {
+        "arrival": d["arrival"]["rate"],
+        "durations": sorted(d["durations"]),
+        "tiers": sorted((t["id"], t["rate"]) for t in d["tiers"]),
+        "service": sorted((r["name"], r["low"], r["high"]) for r in d["service"]),
+        "options": sorted(
+            (g["id"], sorted((c["id"], c.get("rate")) for c in g["choices"]))
+            for g in d["options"]),
+    }
+
+
+def version(d=None):
+    """-> a short fingerprint of what this file charges, e.g. "a1b2c3d4e5f6".
+
+    A journey being planned two years out is priced against the rate card as it
+    stood on the day it was planned, and the rate card is a file somebody edits.
+    Without a version, a traveller who set a target in March and reads it again
+    in September has no way to know whether the number moved because they
+    changed something or because we did — and neither has anybody answering
+    their letter.
+
+    Derived rather than declared, because a version field in the JSON is a
+    field somebody forgets to bump, and a forgotten version is worse than none:
+    it asserts that nothing changed.
+    """
+    import hashlib
+    canon = json.dumps(priced(d if d is not None else load()),
+                       separators=(",", ":"), sort_keys=True)
+    return hashlib.sha256(canon.encode("utf-8")).hexdigest()[:12]
+
+
 def drift(src, d):
     """Every dollar figure in the tunnel has to be a figure this file knows.
 

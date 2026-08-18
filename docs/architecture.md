@@ -82,7 +82,20 @@ node tools/journey-checks.js              99 checks — the engine, events, the
                                           colophon, the manifest
 node tools/link-checks.js                 3 checks over 76,954 links
 node tools/browser-checks.js              243 checks in a real browser
+node tools/fund-checks.js                 64 checks — the estimator's
+                                          arithmetic and the promises it makes
+node tools/design-checks.js               16 checks — the design blueprint's
+                                          two absolutes, at 390/768/1440
 ```
+
+`design-checks.js` answers a different question from `browser-checks.js`. That
+suite asks whether a page works; this one asks whether it is the page the
+design direction asked for. A page can be perfectly accessible, perfectly
+stable, and still be the tourism marketplace the blueprint exists to delete.
+Its card allowances are a ratchet: the number beside each surface is what that
+surface measured when the line was written, it only ever goes down, and a run
+that comes in under its allowance says so and asks for the number to be
+lowered.
 
 `build.py test` runs the lot and folds every line into one report.
 

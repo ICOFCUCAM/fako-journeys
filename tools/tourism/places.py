@@ -393,6 +393,7 @@ addEventListener('DOMContentLoaded',function(){
     %(near)s
     <p class="pl-foot-bar"><a href="/">Afrinkong</a> &middot; %(country)s &middot;
       <a href="/places">every place</a> &middot;
+      <a href="/journey-fund">the journey fund</a> &middot;
       <a href="/enquire">enquire</a></p>
     <p class="pl-foot-co"><!-- gen:company -->
     <!-- /gen:company --></p>

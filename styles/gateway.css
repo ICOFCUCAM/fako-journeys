@@ -102,19 +102,45 @@
 .wa-open{position:relative;background:var(--c-primary);color:var(--c-bg)}
 /* The calls, which were forest on ivory and cannot be forest on forest. */
 .wa-open .wa-act{border-color:var(--c-gold);color:var(--c-bg)}
-.wa-open .wa-act.go{background:var(--c-accent);border-color:var(--c-accent);
-  color:var(--c-primary)}
-.wa-open .wa-act.go:hover{background:var(--c-bg);border-color:var(--c-bg)}
+/* THE PRIMARY CALL IS A BORDER, NOT A BLOCK.
+   It was a solid terracotta slab, which is the single loudest object on the
+   page and the reason the whole hero read as a landing page rather than as a
+   printed opening. A filled accent button asks to be clicked; a bordered one
+   states that it can be. The difference matters here because the hero is not
+   selling a click, it is establishing that somebody has thought about this.
+
+   So the primary call becomes ivory — a full-weight ivory rule at 1.5px around
+   ivory type on the forest ground, against the gold hairline the secondary
+   calls carry. The two are told apart by weight and colour of line, not by one
+   being a poster and the other being text. On hover it fills ivory and the
+   type goes forest: the invert happens on intent, where a fill is a response
+   rather than a permanent shout. */
+.wa-open .wa-act.go{background:transparent;border-color:var(--c-bg);
+  border-width:1.5px;color:var(--c-bg)}
+.wa-open .wa-act.go:hover,.wa-open .wa-act.go:focus-visible{
+  background:var(--c-bg);border-color:var(--c-bg);color:var(--c-primary)}
 /* .wa-open's faint and plain variants went with the second and third hero
    calls. The unscoped .wa-act.faint / .plain below are still in use further
    down the page and stay. */
 /* The rails: rules that were ink on paper become paper on ink. */
 .wa-open .wa-regs,.wa-open .wa-ticks{border-color:var(--c-bg)}
 .wa-open .wa-reg,.wa-open .wa-tick{color:var(--c-bg);border-right-color:var(--fj-rule-dark)}
-.wa-open .wa-reg[aria-pressed="true"]{background:var(--c-accent);color:var(--c-primary)}
+/* With the continent and the primary call both off terracotta, the pressed
+   region tab was the last accent block left in the hero — and being the only
+   one made it the loudest object on the first screen. A rail tab is not the
+   most important thing on this page. It takes the same mark the tick rail
+   below it already takes: the ground and the type swap, and state is ivory. */
+.wa-open .wa-reg[aria-pressed="true"]{background:var(--c-bg);color:var(--c-primary)}
 .wa-open .wa-tick[aria-current]{background:var(--c-bg);color:var(--c-primary)}
 .wa-open .wa-lens,.wa-open .wa-tags-in{border-color:var(--fj-rule-dark)}
 .wa-open .wa-tag{color:var(--c-bg);border-color:var(--fj-rule-dark)}
+/* The lens rail takes the same mark as the region rail above it. Two rails
+   sitting one on top of the other, both saying "this one is on", were saying
+   it in two different languages — ivory in the first, a terracotta slab in the
+   second — and the slab won, so the loudest thing in the hero was whichever
+   experience the reader last pressed. State in this section is ivory. */
+.wa-open .wa-tag[data-on]{background:var(--c-bg);color:var(--c-primary);
+  border-color:var(--c-bg)}
 .wa-open .wa-terrain span{border-color:color-mix(in srgb,var(--c-gold) 42%,transparent)}
 /* The readout. Its name is the one place ivory has to be at display size. */
 /* On the dark ground every swatch takes the ivory ring the map's countries
@@ -439,6 +465,10 @@
 .wa-win-key span::before{content:"";width:10px;height:10px;flex:0 0 auto}
 .wa-win-key span[data-tier="ours"]::before{background:var(--c-tier-ours)}
 .wa-win-key span[data-tier="live"]::before{background:var(--c-accent-fill)}
+/* A ten-pixel square of ink on ink is a square nobody can find, so the key's
+   swatches carry the same hairline the countries carry. The key describes the
+   map; it does not get its own brighter version of it. */
+.wa-win-key span::before{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-bg) 34%,transparent)}
 .wa-win-line{min-height:22px;margin-bottom:10px;font-size:14.5px;color:var(--c-accent);max-width:60em}
 
 /* The map is the signature, and it says three things.
@@ -499,6 +529,47 @@
    2.28:1 — still half again the contrast the coastline has against the page,
    so the reading order is unchanged: destinations first, then the continent,
    then the sea. Taking the land darker than this closes that gap. */
+/* THE LADDER THAT WAS BUILT HERE, AND WHY IT IS NOT HERE.
+   The design blueprint names this map by hand — "never a fill larger than a
+   button, and never a continent" — and the argument is good: an accent that
+   covers half the viewport is not an accent, it is the ground, and the page
+   then has no accent left to spend anywhere. So the whole map was rebuilt on
+   the other principle. The tiers stopped being colours and became quantities
+   of light on the ink the hero is already printed in: four rungs mixed from
+   forest toward sand, an ivory hairline for the coast, terracotta demoted to a
+   two-pixel stroke under the pointer. It was measured, tuned twice — once
+   because mixing toward ivory arrives at wet pavement, once because a tone
+   picked at 1440 is a pale slab at 768 where the map is most of the screen —
+   and rendered at every width.
+
+   Then both maps were put side by side and looked at, and the company chose
+   this one. That is the right way round. A design document is an argument, and
+   an argument that cannot survive being tested against the thing itself is not
+   one worth keeping; the blueprint's own method section says every page was
+   opened in a browser and looked at, and this is that method applied to the
+   blueprint. The sentence about continents stands everywhere else on the site.
+   It is overruled here, once, on the object it was written about, by the
+   people whose company it is.
+
+   What the ladder was right about is kept. The true-size overlay in the scale
+   section is basalt rather than terracotta — it is a silhouette of somewhere
+   the reader already knows and ink draws that better than pigment. The hero's
+   primary call is a bordered ivory rule rather than a filled slab. Both rails
+   mark state in ivory rather than each in a different colour. Those were never
+   the map, and none of them were what was preferred back.
+
+   The exemption is recorded in tools/design-checks.js, scoped to this one
+   selector on this one surface, so it stays visible in every run rather than
+   becoming a rule quietly nobody keeps. Everything below is the palette as it
+   was before the ladder, unchanged, and the derivations above it still hold.
+
+   ---------------------------------------------------------------------------
+   One thing from the rebuild is a real fix and stays, further down: the lens
+   rules carry two attributes, which outranks the three-class rule that hides
+   the countries' hit circles, so pressing a lens put six pale bullseyes over
+   the islands and one over Dakar. That was true before the ladder too — the
+   discs were terracotta rather than pale — and nobody had seen it because
+   nobody had looked at the map with a lens pressed. Matched at four now. */
 :root{--c-land:color-mix(in srgb, var(--c-sand) 85%, var(--c-accent));
   /* Deep forest with enough gold in it to exist on a deep forest ground. Pure
      --c-primary is the tier's colour and measures 1.00:1 against the hero, so
@@ -532,6 +603,12 @@
 .wa-win-state .wa-map-svg{filter:drop-shadow(0 2px 2px rgba(6,18,14,.55))
                                  drop-shadow(0 14px 30px rgba(6,18,14,.45))}
 .wa-map-rest,.wa-map-live{filter:url(#fj-ink)}
+/* Ivory at 46% was right when the land was a pale sand and the border had to
+   cut into it. Against the ink ladder the same line is the brightest thing in
+   the country, and fifty of them turn the continent into a wireframe. At 22%
+   the boundary is a fact you can find when you look for it and not a structure
+   you see first — which is the correct order for a border on a map whose
+   argument is where we go, not who governs what. */
 .wa-win-state .wa-map-rest path{fill:var(--c-land);
   stroke:color-mix(in srgb,var(--c-bg) 46%, transparent);stroke-width:.75;
   vector-effect:non-scaling-stroke;stroke-linejoin:round}
@@ -540,10 +617,32 @@
   vector-effect:non-scaling-stroke;
   stroke-linejoin:round;transition:fill .2s}
 /* The engraved coast, drawn from the survey rather than faked by stroking the
-   countries harder — which only makes every border heavier. Deep ink at low
-   opacity, wider than any internal boundary. */
-.wa-map-coast path{fill:none;stroke:color-mix(in srgb,var(--c-ink) 62%, transparent);
-  stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+   countries harder — which only makes every border heavier.
+
+   IT IS THE ONLY THING THAT DRAWS THE LAND THAT IS NOT AFRICA, AND IT WAS
+   DRAWING IT IN BLACK ON BLACK. This layer carries all eighteen coastlines in
+   the view, not only the continent's: Iberia, Italy, Greece, Turkey, Cyprus,
+   the Levant, Arabia. Africa has fills behind it — fifty-two country polygons
+   in terracotta — so ink there reads as an engraved edge, which is what it was
+   chosen for. Everything above and east of the Mediterranean has no fill at
+   all. `.wa-map-rest` holds a single path, so for that half of the map the
+   coast is not the edge of the drawing, it *is* the drawing. Deep ink at 62%
+   against a deep forest sea measures 1.06:1, and at that number the drawing
+   does not exist: the Mediterranean read as the top of the image rather than
+   as a sea with a far side, and Israel, Lebanon and the whole Levant were not
+   on the map at all.
+
+   The line goes to ivory for exactly the reason the fills stayed terracotta —
+   contrast is against what a thing is drawn on, and these two halves are drawn
+   on opposite grounds. Over the sea, ivory at 58% is the only version of this
+   line that exists. Over terracotta it lands as a pale rim, which is what a
+   printed chart does at a coast in any case, and it does not compete with the
+   internal borders because those are thinner and stay where they were.
+
+   Narrower with it, 1.6 rather than 2: a line that is finally visible does not
+   need the weight it was carrying while it was trying to be. */
+.wa-map-coast path{fill:none;stroke:color-mix(in srgb,var(--c-bg) 58%, transparent);
+  stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
 /* AN OPERATOR OF OURS HAS TO READ AGAINST THE GROUND IT IS ON.
    The tier is deep forest, and the hero's ground is deep forest, so Namibia,
    Cameroon and Uganda were drawn as holes in the continent — 1.1:1 against the
@@ -678,11 +777,16 @@
    three-tone argument (the continent, a destination here, an operator of ours)
    collapsed to two under the pointer.
 
-   Both tiers now move within themselves — the destination to burnt sienna as
-   before, the operator to a forest warmed a third of the way toward it — and
-   the thing that actually says "this one" is the stroke, which goes from the
-   page's ivory to the accent at two pixels and is the same signal on all three
-   tiers, including on a country with no fill of its own. */
+   Both tiers now move within themselves and the thing that actually says "this
+   one" is the stroke, which goes from the page's ivory to the accent at two
+   pixels and is the same signal on all three tiers, including on a country
+   with no fill of its own.
+
+   On the ink ladder the fill change goes away entirely. A hovered country
+   rises one rung — the same amount, from wherever it was — and terracotta is
+   left to do the only thing it should do on a map this size: draw the
+   two-pixel line around the one country under the pointer. That line is
+   smaller than a button. The fill never was. */
 .wa-win-state .wa-map-live:hover path,.wa-win-state .wa-map-live:focus path,
 .wa-win-state .wa-map-live.on path,.wa-win-state .wa-map-live:hover circle,
 .wa-win-state .wa-map-live.on circle{stroke:var(--c-accent);stroke-width:2}
@@ -727,7 +831,13 @@
 .wa-scale-land{fill:color-mix(in srgb,var(--c-primary) 13%,transparent)}
 .wa-scale-in{opacity:0;transition:opacity var(--t-mid) var(--ease)}
 .wa-scale-in[data-on]{opacity:1}
-.wa-scale-in path{fill:var(--c-accent);fill-opacity:.86}
+/* The true-size overlay was the largest single terracotta shape on the site —
+   a country-sized accent fill making an argument that does not need colour to
+   land. An atlas prints this comparison in the darkest ink it has, laid over
+   the pale land, because the whole point is a silhouette: the reader is meant
+   to see the outline of somewhere they already know sitting inside Africa. Ink
+   does that better than pigment and costs the page nothing. */
+.wa-scale-in path{fill:var(--c-primary);fill-opacity:.82}
 .wa-scale-btns{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid var(--c-accent)}
 /* The true-size comparison is the page's one piece of argument-by-geometry and
    its controls were the quietest thing in the section. They take the weight the
@@ -1684,7 +1794,14 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
 
    The five are distinguished by measurements a reader feels rather than names
    they can see: padding runs 68px to 168px, and the headline clamp runs from
-   26px to 72px. */
+   26px to 72px.
+
+   A SIXTH — is-kept, for a section that exists and is not asking to be acted
+   on — was written for the Journey Fund and then removed, because the fund's
+   presence on this page is a door inside the journey section rather than a
+   section of its own, and nothing used it. It belongs with the homepage
+   section it was drawn for, and should come back with it rather than sit here
+   costing every reader of this page a rule that styles nothing. */
 
 /* A — CINEMATIC. The two sections that ask you to imagine something rather than
    choose something. The number goes above the headline instead of beside it,
@@ -2723,10 +2840,18 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    an attribute and an element. A three-class selector loses to that however
    late it appears, so the hit circle came out filled — a 26px terracotta disc
    with the real mark drawn on top of it, which is a bullseye, not an island. */
+/* And the same arithmetic one attribute higher. The lens rules carry two
+   attributes — [data-want][data-tier] — which outranks a three-class selector
+   however late it appears, so pressing a lens put the discs back: six pale
+   bullseyes over the islands and one over Dakar, each with the real mark drawn
+   on top of it. Matched at four, and later, so it holds in every state the
+   continent can be in. */
 .wa-win-state .wa-map-live circle.wa-map-hit,
 .wa-win-state .wa-map-live:hover circle.wa-map-hit,
 .wa-win-state .wa-map-live:focus circle.wa-map-hit,
-.wa-win-state .wa-map-live.on circle.wa-map-hit{fill:transparent;stroke:none}
+.wa-win-state .wa-map-live.on circle.wa-map-hit,
+.wa-win-state .wa-map-live[data-want] circle.wa-map-hit,
+.wa-win-state .wa-map-live[data-dim] circle.wa-map-hit{fill:transparent;stroke:none}
 .wa-win-state .wa-map-mark circle{stroke-width:1.5}
 
 /* ---- the directory ----------------------------------------------------------------- */
@@ -2866,3 +2991,75 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-win-go{padding-top:6px;padding-bottom:8px}
   .wa-foot-bar a{padding-block:6px;display:inline-block}
 }
+
+/* ---- BEFORE YOU GO: the four words a journey passes through -------------------
+   Dream, Choose, Build, Journey. A numbered list because it IS a sequence —
+   the one place on this page where numbered markers carry information rather
+   than decorate it, since the order is the argument.
+
+   Four columns that collapse to two and then to one. The number is set in the
+   gold that the basalt sections already use for their labels, at a size that
+   reads as an ordinal rather than as a statistic: this section has no figures
+   in it and should not appear to. */
+.wa-before .wa-arc{display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  counter-reset:step;list-style:none;margin:0;padding:0;
+  border-top:1px solid var(--fj-rule)}
+.wa-before .wa-arc li{counter-increment:step;position:relative;
+  padding:26px 26px 24px 0;border-right:1px solid var(--fj-rule)}
+.wa-before .wa-arc li:last-child{border-right:0;padding-right:0}
+/* Each column began exactly where the previous column's rule is drawn, so 02,
+   03 and 04 sat on the line — and 01 looked right only because there is
+   nothing to its left, which is why it read as correct at a glance and wrong
+   in a screenshot. The rule belongs to the gap between two columns, not to the
+   first character of the second one. */
+.wa-before .wa-arc li:not(:first-child){padding-left:26px}
+.wa-before .wa-arc li:before{content:counter(step,decimal-leading-zero);display:block;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;
+  color:var(--c-gold);margin-bottom:14px}
+.wa-before .wa-arc b{display:block;font-family:var(--fj-display);font-weight:700;
+  font-size:clamp(21px,2.4vw,30px);line-height:1.02;letter-spacing:-.018em;
+  text-transform:uppercase;color:var(--c-bg);margin-bottom:10px}
+.wa-before .wa-arc span{display:block;font-size:14.5px;line-height:1.55;
+  color:var(--fj-onbasalt-dim);max-width:34ch}
+/* An arrow between the four, drawn rather than typed: a character would be
+   read aloud and would be one more thing to translate. */
+.wa-before .wa-arc li:not(:last-child):after{content:"";position:absolute;
+  right:-4px;top:32px;width:8px;height:8px;border-top:1px solid var(--c-gold);
+  border-right:1px solid var(--c-gold);transform:rotate(45deg)}
+@media(max-width:900px){
+  .wa-before .wa-arc{grid-template-columns:1fr 1fr}
+  .wa-before .wa-arc li{padding:22px 22px 20px 0}
+  /* Two columns: the item that starts a row has no rule to its left and takes
+     no inset, the item that follows one takes the inset. */
+  .wa-before .wa-arc li:not(:first-child){padding-left:0}
+  .wa-before .wa-arc li:nth-child(2n){border-right:0;padding-right:0;
+    padding-left:22px}
+  .wa-before .wa-arc li:nth-child(-n+2){border-bottom:1px solid var(--fj-rule)}
+  .wa-before .wa-arc li:not(:last-child):after{display:none}
+}
+@media(max-width:560px){
+  .wa-before .wa-arc{grid-template-columns:1fr}
+  .wa-before .wa-arc li{border-right:0;padding:20px 0 18px;
+    border-bottom:1px solid var(--fj-rule)}
+  /* One column, no vertical rules, nothing to inset from. Stated because the
+     inset above outranks the shorthand here and would otherwise survive. */
+  .wa-before .wa-arc li:not(:first-child){padding-left:0}
+  .wa-before .wa-arc li:last-child{border-bottom:0}
+  .wa-before .wa-arc span{max-width:none}
+}
+
+/* The name, said once, in the voice the section is already speaking in. Serif
+   rather than the display face, because it is a sentence and not a heading;
+   at the lede's size rather than the caption's, because it is the line the
+   whole section has been building to and the four words above it are already
+   set louder than it is. It closes the distance between the idea and the door
+   below it, which is why the call's top margin comes off. */
+.wa-arc-name{margin:34px 0 0;font-size:19px;line-height:1.5;color:var(--c-bg);
+  max-width:44ch}
+.wa-arc-name + .wa-arc-go{margin-top:20px}
+
+.wa-arc-go{display:inline-block;margin-top:38px;font-family:var(--fj-mono);
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--c-primary);background:var(--c-bg);padding:14px 22px;
+  text-decoration:none;transition:background var(--t-fast) var(--ease)}
+.wa-arc-go:hover{background:var(--c-gold)}

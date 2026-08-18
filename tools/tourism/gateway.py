@@ -2182,6 +2182,11 @@ def block_footer(countries):
     plan = [
         ("/journey", "Build a journey"),
         ("/trans-afrique", "Trans Afrique"),
+        # PLAN, and not the legal strip below it. The Journey Fund is a way of
+        # arriving at a journey, so it belongs with the other two ways; put in
+        # the row that carries the registration number and the terms, it would
+        # quietly reclassify a travel product as a financial one.
+        ("/journey-fund", "The Journey Fund"),
         ("/enquire", "Begin your journey"),
         ("#destinations", "Travel seasons"),
     ]

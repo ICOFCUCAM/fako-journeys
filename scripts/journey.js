@@ -810,6 +810,19 @@
                                   : 'Begin this journey';
       go.insertAdjacentHTML('beforeend', '<i>&rarr;</i>');
     }
+
+    /* The second door carries the SHAPE of the journey rather than the
+       sentence: the planner needs a country, a tier and a length it can price
+       again, not a paragraph to read. Nothing about the traveller travels with
+       it — no name, no dates typed into a box, no figure — because the page it
+       opens has no account to attach any of that to. */
+    var toward = document.getElementById('jn-toward');
+    if (toward && chosen) {
+      var q = ['place=' + encodeURIComponent(chosen.slug)];
+      if (t.tier) q.push('tier=' + encodeURIComponent(t.tier));
+      if (t.days) q.push('days=' + encodeURIComponent(t.days));
+      toward.href = '/journey-fund?' + q.join('&');
+    }
   }
 
   function openGround() {

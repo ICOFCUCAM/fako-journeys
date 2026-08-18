@@ -893,6 +893,24 @@ def crossing_body(d, r, by_slug):
              '<div><dt>Journey fee</dt><dd>%s</dd></div>'
              '</dl>' % (esc(r["shape"]), esc(r["days"]),
                         len(r.get("countries") or []), band(r)))
+    # THE ONE LINE THE JOURNEY FUND GETS, AND WHY IT IS HERE.
+    #
+    # Directly under the fee, because a crossing is the most expensive thing
+    # this company sells and the moment that figure lands is the moment
+    # "someday" happens. That sentence is what this line is for. It is a
+    # sentence rather than a card or a button on purpose: the fund is never the
+    # subject of a section, only a line inside one about travel.
+    #
+    # It restates the band as a LENGTH OF TIME rather than as a new figure. A
+    # monthly amount here would be a second price on a page that already has
+    # one, and a price this file could not stand behind — where in the band a
+    # crossing lands depends on its shape. Time is the honest unit, and it is
+    # also the thing the reader is actually short of.
+    kept = ('<p class="tf-kept">Further off than that? A crossing is roughly '
+            'two years of putting something aside &mdash; '
+            '<a href="/journey-fund?journey=%s">work out what that would look '
+            'like</a>. We hold none of it; the arithmetic is the whole of it.'
+            '</p>' % esc(r["id"]))
     return "\n".join([
         top,
         '<div class="tf-page tf-page--after">',
@@ -903,7 +921,7 @@ def crossing_body(d, r, by_slug):
         '<p class="tf-crossing-strands">%s</p>'
         '<p class="tf-crossing-say">%s</p>'
         '<p class="tf-crossing-chain">%s</p></div>'
-        '%s</section>' % (strands, esc(r["say"]), chain(r, by_slug), facts),
+        '%s%s</section>' % (strands, esc(r["say"]), chain(r, by_slug), facts, kept),
         '<section class="tf-block" id="map">%s</section>'
         % routemap.build(d, by_slug, only=r["id"],
                          title="%s, on the continent"

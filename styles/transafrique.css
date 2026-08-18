@@ -950,3 +950,22 @@
   .tf-pick-where{grid-row:2;grid-column:1/-1}
   .tf-pick-n{grid-row:3;grid-column:1/-1;margin-top:8px}
 }
+
+/* The Journey Fund's one line on a crossing card.
+   Set at the fine-print size and in the muted ink, because it is a footnote to
+   the fee above it rather than a second offer competing with it. The link
+   carries the accent the rest of this page uses for a way onward, so it reads
+   as the same kind of thing as "See this crossing" without borrowing its
+   weight. */
+.tf-route-kept{margin:14px 0 0;font-size:13.5px;line-height:1.5;
+  color:var(--c-muted)}
+.tf-route-kept a{color:var(--c-accent-lit)}
+
+/* The Journey Fund's one line, directly under a crossing's fee.
+   Fine-print size and muted ink: a footnote to the figure above it rather
+   than a second offer competing with it. The link takes the accent this page
+   already uses for a way onward, so it reads as the same kind of thing as
+   "See this crossing" without borrowing its weight. */
+.tf-kept{margin:18px 0 0;font-size:13.5px;line-height:1.55;color:var(--c-muted);
+  max-width:56ch}
+.tf-kept a{color:var(--c-accent-lit)}
