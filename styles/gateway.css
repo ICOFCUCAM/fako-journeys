@@ -3297,24 +3297,42 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   display:flex;flex-direction:column;align-items:center;gap:18px}
 .wa-fund-strap:after{content:"";display:block;width:100%;height:1px;
   background:color-mix(in srgb,var(--c-primary) 34%,transparent)}
-/* Bordered, not filled. A solid slab here would be the loudest object in a
-   section whose whole argument is patience, and the border is the same weight
-   the claim's rule carries. */
-.wa-fund-go{display:block;width:max-content;max-width:100%;margin:26px auto 0;
-  font-family:var(--fj-mono);font-size:11px;letter-spacing:.2em;
+/* THE CALL IS THE ONLY BOXED CONTROL ON THE PAGE, AND IT SHOULD NOT BE.
+   Every other call in this document is the same object: a mono label in
+   letter-spaced caps with a two-pixel terracotta rule under it — .wa-pick-go,
+   .wa-op-go, .wa-story-go, .wa-feel-go, fifty-seven .wa-win-go. This one was
+   an outlined rectangle 220px wide floating in the middle of the frame, which
+   is the house idiom nowhere and a product button everywhere.
+
+   Same idiom, at the scale a section's closing call is owed: the rule runs the
+   full frame, the label sits at the left of it and the arrow at the right, and
+   the whole span is the target. It reads as a threshold rather than a button —
+   which is what it is, the one door out of this section — and it finally
+   matches the strapline's rule sitting directly above it. */
+.wa-fund-go{display:flex;align-items:baseline;justify-content:space-between;
+  gap:20px;width:100%;max-width:none;margin:clamp(24px,2.6vw,38px) 0 0;
+  font-family:var(--fj-mono);font-size:clamp(11px,1.15vw,14px);letter-spacing:.2em;
   text-transform:uppercase;color:var(--c-primary);
-  border:1.5px solid var(--c-primary);padding:17px 34px;text-decoration:none;
-  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
-.wa-fund-go i{font-style:normal;margin-left:11px}
-.wa-fund-go:hover{background:var(--c-primary);color:var(--c-bg)}
+  border:0;border-bottom:2px solid var(--c-accent);
+  /* The top padding is a touch target, not a rhythm: as a single line of 11px
+     mono the row came to 26px high, and a full-width link that a thumb cannot
+     reliably hit is worse than the button it replaced. 45px at the phone. */
+  padding:clamp(18px,2vw,26px) 0 clamp(12px,1.4vw,18px);text-decoration:none;
+  transition:color var(--t-fast) var(--ease)}
+/* The arrow moves along the rule on hover, which is the only motion in the
+   close and the same gesture the road makes above it. */
+.wa-fund-go i{font-style:normal;margin-left:0;font-size:1.5em;line-height:0;
+  transition:transform var(--t-fast) var(--ease)}
+.wa-fund-go:hover{color:var(--c-accent)}
+.wa-fund-go:hover i{transform:translateX(9px)}
 /* FOCUS IS NOT HOVER, AND THIS CALL HAD THEM AS THE SAME THING.
-   A keyboard reader arriving here got exactly what a mouse hovering gets: the
-   fill inverts, and nothing says which of the two happened. On a bordered
-   control the fill IS the hover, so focus has to be something else — a ring
-   outside the border, in the accent, with the ground unchanged. That way a
+   A keyboard reader arriving here got exactly what a mouse hovering gets and
+   nothing said which of the two had happened. Hover is now the label taking
+   the accent and the arrow moving; focus is a ring around the whole span, so a
    reader who tabs to it and a reader who points at it are told apart, and a
-   reader who tabs to it and then hovers gets both without either being lost. */
-.wa-fund-go:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
+   reader who does both gets both without either being lost. The offset clears
+   the rule so the ring reads as a ring and not as a second border. */
+.wa-fund-go:focus-visible{outline:2px solid var(--c-accent);outline-offset:6px}
 
 /* ---- 900 AND BELOW: THE ROAD ROTATES --------------------------------------
    A horizontal road with four stops has the same failure as four columns — on a
@@ -3457,7 +3475,6 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-pic figcaption{padding-inline:20px}
   .wa-fund h2{font-size:clamp(30px,8.6vw,44px)}
   .wa-fund-strap{text-align:left;align-items:flex-start}
-  .wa-fund-go{margin-left:0;width:100%;text-align:center}
 }
 
 /* The road draws once, on scroll, because its subject is the passage of time.
@@ -3465,4 +3482,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
    rather than yielding a degraded page. */
 @media(prefers-reduced-motion:reduce){
   .wa-fund-line path{stroke-dasharray:none;stroke-dashoffset:0;animation:none}
+  /* The arrow still changes colour with the label; it just stops travelling. */
+  .wa-fund-go i{transition:none}
+  .wa-fund-go:hover i{transform:none}
 }
