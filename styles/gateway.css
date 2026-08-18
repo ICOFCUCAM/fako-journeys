@@ -3092,7 +3092,7 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 
 .wa-fund-lead{font-family:var(--fj-display);font-weight:600;
   font-size:clamp(19px,1.8vw,24px);line-height:1.22;letter-spacing:-.008em;
-  color:var(--c-primary);margin:0 0 10px;max-width:30ch}
+  color:var(--c-primary);margin:0 0 10px;max-width:30ch;text-wrap:balance}
 .wa-fund-sub{font-size:16.5px;line-height:1.55;color:var(--c-muted);
   margin:0;max-width:40ch}
 
@@ -3254,8 +3254,14 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
 .wa-fund-move b{display:block;font-family:var(--fj-display);font-weight:700;
   font-size:clamp(24px,2.7vw,36px);line-height:1;letter-spacing:-.022em;
   text-transform:uppercase;color:var(--c-primary);margin-bottom:9px}
+/* Balanced, because these are two-line paragraphs and the first of them left
+   the word "dream." alone on a line twenty-one per cent the width of its box
+   at every width measured. A runt under a display name is the detail that
+   makes a composition look assembled rather than set. balance rather than
+   pretty: pretty only rescues the last line, and with two lines the right
+   answer is to even both. */
 .wa-fund-move span{display:block;font-size:14.5px;line-height:1.5;
-  color:var(--c-primary);max-width:26ch}
+  color:var(--c-primary);max-width:26ch;text-wrap:balance}
 
 /* ---- THE CLOSE ------------------------------------------------------------- */
 .wa-fund-strap{margin:clamp(48px,6vw,88px) 0 0;font-family:var(--fj-mono);
