@@ -124,5 +124,7 @@ not have, and they live in `.github/workflows/`:
 - **`tourism-wonders.yml`** — the same for the wonders' photographs.
 - **`tourism-optimise.yml`** — resize and re-encode placed images.
 
-The resolve workflow is the one that matters: 339 of 1,458 image slots are
-still unresolved, and 168 crops are still at dead centre waiting for it.
+The resolve workflow is the one that matters, and it has now run: 1,416 of
+1,458 slots are filled, and the crops have been decided. Forty-two slots remain
+— the tail where search returns nothing the audit will accept — and they render
+as designed plates rather than as damage.

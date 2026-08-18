@@ -16,7 +16,7 @@ page, so it is first.
 |---|---|
 | Pages that exist and are correct | 1,594 |
 | Countries written up 27 ways | 54 |
-| Image slots filled | 1,119 of 1,458 (77%) |
+| Image slots filled | 1,416 of 1,458 (97%) |
 | Automated checks passing | 400 across four suites |
 | Ways to pay | none |
 | Domain | not registered |
@@ -65,31 +65,39 @@ below is smaller.
 enquiries go to a mailbox or an endpoint. A real endpoint also lets
 `form-action` in the CSP tighten from `mailto:` to `'self'`.
 
-### 2. Twenty-three per cent of the photographs are missing
+### 2. Forty-two photographs are still missing — down from 339
 
-339 of 1,458 image slots have no photograph. They do not look broken — an
-unresolved slot draws the country's own outline on its region's tone, captioned
-with what the picture would have shown — but a visitor to Eritrea, Cabo Verde,
-DR Congo or Mauritania sees ten to thirteen of those on one page.
+**Largely done.** Three runs of the resolve workflow took the site from 1,119
+filled slots to 1,416 of 1,458. Ethiopia and Burkina Faso have heroes; São Tomé
+and Príncipe is three short, including its hero.
 
-Three country pages have no hero photograph at all: **Ethiopia**, Burkina Faso,
-and São Tomé and Príncipe. Ethiopia is a headline destination arriving with a
-drawn outline where its photograph should be.
+The remaining 42 are the hard tail: slots where the search returns nothing the
+audit will accept. Re-running picks at them and stops. They render as designed
+plates — the country's own outline on its region's tone, captioned with what
+the picture would have shown — so they are honest rather than broken.
 
-*What unblocks it:* add `UNSPLASH_ACCESS_KEY` or `PEXELS_API_KEY` under
-Settings → Secrets and variables → Actions, then run **Resolve tourism images**.
-The same run also fixes gap 3.
+*What unblocks the last of them:* better search terms per slot, or the same
+answer as gap 4 — commissioned photography.
 
-### 3. A hundred and sixty-eight photographs are cropped at dead centre
+### 3. The crops are decided now, and most of them decided on centre
 
-Hero, panoramic and portrait boxes throw away most of the frame, and 50/50 is
-the absence of a decision — in a tall box it is the setting most likely to take
-the top off whatever the picture is of.
+The crop pass reads every photograph and moves the framing off dead centre
+where the detail asks for it. It has now run properly: **151 photographs read,
+17 moved, 134 left at centre** because the detail really was already there on
+the axis that crop uses.
 
-The tool to fix this is written and validated, and it cannot run in a
-development environment: it has to read the photographs, and they live on the
-providers' CDNs. It is a step in the resolve workflow, so it happens on the same
-run as gap 2.
+That last number is the pass working, not failing. A panoramic box keeps its
+width and throws away top and bottom, so only its vertical framing is worth
+deciding; a portrait box is the other way round, and a landscape photograph is
+usually balanced left to right — which is why 92 portrait slots stayed put and
+only one moved horizontally. Every shift written was between 55 and 60 on a
+scale of 100: damped, as designed.
+
+It took four attempts to get here, and three of them were my own bugs — an
+exit code that failed the run for succeeding, a log that would not say why, and
+a limit flag borrowed from another command that stopped the pass after one
+photograph. Recorded because the pattern is worth remembering: each one
+reported success.
 
 ### 4. Eight wonders cannot be photographed honestly
 
