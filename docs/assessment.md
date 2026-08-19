@@ -18,11 +18,11 @@ last time this page was written.
 | | | how it was counted |
 |---|---|---|
 | HTML files that exist and are correct | 1,597 | `find . -name '*.html'` |
-| Internal links, all of which resolve | 78,543 | `link-checks.js` |
+| Internal links, all of which resolve | 78,595 | `link-checks.js` |
 | Countries written up 27 ways | 54 | `tourism/countries/*.json` |
 | Image slots filled | 1,416 | `tourism/cache/images.json` |
 | Candidates the audit refused | 337 | same file, `rejected` |
-| Automated checks passing | **497** | six suites, below |
+| Automated checks passing | **503** | six suites, below |
 | Ways to pay | none | — |
 | Ways to reach a human | one `mailto:` to an unregistered domain | `enquire.html` |
 
@@ -30,13 +30,13 @@ The six suites, and what each can see that the others cannot:
 
 ```
 build.py verify         55   every category rendered, every image sized
-journey-checks.js       99   the engine's structure, icons, manifest
+journey-checks.js      105   the engine, icons, manifest, the map
 fund-checks.js          64   the estimator's arithmetic and its promises
-link-checks.js           3   78,543 links, every asset, every #fragment
+link-checks.js           3   78,595 links, every asset, every #fragment
 design-checks.js        17   the blueprint's absolutes, in a browser
 browser-checks.js      259   contrast, focus, CLS, weight, no-JS reading
                        ---
-                       497   failing: 0
+                       503   failing: 0
 ```
 
 ---
@@ -50,7 +50,7 @@ pages, 54 portraits, 9 crossings, an atlas, a fund. Drop a JSON file into
 atlas, in the journey engine, on the homepage and in the sitemap, with no code
 change.
 
-**The measuring.** 497 checks is not the useful number; what is useful is that
+**The measuring.** 503 checks is not the useful number; what is useful is that
 three of the suites measure a *rendered* page rather than a file — composited
 contrast, focus rings, layout shift, transferred weight, and what the page says
 with scripting off. The gap this repository keeps finding is the one where
@@ -58,7 +58,10 @@ every file is right and the render is wrong, and that gap is now instrumented.
 
 **The Journey Fund door** on the homepage, and the fund's own surfaces. Twenty
 commits of composition work, measured at every width the section changes shape
-in, closed most recently.
+in.
+
+**The Journey Builder's map**, which was the largest buildable gap on this page
+when it was written this morning and is gap 2 below, now closed.
 
 ---
 
@@ -78,31 +81,30 @@ footers follow it.
 **This is the whole business, and none of it is a code problem.** Everything
 below is smaller. It needs a purchase and a decision, not a commit.
 
-### 2. The Journey Builder has no map — and it is the page whose name promises one
+### 2. The Journey Builder's map is built; place coordinates are not
 
-This is the largest *buildable* gap on the site, and it is the one this round
-of work takes on.
+This was the largest buildable gap on the site when this page was written
+earlier today, and it is closed. `/journey` now carries the continent in the
+document — fifty-two country paths, two island marks and one disputed
+territory out of `tourism/map.json`, in the same projection and the same
+1000×1060 viewBox the hero and the crossing pages draw. Answering a question
+colours the countries by how each answers it; choosing one flies the viewBox to
+it; composing a journey draws the route across it. Six checks in
+`journey-checks.js` hold the map in the document rather than in a script, which
+is the way it could quietly stop existing.
 
-Measured: `/journey` ships at 122 KB with **zero `<svg>` and zero `<path>`**,
-and renders **270 words** with scripting off — the thinnest page on the site
-apart from `/404`. What exists is a four-step questionnaire that returns a
-country, and it works. What was specified is:
+What remains is the data underneath it, and it is a real limit rather than a
+loose end. **Places have no coordinates.** `data/atlas/*.json` gives each place
+a group, a lens set and a write-up and no position, so a node cannot be put on
+the Mara without inventing where the Mara is. Thirteen places in
+`tourism/atlas-detail.json` have a real position and every country has a
+centroid; that is what the route is drawn from, and the map's caption says
+which of the two each node is rather than letting a reader assume the stronger
+one.
 
-    question -> geographic response -> question -> geographic response
-             -> the finished journey, drawn
-
-The geometry to do it already exists and is proven three times over:
-`tourism/map.json` holds 52 country paths, 2 island marks and a centroid for
-each, in one 1000×1060 viewBox; the homepage hero draws all of them; every
-crossing page draws fifty-five paths of the same projection.
-
-One honest limit, recorded here so it is not rediscovered as a bug: **places
-have no coordinates.** `data/atlas/*.json` gives each place a group, a lens set
-and a write-up, and no position. Thirteen cities in `tourism/atlas-detail.json`
-have a real position and nothing else does. So a journey can be drawn honestly
-across countries and across those thirteen cities, and cannot be drawn as pins
-inside a country without inventing where things are — which this repository
-does not do.
+*What unblocks it:* a latitude and longitude on each place record. That is a
+content task, and it would upgrade the drawn journey from a shape to an
+itinerary. Nothing else in the repository is waiting on it.
 
 ### 3. There is no social proof
 

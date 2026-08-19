@@ -23,31 +23,27 @@ countries without fetching twenty-two files.
 Nothing here books anything, quotes a price, or claims availability. The engine
 proposes a shape and hands it to a person who lives there.
 
-OUTSTANDING: THIS PAGE HAS NO MAP, AND THE EXPERIENCE IT WAS SPECIFIED AS NEEDS
-ONE. Written down here rather than left as an intention, because the page reads
-as finished and is not, and every audit so far has had to rediscover it.
-
-Measured, not asserted: journey.html ships at 121 KB with zero <svg> and zero
-<path> elements in it. The four steps are a text tunnel — eight elements hidden
-until scripting advances them, which is also why the page renders 232 words to a
-visitor who has not interacted and to anything that does not run JavaScript.
-
-The specified experience is:
+THE CONTINENT IS ON THE PAGE, AND IT IS IN THE DOCUMENT.
 
     question -> geographic response -> question -> geographic response
              -> the finished journey, drawn
 
-That is, every answer should land on the continent: choosing an intention should
-light the countries that answer it, choosing a country should fly to it, adding
-a stage should draw it, and the last screen should be the journey as a route on
-a map rather than as a list of names. The geometry already exists and is already
-proven twice over — tools/africa_map.py projects it, the hero draws all
-fifty-four from it, and the four crossing pages each draw fifty-five paths of it
-— so this is a wiring problem and a design problem, not a data problem.
+Each of those verbs is wired. `continent()` below writes the fifty-two country
+paths, two island marks and one disputed territory out of tourism/map.json —
+the same projection and the same 1000x1060 viewBox the homepage hero and the
+crossing pages draw — into the document itself rather than into a script.
+Answering a question colours them by how well each answers it; choosing one
+flies the viewBox to it; composing a journey draws the route across it.
 
-Until that is built, this page should be described as a working four-step
-questionnaire that returns a country, which is what it is, and not as the
-map-based journey builder, which is what it is not.
+The honest limit, recorded so it is not rediscovered as a bug: PLACES HAVE NO
+COORDINATES. data/atlas/<slug>.json gives each place a group, a lens set and a
+write-up and no position, so a node cannot be put on the Mara without inventing
+where the Mara is. Thirteen places in tourism/atlas-detail.json have a real
+position and every country has a centroid; that is what the route is drawn
+from, and the map's own caption says which of the two each node is rather than
+letting a reader assume the stronger one. Place coordinates would upgrade the
+drawn journey from a shape to an itinerary, and nothing else here needs them.
+
 """
 
 import html as html_mod
