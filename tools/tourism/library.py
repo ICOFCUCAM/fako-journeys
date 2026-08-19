@@ -845,12 +845,47 @@ def reachable(log=print, sample=0):
     # learn something a socket knows in one second. Now `library reachable`
     # on a bare checkout answers the connectivity question on its own, and
     # only the per-object measurement needs the ladder.
+    # WHAT TO ASK FOR COMES FROM THE REGISTER, NOT FROM THIS DISK.
+    #
+    # This walked images/library/ and asked for whatever it found, which ties
+    # the measurement to a machine that happens to have just encoded. The
+    # encoded tree is gitignored, so a fresh runner has none of it — and the
+    # objects it would be measuring are already in the bucket, uploaded by an
+    # earlier run. Insisting on local files meant the only way to re-check a
+    # published library was to download and re-encode it first, five minutes
+    # to ask a question the register can answer instantly.
+    #
+    # The register knows what was published and at which widths. That is the
+    # authority. The disk is consulted only where it can add something the
+    # host cannot be trusted about on its own — the byte count.
     root = os.path.join(ROOT, "images", "library")
-    if not os.path.isdir(root):
-        log("library reachable: the host is reachable. No encoded ladder here,"
-            " so nothing to measure — run fetch and encode to check the "
-            "objects themselves.")
-        return 0
+    published = [a for a in reg["assets"].values() if a.get("publishedAt")]
+    keys = []
+    for a in published:
+        keys.append((key(a["id"], None), None))
+        for w in a.get("widths") or LADDER:
+            for ext in FORMATS:
+                keys.append((key(a["id"], w, ext), None))
+    if not keys:
+        # Nothing published yet: fall back to whatever was just encoded, so a
+        # ladder can be checked before it is uploaded.
+        if not os.path.isdir(root):
+            log("library reachable: the host is reachable. Nothing is "
+                "published and nothing is encoded here, so there is nothing "
+                "to measure.")
+            return 0
+        for base, _dirs, files in os.walk(root):
+            for name in sorted(files):
+                full = os.path.join(base, name)
+                keys.append((os.path.relpath(full, root).replace(os.sep, "/"),
+                             os.path.getsize(full)))
+    else:
+        # Sizes where we happen to hold the file, None where we do not.
+        keys = [(k, (os.path.getsize(os.path.join(root, k))
+                     if os.path.exists(os.path.join(root, k)) else None))
+                for k, _ in keys]
+        log("library reachable: %d published asset(s) in the register"
+            % len(published))
 
     def ask(url, method="HEAD"):
         req = urllib.request.Request(url, method=method)
@@ -862,18 +897,13 @@ def reachable(log=print, sample=0):
         except Exception as exc:                      # noqa: BLE001 — report, continue
             return 0, {"x-error": str(exc)}
 
-    keys = []
-    for base, _dirs, files in os.walk(root):
-        for name in sorted(files):
-            full = os.path.join(base, name)
-            keys.append((os.path.relpath(full, root).replace(os.sep, "/"),
-                         os.path.getsize(full)))
     keys.sort()
     if sample and sample < len(keys):
         step = len(keys) / float(sample)
         keys = [keys[int(i * step)] for i in range(sample)]
 
     bad, codes, cache, first, second = [], {}, {}, {}, {}
+    unchecked = 0
     for k, size in keys:
         url = "%s/%s" % (host, k)
         code, head = ask(url)
@@ -882,8 +912,10 @@ def reachable(log=print, sample=0):
             bad.append("%s: %s %s" % (k, code, head.get("x-error", "")))
             continue
         got = head.get("Content-Length")
-        if got and int(got) != size:
+        if size is not None and got and int(got) != size:
             bad.append("%s: host says %s bytes, disk says %d" % (k, got, size))
+        elif size is None and got:
+            unchecked += 1
         ctype = (head.get("Content-Type") or "").split(";")[0]
         if not ctype.startswith("image/"):
             bad.append("%s: Content-Type is %r, not an image" % (k, ctype))
@@ -908,6 +940,9 @@ def reachable(log=print, sample=0):
         % (", ".join("%s x%d" % (s, n) for s, n in sorted(first.items())) or "-",
            ", ".join("%s x%d" % (s, n) for s, n in sorted(second.items())) or "-"))
     log("  absent key  %s %s" % (miss_code, miss_type or "(no type)"))
+    if unchecked:
+        log("  %d object(s) served but not byte-compared — this machine does "
+            "not hold the encoded file" % unchecked)
     if miss_code == 200:
         bad.append("a key that does not exist answers 200 — a broken image "
                    "with a successful request is the worst of both")

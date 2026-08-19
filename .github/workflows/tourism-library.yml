@@ -15,8 +15,9 @@ name: Build the Afrinkong image library
 # assets that have actually been published, one at a time, because pointing a
 # page at an object that was never uploaded is a broken photograph.
 #
-# Tick check_host_only to skip all of it and just ask whether the asset host
-# resolves and will serve TLS. Thirty seconds, no downloads.
+# Tick check_host_only to skip all of it and just measure the asset host: DNS,
+# TLS, and every object the register says is published — type, size, cache
+# header, and that an absent key 404s. Thirty seconds, no downloads.
 
 on:
   workflow_dispatch:
@@ -36,7 +37,7 @@ on:
         required: false
         default: true
       check_host_only:
-        description: "Just ask whether image.afrinkong.com resolves and serves TLS (~30s, downloads nothing)"
+        description: "Only check the asset host: DNS, TLS, and every published object (~30s, downloads nothing)"
         type: boolean
         required: false
         default: false
@@ -49,14 +50,18 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # THE THIRTY-SECOND ANSWER TO "IS THE HOST UP YET".
+  # THE THIRTY-SECOND ANSWER TO "IS THE LIBRARY ACTUALLY BEING SERVED".
   #
-  # Whether DNS resolves and whether Cloudflare will shake hands are facts
-  # about the internet. Neither needs a photograph. They used to be findable
-  # only at the end of a five-minute pilot — download twenty-five, encode
-  # three hundred, upload, and then discover the certificate had not been
-  # issued. This asks the question on its own, so waiting for a certificate
-  # costs a click and half a minute instead of a full run.
+  # Whether DNS resolves, whether Cloudflare will shake hands, and whether
+  # every published object comes back with the right type, size and cache
+  # header are all facts about the internet and the bucket. None of them
+  # needs a photograph downloaded or a file encoded: the register knows what
+  # was published and at what widths, so this asks for exactly those objects.
+  #
+  # It used to be answerable only at the end of a five-minute pilot — download
+  # twenty-five, encode three hundred, upload, and then find out. Now it is a
+  # click and half a minute, which matters when the answer is "wait and try
+  # again".
   host:
     if: ${{ github.event.inputs.check_host_only == 'true' }}
     runs-on: ubuntu-latest
@@ -65,7 +70,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Does the asset host resolve, and will it serve TLS
+      - name: Does the host serve every published object
         run: python tools/tourism/build.py library reachable
 
   library:
