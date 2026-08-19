@@ -1,47 +1,64 @@
 # Afrinkong: where it stands, and what is missing
 
-Written after fifty commits of work on the architecture. This is the honest
-version — what is finished, what is blocked, and on whom.
+Re-measured today, against the repository as it is rather than against the last
+time somebody wrote this page down. Every number below came out of a command in
+this repository; where a number is a judgement rather than a measurement, it
+says so.
 
 ---
 
 ## The short version
 
-The site is **built and correct and cannot yet take a booking**. Every path a
-visitor can walk works, and the path they walk at the end delivers an email to a
-domain nobody owns. That single fact is worth more than everything else on this
-page, so it is first.
+The site is **built, correct, comprehensively checked, and cannot yet take a
+booking or a message**. Every path a visitor can walk works. The path they walk
+at the end delivers an email to a domain nobody owns. That single fact outranks
+everything else on this page, so it is first, and it has not changed since the
+last time this page was written.
 
-| | |
-|---|---|
-| Pages that exist and are correct | 1,594 |
-| Countries written up 27 ways | 54 |
-| Image slots filled | 1,416 of 1,458 (97%) |
-| Automated checks passing | 400 across four suites |
-| Ways to pay | none |
-| Domain | not registered |
+| | | how it was counted |
+|---|---|---|
+| HTML files that exist and are correct | 1,597 | `find . -name '*.html'` |
+| Internal links, all of which resolve | 78,543 | `link-checks.js` |
+| Countries written up 27 ways | 54 | `tourism/countries/*.json` |
+| Image slots filled | 1,416 | `tourism/cache/images.json` |
+| Candidates the audit refused | 337 | same file, `rejected` |
+| Automated checks passing | **497** | six suites, below |
+| Ways to pay | none | — |
+| Ways to reach a human | one `mailto:` to an unregistered domain | `enquire.html` |
+
+The six suites, and what each can see that the others cannot:
+
+```
+build.py verify         55   every category rendered, every image sized
+journey-checks.js       99   the engine's structure, icons, manifest
+fund-checks.js          64   the estimator's arithmetic and its promises
+link-checks.js           3   78,543 links, every asset, every #fragment
+design-checks.js        17   the blueprint's absolutes, in a browser
+browser-checks.js      259   contrast, focus, CLS, weight, no-JS reading
+                       ---
+                       497   failing: 0
+```
 
 ---
 
 ## What is genuinely finished
 
-**The content architecture.** Fifty-four countries, each written up through the
-same twenty-seven categories, so any two can be compared on the same terms.
-1,404 place pages, 54 portraits, 9 crossings, an atlas, a journey builder. Add a
-JSON file and one command gives you a country on the map, in the atlas, in the
-journey engine, on the homepage and in the sitemap. No code change.
+**The content architecture.** Fifty-four countries through the same
+twenty-seven categories, so any two compare on the same terms. 1,404 place
+pages, 54 portraits, 9 crossings, an atlas, a fund. Drop a JSON file into
+`tourism/countries/` and one command puts that country on the map, in the
+atlas, in the journey engine, on the homepage and in the sitemap, with no code
+change.
 
-**The machinery around it.** Four check suites that between them cover
-structure, the journey engine's arithmetic, 76,954 links, and 243 measurements
-taken in a real browser — contrast against composited grounds, the hero's
-composition at nine widths, keyboard focus, what the page weighs.
+**The measuring.** 497 checks is not the useful number; what is useful is that
+three of the suites measure a *rendered* page rather than a file — composited
+contrast, focus rings, layout shift, transferred weight, and what the page says
+with scripting off. The gap this repository keeps finding is the one where
+every file is right and the render is wrong, and that gap is now instrumented.
 
-**The things a professional site is expected to have and this one did not**, all
-added in the last fifty commits: breadcrumb trails on every page, the company's
-legal identity and its three statements on all 1,587 pages that carry a footer,
-a Content-Security-Policy and five other response headers, a display face that
-actually renders on an iPhone, a maskable app icon, and a first screen that
-costs 4.37 MB on a phone instead of 12.29 MB.
+**The Journey Fund door** on the homepage, and the fund's own surfaces. Twenty
+commits of composition work, measured at every width the section changes shape
+in, closed most recently.
 
 ---
 
@@ -49,108 +66,89 @@ costs 4.37 MB on a phone instead of 12.29 MB.
 
 ### 1. Nobody can pay you, and nobody can reach you
 
-`afrinkong.com` is not registered. Every enquiry path on the site — the journey
-builder, the enquiry form, the footer of 1,587 pages — ends at
-`hello@afrinkong.com`, which bounces. The forms `POST` to a `mailto:`, because
-there is no server to post to.
+`afrinkong.com` is not registered. Every enquiry path on the site ends at
+`hello@afrinkong.com`, which bounces, and the one form on the site `POST`s to a
+`mailto:` because there is no endpoint to post to. There is no payment
+provider, no deposit flow, no booking record.
 
-There is no payment provider, no deposit flow, no booking record. A visitor who
-reads 1,594 pages, builds a journey, and decides to spend four thousand dollars
-has nowhere to do it.
+`tourism/company.json` says so itself, in a `$change_me` note beside the
+address: it is one edit here and the tunnel, the enquiry page and 1,587
+footers follow it.
 
 **This is the whole business, and none of it is a code problem.** Everything
-below is smaller.
+below is smaller. It needs a purchase and a decision, not a commit.
 
-*What unblocks it:* buy the domain; point it at the deployment; decide whether
-enquiries go to a mailbox or an endpoint. A real endpoint also lets
-`form-action` in the CSP tighten from `mailto:` to `'self'`.
+### 2. The Journey Builder has no map — and it is the page whose name promises one
 
-### 2. Forty-two photographs are still missing — down from 339
+This is the largest *buildable* gap on the site, and it is the one this round
+of work takes on.
 
-**Largely done.** Three runs of the resolve workflow took the site from 1,119
-filled slots to 1,416 of 1,458. Ethiopia and Burkina Faso have heroes; São Tomé
-and Príncipe is three short, including its hero.
+Measured: `/journey` ships at 122 KB with **zero `<svg>` and zero `<path>`**,
+and renders **270 words** with scripting off — the thinnest page on the site
+apart from `/404`. What exists is a four-step questionnaire that returns a
+country, and it works. What was specified is:
 
-The remaining 42 are the hard tail: slots where the search returns nothing the
-audit will accept. Re-running picks at them and stops. They render as designed
-plates — the country's own outline on its region's tone, captioned with what
-the picture would have shown — so they are honest rather than broken.
+    question -> geographic response -> question -> geographic response
+             -> the finished journey, drawn
 
-*What unblocks the last of them:* better search terms per slot, or the same
-answer as gap 4 — commissioned photography.
+The geometry to do it already exists and is proven three times over:
+`tourism/map.json` holds 52 country paths, 2 island marks and a centroid for
+each, in one 1000×1060 viewBox; the homepage hero draws all of them; every
+crossing page draws fifty-five paths of the same projection.
 
-### 3. The crops are decided now, and most of them decided on centre
+One honest limit, recorded here so it is not rediscovered as a bug: **places
+have no coordinates.** `data/atlas/*.json` gives each place a group, a lens set
+and a write-up, and no position. Thirteen cities in `tourism/atlas-detail.json`
+have a real position and nothing else does. So a journey can be drawn honestly
+across countries and across those thirteen cities, and cannot be drawn as pins
+inside a country without inventing where things are — which this repository
+does not do.
 
-The crop pass reads every photograph and moves the framing off dead centre
-where the detail asks for it. It has now run properly: **151 photographs read,
-17 moved, 134 left at centre** because the detail really was already there on
-the axis that crop uses.
+### 3. There is no social proof
 
-That last number is the pass working, not failing. A panoramic box keeps its
-width and throws away top and bottom, so only its vertical framing is worth
-deciding; a portrait box is the other way round, and a landscape photograph is
-usually balanced left to right — which is why 92 portrait slots stayed put and
-only one moved horizontally. Every shift written was between 55 and 60 on a
-scale of 100: damped, as designed.
-
-It took four attempts to get here, and three of them were my own bugs — an
-exit code that failed the run for succeeding, a log that would not say why, and
-a limit flag borrowed from another command that stopped the pass after one
-photograph. Recorded because the pattern is worth remembering: each one
-reported success.
-
-### 4. Eight wonders cannot be photographed honestly
-
-Great Zimbabwe, Bazaruto, Gorongosa, Timbuktu and four others have no usable
-stock photograph. What the archives return is not what the page claims — Great
-Zimbabwe brings back Türkiye, Spain and France; Bazaruto brings back Brazil;
-Gorongosa brings back Minnesota and a carabao; Timbuktu brings back Kano.
-
-These are recorded in `tourism/wonders.json` as `$photo_needs_commission`
-rather than filled with something approximate, because a photograph that is
-not of the place is worse than a drawn outline that is honest about it.
-
-*What unblocks it:* commissioned or licensed photography. This is a purchase,
-not a task.
-
-### 5. There is no social proof
-
-`tourism/voices.json` holds an empty list. The site
-currently makes its case entirely on its own authority. For a company selling
-four-thousand-dollar journeys to a country most buyers have not visited,
-testimony from someone who went is the single most persuasive thing that could
-be added — and inventing it is not an option.
+`tourism/voices.json` holds an empty list. The site makes its case entirely on
+its own authority, for four-thousand-dollar journeys to countries most buyers
+have not visited. Testimony from someone who went is the single most persuasive
+thing that could be added, and inventing it is not an option.
 
 *What unblocks it:* one completed journey, and permission to quote.
 
-### 6. Nothing has met a real browser
+### 4. Photographs: the tail, and the eight that cannot be taken
 
-The security headers, the domain, the canonical URLs, the manifest — all correct
-in the files and none of them ever served. The Content-Security-Policy is the
-one that can break a page quietly. The first deploy to the real domain wants
-somebody watching the browser console, not the page.
+1,416 slots are filled and 337 candidates were refused by the audit. The
+remainder render as designed plates — the country's outline on its region's
+tone, captioned with what the picture would have shown — on 86 pages. Honest
+rather than broken, but a plate is not a photograph.
+
+Separately, the wonders that stock photography cannot serve honestly stay
+recorded as `$photo_needs_commission` rather than filled with something
+approximate. That is a purchase, not a task.
+
+### 5. Nothing has met a real browser at a real domain
+
+The security headers, the canonical URLs, the manifest, the
+Content-Security-Policy — all correct in the files and none of them ever
+served. The CSP is the one that can break a page quietly. The first deploy to
+the real domain wants somebody watching the console.
 
 ---
 
 ## What I looked at and deliberately did not change
 
 - **The five pages branded "Kamerun"** — `/about`, `/contact`, `/pricing`,
-  `/services`, `/cameroon`. Kamerun is the name of the operating company in
-  Cameroon, those pages are that operator's, and they are linked only from
-  `/cameroon`. The branding is correct.
-- **Two slots whose alt text is only the country name.** That is deliberate
-  conservatism: a record with no provider description gets a generic alt rather
-  than a claim the site cannot support. It resolves itself on the next resolve
-  run.
-- **`sizes` on the homepage's photographs.** Added, measured, and it saves
-  nothing today — those photographs really are painted 950 pixels wide. Kept for
-  what it protects rather than what it saves, and recorded as a negative result.
+  `/services`, `/cameroon`. Kamerun is the operating company in Cameroon and
+  those are that operator's pages. The branding is correct.
+- **`compare.html` reads 55% of its words with scripting off.** It is a
+  comparison tool whose whole content is the comparison; the words it withholds
+  are the ones it has not been asked for yet.
+- **The 42-slot photographic tail.** Re-running the resolver picks at it and
+  stops. Better search terms per slot is a content decision, not a code one.
 
 ---
 
 ## If I had one more day
 
-Not more architecture. The architecture is ahead of the business now: 1,594
-pages of a company that cannot be paid. The next useful commit is a domain
-registration and an endpoint behind the enquiry form, and everything after that
-is easier to justify once a single real enquiry has arrived.
+The same answer as last time, and it is still not a code answer: register the
+domain and put an endpoint behind the enquiry form. Everything the architecture
+can do for the business, it has now done — the next thing that changes the
+business is a single real enquiry arriving somewhere a person reads.
