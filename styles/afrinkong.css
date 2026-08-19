@@ -951,3 +951,37 @@ a.af-lockup > i,a.af-lockup > b,a.af-lockup > span{grid-column:2}
 /* No lazy loading on the mark in a masthead: it is above the fold on every
    page it appears on, and a lazy logo is a logo that arrives late. */
 .af-emblem--mast{width:var(--af-emblem,34px);height:var(--af-emblem,34px)}
+
+/* THE MASTHEAD RUNS OUT OF ROOM BEFORE THE PHONE DOES.
+   The mark costs 34px and a 12px gap, and four mastheads had no 46px to give:
+   at 320 the atlas overflowed its own document by 14 pixels, the places index
+   by 11, /404 by 8 and Trans Afrique by 5 — the right-hand call pushed past
+   the edge. Measured, not assumed: /journey and the homepage were unaffected
+   and are left alone.
+
+   What goes is the eyebrow, not the mark. Every one of these mastheads reads
+   AFRINKONG in 9.5px mono over the page's name, and beside the mark that
+   eyebrow is the redundant half — the mark says Afrinkong, which is what a
+   mark is. It is hidden from the eye and kept for a screen reader, because
+   alt="" on the mark means the company's name would otherwise be announced
+   nowhere in the masthead. The result on a phone is [mark] PAGE NAME, which is
+   a cleaner lockup than three things in 320 pixels.
+
+   The mark also comes down a size between there and 900, where the same
+   right-hand call was 11 pixels over on the places index at 768. */
+@media(max-width:560px){
+  a.af-lockup > i{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+  a.af-lockup{column-gap:8px}
+  a.af-lockup .af-emblem{grid-row:auto;align-self:center}
+  /* width and height, not the custom property: --af-emblem is set inline on
+     the element and an inline custom property beats any stylesheet that tries
+     to redefine it. The first cut of this block set --af-emblem and the mark
+     stayed 34px at every width, which the measurement caught and the eye
+     would not have. */
+  .af-emblem--mast{width:26px;height:26px}
+}
+@media(min-width:561px) and (max-width:900px){
+  a.af-lockup{column-gap:8px}
+  .af-emblem--mast{width:26px;height:26px}
+}
