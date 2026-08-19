@@ -208,14 +208,31 @@
    it is something the eye can go to instead of the answer. */
 .jn-reveal{min-height:calc(100vh - var(--mast) - var(--sp-6) - var(--sp-7));
   display:flex;align-items:center}
+/* The name is sized against this row, not against the window. See the note on
+   .jn-reveal-name. container-type:inline-size applies inline containment, which
+   is a containing block for fixed descendants — there are none here, and this
+   element is on /journey only, so it cannot reach the homepage's fixed-window
+   band. Worth saying because that band has been broken this way before. */
 .jn-reveal-in{display:grid;width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
-  gap:var(--sp-4) var(--sp-6);align-items:center}
+  gap:var(--sp-4) var(--sp-6);align-items:center;container-type:inline-size}
 .jn-reveal-stamp{grid-column:1/-1;color:var(--c-accent)}
 .jn-shape{grid-row:span 4;align-self:stretch;display:flex;align-items:center;
   min-height:340px}
 .jn-shape svg{width:100%;height:auto;max-height:64vh;display:block;overflow:visible}
 .jn-shape-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
-.jn-reveal-name{align-self:end;margin:0;font-size:clamp(46px,7vw,104px)}
+/* THE COUNTRY'S NAME WAS SIZED AGAINST THE WINDOW AND SET IN HALF OF IT.
+   7vw is 104px at 1920, and at 1920 this name stands in a 352px cell: CAMEROON
+   came to 499px and ran out through the map beside it. It overflowed at every
+   width from 1080 up, and the wider the screen the worse it got, which is the
+   signature of a viewport unit doing a container's job.
+
+   Sized against the row it lives in instead. This face sets a name at 4.80
+   times its font size, the cell is 1.05/2.05 of the row, and the target is
+   the longest single-word name on the list — Mozambique, not Cameroon — inside
+   ninety per cent of the cell, which is the row times 0.076. The clamp ends are guards; the calc lands inside them. */
+.jn-reveal-name{align-self:end;margin:0;
+  font-size:clamp(38px,7vw,104px);
+  font-size:clamp(34px,7.6cqw,104px)}
 .jn-reveal-tag{font-family:var(--fj-text);font-size:clamp(19px,2.2vw,27px);color:var(--c-accent);
   line-height:1.25;margin:0}
 
@@ -416,6 +433,18 @@
 @media(max-width:1000px){
   .jn{padding:var(--sp-5) 28px var(--sp-6)}
   .jn-reveal-in{grid-template-columns:1fr;gap:var(--sp-3)}
+  /* AND THE ONE ITEM THAT WAS STILL ASKING FOR COLUMN TWO.
+     "Ask me again" carries grid-column:2 so it sits under the text on a wide
+     screen. Below 1000 there is no column two, so it made one — an implicit
+     track — and the reveal has been a two-column layout at every width down to
+     320 while this rule said one. That is why the country's name was set in
+     half the screen on a phone. Nothing looked broken; it just never was the
+     layout the stylesheet described. */
+  .jn-restart{grid-column:1}
+  /* One column means the name gets the whole row, so it is sized against the
+     whole row: 16cqw rather than 7.6. At 390 that is 57px instead of 37 — the
+     difference between a headline and a label. */
+  .jn-reveal-name{font-size:clamp(38px,16cqw,104px)}
   .jn-shape{grid-row:auto;min-height:0;max-width:340px}
   .jn-shape svg{max-height:38vh}
   .jn-compose-grid{grid-template-columns:1fr;gap:var(--sp-5)}
@@ -461,6 +490,12 @@
     mask-image:linear-gradient(to bottom,#000 calc(100% - 22px),transparent)}
   .jn{padding:var(--sp-4) 18px var(--sp-6)}
   .jn-h1{font-size:clamp(32px,9.5vw,50px);max-width:none}
+  /* The question headings take the phone size above; the country's name does
+     not. It is one word on its own line with the whole row to itself, and at
+     9.5vw it came out at 37px in a 354px column — a label where the page's
+     one big moment should be. Restated here because .jn-h1 is declared after
+     the tablet rule and they carry the same weight. */
+  .jn-reveal-name{font-size:clamp(38px,16cqw,104px)}
   .jn-cards{grid-template-columns:1fr}
   .jn-card-in{padding:16px}
   .jn-card-in b{font-size:22px}

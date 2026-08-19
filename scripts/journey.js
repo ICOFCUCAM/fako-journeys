@@ -222,6 +222,12 @@
     }).join('');
     paintField();
     paintMap();
+    /* The reveal is a country being proposed, so the map goes there too. It
+       flew when a journey opened and sat still when one was offered, which
+       made the answer screen the only place on this page where the map was
+       not answering. Opening an alternative flies again, because that is the
+       same act with a different country. */
+    flyTo(frameFor(chosen.slug));
   }
 
   /* The continent, coloured rather than filtered.
