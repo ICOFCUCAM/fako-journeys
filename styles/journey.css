@@ -722,3 +722,93 @@
   .jn-enq-form{padding:var(--sp-4)}
   .jn-enq-facts div{grid-template-columns:1fr;gap:4px}
 }
+
+/* ---- the continent ---------------------------------------------------------
+ * THE PAGE'S SUBJECT, ON THE PAGE.
+ *
+ * This page asked four questions about where to go and showed nothing that was
+ * anywhere. The map is not an illustration of the answer; it is the surface the
+ * answer lands on, so it is here from the first question and it stays through
+ * the reveal and the composing.
+ *
+ * Its colours are not new. The four states are exactly the four the country
+ * grid below already argues in — leads on it, its region does, written up here
+ * too, and the one you chose — because a reader who has learnt the grid's
+ * legend has learnt the map's, and two legends for one idea is one legend too
+ * many. The measured note on the grid applies here as well: burnt sienna
+ * rather than terracotta, at 6.31:1 against the page.
+ */
+.jn-atlas{margin:0 0 var(--sp-5)}
+.jn-atlas-in{position:relative}
+.jn-atlas .af-stamp{display:block;margin-bottom:14px}
+.jn-atlas-fig{margin:0}
+.jn-map{display:block;width:100%;height:auto;overflow:visible}
+
+/* The base state: an outline continent on the page's own ground. Every stroke
+   is non-scaling, because this drawing is 1000 units wide and rendered at
+   anything from 300 to 520 pixels — a stroke in user units would be a hairline
+   on the rail and a rope on a phone. */
+.jn-map-rest path{fill:none;stroke:var(--c-border);stroke-width:1;
+  vector-effect:non-scaling-stroke;stroke-dasharray:3 3}
+.jn-map-c path,.jn-map-c circle{fill:var(--c-bg);stroke:var(--c-primary);
+  stroke-width:1;vector-effect:non-scaling-stroke;
+  transition:fill var(--t-mid) var(--ease),stroke var(--t-fast) var(--ease)}
+.jn-map-c[data-match="leads"] path,.jn-map-c[data-match="leads"] circle{
+  fill:var(--c-accent);stroke:var(--c-accent)}
+.jn-map-c[data-match="region"] path,.jn-map-c[data-match="region"] circle{
+  fill:var(--c-primary);stroke:var(--c-primary)}
+.jn-map-c[data-match="open"] path,.jn-map-c[data-match="open"] circle{
+  fill:var(--c-bg)}
+/* Out of the month they gave: marked, never removed — the same sentence the
+   grid makes, in the one form a map has for it. */
+.jn-map-c[data-off] path,.jn-map-c[data-off] circle{stroke-dasharray:4 3}
+/* The one they chose. A ring rather than a fill, so the colour underneath goes
+   on saying what that country leads on. */
+.jn-map-c[data-picked] path,.jn-map-c[data-picked] circle{
+  stroke:var(--c-gold,#B99A63);stroke-width:3.4}
+
+.jn-map-c:hover path,.jn-map-c:hover circle,
+.jn-map-c[data-hot] path,.jn-map-c[data-hot] circle{stroke:var(--c-accent);
+  stroke-width:2.4}
+.jn-map-c:focus{outline:none}
+.jn-map-c:focus-visible path,.jn-map-c:focus-visible circle{
+  stroke:var(--c-accent);stroke-width:3.4}
+
+/* THE HIT AREA IS NOT THE OUTLINE.
+   The Gambia is a river seventy units long and Comoros is three dots. Neither
+   is a target a thumb can find, and neither becomes one by being drawn bigger —
+   that would be a lie about the geography. Each country carries an invisible
+   disc at its own centroid instead: transparent fill, which in SVG still takes
+   a pointer, over the drawing and under nothing. */
+.jn-map-hit{fill:transparent;cursor:pointer}
+
+.jn-map-say{margin-top:12px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted);
+  line-height:1.7}
+.jn-map-key{list-style:none;margin:14px 0 0;padding:0;
+  display:flex;flex-wrap:wrap;gap:6px 18px}
+.jn-map-key[hidden]{display:none}
+.jn-map-key li{display:flex;align-items:center;gap:8px;font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.jn-map-key li::before{content:"";width:10px;height:10px;flex:0 0 auto;
+  border:1px solid var(--c-border)}
+.jn-map-key li[data-match="leads"]::before{background:var(--c-accent);
+  border-color:var(--c-accent)}
+.jn-map-key li[data-match="region"]::before{background:var(--c-primary);
+  border-color:var(--c-primary)}
+.jn-map-key li[data-match="open"]::before{background:var(--c-bg)}
+
+/* A RAIL, NOT A BANNER, WHERE THERE IS ROOM FOR ONE.
+   The questions are set in a 16ch measure and the map wants to be square, so
+   above 1080 they sit side by side and the map stays in view while the reader
+   works down the questions — which is the whole point of it being there. Every
+   other child of .jn stays in column one without being named, so adding a
+   section to this page does not mean remembering this rule. */
+@media(min-width:1080px){
+  .jn{max-width:1380px;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(330px,30vw,460px));
+    column-gap:clamp(32px,4vw,72px);align-items:start}
+  .jn > *{grid-column:1}
+  .jn-atlas{grid-column:2;grid-row:1 / -1;position:sticky;
+    top:calc(var(--mast) + 24px);margin:0}
+}

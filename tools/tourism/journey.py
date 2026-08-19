@@ -62,6 +62,7 @@ SHAPES = os.path.join(ROOT, "tourism", "shapes.json")
 LENSES = os.path.join(ROOT, "tourism", "lenses.json")
 PLAN = os.path.join(ROOT, "tourism", "journeys.json")
 ATLAS_DATA = os.path.join(ROOT, "data", "atlas")
+MAP = os.path.join(ROOT, "tourism", "map.json")
 
 MONTHS = ("January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December")
@@ -230,6 +231,107 @@ def style_chips(data):
         for s in data["style"])
 
 
+def continent():
+    """The continent, drawn into the document rather than into a script.
+
+    This is the thing this page was specified to have and did not: every
+    country of Africa, on the page, from the first question, so that an answer
+    has somewhere to land. The projection is not new — `tourism/map.json` holds
+    the same fifty-two paths, two island marks and one disputed territory the
+    homepage hero draws, in the same 1000x1060 viewBox — so nothing here
+    invents geometry. It reads a file three other surfaces already read.
+
+    Three decisions worth stating, because each was the alternative's opposite.
+
+    IT IS SERVER-RENDERED, NOT DRAWN BY THE SCRIPT. A map assembled in the
+    browser is a map that does not exist for anything that does not run
+    JavaScript, and this page was already the thinnest on the site by that
+    measure — 270 words, against 4,174 on the homepage. Fifty-four country
+    names and taglines in the document is the same fix as the map.
+
+    EVERY COUNTRY IS A LINK. Not a <path> with a click handler: an <a> to that
+    country's own page, which is where it goes with scripting off and what a
+    keyboard can reach without a roving tabindex. The script intercepts the
+    click and picks the country instead; the link is what it degrades to.
+
+    THE HIT AREA IS NOT THE OUTLINE. The Gambia is a river and Comoros is three
+    dots, and neither is a target a thumb can find. Each country carries a
+    transparent disc at its own centroid, sized for a finger, painted under
+    nothing and hit before the outline. The outline is the drawing; the disc is
+    the control.
+    """
+    m = read(MAP, {})
+    live = m.get("live") or []
+    if len(live) < 40:
+        raise IOError("tourism/map.json holds %d countries — run: build.py map"
+                      % len(live))
+    view = m.get("view") or [0, 0, 1000.0, 1060.0]
+
+    def at(row):
+        raw = row.get("at")
+        if isinstance(raw, str):
+            raw = json.loads(raw)
+        return [float(raw[0]), float(raw[1])] if raw else None
+
+    rest = "".join(
+        '<path d="%s"><title>%s</title></path>' % (esc(r["d"]), esc(r.get("n") or ""))
+        for r in (m.get("rest") or []))
+
+    shapes, discs = [], []
+    for row in live:
+        p = at(row)
+        title = row["name"] + (" — " + row["tag"] if row.get("tag") else "")
+        shapes.append(
+            '<a class="jn-map-c" href="%s" data-slug="%s"%s>'
+            '<title>%s</title><path d="%s"/></a>'
+            % (esc(row.get("href") or "/" + row["slug"]), esc(row["slug"]),
+               ' data-at="%.1f %.1f"' % (p[0], p[1]) if p else "",
+               esc(title), esc(row["d"])))
+        if p:
+            discs.append('<circle class="jn-map-hit" data-slug="%s" cx="%.1f" '
+                         'cy="%.1f" r="17"/>' % (esc(row["slug"]), p[0], p[1]))
+
+    marks = []
+    for row in (m.get("marks") or []):
+        p = at(row)
+        if not p:
+            continue
+        title = row["name"] + (" — " + row["tag"] if row.get("tag") else "")
+        marks.append(
+            '<a class="jn-map-c is-isle" href="%s" data-slug="%s" '
+            'data-at="%.1f %.1f"><title>%s</title>'
+            '<circle cx="%.1f" cy="%.1f" r="%s"/></a>'
+            % (esc(row.get("href") or "/" + row["slug"]), esc(row["slug"]),
+               p[0], p[1], esc(title), p[0], p[1], esc(row.get("r") or 9)))
+        discs.append('<circle class="jn-map-hit" data-slug="%s" cx="%.1f" '
+                     'cy="%.1f" r="17"/>' % (esc(row["slug"]), p[0], p[1]))
+
+    return """
+      <figure class="jn-atlas-fig">
+        <svg class="jn-map" id="jn-map" viewBox="%(view)s"
+             preserveAspectRatio="xMidYMid meet"
+             aria-labelledby="jn-map-t jn-map-d">
+          <title id="jn-map-t">Africa, with every country this site writes up</title>
+          <desc id="jn-map-d">An outline map of the continent. Every country is
+            a link to its own pages; answering the questions colours them by how
+            well each one answers what you asked for.</desc>
+          <g class="jn-map-rest" aria-hidden="true">%(rest)s</g>
+          <g class="jn-map-live">%(shapes)s</g>
+          <g class="jn-map-isles">%(marks)s</g>
+          <g class="jn-map-route" id="jn-map-route" aria-hidden="true"></g>
+          <g class="jn-map-hits" aria-hidden="true">%(discs)s</g>
+        </svg>
+        <figcaption class="jn-map-say" id="jn-map-say">Fifty-four countries.
+          Answer a question and watch them answer back.</figcaption>
+      </figure>""" % {
+        "view": "%g %g %g %g" % tuple(view),
+        "rest": rest,
+        "shapes": "".join(shapes),
+        "marks": "".join(marks),
+        "discs": "".join(discs),
+    }
+
+
 def render(countries, taxonomy):
     data = brief(countries, taxonomy)
     money = rates.load()
@@ -252,6 +354,7 @@ def render(countries, taxonomy):
         "ground": rates.block_ground(money),
         "notincluded": rates.block_notincluded(money),
         "whopays": company.block_whopays(co),
+        "continent": continent(),
     }
 
 
@@ -299,6 +402,24 @@ TEMPLATE = """<!DOCTYPE html>
 </header>
 
 <main class="jn" id="jn" data-step="1">
+
+  <!-- The continent, from the first question rather than after the last one.
+       It is the page's subject and it was not on the page: a visitor answering
+       four questions about where to go had nothing in front of them that was
+       anywhere. It stays put through the questions, the answer and the
+       composing, and every stage of those three writes to it. -->
+  <aside class="jn-atlas" id="jn-atlas" aria-labelledby="jn-atlas-h">
+    <div class="jn-atlas-in">
+      <h2 class="af-stamp" id="jn-atlas-h">The continent</h2>
+      %(continent)s
+      <ul class="jn-map-key" id="jn-map-key" hidden>
+        <li data-match="leads">Leads on what you asked</li>
+        <li data-match="region">Its region does</li>
+        <li data-match="open">Written up here too</li>
+      </ul>
+    </div>
+  </aside>
+
 
   <!-- the questions ------------------------------------------------------- -->
   <form class="jn-ask" id="ask" novalidate>
