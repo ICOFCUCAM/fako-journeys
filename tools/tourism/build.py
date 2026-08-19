@@ -163,6 +163,7 @@ def cmd_library(args):
         build.py library plan      name the approved set        (no network)
         build.py library fetch     download it                  (NEEDS NETWORK)
         build.py library encode    AVIF + WebP at four widths   (no network)
+        build.py library ingest    take delivered photographs in (no network)
         build.py library publish   upload the ladder to R2      (NEEDS NETWORK)
         build.py library reachable ask the public host for it   (NEEDS NETWORK)
         build.py library verify    no hosted file without an origin
@@ -209,8 +210,11 @@ def cmd_library(args):
         return library.publish(write=write)
     if step == "reachable":
         return library.reachable(sample=int(getattr(args, "limit", 0) or 0))
-    print("library: unknown step %r — plan, fetch, encode, publish, reachable, "
-          "verify or rewrite" % step)
+    if step == "ingest":
+        return library.ingest(write=write,
+                              manifest=getattr(args, "only", None))
+    print("library: unknown step %r — plan, ingest, fetch, encode, publish, "
+          "reachable, provenance, thirdparty, verify or rewrite" % step)
     return 1
 
 
