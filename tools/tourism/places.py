@@ -325,7 +325,7 @@ def run(countries, taxonomy, log=print):
 
 
 CHROME = """<header class="pl-mast">
-  <a class="pl-mark" href="/"><i>Afrinkong</i><b>%(country)s</b></a>
+  <a class="pl-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>%(country)s</b></a>
   <nav class="pl-routes" aria-label="Primary">
     <a href="/portrait/%(slug)s">Portrait</a>
     <a href="/atlas#/%(slug)s">The Atlas</a>
@@ -422,7 +422,7 @@ INDEX = """<!DOCTYPE html>
 <body>
 <a class="af-skip" href="#main">Skip to the list</a>
 <header class="pl-mast">
-  <a class="pl-mark" href="/"><i>Afrinkong</i><b>Every place</b></a>
+  <a class="pl-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Every place</b></a>
   <nav class="pl-routes" aria-label="Primary">
     <a href="/stories">Stories</a>
     <a href="/atlas">The Atlas</a>

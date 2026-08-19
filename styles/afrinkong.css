@@ -913,8 +913,14 @@ img[data-illustration]{height:auto}
  * places bar — because the size is a property of the place it is used, not of
  * the mark, and a modifier class per size is a class per size.
  */
+/* max-width:none matters and is not tidying. The global img rule sets
+   max-width:100%, and in the masthead lockup the mark sits in an `auto` grid
+   track: the track sizes itself from the image, the image's max-width resolves
+   against the track, and the pair settle at zero. The mark computed 0px wide
+   and 34px tall on the homepage and simply was not there. An explicit width
+   with no percentage cap breaks the circle. */
 .af-emblem{display:block;width:var(--af-emblem,52px);height:var(--af-emblem,52px);
-  flex:0 0 auto}
+  max-width:none;flex:0 0 auto}
 /* Inline against a line of text: on the baseline rather than above it, and
    sized against the line it sits in. */
 .af-emblem--inline{display:inline-block;vertical-align:-.34em;margin-right:9px}
@@ -925,3 +931,23 @@ img[data-illustration]{height:auto}
 .af-foot-brand .af-emblem,.wa-foot-brand .af-emblem,.fj-foot-brand .af-emblem{
   margin-bottom:14px}
 .af-foot-brand b,.wa-foot-brand b,.fj-foot-brand b{display:block;font-weight:inherit}
+
+/* THE MASTHEAD LOCKUP: THE MARK BESIDE THE NAME, NOT ABOVE IT.
+   Every masthead on this site is a fixed 78px bar carrying two lines of type —
+   a mono eyebrow over the page's name — and the marks are laid out as flex
+   columns to stack them. A mark added to that column would be a third row in a
+   bar with room for two.
+
+   Beside them instead, spanning both lines, which is the shape a mark and a
+   wordmark have always had. `a.af-lockup` rather than `.af-lockup` on purpose:
+   each page family declares its own .xx-mark as display:flex in its own
+   stylesheet, and those load after this file — an element plus a class beats a
+   class whatever the order, which is the only way to state this once instead
+   of five times. */
+a.af-lockup{display:grid;grid-template-columns:auto 1fr;
+  column-gap:12px;align-items:center;line-height:1}
+a.af-lockup .af-emblem{grid-row:1 / span 2;align-self:center;margin:0}
+a.af-lockup > i,a.af-lockup > b,a.af-lockup > span{grid-column:2}
+/* No lazy loading on the mark in a masthead: it is above the fold on every
+   page it appears on, and a lazy logo is a logo that arrives late. */
+.af-emblem--mast{width:var(--af-emblem,34px);height:var(--af-emblem,34px)}

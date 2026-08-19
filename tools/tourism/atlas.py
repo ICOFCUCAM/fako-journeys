@@ -398,7 +398,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body>
 <a class="af-skip" href="#atlas">Skip to the atlas</a>
 <header class="at-mast">
-  <a class="at-mark" href="/"><i>Afrinkong</i><b>The Atlas</b></a>
+  <a class="at-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>The Atlas</b></a>
   <nav class="at-routes" aria-label="Primary">
     <a href="/#window">Home</a>
     <a href="/journey">Build a journey</a>

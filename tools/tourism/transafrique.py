@@ -1125,7 +1125,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body class="tf-body">
 <a class="af-skip" href="#main">%(skip)s</a>
 <header class="jn-mast">
-  <a class="jn-mark" href="/"><i>Afrinkong</i><b>Trans Afrique</b></a>
+  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Trans Afrique</b></a>
   <nav class="jn-routes" aria-label="Primary">
     <a href="/wonders">The Wonders</a>
     <a href="/atlas">The Atlas</a>
