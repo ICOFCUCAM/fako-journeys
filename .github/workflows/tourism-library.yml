@@ -1,0 +1,119 @@
+name: Build the Afrinkong image library
+
+# Download the approved photographs, encode the ladder, and commit the register.
+# Here rather than in a working copy for the same reason the resolver runs here:
+# the development environment cannot reach images.pexels.com at all — its proxy
+# answers 403 to the CONNECT — so `fetch` is a workflow step by necessity.
+#
+# Nothing in this workflow decides WHICH photographs. That is decided by
+# `build.py assets`, which reads and classifies without downloading, and by
+# `build.py library plan`, which writes the approved set into tourism/assets.json.
+# This runs against that register and nothing else.
+#
+# It does not publish. Uploading the ladder to object storage needs credentials
+# for a bucket that does not exist yet, and the step that writes first-party
+# URLs into 1,529 pages refuses to run until tourism/assets.json says live: true.
+# Both of those are deliberate: a rewrite before publication is 1,529 pages of
+# broken photographs.
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Stop after this many downloads (0 = the whole approved set)"
+        required: false
+        default: "25"
+      publish:
+        description: "Upload the ladder to R2 (needs the four R2_ secrets)"
+        type: boolean
+        required: false
+        default: false
+      encode:
+        description: "Encode the AVIF/WebP ladder after downloading"
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tourism-library
+  cancel-in-progress: false
+
+jobs:
+  library:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install the encoder and the uploader
+        run: python -m pip install --upgrade "pillow>=11" boto3
+
+      # The plan is recomputed rather than trusted, so a register that has
+      # drifted from the inventory cannot quietly send this to fetch something
+      # the audit has since refused.
+      - name: Re-plan from the inventory
+        run: python tools/tourism/build.py library plan --fetch
+
+      - name: Download the approved set
+        run: |
+          python tools/tourism/build.py library fetch --fetch \
+            --limit "${{ github.event.inputs.limit }}"
+
+      - name: Encode the ladder
+        if: ${{ github.event.inputs.encode == 'true' }}
+        run: python tools/tourism/build.py library encode --fetch
+
+      # Cloudflare R2, S3 API. Four repository secrets, none of them ever in a
+      # working copy: R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY,
+      # R2_BUCKET. Objects go up with a year of immutable caching, because a
+      # name identifies one photograph at one width in one format.
+      - name: Publish to R2
+        if: ${{ github.event.inputs.publish == 'true' }}
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+        run: python tools/tourism/build.py library publish --fetch
+
+      # An upload that returned 200 proves the S3 endpoint accepted it. It
+      # does not prove image.afrinkong.com serves it to somebody with no
+      # credentials, which is the only request a visitor ever makes. This asks
+      # the public host for every object by the key publish used, and checks
+      # the byte count, the content type, the cache header, and that an absent
+      # key answers 404 rather than a 200 that is not an image.
+      - name: Ask the public host for what we just published
+        if: ${{ github.event.inputs.publish == 'true' }}
+        run: python tools/tourism/build.py library reachable
+
+      # Every hosted photograph has a photographer, a source page and a
+      # licence; nothing that was migrated is still fetched from a provider.
+      # Either failing means nothing is committed.
+      - name: Verify provenance and third-party leakage
+        run: python tools/tourism/build.py library verify
+
+      # The register and the encoded ladder, not the originals. incoming/ is
+      # the staging area and stays out of the repository — that is the whole
+      # point of not putting several gigabytes into git.
+      - name: Commit the register
+        run: |
+          git config user.name  "afrinkong-library"
+          git config user.email "actions@users.noreply.github.com"
+          git add tourism/assets.json data/asset-inventory.json
+          git diff --cached --quiet && echo "nothing changed" && exit 0
+          git commit -m "The image library: download and register the approved set"
+          git push
+
+      - name: Keep the encoded ladder as an artefact, not as a commit
+        uses: actions/upload-artifact@v4
+        with:
+          name: afrinkong-image-library
+          path: images/library/
+          if-no-files-found: warn
+          retention-days: 14

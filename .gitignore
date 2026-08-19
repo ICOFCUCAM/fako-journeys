@@ -14,3 +14,17 @@ node_modules/
 # every deploy from then on, in exchange for the 2 MB in videos/ that is
 # actually served. The cut is the deliverable; the master is working material.
 incoming/video/masters/
+
+# THE IMAGE LIBRARY'S WORKING FILES, AND WHY THEY ARE NOT COMMITTED.
+#
+# incoming/library/ holds the downloaded originals and images/library/ holds
+# the encoded ladder — 629 photographs at four widths in two formats. Putting
+# those in git is the thing the whole first-party image exercise was told not
+# to do: the repository is cloned on every deploy and every checkout, and a
+# few hundred megabytes of photographs makes both slower forever.
+#
+# What IS committed is tourism/assets.json — the register that says what each
+# one is, who took it, under what licence, and which pages use it. The bytes
+# live in object storage; the knowledge lives here.
+incoming/library/
+images/library/

@@ -56,6 +56,50 @@ resources, and a CSP does not govern where a link may go.
   right thing to add once the domain has been live on HTTPS for a while and
   nobody plans a subdomain that cannot be. Not on the day the domain is bought.
 
+## img-src gains the asset host before it loses the providers
+
+`image.afrinkong.com` is in `img-src` from the day the first photograph is
+published there, and the two provider hosts stay until the last one leaves.
+That order is deliberate and it is the only safe one: tightening first would
+break every page still hotlinking, and the count of what is left — reported by
+`build.py library verify` — is what says when the two lines can go. Today it is
+11,472 references across 1,529 pages, so they stay.
+
+When it reaches zero the directive becomes
+
+    img-src 'self' data: https://image.afrinkong.com;
+
+and with it the third-party transfer of every visitor's IP address to Pexels
+and Unsplash ends. That is the privacy half of the first-party image argument,
+and it is the half a CSP can actually enforce.
+
+## Cache-Control, and why two policies rather than one
+
+The site had six security headers and nothing about caching, so every asset
+took whatever the host felt like. Two policies, split on one question: does the
+content at this filename ever change?
+
+**A year, immutable — `/images`, `/fonts`, `/videos`.** A file at
+`/images/uploads/x-1600w.jpg` is that photograph and stays that photograph; a
+different photograph gets a different name. `immutable` means the browser does
+not even send a conditional request, which on a site whose first screen is
+photographs is most of the repeat-visit cost.
+
+**An hour with background revalidation — `/styles`, `/scripts`.** These
+filenames are stable across deploys and their contents are not: there is no
+content hash in `afrinkong.css`. A year here would leave a returning reader on
+the previous stylesheet until they cleared their cache, which is the classic
+way a deploy appears not to have happened. `stale-while-revalidate=86400` lets
+them have the cached copy instantly and fetches the new one behind it.
+
+**Ten minutes — `/data`.** The payloads the atlas and the journey engine fetch.
+Same reasoning as the stylesheets and shorter, because a country's write-up
+changing is the thing a reader would most notice not changing.
+
+**Nothing for HTML on purpose.** The pages are the site; they must revalidate,
+and the host's default already does that. Setting a long life on them is how a
+static site starts serving last week.
+
 ## Before changing any of this
 
 `afrinkong.com` is not registered yet, so none of these headers has ever been
