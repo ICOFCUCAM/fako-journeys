@@ -805,11 +805,26 @@ def overview_body(d, by_slug):
         '<div class="tf-page">',
         # The idea, at door length: the line and one paragraph. The rest of it,
         # including the frontier logistics, is /why.
+        # THE CLAIM IS GEOGRAPHIC AND THIS PAGE SHOWED NO GEOGRAPHY.
+        # "Dakar to Mombasa is further than Lisbon to Kabul, and there are
+        # fifty-four countries in between" is a sentence about distance, on the
+        # door page of a series about crossing a continent, with nothing drawn
+        # anywhere on it. Each of the four crossing pages carries fifty-five
+        # paths of this map; the page that introduces them carried zero, and
+        # two hundred and fifty pixels of empty dark sat under the paragraph
+        # making the argument.
+        #
+        # The plate, not the section. routemap.build() adds the index of four
+        # journeys, which is what /trans-afrique/crossings is for; here it is
+        # the drawing alone, saying what the sentence says.
         '<section class="tf-block tf-idea" id="idea">'
         '<h2 class="tf-h2">%s</h2>'
         '<div class="tf-idea-in"><p class="tf-idea-line">%s</p>'
-        '<div class="tf-idea-body"><p class="tf-idea-say">%s</p></div></div>'
-        '</section>' % (esc(i["title"]), esc(i["line"]), esc(i["say"][0])),
+        '<div class="tf-idea-body"><p class="tf-idea-say">%s</p></div>'
+        '<figure class="tf-idea-map">%s<figcaption>The four crossings, on the '
+        'continent they cross.</figcaption></figure></div>'
+        '</section>' % (esc(i["title"]), esc(i["line"]), esc(i["say"][0]),
+                        routemap.plate(d, by_slug)),
         '</div>',
         philosophy_band(d),
         '<div class="tf-page tf-page--after">',
