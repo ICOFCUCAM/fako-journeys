@@ -963,6 +963,26 @@ def reachable(log=print, sample=0):
         st2 = (ask(url)[1].get("cf-cache-status") or "-").upper()
         second[st2] = second.get(st2, 0) + 1
 
+    # CACHE BEHAVIOUR IS MEASURED WITH GET, BECAUSE HEAD IS NOT CACHED.
+    #
+    # The loop above uses HEAD, which is right for checking three hundred
+    # objects cheaply and useless for asking about the cache: Cloudflare does
+    # not serve HEAD from cache and answers DYNAMIC to all of it. Reported as
+    # it stood, that said "nothing is being cached" about a library whose
+    # whole economics are a year of immutable caching — a false alarm that
+    # would have sent somebody hunting a problem that was never there.
+    #
+    # So a handful of real GETs, each asked twice. The first may legitimately
+    # MISS on a cold edge; the second is the one that matters, and HIT is what
+    # a returning visitor gets.
+    warm = {}
+    sample = [k for k, _ in keys[:8]]
+    for k in sample:
+        url = "%s/%s" % (host, k)
+        ask(url, "GET")
+        st = (ask(url, "GET")[1].get("cf-cache-status") or "-").upper()
+        warm[st] = warm.get(st, 0) + 1
+
     # A name nothing was ever published under. 404 is correct; 200 is the
     # failure mode that renders as a broken image with a successful request.
     miss_code, miss_head = ask("%s/1200/afrinkong/no-such-photograph.avif" % host)
@@ -971,9 +991,12 @@ def reachable(log=print, sample=0):
     log("library reachable: %d object(s) asked of %s" % (len(keys), host))
     log("  status      %s" % ", ".join("%s x%d" % (c, n) for c, n in sorted(codes.items())))
     log("  cache-control %s" % ", ".join("%r x%d" % (c, n) for c, n in cache.items()))
-    log("  cf-cache-status  first %s | again %s"
-        % (", ".join("%s x%d" % (s, n) for s, n in sorted(first.items())) or "-",
-           ", ".join("%s x%d" % (s, n) for s, n in sorted(second.items())) or "-"))
+    log("  cf-cache-status  HEAD is never cached, so these are expected to be "
+        "DYNAMIC: %s"
+        % (", ".join("%s x%d" % (s, n) for s, n in sorted(first.items())) or "-"))
+    log("  cache on GET     %d object(s) fetched twice: %s"
+        % (len(sample),
+           ", ".join("%s x%d" % (s, n) for s, n in sorted(warm.items())) or "-"))
     log("  absent key  %s %s" % (miss_code, miss_type or "(no type)"))
     if unchecked:
         log("  %d object(s) served but not byte-compared — this machine does "
