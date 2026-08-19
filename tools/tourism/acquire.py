@@ -217,6 +217,27 @@ def rows(log=print):
     index = _pages_index(log=log)
     recrop = library.artdirected()
 
+    # How wrong a country's photography is, as a share of its own set. The
+    # denominator matters: every country has about twenty-seven slots, so a
+    # raw count of bad photographs is nearly the same everywhere and the share
+    # is what separates Botswana at 81% from Kenya at 33%.
+    tally = {}
+    for r in recs:
+        c = r.get("country") or "?"
+        t = tally.setdefault(c, [0, 0])
+        t[0] += 1
+        if r.get("verdict") == "REPLACE":
+            t[1] += 1
+    deficiency = {c: (bad / tot if tot else 0.0) for c, (tot, bad) in tally.items()}
+
+    # An asset already in the register keeps its identity: a re-crop is the
+    # same photograph, and a commissioned replacement TAKES OVER the key of the
+    # one it replaces so no page needs editing. Found by sourceKey, which is
+    # the provider's own id and cannot change.
+    reg = library.register()
+    known = {a.get("sourceKey"): a["id"] for a in reg["assets"].values()
+             if a.get("sourceKey")}
+
     out = []
     for rec in recs:
         url = (rec.get("imageUrl") or "").split("?")[0]
@@ -237,9 +258,28 @@ def rows(log=print):
         category = library._slug(rec.get("category") or "general")
         stem = library._slug(rec.get("caption") or rec.get("altIntended")
                              or rec.get("photoId"))
+        t = commerce_tier(country)
+        prio = _priority(uses)
+        route, cost = route_and_cost(cls, t, prio)
+        skey = library.source_key("provider", rec.get("provider"),
+                                  rec.get("photoId"))
+        aid = known.get(skey)
         out.append({
             "class": cls,
-            "priority": _priority(uses),
+            # The provider's own id, which is how a reserved identity is found
+            # again on a later run. Carried in the CSV too, so a delivery can
+            # be matched back to the photograph it replaces.
+            "sourceKey": skey,
+            "commercial tier": t,
+            "tier why": TIERS[t],
+            "country deficiency": "%.0f%%" % (deficiency.get(country, 0) * 100),
+            "acquisition route": route,
+            "cost band": cost,
+            # Blank here for anything not yet in the register; run() reserves
+            # an identity for those so the plan can name one.
+            "canonical asset id": aid or "",
+            "current reference": rec.get("imageUrl") or "",
+            "priority": prio,
             "country": country,
             "destination": _destination([u["page"] for u in uses]),
             "category": category,
@@ -259,19 +299,178 @@ def rows(log=print):
             "current photographer": rec.get("photographer") or "",
             "current source": rec.get("sourceUrl") or "",
         })
-    out.sort(key=lambda r: (r["priority"], r["class"], r["country"],
-                            r["category"]))
+    # THE BUY ORDER. Free work first, then the frames that open pages
+    # carrying a price, then everything else — and inside each band the
+    # countries whose photography is furthest from acceptable go first.
+    WAVE = {
+        ("RECROP", True): (1, "W1 re-crop, commercially live"),
+        ("RECROP", False): (2, "W2 re-crop, remainder"),
+        ("SIGNATURE", True): (3, "W3 commission, commercially live"),
+        ("REPLACE", True): (4, "W4 licence, commercially live"),
+        ("SIGNATURE", False): (5, "W5 commission, remainder"),
+        ("REPLACE", False): (6, "W6 licence, long tail"),
+    }
+    def sortkey(r):
+        live = r["commercial tier"] <= 3
+        w, label = WAVE.get((r["class"], live), (9, "W9 no acquisition"))
+        r["wave"] = label
+        return (w, r["commercial tier"], -float(r["country deficiency"].rstrip("%")),
+                r["priority"], r["country"], r["category"])
+    out.sort(key=sortkey)
+    for i, r in enumerate(out, 1):
+        r["rank"] = i
     return out
 
 
-FIELDS = ["class", "priority", "country", "destination", "category",
-          "required subject", "required composition", "widest display px",
-          "action", "replacement filename", "pages", "hero on", "first page",
-          "why", "current provider", "current photographer", "current source"]
+# ---------------------------------------------------------------------------
+# COMMERCIAL WEIGHT, READ OFF THE SITE RATHER THAN GUESSED
+#
+# I said before that this repository could not rank countries commercially and
+# that somebody would have to name them. That was half wrong: the site states
+# its own commercial shape in three places, and none of it is opinion.
+#
+#   an operator      data/graph.json names an operator for three countries.
+#                    Those are the ones with offices, phone numbers, a licence
+#                    number and rates — the journeys somebody can actually buy
+#                    today. Nothing outranks that.
+#   a priced route   the Trans Afrique pages are where the money is: crossings,
+#                    ways, east, south, west and continental carry every real
+#                    figure on the site. Nine countries are named on three of
+#                    them (the East and South arms plus continental); six more
+#                    on two (the West arm). A country on a priced page is a
+#                    country the site is selling.
+#   everything else  the remaining thirty-eight. Real pages, no price attached.
+#
+# What was NOT usable, having tried it: inbound links. They run 38–53 per
+# country and are driven by shared borders and the atlas, so Mali and DR Congo
+# top the table. That measures geography, not demand.
+OPERATOR = ("cameroon", "namibia", "uganda")
+ROUTE_MAJOR = ("botswana", "kenya", "namibia", "rwanda", "south-africa",
+               "tanzania", "uganda", "zambia", "zimbabwe")
+ROUTE_WEST = ("cote-divoire", "gambia", "ghana", "guinea", "guinea-bissau",
+              "senegal")
+
+TIERS = {1: "operator — bookable today",
+         2: "priced route — East, South and continental",
+         3: "priced route — West",
+         4: "no price attached"}
+
+# What each route costs, as a band rather than a number. Real figures depend on
+# who you commission and which agency you licence from, and inventing them
+# would be the least useful thing in this file.
+COST = {
+    "re-crop":   "A — none. We hold the file; this is an hour of somebody's "
+                 "attention, not a purchase.",
+    "licence":   "B — one stock or agency licence at the going rate.",
+    "licence+":  "C — a licence worth paying up for: this frame opens a page "
+                 "that carries a price.",
+    "commission": "D — a commissioned shoot. The most expensive route and the "
+                  "only one that produces something nobody else has.",
+}
+
+
+def commerce_tier(country):
+    """Commercial weight 1-4. NOT the page tier above — different question.
+
+    `tier()` asks how prominent a page is. This asks how much money is
+    attached to a country. Two separate axes, and naming them both `tier`
+    shadowed the first one, which `_priority` calls on every use.
+    """
+    if country in OPERATOR:
+        return 1
+    if country in ROUTE_MAJOR:
+        return 2
+    if country in ROUTE_WEST:
+        return 3
+    return 4
+
+
+def route_and_cost(cls, t, priority):
+    """Which way this photograph is obtained, and roughly what that costs."""
+    if cls == "RECROP":
+        return "re-crop", COST["re-crop"]
+    if cls == "SIGNATURE":
+        return "commission", COST["commission"]
+    if cls in ("REVIEW", "REMOVE"):
+        return "decide", "— a person decides; no acquisition until they do."
+    if cls == "KEEP":
+        return "none", "— already ours."
+    # REPLACE. A licence on a page that carries a price is worth more care.
+    if t <= 3 or priority == "P1":
+        return "licence", COST["licence+"]
+    return "licence", COST["licence"]
+
+
+FIELDS = ["rank", "wave", "class", "sourceKey", "commercial tier", "tier why",
+          "country deficiency", "priority", "country", "destination",
+          "category", "required subject", "required composition",
+          "widest display px", "action", "acquisition route", "cost band",
+          "canonical asset id", "current reference", "replacement filename",
+          "pages", "hero on", "first page", "why",
+          "current provider", "current photographer", "current source"]
+
+
+def reserve(data, write=False, log=print):
+    """Give every planned acquisition a canonical identity, now.
+
+    The plan has to name the identity a delivered photograph will carry —
+    otherwise "which asset is this replacing?" is answered by a filename, and
+    filenames are exactly what the identity change removed. A re-crop and a
+    commissioned replacement already have one: they take over the key of the
+    photograph they replace, so every page pointing there shows the new
+    picture with nothing edited.
+
+    What has no identity yet is the REPLACE set, which was never registered —
+    the register holds the 629 the audit approved. So the identities are
+    reserved here, in the buy order, and `nextId` is advanced past the block.
+    That last part is the whole point: a reservation written only into a
+    spreadsheet is not a reservation, and the next ingest would hand the same
+    number to something else.
+    """
+    reg = library.register()
+    # RESERVATION IS BY sourceKey, SO RUNNING THIS TWICE RESERVES NOTHING NEW.
+    # Keyed on a counter alone it was not idempotent: the second run found the
+    # same 786 rows still absent from `assets`, handed out AKL-001416..002201
+    # and left the first block stranded. The identity of a planned photograph
+    # has to be found again the same way a real one is.
+    book = (reg.get("reserved") or {}).get("ids") or {}
+    for r in data:
+        if not r["canonical asset id"]:
+            r["canonical asset id"] = book.get(r["sourceKey"], "")
+    need = [r for r in data if not r["canonical asset id"]
+            and r["acquisition route"] in ("commission", "licence")]
+    if not write:
+        log("  %d identity/identities would be reserved from AKL-%06d "
+            "(%d already reserved)"
+            % (len(need), int(reg.get("nextId") or 1), len(book)))
+        return
+    if not need:
+        log("  every planned acquisition already has an identity (%d reserved)"
+            % len(book))
+        return
+    first = int(reg.get("nextId") or 1)
+    for r in need:
+        r["canonical asset id"] = library.new_id(reg)
+        book[r["sourceKey"]] = r["canonical asset id"]
+    reg["reserved"] = {
+        "ids": book,
+        "$comment": "Identities handed out to data/image-acquisition.csv for "
+                    "photographs that do not exist yet. Pin them in the "
+                    "ingest manifest's `id` column when the files arrive; "
+                    "nextId is already past them so nothing else can be "
+                    "given the same number.",
+        "from": "AKL-%06d" % first,
+        "to": "AKL-%06d" % (int(reg["nextId"]) - 1),
+        "count": len(book),
+    }
+    library._write_register(reg, log=lambda *a: None)
+    log("  reserved %d identity/identities, %s..%s"
+        % (len(need), reg["reserved"]["from"], reg["reserved"]["to"]))
 
 
 def run(write=False, log=print):
     data = rows(log=log)
+    reserve(data, write=write, log=log)
     by_class, by_priority, spend = {}, {}, {}
     for r in data:
         by_class[r["class"]] = by_class.get(r["class"], 0) + 1
@@ -293,6 +492,27 @@ def run(write=False, log=print):
                      ("P4", "opens a place page, seen nowhere else")):
         if by_priority.get(p):
             log("  %-4s %6d   %s" % (p, by_priority[p], label))
+    log("")
+    log("  the buy order:")
+    waves, wcost = {}, {}
+    for r in data:
+        w = r.get("wave") or ""
+        # W9 is the rows that need nothing bought — already ours, or waiting
+        # on a person. Listing it in a buy order inflates the total and gives
+        # it a cost band, neither of which is true.
+        if not w.startswith("W") or w.startswith("W9"):
+            continue
+        waves[w] = waves.get(w, 0) + 1
+        wcost.setdefault(w, set()).add(r["cost band"].split(" —")[0])
+    for w in sorted(waves):
+        log("  %-32s %5d   cost band %s"
+            % (w, waves[w], "/".join(sorted(wcost[w]))))
+    log("")
+    live = [r for r in data if r["commercial tier"] <= 3
+            and r["acquisition route"] in ("commission", "licence", "re-crop")
+            and not (r.get("wave") or "").startswith("W9")]
+    log("  %d of the %d to be acquired sit in the 16 commercially live "
+        "countries" % (len(live), sum(waves.values())))
     log("")
     to_source = by_class.get("SIGNATURE", 0) + by_class.get("REPLACE", 0)
     log("  %d photograph(s) to source across %d countries"
