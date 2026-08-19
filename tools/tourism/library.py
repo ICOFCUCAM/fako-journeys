@@ -172,13 +172,30 @@ def plan(write=False, log=print):
 
     keep = [a for a in inv["assets"] if a["verdict"] == "KEEP"]
     reg = register()
-    # A fresh set, not a merge. The register is the current approved list, and
-    # a photograph that has been reclassified out of KEEP has to leave it —
-    # otherwise a later fetch downloads something the audit has since refused.
-    # What carries forward is only what a re-plan cannot recompute: the date it
-    # was taken down and the checksum of what arrived.
+    # A fresh set for the provider-derived half, not a merge. The register is
+    # the current approved list, and a photograph that has been reclassified
+    # out of KEEP has to leave it — otherwise a later fetch downloads
+    # something the audit has since refused. What carries forward is only what
+    # a re-plan cannot recompute: the date it was taken down and the checksum
+    # of what arrived.
     previous = reg.get("assets") or {}
-    reg["assets"] = {}
+    # BUT NOT THE PHOTOGRAPHS THAT WERE NEVER IN THE INVENTORY.
+    #
+    # This used to empty the whole register, and that made the library
+    # structurally incapable of being a library. The inventory is derived from
+    # what the pages currently hotlink, so rebuilding the register from it
+    # means the only photographs that can exist are the ones already on a page
+    # from a provider. A commissioned photograph — the entire point of the
+    # acquisition plan — would be written in by `ingest` and deleted by the
+    # next `plan`, which the workflow runs first on every run.
+    #
+    # So the register has two halves now. The provider half is recomputed from
+    # the audit every time, because the audit is its authority. The licensed
+    # and commissioned half is ours, has no upstream to recompute from, and
+    # survives.
+    reg["assets"] = {k: v for k, v in previous.items()
+                     if v.get("origin", "provider") != "provider"}
+    ours = len(reg["assets"])
     named, clash = {}, 0
     for a in keep:
         country = _slug(a.get("country") or "world")
@@ -193,6 +210,7 @@ def plan(write=False, log=print):
         named[name] = a
         reg["assets"][name] = {
             "name": name,
+            "origin": "provider",
             "provider": a["provider"],
             "photoId": a["photoId"],
             "photographer": a.get("photographer"),
@@ -215,6 +233,9 @@ def plan(write=False, log=print):
     log("  library plan")
     log("  ---------------------------------------------------------------")
     log("  approved for hosting        %6d" % len(keep))
+    if ours:
+        log("  ours, kept across the plan  %6d  (licensed or commissioned)"
+            % ours)
     log("  names assigned              %6d  (%d disambiguated by photo id)"
         % (len(named), clash))
     log("  widths per photograph       %6d  %s" % (len(LADDER), list(LADDER)))
@@ -567,6 +588,160 @@ def reachable(log=print, sample=0):
     return 0 if not bad else 1
 
 
+MANIFEST = os.path.join(ROOT, "incoming", "manifest.csv")
+
+# What a delivery has to tell us, per origin. Deliberately the same questions
+# `verify` asks, so a manifest that ingests cleanly cannot fail provenance
+# afterwards — the check happens once, at the door.
+MANIFEST_FIELDS = (
+    "file", "country", "category", "subject", "photographer", "origin",
+    "licenceName", "licenceRef", "acquiredAt",       # licensed
+    "contractRef", "shotAt", "releases",             # commissioned
+    "credit", "name", "notes",
+)
+
+
+def ingest(write=False, log=print, manifest=None):
+    """Take delivered photographs into the library. NO NETWORK, NO PROVIDER.
+
+        build.py library ingest                     # what it would take
+        build.py library ingest --fetch             # take them
+        build.py library ingest incoming/batch1.csv --fetch
+
+    THE DOOR THE LIBRARY DID NOT HAVE.
+
+    Everything else here descends from data/asset-inventory.json, which is a
+    reading of what the 1,528 pages currently hotlink. That made the register
+    a mirror of the site's existing dependency on Pexels and Unsplash: the
+    only photograph that could enter was one already on a page, from a
+    provider. A commissioned frame had no way in, and `plan` would have
+    deleted it if one had been written by hand.
+
+    This is the other way in. It reads a manifest — the acquisition plan's own
+    columns plus a `file` — and for each row hashes the delivery, reads its
+    real dimensions, gives it a library name and stages it exactly where
+    `fetch` would have put a download. From there `encode`, `publish`,
+    `reachable` and `rewrite` cannot tell the difference, which is the point:
+    one pipeline, three origins.
+
+    The manifest is the same shape as data/image-acquisition.csv on purpose.
+    Filter that file to what you are buying, send it out, and when the
+    photographs come back add the delivered filename to the `file` column and
+    ingest it. The brief and the receipt are one document.
+    """
+    import csv
+    import hashlib
+    import shutil
+
+    path = manifest or MANIFEST
+    if not os.path.exists(path):
+        log("library ingest: no manifest at %s" % os.path.relpath(path, ROOT))
+        log("  columns: %s" % ", ".join(MANIFEST_FIELDS))
+        return 1
+
+    with open(path, encoding="utf-8-sig", newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    if not rows:
+        log("library ingest: %s is empty" % os.path.relpath(path, ROOT))
+        return 1
+
+    reg = register()
+    taken, bad = [], []
+    for i, row in enumerate(rows, 2):          # 2 — row 1 is the header
+        row = {k: (v or "").strip() for k, v in row.items() if k}
+        src = row.get("file") or ""
+        if not src:
+            continue                            # a brief not yet delivered
+        full = src if os.path.isabs(src) else os.path.join(ROOT, src)
+        if not os.path.exists(full):
+            bad.append("row %d: %s is not on disk" % (i, src))
+            continue
+        origin = (row.get("origin") or "").lower()
+        if origin not in ("licensed", "commissioned"):
+            bad.append("row %d: origin is %r — licensed or commissioned"
+                       % (i, row.get("origin")))
+            continue
+        if not row.get("photographer"):
+            bad.append("row %d: no photographer" % i)
+            continue
+        # The same fields verify will demand, refused here rather than after
+        # the file has been encoded and uploaded.
+        need = (("licenceRef", "acquiredAt") if origin == "licensed"
+                else ("contractRef", "shotAt", "releases"))
+        missing = [f for f in need if not row.get(f)]
+        if missing:
+            bad.append("row %d: %s asset with no %s"
+                       % (i, origin, ", ".join(missing)))
+            continue
+
+        country = _slug(row.get("country") or "world")
+        category = _slug(row.get("category") or "general")
+        # An explicit name wins, because a photograph that has already been
+        # published must never be renamed — its object key is in 1,528 pages.
+        name = row.get("name") or "%s/%s/%s" % (
+            country, category, _slug(row.get("subject") or os.path.basename(src)))
+        name = name[:-5] if name.endswith(".avif") else name
+
+        with open(full, "rb") as fh:
+            blob = fh.read()
+        digest = hashlib.sha256(blob).hexdigest()
+        width = height = 0
+        try:
+            from PIL import Image
+            with Image.open(full) as im:
+                width, height = im.size
+        except Exception:                        # noqa: BLE001 — size is not fatal
+            pass
+
+        entry = {
+            "name": name,
+            "origin": origin,
+            "photographer": row.get("photographer"),
+            "credit": row.get("credit") or row.get("photographer"),
+            "licence": {"name": row.get("licenceName")
+                        or ("Commissioned for Afrinkong"
+                            if origin == "commissioned" else "Licensed")},
+            "licenceRef": row.get("licenceRef"),
+            "acquiredAt": row.get("acquiredAt"),
+            "contractRef": row.get("contractRef"),
+            "shotAt": row.get("shotAt"),
+            "releases": row.get("releases"),
+            "alt": row.get("subject"),
+            "country": country,
+            "category": category,
+            "width": width,
+            "height": height,
+            "sha256": digest,
+            "downloadedAt": row.get("acquiredAt") or row.get("shotAt"),
+            "ingestedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "notes": row.get("notes"),
+            # Empty on purpose. A library asset exists before a page uses it,
+            # and `rewrite` fills this in when one does.
+            "pages": [],
+            "widths": list(LADDER),
+        }
+        if write:
+            os.makedirs(STAGE, exist_ok=True)
+            shutil.copyfile(full, os.path.join(
+                STAGE, name.replace("/", "__") + ".jpg"))
+            reg["assets"][name] = entry
+        taken.append((name, origin))
+
+    for line in bad[:12]:
+        log("  ! %s" % line)
+    if len(bad) > 12:
+        log("  ! ...and %d more" % (len(bad) - 12))
+    log("library ingest: %d photograph(s) %s, %d refused"
+        % (len(taken), "taken into the library" if write else "would be taken",
+           len(bad)))
+    if write and taken:
+        _write_register(reg, log=log)
+        log("  staged for encode: %s" % os.path.relpath(STAGE, ROOT))
+    elif not write:
+        log("  dry run — add --fetch to take them in")
+    return 1 if bad else 0
+
+
 def verify(log=print):
     """No hosted file without an origin, and no rewritten URL without a file.
 
@@ -576,17 +751,50 @@ def verify(log=print):
     knows about.
     """
     reg = register()
-    bad = []
+    bad, unused = [], []
     for name, a in reg["assets"].items():
-        for field in ("provider", "photoId", "sourceUrl", "originalUrl"):
+        # PROVENANCE IS PER ORIGIN, BECAUSE A COMMISSIONED PHOTOGRAPH HAS NO
+        # photoId AND NEVER WILL.
+        #
+        # These four fields were required of everything, and all four are
+        # shapes that only a stock provider has. That is fine while the
+        # library is a migration of hotlinks and fatal the moment it is a
+        # library: five of the seven checks below would reject the first
+        # photograph anybody is paid to take. What every origin owes is the
+        # same question answered differently — who took it, and under what
+        # right do we publish it.
+        origin = a.get("origin", "provider")
+        if origin == "provider":
+            need = ("provider", "photoId", "sourceUrl", "originalUrl")
+        elif origin == "licensed":
+            # Bought from an agency or a photographer. The licence reference
+            # is the receipt, and without it nobody can answer a takedown.
+            need = ("licenceRef", "acquiredAt")
+        elif origin == "commissioned":
+            # Shot for us. The contract says what we may do with it, and a
+            # photograph of identifiable people or private property without
+            # releases is a photograph we cannot safely publish.
+            need = ("contractRef", "shotAt", "releases")
+        else:
+            bad.append("%s: unknown origin %r" % (name, origin))
+            continue
+        for field in need:
             if not a.get(field):
-                bad.append("%s: no %s" % (name, field))
-        if not (a.get("licence") or {}).get("url"):
+                bad.append("%s: %s asset with no %s" % (name, origin, field))
+        # A licence for a provider photograph is a URL; for one we bought or
+        # commissioned it is a name and a reference, held above.
+        if origin == "provider" and not (a.get("licence") or {}).get("url"):
             bad.append("%s: no licence" % name)
+        if not (a.get("licence") or {}).get("name"):
+            bad.append("%s: no licence name" % name)
         if not a.get("photographer"):
             bad.append("%s: no photographer" % name)
+        # NOT AN ERROR ANY MORE. A library asset is allowed to exist before a
+        # page uses it — that is what makes it a library rather than a cache
+        # of the current site. It is still worth counting, because an asset
+        # nobody has wired up is either new or forgotten.
         if not a.get("pages"):
-            bad.append("%s: no page uses it" % name)
+            unused.append(name)
 
     host = reg.get("host", "")
     unknown = []
@@ -616,6 +824,20 @@ def verify(log=print):
         % ("PASS" if not unknown else "FAIL",
            "nothing points at an unregistered file" if not unknown
            else "%d unknown: %s" % (len(unknown), ", ".join(sorted(set(unknown))[:3]))))
+    # The shape of the library, not a pass or a fail. While every row says
+    # provider, this is a migration of somebody else's photographs; the
+    # licensed and commissioned counts are the only real measure of whether
+    # AfrinKong owns its own pictures yet.
+    mix = {}
+    for a in reg["assets"].values():
+        o = a.get("origin", "provider")
+        mix[o] = mix.get(o, 0) + 1
+    log("        origins: %s"
+        % (", ".join("%s %d" % (o, n) for o, n in sorted(mix.items()))
+           or "none"))
+    if unused:
+        log("        %d asset(s) in the library that no page uses yet"
+            % len(unused))
     return 0 if ok else 1
 
 
