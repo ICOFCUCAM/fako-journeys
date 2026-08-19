@@ -163,6 +163,8 @@ def cmd_library(args):
         build.py library plan      name the approved set        (no network)
         build.py library fetch     download it                  (NEEDS NETWORK)
         build.py library encode    AVIF + WebP at four widths   (no network)
+        build.py library publish   upload the ladder to R2      (NEEDS NETWORK)
+        build.py library reachable ask the public host for it   (NEEDS NETWORK)
         build.py library verify    no hosted file without an origin
         build.py library rewrite   point the pages at us        (refuses until live)
 
@@ -171,7 +173,17 @@ def cmd_library(args):
     .github/workflows/tourism-library.yml and tourism/library.py.
     """
     from tourism import library
-    step = (getattr(args, "country", "") or "plan").strip()
+    # THE STEP ARRIVES AS `picks`, NOT AS `--country`, AND READING THE WRONG
+    # ONE COST A WORKFLOW. This parser has exactly one free positional after
+    # the command, and it is named `picks`; `--country` is a flag. So
+    # `library encode` put "encode" in picks, left country as None, and this
+    # fell through to the default — plan. Which returns 0. Which meant the
+    # workflow ran plan five times, downloaded nothing, published nothing, and
+    # reported success at every step. Read picks first, keep country as the
+    # spelling that already works, and refuse anything unrecognised rather
+    # than quietly doing something else.
+    step = (getattr(args, "picks", None)
+            or getattr(args, "country", None) or "plan").strip()
     write = bool(getattr(args, "fetch", False))
     if step == "plan":
         return library.plan(write=write)
@@ -188,7 +200,10 @@ def cmd_library(args):
                                revert=bool(getattr(args, "revert", False)))
     if step == "publish":
         return library.publish(write=write)
-    print("library: unknown step %r — plan, fetch, encode, publish, verify or rewrite" % step)
+    if step == "reachable":
+        return library.reachable(sample=int(getattr(args, "limit", 0) or 0))
+    print("library: unknown step %r — plan, fetch, encode, publish, reachable, "
+          "verify or rewrite" % step)
     return 1
 
 

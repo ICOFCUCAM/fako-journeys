@@ -49,7 +49,7 @@ visitor and a photograph is object storage.
 ---------------------------------------------------------------------------
 THE LAYOUT ON R2, AND THE URL THE SITE ASKS FOR
 
-    images.afrinkong.com
+    image.afrinkong.com
         |
         +-- originals/  kenya/cities/nairobi-green-city-in-the-sun.jpg
         +-- 1600/       kenya/cities/nairobi-green-city-in-the-sun.avif|.webp|.jpg
@@ -63,7 +63,7 @@ new width or a different quality can be produced later without going back to
 Pexels for a file we already have — and it is the only copy of the source that
 exists once the hotlink is gone.
 
-The site asks for https://images.afrinkong.com/1200/kenya/cities/<slug>.avif
+The site asks for https://image.afrinkong.com/1200/kenya/cities/<slug>.avif
 and knows nothing else. Where the photograph came from lives in
 tourism/assets.json and never in a URL.
 
@@ -150,7 +150,7 @@ def register():
                     "which pages use it. Written by tools/tourism/library.py. "
                     "`live` stays false until the assets are actually on the "
                     "asset host; the rewrite pass refuses to run while it is.",
-        "host": "https://images.afrinkong.com",
+        "host": "https://image.afrinkong.com",
         "live": False,
         "assets": {},
     })
@@ -431,6 +431,118 @@ def publish(write=False, log=print):
     log("library publish: %d object(s) %s (%.1f MB)"
         % (sent, "uploaded" if write else "would be uploaded", size / 1e6))
     return 0
+
+
+def reachable(log=print, sample=0):
+    """Ask the public host for every object we published. NEEDS NETWORK.
+
+    THIS IS THE STEP THAT CATCHES THE FAILURE `publish` CANNOT.
+
+    `publish` talks to the S3 endpoint with credentials. A visitor talks to
+    image.afrinkong.com with none. Those are two different systems and the
+    second one can be wrong while the first reports success: the bucket has no
+    custom domain bound, or the domain is bound but public access is off, or
+    the key prefix on the host is not the key prefix in the bucket. Every one
+    of those ends as a 1,529-page site of broken photographs, and every one of
+    them is invisible to an upload that returned 200.
+
+    So this walks the encoded ladder, asks the public host for each object by
+    the same key `publish` used, and checks four things that a 200 alone does
+    not establish:
+
+      - the byte count matches the file on disk, so the host is serving the
+        photograph and not a placeholder or an error page that happens to be
+        served with a 200;
+      - Content-Type is the image type, for the same reason;
+      - Cache-Control survived the upload, because a year of immutability is
+        the whole economics of putting these on object storage;
+      - a key that does not exist answers 404 and not a 200 HTML page, because
+        a 200 that is not an image is the one broken-image failure a browser
+        cannot report and a monitor cannot see.
+
+    It reports cf-cache-status where Cloudflare sends one. The first request
+    for an object is a MISS by definition — that is not a fault, it is what a
+    cold cache looks like — so each object is asked for twice and both answers
+    are reported.
+    """
+    import urllib.error
+    import urllib.request
+
+    reg = register()
+    host = (reg.get("host") or "").rstrip("/")
+    if not host:
+        log("library reachable: the register has no host")
+        return 1
+    root = os.path.join(ROOT, "images", "library")
+    if not os.path.isdir(root):
+        log("library reachable: nothing encoded — run encode first")
+        return 1
+
+    def ask(url, method="HEAD"):
+        req = urllib.request.Request(url, method=method)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return r.status, dict(r.headers)
+        except urllib.error.HTTPError as e:
+            return e.code, dict(e.headers or {})
+        except Exception as exc:                      # noqa: BLE001 — report, continue
+            return 0, {"x-error": str(exc)}
+
+    keys = []
+    for base, _dirs, files in os.walk(root):
+        for name in sorted(files):
+            full = os.path.join(base, name)
+            keys.append((os.path.relpath(full, root).replace(os.sep, "/"),
+                         os.path.getsize(full)))
+    keys.sort()
+    if sample and sample < len(keys):
+        step = len(keys) / float(sample)
+        keys = [keys[int(i * step)] for i in range(sample)]
+
+    bad, codes, cache, first, second = [], {}, {}, {}, {}
+    for k, size in keys:
+        url = "%s/%s" % (host, k)
+        code, head = ask(url)
+        codes[code] = codes.get(code, 0) + 1
+        if code != 200:
+            bad.append("%s: %s %s" % (k, code, head.get("x-error", "")))
+            continue
+        got = head.get("Content-Length")
+        if got and int(got) != size:
+            bad.append("%s: host says %s bytes, disk says %d" % (k, got, size))
+        ctype = (head.get("Content-Type") or "").split(";")[0]
+        if not ctype.startswith("image/"):
+            bad.append("%s: Content-Type is %r, not an image" % (k, ctype))
+        cc = head.get("Cache-Control") or ""
+        cache[cc] = cache.get(cc, 0) + 1
+        if "immutable" not in cc:
+            bad.append("%s: Cache-Control is %r" % (k, cc))
+        st = (head.get("cf-cache-status") or "-").upper()
+        first[st] = first.get(st, 0) + 1
+        st2 = (ask(url)[1].get("cf-cache-status") or "-").upper()
+        second[st2] = second.get(st2, 0) + 1
+
+    # A name nothing was ever published under. 404 is correct; 200 is the
+    # failure mode that renders as a broken image with a successful request.
+    miss_code, miss_head = ask("%s/1200/afrinkong/no-such-photograph.avif" % host)
+    miss_type = (miss_head.get("Content-Type") or "").split(";")[0]
+
+    log("library reachable: %d object(s) asked of %s" % (len(keys), host))
+    log("  status      %s" % ", ".join("%s x%d" % (c, n) for c, n in sorted(codes.items())))
+    log("  cache-control %s" % ", ".join("%r x%d" % (c, n) for c, n in cache.items()))
+    log("  cf-cache-status  first %s | again %s"
+        % (", ".join("%s x%d" % (s, n) for s, n in sorted(first.items())) or "-",
+           ", ".join("%s x%d" % (s, n) for s, n in sorted(second.items())) or "-"))
+    log("  absent key  %s %s" % (miss_code, miss_type or "(no type)"))
+    if miss_code == 200:
+        bad.append("a key that does not exist answers 200 — a broken image "
+                   "with a successful request is the worst of both")
+    for line in bad[:20]:
+        log("  ! %s" % line)
+    if len(bad) > 20:
+        log("  ! ...and %d more" % (len(bad) - 20))
+    log("library reachable: %s" % ("OK" if not bad else "%d problem(s)" % len(bad)))
+    return 0 if not bad else 1
 
 
 def verify(log=print):

@@ -82,6 +82,16 @@ jobs:
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
         run: python tools/tourism/build.py library publish --fetch
 
+      # An upload that returned 200 proves the S3 endpoint accepted it. It
+      # does not prove image.afrinkong.com serves it to somebody with no
+      # credentials, which is the only request a visitor ever makes. This asks
+      # the public host for every object by the key publish used, and checks
+      # the byte count, the content type, the cache header, and that an absent
+      # key answers 404 rather than a 200 that is not an image.
+      - name: Ask the public host for what we just published
+        if: ${{ github.event.inputs.publish == 'true' }}
+        run: python tools/tourism/build.py library reachable
+
       # Every hosted photograph has a photographer, a source page and a
       # licence; nothing that was migrated is still fetched from a provider.
       # Either failing means nothing is committed.

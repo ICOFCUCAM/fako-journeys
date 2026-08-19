@@ -58,7 +58,7 @@ resources, and a CSP does not govern where a link may go.
 
 ## img-src gains the asset host before it loses the providers
 
-`images.afrinkong.com` is in `img-src` from the day the first photograph is
+`image.afrinkong.com` is in `img-src` from the day the first photograph is
 published there, and the two provider hosts stay until the last one leaves.
 That order is deliberate and it is the only safe one: tightening first would
 break every page still hotlinking, and the count of what is left — reported by
@@ -67,7 +67,7 @@ break every page still hotlinking, and the count of what is left — reported by
 
 When it reaches zero the directive becomes
 
-    img-src 'self' data: https://images.afrinkong.com;
+    img-src 'self' data: https://image.afrinkong.com;
 
 and with it the third-party transfer of every visitor's IP address to Pexels
 and Unsplash ends. That is the privacy half of the first-party image argument,

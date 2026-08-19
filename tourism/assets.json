@@ -1,6 +1,6 @@
 {
  "$comment": "The Afrinkong image library. One row per hosted photograph: where it came from, who took it, under what licence, when it was taken down, what we call it, and which pages use it. Written by tools/tourism/library.py. `live` stays false until the assets are actually on the asset host; the rewrite pass refuses to run while it is.",
- "host": "https://images.afrinkong.com",
+ "host": "https://image.afrinkong.com",
  "live": false,
  "assets": {
   "seychelles/local-life/close-up-of-red-snapper-fish-on-ice-at-a-market-showcasing-freshness-a": {
