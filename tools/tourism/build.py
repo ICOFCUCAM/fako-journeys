@@ -167,7 +167,16 @@ def cmd_library(args):
         build.py library publish   upload the ladder to R2      (NEEDS NETWORK)
         build.py library reachable ask the public host for it   (NEEDS NETWORK)
         build.py library verify    no hosted file without an origin
-        build.py library rewrite   point the pages at us        (refuses until live)
+        build.py library rewrite   point the pages at us        (published only)
+
+    publish and rewrite take --only to act on a subset, which is how the best
+    hundred photographs go live before the other six hundred:
+
+        --only AKL-000123,AKL-000456     these identities
+        --only country:kenya             one country
+        --only origin:commissioned       provider, licensed or commissioned
+        --only state:encoded             planned/staged/encoded/published/live
+        --only @some/ids.txt             one identity per line
 
     fetch is a workflow step by necessity: this development environment cannot
     reach images.pexels.com — the proxy answers 403 to the CONNECT. See
@@ -205,9 +214,10 @@ def cmd_library(args):
         return library.thirdparty()
     if step == "rewrite":
         return library.rewrite(write=write,
-                               revert=bool(getattr(args, "revert", False)))
+                               revert=bool(getattr(args, "revert", False)),
+                               only=getattr(args, "only", None))
     if step == "publish":
-        return library.publish(write=write)
+        return library.publish(write=write, only=getattr(args, "only", None))
     if step == "reachable":
         return library.reachable(sample=int(getattr(args, "limit", 0) or 0))
     if step == "ingest":
