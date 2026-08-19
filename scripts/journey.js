@@ -444,6 +444,15 @@
       var cap = nearest[i] * 0.48;
       el.setAttribute('r', Math.max(6, Math.min(want, cap)).toFixed(1));
     });
+    /* The stops are drawn in pixels for the same reason the targets are. At
+       3.3x — which is what choosing Rwanda gives you — a nine-unit stop is
+       thirty pixels across and covers the country it is marking. */
+    if (mapEl) {
+      [].forEach.call(mapEl.querySelectorAll('.jn-map-stop'), function (el) {
+        el.setAttribute('r',
+          ((el.classList.contains('is-end') ? 6 : 4.5) * perPx).toFixed(1));
+      });
+    }
   }
   sizeHits();
   addEventListener('resize', sizeHits);
@@ -536,10 +545,12 @@
       bits.push('<path class="jn-map-road" d="' + through(pts) + '"/>');
     }
     pts.forEach(function (p, i) {
-      bits.push('<circle class="jn-map-stop" cx="' + p.x.toFixed(1) + '" cy="'
-        + p.y.toFixed(1) + '" r="' + (i === pts.length - 1 ? 9 : 6.5) + '"/>');
+      bits.push('<circle class="jn-map-stop'
+        + (i === pts.length - 1 ? ' is-end' : '') + '" cx="' + p.x.toFixed(1)
+        + '" cy="' + p.y.toFixed(1) + '" r="6"/>');
     });
     routeEl.innerHTML = bits.join('');
+    sizeHits();
 
     /* The caption says which kind of node the reader is looking at, because a
        node drawn at a country's centre and a node on a surveyed city look
@@ -643,7 +654,19 @@
       .join(' ');
   }
 
-  function setBox(v) { if (mapEl) mapEl.setAttribute('viewBox', v); }
+  var wideEl = document.getElementById('jn-map-wide');
+  function setBox(v) {
+    if (!mapEl) return;
+    mapEl.setAttribute('viewBox', v);
+    /* The control exists only while there is something off the edge. */
+    if (wideEl) wideEl.hidden = (v === HOME);
+  }
+  if (wideEl) {
+    wideEl.addEventListener('click', function () {
+      flyTo(HOME);
+      track('map_widened', {country: chosen ? chosen.slug : null});
+    });
+  }
 
   function flyTo(target) {
     if (!mapEl) return;

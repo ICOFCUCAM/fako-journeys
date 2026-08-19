@@ -431,6 +431,8 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="jn-atlas-in">
       <h2 class="af-stamp" id="jn-atlas-h">The continent</h2>
       %(continent)s
+      <button class="jn-map-wide" id="jn-map-wide" type="button" hidden>
+        Show the whole continent</button>
       <ul class="jn-map-key" id="jn-map-key" hidden>
         <li data-match="leads">Leads on what you asked</li>
         <li data-match="region">Its region does</li>
