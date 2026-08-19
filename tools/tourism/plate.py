@@ -540,6 +540,49 @@ PRELOAD = ('<link rel="preload" href="/fonts/archivo-narrow-latin.woff2" '
            'as="font" type="font/woff2" crossorigin>')
 
 
+EXPLORE = '<script src="/scripts/explore.js" defer></script>'
+
+
+def graft_explore(write=False, log=print):
+    """Put the universal index on the pages that were built without it.
+
+    The index is the site's one search — Cmd/Ctrl-K, or `/`, or the button —
+    and it was on 1,522 pages and missing from seventy-five: all fifty-six
+    /tourism country pages, the whole Trans Afrique series, the Journey Fund
+    and its two subpages, /wonders, /how-it-works, /enquire and the three legal
+    pages. Those are not minor addresses. A reader on /tourism/kenya, looking
+    at all twenty-seven of that country's write-ups, had no way to search the
+    site from where they stood.
+
+    It needs nothing but the script: explore.js builds its own dialog and the
+    styles for it are in afrinkong.css, which every page already loads.
+
+    Grafted rather than added to seven generators, which is the same reasoning
+    as the preload above and as `company`: one pass over the output is one
+    place to be right. Idempotent — a page that already has it is skipped —
+    and keyed on </body>, which every page on this site has.
+    """
+    done = 0
+    for base, dirs, files in os.walk(ROOT):
+        dirs[:] = [d for d in dirs
+                   if d not in ("node_modules", ".git", "incoming", "tools")
+                   and not d.startswith(".")]
+        for name in sorted(files):
+            if not name.endswith(".html"):
+                continue
+            full = os.path.join(base, name)
+            with open(full, encoding="utf-8") as fh:
+                src = fh.read()
+            if "explore.js" in src or "</body>" not in src:
+                continue
+            done += 1
+            if write:
+                with open(full, "w", encoding="utf-8") as fh:
+                    fh.write(src.replace("</body>", EXPLORE + "\n</body>", 1))
+    log("%s the universal index onto %d page(s)"
+        % ("put" if write else "WOULD put", done))
+
+
 def graft_preload(write=False, log=print):
     """Put the font preload on the pages whose head is not built by icons().
 

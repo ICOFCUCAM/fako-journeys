@@ -985,3 +985,13 @@ a.af-lockup > i,a.af-lockup > b,a.af-lockup > span{grid-column:2}
   a.af-lockup{column-gap:8px}
   .af-emblem--mast{width:26px;height:26px}
 }
+
+/* A <picture> is a wrapper and nothing else, so it should not be a box.
+   `modern` wraps every self-hosted photograph to offer AVIF and WebP before
+   the JPEG, which changes each image's parent; display:contents takes the
+   wrapper out of layout entirely, so the <img> goes on participating in its
+   flex or grid container exactly as it did. Checked before relying on it:
+   `> img` appears zero times across all fifteen stylesheets, and so do
+   img:first-child and img:nth-*, so nothing was reaching the image as a
+   direct child in the first place. */
+picture{display:contents}

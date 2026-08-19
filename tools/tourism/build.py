@@ -157,6 +157,20 @@ def cmd_srcset(args):
     return srcset.run(write=bool(getattr(args, "fetch", False))) or rc
 
 
+def cmd_modern(args):
+    """AVIF and WebP beside every photograph, and a <picture> around every tag.
+
+    The site shipped 276 JPEGs and nothing else, and the homepage's first
+    screen came to 4.45 MB on a phone. Same photographs, same crops, same
+    layout — encoded by something not designed in 1992. See tourism/modern.py
+    for the qualities and why they were chosen by looking.
+    """
+    from tourism import modern
+    write = bool(getattr(args, "fetch", False))
+    rc = modern.encode(write=write)
+    return modern.run(write=write) or rc
+
+
 def cmd_sizeattr(args):
     """Tell the browser how wide each photograph will be, from a measurement.
 
@@ -193,11 +207,13 @@ def cmd_graft(args):
     Six pages write their own head — the gateway and the five hand-written
     ones — and every improvement to the shared head has to be carried to them
     by hand or not at all. These passes carry it: the breadcrumb trail onto
-    the graph already in the file, and the display face preload after the
-    manifest link. Both are idempotent, so they run on every build.
+    the graph already in the file, the display face preload after the manifest
+    link, and the universal index onto the seventy-five pages that were built
+    without it. All three are idempotent, so they run on every build.
     """
     from tourism import plate
-    return plate.graft_trails(write=True) or plate.graft_preload(write=True)
+    return (plate.graft_trails(write=True) or plate.graft_preload(write=True)
+            or plate.graft_explore(write=True))
 
 
 def cmd_trust(args):
@@ -889,6 +905,15 @@ def cmd_all(args):
     # which is most of srcset's benefit given away at the last step.
     from tourism import sizes_attr as _sizes
     _sizes.run(write=True, log=lambda *a: None)
+    # And after BOTH, because it copies the srcset ladder srcset has written
+    # and the sizes hint sizeattr has written onto the <source> elements it
+    # adds. Same reason as the two above for being here at all: every
+    # generator that writes a page wipes it, so "wrap the photographs" cannot
+    # be a thing somebody has to remember. Encoding is skipped when the files
+    # are newer than their sources, so this costs a scan on a normal build.
+    from tourism import modern as _modern
+    _modern.encode(write=True, log=lambda *a: None)
+    _modern.run(write=True, log=lambda *a: None)
     print()
     rc = cmd_verify(args) or rc
     cmd_report(args)
@@ -999,7 +1024,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
