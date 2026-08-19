@@ -305,6 +305,67 @@
     }
   }
 
+  /* THE TARGETS ARE SIZED IN PIXELS, AND CAPPED BY THE GEOGRAPHY.
+   *
+   * The discs are 17 units in a 1000-unit drawing. On the rail that renders at
+   * seven pixels across; on a phone, where the map is 300px wide, it is five.
+   * A five-pixel target is not a target. The browser suite does not catch this
+   * — its tap-target pass skips anything inside an <svg>, which was right when
+   * SVG on this site was decoration and is not right now that it carries
+   * fifty-four controls.
+   *
+   * So they are sized against the render: eleven pixels of radius, converted
+   * into user units through whatever the viewBox currently is, which means
+   * they also grow correctly when the map flies in.
+   *
+   * And capped by half the distance to the nearest other centroid, because the
+   * alternative is worse than a small target: at the size a phone wants, the
+   * discs for Togo and Benin would each cover the other and one of the two
+   * countries would become unpressable. Geometry gets the final say — no disc
+   * may reach its neighbour's centre, and that was measured: zero overlapping
+   * pairs at 390, 768 and 1440.
+   *
+   * WHERE THAT LEAVES THE DENSE PLACES, HONESTLY. Fifty-four centroid discs on
+   * a 253px drawing cannot all be finger-sized, and pretending otherwise would
+   * mean letting Rwanda's disc cover Burundi. On the unflown continent the
+   * tightest targets measure 3px across at 390 and 5px at 1440 — Gambia,
+   * Rwanda, Burundi — and for those the country grid below, whose buttons are
+   * the full width of the column, is the real control. The map is the coarse
+   * one.
+   *
+   * Flying in is what fixes it, and it fixes it by itself. Zoom changes
+   * units-per-pixel, so the same rule hands out bigger discs: after a fly to
+   * Rwanda those same three go from 3px to 10-11px at 390, and from 5px to
+   * 17px at 1440. Measured, both states.
+   */
+  var hits = mapEl
+    ? [].slice.call(mapEl.querySelectorAll('.jn-map-hit')) : [];
+  var nearest = hits.map(function (a, i) {
+    var ax = +a.getAttribute('cx'), ay = +a.getAttribute('cy'), best = 1e9;
+    hits.forEach(function (b, j) {
+      if (i === j) return;
+      var dx = ax - (+b.getAttribute('cx')), dy = ay - (+b.getAttribute('cy'));
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d < best) best = d;
+    });
+    return best;
+  });
+
+  function sizeHits() {
+    if (!hits.length || !mapEl) return;
+    var box = mapEl.getBoundingClientRect();
+    if (!box.width) return;
+    var units = (mapEl.getAttribute('viewBox') || HOME).split(/[ ,]+/).map(Number);
+    var perPx = units[2] / box.width;
+    var want = 11 * perPx;
+    hits.forEach(function (el, i) {
+      var cap = nearest[i] * 0.48;
+      el.setAttribute('r', Math.max(6, Math.min(want, cap)).toFixed(1));
+    });
+  }
+  sizeHits();
+  addEventListener('resize', sizeHits);
+
   /* ---- THE JOURNEY, DRAWN ------------------------------------------------
    * The specification's last line, and the one with an honest limit on it.
    *
@@ -508,14 +569,15 @@
     var to = String(target).split(/[ ,]+/).map(Number);
     if (flying) { cancelAnimationFrame(flying); flying = null; }
     /* Reduced motion gets the destination, not a slower journey to it. */
-    if (reduced.matches) { setBox(to.join(' ')); return; }
+    if (reduced.matches) { setBox(to.join(' ')); sizeHits(); return; }
     var t0 = performance.now(), ms = 620;
     var tick = function (now) {
       var k = Math.min(1, (now - t0) / ms);
       var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
       setBox(from.map(function (v, i) {
         return Math.round((v + (to[i] - v) * e) * 10) / 10; }).join(' '));
-      if (k < 1) flying = requestAnimationFrame(tick); else flying = null;
+      if (k < 1) flying = requestAnimationFrame(tick);
+      else { flying = null; sizeHits(); }
     };
     flying = requestAnimationFrame(tick);
   }

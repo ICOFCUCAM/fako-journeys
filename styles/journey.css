@@ -822,6 +822,23 @@
   border-color:var(--c-primary)}
 .jn-map-key li[data-match="open"]::before{background:var(--c-bg)}
 
+/* BELOW THE RAIL, THE MAP IS SIZED AGAINST THE SCREEN'S HEIGHT, NOT ITS WIDTH.
+   Stacked at 390 the continent is as wide as the phone and therefore taller
+   than it is wide, and the first question — the reason the page exists — was
+   pushed to 600 pixels down. A map is not a hero.
+
+   The size is tied to the viewport's height instead, which is the dimension
+   that actually decides whether the question is on screen. Thirty per cent of
+   it, with a floor so a landscape phone does not get a postage stamp, and
+   never wider than the column. At 390x844 that is a 253px drawing and the
+   question starts at 480 rather than 600. The order is kept — continent, then
+   the question about it — because that sequence is the argument. */
+@media(max-width:1079px){
+  .jn-atlas{margin-bottom:var(--sp-5)}
+  .jn-atlas-fig{max-width:min(100%,max(180px,30vh))}
+  .jn-map-say{max-width:52ch}
+}
+
 /* A RAIL, NOT A BANNER, WHERE THERE IS ROOM FOR ONE.
    The questions are set in a 16ch measure and the map wants to be square, so
    above 1080 they sit side by side and the map stays in view while the reader

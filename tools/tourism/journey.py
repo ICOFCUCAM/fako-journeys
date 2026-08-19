@@ -328,8 +328,10 @@ def continent():
              aria-labelledby="jn-map-t jn-map-d">
           <title id="jn-map-t">Africa, with every country this site writes up</title>
           <desc id="jn-map-d">An outline map of the continent. Every country is
-            a link to its own pages; answering the questions colours them by how
-            well each one answers what you asked for.</desc>
+            a link to its own pages, and every country is also a button in the
+            list of all fifty-four below, which is the easier target on a small
+            screen. Answering the questions colours them by how well each one
+            answers what you asked for.</desc>
           <g class="jn-map-rest" aria-hidden="true">%(rest)s</g>
           <g class="jn-map-live">%(shapes)s</g>
           <g class="jn-map-isles">%(marks)s</g>
