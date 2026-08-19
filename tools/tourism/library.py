@@ -1252,7 +1252,14 @@ def verify(log=print):
     host = reg.get("host", "")
     unknown = []
     if host:
-        pat = re.compile(re.escape(host) + r"/([\w/\-]+?)-\d+\.(?:avif|webp|jpg)")
+        # THE KEY IS <width-or-originals>/<identity>.<ext>, AND NOTHING ELSE.
+        # This pattern was written for the old caption-derived keys and read
+        # "1600/AKL-000256.jpg" as an asset named "1600/AKL" — so the first
+        # real rewrite reported 684 unknown assets that were all registered.
+        # A check that cannot parse the URLs the pipeline writes is worse
+        # than no check, because it fails loudly against correct output.
+        pat = re.compile(re.escape(host)
+                         + r"/(?:originals|\d+)/(AKL-\d{6})\.(?:avif|webp|jpg)")
         for base, dirs, files in os.walk(ROOT):
             dirs[:] = [d for d in dirs if d not in
                        ("node_modules", ".git", "incoming", "tools")
