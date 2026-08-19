@@ -63,6 +63,19 @@ in.
 **The Journey Builder's map**, which was the largest buildable gap on this page
 when it was written this morning and is gap 2 below, now closed.
 
+**The Journey Builder's surfaces**, rebuilt out of the one pattern the design
+direction exists to delete. Every question on the page was a one-pixel border
+repeated — eight times in a three-column grid, then five, then twelve — and
+every selection was a solid deep-forest slab. They are ruled indexes now, the
+year is drawn as a scale, and selection is a three-pixel accent rule
+everywhere on the page including the stage picker and the fifty-four-country
+field, which had been twenty-seven solid terracotta chips disagreeing with the
+map beside it.
+
+**`/trans-afrique`**, which introduced a series about crossing a continent and
+drew no continent. It carries the four crossings' plate now — the same
+`routemap.plate()` the crossing pages already call.
+
 ---
 
 ## The gaps, in the order they cost money
