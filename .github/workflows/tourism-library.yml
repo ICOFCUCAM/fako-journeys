@@ -82,25 +82,26 @@ jobs:
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
         run: python tools/tourism/build.py library publish --fetch
 
-      # An upload that returned 200 proves the S3 endpoint accepted it. It
-      # does not prove image.afrinkong.com serves it to somebody with no
-      # credentials, which is the only request a visitor ever makes. This asks
-      # the public host for every object by the key publish used, and checks
-      # the byte count, the content type, the cache header, and that an absent
-      # key answers 404 rather than a 200 that is not an image.
-      - name: Ask the public host for what we just published
-        if: ${{ github.event.inputs.publish == 'true' }}
-        run: python tools/tourism/build.py library reachable
-
       # Every hosted photograph has a photographer, a source page and a
       # licence; nothing that was migrated is still fetched from a provider.
       # Either failing means nothing is committed.
       - name: Verify provenance and third-party leakage
         run: python tools/tourism/build.py library verify
 
-      # The register and the encoded ladder, not the originals. incoming/ is
-      # the staging area and stays out of the repository — that is the whole
-      # point of not putting several gigabytes into git.
+      # BEFORE THE REACHABILITY GATE, AND THE FIRST REAL RUN IS WHY.
+      #
+      # This used to sit last. Run 1 downloaded 25 photographs, encoded 300
+      # files and uploaded 325 objects — all of it true and all of it
+      # recorded in the register — and then failed at the reachability check
+      # because image.afrinkong.com had no public DNS yet. Because the run
+      # failed, this step never ran, the register was never committed, and
+      # the record of what had been downloaded and hashed was thrown away.
+      # The next run would have gone back to Pexels for 25 files already
+      # sitting in the bucket.
+      #
+      # What was downloaded is a fact about this run. Whether somebody else's
+      # nameservers have propagated is not, so it does not get a vote on
+      # whether the fact is written down.
       - name: Commit the register
         run: |
           git config user.name  "afrinkong-library"
@@ -110,7 +111,27 @@ jobs:
           git commit -m "The image library: download and register the approved set"
           git push
 
+      # An upload that returned 200 proves the S3 endpoint accepted it. It
+      # does not prove image.afrinkong.com serves it to somebody with no
+      # credentials, which is the only request a visitor ever makes. This asks
+      # the public host for every object by the key publish used, and checks
+      # the byte count, the content type, the cache header, and that an absent
+      # key answers 404 rather than a 200 that is not an image.
+      #
+      # Last, and it still fails the run. Everything above it is durable now,
+      # so failing here costs a re-run of this step alone rather than another
+      # 25 downloads from a provider.
+      - name: Ask the public host for what we just published
+        if: ${{ github.event.inputs.publish == 'true' }}
+        run: python tools/tourism/build.py library reachable
+
+      # The register and the encoded ladder, not the originals. incoming/ is
+      # the staging area and stays out of the repository — that is the whole
+      # point of not putting several gigabytes into git. always(), because a
+      # ladder that encoded correctly is worth keeping even when the host it
+      # was uploaded to cannot yet be looked up.
       - name: Keep the encoded ladder as an artefact, not as a commit
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: afrinkong-image-library
