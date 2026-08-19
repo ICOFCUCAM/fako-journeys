@@ -36,6 +36,11 @@ on:
         type: boolean
         required: false
         default: true
+      weigh:
+        description: "Measure page weight before/after the rewrite on six of the 76 pages (needs the open internet)"
+        type: boolean
+        required: false
+        default: false
       check_host_only:
         description: "Only check the asset host: DNS, TLS, and every published object (~30s, downloads nothing)"
         type: boolean
@@ -63,7 +68,7 @@ jobs:
   # click and half a minute, which matters when the answer is "wait and try
   # again".
   host:
-    if: ${{ github.event.inputs.check_host_only == 'true' }}
+    if: ${{ github.event.inputs.check_host_only == 'true' && github.event.inputs.weigh != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -73,8 +78,29 @@ jobs:
       - name: Does the host serve every published object
         run: python tools/tourism/build.py library reachable
 
+  # BEFORE AND AFTER, ON PAGES THAT ACTUALLY CHANGED.
+  #
+  # browser-checks measures four fixed pages and none of them was rewritten,
+  # so it correctly reported no change and told us nothing about whether
+  # first-party images are lighter than the hotlinks they replaced. This
+  # loads six of the seventy-six at a phone viewport, once from the commit
+  # before the rewrite and once from now, and counts the image bytes that
+  # actually crossed the wire. Needs the open internet: the providers and our
+  # own asset host are both unreachable from the development sandbox.
+  weigh:
+    if: ${{ github.event.inputs.weigh == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # "before" is a commit, so history is needed
+      - name: Install a browser
+        run: npm i -g playwright && npx playwright install --with-deps chromium
+      - name: Weigh the rewritten pages
+        run: node tools/weigh.js
+
   library:
-    if: ${{ github.event.inputs.check_host_only != 'true' }}
+    if: ${{ github.event.inputs.check_host_only != 'true' && github.event.inputs.weigh != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
