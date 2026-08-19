@@ -257,8 +257,14 @@ def continent():
     IT IS SERVER-RENDERED, NOT DRAWN BY THE SCRIPT. A map assembled in the
     browser is a map that does not exist for anything that does not run
     JavaScript, and this page was already the thinnest on the site by that
-    measure — 270 words, against 4,174 on the homepage. Fifty-four country
-    names and taglines in the document is the same fix as the map.
+    measure — 270 words against the homepage's 4,174.
+
+    Measured after, honestly: 282. The fifty-four names and taglines are in
+    the document, but they are in <title> elements, which a screen reader
+    announces and a word counter does not read. So the win here is not a word
+    count and should not be claimed as one — it is that a visitor with no
+    JavaScript now gets a map of Africa where every country is a link to its
+    own pages, instead of a page with four hidden questions on it.
 
     EVERY COUNTRY IS A LINK. Not a <path> with a click handler: an <a> to that
     country's own page, which is where it goes with scripting off and what a

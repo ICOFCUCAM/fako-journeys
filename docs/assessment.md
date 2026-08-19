@@ -91,7 +91,17 @@ territory out of `tourism/map.json`, in the same projection and the same
 colours the countries by how each answers it; choosing one flies the viewBox to
 it; composing a journey draws the route across it. Six checks in
 `journey-checks.js` hold the map in the document rather than in a script, which
-is the way it could quietly stop existing.
+is the way it could quietly stop existing. The browser suite reads the page
+after the change at 259 checks and no failures: CLS 0.0000, 78 focus stops with
+every ring at 3:1 or better, nothing under 24px to press, and every text
+contrast at AA.
+
+One thing that is *not* fixed and was worth checking: the page still renders
+only 282 words with scripting off, up from 270. The fifty-four country names
+are in the document, but they sit in `<title>` elements, which a screen reader
+announces and a word counter does not read. The real gain is that a visitor
+with no JavaScript now gets a map of Africa where every country links to its
+own pages, rather than a page of four hidden questions.
 
 What remains is the data underneath it, and it is a real limit rather than a
 loose end. **Places have no coordinates.** `data/atlas/*.json` gives each place
