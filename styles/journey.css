@@ -417,8 +417,16 @@
 .jn-pick-meta{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 /* Already in the journey: the row keeps its place in the list rather than
-   disappearing out of it, so the list never reorders under the cursor. */
-.jn-pick[aria-pressed="true"]{background:var(--fj-dust)}
+   disappearing out of it, so the list never reorders under the cursor.
+
+   A rule, not a plate. Three consecutive chosen stages made one dust-coloured
+   block behind them — a filled slab in the middle of a page that has just
+   spent four screens saying selection is a rule. It is the accent down the
+   left edge here too, and the name goes quiet because the row's job is now to
+   say "this one is already in", not to compete with the timeline that holds
+   it. Hover keeps the dust: that is a pointer, not a state. */
+.jn-pick{border-left:3px solid transparent}
+.jn-pick[aria-pressed="true"]{background:none;border-left-color:var(--c-accent)}
 .jn-pick[aria-pressed="true"] .jn-pick-body b{color:var(--c-muted)}
 /* Written up under something you asked for. */
 .jn-pick[data-lead] .jn-pick-body b::after{content:"";display:inline-block;width:5px;height:5px;
