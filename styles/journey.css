@@ -54,58 +54,94 @@
 .jn-lede{margin-top:20px;font-size:17.5px;color:var(--c-muted);max-width:56ch}
 .jn-note{margin-top:10px;font-size:14.5px;color:var(--c-muted)}
 
-/* A choice is an editorial card, not a checkbox with a word beside it: the
-   thing being chosen is what it means, and what it means takes a sentence. */
-.jn-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:var(--sp-2);margin-top:var(--sp-4)}
+/* THE CHOICES ARE RULED ROWS, NOT BOXES.
+ *
+ * Every question on this page was built from the same object: a one-pixel
+ * border round a title, a sentence and a number, repeated eight times, then
+ * five times, then twelve, then again. Eight equal bordered cards in a
+ * three-column grid is the pattern this direction exists to delete — it is a
+ * pricing table with the prices taken out — and the border was doing no work
+ * that the words were not already doing.
+ *
+ * So the box goes and the rule stays. A stack of choices is an index: a
+ * hairline between rows, the name in display, what it means in the reading
+ * face, and the quantity out at the right in mono where a figure belongs. The
+ * white space does the separating, which is what white space is for.
+ *
+ * AND SELECTION IS A RULE, NEVER A FILL. A chosen row took a solid deep-forest
+ * slab, which on question one meant up to eight slabs at once and a page that
+ * looked like a form with half its fields highlighted. It is now a three-pixel
+ * accent rule down the left edge and the name in burnt sienna — the same
+ * gesture the fifty-seven calls elsewhere on this site make, and the same one
+ * the fund's closing call was rebuilt around. Burnt sienna on the page is
+ * 6.31:1, which a name at 26px more than clears.
+ */
+.jn-cards{display:grid;grid-template-columns:1fr;gap:0;margin-top:var(--sp-4);
+  border-top:1px solid var(--c-border)}
 .jn-cards--rows{grid-template-columns:1fr}
-.jn-card{display:block;cursor:pointer}
+.jn-card{display:block;cursor:pointer;border-bottom:1px solid var(--c-border)}
 .jn-card input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.jn-card-in{display:block;border:1px solid var(--c-border);padding:20px 20px 18px;height:100%;
-  transition:border-color var(--t-fast) var(--ease),background var(--t-fast) var(--ease)}
+.jn-card-in{display:block;padding:18px 4px 17px 18px;height:100%;
+  border-left:3px solid transparent;
+  transition:border-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),padding-left var(--t-fast) var(--ease)}
 .jn-card-in b{display:block;font-family:var(--fj-display);font-size:26px;font-weight:700;
-  text-transform:uppercase;line-height:1.02;letter-spacing:-.01em}
-.jn-card-line{display:block;margin-top:8px;font-size:15.5px;line-height:1.5;color:var(--c-muted)}
-.jn-card-n{display:block;margin-top:12px;font-family:var(--fj-mono);font-size:9.5px;
+  text-transform:uppercase;line-height:1.02;letter-spacing:-.01em;
+  transition:color var(--t-fast) var(--ease)}
+.jn-card-line{display:block;margin-top:7px;font-size:15.5px;line-height:1.5;color:var(--c-muted);
+  max-width:52ch}
+.jn-card-n{display:block;margin-top:10px;font-family:var(--fj-mono);font-size:9.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
-.jn-card:hover .jn-card-in{border-color:var(--c-primary)}
-.jn-card input:checked + .jn-card-in{border-color:var(--c-primary);background:var(--c-primary);
-  color:var(--c-bg);border-width:1px}
-.jn-card input:checked + .jn-card-in .jn-card-line,
-.jn-card input:checked + .jn-card-in .jn-card-n{color:var(--fj-onbasalt-dim)}
+.jn-card:hover .jn-card-in b{color:var(--c-accent)}
+.jn-card input:checked + .jn-card-in{border-left-color:var(--c-accent);padding-left:24px}
+.jn-card input:checked + .jn-card-in b{color:var(--c-accent)}
+.jn-card input:checked + .jn-card-in .jn-card-n{color:var(--c-accent)}
 .jn-card input:focus-visible + .jn-card-in{outline:2px solid var(--c-accent);outline-offset:3px}
+/* A row whose quantity is a range rather than a count: the figure sits out at
+   the right on the name's own baseline, which is where a reader looks for it. */
 .jn-card--row .jn-card-in{display:grid;grid-template-columns:1fr auto;
-  grid-template-areas:"name short" "line short";column-gap:20px;align-items:baseline}
+  grid-template-areas:"name short" "line short";column-gap:24px;align-items:baseline}
 .jn-card--row .jn-card-in b{grid-area:name}
 .jn-card--row .jn-card-line{grid-area:line;margin-top:6px}
 .jn-card--row .jn-card-n{grid-area:short;margin-top:0;white-space:nowrap}
 
-.jn-months{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:var(--sp-4)}
+/* THE YEAR IS A SCALE, SO IT IS DRAWN AS ONE.
+   Twelve bordered boxes in a row is a keypad. A year is an axis: twelve marks
+   along one line, each under its own label, and the month chosen takes the
+   accent and a rule three times the weight. That is a scale reading, which is
+   what picking a month is. */
+.jn-months{display:grid;grid-template-columns:repeat(12,1fr);gap:0;
+  margin-top:var(--sp-4);border-top:1px solid var(--c-border)}
 .jn-mon{cursor:pointer}
 .jn-mon input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.jn-mon span{display:block;text-align:center;border:1px solid var(--c-border);padding:16px 0;
+.jn-mon span{display:block;text-align:center;padding:18px 0 14px;
+  border-bottom:2px solid transparent;
   font-family:var(--fj-mono);font-size:10px;letter-spacing:.1em;
-  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
+  transition:color var(--t-fast) var(--ease),
     border-color var(--t-fast) var(--ease)}
-.jn-mon:hover span{border-color:var(--c-primary)}
-.jn-mon input:checked + span{background:var(--c-primary);color:var(--c-bg);
-  border-color:var(--c-primary)}
-.jn-mon input:focus-visible + span{outline:2px solid var(--c-accent);outline-offset:3px}
+.jn-mon:hover span{color:var(--c-accent)}
+.jn-mon input:checked + span{color:var(--c-accent);border-bottom-color:var(--c-accent)}
+.jn-mon input:focus-visible + span{outline:2px solid var(--c-accent);outline-offset:2px}
 
-.jn-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--sp-4)}
+/* The same sentence again at the smallest size: a label and a rule under it
+   when it is chosen. No pill, no fill. */
+.jn-chips{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:var(--sp-4)}
 .jn-chips--style{margin-top:var(--sp-2)}
 .jn-chip{cursor:pointer;display:inline-block}
 .jn-chip input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.jn-chip span{display:inline-block;border:1px solid var(--c-border);padding:12px 16px;
+.jn-chip span{display:inline-block;padding:10px 0 7px;
+  border-bottom:2px solid transparent;
   font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
-    border-color var(--t-fast) var(--ease)}
-.jn-chip:hover span{border-color:var(--c-primary)}
-.jn-chip input:checked + span{background:var(--c-primary);color:var(--c-bg);
-  border-color:var(--c-primary)}
+  color:var(--c-muted);
+  transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.jn-chip:hover span{color:var(--c-accent)}
+.jn-chip input:checked + span{color:var(--c-accent);border-bottom-color:var(--c-accent)}
 .jn-chip input:focus-visible + span{outline:2px solid var(--c-accent);outline-offset:3px}
-.jn-chip--wide{display:block;margin-top:6px}
-.jn-chip--wide span{width:100%;text-align:center}
+/* "I'm flexible" was a full-width slab of deep forest — the loudest object on
+   a page whose subject is a question. It is the same label as the others now,
+   set apart by sitting on its own line rather than by being shouted. */
+.jn-chip--wide{display:block;margin-top:14px}
+.jn-chip--wide span{text-align:left}
 
 .jn-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--sp-5)}
 .jn-acts--end{margin-top:var(--sp-5)}

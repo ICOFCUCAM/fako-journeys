@@ -187,10 +187,15 @@ def brief(countries, taxonomy):
 def want_cards(data):
     """The first question, written into the page rather than drawn by script.
 
-    Six choices, each with the sentence that says what it means here. They are
+    Eight choices, each with the sentence that says what it means here. They are
     checkboxes underneath — one control, one label, no invented widget — so the
     keyboard, the screen reader and the browser's own form behaviour all work
     before a line of script runs.
+
+    Ordered by how much of the continent answers to each, which is the one
+    ordering that carries information: culture leads in thirty-nine countries
+    and food in nine, and a reader scanning the column learns that before
+    reading a word of it. Alphabetical would have been a filing system.
     """
     order = sorted(data["lenses"].items(),
                    key=lambda kv: (-len([1 for c in data["countries"].values()
@@ -199,7 +204,7 @@ def want_cards(data):
     for i, (key, lens) in enumerate(order):
         n = len([1 for c in data["countries"].values() if key in c["calls"]])
         out.append(
-            '        <label class="jn-card">\n'
+            '        <label class="jn-card jn-card--row">\n'
             '          <input type="checkbox" name="want" value="%s">\n'
             '          <span class="jn-card-in"><b>%s</b>'
             '<span class="jn-card-line">%s</span>'
