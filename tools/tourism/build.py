@@ -214,6 +214,21 @@ def cmd_library(args):
     return 1
 
 
+def cmd_acquire(args):
+    """The Image Acquisition Plan: the classification as a commissioning brief.
+
+        build.py acquire            what it would write
+        build.py acquire --fetch    write data/image-acquisition.csv
+
+    `assets` says which photographs are wrong. This says what to do about each
+    one: the country, the destination, the page, what the picture has to show,
+    what shape it has to be, how much it matters and what to call the file.
+    CSV, so it can be handed to a photographer or an agency as it is.
+    """
+    from tourism import acquire
+    return acquire.run(write=bool(getattr(args, "fetch", False)))
+
+
 def cmd_assets(args):
     """Survey the photographs this site hotlinks. Downloads nothing.
 
@@ -1094,7 +1109,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "acquire": cmd_acquire, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
