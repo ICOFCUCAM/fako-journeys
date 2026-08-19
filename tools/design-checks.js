@@ -116,7 +116,26 @@ const SURFACES = [
   {url: '/trans-afrique.html',      name: 'Trans Afrique',       cards: 2},
   {url: '/trans-afrique/east.html', name: 'a crossing',          cards: 1},
   {url: '/atlas.html',              name: 'the atlas',           cards: 2},
-  {url: '/journey.html',            name: 'the journey builder', cards: 1},
+  /* AN ANSWERED STATE, NOT THE RESTING ONE.
+     This page draws its continent unlit until somebody answers a question, so
+     scanning it as it loads measures a surface nobody is looking at: the wash
+     that lights thirty-one countries never gets measured at all. `prep` runs
+     in the page before the scan and answers the first question.
+
+     One lens, not six. Checking all of them lights the map no harder — one
+     lens already washes thirty-one countries — and it presses six choice
+     cards, each of which takes a fill and a border and is then counted as a
+     card by the rule below. A pressed control is not a card, and the honest
+     way to say so here is to put the page into a state a reader actually
+     reaches rather than to teach the card rule an exception. */
+  {url: '/journey.html',            name: 'the journey builder', cards: 1,
+   prep: function () {
+     var el = document.querySelector('[name="want"][value="nature"]')
+           || document.querySelector('[name="want"]');
+     if (!el) return;
+     el.checked = true;
+     el.dispatchEvent(new Event('change', {bubbles: true}));
+   }},
   {url: '/journey-fund.html',       name: 'the journey fund',    cards: 2},
   {url: '/uganda.html',             name: 'a country',           cards: 0},
   {url: '/how-it-works.html',       name: 'how it works',        cards: 0}
@@ -199,16 +218,40 @@ const SCAN = `(function(){
   var TOL = 30;
   var PAPER = [246,241,231];   /* the page, when nothing above it is opaque */
 
-  /* -> [r,g,b,a] on bytes and a 0..1 alpha, from any of the three shapes
-     Chromium hands back: rgb(), rgba(), and color(srgb f f f / a). */
+  /* -> [r,g,b,a] on bytes and a 0..1 alpha, from ANY colour syntax.
+     This was a regex over the three shapes Chromium was known to hand back —
+     rgb(), rgba() and color(srgb f f f / a) — and it was one syntax behind the
+     browser. color-mix(in srgb, ...) on an SVG fill computes to oklab() here,
+     which the regex read as three numbers under 1 and called a near-black: a
+     wash that could have been a flood fill and the check would not have known
+     the difference. It passed, and it passed by accident.
+
+     Painted instead of parsed. A 1x1 canvas accepts every syntax the engine
+     accepts, including the ones that do not exist yet, and getImageData
+     reports what was actually put on the pixel. An unparseable value leaves
+     the transparent ground untouched and comes back at alpha 0, which is the
+     safe failure: no paint rather than a wrong colour. */
+  var _c = document.createElement('canvas');
+  _c.width = _c.height = 1;
+  var _x = _c.getContext('2d', {willReadFrequently: true});
   function rgba(s){
-    if(!s) return null;
-    var m = String(s).match(/[\\d.]+/g);
-    if(!m) return null;
-    var v = m.slice(0,3).map(Number);
-    if(/^color\\(/.test(s)) v = v.map(function(x){ return Math.round(x*255); });
-    v.push(m.length > 3 ? +m[3] : 1);
-    return v;
+    if(!s || s === 'none' || s === 'transparent') return null;
+    _x.clearRect(0,0,1,1);
+    _x.fillStyle = 'rgba(0,0,0,0)';
+    try { _x.fillStyle = s; } catch(e) { return null; }
+    _x.fillRect(0,0,1,1);
+    var d = _x.getImageData(0,0,1,1).data;
+    if(!d[3]) return null;
+    return [d[0], d[1], d[2], d[3]/255];
+  }
+  /* Alpha does not only live in the colour. fill-opacity and opacity paint the
+     same wash and report a solid colour, which is the documented way text has
+     slipped past the contrast checks on this site before. Folded in here so a
+     fill cannot be hidden behind a property the predicate does not read. */
+  function alphaOf(cs, key){
+    var a = parseFloat(cs[key]);
+    var o = parseFloat(cs.opacity);
+    return (isNaN(a) ? 1 : a) * (isNaN(o) ? 1 : o);
   }
   function over(f, b){
     var a = f[3];
@@ -277,6 +320,14 @@ const SCAN = `(function(){
       var under = ground(el) || PAPER;
       var bgR = rgba(cs.backgroundColor);
       var flR = (cs.fill && cs.fill !== 'none') ? rgba(cs.fill) : null;
+      /* The alpha the pixel actually gets, not the alpha the colour declares:
+         the element's own opacity multiplies both, and fill-opacity multiplies
+         the fill again. Without this a solid accent at fill-opacity .34 reads
+         as a solid accent and a wash reads as a flood. */
+      var own = parseFloat(cs.opacity);
+      own = isNaN(own) ? 1 : own;
+      if(bgR) bgR[3] = Math.min(1, bgR[3] * own);
+      if(flR) flR[3] = Math.min(1, flR[3] * alphaOf(cs, 'fillOpacity'));
       var bg = bytes(cs.backgroundColor);
       var paintedBg = (bgR && bgR[3] > 0.02) ? over(bgR, under) : null;
       var paintedFl = (flR && flR[3] > 0.02) ? over(flR, under) : null;
@@ -287,8 +338,22 @@ const SCAN = `(function(){
       }
 
       /* ABSOLUTE TWO — nothing is a card. Four borders of one visible colour
-         plus a fill that differs from the ground behind it. */
-      var w4 = ['Top','Right','Bottom','Left'].map(function(s){
+         plus a fill that differs from the ground behind it.
+
+         A PRESSED CONTROL IS NOT A CARD. The box that says "you chose this
+         one" takes a border and a fill for as long as the choice stands, and
+         that is what a pressed control looks like in every medium including
+         paper. Counting it makes the ratchet unusable for any page with
+         choices on it — answer a question and the surface has grown a card.
+         Recognised by the state rather than by the class name: the element is
+         inside a label whose input is checked, or carries aria-checked
+         itself. Unchecked, the same element is measured like everything else,
+         so a design that ships four filled boxes cannot hide behind this. */
+      var lab = el.closest ? el.closest('label') : null;
+      var pressed = (lab && lab.querySelector('input:checked'))
+        || el.getAttribute('aria-checked') === 'true'
+        || (el.closest && el.closest('[aria-checked="true"]'));
+      var w4 = pressed ? [0,0,0,0] : ['Top','Right','Bottom','Left'].map(function(s){
         return parseFloat(cs['border' + s + 'Width']) || 0; });
       if(w4.every(function(x){ return x >= 0.5; })){
         var c4 = ['Top','Right','Bottom','Left'].map(function(s){
@@ -382,6 +447,10 @@ const SCAN = `(function(){
         await page.goto('http://127.0.0.1:' + PORT + surface.url,
           {waitUntil: 'load'});
         await page.waitForTimeout(1200);
+        if (surface.prep) {
+          await page.evaluate(surface.prep);
+          await page.waitForTimeout(500);
+        }
         await page.addScriptTag({content: SCAN});
         const r = await page.evaluate('__design(' + BUTTON + ')');
         r.fills.forEach(f => fills.push(Object.assign({at: w}, f)));
