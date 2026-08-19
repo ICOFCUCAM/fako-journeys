@@ -365,6 +365,29 @@
 
   /* The field is its own section now, so the delegated handler has to be bound
      to both. Bound only to .jn-reveal, every country in the grid was inert. */
+  /* They picked one themselves. That is the whole point of showing all
+     fifty-four, so nothing here second-guesses it: the country they chose
+     becomes the journey, whatever the ranking thought.
+
+     One function for two doors. The grid and the map are the same choice made
+     two ways, and the moment they were two code paths one of them would start
+     forgetting something the other does — which is how a map ends up not
+     recording that a country was chosen from it. `how` is the only thing that
+     differs, and it is a label on the count, not a branch. */
+  function chooseCountry(want, how) {
+    if (!want || !D.countries[want]) return false;
+    var found = E.rank(D, {wants: brief.wants, month: brief.month, seed: brief.seed})
+      .filter(function (p) { return p.slug === want; })[0];
+    chosen = found || {slug: want, reasons: [], outOfSeason: false};
+    picks = [chosen].concat(picks.filter(function (p) { return p.slug !== want; }));
+    track('country_chosen', {country: want, from: how || 'grid'});
+    var fs = document.getElementById('jn-field');
+    if (fs) fs.hidden = true;
+    paintMap();
+    openComposer(want);
+    return true;
+  }
+
   function onPick(e) {
     var t = e.target.closest ? e.target.closest('[data-alt],[data-compose],[data-others],[data-restart],[data-country]') : null;
     if (!t) return;
@@ -386,18 +409,7 @@
         alts.scrollIntoView({behavior: reduced.matches ? 'auto' : 'smooth', block: 'start'});
       }
     } else if (t.hasAttribute('data-country')) {
-      /* They picked one themselves. That is the whole point of showing all
-         fifty-four, so nothing here second-guesses it: the country they chose
-         becomes the journey, whatever the ranking thought. */
-      var want = t.dataset.country;
-      var found = E.rank(D, {wants: brief.wants, month: brief.month, seed: brief.seed})
-        .filter(function (p) { return p.slug === want; })[0];
-      chosen = found || {slug: want, reasons: [], outOfSeason: false};
-      picks = [chosen].concat(picks.filter(function (p) { return p.slug !== want; }));
-      track('country_chosen', {country: want});
-      var fs = document.getElementById('jn-field');
-      if (fs) fs.hidden = true;
-      openComposer(want);
+      chooseCountry(t.dataset.country, 'grid');
     } else if (t.hasAttribute('data-restart')) {
       /* Re-rolling changes the tie-break, not the rules: two countries that
          scored the same get to take turns. It travels in the link, so a
@@ -410,6 +422,45 @@
       show(1);
     }
   }
+  /* THE MAP IS A DOOR, AND IT IS A LINK FIRST.
+     Every country is an <a> to its own page, so with the script off — or
+     before it loads, or if it throws — pressing Ghana goes to Ghana, which is
+     a reasonable thing for pressing Ghana to do. With the script running the
+     press is intercepted and the country becomes the journey instead.
+
+     Two targets resolve to one slug: the outline, which is what a pointer
+     lands on for a country the size of Algeria, and the transparent disc at
+     the centroid, which is the only way to press The Gambia. A country this
+     site has not written up is not intercepted at all — the link goes where
+     the link says. */
+  if (mapEl) {
+    mapEl.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target : null;
+      if (!t) return;
+      var hit = t.closest('.jn-map-hit');
+      var link = t.closest('.jn-map-c');
+      var slug = hit ? hit.getAttribute('data-slug')
+        : (link ? link.getAttribute('data-slug') : null);
+      if (!slug) return;
+      if (chooseCountry(slug, 'map')) e.preventDefault();
+    });
+    /* Pointing at the disc lights the country under it, because the disc is
+       invisible and the country is what the reader thinks they are pointing
+       at. Without this, hovering The Gambia lights nothing. */
+    mapEl.addEventListener('mouseover', function (e) {
+      var hit = e.target.closest ? e.target.closest('.jn-map-hit') : null;
+      if (!hit) return;
+      var el = mapBy[hit.getAttribute('data-slug')];
+      if (el) el.setAttribute('data-hot', 'true');
+    });
+    mapEl.addEventListener('mouseout', function (e) {
+      var hit = e.target.closest ? e.target.closest('.jn-map-hit') : null;
+      if (!hit) return;
+      var el = mapBy[hit.getAttribute('data-slug')];
+      if (el) el.removeAttribute('data-hot');
+    });
+  }
+
   reveal.addEventListener('click', onPick);
   var fieldEl = document.getElementById('jn-field');
   if (fieldEl) fieldEl.addEventListener('click', onPick);
