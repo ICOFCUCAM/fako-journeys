@@ -504,14 +504,39 @@ def fetch(write=False, log=print, limit=0):
     replacement. Nothing outside the register is ever fetched.
     """
     reg = register()
-    todo = [a for a in reg["assets"].values() if not a.get("sha256")]
+
+    def needed(a):
+        """Whether this run has to go and get the bytes.
+
+        THE REGISTER'S MEMORY OUTLIVES THE FILES IT DESCRIBES, AND THAT COST
+        A RUN. This used to skip anything carrying a sha256, which is a
+        perfectly good rule on one machine and wrong in a workflow. The
+        register is committed; incoming/library/ and images/library/ are
+        gitignored, because the entire point was to keep gigabytes of
+        photographs out of git. So a fresh runner checks out a register
+        saying twenty-five photographs are downloaded and encoded, and an
+        empty disk. fetch skipped all twenty-five, encode had no source,
+        publish found nothing and failed — in twenty-nine seconds, having
+        done nothing at all.
+
+        So the disk decides, not the register. sha256 goes back to being what
+        it is for: telling a re-download of the same photograph from a
+        provider quietly serving something else. An asset already published
+        is the one case where the bytes genuinely are not needed again — it
+        is in the bucket, and that is where it is served from.
+        """
+        if a.get("publishedAt"):
+            return False
+        return not os.path.exists(staged(a["id"]))
+
+    pool = list(reg["assets"].values())
     if limit:
         # The pilot is a sample of the library, not its first page.
-        spread = pilot(reg, limit)
-        todo = [a for a in spread if not a.get("sha256")]
+        pool = pilot(reg, limit)
+    todo = [a for a in pool if needed(a)]
     if not write:
-        log("library fetch: %d of %d asset(s) not yet downloaded. dry run."
-            % (len(todo), len(reg["assets"])))
+        log("library fetch: %d of %d asset(s) need downloading. dry run."
+            % (len(todo), len(pool)))
         return 0
 
     os.makedirs(STAGE, exist_ok=True)
@@ -532,7 +557,18 @@ def fetch(write=False, log=print, limit=0):
             os.makedirs(os.path.dirname(out), exist_ok=True)
             with open(out, "wb") as fh:
                 fh.write(body)
-            a["sha256"] = hashlib.sha256(body).hexdigest()
+            digest = hashlib.sha256(body).hexdigest()
+            # The checksum's actual job. A provider that has replaced the file
+            # behind a URL we approved is serving a photograph nobody audited,
+            # and the only way to notice is to compare with what arrived last
+            # time. Recorded and reported, not fatal: the audit decides what
+            # to do about it, this step only reports what it saw.
+            if a.get("sha256") and a["sha256"] != digest:
+                log("  %s: the provider is serving different bytes than last "
+                    "time (%s -> %s)" % (a["id"], a["sha256"][:12], digest[:12]))
+                a["sourceChangedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ",
+                                                     time.gmtime())
+            a["sha256"] = digest
             a["downloadedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             a["bytes"] = len(body)
             got += 1
@@ -633,7 +669,11 @@ def publish(write=False, log=print, only=None):
 
     root = os.path.join(ROOT, "images", "library")
     if not os.path.isdir(root):
-        log("library publish: nothing encoded yet")
+        log("library publish: images/library/ does not exist — nothing has "
+            "been encoded on this machine.")
+        log("  The encoded ladder is gitignored on purpose, so a fresh "
+            "checkout never has it. Run fetch and encode first; the register "
+            "remembering a download is not the same as the bytes being here.")
         return 1
     types = {".avif": "image/avif", ".webp": "image/webp", ".jpg": "image/jpeg"}
 
