@@ -122,8 +122,17 @@ async function weigh(browser, url) {
   /* The same resolution browser-checks.js uses: playwright-core lives in the
      image, not in the repository, so it is found rather than depended on. */
   const chromium = (() => {
-    for (const r of ["/opt/node22/lib/node_modules/playwright/node_modules/playwright-core",
-                     "playwright-core", "playwright"]) {
+    const roots = ["/opt/node22/lib/node_modules/playwright/node_modules/playwright-core",
+                   "playwright-core", "playwright"];
+    /* A globally installed playwright is not on node's resolution path for a
+       script inside this repository, which is exactly how the first CI run
+       failed: 115 MB of browser downloaded, then nothing measured. Ask npm
+       where global packages live and look there too. */
+    try {
+      const g = execFileSync("npm", ["root", "-g"], { encoding: "utf-8" }).trim();
+      if (g) roots.push(path.join(g, "playwright"), path.join(g, "playwright-core"));
+    } catch (e) { /* no npm, no global root */ }
+    for (const r of roots) {
       try { return require(r).chromium; } catch (e) { /* next */ }
     }
     return null;
