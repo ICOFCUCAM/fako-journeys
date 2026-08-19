@@ -84,7 +84,16 @@ ul,ol{list-style:none}
 .fj-mast-tel{font-family:var(--fj-mono);font-size:11px;letter-spacing:.1em;color:var(--c-muted)}
 .btn{font-family:var(--fj-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-bg);background:var(--c-primary);padding:12px 20px;transition:background .2s}
 .btn:hover{background:var(--c-accent)}
-@media(max-width:1010px){.fj-routes,.fj-mast-tel{display:none}}
+/* The routes hide sooner than they used to, and the Explore key is why.
+   This masthead is one row of mark, five route links, the key and the call,
+   and the key was the item that took it past the edge: /tourism/index needed
+   1,097 pixels for its own content and the browser suite caught it 73 over at
+   1,024. Measured up in twenty-pixel steps — kenya wants 1,046, index wants
+   1,097 — so the links go at 1,140, which leaves margin rather than landing on
+   the number. Nothing is lost: the key that displaced them searches every one
+   of those destinations and more, from the same row, and the footer still
+   lists them. */
+@media(max-width:1140px){.fj-routes,.fj-mast-tel{display:none}}
 @media(max-width:560px){
   .fj-frame{padding:0 20px}
   .fj-mast-in{gap:12px;padding:11px 0}

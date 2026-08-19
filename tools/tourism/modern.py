@@ -69,9 +69,13 @@ AVIF_Q = 62
 WEBP_Q = 82
 
 IMG_RE = re.compile(r"<img\b[^>]*>", re.I)
-SRC_RE = re.compile(r'\bsrc="([^"]+)"')
-SET_RE = re.compile(r'\bsrcset="([^"]+)"')
-SIZES_RE = re.compile(r'\bsizes="([^"]+)"')
+# The lookbehind is load-bearing, not tidiness. \bsrc=" matches inside
+# data-src=" — a hyphen is a non-word character, so there is a word boundary
+# right before the s — which meant every deferred image on the homepage looked
+# to this pass like an image with a real src. See _wrap().
+SRC_RE = re.compile(r'(?<![-\w])src="([^"]+)"')
+SET_RE = re.compile(r'(?<![-\w])srcset="([^"]+)"')
+SIZES_RE = re.compile(r'(?<![-\w])sizes="([^"]+)"')
 
 CONVERTIBLE = (".jpg", ".jpeg", ".png")
 # The mark is a PNG and stays one. See the note above.
@@ -202,8 +206,28 @@ def _swap(value, ext):
     return ", ".join(out) if out else None
 
 
+DATA_SRC_RE = re.compile(r'\bdata-src="')
+
+
 def _wrap(tag):
-    """One <img> into a <picture>, or the tag unchanged."""
+    """One <img> into a <picture>, or the tag unchanged.
+
+    AN IMAGE THIS SITE IS HOLDING BACK IS LEFT ALONE, AND THIS COST A RUN
+    TO LEARN. The homepage defers most of its photographs with data-src and
+    releases them from a script; the tag carries no src at all until then.
+    Wrapping one of those in a <picture> hands the browser candidates it can
+    act on immediately, so every held-back photograph loaded at once: the
+    first screen went from 4.45 MB over 22 requests to 7.47 MB over 46, which
+    is the exact opposite of the point of this pass.
+
+    A <source> is not itself a fetch — the <img> still chooses, and
+    loading="lazy" still governs — but an <img> with no src and a picture full
+    of candidates has nothing left to wait for. So: a real src, or no wrapper.
+    The homepage keeps its JPEGs until its own loader releases them, and
+    deferring the sources too is a change to that loader rather than to this.
+    """
+    if DATA_SRC_RE.search(tag) and not SRC_RE.search(tag):
+        return tag
     set_m = SET_RE.search(tag)
     src_m = SRC_RE.search(tag)
     base = set_m.group(1) if set_m else (src_m.group(1) if src_m else "")
