@@ -69,6 +69,11 @@ resolver, not a judgement made here:
                           category to find anything at all (queryTier)
                         - the alt text it got does not name the country the
                           page is about, while the alt text it WANTED did
+                        - the provider's own title for the photograph shares no
+                          word with what the slot asked for. This is the only
+                          description in the record that did not come from the
+                          query that went looking, and it is the one that
+                          catches a beach illustrating a carnival
                       These are the generic and the geographically unsupported
                       ones, in the resolver's own words.
   KEEP                everything else, which is the set worth downloading.
@@ -168,6 +173,44 @@ def _cache():
     return out
 
 
+# The words a title shares with nothing. Common English plus the vocabulary a
+# stock library uses about every photograph it holds, which would otherwise
+# match everything.
+_STOP = set("""a an the of on in at to and or with near under over by for from
+is are was were this that some photo photos image images picture pictures free
+stock view scenic beautiful blue white black green red brown grey gray sky
+background close shot side""".split())
+
+_TITLE_PEXELS = re.compile(r"/photo/([a-z0-9-]+?)-\d+/?$")
+_TITLE_UNSPLASH = re.compile(r"/photos/(.+?)-[A-Za-z0-9_-]{11}$")
+
+
+def provider_title(source_url):
+    """What the provider itself says the photograph shows, or None.
+
+    Both providers put their own description in the source page's path —
+    /photo/beach-near-mountain-under-blue-sky-10010546/ on Pexels and
+    /photos/black-ram-near-tree-JaD-db16oAE on Unsplash, where the trailing
+    eleven characters are the id. It is the one description of the photograph
+    that did not come from the query that went looking for it, which is what
+    makes it worth reading.
+    """
+    if not source_url:
+        return None
+    m = _TITLE_PEXELS.search(source_url)
+    if m:
+        return m.group(1).replace("-", " ")
+    m = _TITLE_UNSPLASH.search(source_url)
+    if m:
+        return m.group(1).replace("-", " ")
+    return None
+
+
+def _words(text):
+    return {w for w in re.split(r"[^a-z]+", (text or "").lower())
+            if len(w) > 3 and w not in _STOP}
+
+
 def _classify(rec, used):
     """One photograph, one verdict, and the reason in the resolver's words."""
     if not used:
@@ -186,6 +229,28 @@ def _classify(rec, used):
     intended = (rec.get("altIntended") or "").lower()
     if country and country not in alt and country in intended:
         why.append("does not name %s, which the slot asked for" % country.title())
+
+    # THE PROVIDER'S OWN TITLE, WHICH IS THE ONLY DESCRIPTION HERE THAT DID NOT
+    # COME FROM THE QUERY THAT WENT LOOKING.
+    #
+    # The resolver scores a photograph against the words it searched with, so a
+    # picture that matched "Cape Town carnival" scores well on "Cape Town" and
+    # is kept. Pexels calls that same photograph "beach near mountain under
+    # blue sky". It is a beach, and it is illustrating a carnival.
+    #
+    # Twenty-seven per cent of the set that passed every other test fails this
+    # one: a desert of "group of people sitting on sand" standing in for
+    # desert-adapted elephants, "man in gray polo shirt" for a cathedral in
+    # Malabo, "man resting among corn crops" for the Karera falls. Those are
+    # not marginal matches, they are the wrong photograph, and no amount of
+    # relevance scoring against its own query was ever going to say so.
+    title = provider_title(rec.get("sourceUrl"))
+    if title:
+        want = (_words(rec.get("altIntended")) | _words(rec.get("caption"))
+                | _words(rec.get("category")))
+        if want and not (want & _words(title)):
+            why.append("the provider calls it \"%s\"" % title[:52])
+
     if why:
         return "REPLACE", "; ".join(why)
     return "KEEP", "relevance %.1f, subject query, names its country" % (score or 0)

@@ -157,6 +157,36 @@ def cmd_srcset(args):
     return srcset.run(write=bool(getattr(args, "fetch", False))) or rc
 
 
+def cmd_library(args):
+    """The Afrinkong image library: plan, fetch, encode, verify, rewrite.
+
+        build.py library plan      name the approved set        (no network)
+        build.py library fetch     download it                  (NEEDS NETWORK)
+        build.py library encode    AVIF + WebP at four widths   (no network)
+        build.py library verify    no hosted file without an origin
+        build.py library rewrite   point the pages at us        (refuses until live)
+
+    fetch is a workflow step by necessity: this development environment cannot
+    reach images.pexels.com — the proxy answers 403 to the CONNECT. See
+    .github/workflows/tourism-library.yml and tourism/library.py.
+    """
+    from tourism import library
+    step = (getattr(args, "country", "") or "plan").strip()
+    write = bool(getattr(args, "fetch", False))
+    if step == "plan":
+        return library.plan(write=write)
+    if step == "fetch":
+        return library.fetch(write=write, limit=int(getattr(args, "limit", 0) or 0))
+    if step == "encode":
+        return library.encode(write=write)
+    if step == "verify":
+        return library.verify()
+    if step == "rewrite":
+        return library.rewrite(write=write)
+    print("library: unknown step %r — plan, fetch, encode, verify or rewrite" % step)
+    return 1
+
+
 def cmd_assets(args):
     """Survey the photographs this site hotlinks. Downloads nothing.
 
@@ -1037,7 +1067,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
