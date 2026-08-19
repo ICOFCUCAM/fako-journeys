@@ -169,6 +169,11 @@ def page(country, place, pack, order, tax, ctx):
                  'distances between country centres. Solid names share a land '
                  'border with it.</p></div>' % (esc(country.name), near)) if near else "",
         "tone": esc(tone),
+        # Small here — twenty-four pixels beside a one-line bar, not the
+        # fifty-two the brand blocks carry. This footer is a rule of text on
+        # the country's own region tone, and a mark that outweighs the line it
+        # sits in stops being a signature.
+        "emblem": plate.emblem(24, "af-emblem--inline"),
         "url": esc(country.url),
         "events": plate.events_block(),
         "explore": plate.explore_block(),
@@ -391,7 +396,7 @@ addEventListener('DOMContentLoaded',function(){
 <footer class="pl-foot" style="--plate-tone:%(tone)s">
   <div class="pl-foot-in">
     %(near)s
-    <p class="pl-foot-bar"><a href="/">Afrinkong</a> &middot; %(country)s &middot;
+    <p class="pl-foot-bar"><a class="pl-foot-mark" href="/">%(emblem)s<b>Afrinkong</b></a> &middot; %(country)s &middot;
       <a href="/places">every place</a> &middot;
       <a href="/journey-fund">the journey fund</a> &middot;
       <a href="/enquire">enquire</a></p>

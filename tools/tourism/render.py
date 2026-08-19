@@ -149,7 +149,8 @@ def footer(country, ours=None):
             '  <div class="fj-frame">\n'
             '    <div class="fj-foot-grid">\n'
             '      <div>\n'
-            '        <div class="fj-foot-brand">Afrinkong<span>Journeys across Africa</span></div>\n'
+            '        <div class="fj-foot-brand">' + plate.emblem(52)
+            + '<b>Afrinkong</b><span>Journeys across Africa</span></div>\n'
             '        <p>Tour operators of our own in three countries, and every country '
             'here worked through the same twenty-seven categories, so two of them can be '
             'compared on the same terms.</p>\n%s'

@@ -55,7 +55,20 @@ def check_page(path, taxonomy, expect_categories=True):
     src = open(path).read()
     name = os.path.basename(path)
 
-    tags = IMG_RE.findall(src)
+    # THE COMPANY'S OWN MARK IS NOT ONE OF THE TWENTY-SEVEN SLOTS.
+    # Everything this function does is written for a photograph that arrived
+    # from a provider and was cropped into a box: it is counted against the
+    # taxonomy, it must describe what it shows, declare its aspect so the box
+    # does not move, and say where the subject sits so the crop keeps it. The
+    # mark is none of those. It is one file, drawn at the size it is drawn at,
+    # never cropped, and it stands beside the word "Afrinkong" in every footer
+    # it appears in — so alt="" is correct and alt text would read the
+    # company's name twice in a row. Dropped before the count as well as
+    # before the checks, or every country page reports twenty-eight slots
+    # against an expected twenty-seven. Recognised by its class rather than by
+    # its path, so a second brand file cannot slip in by being called
+    # something else.
+    tags = [t for t in IMG_RE.findall(src) if "af-emblem" not in t]
     # An unresolved slot is the plate component. It used to be a `tq-empty` div,
     # and this line was never updated when it changed, so a country with no
     # photographs counted zero slots against an expected twenty-seven, `verify`

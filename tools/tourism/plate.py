@@ -470,6 +470,35 @@ FOOT_LINKS = (
 )
 
 
+def emblem(px=56, extra=""):
+    """The company's mark, written once and used everywhere it belongs.
+
+    The site's identity is typographic — the word AFRINKONG set in the display
+    face — and it has been carrying the brand alone on 1,597 pages. The mark
+    exists and was reaching the reader only as a favicon and a home-screen
+    icon, which is the one place a logo is too small to be a logo.
+
+    THE MARK, NOT THE LOCKUP. images/brand/lockup.png is the mark plus the
+    wordmark plus the tagline, and every footer on this site already prints the
+    wordmark and the tagline in type. Dropping the lockup beside them would
+    print the company's name twice and its tagline twice, in two different
+    faces, one of which is a photograph of type. The mark is the half that is
+    not already there.
+
+    Decorative, deliberately. It sits next to the word "Afrinkong" in every
+    place it is used, so a screen reader that announced it would read the
+    company's name twice in a row. alt="" and the wordmark does the naming —
+    which is what alt="" is for and not a shortcut around writing alt text.
+
+    Served at 128px for a mark drawn at 24 to 56, so it is at or above 2x
+    everywhere it appears without a srcset to keep in step with a layout. One
+    file, 26 KB, cached once for the whole site.
+    """
+    return ('<img class="af-emblem%s" src="/images/brand/mark-128.png" '
+            'width="128" height="128" alt="" loading="lazy" decoding="async" '
+            'style="--af-emblem:%dpx">' % ((" " + extra) if extra else "", px))
+
+
 def colophon_foot(here=None):
     """The last thing on a page: where else to go, and who this is.
 
@@ -497,14 +526,14 @@ def colophon_foot(here=None):
         if not here or h.rstrip("/") != here.rstrip("/"))
     return ('<footer class="af-foot">\n'
             '  <div class="af-foot-in">\n'
-            '    <a class="af-foot-brand" href="/">Afrinkong'
+            '    <a class="af-foot-brand" href="/">%s<b>Afrinkong</b>'
             '<span>Journeys across Africa</span></a>\n'
             '    <nav class="af-foot-nav" aria-label="Elsewhere on this site">'
             '%s</nav>\n'
             '    <p class="af-foot-co"><!-- gen:company -->\n'
             '    <!-- /gen:company --></p>\n'
             '  </div>\n'
-            '</footer>' % links)
+            '</footer>' % (emblem(52), links))
 
 
 PRELOAD = ('<link rel="preload" href="/fonts/archivo-narrow-latin.woff2" '

@@ -894,3 +894,34 @@ img[data-illustration]{height:auto}
 .fj-foot-co .af-co-brand{font-weight:700;color:var(--c-bg)}
 .fj-foot .af-co-link{color:var(--fj-onbasalt-dim)}
 .fj-foot .af-co-link:hover{color:var(--c-bg);border-bottom-color:var(--c-accent)}
+
+/* ---- the mark -------------------------------------------------------------
+ * THE COMPANY HAD A LOGO AND THE SITE NEVER SHOWED IT.
+ *
+ * images/brand/ has carried a mark and a full lockup since the beginning, and
+ * the only place either of them reached a reader was the favicon and the
+ * home-screen icon — the two sizes at which a logo is too small to be one.
+ * Every footer on 1,597 pages set the company's name in type and nothing else.
+ *
+ * The mark rather than the lockup, everywhere. The lockup is the mark plus the
+ * wordmark plus the tagline; every footer here already prints the wordmark and
+ * the tagline in the display and mono faces, so the lockup would print both a
+ * second time, in a third face, one of which is a photograph of type.
+ *
+ * One class, one file, one custom property for the size. `--af-emblem` is set
+ * inline per use — 60 on the homepage, 52 in the brand blocks, 24 in the
+ * places bar — because the size is a property of the place it is used, not of
+ * the mark, and a modifier class per size is a class per size.
+ */
+.af-emblem{display:block;width:var(--af-emblem,52px);height:var(--af-emblem,52px);
+  flex:0 0 auto}
+/* Inline against a line of text: on the baseline rather than above it, and
+   sized against the line it sits in. */
+.af-emblem--inline{display:inline-block;vertical-align:-.34em;margin-right:9px}
+
+/* The brand blocks: mark above the wordmark, which is how a mark and a
+   wordmark stack when the wordmark is set in type and not drawn. */
+.af-foot-brand,.wa-foot-brand,.fj-foot-brand{display:block}
+.af-foot-brand .af-emblem,.wa-foot-brand .af-emblem,.fj-foot-brand .af-emblem{
+  margin-bottom:14px}
+.af-foot-brand b,.wa-foot-brand b,.fj-foot-brand b{display:block;font-weight:inherit}
