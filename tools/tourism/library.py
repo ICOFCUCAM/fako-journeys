@@ -768,6 +768,7 @@ def reachable(log=print, sample=0):
     are reported.
     """
     import socket
+    import ssl
     import urllib.error
     import urllib.parse
     import urllib.request
@@ -801,6 +802,43 @@ def reachable(log=print, sample=0):
         log("  R2 dashboard showing the domain as Active is not the same")
         log("  thing as the internet being able to look it up.")
         return 1
+
+    # AND THEN SHAKE HANDS ONCE, FOR THE SAME REASON.
+    #
+    # The run after DNS came good failed 325 times with SSLV3_ALERT_HANDSHAKE_
+    # FAILURE, which is a different problem wearing the same clothes: the name
+    # resolves, the socket opens, and Cloudflare refuses TLS. That is what a
+    # custom hostname looks like in the window between DNS going live and the
+    # edge certificate being issued for it — minutes, sometimes longer. It is
+    # not a bucket problem, not a key problem and not something in this
+    # repository, so it deserves one sentence rather than three hundred
+    # identical stack traces.
+    try:
+        ctx = ssl.create_default_context()
+        with socket.create_connection((name, 443), timeout=20) as raw:
+            with ctx.wrap_socket(raw, server_hostname=name) as tls:
+                cert = tls.getpeercert()
+                covers = [v for k, v in cert.get("subjectAltName", ())
+                          if k == "DNS"]
+    except ssl.SSLError as exc:
+        log("library reachable: %s resolves, but refuses TLS (%s)"
+            % (name, exc))
+        log("  DNS is done — the name resolved and the socket opened. What is")
+        log("  missing is the edge certificate for this hostname. Cloudflare")
+        log("  issues one after the custom domain goes live and it is not")
+        log("  instant; until it exists every request is rejected at the")
+        log("  handshake, before a single byte of HTTP is exchanged. Nothing")
+        log("  in the bucket, the keys or this pipeline is implicated. Look")
+        log("  at the custom domain's certificate status in R2 and run this")
+        log("  again when it says active.")
+        return 1
+    except Exception as exc:                          # noqa: BLE001 — report
+        log("library reachable: %s resolves but will not connect (%s)"
+            % (name, exc))
+        return 1
+    if covers:
+        log("library reachable: TLS to %s is up, certificate covers %s"
+            % (name, ", ".join(covers[:3])))
 
     def ask(url, method="HEAD"):
         req = urllib.request.Request(url, method=method)
