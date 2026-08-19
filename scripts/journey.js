@@ -288,8 +288,12 @@
       if (r.match === 'leads') lit++;
       if (r.inSeason) el.removeAttribute('data-off');
       else el.setAttribute('data-off', 'true');
-      if (chosen && chosen.slug === r.slug) el.setAttribute('data-picked', 'true');
-      else el.removeAttribute('data-picked');
+      if (chosen && chosen.slug === r.slug) {
+        el.setAttribute('data-picked', 'true');
+        /* The tab stop follows the choice: a reader who picks Kenya and comes
+           back to the map should land on Kenya. */
+        if (typeof focusable === 'function') focusable(el);
+      } else { el.removeAttribute('data-picked'); }
     });
     var asked = (brief.wants || []).length || brief.month;
     if (mapKey) mapKey.hidden = !asked;
@@ -303,6 +307,84 @@
         : lit + ' of the fifty-four lead on what you have asked for so far. '
           + 'Every one of them is still yours to choose.';
     }
+  }
+
+  /* ONE TAB STOP FOR FIFTY-FOUR COUNTRIES.
+   *
+   * The map is the first thing in the document, which is where it belongs —
+   * the page's subject, above the question about it. Left as fifty-four
+   * ordinary links that costs a keyboard reader fifty-four presses before the
+   * first question, which is not a map being first, it is a map being in the
+   * way.
+   *
+   * So it is navigated the way a grid is: the group takes one stop, and the
+   * arrows move inside it. The roving tabindex is applied by the script, so
+   * with scripting off — where there is no interactive map anyway and the
+   * links ARE the content — all fifty-four stay in the tab order as plain
+   * links to plain pages.
+   *
+   * The arrows move geographically, not in document order. Document order is
+   * alphabetical, so Right from Algeria would be Angola: two thousand miles
+   * south and the wrong direction entirely. Each press picks the nearest
+   * centroid inside a sixty-degree cone in the direction asked for, which on a
+   * map is what "right" means.
+   */
+  var roving = null;
+  function focusable(el) {
+    mapC.forEach(function (c) { c.setAttribute('tabindex', '-1'); });
+    if (el) { el.setAttribute('tabindex', '0'); roving = el; }
+  }
+  function centre(el) {
+    var raw = el && el.getAttribute('data-at');
+    if (!raw) return null;
+    var n = raw.split(/[ ,]+/).map(Number);
+    return {x: n[0], y: n[1]};
+  }
+  /* Nearest centroid within sixty degrees of the direction asked for. The cone
+     is what stops "up" from Ghana landing on Chad because Chad happens to be
+     the closest thing that is even slightly north. */
+  function neighbour(from, dx, dy) {
+    var a = centre(from);
+    if (!a) return null;
+    var best = null, bestD = 1e9;
+    mapC.forEach(function (el) {
+      if (el === from) return;
+      var b = centre(el);
+      if (!b) return;
+      var vx = b.x - a.x, vy = b.y - a.y;
+      var d = Math.sqrt(vx * vx + vy * vy);
+      if (!d) return;
+      var cos = (vx * dx + vy * dy) / d;
+      if (cos < 0.5) return;                  /* outside the sixty-degree cone */
+      var cost = d / cos;                     /* straight ahead beats sideways */
+      if (cost < bestD) { bestD = cost; best = el; }
+    });
+    return best;
+  }
+  if (mapC.length) {
+    focusable(mapC[0]);
+    mapEl.addEventListener('keydown', function (e) {
+      var here = e.target.closest ? e.target.closest('.jn-map-c') : null;
+      if (!here) return;
+      var go = null;
+      if (e.key === 'ArrowRight') go = neighbour(here, 1, 0);
+      else if (e.key === 'ArrowLeft') go = neighbour(here, -1, 0);
+      else if (e.key === 'ArrowUp') go = neighbour(here, 0, -1);
+      else if (e.key === 'ArrowDown') go = neighbour(here, 0, 1);
+      else if (e.key === 'Home') go = mapC[0];
+      else if (e.key === 'End') go = mapC[mapC.length - 1];
+      else return;
+      if (!go) { e.preventDefault(); return; }
+      e.preventDefault();
+      focusable(go);
+      go.focus();
+    });
+    /* Whatever was last touched keeps the stop, so tabbing away and back
+       returns to where the reader was rather than to Algeria. */
+    mapEl.addEventListener('focusin', function (e) {
+      var here = e.target.closest ? e.target.closest('.jn-map-c') : null;
+      if (here && here !== roving) focusable(here);
+    });
   }
 
   /* THE TARGETS ARE SIZED IN PIXELS, AND CAPPED BY THE GEOGRAPHY.

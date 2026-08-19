@@ -789,7 +789,16 @@
 .jn-map-c:hover path,.jn-map-c:hover circle,
 .jn-map-c[data-hot] path,.jn-map-c[data-hot] circle{stroke:var(--c-accent);
   stroke-width:2.4}
+/* A RING THE CHECKS CAN MEASURE, NOT ONLY A THICKER COASTLINE.
+   Suppressing the outline and thickening the stroke looks like a focus state
+   and is invisible to the suite that measures focus states — it reads
+   outline-color against the ground, finds none drawn, and records nothing.
+   A focus indicator no check can see is a focus indicator that stops existing
+   the day somebody edits this block. Both, then: the outline for the reader
+   who needs a rectangle they can find, and the stroke for the reader looking
+   at the country. */
 .jn-map-c:focus{outline:none}
+.jn-map-c:focus-visible{outline:2px solid var(--c-accent);outline-offset:2px}
 .jn-map-c:focus-visible path,.jn-map-c:focus-visible circle{
   stroke:var(--c-accent);stroke-width:3.4}
 
@@ -850,6 +859,9 @@
     display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(330px,30vw,460px));
     column-gap:clamp(32px,4vw,72px);align-items:start}
   .jn > *{grid-column:1}
+  /* The aside comes after the questions in the document — a keyboard should
+     reach the first question before fifty-four countries — and grid puts it
+     back on the right, spanning every row, without the document caring. */
   .jn-atlas{grid-column:2;grid-row:1 / -1;position:sticky;
     top:calc(var(--mast) + 24px);margin:0}
 }

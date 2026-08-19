@@ -420,7 +420,13 @@ TEMPLATE = """<!DOCTYPE html>
        It is the page's subject and it was not on the page: a visitor answering
        four questions about where to go had nothing in front of them that was
        anywhere. It stays put through the questions, the answer and the
-       composing, and every stage of those three writes to it. -->
+       composing, and every stage of those three writes to it.
+
+       It is first in the document as well as on the screen, which it can afford
+       to be because the script gives it ONE tab stop: the fifty-four countries
+       are moved out of the tab order and navigated with the arrow keys, the way
+       a grid is. With the script off they are fifty-four ordinary links, which
+       is what they are then. -->
   <aside class="jn-atlas" id="jn-atlas" aria-labelledby="jn-atlas-h">
     <div class="jn-atlas-in">
       <h2 class="af-stamp" id="jn-atlas-h">The continent</h2>
@@ -432,6 +438,7 @@ TEMPLATE = """<!DOCTYPE html>
       </ul>
     </div>
   </aside>
+
 
 
   <!-- the questions ------------------------------------------------------- -->
@@ -516,6 +523,12 @@ TEMPLATE = """<!DOCTYPE html>
       </div>
     </section>
   </form>
+  <!-- The continent, from the first question rather than after the last one.
+       It is the page's subject and it was not on the page: a visitor answering
+       four questions about where to go had nothing in front of them that was
+       anywhere. It stays put through the questions, the answer and the
+       composing, and every stage of those three writes to it. -->
+
 
   <!-- the reveal ---------------------------------------------------------- -->
   <section class="jn-reveal" id="reveal" hidden aria-live="polite">
