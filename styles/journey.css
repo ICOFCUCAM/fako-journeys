@@ -836,3 +836,12 @@
   .jn-atlas{grid-column:2;grid-row:1 / -1;position:sticky;
     top:calc(var(--mast) + 24px);margin:0}
 }
+
+/* The journey itself, over the countries it crosses. The road is the accent
+   because it is the one thing on this drawing that is the reader's own; the
+   stops are ink, and the last one is larger because arriving is the point. */
+.jn-map-road{fill:none;stroke:var(--c-accent);stroke-width:2.6;
+  stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;
+  stroke-dasharray:7 6}
+.jn-map-stop{fill:var(--c-accent);stroke:var(--c-bg);stroke-width:2;
+  vector-effect:non-scaling-stroke}

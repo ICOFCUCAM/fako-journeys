@@ -63,6 +63,7 @@ LENSES = os.path.join(ROOT, "tourism", "lenses.json")
 PLAN = os.path.join(ROOT, "tourism", "journeys.json")
 ATLAS_DATA = os.path.join(ROOT, "data", "atlas")
 MAP = os.path.join(ROOT, "tourism", "map.json")
+DETAIL = os.path.join(ROOT, "tourism", "atlas-detail.json")
 
 MONTHS = ("January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December")
@@ -115,7 +116,21 @@ def brief(countries, taxonomy):
         for cat in lens.get("categories") or []:
             lens_of.setdefault(cat, []).append(key)
 
+    # The thirteen places on this site with a real position, in the same
+    # viewBox units the continent is drawn in. Nothing else has one: a place
+    # page carries a group, a lens set and a write-up, and no coordinates. So
+    # a journey can put a node on Nairobi and cannot put one on the Mara, and
+    # the map says which of those it is doing rather than guessing.
+    det = read(DETAIL, {})
+    cities = []
+    for c in (det.get("cities") or []):
+        x, y = c.get("x"), c.get("y")
+        if x is None or y is None:
+            continue
+        cities.append({"name": c["name"], "x": float(x), "y": float(y)})
+
     out = {
+        "cities": cities,
         "months": list(MONTHS),
         "weights": plan.get("weights") or {},
         "pacing": plan.get("pacing") or [],

@@ -293,12 +293,162 @@
     });
     var asked = (brief.wants || []).length || brief.month;
     if (mapKey) mapKey.hidden = !asked;
+    /* Once a journey is drawn the caption belongs to the journey. Both of
+       these write the same element and the composer's sentence is the more
+       specific one, so the field's sentence gives way rather than racing it. */
+    if (routeEl && routeEl.childNodes.length) return;
     if (mapSay) {
       mapSay.textContent = !asked
         ? 'Fifty-four countries. Answer a question and watch them answer back.'
         : lit + ' of the fifty-four lead on what you have asked for so far. '
           + 'Every one of them is still yours to choose.';
     }
+  }
+
+  /* ---- THE JOURNEY, DRAWN ------------------------------------------------
+   * The specification's last line, and the one with an honest limit on it.
+   *
+   * A place on this site carries a group, a lens set and a write-up. It does
+   * not carry a position — data/atlas/*.json has no coordinates in it — so
+   * there is no way to put a pin on the Mara that is not invented. Thirteen
+   * places do have a real position, in tourism/atlas-detail.json, and the
+   * countries have centroids. That is what can be drawn, so that is what is
+   * drawn, and the caption says which of the two it is doing rather than
+   * letting a reader assume every node was surveyed.
+   *
+   * Country centroids for the shape of the journey, city nodes where a stage
+   * names one of the thirteen, and a line through them in the order they are
+   * visited. One point is not a route and is drawn as one node; no points is
+   * drawn as nothing at all rather than as a line between guesses.
+   */
+  var routeEl = document.getElementById('jn-map-route');
+  var CITY = {};
+  (D.cities || []).forEach(function (c) { CITY[c.name.toLowerCase()] = c; });
+
+  function atOf(slug) {
+    var el = mapBy[slug];
+    var raw = el && el.getAttribute('data-at');
+    if (!raw) return null;
+    var n = raw.split(/[ ,]+/).map(Number);
+    return (n.length === 2 && !isNaN(n[0])) ? {x: n[0], y: n[1]} : null;
+  }
+
+  /* A stage's own position, if one exists. Matched on the city's name
+     appearing in the stage's title — "Nairobi, Green City in the Sun" is
+     Nairobi — and on nothing looser than that, because a fuzzy match here puts
+     a node on the wrong continent and calls it data. */
+  function cityFor(st) {
+    var title = String(st.title || '').toLowerCase();
+    for (var k in CITY) {
+      if (title.indexOf(k) >= 0) return CITY[k];
+    }
+    return null;
+  }
+
+  /* Catmull-Rom through the points, as one cubic. The same curve the crossing
+     maps use, at the same tension, so a route on this page and a route on
+     /trans-afrique are the same object drawn by the same rule. */
+  function through(pts) {
+    if (pts.length < 2) return '';
+    var d = 'M' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i],
+          p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      var t = 0.62 / 3;
+      d += ' C' + (p1.x + (p2.x - p0.x) * t).toFixed(1) + ' '
+         + (p1.y + (p2.y - p0.y) * t).toFixed(1) + ', '
+         + (p2.x - (p3.x - p1.x) * t).toFixed(1) + ' '
+         + (p2.y - (p3.y - p1.y) * t).toFixed(1) + ', '
+         + p2.x.toFixed(1) + ' ' + p2.y.toFixed(1);
+    }
+    return d;
+  }
+
+  function drawRoute() {
+    if (!routeEl) return;
+    var st = (typeof stageObjects === 'function') ? stageObjects() : [];
+    var pts = [], seen = {}, named = 0;
+    st.forEach(function (stage) {
+      var city = cityFor(stage);
+      if (city) {
+        pts.push({x: city.x, y: city.y, label: city.name});
+        named++;
+        seen[stage.country] = true;
+        return;
+      }
+      if (seen[stage.country]) return;
+      var a = atOf(stage.country);
+      if (!a) return;
+      seen[stage.country] = true;
+      pts.push({x: a.x, y: a.y, label: stage.countryName});
+    });
+    if (!pts.length && chosen) {
+      var a0 = atOf(chosen.slug);
+      if (a0) pts.push({x: a0.x, y: a0.y,
+        label: (D.countries[chosen.slug] || {}).name || chosen.slug});
+    }
+
+    var bits = [];
+    if (pts.length > 1) {
+      bits.push('<path class="jn-map-road" d="' + through(pts) + '"/>');
+    }
+    pts.forEach(function (p, i) {
+      bits.push('<circle class="jn-map-stop" cx="' + p.x.toFixed(1) + '" cy="'
+        + p.y.toFixed(1) + '" r="' + (i === pts.length - 1 ? 9 : 6.5) + '"/>');
+    });
+    routeEl.innerHTML = bits.join('');
+
+    /* The caption says which kind of node the reader is looking at, because a
+       node drawn at a country's centre and a node on a surveyed city look
+       identical and mean different things. A map that does not say which is a
+       map that is quietly claiming the second. */
+    if (mapSay) {
+      var says;
+      if (!pts.length) {
+        says = 'Nothing in this journey has a published position yet.';
+      } else if (pts.length === 1) {
+        says = named
+          ? 'One stop on the map: ' + pts[0].label + ', the only place in this '
+            + 'journey with a surveyed position.'
+          : 'Drawn at the centre of ' + pts[0].label + '. The places in this '
+            + 'journey do not carry coordinates.';
+      } else {
+        says = pts.length + ' stops, in the order you would take them.'
+          + (named
+              ? ' ' + named + ' of them ' + (named === 1 ? 'is a city' : 'are cities')
+                + ' with a surveyed position; the rest sit at their '
+                + 'country\u2019s centre.'
+              : ' Each at its country\u2019s centre \u2014 the places on this '
+                + 'site do not carry coordinates.');
+      }
+      mapSay.textContent = says;
+    }
+
+    /* A journey that crosses a border needs a frame that holds both sides of
+       it. Flying to the chosen country and leaving the second stop off the
+       edge is worse than not flying at all: the reader is looking at a route
+       with one end outside the picture and no way to know it. */
+    if (pts.length > 1) flyTo(frameAround(pts));
+  }
+
+  /* The smallest frame at the home proportion that holds every point, with
+     room round it, clamped to the continent. */
+  function frameAround(pts) {
+    var home = HOME.split(/[ ,]+/).map(Number);
+    var xs = pts.map(function (p) { return p.x; });
+    var ys = pts.map(function (p) { return p.y; });
+    var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs);
+    var y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
+    var pad = Math.max(x1 - x0, y1 - y0) * 0.35 + 70;
+    var w = Math.max((x1 - x0) + pad * 2, 300);
+    var h = w / ASPECT;
+    if (h < (y1 - y0) + pad * 2) { h = (y1 - y0) + pad * 2; w = h * ASPECT; }
+    if (w > home[2]) { w = home[2]; h = home[3]; }
+    var cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    var x = Math.min(Math.max(cx - w / 2, home[0]), home[0] + home[2] - w);
+    var y = Math.min(Math.max(cy - h / 2, home[1]), home[1] + home[3] - h);
+    return [x, y, w, h].map(function (n) { return Math.round(n * 10) / 10; })
+      .join(' ');
   }
 
   /* ---- FLYING TO THE COUNTRY -------------------------------------------
@@ -453,7 +603,6 @@
     var fs = document.getElementById('jn-field');
     if (fs) fs.hidden = true;
     paintMap();
-    flyTo(frameFor(want));
     openComposer(want);
     return true;
   }
@@ -488,6 +637,7 @@
       /* Back to the whole continent: the questions are about all of it again. */
       chosen = null;
       paintMap();
+      if (routeEl) routeEl.innerHTML = '';
       flyTo(HOME);
       reveal.hidden = true;
       form.hidden = false;
@@ -580,6 +730,12 @@
       reveal.hidden = true;
       compose.hidden = false;
       paintComposer();
+      /* One place the map is told a journey has opened, because there are four
+         ways in — the grid, the map, the "somewhere else" select, and a shared
+         link restoring from the hash — and a restored journey that arrives on
+         an unflown continent is the one nobody would have tested. */
+      paintMap();
+      flyTo(frameFor(slug));
       track('journey_composed', {country: slug, stages: stages.length,
                                  pacing: brief.pacing, month: brief.month});
       writeHash();
@@ -718,6 +874,7 @@
       track('enquiry_started', {country: chosen.slug, stages: stages.length,
                                 month: brief.month, pacing: brief.pacing});
     };
+    drawRoute();
   }
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
