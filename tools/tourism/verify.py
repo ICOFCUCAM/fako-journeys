@@ -15,6 +15,18 @@ from .model import COUNTRY_DIR, ROOT
 TOURISM = os.path.join(ROOT, "tourism")
 
 
+def asset_host():
+    """Where our own photographs are served from, read from the register.
+
+    Not a constant here, because there must be exactly one place that decides
+    it. tourism/assets.json already holds it — the pipeline writes those URLs
+    from that field — and a second copy in this file would be a copy that can
+    disagree with the pages it is checking.
+    """
+    from . import library
+    return (library.register().get("host") or "").rstrip("/")
+
+
 def country_names():
     """Every country's name, for the one alt text that is allowed to be short.
 
@@ -48,6 +60,9 @@ def attrs(tag):
 
 
 COUNTRIES = country_names()
+# Computed once, like COUNTRIES above, and read from the register so this
+# file cannot hold an opinion about the host that disagrees with the pages.
+ASSET_HOST = asset_host()
 
 
 def check_page(path, taxonomy, expect_categories=True):
@@ -126,6 +141,12 @@ def check_page(path, taxonomy, expect_categories=True):
             local = os.path.join(ROOT, src_url.lstrip("/"))
             if not os.path.exists(local):
                 problems.append("%s: broken local image reference %s" % (name, src_url))
+        elif ASSET_HOST and src_url.startswith(ASSET_HOST):
+            # Our own asset host. The library's `verify` step is what checks
+            # these against the register — every URL resolving to a registered
+            # asset, with a photographer and a licence behind it. Repeating a
+            # weaker version of that here would only mean two places to fix.
+            pass
         elif src_url:
             problems.append("%s: image from an unexpected source: %s" % (name, src_url[:70]))
 
