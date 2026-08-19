@@ -273,7 +273,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body>
 <a class="af-skip" href="#doors">Skip to the questions</a>
 <header class="mt-mast">
-  <a class="mt-mark" href="/"><i>Afrinkong</i><b>Meet Africa</b></a>
+  <a class="mt-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Meet Africa</b></a>
   <nav class="mt-routes" aria-label="Primary">
     <a href="/atlas">The Atlas</a>
     <a href="/journey">Build a journey</a>

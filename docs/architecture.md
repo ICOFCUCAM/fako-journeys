@@ -7,7 +7,7 @@ the answer to that.
 
 ## The shape
 
-1,594 HTML files, no server, no framework, no build step at deploy time. The
+1,597 HTML files, no server, no framework, no build step at deploy time. The
 repository IS the site: Vercel serves the files as they are committed, with
 `cleanUrls: true` and `trailingSlash: false`, so `/about` is `about.html` and
 `/places/kenya/x` is `places/kenya/x.html`.
@@ -73,15 +73,16 @@ way they go stale is silent.
 
 ## The gates
 
-Four suites, and the reason there are four is that each can see something the
+Six suites, and the reason there are six is that each can see something the
 others cannot.
 
 ```
 python3 tools/tourism/build.py verify     55 country pages, structurally
-node tools/journey-checks.js              99 checks — the engine, events, the
-                                          colophon, the manifest
-node tools/link-checks.js                 3 checks over 76,954 links
-node tools/browser-checks.js              243 checks in a real browser
+node tools/journey-checks.js             105 checks — the engine, events, the
+                                          colophon, the manifest, and the
+                                          continent in the built document
+node tools/link-checks.js                 3 checks over 78,595 links
+node tools/browser-checks.js              259 checks in a real browser
 node tools/fund-checks.js                 64 checks — the estimator's
                                           arithmetic and the promises it makes
 node tools/design-checks.js               17 checks — the design blueprint's
@@ -146,24 +147,20 @@ as designed plates rather than as damage.
 
 ## What is specified and not built
 
-One item, recorded here because the page it concerns reads as finished and is
-not, and three separate audits have had to rediscover it.
+**Place coordinates.** `data/atlas/*.json` gives every place a group, a lens
+set and a write-up, and no position. Thirteen places in
+`tourism/atlas-detail.json` carry a real position and every country carries a
+centroid, which is what `/journey` draws its route from — a node on a surveyed
+city where a stage names one, a node at the country's centre otherwise, and a
+caption that says which of the two each node is. Adding coordinates to places
+would upgrade the drawn journey from a shape to an itinerary. Nothing else in
+the repository is waiting on them.
 
-**The Journey Builder has no map.** `/journey` ships at 121 KB with **zero
-`<svg>` and zero `<path>`** in it. What exists is a four-step questionnaire —
-eight elements hidden until scripting advances them, which is also why the page
-renders 232 words to a visitor who has not interacted with it — and it works.
-What was specified is:
-
-    question -> geographic response -> question -> geographic response
-             -> the finished journey, drawn
-
-Every answer landing on the continent: an intention lighting the countries that
-answer it, a country flown to, a stage drawn, and a last screen that is the
-journey as a route rather than as a list of names. The geometry for it already
-exists and is proven twice — `tools/africa_map.py` projects it, the hero draws
-all fifty-four from it, and each crossing page draws fifty-five paths of it — so
-this is a wiring and design problem, not a data one.
-
-Until it is built, `/journey` should be described as a questionnaire that
-returns a country, not as a map-based journey builder.
+The Journey Builder's map itself is built. `/journey` carries the continent in
+the document — fifty-two country paths, two island marks and one disputed
+territory out of `tourism/map.json`, in the same projection and the same
+1000x1060 viewBox the hero and the crossing pages draw. Answering a question
+colours the countries by how each answers it, choosing one flies the viewBox to
+it, and composing a journey draws the route across it. Six checks in
+`journey-checks.js` hold it in the document rather than in a script, which is
+the way it could quietly stop existing.

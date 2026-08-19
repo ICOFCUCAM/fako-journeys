@@ -969,3 +969,13 @@
 .tf-kept{margin:18px 0 0;font-size:13.5px;line-height:1.55;color:var(--c-muted);
   max-width:56ch}
 .tf-kept a{color:var(--c-accent-lit)}
+
+/* The plate on the door page. It spans both columns under the claim and the
+   paragraph, because the sentence above it is about the whole continent and a
+   drawing of the whole continent in a half column is a thumbnail. Capped
+   rather than full-bleed: past about 760 the roads stop gaining anything and
+   the section starts being a map with a paragraph attached. */
+.tf-idea-map{grid-column:1/-1;margin:var(--sp-4) 0 0;max-width:760px}
+.tf-idea-map svg{display:block;width:100%;height:auto}
+.tf-idea-map figcaption{margin-top:14px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--fj-onbasalt-dim)}

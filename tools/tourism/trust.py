@@ -421,7 +421,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body class="tr-body">
 <a class="af-skip" href="#main">Skip to the text</a>
 <header class="jn-mast">
-  <a class="jn-mark" href="/"><i>Afrinkong</i><b>%(eyebrow)s</b></a>
+  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>%(eyebrow)s</b></a>
   <nav class="jn-routes" aria-label="Primary">
     <a href="/atlas">The Atlas</a>
     <a href="/trans-afrique">Trans Afrique</a>

@@ -159,7 +159,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body class="hw-body">
 <a class="af-skip" href="#main">Skip to how it works</a>
 <header class="jn-mast">
-  <a class="jn-mark" href="/"><i>Afrinkong</i><b>How it works</b></a>
+  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>How it works</b></a>
   <nav class="jn-routes" aria-label="Primary">
     <a href="/atlas">The Atlas</a>
     <a href="/trans-afrique">Trans Afrique</a>
@@ -214,6 +214,33 @@ TEMPLATE = """<!DOCTYPE html>
       journey starts, while Trans Afrique Private is where a crossing tops out.
       Read the tier against its own ladder, never across the two.</p>
   </section>
+
+  <!-- THE ONLY PHOTOGRAPH ON THIS PAGE, AND WHY IT IS THIS ONE.
+       Everything above is a price and a distinction between two ladders. What
+       neither of them shows is the thing being bought, which is not a vehicle
+       and not an animal: it is the man in the white shirt on the wing seat,
+       who is looking at the elephant so that the people behind him do not have
+       to work out whether they should be worried.
+
+       One vehicle, not a line of them. Nobody looking at the camera. No
+       country named, because this frame does not tell us which one it is and
+       the site does not claim what a photograph cannot support.
+
+       It lives here rather than in the built page. It was added to
+       how-it-works.html by hand, which meant every `build.py all` deleted it
+       and nobody would have noticed until somebody looked at the page after a
+       rebuild. Anything a generator writes has to be written in the
+       generator. -->
+  <figure class="hw-plate">
+    <img src="/images/uploads/guide-elephant-on-the-track-1600w.jpg"
+      width="1600" height="1066" loading="lazy" decoding="async"
+      data-provider="upload"
+      srcset="/images/uploads/guide-elephant-on-the-track-800w.jpg 800w,
+              /images/uploads/guide-elephant-on-the-track-1600w.jpg 1600w"
+      alt="A tracker in a white shirt and cap sits on the wing seat of an open Land Rover, watching an elephant walk along the sand track beside them while three passengers look on from the tiered seats behind">
+    <figcaption>What the day rate is actually for: one vehicle, and somebody
+      whose job is to have seen this before.</figcaption>
+  </figure>
 
   <section class="hw-block">
     <h2 class="hw-h2">What each one covers</h2>

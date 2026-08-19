@@ -23,31 +23,27 @@ countries without fetching twenty-two files.
 Nothing here books anything, quotes a price, or claims availability. The engine
 proposes a shape and hands it to a person who lives there.
 
-OUTSTANDING: THIS PAGE HAS NO MAP, AND THE EXPERIENCE IT WAS SPECIFIED AS NEEDS
-ONE. Written down here rather than left as an intention, because the page reads
-as finished and is not, and every audit so far has had to rediscover it.
-
-Measured, not asserted: journey.html ships at 121 KB with zero <svg> and zero
-<path> elements in it. The four steps are a text tunnel — eight elements hidden
-until scripting advances them, which is also why the page renders 232 words to a
-visitor who has not interacted and to anything that does not run JavaScript.
-
-The specified experience is:
+THE CONTINENT IS ON THE PAGE, AND IT IS IN THE DOCUMENT.
 
     question -> geographic response -> question -> geographic response
              -> the finished journey, drawn
 
-That is, every answer should land on the continent: choosing an intention should
-light the countries that answer it, choosing a country should fly to it, adding
-a stage should draw it, and the last screen should be the journey as a route on
-a map rather than as a list of names. The geometry already exists and is already
-proven twice over — tools/africa_map.py projects it, the hero draws all
-fifty-four from it, and the four crossing pages each draw fifty-five paths of it
-— so this is a wiring problem and a design problem, not a data problem.
+Each of those verbs is wired. `continent()` below writes the fifty-two country
+paths, two island marks and one disputed territory out of tourism/map.json —
+the same projection and the same 1000x1060 viewBox the homepage hero and the
+crossing pages draw — into the document itself rather than into a script.
+Answering a question colours them by how well each answers it; choosing one
+flies the viewBox to it; composing a journey draws the route across it.
 
-Until that is built, this page should be described as a working four-step
-questionnaire that returns a country, which is what it is, and not as the
-map-based journey builder, which is what it is not.
+The honest limit, recorded so it is not rediscovered as a bug: PLACES HAVE NO
+COORDINATES. data/atlas/<slug>.json gives each place a group, a lens set and a
+write-up and no position, so a node cannot be put on the Mara without inventing
+where the Mara is. Thirteen places in tourism/atlas-detail.json have a real
+position and every country has a centroid; that is what the route is drawn
+from, and the map's own caption says which of the two each node is rather than
+letting a reader assume the stronger one. Place coordinates would upgrade the
+drawn journey from a shape to an itinerary, and nothing else here needs them.
+
 """
 
 import html as html_mod
@@ -62,6 +58,8 @@ SHAPES = os.path.join(ROOT, "tourism", "shapes.json")
 LENSES = os.path.join(ROOT, "tourism", "lenses.json")
 PLAN = os.path.join(ROOT, "tourism", "journeys.json")
 ATLAS_DATA = os.path.join(ROOT, "data", "atlas")
+MAP = os.path.join(ROOT, "tourism", "map.json")
+DETAIL = os.path.join(ROOT, "tourism", "atlas-detail.json")
 
 MONTHS = ("January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December")
@@ -114,7 +112,21 @@ def brief(countries, taxonomy):
         for cat in lens.get("categories") or []:
             lens_of.setdefault(cat, []).append(key)
 
+    # The thirteen places on this site with a real position, in the same
+    # viewBox units the continent is drawn in. Nothing else has one: a place
+    # page carries a group, a lens set and a write-up, and no coordinates. So
+    # a journey can put a node on Nairobi and cannot put one on the Mara, and
+    # the map says which of those it is doing rather than guessing.
+    det = read(DETAIL, {})
+    cities = []
+    for c in (det.get("cities") or []):
+        x, y = c.get("x"), c.get("y")
+        if x is None or y is None:
+            continue
+        cities.append({"name": c["name"], "x": float(x), "y": float(y)})
+
     out = {
+        "cities": cities,
         "months": list(MONTHS),
         "weights": plan.get("weights") or {},
         "pacing": plan.get("pacing") or [],
@@ -175,10 +187,15 @@ def brief(countries, taxonomy):
 def want_cards(data):
     """The first question, written into the page rather than drawn by script.
 
-    Six choices, each with the sentence that says what it means here. They are
+    Eight choices, each with the sentence that says what it means here. They are
     checkboxes underneath — one control, one label, no invented widget — so the
     keyboard, the screen reader and the browser's own form behaviour all work
     before a line of script runs.
+
+    Ordered by how much of the continent answers to each, which is the one
+    ordering that carries information: culture leads in thirty-nine countries
+    and food in nine, and a reader scanning the column learns that before
+    reading a word of it. Alphabetical would have been a filing system.
     """
     order = sorted(data["lenses"].items(),
                    key=lambda kv: (-len([1 for c in data["countries"].values()
@@ -187,7 +204,7 @@ def want_cards(data):
     for i, (key, lens) in enumerate(order):
         n = len([1 for c in data["countries"].values() if key in c["calls"]])
         out.append(
-            '        <label class="jn-card">\n'
+            '        <label class="jn-card jn-card--row">\n'
             '          <input type="checkbox" name="want" value="%s">\n'
             '          <span class="jn-card-in"><b>%s</b>'
             '<span class="jn-card-line">%s</span>'
@@ -230,6 +247,115 @@ def style_chips(data):
         for s in data["style"])
 
 
+def continent():
+    """The continent, drawn into the document rather than into a script.
+
+    This is the thing this page was specified to have and did not: every
+    country of Africa, on the page, from the first question, so that an answer
+    has somewhere to land. The projection is not new — `tourism/map.json` holds
+    the same fifty-two paths, two island marks and one disputed territory the
+    homepage hero draws, in the same 1000x1060 viewBox — so nothing here
+    invents geometry. It reads a file three other surfaces already read.
+
+    Three decisions worth stating, because each was the alternative's opposite.
+
+    IT IS SERVER-RENDERED, NOT DRAWN BY THE SCRIPT. A map assembled in the
+    browser is a map that does not exist for anything that does not run
+    JavaScript, and this page was already the thinnest on the site by that
+    measure — 270 words against the homepage's 4,174.
+
+    Measured after, honestly: 282. The fifty-four names and taglines are in
+    the document, but they are in <title> elements, which a screen reader
+    announces and a word counter does not read. So the win here is not a word
+    count and should not be claimed as one — it is that a visitor with no
+    JavaScript now gets a map of Africa where every country is a link to its
+    own pages, instead of a page with four hidden questions on it.
+
+    EVERY COUNTRY IS A LINK. Not a <path> with a click handler: an <a> to that
+    country's own page, which is where it goes with scripting off and what a
+    keyboard can reach without a roving tabindex. The script intercepts the
+    click and picks the country instead; the link is what it degrades to.
+
+    THE HIT AREA IS NOT THE OUTLINE. The Gambia is a river and Comoros is three
+    dots, and neither is a target a thumb can find. Each country carries a
+    transparent disc at its own centroid, sized for a finger, painted under
+    nothing and hit before the outline. The outline is the drawing; the disc is
+    the control.
+    """
+    m = read(MAP, {})
+    live = m.get("live") or []
+    if len(live) < 40:
+        raise IOError("tourism/map.json holds %d countries — run: build.py map"
+                      % len(live))
+    view = m.get("view") or [0, 0, 1000.0, 1060.0]
+
+    def at(row):
+        raw = row.get("at")
+        if isinstance(raw, str):
+            raw = json.loads(raw)
+        return [float(raw[0]), float(raw[1])] if raw else None
+
+    rest = "".join(
+        '<path d="%s"><title>%s</title></path>' % (esc(r["d"]), esc(r.get("n") or ""))
+        for r in (m.get("rest") or []))
+
+    shapes, discs = [], []
+    for row in live:
+        p = at(row)
+        title = row["name"] + (" — " + row["tag"] if row.get("tag") else "")
+        shapes.append(
+            '<a class="jn-map-c" href="%s" data-slug="%s"%s>'
+            '<title>%s</title><path d="%s"/></a>'
+            % (esc(row.get("href") or "/" + row["slug"]), esc(row["slug"]),
+               ' data-at="%.1f %.1f"' % (p[0], p[1]) if p else "",
+               esc(title), esc(row["d"])))
+        if p:
+            discs.append('<circle class="jn-map-hit" data-slug="%s" cx="%.1f" '
+                         'cy="%.1f" r="17"/>' % (esc(row["slug"]), p[0], p[1]))
+
+    marks = []
+    for row in (m.get("marks") or []):
+        p = at(row)
+        if not p:
+            continue
+        title = row["name"] + (" — " + row["tag"] if row.get("tag") else "")
+        marks.append(
+            '<a class="jn-map-c is-isle" href="%s" data-slug="%s" '
+            'data-at="%.1f %.1f"><title>%s</title>'
+            '<circle cx="%.1f" cy="%.1f" r="%s"/></a>'
+            % (esc(row.get("href") or "/" + row["slug"]), esc(row["slug"]),
+               p[0], p[1], esc(title), p[0], p[1], esc(row.get("r") or 9)))
+        discs.append('<circle class="jn-map-hit" data-slug="%s" cx="%.1f" '
+                     'cy="%.1f" r="17"/>' % (esc(row["slug"]), p[0], p[1]))
+
+    return """
+      <figure class="jn-atlas-fig">
+        <svg class="jn-map" id="jn-map" viewBox="%(view)s"
+             preserveAspectRatio="xMidYMid meet"
+             aria-labelledby="jn-map-t jn-map-d">
+          <title id="jn-map-t">Africa, with every country this site writes up</title>
+          <desc id="jn-map-d">An outline map of the continent. Every country is
+            a link to its own pages, and every country is also a button in the
+            list of all fifty-four below, which is the easier target on a small
+            screen. Answering the questions colours them by how well each one
+            answers what you asked for.</desc>
+          <g class="jn-map-rest" aria-hidden="true">%(rest)s</g>
+          <g class="jn-map-live">%(shapes)s</g>
+          <g class="jn-map-isles">%(marks)s</g>
+          <g class="jn-map-route" id="jn-map-route" aria-hidden="true"></g>
+          <g class="jn-map-hits" aria-hidden="true">%(discs)s</g>
+        </svg>
+        <figcaption class="jn-map-say" id="jn-map-say">Fifty-four countries.
+          Answer a question and watch them answer back.</figcaption>
+      </figure>""" % {
+        "view": "%g %g %g %g" % tuple(view),
+        "rest": rest,
+        "shapes": "".join(shapes),
+        "marks": "".join(marks),
+        "discs": "".join(discs),
+    }
+
+
 def render(countries, taxonomy):
     data = brief(countries, taxonomy)
     money = rates.load()
@@ -252,6 +378,7 @@ def render(countries, taxonomy):
         "ground": rates.block_ground(money),
         "notincluded": rates.block_notincluded(money),
         "whopays": company.block_whopays(co),
+        "continent": continent(),
     }
 
 
@@ -287,7 +414,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body>
 <a class="af-skip" href="#ask">Skip to the questions</a>
 <header class="jn-mast">
-  <a class="jn-mark" href="/"><i>Afrinkong</i><b>Build a journey</b></a>
+  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Build a journey</b></a>
   <nav class="jn-routes" aria-label="Primary">
     <a href="/atlas">The Atlas</a>
     <a href="/meet">Meet Africa</a>
@@ -299,6 +426,33 @@ TEMPLATE = """<!DOCTYPE html>
 </header>
 
 <main class="jn" id="jn" data-step="1">
+
+  <!-- The continent, from the first question rather than after the last one.
+       It is the page's subject and it was not on the page: a visitor answering
+       four questions about where to go had nothing in front of them that was
+       anywhere. It stays put through the questions, the answer and the
+       composing, and every stage of those three writes to it.
+
+       It is first in the document as well as on the screen, which it can afford
+       to be because the script gives it ONE tab stop: the fifty-four countries
+       are moved out of the tab order and navigated with the arrow keys, the way
+       a grid is. With the script off they are fifty-four ordinary links, which
+       is what they are then. -->
+  <aside class="jn-atlas" id="jn-atlas" aria-labelledby="jn-atlas-h">
+    <div class="jn-atlas-in">
+      <h2 class="af-stamp" id="jn-atlas-h">The continent</h2>
+      %(continent)s
+      <button class="jn-map-wide" id="jn-map-wide" type="button" hidden>
+        Show the whole continent</button>
+      <ul class="jn-map-key" id="jn-map-key" hidden>
+        <li data-match="leads">Leads on what you asked</li>
+        <li data-match="region">Its region does</li>
+        <li data-match="open">Written up here too</li>
+      </ul>
+    </div>
+  </aside>
+
+
 
   <!-- the questions ------------------------------------------------------- -->
   <form class="jn-ask" id="ask" novalidate>
@@ -382,6 +536,12 @@ TEMPLATE = """<!DOCTYPE html>
       </div>
     </section>
   </form>
+  <!-- The continent, from the first question rather than after the last one.
+       It is the page's subject and it was not on the page: a visitor answering
+       four questions about where to go had nothing in front of them that was
+       anywhere. It stays put through the questions, the answer and the
+       composing, and every stage of those three writes to it. -->
+
 
   <!-- the reveal ---------------------------------------------------------- -->
   <section class="jn-reveal" id="reveal" hidden aria-live="polite">

@@ -394,7 +394,7 @@ def run(countries=None, log=print):
 # --- the templates -----------------------------------------------------------
 
 MAST = """<header class="jf-mast">
-  <a class="jf-mark" href="/"><i>Afrinkong</i><b>The Journey Fund</b></a>
+  <a class="jf-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>The Journey Fund</b></a>
   <nav class="jf-routes" aria-label="Primary">
     <a href="/journey-fund">Plan a journey</a>
     <a href="/journey-fund/how-it-works">How it works</a>

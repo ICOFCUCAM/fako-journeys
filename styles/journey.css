@@ -54,58 +54,94 @@
 .jn-lede{margin-top:20px;font-size:17.5px;color:var(--c-muted);max-width:56ch}
 .jn-note{margin-top:10px;font-size:14.5px;color:var(--c-muted)}
 
-/* A choice is an editorial card, not a checkbox with a word beside it: the
-   thing being chosen is what it means, and what it means takes a sentence. */
-.jn-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:var(--sp-2);margin-top:var(--sp-4)}
+/* THE CHOICES ARE RULED ROWS, NOT BOXES.
+ *
+ * Every question on this page was built from the same object: a one-pixel
+ * border round a title, a sentence and a number, repeated eight times, then
+ * five times, then twelve, then again. Eight equal bordered cards in a
+ * three-column grid is the pattern this direction exists to delete — it is a
+ * pricing table with the prices taken out — and the border was doing no work
+ * that the words were not already doing.
+ *
+ * So the box goes and the rule stays. A stack of choices is an index: a
+ * hairline between rows, the name in display, what it means in the reading
+ * face, and the quantity out at the right in mono where a figure belongs. The
+ * white space does the separating, which is what white space is for.
+ *
+ * AND SELECTION IS A RULE, NEVER A FILL. A chosen row took a solid deep-forest
+ * slab, which on question one meant up to eight slabs at once and a page that
+ * looked like a form with half its fields highlighted. It is now a three-pixel
+ * accent rule down the left edge and the name in burnt sienna — the same
+ * gesture the fifty-seven calls elsewhere on this site make, and the same one
+ * the fund's closing call was rebuilt around. Burnt sienna on the page is
+ * 6.31:1, which a name at 26px more than clears.
+ */
+.jn-cards{display:grid;grid-template-columns:1fr;gap:0;margin-top:var(--sp-4);
+  border-top:1px solid var(--c-border)}
 .jn-cards--rows{grid-template-columns:1fr}
-.jn-card{display:block;cursor:pointer}
+.jn-card{display:block;cursor:pointer;border-bottom:1px solid var(--c-border)}
 .jn-card input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.jn-card-in{display:block;border:1px solid var(--c-border);padding:20px 20px 18px;height:100%;
-  transition:border-color var(--t-fast) var(--ease),background var(--t-fast) var(--ease)}
+.jn-card-in{display:block;padding:18px 4px 17px 18px;height:100%;
+  border-left:3px solid transparent;
+  transition:border-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),padding-left var(--t-fast) var(--ease)}
 .jn-card-in b{display:block;font-family:var(--fj-display);font-size:26px;font-weight:700;
-  text-transform:uppercase;line-height:1.02;letter-spacing:-.01em}
-.jn-card-line{display:block;margin-top:8px;font-size:15.5px;line-height:1.5;color:var(--c-muted)}
-.jn-card-n{display:block;margin-top:12px;font-family:var(--fj-mono);font-size:9.5px;
+  text-transform:uppercase;line-height:1.02;letter-spacing:-.01em;
+  transition:color var(--t-fast) var(--ease)}
+.jn-card-line{display:block;margin-top:7px;font-size:15.5px;line-height:1.5;color:var(--c-muted);
+  max-width:52ch}
+.jn-card-n{display:block;margin-top:10px;font-family:var(--fj-mono);font-size:9.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
-.jn-card:hover .jn-card-in{border-color:var(--c-primary)}
-.jn-card input:checked + .jn-card-in{border-color:var(--c-primary);background:var(--c-primary);
-  color:var(--c-bg);border-width:1px}
-.jn-card input:checked + .jn-card-in .jn-card-line,
-.jn-card input:checked + .jn-card-in .jn-card-n{color:var(--fj-onbasalt-dim)}
+.jn-card:hover .jn-card-in b{color:var(--c-accent)}
+.jn-card input:checked + .jn-card-in{border-left-color:var(--c-accent);padding-left:24px}
+.jn-card input:checked + .jn-card-in b{color:var(--c-accent)}
+.jn-card input:checked + .jn-card-in .jn-card-n{color:var(--c-accent)}
 .jn-card input:focus-visible + .jn-card-in{outline:2px solid var(--c-accent);outline-offset:3px}
+/* A row whose quantity is a range rather than a count: the figure sits out at
+   the right on the name's own baseline, which is where a reader looks for it. */
 .jn-card--row .jn-card-in{display:grid;grid-template-columns:1fr auto;
-  grid-template-areas:"name short" "line short";column-gap:20px;align-items:baseline}
+  grid-template-areas:"name short" "line short";column-gap:24px;align-items:baseline}
 .jn-card--row .jn-card-in b{grid-area:name}
 .jn-card--row .jn-card-line{grid-area:line;margin-top:6px}
 .jn-card--row .jn-card-n{grid-area:short;margin-top:0;white-space:nowrap}
 
-.jn-months{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:var(--sp-4)}
+/* THE YEAR IS A SCALE, SO IT IS DRAWN AS ONE.
+   Twelve bordered boxes in a row is a keypad. A year is an axis: twelve marks
+   along one line, each under its own label, and the month chosen takes the
+   accent and a rule three times the weight. That is a scale reading, which is
+   what picking a month is. */
+.jn-months{display:grid;grid-template-columns:repeat(12,1fr);gap:0;
+  margin-top:var(--sp-4);border-top:1px solid var(--c-border)}
 .jn-mon{cursor:pointer}
 .jn-mon input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.jn-mon span{display:block;text-align:center;border:1px solid var(--c-border);padding:16px 0;
+.jn-mon span{display:block;text-align:center;padding:18px 0 14px;
+  border-bottom:2px solid transparent;
   font-family:var(--fj-mono);font-size:10px;letter-spacing:.1em;
-  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
+  transition:color var(--t-fast) var(--ease),
     border-color var(--t-fast) var(--ease)}
-.jn-mon:hover span{border-color:var(--c-primary)}
-.jn-mon input:checked + span{background:var(--c-primary);color:var(--c-bg);
-  border-color:var(--c-primary)}
-.jn-mon input:focus-visible + span{outline:2px solid var(--c-accent);outline-offset:3px}
+.jn-mon:hover span{color:var(--c-accent)}
+.jn-mon input:checked + span{color:var(--c-accent);border-bottom-color:var(--c-accent)}
+.jn-mon input:focus-visible + span{outline:2px solid var(--c-accent);outline-offset:2px}
 
-.jn-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--sp-4)}
+/* The same sentence again at the smallest size: a label and a rule under it
+   when it is chosen. No pill, no fill. */
+.jn-chips{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:var(--sp-4)}
 .jn-chips--style{margin-top:var(--sp-2)}
 .jn-chip{cursor:pointer;display:inline-block}
 .jn-chip input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.jn-chip span{display:inline-block;border:1px solid var(--c-border);padding:12px 16px;
+.jn-chip span{display:inline-block;padding:10px 0 7px;
+  border-bottom:2px solid transparent;
   font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease),
-    border-color var(--t-fast) var(--ease)}
-.jn-chip:hover span{border-color:var(--c-primary)}
-.jn-chip input:checked + span{background:var(--c-primary);color:var(--c-bg);
-  border-color:var(--c-primary)}
+  color:var(--c-muted);
+  transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.jn-chip:hover span{color:var(--c-accent)}
+.jn-chip input:checked + span{color:var(--c-accent);border-bottom-color:var(--c-accent)}
 .jn-chip input:focus-visible + span{outline:2px solid var(--c-accent);outline-offset:3px}
-.jn-chip--wide{display:block;margin-top:6px}
-.jn-chip--wide span{width:100%;text-align:center}
+/* "I'm flexible" was a full-width slab of deep forest — the loudest object on
+   a page whose subject is a question. It is the same label as the others now,
+   set apart by sitting on its own line rather than by being shouted. */
+.jn-chip--wide{display:block;margin-top:14px}
+.jn-chip--wide span{text-align:left}
 
 .jn-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--sp-5)}
 .jn-acts--end{margin-top:var(--sp-5)}
@@ -172,14 +208,31 @@
    it is something the eye can go to instead of the answer. */
 .jn-reveal{min-height:calc(100vh - var(--mast) - var(--sp-6) - var(--sp-7));
   display:flex;align-items:center}
+/* The name is sized against this row, not against the window. See the note on
+   .jn-reveal-name. container-type:inline-size applies inline containment, which
+   is a containing block for fixed descendants — there are none here, and this
+   element is on /journey only, so it cannot reach the homepage's fixed-window
+   band. Worth saying because that band has been broken this way before. */
 .jn-reveal-in{display:grid;width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
-  gap:var(--sp-4) var(--sp-6);align-items:center}
+  gap:var(--sp-4) var(--sp-6);align-items:center;container-type:inline-size}
 .jn-reveal-stamp{grid-column:1/-1;color:var(--c-accent)}
 .jn-shape{grid-row:span 4;align-self:stretch;display:flex;align-items:center;
   min-height:340px}
 .jn-shape svg{width:100%;height:auto;max-height:64vh;display:block;overflow:visible}
 .jn-shape-fill{fill:color-mix(in srgb,var(--c-accent) 88%,var(--c-primary))}
-.jn-reveal-name{align-self:end;margin:0;font-size:clamp(46px,7vw,104px)}
+/* THE COUNTRY'S NAME WAS SIZED AGAINST THE WINDOW AND SET IN HALF OF IT.
+   7vw is 104px at 1920, and at 1920 this name stands in a 352px cell: CAMEROON
+   came to 499px and ran out through the map beside it. It overflowed at every
+   width from 1080 up, and the wider the screen the worse it got, which is the
+   signature of a viewport unit doing a container's job.
+
+   Sized against the row it lives in instead. This face sets a name at 4.80
+   times its font size, the cell is 1.05/2.05 of the row, and the target is
+   the longest single-word name on the list — Mozambique, not Cameroon — inside
+   ninety per cent of the cell, which is the row times 0.076. The clamp ends are guards; the calc lands inside them. */
+.jn-reveal-name{align-self:end;margin:0;
+  font-size:clamp(38px,7vw,104px);
+  font-size:clamp(34px,7.6cqw,104px)}
 .jn-reveal-tag{font-family:var(--fj-text);font-size:clamp(19px,2.2vw,27px);color:var(--c-accent);
   line-height:1.25;margin:0}
 
@@ -364,8 +417,16 @@
 .jn-pick-meta{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8.5px;
   letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 /* Already in the journey: the row keeps its place in the list rather than
-   disappearing out of it, so the list never reorders under the cursor. */
-.jn-pick[aria-pressed="true"]{background:var(--fj-dust)}
+   disappearing out of it, so the list never reorders under the cursor.
+
+   A rule, not a plate. Three consecutive chosen stages made one dust-coloured
+   block behind them — a filled slab in the middle of a page that has just
+   spent four screens saying selection is a rule. It is the accent down the
+   left edge here too, and the name goes quiet because the row's job is now to
+   say "this one is already in", not to compete with the timeline that holds
+   it. Hover keeps the dust: that is a pointer, not a state. */
+.jn-pick{border-left:3px solid transparent}
+.jn-pick[aria-pressed="true"]{background:none;border-left-color:var(--c-accent)}
 .jn-pick[aria-pressed="true"] .jn-pick-body b{color:var(--c-muted)}
 /* Written up under something you asked for. */
 .jn-pick[data-lead] .jn-pick-body b::after{content:"";display:inline-block;width:5px;height:5px;
@@ -380,6 +441,18 @@
 @media(max-width:1000px){
   .jn{padding:var(--sp-5) 28px var(--sp-6)}
   .jn-reveal-in{grid-template-columns:1fr;gap:var(--sp-3)}
+  /* AND THE ONE ITEM THAT WAS STILL ASKING FOR COLUMN TWO.
+     "Ask me again" carries grid-column:2 so it sits under the text on a wide
+     screen. Below 1000 there is no column two, so it made one — an implicit
+     track — and the reveal has been a two-column layout at every width down to
+     320 while this rule said one. That is why the country's name was set in
+     half the screen on a phone. Nothing looked broken; it just never was the
+     layout the stylesheet described. */
+  .jn-restart{grid-column:1}
+  /* One column means the name gets the whole row, so it is sized against the
+     whole row: 16cqw rather than 7.6. At 390 that is 57px instead of 37 — the
+     difference between a headline and a label. */
+  .jn-reveal-name{font-size:clamp(38px,16cqw,104px)}
   .jn-shape{grid-row:auto;min-height:0;max-width:340px}
   .jn-shape svg{max-height:38vh}
   .jn-compose-grid{grid-template-columns:1fr;gap:var(--sp-5)}
@@ -425,6 +498,12 @@
     mask-image:linear-gradient(to bottom,#000 calc(100% - 22px),transparent)}
   .jn{padding:var(--sp-4) 18px var(--sp-6)}
   .jn-h1{font-size:clamp(32px,9.5vw,50px);max-width:none}
+  /* The question headings take the phone size above; the country's name does
+     not. It is one word on its own line with the whole row to itself, and at
+     9.5vw it came out at 37px in a 354px column — a label where the page's
+     one big moment should be. Restated here because .jn-h1 is declared after
+     the tablet rule and they carry the same weight. */
+  .jn-reveal-name{font-size:clamp(38px,16cqw,104px)}
   .jn-cards{grid-template-columns:1fr}
   .jn-card-in{padding:16px}
   .jn-card-in b{font-size:22px}
@@ -474,51 +553,69 @@
 .jn-field-h em{font-style:normal;color:var(--c-accent)}
 .jn-field-say{margin-top:12px;font-size:16px;color:var(--c-muted);max-width:58ch}
 
-.jn-field-key{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:var(--sp-4)}
-.jn-field-key span{display:flex;align-items:center;gap:8px;font-family:var(--fj-mono);
+/* THE LEGEND IS A RULE, BECAUSE THE MAP AND THE GRID ARE NOW ONE LANGUAGE.
+   The swatch was a filled square, which described a grid of filled squares.
+   Both of those are gone: a country declares its answer with a rule at its
+   left edge, on the map and in this list alike, so the legend shows a rule. */
+.jn-field-key{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:var(--sp-4)}
+.jn-field-key span{display:flex;align-items:center;gap:10px;font-family:var(--fj-mono);
   font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
-.jn-field-key span::before{content:"";width:10px;height:10px;flex:0 0 auto;
-  border:1px solid var(--c-border)}
-.jn-field-key span[data-match="leads"]::before{background:var(--c-accent);
-  border-color:var(--c-accent)}
-.jn-field-key span[data-match="region"]::before{background:var(--c-primary);
-  border-color:var(--c-primary)}
-.jn-field-key span[data-match="open"]::before{background:var(--c-bg)}
+.jn-field-key span::before{content:"";width:3px;height:15px;flex:0 0 auto;
+  background:var(--c-border)}
+.jn-field-key span[data-match="leads"]::before{background:var(--c-accent)}
+.jn-field-key span[data-match="region"]::before{background:var(--c-primary)}
+.jn-field-key span[data-match="open"]::before{background:var(--c-border)}
 
-.jn-field-grid{display:grid;gap:8px;margin-top:var(--sp-4);
-  grid-template-columns:repeat(auto-fill,minmax(212px,1fr))}
+/* FIFTY-FOUR COUNTRIES, NOT FIFTY-FOUR SLABS.
+ *
+ * This was a grid of filled chips: twenty-seven solid burnt sienna, nineteen
+ * solid deep forest, eight on the page's own ground — most of a screen given
+ * over to blocks of colour, and the exact repetition of a bordered box the
+ * direction was written to stop.
+ *
+ * It also stopped agreeing with the map beside it. The map says "this one
+ * answers" with a wash and a heavier outline; the grid said it with a flood.
+ * Two paints for one idea is two legends, and this file claimed in a comment
+ * that a reader who had learnt one had learnt the other. Now that is true.
+ *
+ * A ruled index instead, in the same language as the questions: a hairline
+ * above each row, the name, what it leads on under it, and a three-pixel rule
+ * at the left edge carrying the answer. No fill anywhere, so the colour on
+ * this screen is a set of marks rather than a wall.
+ */
+.jn-field-grid{display:grid;gap:0 clamp(20px,3vw,52px);margin-top:var(--sp-4);
+  grid-template-columns:repeat(auto-fill,minmax(236px,1fr))}
 .jn-c{display:block;width:100%;text-align:left;cursor:pointer;font:inherit;
-  padding:13px 14px;border:1px solid var(--c-border);background:var(--c-bg);
-  color:var(--c-fg);transition:transform var(--t-fast) var(--ease),
-  border-color var(--t-fast) var(--ease)}
+  padding:12px 2px 13px 15px;background:none;color:var(--c-fg);
+  border:0;border-top:1px solid var(--c-border);
+  border-left:3px solid transparent;
+  transition:border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
 .jn-c b{display:block;font-family:var(--fj-display);font-size:16px;
-  text-transform:uppercase;letter-spacing:-.005em;line-height:1.1}
-.jn-c-for{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8.5px;
+  text-transform:uppercase;letter-spacing:-.005em;line-height:1.1;
+  transition:color var(--t-fast) var(--ease)}
+.jn-c-for{display:block;margin-top:5px;font-family:var(--fj-mono);font-size:8.5px;
   letter-spacing:.13em;text-transform:uppercase;color:var(--c-muted)}
 
-/* Leads on it: the loudest thing on the grid, and the one state whose colour
-   was chosen by measurement rather than by eye. Terracotta (--c-accent-fill)
-   is the obvious pick and cannot carry 16px type: white on it is 3.73:1 and
-   deep forest 4.31:1, both under the 4.5 a name this size needs. Burnt sienna
-   — the accent's own text weight — takes the page colour at 6.31:1 and is the
-   same accent to look at. */
-.jn-c[data-match="leads"]{background:var(--c-accent);border-color:var(--c-accent);
-  color:var(--c-bg)}
-.jn-c[data-match="leads"] .jn-c-for{color:var(--c-bg);opacity:.86}
+/* Leads on it: the accent, as a rule and as the name. Burnt sienna rather than
+   terracotta is not a taste decision — it is the one of the two that carries
+   16px type on this ground, at 6.31:1 against 4.31:1. */
+.jn-c[data-match="leads"]{border-left-color:var(--c-accent)}
+.jn-c[data-match="leads"] b{color:var(--c-accent)}
 /* Its region does: deep forest, quieter but still an answer. */
-.jn-c[data-match="region"]{background:var(--c-primary);border-color:var(--c-primary);
-  color:var(--c-bg)}
-.jn-c[data-match="region"] .jn-c-for{color:var(--fj-onbasalt-dim)}
-/* Written up here too: the page's own ground. Present, not dimmed out. */
-.jn-c[data-match="open"]{background:var(--c-bg)}
+.jn-c[data-match="region"]{border-left-color:var(--c-primary)}
+/* Written up here too: no rule at all. Present, not dimmed out — the name is
+   the same ink as everything else and the line under it still says what the
+   country IS for. */
+.jn-c[data-match="open"]{border-left-color:transparent}
 
-.jn-c:hover{transform:translateY(-2px)}
+.jn-c:hover b{color:var(--c-accent)}
 .jn-c:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
-/* The one they chose, whatever the ranking thought of it. */
-.jn-c[data-picked]{box-shadow:inset 0 0 0 3px var(--c-accent)}
+/* The one they chose, whatever the ranking thought of it. Gold and heavier —
+   the same mark the map puts round a chosen country, for the same reason. */
+.jn-c[data-picked]{border-left:5px solid var(--c-gold,#B99A63);padding-left:13px}
 /* Out of the month they gave: marked, never removed. */
 .jn-c[data-off] b::after{content:"\00a0\00b7\00a0other months";font-family:var(--fj-mono);
-  font-size:8px;letter-spacing:.12em;opacity:.72;text-transform:uppercase}
+  font-size:8px;letter-spacing:.12em;color:var(--c-muted);text-transform:uppercase}
 
 .jn-field-fine{margin-top:var(--sp-4);font-family:var(--fj-display);
   font-size:clamp(15px,1.5vw,19px);color:var(--c-accent)}
@@ -722,3 +819,170 @@
   .jn-enq-form{padding:var(--sp-4)}
   .jn-enq-facts div{grid-template-columns:1fr;gap:4px}
 }
+
+/* ---- the continent ---------------------------------------------------------
+ * THE PAGE'S SUBJECT, ON THE PAGE.
+ *
+ * This page asked four questions about where to go and showed nothing that was
+ * anywhere. The map is not an illustration of the answer; it is the surface the
+ * answer lands on, so it is here from the first question and it stays through
+ * the reveal and the composing.
+ *
+ * Its colours are not new. The four states are exactly the four the country
+ * grid below already argues in — leads on it, its region does, written up here
+ * too, and the one you chose — because a reader who has learnt the grid's
+ * legend has learnt the map's, and two legends for one idea is one legend too
+ * many. The measured note on the grid applies here as well: burnt sienna
+ * rather than terracotta, at 6.31:1 against the page.
+ */
+.jn-atlas{margin:0 0 var(--sp-5)}
+.jn-atlas-in{position:relative}
+.jn-atlas .af-stamp{display:block;margin-bottom:14px}
+.jn-atlas-fig{margin:0}
+/* Clipped, not visible. The viewBox moves when a country is chosen, and
+   anything outside it is the rest of the continent — which at 3x zoom is most
+   of the continent, drawn across the caption and down the page. `overflow` on
+   an SVG is the frame of the drawing, and this drawing has one. */
+.jn-map{display:block;width:100%;height:auto;overflow:hidden}
+
+/* The base state: an outline continent on the page's own ground. Every stroke
+   is non-scaling, because this drawing is 1000 units wide and rendered at
+   anything from 300 to 520 pixels — a stroke in user units would be a hairline
+   on the rail and a rope on a phone. */
+.jn-map-rest path{fill:none;stroke:var(--c-border);stroke-width:1;
+  vector-effect:non-scaling-stroke;stroke-dasharray:3 3}
+.jn-map-c path,.jn-map-c circle{fill:var(--c-bg);stroke:var(--c-primary);
+  stroke-width:1;vector-effect:non-scaling-stroke;
+  transition:fill var(--t-mid) var(--ease),stroke var(--t-fast) var(--ease)}
+/* A WASH AND A STROKE, NOT A FLOOD FILL.
+   The grid can flood a chip in burnt sienna because a chip is a chip. Doing
+   the same on a map paints thirty-one countries solid accent — an accent fill
+   the size of most of a continent, which is the exact thing the design
+   blueprint names as its first absolute and which design-checks measures on
+   this page at three widths.
+
+   The atlas already had the answer: a wash. Composited against the page,
+   thirty-four per cent burnt sienna over ivory reads as a tint and measures
+   nowhere near the accent, so the rule is respected in the render and not
+   merely in the file. The country is told apart by the weight of its outline —
+   which is how a map has always said "this one", and which survives being
+   printed, being colour-blind, and being looked at from across the room. */
+.jn-map-c[data-match="leads"] path,.jn-map-c[data-match="leads"] circle{
+  fill:color-mix(in srgb,var(--c-accent) 34%,transparent);
+  stroke:var(--c-accent);stroke-width:1.8}
+.jn-map-c[data-match="region"] path,.jn-map-c[data-match="region"] circle{
+  fill:color-mix(in srgb,var(--c-primary) 20%,transparent);
+  stroke:var(--c-primary);stroke-width:1.3}
+.jn-map-c[data-match="open"] path,.jn-map-c[data-match="open"] circle{
+  fill:var(--c-bg)}
+/* Out of the month they gave: marked, never removed — the same sentence the
+   grid makes, in the one form a map has for it. */
+.jn-map-c[data-off] path,.jn-map-c[data-off] circle{stroke-dasharray:4 3}
+/* The one they chose. A ring rather than a fill, so the colour underneath goes
+   on saying what that country leads on. */
+.jn-map-c[data-picked] path,.jn-map-c[data-picked] circle{
+  stroke:var(--c-gold,#B99A63);stroke-width:3.4}
+
+.jn-map-c:hover path,.jn-map-c:hover circle,
+.jn-map-c[data-hot] path,.jn-map-c[data-hot] circle{stroke:var(--c-accent);
+  stroke-width:2.4}
+/* A RING THE CHECKS CAN MEASURE, NOT ONLY A THICKER COASTLINE.
+   Suppressing the outline and thickening the stroke looks like a focus state
+   and is invisible to the suite that measures focus states — it reads
+   outline-color against the ground, finds none drawn, and records nothing.
+   A focus indicator no check can see is a focus indicator that stops existing
+   the day somebody edits this block. Both, then: the outline for the reader
+   who needs a rectangle they can find, and the stroke for the reader looking
+   at the country. */
+.jn-map-c:focus{outline:none}
+.jn-map-c:focus-visible{outline:2px solid var(--c-accent);outline-offset:2px}
+.jn-map-c:focus-visible path,.jn-map-c:focus-visible circle{
+  stroke:var(--c-accent);stroke-width:3.4}
+
+/* THE HIT AREA IS NOT THE OUTLINE.
+   The Gambia is a river seventy units long and Comoros is three dots. Neither
+   is a target a thumb can find, and neither becomes one by being drawn bigger —
+   that would be a lie about the geography. Each country carries an invisible
+   disc at its own centroid instead: transparent fill, which in SVG still takes
+   a pointer, over the drawing and under nothing. */
+.jn-map-hit{fill:transparent;cursor:pointer}
+
+.jn-map-say{margin-top:12px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted);
+  line-height:1.7}
+/* THE WAY BACK OUT.
+   Flying in is one press and flying out was none: a reader who chose Rwanda
+   was left looking at Rwanda with the other fifty-three countries off the
+   edge and no way to see them again short of starting the questions over.
+   It appears only when the map is not showing everything, because a control
+   that says "show the whole continent" while the whole continent is on screen
+   is a control that has to be read before it can be ignored. */
+.jn-map-wide{display:block;margin-top:12px;padding:0 0 3px;background:none;
+  border:0;border-bottom:2px solid var(--c-accent);cursor:pointer;
+  font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--c-primary)}
+.jn-map-wide[hidden]{display:none}
+.jn-map-wide:hover{color:var(--c-accent)}
+.jn-map-wide:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
+
+.jn-map-key{list-style:none;margin:14px 0 0;padding:0;
+  display:flex;flex-wrap:wrap;gap:6px 18px}
+.jn-map-key[hidden]{display:none}
+.jn-map-key li{display:flex;align-items:center;gap:8px;font-family:var(--fj-mono);
+  font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
+.jn-map-key li::before{content:"";width:10px;height:10px;flex:0 0 auto;
+  border:1px solid var(--c-border)}
+/* The swatch is the map's own paint, not the grid's: a wash inside the outline
+   that names it. A legend that shows a colour the map never uses is a legend
+   that has to be translated. */
+.jn-map-key li[data-match="leads"]::before{
+  background:color-mix(in srgb,var(--c-accent) 34%,transparent);
+  border-color:var(--c-accent)}
+.jn-map-key li[data-match="region"]::before{
+  background:color-mix(in srgb,var(--c-primary) 20%,transparent);
+  border-color:var(--c-primary)}
+.jn-map-key li[data-match="open"]::before{background:var(--c-bg)}
+
+/* BELOW THE RAIL, THE MAP IS SIZED AGAINST THE SCREEN'S HEIGHT, NOT ITS WIDTH.
+   Stacked at 390 the continent is as wide as the phone and therefore taller
+   than it is wide, and the first question — the reason the page exists — was
+   pushed to 600 pixels down. A map is not a hero.
+
+   The size is tied to the viewport's height instead, which is the dimension
+   that actually decides whether the question is on screen. Thirty per cent of
+   it, with a floor so a landscape phone does not get a postage stamp, and
+   never wider than the column. At 390x844 that is a 253px drawing and the
+   question starts at 480 rather than 600. The order is kept — continent, then
+   the question about it — because that sequence is the argument. */
+@media(max-width:1079px){
+  .jn-atlas{margin-bottom:var(--sp-5)}
+  .jn-atlas-fig{max-width:min(100%,max(180px,30vh))}
+  .jn-map-say{max-width:52ch}
+}
+
+/* A RAIL, NOT A BANNER, WHERE THERE IS ROOM FOR ONE.
+   The questions are set in a 16ch measure and the map wants to be square, so
+   above 1080 they sit side by side and the map stays in view while the reader
+   works down the questions — which is the whole point of it being there. Every
+   other child of .jn stays in column one without being named, so adding a
+   section to this page does not mean remembering this rule. */
+@media(min-width:1080px){
+  .jn{max-width:1380px;
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(330px,30vw,460px));
+    column-gap:clamp(32px,4vw,72px);align-items:start}
+  .jn > *{grid-column:1}
+  /* The aside comes after the questions in the document — a keyboard should
+     reach the first question before fifty-four countries — and grid puts it
+     back on the right, spanning every row, without the document caring. */
+  .jn-atlas{grid-column:2;grid-row:1 / -1;position:sticky;
+    top:calc(var(--mast) + 24px);margin:0}
+}
+
+/* The journey itself, over the countries it crosses. The road is the accent
+   because it is the one thing on this drawing that is the reader's own; the
+   stops are ink, and the last one is larger because arriving is the point. */
+.jn-map-road{fill:none;stroke:var(--c-accent);stroke-width:2.6;
+  stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;
+  stroke-dasharray:7 6}
+.jn-map-stop{fill:var(--c-accent);stroke:var(--c-bg);stroke-width:2;
+  vector-effect:non-scaling-stroke}

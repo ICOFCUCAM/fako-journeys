@@ -221,6 +221,13 @@
         + '<span class="jn-alt-go" aria-hidden="true">&rarr;</span></button>';
     }).join('');
     paintField();
+    paintMap();
+    /* The reveal is a country being proposed, so the map goes there too. It
+       flew when a journey opened and sat still when one was offered, which
+       made the answer screen the only place on this page where the map was
+       not answering. Opening an alternative flies again, because that is the
+       same act with a different country. */
+    flyTo(frameFor(chosen.slug));
   }
 
   /* The continent, coloured rather than filtered.
@@ -253,6 +260,444 @@
         + '</button>';
     }).join('');
   }
+
+  /* ---- the continent ----------------------------------------------------- */
+
+  /* EVERY ANSWER LANDS ON THE MAP, AND IT LANDS AS THE ANSWER IS GIVEN.
+   *
+   * The country grid says the same thing, and says it once, at the end. The
+   * map's job is different: it is the only part of this page that can answer
+   * a question before the question after it has been asked, which is what
+   * makes four questions feel like a conversation rather than a form.
+   *
+   * It writes the same three attributes the grid writes, off the same rows
+   * from the same engine call. Nothing here decides anything — if the map and
+   * the grid ever disagree it is because one of them stopped calling
+   * E.field(), and that is a bug with one place to look.
+   */
+  var mapEl = document.getElementById('jn-map');
+  var mapSay = document.getElementById('jn-map-say');
+  var mapKey = document.getElementById('jn-map-key');
+  var mapC = mapEl
+    ? [].slice.call(mapEl.querySelectorAll('.jn-map-c')) : [];
+  var mapBy = {};
+  mapC.forEach(function (el) { mapBy[el.getAttribute('data-slug')] = el; });
+
+  function paintMap() {
+    if (!mapC.length) return;
+    var rows = E.field(D, brief);
+    var lit = 0;
+    rows.forEach(function (r) {
+      var el = mapBy[r.slug];
+      if (!el) return;
+      el.setAttribute('data-match', r.match);
+      if (r.match === 'leads') lit++;
+      if (r.inSeason) el.removeAttribute('data-off');
+      else el.setAttribute('data-off', 'true');
+      if (chosen && chosen.slug === r.slug) {
+        el.setAttribute('data-picked', 'true');
+        /* The tab stop follows the choice: a reader who picks Kenya and comes
+           back to the map should land on Kenya. */
+        if (typeof focusable === 'function') focusable(el);
+      } else { el.removeAttribute('data-picked'); }
+    });
+    var asked = (brief.wants || []).length || brief.month;
+    if (mapKey) mapKey.hidden = !asked;
+    /* Once a journey is drawn the caption belongs to the journey. Both of
+       these write the same element and the composer's sentence is the more
+       specific one, so the field's sentence gives way rather than racing it. */
+    if (routeEl && routeEl.childNodes.length) return;
+    if (mapSay) {
+      mapSay.textContent = !asked
+        ? 'Fifty-four countries. Answer a question and watch them answer back.'
+        : lit + ' of the fifty-four lead on what you have asked for so far. '
+          + 'Every one of them is still yours to choose.';
+    }
+  }
+
+  /* ONE TAB STOP FOR FIFTY-FOUR COUNTRIES.
+   *
+   * The map is the first thing in the document, which is where it belongs —
+   * the page's subject, above the question about it. Left as fifty-four
+   * ordinary links that costs a keyboard reader fifty-four presses before the
+   * first question, which is not a map being first, it is a map being in the
+   * way.
+   *
+   * So it is navigated the way a grid is: the group takes one stop, and the
+   * arrows move inside it. The roving tabindex is applied by the script, so
+   * with scripting off — where there is no interactive map anyway and the
+   * links ARE the content — all fifty-four stay in the tab order as plain
+   * links to plain pages.
+   *
+   * The arrows move geographically, not in document order. Document order is
+   * alphabetical, so Right from Algeria would be Angola: two thousand miles
+   * south and the wrong direction entirely. Each press picks the nearest
+   * centroid inside a sixty-degree cone in the direction asked for, which on a
+   * map is what "right" means.
+   */
+  var roving = null;
+  function focusable(el) {
+    mapC.forEach(function (c) { c.setAttribute('tabindex', '-1'); });
+    if (el) { el.setAttribute('tabindex', '0'); roving = el; }
+  }
+  function centre(el) {
+    var raw = el && el.getAttribute('data-at');
+    if (!raw) return null;
+    var n = raw.split(/[ ,]+/).map(Number);
+    return {x: n[0], y: n[1]};
+  }
+  /* Nearest centroid within sixty degrees of the direction asked for. The cone
+     is what stops "up" from Ghana landing on Chad because Chad happens to be
+     the closest thing that is even slightly north. */
+  function neighbour(from, dx, dy) {
+    var a = centre(from);
+    if (!a) return null;
+    var best = null, bestD = 1e9;
+    mapC.forEach(function (el) {
+      if (el === from) return;
+      var b = centre(el);
+      if (!b) return;
+      var vx = b.x - a.x, vy = b.y - a.y;
+      var d = Math.sqrt(vx * vx + vy * vy);
+      if (!d) return;
+      var cos = (vx * dx + vy * dy) / d;
+      if (cos < 0.5) return;                  /* outside the sixty-degree cone */
+      var cost = d / cos;                     /* straight ahead beats sideways */
+      if (cost < bestD) { bestD = cost; best = el; }
+    });
+    return best;
+  }
+  if (mapC.length) {
+    focusable(mapC[0]);
+    mapEl.addEventListener('keydown', function (e) {
+      var here = e.target.closest ? e.target.closest('.jn-map-c') : null;
+      if (!here) return;
+      var go = null;
+      if (e.key === 'ArrowRight') go = neighbour(here, 1, 0);
+      else if (e.key === 'ArrowLeft') go = neighbour(here, -1, 0);
+      else if (e.key === 'ArrowUp') go = neighbour(here, 0, -1);
+      else if (e.key === 'ArrowDown') go = neighbour(here, 0, 1);
+      else if (e.key === 'Home') go = mapC[0];
+      else if (e.key === 'End') go = mapC[mapC.length - 1];
+      else return;
+      if (!go) { e.preventDefault(); return; }
+      e.preventDefault();
+      focusable(go);
+      go.focus();
+    });
+    /* Whatever was last touched keeps the stop, so tabbing away and back
+       returns to where the reader was rather than to Algeria. */
+    mapEl.addEventListener('focusin', function (e) {
+      var here = e.target.closest ? e.target.closest('.jn-map-c') : null;
+      if (here && here !== roving) focusable(here);
+    });
+  }
+
+  /* THE TARGETS ARE SIZED IN PIXELS, AND CAPPED BY THE GEOGRAPHY.
+   *
+   * The discs are 17 units in a 1000-unit drawing. On the rail that renders at
+   * seven pixels across; on a phone, where the map is 300px wide, it is five.
+   * A five-pixel target is not a target. The browser suite does not catch this
+   * — its tap-target pass skips anything inside an <svg>, which was right when
+   * SVG on this site was decoration and is not right now that it carries
+   * fifty-four controls.
+   *
+   * So they are sized against the render: eleven pixels of radius, converted
+   * into user units through whatever the viewBox currently is, which means
+   * they also grow correctly when the map flies in.
+   *
+   * And capped by half the distance to the nearest other centroid, because the
+   * alternative is worse than a small target: at the size a phone wants, the
+   * discs for Togo and Benin would each cover the other and one of the two
+   * countries would become unpressable. Geometry gets the final say — no disc
+   * may reach its neighbour's centre, and that was measured: zero overlapping
+   * pairs at 390, 768 and 1440.
+   *
+   * WHERE THAT LEAVES THE DENSE PLACES, HONESTLY. Fifty-four centroid discs on
+   * a 253px drawing cannot all be finger-sized, and pretending otherwise would
+   * mean letting Rwanda's disc cover Burundi. On the unflown continent the
+   * tightest targets measure 3px across at 390 and 5px at 1440 — Gambia,
+   * Rwanda, Burundi — and for those the country grid below, whose buttons are
+   * the full width of the column, is the real control. The map is the coarse
+   * one.
+   *
+   * Flying in is what fixes it, and it fixes it by itself. Zoom changes
+   * units-per-pixel, so the same rule hands out bigger discs: after a fly to
+   * Rwanda those same three go from 3px to 10-11px at 390, and from 5px to
+   * 17px at 1440. Measured, both states.
+   */
+  var hits = mapEl
+    ? [].slice.call(mapEl.querySelectorAll('.jn-map-hit')) : [];
+  var nearest = hits.map(function (a, i) {
+    var ax = +a.getAttribute('cx'), ay = +a.getAttribute('cy'), best = 1e9;
+    hits.forEach(function (b, j) {
+      if (i === j) return;
+      var dx = ax - (+b.getAttribute('cx')), dy = ay - (+b.getAttribute('cy'));
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d < best) best = d;
+    });
+    return best;
+  });
+
+  function sizeHits() {
+    if (!hits.length || !mapEl) return;
+    var box = mapEl.getBoundingClientRect();
+    if (!box.width) return;
+    var units = (mapEl.getAttribute('viewBox') || HOME).split(/[ ,]+/).map(Number);
+    var perPx = units[2] / box.width;
+    var want = 11 * perPx;
+    hits.forEach(function (el, i) {
+      var cap = nearest[i] * 0.48;
+      el.setAttribute('r', Math.max(6, Math.min(want, cap)).toFixed(1));
+    });
+    /* The stops are drawn in pixels for the same reason the targets are. At
+       3.3x — which is what choosing Rwanda gives you — a nine-unit stop is
+       thirty pixels across and covers the country it is marking. */
+    if (mapEl) {
+      [].forEach.call(mapEl.querySelectorAll('.jn-map-stop'), function (el) {
+        el.setAttribute('r',
+          ((el.classList.contains('is-end') ? 6 : 4.5) * perPx).toFixed(1));
+      });
+    }
+  }
+  sizeHits();
+  addEventListener('resize', sizeHits);
+
+  /* ---- THE JOURNEY, DRAWN ------------------------------------------------
+   * The specification's last line, and the one with an honest limit on it.
+   *
+   * A place on this site carries a group, a lens set and a write-up. It does
+   * not carry a position — data/atlas/*.json has no coordinates in it — so
+   * there is no way to put a pin on the Mara that is not invented. Thirteen
+   * places do have a real position, in tourism/atlas-detail.json, and the
+   * countries have centroids. That is what can be drawn, so that is what is
+   * drawn, and the caption says which of the two it is doing rather than
+   * letting a reader assume every node was surveyed.
+   *
+   * Country centroids for the shape of the journey, city nodes where a stage
+   * names one of the thirteen, and a line through them in the order they are
+   * visited. One point is not a route and is drawn as one node; no points is
+   * drawn as nothing at all rather than as a line between guesses.
+   */
+  var routeEl = document.getElementById('jn-map-route');
+  var CITY = {};
+  (D.cities || []).forEach(function (c) { CITY[c.name.toLowerCase()] = c; });
+
+  function atOf(slug) {
+    var el = mapBy[slug];
+    var raw = el && el.getAttribute('data-at');
+    if (!raw) return null;
+    var n = raw.split(/[ ,]+/).map(Number);
+    return (n.length === 2 && !isNaN(n[0])) ? {x: n[0], y: n[1]} : null;
+  }
+
+  /* A stage's own position, if one exists. Matched on the city's name
+     appearing in the stage's title — "Nairobi, Green City in the Sun" is
+     Nairobi — and on nothing looser than that, because a fuzzy match here puts
+     a node on the wrong continent and calls it data. */
+  function cityFor(st) {
+    var title = String(st.title || '').toLowerCase();
+    for (var k in CITY) {
+      if (title.indexOf(k) >= 0) return CITY[k];
+    }
+    return null;
+  }
+
+  /* Catmull-Rom through the points, as one cubic. The same curve the crossing
+     maps use, at the same tension, so a route on this page and a route on
+     /trans-afrique are the same object drawn by the same rule. */
+  function through(pts) {
+    if (pts.length < 2) return '';
+    var d = 'M' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i],
+          p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      var t = 0.62 / 3;
+      d += ' C' + (p1.x + (p2.x - p0.x) * t).toFixed(1) + ' '
+         + (p1.y + (p2.y - p0.y) * t).toFixed(1) + ', '
+         + (p2.x - (p3.x - p1.x) * t).toFixed(1) + ' '
+         + (p2.y - (p3.y - p1.y) * t).toFixed(1) + ', '
+         + p2.x.toFixed(1) + ' ' + p2.y.toFixed(1);
+    }
+    return d;
+  }
+
+  function drawRoute() {
+    if (!routeEl) return;
+    var st = (typeof stageObjects === 'function') ? stageObjects() : [];
+    var pts = [], seen = {}, named = 0;
+    st.forEach(function (stage) {
+      var city = cityFor(stage);
+      if (city) {
+        pts.push({x: city.x, y: city.y, label: city.name});
+        named++;
+        seen[stage.country] = true;
+        return;
+      }
+      if (seen[stage.country]) return;
+      var a = atOf(stage.country);
+      if (!a) return;
+      seen[stage.country] = true;
+      pts.push({x: a.x, y: a.y, label: stage.countryName});
+    });
+    if (!pts.length && chosen) {
+      var a0 = atOf(chosen.slug);
+      if (a0) pts.push({x: a0.x, y: a0.y,
+        label: (D.countries[chosen.slug] || {}).name || chosen.slug});
+    }
+
+    var bits = [];
+    if (pts.length > 1) {
+      bits.push('<path class="jn-map-road" d="' + through(pts) + '"/>');
+    }
+    pts.forEach(function (p, i) {
+      bits.push('<circle class="jn-map-stop'
+        + (i === pts.length - 1 ? ' is-end' : '') + '" cx="' + p.x.toFixed(1)
+        + '" cy="' + p.y.toFixed(1) + '" r="6"/>');
+    });
+    routeEl.innerHTML = bits.join('');
+    sizeHits();
+
+    /* The caption says which kind of node the reader is looking at, because a
+       node drawn at a country's centre and a node on a surveyed city look
+       identical and mean different things. A map that does not say which is a
+       map that is quietly claiming the second. */
+    if (mapSay) {
+      var says;
+      if (!pts.length) {
+        says = 'Nothing in this journey has a published position yet.';
+      } else if (pts.length === 1) {
+        says = named
+          ? 'One stop on the map: ' + pts[0].label + ', the only place in this '
+            + 'journey with a surveyed position.'
+          : 'Drawn at the centre of ' + pts[0].label + '. The places in this '
+            + 'journey do not carry coordinates.';
+      } else {
+        says = pts.length + ' stops, in the order you would take them.'
+          + (named
+              ? ' ' + named + ' of them ' + (named === 1 ? 'is a city' : 'are cities')
+                + ' with a surveyed position; the rest sit at their '
+                + 'country\u2019s centre.'
+              : ' Each at its country\u2019s centre \u2014 the places on this '
+                + 'site do not carry coordinates.');
+      }
+      mapSay.textContent = says;
+    }
+
+    /* A journey that crosses a border needs a frame that holds both sides of
+       it. Flying to the chosen country and leaving the second stop off the
+       edge is worse than not flying at all: the reader is looking at a route
+       with one end outside the picture and no way to know it. */
+    if (pts.length > 1) flyTo(frameAround(pts));
+  }
+
+  /* The smallest frame at the home proportion that holds every point, with
+     room round it, clamped to the continent. */
+  function frameAround(pts) {
+    var home = HOME.split(/[ ,]+/).map(Number);
+    var xs = pts.map(function (p) { return p.x; });
+    var ys = pts.map(function (p) { return p.y; });
+    var x0 = Math.min.apply(null, xs), x1 = Math.max.apply(null, xs);
+    var y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
+    var pad = Math.max(x1 - x0, y1 - y0) * 0.35 + 70;
+    var w = Math.max((x1 - x0) + pad * 2, 300);
+    var h = w / ASPECT;
+    if (h < (y1 - y0) + pad * 2) { h = (y1 - y0) + pad * 2; w = h * ASPECT; }
+    if (w > home[2]) { w = home[2]; h = home[3]; }
+    var cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    var x = Math.min(Math.max(cx - w / 2, home[0]), home[0] + home[2] - w);
+    var y = Math.min(Math.max(cy - h / 2, home[1]), home[1] + home[3] - h);
+    return [x, y, w, h].map(function (n) { return Math.round(n * 10) / 10; })
+      .join(' ');
+  }
+
+  /* ---- FLYING TO THE COUNTRY -------------------------------------------
+   * The specification's second verb. Choosing a country should not merely
+   * ring it on a continent-sized drawing where Rwanda is four pixels across;
+   * the map should go there.
+   *
+   * It is the viewBox that moves, not a transform. A transform scales the
+   * strokes with it — a 1px border becomes a 6px border at 6x — and it scales
+   * the transparent hit discs too, so the targets would drift away from the
+   * countries under them. Moving the viewBox moves the camera: the strokes
+   * are non-scaling, the discs stay on their centroids, and the drawing is
+   * resolution-independent all the way in.
+   *
+   * THE ASPECT RATIO IS HELD. The element has no height of its own — it takes
+   * it from the viewBox — so a target box of a different shape resizes the
+   * element and shifts the page under the reader. This page is measured for
+   * layout shift; a fly-to that scores 0.4 CLS is a fly-to that has to be
+   * reverted. Every target is built at the home box's own proportion.
+   */
+  var HOME = mapEl ? (mapEl.getAttribute('viewBox') || '0 0 1000 1060') : null;
+  var ASPECT = HOME ? (function (v) {
+    var n = v.split(/[ ,]+/).map(Number); return n[2] / n[3]; }(HOME)) : 1;
+  var flying = null;
+
+  function boxOf(slug) {
+    var el = mapBy[slug];
+    if (!el || !el.getBBox) return null;
+    try { return el.getBBox(); } catch (e) { return null; }
+  }
+
+  /* A box around the country, at the home proportion, never smaller than a
+     minimum and never larger than the continent. The minimum is what stops
+     Comoros filling the frame with three dots and no coastline to say where
+     they are: a country is only legible with some of its neighbours in shot. */
+  function frameFor(slug) {
+    var b = boxOf(slug);
+    if (!b) return HOME;
+    var home = HOME.split(/[ ,]+/).map(Number);
+    var pad = Math.max(b.width, b.height) * 0.55 + 40;
+    var w = Math.max(b.width + pad * 2, 300);
+    var h = w / ASPECT;
+    if (h < b.height + pad * 2) { h = b.height + pad * 2; w = h * ASPECT; }
+    if (w > home[2]) { w = home[2]; h = home[3]; }
+    var cx = b.x + b.width / 2, cy = b.y + b.height / 2;
+    var x = Math.min(Math.max(cx - w / 2, home[0]), home[0] + home[2] - w);
+    var y = Math.min(Math.max(cy - h / 2, home[1]), home[1] + home[3] - h);
+    return [x, y, w, h].map(function (n) { return Math.round(n * 10) / 10; })
+      .join(' ');
+  }
+
+  var wideEl = document.getElementById('jn-map-wide');
+  function setBox(v) {
+    if (!mapEl) return;
+    mapEl.setAttribute('viewBox', v);
+    /* The control exists only while there is something off the edge. */
+    if (wideEl) wideEl.hidden = (v === HOME);
+  }
+  if (wideEl) {
+    wideEl.addEventListener('click', function () {
+      flyTo(HOME);
+      track('map_widened', {country: chosen ? chosen.slug : null});
+    });
+  }
+
+  function flyTo(target) {
+    if (!mapEl) return;
+    var from = (mapEl.getAttribute('viewBox') || HOME).split(/[ ,]+/).map(Number);
+    var to = String(target).split(/[ ,]+/).map(Number);
+    if (flying) { cancelAnimationFrame(flying); flying = null; }
+    /* Reduced motion gets the destination, not a slower journey to it. */
+    if (reduced.matches) { setBox(to.join(' ')); sizeHits(); return; }
+    var t0 = performance.now(), ms = 620;
+    var tick = function (now) {
+      var k = Math.min(1, (now - t0) / ms);
+      var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      setBox(from.map(function (v, i) {
+        return Math.round((v + (to[i] - v) * e) * 10) / 10; }).join(' '));
+      if (k < 1) flying = requestAnimationFrame(tick);
+      else { flying = null; sizeHits(); }
+    };
+    flying = requestAnimationFrame(tick);
+  }
+
+  /* Live, not on submit. The controls are radios and checkboxes, so `change`
+     fires on the press that matters and on nothing else; `input` would fire
+     for the sentence box too, and the sentence has its own button. */
+  form.addEventListener('change', function () { readForm(); paintMap(); });
+  paintMap();
 
   /* Who lives there, before why we chose it. A country that arrives as an
      outline, a season and a reason is a destination; a country that arrives
@@ -312,6 +757,29 @@
 
   /* The field is its own section now, so the delegated handler has to be bound
      to both. Bound only to .jn-reveal, every country in the grid was inert. */
+  /* They picked one themselves. That is the whole point of showing all
+     fifty-four, so nothing here second-guesses it: the country they chose
+     becomes the journey, whatever the ranking thought.
+
+     One function for two doors. The grid and the map are the same choice made
+     two ways, and the moment they were two code paths one of them would start
+     forgetting something the other does — which is how a map ends up not
+     recording that a country was chosen from it. `how` is the only thing that
+     differs, and it is a label on the count, not a branch. */
+  function chooseCountry(want, how) {
+    if (!want || !D.countries[want]) return false;
+    var found = E.rank(D, {wants: brief.wants, month: brief.month, seed: brief.seed})
+      .filter(function (p) { return p.slug === want; })[0];
+    chosen = found || {slug: want, reasons: [], outOfSeason: false};
+    picks = [chosen].concat(picks.filter(function (p) { return p.slug !== want; }));
+    track('country_chosen', {country: want, from: how || 'grid'});
+    var fs = document.getElementById('jn-field');
+    if (fs) fs.hidden = true;
+    paintMap();
+    openComposer(want);
+    return true;
+  }
+
   function onPick(e) {
     var t = e.target.closest ? e.target.closest('[data-alt],[data-compose],[data-others],[data-restart],[data-country]') : null;
     if (!t) return;
@@ -333,23 +801,17 @@
         alts.scrollIntoView({behavior: reduced.matches ? 'auto' : 'smooth', block: 'start'});
       }
     } else if (t.hasAttribute('data-country')) {
-      /* They picked one themselves. That is the whole point of showing all
-         fifty-four, so nothing here second-guesses it: the country they chose
-         becomes the journey, whatever the ranking thought. */
-      var want = t.dataset.country;
-      var found = E.rank(D, {wants: brief.wants, month: brief.month, seed: brief.seed})
-        .filter(function (p) { return p.slug === want; })[0];
-      chosen = found || {slug: want, reasons: [], outOfSeason: false};
-      picks = [chosen].concat(picks.filter(function (p) { return p.slug !== want; }));
-      track('country_chosen', {country: want});
-      var fs = document.getElementById('jn-field');
-      if (fs) fs.hidden = true;
-      openComposer(want);
+      chooseCountry(t.dataset.country, 'grid');
     } else if (t.hasAttribute('data-restart')) {
       /* Re-rolling changes the tie-break, not the rules: two countries that
          scored the same get to take turns. It travels in the link, so a
          shared journey is still the same journey. */
       brief.seed = (brief.seed + 1) % 7;
+      /* Back to the whole continent: the questions are about all of it again. */
+      chosen = null;
+      paintMap();
+      if (routeEl) routeEl.innerHTML = '';
+      flyTo(HOME);
       reveal.hidden = true;
       form.hidden = false;
       var fieldSec = document.getElementById('jn-field');
@@ -357,6 +819,45 @@
       show(1);
     }
   }
+  /* THE MAP IS A DOOR, AND IT IS A LINK FIRST.
+     Every country is an <a> to its own page, so with the script off — or
+     before it loads, or if it throws — pressing Ghana goes to Ghana, which is
+     a reasonable thing for pressing Ghana to do. With the script running the
+     press is intercepted and the country becomes the journey instead.
+
+     Two targets resolve to one slug: the outline, which is what a pointer
+     lands on for a country the size of Algeria, and the transparent disc at
+     the centroid, which is the only way to press The Gambia. A country this
+     site has not written up is not intercepted at all — the link goes where
+     the link says. */
+  if (mapEl) {
+    mapEl.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target : null;
+      if (!t) return;
+      var hit = t.closest('.jn-map-hit');
+      var link = t.closest('.jn-map-c');
+      var slug = hit ? hit.getAttribute('data-slug')
+        : (link ? link.getAttribute('data-slug') : null);
+      if (!slug) return;
+      if (chooseCountry(slug, 'map')) e.preventDefault();
+    });
+    /* Pointing at the disc lights the country under it, because the disc is
+       invisible and the country is what the reader thinks they are pointing
+       at. Without this, hovering The Gambia lights nothing. */
+    mapEl.addEventListener('mouseover', function (e) {
+      var hit = e.target.closest ? e.target.closest('.jn-map-hit') : null;
+      if (!hit) return;
+      var el = mapBy[hit.getAttribute('data-slug')];
+      if (el) el.setAttribute('data-hot', 'true');
+    });
+    mapEl.addEventListener('mouseout', function (e) {
+      var hit = e.target.closest ? e.target.closest('.jn-map-hit') : null;
+      if (!hit) return;
+      var el = mapBy[hit.getAttribute('data-slug')];
+      if (el) el.removeAttribute('data-hot');
+    });
+  }
+
   reveal.addEventListener('click', onPick);
   var fieldEl = document.getElementById('jn-field');
   if (fieldEl) fieldEl.addEventListener('click', onPick);
@@ -402,6 +903,12 @@
       reveal.hidden = true;
       compose.hidden = false;
       paintComposer();
+      /* One place the map is told a journey has opened, because there are four
+         ways in — the grid, the map, the "somewhere else" select, and a shared
+         link restoring from the hash — and a restored journey that arrives on
+         an unflown continent is the one nobody would have tested. */
+      paintMap();
+      flyTo(frameFor(slug));
       track('journey_composed', {country: slug, stages: stages.length,
                                  pacing: brief.pacing, month: brief.month});
       writeHash();
@@ -540,6 +1047,7 @@
       track('enquiry_started', {country: chosen.slug, stages: stages.length,
                                 month: brief.month, pacing: brief.pacing});
     };
+    drawRoute();
   }
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }

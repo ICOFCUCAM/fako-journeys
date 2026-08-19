@@ -805,11 +805,26 @@ def overview_body(d, by_slug):
         '<div class="tf-page">',
         # The idea, at door length: the line and one paragraph. The rest of it,
         # including the frontier logistics, is /why.
+        # THE CLAIM IS GEOGRAPHIC AND THIS PAGE SHOWED NO GEOGRAPHY.
+        # "Dakar to Mombasa is further than Lisbon to Kabul, and there are
+        # fifty-four countries in between" is a sentence about distance, on the
+        # door page of a series about crossing a continent, with nothing drawn
+        # anywhere on it. Each of the four crossing pages carries fifty-five
+        # paths of this map; the page that introduces them carried zero, and
+        # two hundred and fifty pixels of empty dark sat under the paragraph
+        # making the argument.
+        #
+        # The plate, not the section. routemap.build() adds the index of four
+        # journeys, which is what /trans-afrique/crossings is for; here it is
+        # the drawing alone, saying what the sentence says.
         '<section class="tf-block tf-idea" id="idea">'
         '<h2 class="tf-h2">%s</h2>'
         '<div class="tf-idea-in"><p class="tf-idea-line">%s</p>'
-        '<div class="tf-idea-body"><p class="tf-idea-say">%s</p></div></div>'
-        '</section>' % (esc(i["title"]), esc(i["line"]), esc(i["say"][0])),
+        '<div class="tf-idea-body"><p class="tf-idea-say">%s</p></div>'
+        '<figure class="tf-idea-map">%s<figcaption>The four crossings, on the '
+        'continent they cross.</figcaption></figure></div>'
+        '</section>' % (esc(i["title"]), esc(i["line"]), esc(i["say"][0]),
+                        routemap.plate(d, by_slug)),
         '</div>',
         philosophy_band(d),
         '<div class="tf-page tf-page--after">',
@@ -1110,7 +1125,7 @@ TEMPLATE = """<!DOCTYPE html>
 <body class="tf-body">
 <a class="af-skip" href="#main">%(skip)s</a>
 <header class="jn-mast">
-  <a class="jn-mark" href="/"><i>Afrinkong</i><b>Trans Afrique</b></a>
+  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Trans Afrique</b></a>
   <nav class="jn-routes" aria-label="Primary">
     <a href="/wonders">The Wonders</a>
     <a href="/atlas">The Atlas</a>
