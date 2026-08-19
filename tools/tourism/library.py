@@ -465,7 +465,9 @@ def reachable(log=print, sample=0):
     cold cache looks like — so each object is asked for twice and both answers
     are reported.
     """
+    import socket
     import urllib.error
+    import urllib.parse
     import urllib.request
 
     reg = register()
@@ -476,6 +478,26 @@ def reachable(log=print, sample=0):
     root = os.path.join(ROOT, "images", "library")
     if not os.path.isdir(root):
         log("library reachable: nothing encoded — run encode first")
+        return 1
+
+    # RESOLVE THE NAME ONCE BEFORE ASKING IT FOR THREE HUNDRED FILES.
+    # The first real run spent two minutes and twenty seconds discovering the
+    # same fact 325 times — "Temporary failure in name resolution" against
+    # every object — and printed twenty copies of it. One lookup establishes
+    # it, and a name that does not resolve is a different problem from a name
+    # that resolves and answers 404, so it deserves a different sentence.
+    name = urllib.parse.urlsplit(host).hostname or ""
+    try:
+        socket.getaddrinfo(name, 443)
+    except socket.gaierror as exc:
+        log("library reachable: %s does not resolve (%s)" % (name, exc))
+        log("  The objects may well be in the bucket — publish talks to the")
+        log("  S3 endpoint, which is a different name and resolves fine. What")
+        log("  is missing is public DNS for %s: either the zone's" % name)
+        log("  nameservers do not point at Cloudflare yet, or the custom")
+        log("  domain is bound in R2 but the record has not propagated. The")
+        log("  R2 dashboard showing the domain as Active is not the same")
+        log("  thing as the internet being able to look it up.")
         return 1
 
     def ask(url, method="HEAD"):
