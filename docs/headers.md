@@ -56,6 +56,23 @@ resources, and a CSP does not govern where a link may go.
   right thing to add once the domain has been live on HTTPS for a while and
   nobody plans a subdomain that cannot be. Not on the day the domain is bought.
 
+## img-src gains the asset host before it loses the providers
+
+`images.afrinkong.com` is in `img-src` from the day the first photograph is
+published there, and the two provider hosts stay until the last one leaves.
+That order is deliberate and it is the only safe one: tightening first would
+break every page still hotlinking, and the count of what is left — reported by
+`build.py library verify` — is what says when the two lines can go. Today it is
+11,472 references across 1,529 pages, so they stay.
+
+When it reaches zero the directive becomes
+
+    img-src 'self' data: https://images.afrinkong.com;
+
+and with it the third-party transfer of every visitor's IP address to Pexels
+and Unsplash ends. That is the privacy half of the first-party image argument,
+and it is the half a CSP can actually enforce.
+
 ## Cache-Control, and why two policies rather than one
 
 The site had six security headers and nothing about caching, so every asset

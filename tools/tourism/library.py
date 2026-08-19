@@ -88,6 +88,7 @@ JPEG costs the most bytes and is served the least often, which is the right
 way round.
 """
 
+import base64
 import hashlib
 import json
 import os
@@ -497,8 +498,15 @@ def thirdparty(log=print):
     waiting for art direction, a REVIEW waiting for a person, or a bug.
     """
     reg = register()
+    # Migrated means rewritten, not encoded. An art-directed photograph is
+    # encoded and deliberately left hotlinked until a second crop exists, and
+    # counting it as a leak makes this check permanently red for a reason that
+    # is a decision rather than a fault. One definition of art-directed, used
+    # by the pass that skips them and by the check that measures them.
+    skip = artdirected()
     migrated = {a["originalUrl"] for a in reg["assets"].values()
-                if a.get("encodedAt") and a.get("originalUrl")}
+                if a.get("encodedAt") and a.get("originalUrl")
+                and a["originalUrl"].split("?")[0] not in skip}
     left, leaked, pages = 0, [], 0
     for base, dirs, files in os.walk(ROOT):
         dirs[:] = [d for d in dirs
@@ -509,7 +517,15 @@ def thirdparty(log=print):
                 continue
             with open(os.path.join(base, name), encoding="utf-8") as fh:
                 html = fh.read()
-            hits = re.findall(r"https://images\.(?:pexels|unsplash)\.com/[^\"\s]+", html)
+            # Only what a browser would actually fetch. The rollback
+            # breadcrumb — data-was — holds the whole original tag on purpose,
+            # base64 so it is inert, and it is never requested. Counting
+            # them said 312 references survived a rewrite that had in fact
+            # left nothing behind. A leak check that cannot tell an inert
+            # attribute from a request is worse than no leak check.
+            live_html = re.sub(r'\sdata-was="[^"]*"', "", html)
+            hits = re.findall(r"https://images\.(?:pexels|unsplash)\.com/[^\"\s]+",
+                              live_html)
             if not hits:
                 continue
             pages += 1
@@ -529,19 +545,71 @@ def thirdparty(log=print):
     return 0 if ok else 1
 
 
+DEFERRED_RE = re.compile(r'\bdata-src="')
+REAL_SRC_RE = re.compile(r'(?<![-\w])src="([^"]+)"')
+IMG_TAG_RE = re.compile(r"<img\b[^>]*>", re.I)
+HAS_SIZES_RE = re.compile(r'(?<![-\w])sizes="([^"]+)"')
+
+
+def artdirected():
+    """Photographs the pages crop differently for the phone. Not migratable yet.
+
+    The fifty /tourism pages wrap their feature photographs in a <picture> with
+    <source media="(max-width: 700px)"> — a different crop, cut by the
+    provider's focal-point API. This library holds one crop per photograph, so
+    migrating the <img> and leaving that <source> on Pexels serves half the
+    photograph from us and half from them, and migrating both would silently
+    replace a phone crop somebody chose with a desktop crop nobody did.
+
+    102 of the 629 approved photographs are in this shape. They wait for a
+    second crop to be produced, which is art direction and out of scope.
+    """
+    out = set()
+    for base, dirs, files in os.walk(ROOT):
+        dirs[:] = [d for d in dirs
+                   if d not in ("node_modules", ".git", "incoming", "tools")
+                   and not d.startswith(".")]
+        for name in sorted(files):
+            if not name.endswith(".html"):
+                continue
+            with open(os.path.join(base, name), encoding="utf-8") as fh:
+                html = fh.read()
+            if "<source media=" not in html:
+                continue
+            for pm in re.finditer(r"<picture>.*?</picture>", html, re.S):
+                if "<source media=" not in pm.group(0):
+                    continue
+                for u in re.findall(
+                        r"https://images\.(?:pexels|unsplash)\.com/[^\"\s]+",
+                        pm.group(0)):
+                    out.add(u.split("?")[0])
+    return out
+
+
 def rewrite(write=False, revert=False, log=print):
-    """Point every migrated <img> at the library, or put it back. Gated on live.
+    """Point every migrated photograph at the library, or put it back.
 
     A rewrite before publication is 1,529 pages of broken photographs, so the
     gate is the register's own `live` flag and not a comment asking somebody to
-    be careful. Only assets that have actually been encoded are rewritten — a
-    row that has been planned but not fetched is left hotlinked, which is why
-    the pilot can migrate twenty-five photographs and leave six hundred alone.
+    be careful. Only assets that have actually been ENCODED are rewritten — a
+    row that is planned but not fetched stays hotlinked, which is exactly what
+    lets a twenty-five photograph pilot leave six hundred alone.
+
+    WHAT IT WRITES. Not a swapped URL: the whole ladder, as a <picture> with
+    AVIF and WebP sources at every width that exists and a JPEG <img> under
+    them. Swapping one URL for one URL would move the hosting and throw away
+    the responsive part, which is most of the point.
+
+    An image the page is holding back with data-src is not wrapped, for the
+    same reason the `modern` pass leaves them alone: a <picture> full of
+    candidates gives the browser nothing left to wait for, and the homepage's
+    deferred photographs would all load at once. Its data-src is rewritten in
+    place instead, so it still comes from us — it simply keeps being deferred.
 
     ROLLBACK IS THE SAME PASS RUN BACKWARDS. Every asset keeps its
-    `originalUrl`, so --revert restores exactly the URL that was there before,
-    from the register rather than from a backup that could drift. That is step
-    twelve of the pilot and it has to work before step thirteen is allowed.
+    originalUrl, so --revert restores exactly the URL that was there, from the
+    register rather than from a backup that could drift. That is step twelve
+    of the pilot and it has to work before step thirteen is allowed.
     """
     reg = register()
     if not revert and not reg.get("live"):
@@ -549,23 +617,69 @@ def rewrite(write=False, revert=False, log=print):
             "publish the ladder to %s and set it." % reg.get("host"))
         return 1
 
-    host = reg.get("host", "").rstrip("/")
-    ready = {a["originalUrl"]: a for a in reg["assets"].values()
-             if a.get("originalUrl") and a.get("encodedAt") and a.get("widths")}
+    host = (reg.get("host") or "").rstrip("/")
+    # Art direction is a property of the photograph, not of one page. An asset
+    # that appears in an art-directed <picture> anywhere is excluded
+    # everywhere: migrating it on the pages that do not art-direct it and
+    # leaving it hotlinked on the ones that do would put the same photograph on
+    # two hosts and leave the leak check permanently red.
+    blocked = artdirected()
+
+    ready = [a for a in reg["assets"].values()
+             if a.get("originalUrl") and a.get("encodedAt") and a.get("widths")
+             and a["originalUrl"].split("?")[0] not in blocked]
+    by_url = {}
+    for a in ready:
+        by_url[a["originalUrl"].split("?")[0]] = a
     if not ready:
         log("library rewrite: nothing has been encoded yet")
         return 0
 
-    def sources(a):
-        """The <picture> for one asset: AVIF, then WebP, then a JPEG <img>."""
+    def url_for(a, width, ext):
+        return "%s/%s" % (host, key(a["name"], width, ext))
+
+    def wrap(tag, a):
+        sizes = HAS_SIZES_RE.search(tag)
+        sizes_attr = ' sizes="%s"' % sizes.group(1) if sizes else ""
         out = []
         for ext, mime in ((".avif", "image/avif"), (".webp", "image/webp")):
-            ladder = ", ".join("%s/%s %dw" % (host, key(a["name"], w, ext), w)
-                               for w in a["widths"])
-            out.append('<source type="%s" srcset="%s">' % (mime, ladder))
-        return "".join(out)
+            ladder = ", ".join("%s %dw" % (url_for(a, w, ext), w) for w in a["widths"])
+            out.append('<source type="%s" srcset="%s"%s>' % (mime, ladder, sizes_attr))
+        # The <img> keeps every attribute it had — alt, width, height, loading,
+        # decoding, the focal point in its style — and only its src moves. A
+        # missing width or height here is a layout shift, and this pass is not
+        # allowed to introduce one.
+        #
+        # REVERSIBLE BY CONSTRUCTION, WHICH THE FIRST VERSION WAS NOT.
+        # That version swapped the src for ours and deleted the provider's
+        # srcset, and revert put back the bare imageUrl from the register. The
+        # register holds one URL per photograph; the page held a URL per USE,
+        # with the focal-point crop and the width in its query string. Fifty
+        # pages came back missing their srcset and their crop, and git was the
+        # only thing that noticed.
+        #
+        # The old values ride along on the tag instead. Revert reads them off
+        # the element it is undoing rather than out of a table that never knew
+        # them, so it restores the bytes that were there. They cost a few
+        # hundred characters a tag and come out in a --finalise pass once a
+        # migration is accepted and rollback is no longer wanted.
+        widest = a["widths"][-1]
+        # The WHOLE original tag, base64, in one attribute. Storing src and
+        # srcset separately restored both values and put them back in a
+        # different order, so a revert produced HTML that rendered identically
+        # and did not match byte for byte — which makes it impossible to read a
+        # rollback diff and see whether anything unintended happened. Exact is
+        # a much stronger property than equivalent, and it costs one attribute.
+        # Base64 because an <img> tag inside an attribute otherwise needs quote
+        # escaping, and an escaping bug here corrupts the only copy of what was
+        # there. Removed by --finalise once a migration is accepted.
+        keep = base64.b64encode(tag.encode("utf-8")).decode("ascii")
+        img = REAL_SRC_RE.sub(lambda m: 'src="%s"' % url_for(a, widest, ".jpg"), tag, count=1)
+        img = re.sub(r'(?<![-\w])srcset="[^"]*"\s*', "", img)
+        img = img[:-1].rstrip() + ' data-was="%s">' % keep
+        return "<picture>" + "".join(out) + img + "</picture>"
 
-    changed, pages = 0, 0
+    changed_pages, changed_tags = 0, 0
     for base, dirs, files in os.walk(ROOT):
         dirs[:] = [d for d in dirs
                    if d not in ("node_modules", ".git", "incoming", "tools")
@@ -576,30 +690,64 @@ def rewrite(write=False, revert=False, log=print):
             full = os.path.join(base, name)
             with open(full, encoding="utf-8") as fh:
                 html = fh.read()
-            before = html
+            before, n = html, 0
+
             if revert:
-                for a in reg["assets"].values():
-                    if not a.get("originalUrl"):
-                        continue
-                    widest = "%s/%s" % (host, key(a["name"], a["widths"][-1], ".jpg")) \
-                        if a.get("widths") else None
-                    if widest and widest in html:
-                        html = html.replace(widest, a["originalUrl"])
+                # Undo from what the tag itself remembers, so the bytes that
+                # come back are the bytes that were there — including the
+                # focal-point crop and the width in the provider's query
+                # string, neither of which the register has ever held.
+                def undo(m):
+                    was = re.search(r'\bdata-was="([A-Za-z0-9+/=]+)"', m.group(1))
+                    if not was:
+                        return m.group(0)
+                    return base64.b64decode(was.group(1)).decode("utf-8")
+
+                html, k = re.subn(
+                    r"<picture>(?:<source[^>]*>)+(<img\b[^>]*data-was=[^>]*>)</picture>",
+                    undo, html)
+                n += k
+                # A deferred image was never wrapped; its data-src moved in
+                # place and moves back the same way.
+                for a in ready:
+                    for w in a["widths"]:
+                        for ext in FORMATS:
+                            html = html.replace(url_for(a, w, ext), a["originalUrl"])
             else:
-                for url, a in ready.items():
-                    if url not in html:
+                out, cut = [], 0
+                for m in IMG_TAG_RE.finditer(html):
+                    tag = m.group(0)
+                    urls = re.findall(r"https://images\.(?:pexels|unsplash)\.com/[^\"\s]+", tag)
+                    hit = next((by_url[u.split("?")[0]] for u in urls
+                                if u.split("?")[0] in by_url), None)
+                    if not hit:
                         continue
-                    html = html.replace(
-                        url, "%s/%s" % (host, key(a["name"], a["widths"][-1], ".jpg")))
+                    out.append(html[cut:m.start()])
+                    if DEFERRED_RE.search(tag) and not REAL_SRC_RE.search(tag):
+                        # Held back by the page's own loader: move the URL, keep
+                        # the deferral.
+                        moved = tag
+                        for u in urls:
+                            moved = moved.replace(
+                                u, url_for(hit, hit["widths"][-1], ".jpg"))
+                        out.append(moved)
+                    else:
+                        out.append(wrap(tag, hit))
+                    cut = m.end()
+                    n += 1
+                if n:
+                    out.append(html[cut:])
+                    html = "".join(out)
+
             if html == before:
                 continue
-            pages += 1
-            changed += 1
+            changed_pages += 1
+            changed_tags += n
             if write:
                 with open(full, "w", encoding="utf-8") as fh:
                     fh.write(html)
 
-    log("library %s: %d page(s) %s"
-        % ("revert" if revert else "rewrite", pages,
-           "rewritten" if write else "would change"))
+    log("library %s: %d tag(s) across %d page(s) %s"
+        % ("revert" if revert else "rewrite", changed_tags, changed_pages,
+           "written" if write else "would change"))
     return 0
