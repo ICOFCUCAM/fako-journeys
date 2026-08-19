@@ -180,10 +180,15 @@ def cmd_library(args):
     if step == "encode":
         return library.encode(write=write)
     if step == "verify":
-        return library.verify()
+        return library.verify() or library.thirdparty()
+    if step == "thirdparty":
+        return library.thirdparty()
     if step == "rewrite":
-        return library.rewrite(write=write)
-    print("library: unknown step %r — plan, fetch, encode, verify or rewrite" % step)
+        return library.rewrite(write=write,
+                               revert=bool(getattr(args, "revert", False)))
+    if step == "publish":
+        return library.publish(write=write)
+    print("library: unknown step %r — plan, fetch, encode, publish, verify or rewrite" % step)
     return 1
 
 

@@ -47,16 +47,45 @@ once at publish time and served as static files, so the only thing between a
 visitor and a photograph is object storage.
 
 ---------------------------------------------------------------------------
+THE LAYOUT ON R2, AND THE URL THE SITE ASKS FOR
+
+    images.afrinkong.com
+        |
+        +-- originals/  kenya/cities/nairobi-green-city-in-the-sun.jpg
+        +-- 1600/       kenya/cities/nairobi-green-city-in-the-sun.avif|.webp|.jpg
+        +-- 1200/       ...
+        +--  800/       ...
+        +--  480/       ...
+
+Width first, because that is what the browser is choosing between, and the
+name underneath it never changes. `originals/` is kept so a better encoder, a
+new width or a different quality can be produced later without going back to
+Pexels for a file we already have — and it is the only copy of the source that
+exists once the hotlink is gone.
+
+The site asks for https://images.afrinkong.com/1200/kenya/cities/<slug>.avif
+and knows nothing else. Where the photograph came from lives in
+tourism/assets.json and never in a URL.
+
+---------------------------------------------------------------------------
 NAMING, AND WHY IT IS NOT THE SOURCE'S NAME
 
-    <country>/<category>/<slug>-<width>.avif
-
 `pexels-photo-18000433.jpeg` names a row in somebody else's database. This
-names the thing: kenya/cities/nairobi-green-city-in-the-sun-1200.avif. It is
-stable across a replacement — commission a better photograph of the same
-subject and it takes the same name, the same URL, and every page that
-references it needs no edit at all. That is the property that makes the 496
-REPLACE assets a content job rather than another migration.
+names the thing: kenya/cities/nairobi-green-city-in-the-sun. It is stable
+across a replacement — commission a better photograph of the same subject and
+it takes the same name, the same URL, and every page referencing it needs no
+edit at all. That is the property that makes the 786 REPLACE assets a content
+job rather than a second migration.
+
+---------------------------------------------------------------------------
+THREE FORMATS AT EVERY WIDTH, AND WHY JPEG IS STILL ONE OF THEM
+
+AVIF is taken by about ninety-three per cent of browsers and WebP by
+ninety-seven. A <picture> falls through to the <img> when it can take neither,
+so the <img> has to be the format everything reads. Three per cent of a
+premium travel site's visitors seeing no photograph at all is not a saving.
+JPEG costs the most bytes and is served the least often, which is the right
+way round.
 """
 
 import hashlib
@@ -76,6 +105,15 @@ STAGE = os.path.join(ROOT, "incoming", "library")
 LADDER = (480, 800, 1200, 1600)
 AVIF_Q = 62
 WEBP_Q = 82
+JPEG_Q = 82
+FORMATS = (".avif", ".webp", ".jpg")
+
+
+def key(name, width=None, ext=".avif"):
+    """The object key on R2 for one photograph at one width, or its original."""
+    if width is None:
+        return "originals/%s.jpg" % name
+    return "%d/%s%s" % (width, name, ext)
 
 # What each provider's licence is, as a fact about the provider rather than a
 # claim about one photograph. The per-photograph half of provenance — who took
@@ -191,6 +229,42 @@ def plan(write=False, log=print):
     return 0
 
 
+def pilot(reg, n):
+    """A representative n, not the first n.
+
+    Alphabetical order would take twenty-five photographs of Algeria and prove
+    nothing about the other fifty-three countries or the other twenty-six
+    categories. This spreads the pick across countries first and categories
+    second, and prefers the photographs used on the most pages — so the pilot
+    is looked at by the most visitors and any problem in it shows up soonest.
+    """
+    rows = sorted(reg["assets"].values(),
+                  key=lambda a: (-len(a.get("pages") or []), a["name"]))
+    out, taken = [], set()
+    # One country at a time, most-used photograph first. A sample that is
+    # twenty-five photographs of Algeria proves nothing about the other
+    # fifty-three, and country is the axis this site's content is organised on.
+    for axis in (lambda a: a["name"].split("/")[0],
+                 lambda a: "/".join(a["name"].split("/")[:2])):
+        seen = set()
+        for a in rows:
+            if len(out) >= n:
+                break
+            k = axis(a)
+            if k in seen or a["name"] in taken:
+                continue
+            seen.add(k)
+            taken.add(a["name"])
+            out.append(a)
+    for a in rows:                       # top up if both axes ran out first
+        if len(out) >= n:
+            break
+        if a["name"] not in taken:
+            taken.add(a["name"])
+            out.append(a)
+    return out[:n]
+
+
 def fetch(write=False, log=print, limit=0):
     """Download exactly the planned set. NEEDS NETWORK — a workflow step.
 
@@ -201,7 +275,9 @@ def fetch(write=False, log=print, limit=0):
     reg = register()
     todo = [a for a in reg["assets"].values() if not a.get("sha256")]
     if limit:
-        todo = todo[:limit]
+        # The pilot is a sample of the library, not its first page.
+        spread = pilot(reg, limit)
+        todo = [a for a in spread if not a.get("sha256")]
     if not write:
         log("library fetch: %d of %d asset(s) not yet downloaded. dry run."
             % (len(todo), len(reg["assets"])))
@@ -239,38 +315,120 @@ def fetch(write=False, log=print, limit=0):
 
 
 def encode(write=False, log=print):
-    """AVIF and WebP at four widths, from whatever fetch staged. No network."""
+    """The ladder, laid out the way R2 will hold it. No network.
+
+    Three formats at four widths from the staged original, written under
+    images/library/<width>/<name>.<ext> so that directory IS the bucket's
+    shape and `publish` is a copy rather than a translation. A width larger
+    than the original is skipped: upscaling a photograph to fill a rung of the
+    ladder invents detail, and a browser asked to choose between 1200 and a
+    fake 1600 will take the fake one.
+    """
     try:
         from PIL import Image
     except ImportError:
         log("library encode: Pillow is not installed")
         return 1
     reg = register()
-    made, skipped = 0, 0
     out_root = os.path.join(ROOT, "images", "library")
+    made, skipped, bytes_out = 0, 0, 0
     for a in reg["assets"].values():
         src = os.path.join(STAGE, a["name"].replace("/", "__") + ".jpg")
         if not os.path.exists(src):
             skipped += 1
             continue
         if not write:
-            made += len(LADDER) * 2
+            made += len(LADDER) * len(FORMATS)
             continue
+        widths = []
         with Image.open(src) as im:
             im = im.convert("RGB")
+            # The original, kept as it arrived: a better encoder or a new width
+            # later must not mean going back to Pexels for a file we already
+            # hold, and after the rewrite this is the only copy that exists.
+            orig = os.path.join(out_root, key(a["name"], None))
+            os.makedirs(os.path.dirname(orig), exist_ok=True)
+            im.save(orig, quality=94)
+            bytes_out += os.path.getsize(orig)
             for w in LADDER:
                 if w > im.width:
                     continue
-                h = round(im.height * w / im.width)
-                small = im.resize((w, h), Image.LANCZOS)
+                widths.append(w)
+                small = im.resize((w, round(im.height * w / im.width)),
+                                  Image.LANCZOS)
                 for ext, kw in ((".avif", {"quality": AVIF_Q}),
-                                (".webp", {"quality": WEBP_Q, "method": 5})):
-                    dst = os.path.join(out_root, "%s-%d%s" % (a["name"], w, ext))
+                                (".webp", {"quality": WEBP_Q, "method": 5}),
+                                (".jpg", {"quality": JPEG_Q, "optimize": True})):
+                    dst = os.path.join(out_root, key(a["name"], w, ext))
                     os.makedirs(os.path.dirname(dst), exist_ok=True)
                     small.save(dst, **kw)
+                    bytes_out += os.path.getsize(dst)
                     made += 1
-    log("library encode: %d file(s) %s, %d asset(s) not yet downloaded"
-        % (made, "written" if write else "would be written", skipped))
+        a["widths"] = widths
+        a["encodedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    if write:
+        _write_register(reg, log=log)
+    log("library encode: %d file(s) %s (%.1f MB), %d asset(s) not yet downloaded"
+        % (made, "written" if write else "would be written",
+           bytes_out / 1e6, skipped))
+    return 0
+
+
+def publish(write=False, log=print):
+    """Copy images/library/ to the R2 bucket. NEEDS NETWORK AND CREDENTIALS.
+
+    R2 speaks the S3 API, so this is boto3 against an account-specific
+    endpoint. Four secrets, all repository secrets and none of them ever in a
+    working copy:
+
+        R2_ACCOUNT_ID  R2_ACCESS_KEY_ID  R2_SECRET_ACCESS_KEY  R2_BUCKET
+
+    Cache-Control is set here rather than at the CDN because these objects are
+    immutable by construction: a name identifies a photograph at a width in a
+    format, and a replacement is a different photograph under the same name
+    only when somebody has decided it should be. A year, and the same
+    `immutable` the site's own /images already carries.
+    """
+    try:
+        import boto3
+    except ImportError:
+        log("library publish: boto3 is not installed — this is a workflow step")
+        return 1
+    need = ("R2_ACCOUNT_ID", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY", "R2_BUCKET")
+    missing = [k for k in need if not os.environ.get(k)]
+    if missing:
+        log("library publish: missing %s" % ", ".join(missing))
+        return 1
+
+    root = os.path.join(ROOT, "images", "library")
+    if not os.path.isdir(root):
+        log("library publish: nothing encoded yet")
+        return 1
+    types = {".avif": "image/avif", ".webp": "image/webp", ".jpg": "image/jpeg"}
+    client = boto3.client(
+        "s3",
+        endpoint_url="https://%s.r2.cloudflarestorage.com" % os.environ["R2_ACCOUNT_ID"],
+        aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"],
+        aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
+        region_name="auto")
+    bucket = os.environ["R2_BUCKET"]
+
+    sent, size = 0, 0
+    for base, _dirs, files in os.walk(root):
+        for name in sorted(files):
+            full = os.path.join(base, name)
+            k = os.path.relpath(full, root).replace(os.sep, "/")
+            if not write:
+                sent += 1
+                size += os.path.getsize(full)
+                continue
+            client.upload_file(full, bucket, k, ExtraArgs={
+                "ContentType": types.get(os.path.splitext(name)[1], "application/octet-stream"),
+                "CacheControl": "public, max-age=31536000, immutable"})
+            sent += 1
+            size += os.path.getsize(full)
+    log("library publish: %d object(s) %s (%.1f MB)"
+        % (sent, "uploaded" if write else "would be uploaded", size / 1e6))
     return 0
 
 
@@ -326,19 +484,122 @@ def verify(log=print):
     return 0 if ok else 1
 
 
-def rewrite(write=False, log=print):
-    """Point every external <img> at the library. Refuses until it is live.
+def thirdparty(log=print):
+    """Step eleven: does a visitor's browser still reach Pexels or Unsplash?
 
-    A rewrite before publication is 1,529 pages of broken photographs, so the
-    gate is the register's own `live` flag rather than a comment asking
-    somebody to be careful.
+    Counted in the built HTML rather than in a browser, because the browser
+    only requests what is on the screen and this has to see every page. The
+    number that matters is not "did the pilot work" — it is how far the site
+    still is from the target, which is zero.
+
+    A migrated photograph should leave nothing behind: no <img>, no <source>,
+    no preload. Anything still pointing at a provider is either a REPLACE
+    waiting for art direction, a REVIEW waiting for a person, or a bug.
     """
     reg = register()
-    if not reg.get("live"):
+    migrated = {a["originalUrl"] for a in reg["assets"].values()
+                if a.get("encodedAt") and a.get("originalUrl")}
+    left, leaked, pages = 0, [], 0
+    for base, dirs, files in os.walk(ROOT):
+        dirs[:] = [d for d in dirs
+                   if d not in ("node_modules", ".git", "incoming", "tools")
+                   and not d.startswith(".")]
+        for name in sorted(files):
+            if not name.endswith(".html"):
+                continue
+            with open(os.path.join(base, name), encoding="utf-8") as fh:
+                html = fh.read()
+            hits = re.findall(r"https://images\.(?:pexels|unsplash)\.com/[^\"\s]+", html)
+            if not hits:
+                continue
+            pages += 1
+            left += len(hits)
+            for h in hits:
+                if h.split("?")[0] in {u.split("?")[0] for u in migrated}:
+                    leaked.append(h)
+
+    ok = not leaked
+    log("%s\tno migrated photograph is still fetched from a provider\t%s"
+        % ("PASS" if ok else "FAIL",
+           "nothing left behind" if ok
+           else "%d reference(s) survived the rewrite" % len(leaked)))
+    log("        third-party image references remaining: %d across %d page(s) "
+        "— the REPLACE and REVIEW sets, and the KEEP rows not yet migrated"
+        % (left, pages))
+    return 0 if ok else 1
+
+
+def rewrite(write=False, revert=False, log=print):
+    """Point every migrated <img> at the library, or put it back. Gated on live.
+
+    A rewrite before publication is 1,529 pages of broken photographs, so the
+    gate is the register's own `live` flag and not a comment asking somebody to
+    be careful. Only assets that have actually been encoded are rewritten — a
+    row that has been planned but not fetched is left hotlinked, which is why
+    the pilot can migrate twenty-five photographs and leave six hundred alone.
+
+    ROLLBACK IS THE SAME PASS RUN BACKWARDS. Every asset keeps its
+    `originalUrl`, so --revert restores exactly the URL that was there before,
+    from the register rather than from a backup that could drift. That is step
+    twelve of the pilot and it has to work before step thirteen is allowed.
+    """
+    reg = register()
+    if not revert and not reg.get("live"):
         log("library rewrite: refused. tourism/assets.json says live: false — "
-            "publish the ladder to %s first, then set it." % reg.get("host"))
+            "publish the ladder to %s and set it." % reg.get("host"))
         return 1
-    log("library rewrite: not implemented until the host is live and the "
-        "ladder is on it; the URL shape it will write is "
-        "%s/<name>-<width>.avif" % reg.get("host"))
+
+    host = reg.get("host", "").rstrip("/")
+    ready = {a["originalUrl"]: a for a in reg["assets"].values()
+             if a.get("originalUrl") and a.get("encodedAt") and a.get("widths")}
+    if not ready:
+        log("library rewrite: nothing has been encoded yet")
+        return 0
+
+    def sources(a):
+        """The <picture> for one asset: AVIF, then WebP, then a JPEG <img>."""
+        out = []
+        for ext, mime in ((".avif", "image/avif"), (".webp", "image/webp")):
+            ladder = ", ".join("%s/%s %dw" % (host, key(a["name"], w, ext), w)
+                               for w in a["widths"])
+            out.append('<source type="%s" srcset="%s">' % (mime, ladder))
+        return "".join(out)
+
+    changed, pages = 0, 0
+    for base, dirs, files in os.walk(ROOT):
+        dirs[:] = [d for d in dirs
+                   if d not in ("node_modules", ".git", "incoming", "tools")
+                   and not d.startswith(".")]
+        for name in sorted(files):
+            if not name.endswith(".html"):
+                continue
+            full = os.path.join(base, name)
+            with open(full, encoding="utf-8") as fh:
+                html = fh.read()
+            before = html
+            if revert:
+                for a in reg["assets"].values():
+                    if not a.get("originalUrl"):
+                        continue
+                    widest = "%s/%s" % (host, key(a["name"], a["widths"][-1], ".jpg")) \
+                        if a.get("widths") else None
+                    if widest and widest in html:
+                        html = html.replace(widest, a["originalUrl"])
+            else:
+                for url, a in ready.items():
+                    if url not in html:
+                        continue
+                    html = html.replace(
+                        url, "%s/%s" % (host, key(a["name"], a["widths"][-1], ".jpg")))
+            if html == before:
+                continue
+            pages += 1
+            changed += 1
+            if write:
+                with open(full, "w", encoding="utf-8") as fh:
+                    fh.write(html)
+
+    log("library %s: %d page(s) %s"
+        % ("revert" if revert else "rewrite", pages,
+           "rewritten" if write else "would change"))
     return 0
