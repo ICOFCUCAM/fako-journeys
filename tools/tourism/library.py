@@ -887,8 +887,24 @@ def reachable(log=print, sample=0):
         log("library reachable: %d published asset(s) in the register"
             % len(published))
 
+    # A BROWSER-SHAPED REQUEST, BECAUSE THE CLIENT MUST NOT BE THE SUSPECT.
+    #
+    # This sent no User-Agent, so it went out as Python-urllib/3.11 — a string
+    # every bot-protection product on the internet recognises. When 325
+    # objects and one deliberately absent key all came back 403, that was
+    # indistinguishable from "public access is off": both reject everything
+    # before the object is ever looked up. Reporting a misconfigured bucket
+    # on that evidence would have sent somebody to change settings that were
+    # never wrong. So the request now identifies itself the way a real
+    # visitor's does, and a refusal that survives that is about the bucket.
+    HEADERS = {
+        "User-Agent": ("Mozilla/5.0 (afrinkong-library; +https://afrinkong.com) "
+                       "reachability-check"),
+        "Accept": "image/avif,image/webp,image/jpeg,*/*",
+    }
+
     def ask(url, method="HEAD"):
-        req = urllib.request.Request(url, method=method)
+        req = urllib.request.Request(url, method=method, headers=HEADERS)
         try:
             with urllib.request.urlopen(req, timeout=30) as r:
                 return r.status, dict(r.headers)
@@ -896,6 +912,25 @@ def reachable(log=print, sample=0):
             return e.code, dict(e.headers or {})
         except Exception as exc:                      # noqa: BLE001 — report, continue
             return 0, {"x-error": str(exc)}
+
+    def whodunnit(url):
+        """Who refused, in their own words. Printed once, for one URL.
+
+        A bare status tells you nothing about which layer said no. Cloudflare
+        names itself in `server`, stamps every response with `cf-ray`, and
+        sets `cf-mitigated` when its own bot or WAF rules were what stopped
+        the request — which is a completely different fix from R2 public
+        access being disabled, and looks identical from the status line.
+        """
+        code, head = ask(url, "GET")
+        lines = ["  the refusal, in full, for %s" % url,
+                 "    status        %s" % code]
+        for h in ("server", "cf-ray", "cf-mitigated", "cf-cache-status",
+                  "content-type", "content-length", "x-error"):
+            for k, v in head.items():
+                if k.lower() == h:
+                    lines.append("    %-13s %s" % (h, v))
+        return lines
 
     keys.sort()
     if sample and sample < len(keys):
@@ -946,6 +981,11 @@ def reachable(log=print, sample=0):
     if miss_code == 200:
         bad.append("a key that does not exist answers 200 — a broken image "
                    "with a successful request is the worst of both")
+    # When everything failed the same way, the status line is not the story —
+    # who refused is. Ask once more, with the body, and print what came back.
+    if bad and len(codes) == 1 and 200 not in codes:
+        for line in whodunnit("%s/%s" % (host, keys[0][0])):
+            log(line)
     for line in bad[:20]:
         log("  ! %s" % line)
     if len(bad) > 20:
