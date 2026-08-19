@@ -510,51 +510,69 @@
 .jn-field-h em{font-style:normal;color:var(--c-accent)}
 .jn-field-say{margin-top:12px;font-size:16px;color:var(--c-muted);max-width:58ch}
 
-.jn-field-key{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:var(--sp-4)}
-.jn-field-key span{display:flex;align-items:center;gap:8px;font-family:var(--fj-mono);
+/* THE LEGEND IS A RULE, BECAUSE THE MAP AND THE GRID ARE NOW ONE LANGUAGE.
+   The swatch was a filled square, which described a grid of filled squares.
+   Both of those are gone: a country declares its answer with a rule at its
+   left edge, on the map and in this list alike, so the legend shows a rule. */
+.jn-field-key{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:var(--sp-4)}
+.jn-field-key span{display:flex;align-items:center;gap:10px;font-family:var(--fj-mono);
   font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
-.jn-field-key span::before{content:"";width:10px;height:10px;flex:0 0 auto;
-  border:1px solid var(--c-border)}
-.jn-field-key span[data-match="leads"]::before{background:var(--c-accent);
-  border-color:var(--c-accent)}
-.jn-field-key span[data-match="region"]::before{background:var(--c-primary);
-  border-color:var(--c-primary)}
-.jn-field-key span[data-match="open"]::before{background:var(--c-bg)}
+.jn-field-key span::before{content:"";width:3px;height:15px;flex:0 0 auto;
+  background:var(--c-border)}
+.jn-field-key span[data-match="leads"]::before{background:var(--c-accent)}
+.jn-field-key span[data-match="region"]::before{background:var(--c-primary)}
+.jn-field-key span[data-match="open"]::before{background:var(--c-border)}
 
-.jn-field-grid{display:grid;gap:8px;margin-top:var(--sp-4);
-  grid-template-columns:repeat(auto-fill,minmax(212px,1fr))}
+/* FIFTY-FOUR COUNTRIES, NOT FIFTY-FOUR SLABS.
+ *
+ * This was a grid of filled chips: twenty-seven solid burnt sienna, nineteen
+ * solid deep forest, eight on the page's own ground — most of a screen given
+ * over to blocks of colour, and the exact repetition of a bordered box the
+ * direction was written to stop.
+ *
+ * It also stopped agreeing with the map beside it. The map says "this one
+ * answers" with a wash and a heavier outline; the grid said it with a flood.
+ * Two paints for one idea is two legends, and this file claimed in a comment
+ * that a reader who had learnt one had learnt the other. Now that is true.
+ *
+ * A ruled index instead, in the same language as the questions: a hairline
+ * above each row, the name, what it leads on under it, and a three-pixel rule
+ * at the left edge carrying the answer. No fill anywhere, so the colour on
+ * this screen is a set of marks rather than a wall.
+ */
+.jn-field-grid{display:grid;gap:0 clamp(20px,3vw,52px);margin-top:var(--sp-4);
+  grid-template-columns:repeat(auto-fill,minmax(236px,1fr))}
 .jn-c{display:block;width:100%;text-align:left;cursor:pointer;font:inherit;
-  padding:13px 14px;border:1px solid var(--c-border);background:var(--c-bg);
-  color:var(--c-fg);transition:transform var(--t-fast) var(--ease),
-  border-color var(--t-fast) var(--ease)}
+  padding:12px 2px 13px 15px;background:none;color:var(--c-fg);
+  border:0;border-top:1px solid var(--c-border);
+  border-left:3px solid transparent;
+  transition:border-color var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
 .jn-c b{display:block;font-family:var(--fj-display);font-size:16px;
-  text-transform:uppercase;letter-spacing:-.005em;line-height:1.1}
-.jn-c-for{display:block;margin-top:6px;font-family:var(--fj-mono);font-size:8.5px;
+  text-transform:uppercase;letter-spacing:-.005em;line-height:1.1;
+  transition:color var(--t-fast) var(--ease)}
+.jn-c-for{display:block;margin-top:5px;font-family:var(--fj-mono);font-size:8.5px;
   letter-spacing:.13em;text-transform:uppercase;color:var(--c-muted)}
 
-/* Leads on it: the loudest thing on the grid, and the one state whose colour
-   was chosen by measurement rather than by eye. Terracotta (--c-accent-fill)
-   is the obvious pick and cannot carry 16px type: white on it is 3.73:1 and
-   deep forest 4.31:1, both under the 4.5 a name this size needs. Burnt sienna
-   — the accent's own text weight — takes the page colour at 6.31:1 and is the
-   same accent to look at. */
-.jn-c[data-match="leads"]{background:var(--c-accent);border-color:var(--c-accent);
-  color:var(--c-bg)}
-.jn-c[data-match="leads"] .jn-c-for{color:var(--c-bg);opacity:.86}
+/* Leads on it: the accent, as a rule and as the name. Burnt sienna rather than
+   terracotta is not a taste decision — it is the one of the two that carries
+   16px type on this ground, at 6.31:1 against 4.31:1. */
+.jn-c[data-match="leads"]{border-left-color:var(--c-accent)}
+.jn-c[data-match="leads"] b{color:var(--c-accent)}
 /* Its region does: deep forest, quieter but still an answer. */
-.jn-c[data-match="region"]{background:var(--c-primary);border-color:var(--c-primary);
-  color:var(--c-bg)}
-.jn-c[data-match="region"] .jn-c-for{color:var(--fj-onbasalt-dim)}
-/* Written up here too: the page's own ground. Present, not dimmed out. */
-.jn-c[data-match="open"]{background:var(--c-bg)}
+.jn-c[data-match="region"]{border-left-color:var(--c-primary)}
+/* Written up here too: no rule at all. Present, not dimmed out — the name is
+   the same ink as everything else and the line under it still says what the
+   country IS for. */
+.jn-c[data-match="open"]{border-left-color:transparent}
 
-.jn-c:hover{transform:translateY(-2px)}
+.jn-c:hover b{color:var(--c-accent)}
 .jn-c:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
-/* The one they chose, whatever the ranking thought of it. */
-.jn-c[data-picked]{box-shadow:inset 0 0 0 3px var(--c-accent)}
+/* The one they chose, whatever the ranking thought of it. Gold and heavier —
+   the same mark the map puts round a chosen country, for the same reason. */
+.jn-c[data-picked]{border-left:5px solid var(--c-gold,#B99A63);padding-left:13px}
 /* Out of the month they gave: marked, never removed. */
 .jn-c[data-off] b::after{content:"\00a0\00b7\00a0other months";font-family:var(--fj-mono);
-  font-size:8px;letter-spacing:.12em;opacity:.72;text-transform:uppercase}
+  font-size:8px;letter-spacing:.12em;color:var(--c-muted);text-transform:uppercase}
 
 .jn-field-fine{margin-top:var(--sp-4);font-family:var(--fj-display);
   font-size:clamp(15px,1.5vw,19px);color:var(--c-accent)}
