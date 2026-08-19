@@ -778,11 +778,6 @@ def reachable(log=print, sample=0):
     if not host:
         log("library reachable: the register has no host")
         return 1
-    root = os.path.join(ROOT, "images", "library")
-    if not os.path.isdir(root):
-        log("library reachable: nothing encoded — run encode first")
-        return 1
-
     # RESOLVE THE NAME ONCE BEFORE ASKING IT FOR THREE HUNDRED FILES.
     # The first real run spent two minutes and twenty seconds discovering the
     # same fact 325 times — "Temporary failure in name resolution" against
@@ -839,6 +834,23 @@ def reachable(log=print, sample=0):
     if covers:
         log("library reachable: TLS to %s is up, certificate covers %s"
             % (name, ", ".join(covers[:3])))
+
+    # AFTER THE TWO PREFLIGHTS, NOT BEFORE THEM.
+    #
+    # Whether DNS resolves and whether the host will shake hands are facts
+    # about the internet, and neither needs a single encoded file to answer.
+    # They used to sit behind this check, so the only way to find out whether
+    # a certificate had been issued was to download twenty-five photographs,
+    # encode three hundred files and upload them first — five minutes to
+    # learn something a socket knows in one second. Now `library reachable`
+    # on a bare checkout answers the connectivity question on its own, and
+    # only the per-object measurement needs the ladder.
+    root = os.path.join(ROOT, "images", "library")
+    if not os.path.isdir(root):
+        log("library reachable: the host is reachable. No encoded ladder here,"
+            " so nothing to measure — run fetch and encode to check the "
+            "objects themselves.")
+        return 0
 
     def ask(url, method="HEAD"):
         req = urllib.request.Request(url, method=method)

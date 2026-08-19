@@ -10,11 +10,13 @@ name: Build the Afrinkong image library
 # `build.py library plan`, which writes the approved set into tourism/assets.json.
 # This runs against that register and nothing else.
 #
-# It does not publish. Uploading the ladder to object storage needs credentials
-# for a bucket that does not exist yet, and the step that writes first-party
-# URLs into 1,529 pages refuses to run until tourism/assets.json says live: true.
-# Both of those are deliberate: a rewrite before publication is 1,529 pages of
-# broken photographs.
+# Publishing is opt-in per run and needs the four R2_ secrets. The step that
+# writes first-party URLs into pages is not here at all: `rewrite` runs against
+# assets that have actually been published, one at a time, because pointing a
+# page at an object that was never uploaded is a broken photograph.
+#
+# Tick check_host_only to skip all of it and just ask whether the asset host
+# resolves and will serve TLS. Thirty seconds, no downloads.
 
 on:
   workflow_dispatch:
@@ -33,6 +35,11 @@ on:
         type: boolean
         required: false
         default: true
+      check_host_only:
+        description: "Just ask whether image.afrinkong.com resolves and serves TLS (~30s, downloads nothing)"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -42,7 +49,27 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # THE THIRTY-SECOND ANSWER TO "IS THE HOST UP YET".
+  #
+  # Whether DNS resolves and whether Cloudflare will shake hands are facts
+  # about the internet. Neither needs a photograph. They used to be findable
+  # only at the end of a five-minute pilot — download twenty-five, encode
+  # three hundred, upload, and then discover the certificate had not been
+  # issued. This asks the question on its own, so waiting for a certificate
+  # costs a click and half a minute instead of a full run.
+  host:
+    if: ${{ github.event.inputs.check_host_only == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Does the asset host resolve, and will it serve TLS
+        run: python tools/tourism/build.py library reachable
+
   library:
+    if: ${{ github.event.inputs.check_host_only != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
