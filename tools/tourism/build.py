@@ -193,6 +193,13 @@ def cmd_library(args):
         return library.encode(write=write)
     if step == "verify":
         return library.verify() or library.thirdparty()
+    # The two halves separately, because they gate different things. Whether
+    # the register is fit to commit is a question about the register, and it
+    # belongs before the commit. Whether pages still reach a provider is a
+    # question about pages, and gating the commit on it means a page-side
+    # finding throws away the record of what was downloaded.
+    if step == "provenance":
+        return library.verify()
     if step == "thirdparty":
         return library.thirdparty()
     if step == "rewrite":

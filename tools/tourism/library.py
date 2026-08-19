@@ -632,15 +632,32 @@ def thirdparty(log=print):
     waiting for art direction, a REVIEW waiting for a person, or a bug.
     """
     reg = register()
-    # Migrated means rewritten, not encoded. An art-directed photograph is
-    # encoded and deliberately left hotlinked until a second crop exists, and
-    # counting it as a leak makes this check permanently red for a reason that
-    # is a decision rather than a fault. One definition of art-directed, used
-    # by the pass that skips them and by the check that measures them.
+    # MIGRATED MEANS REWRITTEN, AND UNTIL THE REGISTER IS LIVE NOTHING IS.
+    #
+    # This comment said exactly that before the code did it, and the second
+    # real run is what exposed the gap: `verify` now runs after `fetch`, so
+    # 25 photographs had encodedAt for the first time, and the check called
+    # all 25 migrated and reported 228 references as having "survived the
+    # rewrite" — a rewrite that had not run and, by design, cannot run while
+    # live is false. It refuses. So the pages were pointing at providers for
+    # the only correct reason there is: nothing has replaced those URLs yet.
+    #
+    # Encoding a photograph changes what is in the bucket. Only `rewrite`
+    # changes what a page asks for, and it is all-or-nothing across the
+    # register behind the live flag. So that flag is the honest gate, and
+    # before it is set the only true statement this check can make is the
+    # count of what is left.
     skip = artdirected()
-    migrated = {a["originalUrl"] for a in reg["assets"].values()
-                if a.get("encodedAt") and a.get("originalUrl")
-                and a["originalUrl"].split("?")[0] not in skip}
+    migrated = set()
+    if reg.get("live"):
+        # An art-directed photograph is encoded and deliberately left
+        # hotlinked until a second crop exists; counting it as a leak makes
+        # this permanently red for a decision rather than a fault. One
+        # definition, used by the pass that skips them and the check that
+        # measures them.
+        migrated = {a["originalUrl"] for a in reg["assets"].values()
+                    if a.get("encodedAt") and a.get("originalUrl")
+                    and a["originalUrl"].split("?")[0] not in skip}
     left, leaked, pages = 0, [], 0
     for base, dirs, files in os.walk(ROOT):
         dirs[:] = [d for d in dirs
@@ -669,10 +686,17 @@ def thirdparty(log=print):
                     leaked.append(h)
 
     ok = not leaked
+    if not reg.get("live"):
+        # Not "nothing left behind", which would read as a clean rewrite. No
+        # rewrite has happened, and saying so is the only honest PASS here.
+        note = ("the register is not live, so nothing has been rewritten yet "
+                "— every reference below is expected")
+    elif ok:
+        note = "nothing left behind"
+    else:
+        note = "%d reference(s) survived the rewrite" % len(leaked)
     log("%s\tno migrated photograph is still fetched from a provider\t%s"
-        % ("PASS" if ok else "FAIL",
-           "nothing left behind" if ok
-           else "%d reference(s) survived the rewrite" % len(leaked)))
+        % ("PASS" if ok else "FAIL", note))
     log("        third-party image references remaining: %d across %d page(s) "
         "— the REPLACE and REVIEW sets, and the KEEP rows not yet migrated"
         % (left, pages))
