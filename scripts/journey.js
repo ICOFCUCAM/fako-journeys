@@ -221,6 +221,7 @@
         + '<span class="jn-alt-go" aria-hidden="true">&rarr;</span></button>';
     }).join('');
     paintField();
+    paintMap();
   }
 
   /* The continent, coloured rather than filtered.
@@ -253,6 +254,58 @@
         + '</button>';
     }).join('');
   }
+
+  /* ---- the continent ----------------------------------------------------- */
+
+  /* EVERY ANSWER LANDS ON THE MAP, AND IT LANDS AS THE ANSWER IS GIVEN.
+   *
+   * The country grid says the same thing, and says it once, at the end. The
+   * map's job is different: it is the only part of this page that can answer
+   * a question before the question after it has been asked, which is what
+   * makes four questions feel like a conversation rather than a form.
+   *
+   * It writes the same three attributes the grid writes, off the same rows
+   * from the same engine call. Nothing here decides anything — if the map and
+   * the grid ever disagree it is because one of them stopped calling
+   * E.field(), and that is a bug with one place to look.
+   */
+  var mapEl = document.getElementById('jn-map');
+  var mapSay = document.getElementById('jn-map-say');
+  var mapKey = document.getElementById('jn-map-key');
+  var mapC = mapEl
+    ? [].slice.call(mapEl.querySelectorAll('.jn-map-c')) : [];
+  var mapBy = {};
+  mapC.forEach(function (el) { mapBy[el.getAttribute('data-slug')] = el; });
+
+  function paintMap() {
+    if (!mapC.length) return;
+    var rows = E.field(D, brief);
+    var lit = 0;
+    rows.forEach(function (r) {
+      var el = mapBy[r.slug];
+      if (!el) return;
+      el.setAttribute('data-match', r.match);
+      if (r.match === 'leads') lit++;
+      if (r.inSeason) el.removeAttribute('data-off');
+      else el.setAttribute('data-off', 'true');
+      if (chosen && chosen.slug === r.slug) el.setAttribute('data-picked', 'true');
+      else el.removeAttribute('data-picked');
+    });
+    var asked = (brief.wants || []).length || brief.month;
+    if (mapKey) mapKey.hidden = !asked;
+    if (mapSay) {
+      mapSay.textContent = !asked
+        ? 'Fifty-four countries. Answer a question and watch them answer back.'
+        : lit + ' of the fifty-four lead on what you have asked for so far. '
+          + 'Every one of them is still yours to choose.';
+    }
+  }
+
+  /* Live, not on submit. The controls are radios and checkboxes, so `change`
+     fires on the press that matters and on nothing else; `input` would fire
+     for the sentence box too, and the sentence has its own button. */
+  form.addEventListener('change', function () { readForm(); paintMap(); });
+  paintMap();
 
   /* Who lives there, before why we chose it. A country that arrives as an
      outline, a season and a reason is a destination; a country that arrives

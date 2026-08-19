@@ -753,10 +753,25 @@
 .jn-map-c path,.jn-map-c circle{fill:var(--c-bg);stroke:var(--c-primary);
   stroke-width:1;vector-effect:non-scaling-stroke;
   transition:fill var(--t-mid) var(--ease),stroke var(--t-fast) var(--ease)}
+/* A WASH AND A STROKE, NOT A FLOOD FILL.
+   The grid can flood a chip in burnt sienna because a chip is a chip. Doing
+   the same on a map paints thirty-one countries solid accent — an accent fill
+   the size of most of a continent, which is the exact thing the design
+   blueprint names as its first absolute and which design-checks measures on
+   this page at three widths.
+
+   The atlas already had the answer: a wash. Composited against the page,
+   thirty-four per cent burnt sienna over ivory reads as a tint and measures
+   nowhere near the accent, so the rule is respected in the render and not
+   merely in the file. The country is told apart by the weight of its outline —
+   which is how a map has always said "this one", and which survives being
+   printed, being colour-blind, and being looked at from across the room. */
 .jn-map-c[data-match="leads"] path,.jn-map-c[data-match="leads"] circle{
-  fill:var(--c-accent);stroke:var(--c-accent)}
+  fill:color-mix(in srgb,var(--c-accent) 34%,transparent);
+  stroke:var(--c-accent);stroke-width:1.8}
 .jn-map-c[data-match="region"] path,.jn-map-c[data-match="region"] circle{
-  fill:var(--c-primary);stroke:var(--c-primary)}
+  fill:color-mix(in srgb,var(--c-primary) 20%,transparent);
+  stroke:var(--c-primary);stroke-width:1.3}
 .jn-map-c[data-match="open"] path,.jn-map-c[data-match="open"] circle{
   fill:var(--c-bg)}
 /* Out of the month they gave: marked, never removed — the same sentence the
@@ -792,9 +807,14 @@
   font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted)}
 .jn-map-key li::before{content:"";width:10px;height:10px;flex:0 0 auto;
   border:1px solid var(--c-border)}
-.jn-map-key li[data-match="leads"]::before{background:var(--c-accent);
+/* The swatch is the map's own paint, not the grid's: a wash inside the outline
+   that names it. A legend that shows a colour the map never uses is a legend
+   that has to be translated. */
+.jn-map-key li[data-match="leads"]::before{
+  background:color-mix(in srgb,var(--c-accent) 34%,transparent);
   border-color:var(--c-accent)}
-.jn-map-key li[data-match="region"]::before{background:var(--c-primary);
+.jn-map-key li[data-match="region"]::before{
+  background:color-mix(in srgb,var(--c-primary) 20%,transparent);
   border-color:var(--c-primary)}
 .jn-map-key li[data-match="open"]::before{background:var(--c-bg)}
 
