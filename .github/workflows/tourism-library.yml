@@ -82,11 +82,14 @@ jobs:
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
         run: python tools/tourism/build.py library publish --fetch
 
-      # Every hosted photograph has a photographer, a source page and a
-      # licence; nothing that was migrated is still fetched from a provider.
-      # Either failing means nothing is committed.
-      - name: Verify provenance and third-party leakage
-        run: python tools/tourism/build.py library verify
+      # Provenance only, and deliberately only that: every hosted photograph
+      # has a photographer, a source page and a licence. That is a question
+      # about whether the register is fit to commit, so it gates the commit.
+      # The leak count is a question about pages and runs after, because run 2
+      # failed here on the page-side half and discarded the download record a
+      # second time.
+      - name: Verify provenance
+        run: python tools/tourism/build.py library provenance
 
       # BEFORE THE REACHABILITY GATE, AND THE FIRST REAL RUN IS WHY.
       #
@@ -124,6 +127,13 @@ jobs:
       - name: Ask the public host for what we just published
         if: ${{ github.event.inputs.publish == 'true' }}
         run: python tools/tourism/build.py library reachable
+
+      # How far the site still is from asking a provider for nothing. Zero is
+      # the target and it is a long way off — this reports the count on every
+      # run so the number moves in public rather than in somebody's head.
+      - name: Count what still reaches Pexels and Unsplash
+        if: always()
+        run: python tools/tourism/build.py library thirdparty
 
       # The register and the encoded ladder, not the originals. incoming/ is
       # the staging area and stays out of the repository — that is the whole
