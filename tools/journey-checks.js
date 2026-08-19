@@ -671,5 +671,51 @@ if (man) {
     goneLinks.length ? goneLinks.join(', ') : (man.shortcuts || []).length + ' shortcuts');
 }
 
+/* ---- the continent, in the built document ---------------------------------
+ *
+ * The map is the thing this page was specified to have and did not, and the
+ * way it could quietly stop existing is not a visual regression — it is
+ * `build.py journey` running without `build.py map` having run, or map.json
+ * losing a country, or the SVG becoming something a script draws. All three
+ * leave a page that still looks like a page.
+ *
+ * These read the built file, not a browser, because that is where the failure
+ * would be: a map assembled at run time passes every rendering check and is
+ * absent from the document, which is the state this page was in before.
+ */
+const svgs = (page.match(/<svg\b/g) || []).length;
+check('the journey page carries a continent in the document', svgs > 0,
+  svgs ? svgs + ' <svg> in the built file' : 'no <svg> — /journey has no map');
+
+const mapC = (page.match(/class="jn-map-c"/g) || []).length
+           + (page.match(/class="jn-map-c is-isle"/g) || []).length;
+check('every country on the map is a link, not a click handler', mapC >= 50,
+  mapC + ' countries carry an <a> of their own');
+
+/* Each of them has to name itself. A <path> with no <title> is a shape, and a
+   screen reader arriving at fifty-four of them learns nothing. */
+const titles = (page.match(/<a class="jn-map-c[^>]*>\s*<title>/g) || []).length;
+check('every country on the map says its own name', titles === mapC,
+  titles + ' of ' + mapC + ' carry a <title>');
+
+/* The transparent target for the countries a finger cannot otherwise find.
+   Sized in the browser; present here, or there is nothing to size. */
+const discs = (page.match(/class="jn-map-hit"/g) || []).length;
+check('every country on the map has a target a finger can find', discs === mapC,
+  discs + ' hit discs for ' + mapC + ' countries');
+
+/* The thirteen positions the drawn journey is allowed to use. If this ever
+   comes back empty the route silently degrades to country centroids only, and
+   the caption would go on saying "surveyed position" about nothing. */
+check('the page carries the positions a journey can be drawn from',
+  (D.cities || []).length > 0,
+  (D.cities || []).length + ' places with a real position');
+
+const noPos = (D.cities || []).filter(function (c) {
+  return typeof c.x !== 'number' || typeof c.y !== 'number'; });
+check('every position it carries is a pair of numbers', !noPos.length,
+  noPos.length ? noPos.map(function (c) { return c.name; }).join(', ')
+    : 'all ' + (D.cities || []).length + ' usable');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(function (l) { return l.indexOf('FAIL') === 0; }) ? 1 : 0);
