@@ -82,6 +82,14 @@ jobs:
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
         run: python tools/tourism/build.py library publish --fetch
 
+      # The two structural promises, before anything is uploaded: a caption
+      # change cannot move an object key, and a subset can be published
+      # without dragging the rest of the library live with it. Both are
+      # properties that only hurt once thousands of objects exist, which is
+      # exactly why they are checked on every run from now on.
+      - name: The library's own invariants
+        run: node tools/library-checks.js
+
       # Provenance only, and deliberately only that: every hosted photograph
       # has a photographer, a source page and a licence. That is a question
       # about whether the register is fit to commit, so it gates the commit.

@@ -23,9 +23,9 @@ THE SIX STEPS, AND WHICH OF THEM CAN RUN WHERE
   publish   uploads the encoded ladder to object storage. NEEDS NETWORK AND
             CREDENTIALS. Deliberately not implemented here — see below.
   rewrite   a late pass over the built HTML swapping every external URL for
-            its first-party one. REFUSES to run until the register says the
-            library is live, because a rewrite before publication is 1,529
-            pages of broken photographs.
+            its first-party one. Touches an asset only once THAT asset has
+            been published, because pointing a page at an object that was
+            never uploaded is a broken photograph.
   verify    every asset in the register has a source, a photographer, a
             licence and a page using it; every rewritten URL resolves to a
             registered asset. Runs anywhere.
@@ -51,31 +51,50 @@ THE LAYOUT ON R2, AND THE URL THE SITE ASKS FOR
 
     image.afrinkong.com
         |
-        +-- originals/  kenya/cities/nairobi-green-city-in-the-sun.jpg
-        +-- 1600/       kenya/cities/nairobi-green-city-in-the-sun.avif|.webp|.jpg
+        +-- originals/  AKL-000631.jpg
+        +-- 1600/       AKL-000631.avif|.webp|.jpg
         +-- 1200/       ...
         +--  800/       ...
         +--  480/       ...
 
 Width first, because that is what the browser is choosing between, and the
-name underneath it never changes. `originals/` is kept so a better encoder, a
-new width or a different quality can be produced later without going back to
-Pexels for a file we already have — and it is the only copy of the source that
-exists once the hotlink is gone.
-
-The site asks for https://image.afrinkong.com/1200/kenya/cities/<slug>.avif
-and knows nothing else. Where the photograph came from lives in
-tourism/assets.json and never in a URL.
+identity underneath it never changes. `originals/` is kept so a better
+encoder, a new width or a different quality can be produced later without
+going back to Pexels for a file we already have — and it is the only copy of
+the source that exists once the hotlink is gone.
 
 ---------------------------------------------------------------------------
-NAMING, AND WHY IT IS NOT THE SOURCE'S NAME
+IDENTITY, AND WHY IT IS NOT THE CAPTION
 
-`pexels-photo-18000433.jpeg` names a row in somebody else's database. This
-names the thing: kenya/cities/nairobi-green-city-in-the-sun. It is stable
-across a replacement — commission a better photograph of the same subject and
-it takes the same name, the same URL, and every page referencing it needs no
-edit at all. That is the property that makes the 786 REPLACE assets a content
-job rather than a second migration.
+The key used to be country/category/slug-of-the-caption. It read beautifully
+in a bucket listing and it was wrong: the caption is page copy. Rewrite
+"Elephants at Chobe" as "Elephants beside the Chobe River" and the computed
+key changes, so one photograph acquires a second identity — a new object
+uploaded and paid for, the old one orphaned in the bucket forever, and pages
+pointing at whichever the last run wrote. From inside the pipeline that is
+indistinguishable from a new photograph, so nothing would have reported it.
+
+So an asset is AKL-000631 and stays AKL-000631. Country, destination,
+category, caption, alt text, photographer, licence, acquisition date, shoot
+date, pages, publication state, dimensions — all of it is metadata beside the
+identity, all of it free to be corrected, none of it able to move an object.
+
+An identity is assigned once and found again by `sourceKey`, which is the
+provider's own id for a hotlink and the file's checksum for a delivery.
+Neither can change. A manifest may also PIN an identity, which is how a
+commissioned photograph replaces a bad one: it takes over the key, and every
+page already pointing there shows the new picture without being edited.
+
+---------------------------------------------------------------------------
+PUBLICATION IS PER ASSET, NOT PER LIBRARY
+
+There used to be one `live` boolean for the whole register, so the library
+could only ever go live all at once. A canonical library grows: the best
+hundred photographs should reach visitors while the other six hundred are
+still being bought. Each asset carries its own downloadedAt, encodedAt,
+publishedAt and rewrittenAt, plus a `hold` for one deliberately kept back,
+and `state()` reads the answer off that evidence rather than storing a claim
+that can drift from it. `publish` and `rewrite` both take a selector.
 
 ---------------------------------------------------------------------------
 THREE FORMATS AT EVERY WIDTH, AND WHY JPEG IS STILL ONE OF THEM
@@ -110,11 +129,125 @@ JPEG_Q = 82
 FORMATS = (".avif", ".webp", ".jpg")
 
 
-def key(name, width=None, ext=".avif"):
-    """The object key on R2 for one photograph at one width, or its original."""
+ID_RE = re.compile(r"^AKL-\d{6}$")
+
+# Every publication state an asset can be in, in the order it moves through
+# them. `hold` is the one that is a decision rather than a stage.
+STATES = ("planned", "staged", "encoded", "published", "live", "hold")
+
+
+def new_id(reg):
+    """The next permanent identity. Monotonic, never reused, never derived."""
+    n = int(reg.get("nextId") or 1)
+    reg["nextId"] = n + 1
+    return "AKL-%06d" % n
+
+
+def source_key(origin, provider=None, photo_id=None, sha=None):
+    """The immutable fact that says two rows are the same photograph.
+
+    An identity has to be assigned once and then found again on every
+    subsequent run, and the thing used to find it again must be something that
+    cannot change. For a provider photograph that is the provider's own id —
+    pexels:10010546 is that picture for as long as Pexels exists. For one we
+    were given it is the checksum of the file, so re-ingesting the same
+    delivery twice recognises it instead of minting a second identity for the
+    same photograph.
+
+    Never the caption, the country, the category or the filename. All four are
+    editorial and all four change.
+    """
+    if origin == "provider":
+        return "%s:%s" % (provider, photo_id)
+    return "sha256:%s" % sha
+
+
+def key(asset_id, width=None, ext=".avif"):
+    """The object key on R2 for one photograph at one width, or its original.
+
+    THE KEY IS THE IDENTITY AND NOTHING ELSE.
+
+    This used to be country/category/slug-of-the-caption, which reads well in
+    a bucket listing and is wrong. The caption is page copy. Rewrite
+    "Elephants at Chobe" as "Elephants beside the Chobe River" and the
+    computed key changed, so the same photograph acquired a second identity: a
+    new object uploaded and paid for, the old one orphaned in the bucket
+    forever, and 1,528 pages pointing at whichever the last run happened to
+    write. Nothing in the pipeline would have reported it, because from the
+    inside it looks exactly like a new photograph.
+
+    So the key is AKL-000631 and the country, category and caption are
+    metadata beside it, free to be corrected as often as anybody likes.
+    """
     if width is None:
-        return "originals/%s.jpg" % name
-    return "%d/%s%s" % (width, name, ext)
+        return "originals/%s.jpg" % asset_id
+    return "%d/%s%s" % (width, asset_id, ext)
+
+
+def staged(asset_id):
+    """Where the original waits between fetch-or-ingest and encode."""
+    return os.path.join(STAGE, "%s.jpg" % asset_id)
+
+
+def state(a):
+    """What has actually happened to this photograph, from the evidence.
+
+    Computed rather than stored, because a stored state drifts: something
+    fails halfway, the field says published and the object is not there. Each
+    of these is a timestamp written by the step that did the work, so the
+    state cannot claim more than the pipeline actually did. `hold` is the
+    exception and the only one that is an intention — it is how a photograph
+    is kept out of publication on purpose.
+    """
+    if a.get("hold"):
+        return "hold"
+    if a.get("rewrittenAt"):
+        return "live"
+    if a.get("publishedAt"):
+        return "published"
+    if a.get("encodedAt"):
+        return "encoded"
+    if a.get("sha256"):
+        return "staged"
+    return "planned"
+
+
+def select(reg, only=None):
+    """The subset a step should act on. THIS IS HOW 100 GO BEFORE 786 DO.
+
+        (nothing)            every asset
+        AKL-000123           one, or a comma-separated list
+        country:kenya        every asset of a country
+        category:wildlife    every asset of a category
+        origin:commissioned  provider, licensed or commissioned
+        state:encoded        planned, staged, encoded, published, live, hold
+        @some/file.txt       one identity per line, for a list from elsewhere
+
+    The point of the whole per-asset publication change is that a subset can
+    be published and rewritten without the rest of the library going with it.
+    A selector that matches nothing returns nothing rather than everything,
+    because the failure mode of the opposite is publishing the entire library
+    by typing a name wrong.
+    """
+    assets = list(reg["assets"].values())
+    if not only:
+        return assets
+    only = only.strip()
+    if only.startswith("@"):
+        path = only[1:]
+        path = path if os.path.isabs(path) else os.path.join(ROOT, path)
+        with open(path, encoding="utf-8") as fh:
+            want = {ln.strip() for ln in fh if ln.strip()}
+        return [a for a in assets if a["id"] in want]
+    if ":" in only:
+        field, value = only.split(":", 1)
+        value = value.strip().lower()
+        if field == "state":
+            return [a for a in assets if state(a) == value]
+        return [a for a in assets
+                if str(a.get(field) or "").lower() == value]
+    want = {p.strip() for p in only.split(",") if p.strip()}
+    return [a for a in assets if a["id"] in want]
 
 # What each provider's licence is, as a fact about the provider rather than a
 # claim about one photograph. The per-photograph half of provenance — who took
@@ -142,18 +275,63 @@ def _read(path, fallback):
         return fallback
 
 
+def _upgrade(reg):
+    """Bring an older register up to permanent identities. Idempotent.
+
+    The first register was keyed by country/category/slug and gated
+    publication on one global `live` boolean. Both were fine for migrating
+    629 hotlinks and wrong for a library, so this converts in place on read:
+    every row gets an AKL identity and the sourceKey that will find it again,
+    and the global switch becomes a per-asset one.
+
+    Identities are handed out in sorted order of the old key, so the same
+    register upgrades to the same identities on any machine — this runs in a
+    workflow and on a laptop and the two must not disagree.
+    """
+    assets = reg.get("assets") or {}
+    if not assets or all(ID_RE.match(k) for k in assets):
+        reg.setdefault("nextId", len(assets) + 1)
+        reg.pop("live", None)
+        return reg
+
+    was_live = bool(reg.get("live"))
+    reg["nextId"] = 1
+    fresh = {}
+    for old_key in sorted(assets):
+        a = dict(assets[old_key])
+        aid = new_id(reg)
+        a["id"] = aid
+        a.setdefault("origin", "provider")
+        a["sourceKey"] = source_key(a["origin"], a.get("provider"),
+                                    a.get("photoId"), a.get("sha256"))
+        # The old key was the name AND the object key. It survives as the
+        # human-readable label, which is all it should ever have been.
+        a["slug"] = a.pop("name", old_key)
+        # A register that said live: true had already rewritten its pages, and
+        # every one of those assets was published under its old key. Say so
+        # per asset rather than losing it — and note the keys have moved.
+        if was_live and a.get("encodedAt"):
+            a.setdefault("publishedAt", a.get("encodedAt"))
+        fresh[aid] = a
+    reg["assets"] = fresh
+    reg.pop("live", None)
+    return reg
+
+
 def register():
-    return _read(REGISTER, {
-        "$comment": "The Afrinkong image library. One row per hosted "
-                    "photograph: where it came from, who took it, under what "
-                    "licence, when it was taken down, what we call it, and "
-                    "which pages use it. Written by tools/tourism/library.py. "
-                    "`live` stays false until the assets are actually on the "
-                    "asset host; the rewrite pass refuses to run while it is.",
+    reg = _read(REGISTER, {
+        "$comment": "The Afrinkong image library. One row per photograph, "
+                    "keyed by a permanent identity that never changes: where "
+                    "it came from, who took it, under what licence, when it "
+                    "was taken down, encoded, published and wired into pages, "
+                    "and which pages use it. Country, category and caption "
+                    "are metadata beside the identity, not part of it. "
+                    "Written by tools/tourism/library.py.",
         "host": "https://image.afrinkong.com",
-        "live": False,
+        "nextId": 1,
         "assets": {},
     })
+    return _upgrade(reg)
 
 
 def _write_register(reg, log=print):
@@ -196,21 +374,34 @@ def plan(write=False, log=print):
     reg["assets"] = {k: v for k, v in previous.items()
                      if v.get("origin", "provider") != "provider"}
     ours = len(reg["assets"])
-    named, clash = {}, 0
+    # AN IDENTITY IS LOOKED UP, NEVER RECOMPUTED. The register is rebuilt from
+    # the audit on every run, so if the identity came out of this loop it
+    # would be re-derived every time — and anything it was derived from could
+    # change. Found by sourceKey, which cannot.
+    known = {a.get("sourceKey"): a for a in previous.values()
+             if a.get("sourceKey")}
+    minted = 0
     for a in keep:
+        skey = source_key("provider", a["provider"], a["photoId"])
+        old = known.get(skey)
+        if old:
+            aid = old["id"]
+        else:
+            aid = new_id(reg)
+            minted += 1
         country = _slug(a.get("country") or "world")
         category = _slug(a.get("category") or "general")
         stem = _slug(a.get("caption") or a.get("altIntended") or a.get("photoId"))
-        name = "%s/%s/%s" % (country, category, stem)
-        # A collision means two photographs claim one subject; the id keeps
-        # them apart rather than one silently overwriting the other.
-        if name in named:
-            clash += 1
-            name = "%s-%s" % (name, a["photoId"][:8])
-        named[name] = a
-        reg["assets"][name] = {
-            "name": name,
+        reg["assets"][aid] = {
+            "id": aid,
+            "sourceKey": skey,
             "origin": "provider",
+            # Editorial, and recomputed every run on purpose. Changing any of
+            # the three moves nothing: not the identity, not the object key,
+            # not a single URL in a page.
+            "slug": "%s/%s/%s" % (country, category, stem),
+            "country": country,
+            "category": category,
             "provider": a["provider"],
             "photoId": a["photoId"],
             "photographer": a.get("photographer"),
@@ -219,15 +410,24 @@ def plan(write=False, log=print):
             "originalUrl": a.get("imageUrl"),
             "licence": LICENCES.get(a["provider"], {}),
             "chosenAt": a.get("chosenAt"),
-            "downloadedAt": previous.get(name, {}).get("downloadedAt"),
-            "sha256": previous.get(name, {}).get("sha256"),
+            # Everything the pipeline established about the bytes carries
+            # forward — a re-plan is a re-read of the audit, not a reason to
+            # download, encode or publish anything twice.
+            "downloadedAt": (old or {}).get("downloadedAt"),
+            "sha256": (old or {}).get("sha256"),
+            "encodedAt": (old or {}).get("encodedAt"),
+            "publishedAt": (old or {}).get("publishedAt"),
+            "rewrittenAt": (old or {}).get("rewrittenAt"),
+            "hold": (old or {}).get("hold"),
             "slot": a.get("slot"),
             "alt": a.get("alt"),
             "width": a.get("width"),
             "height": a.get("height"),
             "pages": a.get("pages", []),
-            "widths": list(LADDER),
+            "widths": (old or {}).get("widths") or list(LADDER),
         }
+    named = reg["assets"]
+    clash = minted
 
     log("")
     log("  library plan")
@@ -236,13 +436,18 @@ def plan(write=False, log=print):
     if ours:
         log("  ours, kept across the plan  %6d  (licensed or commissioned)"
             % ours)
-    log("  names assigned              %6d  (%d disambiguated by photo id)"
-        % (len(named), clash))
+    log("  identities                  %6d  (%d newly minted, %d recognised)"
+        % (len(named), clash, len(keep) - clash))
     log("  widths per photograph       %6d  %s" % (len(LADDER), list(LADDER)))
     log("  files to publish            %6d  (AVIF + WebP)"
         % (len(named) * len(LADDER) * 2))
-    log("  host                        %s  (live: %s)"
-        % (reg["host"], reg["live"]))
+    counts = {}
+    for a in reg["assets"].values():
+        s = state(a)
+        counts[s] = counts.get(s, 0) + 1
+    log("  publication state           %s"
+        % ", ".join("%s %d" % (s, counts[s]) for s in STATES if counts.get(s)))
+    log("  host                        %s" % reg["host"])
     log("")
     if write:
         _write_register(reg, log=log)
@@ -261,28 +466,32 @@ def pilot(reg, n):
     is looked at by the most visitors and any problem in it shows up soonest.
     """
     rows = sorted(reg["assets"].values(),
-                  key=lambda a: (-len(a.get("pages") or []), a["name"]))
+                  key=lambda a: (-len(a.get("pages") or []), a["id"]))
     out, taken = [], set()
     # One country at a time, most-used photograph first. A sample that is
     # twenty-five photographs of Algeria proves nothing about the other
     # fifty-three, and country is the axis this site's content is organised on.
-    for axis in (lambda a: a["name"].split("/")[0],
-                 lambda a: "/".join(a["name"].split("/")[:2])):
+    # Spread on the editorial slug — country first, then category — because
+    # that is what "representative" means here. Membership is tracked by
+    # identity, so two photographs whose captions collide cannot shadow
+    # each other.
+    for axis in (lambda a: (a.get("slug") or "").split("/")[0],
+                 lambda a: "/".join((a.get("slug") or "").split("/")[:2])):
         seen = set()
         for a in rows:
             if len(out) >= n:
                 break
             k = axis(a)
-            if k in seen or a["name"] in taken:
+            if k in seen or a["id"] in taken:
                 continue
             seen.add(k)
-            taken.add(a["name"])
+            taken.add(a["id"])
             out.append(a)
     for a in rows:                       # top up if both axes ran out first
         if len(out) >= n:
             break
-        if a["name"] not in taken:
-            taken.add(a["name"])
+        if a["id"] not in taken:
+            taken.add(a["id"])
             out.append(a)
     return out[:n]
 
@@ -310,12 +519,12 @@ def fetch(write=False, log=print, limit=0):
     for a in todo:
         url = a.get("originalUrl") or ""
         if not url:
-            failed.append((a["name"], "no source url"))
+            failed.append((a["id"], "no source url"))
             continue
         # Ask each provider for the widest size the ladder needs and no more.
         sep = "&" if "?" in url else "?"
         want = "%s%sw=%d" % (url, sep, LADDER[-1])
-        out = os.path.join(STAGE, a["name"].replace("/", "__") + ".jpg")
+        out = staged(a["id"])
         try:
             req = urllib.request.Request(want, headers={"User-Agent": "afrinkong-library"})
             with urllib.request.urlopen(req, timeout=45) as res:
@@ -328,7 +537,7 @@ def fetch(write=False, log=print, limit=0):
             a["bytes"] = len(body)
             got += 1
         except Exception as exc:                       # noqa: BLE001 — report, continue
-            failed.append((a["name"], str(exc)[:70]))
+            failed.append((a["id"], str(exc)[:70]))
     log("library fetch: %d downloaded, %d failed" % (got, len(failed)))
     for name, why in failed[:5]:
         log("  %s — %s" % (name, why))
@@ -355,7 +564,7 @@ def encode(write=False, log=print):
     out_root = os.path.join(ROOT, "images", "library")
     made, skipped, bytes_out = 0, 0, 0
     for a in reg["assets"].values():
-        src = os.path.join(STAGE, a["name"].replace("/", "__") + ".jpg")
+        src = staged(a["id"])
         if not os.path.exists(src):
             skipped += 1
             continue
@@ -368,7 +577,7 @@ def encode(write=False, log=print):
             # The original, kept as it arrived: a better encoder or a new width
             # later must not mean going back to Pexels for a file we already
             # hold, and after the rewrite this is the only copy that exists.
-            orig = os.path.join(out_root, key(a["name"], None))
+            orig = os.path.join(out_root, key(a["id"], None))
             os.makedirs(os.path.dirname(orig), exist_ok=True)
             im.save(orig, quality=94)
             bytes_out += os.path.getsize(orig)
@@ -381,7 +590,7 @@ def encode(write=False, log=print):
                 for ext, kw in ((".avif", {"quality": AVIF_Q}),
                                 (".webp", {"quality": WEBP_Q, "method": 5}),
                                 (".jpg", {"quality": JPEG_Q, "optimize": True})):
-                    dst = os.path.join(out_root, key(a["name"], w, ext))
+                    dst = os.path.join(out_root, key(a["id"], w, ext))
                     os.makedirs(os.path.dirname(dst), exist_ok=True)
                     small.save(dst, **kw)
                     bytes_out += os.path.getsize(dst)
@@ -396,7 +605,7 @@ def encode(write=False, log=print):
     return 0
 
 
-def publish(write=False, log=print):
+def publish(write=False, log=print, only=None):
     """Copy images/library/ to the R2 bucket. NEEDS NETWORK AND CREDENTIALS.
 
     R2 speaks the S3 API, so this is boto3 against an account-specific
@@ -427,6 +636,24 @@ def publish(write=False, log=print):
         log("library publish: nothing encoded yet")
         return 1
     types = {".avif": "image/avif", ".webp": "image/webp", ".jpg": "image/jpeg"}
+
+    # PER ASSET, AND ONLY THE ONES ASKED FOR. This used to walk the encoded
+    # tree and upload whatever it found, which is the same all-or-nothing
+    # shape the global `live` flag had: there was no way to put a hundred
+    # photographs in front of visitors without putting all of them there.
+    reg = register()
+    chosen = [a for a in select(reg, only) if a.get("encodedAt")
+              and not a.get("hold")]
+    held = [a for a in select(reg, only) if a.get("hold")]
+    if not chosen:
+        log("library publish: nothing selected is encoded and off hold")
+        return 1
+    want = set()
+    for a in chosen:
+        want.add(key(a["id"], None))
+        for w in a.get("widths") or LADDER:
+            for ext in FORMATS:
+                want.add(key(a["id"], w, ext))
     client = boto3.client(
         "s3",
         endpoint_url="https://%s.r2.cloudflarestorage.com" % os.environ["R2_ACCOUNT_ID"],
@@ -435,22 +662,36 @@ def publish(write=False, log=print):
         region_name="auto")
     bucket = os.environ["R2_BUCKET"]
 
-    sent, size = 0, 0
+    sent, size, missing = 0, 0, 0
     for base, _dirs, files in os.walk(root):
         for name in sorted(files):
             full = os.path.join(base, name)
             k = os.path.relpath(full, root).replace(os.sep, "/")
-            if not write:
-                sent += 1
-                size += os.path.getsize(full)
+            if k not in want:
                 continue
-            client.upload_file(full, bucket, k, ExtraArgs={
-                "ContentType": types.get(os.path.splitext(name)[1], "application/octet-stream"),
-                "CacheControl": "public, max-age=31536000, immutable"})
+            if write:
+                client.upload_file(full, bucket, k, ExtraArgs={
+                    "ContentType": types.get(os.path.splitext(name)[1],
+                                             "application/octet-stream"),
+                    "CacheControl": "public, max-age=31536000, immutable"})
             sent += 1
             size += os.path.getsize(full)
-    log("library publish: %d object(s) %s (%.1f MB)"
-        % (sent, "uploaded" if write else "would be uploaded", size / 1e6))
+    missing = len(want) - sent
+    if write:
+        # publishedAt is what `rewrite` reads. Set only after the uploads for
+        # that asset actually ran, so a page can never be pointed at an object
+        # that was never sent.
+        stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        for a in chosen:
+            a["publishedAt"] = stamp
+        _write_register(reg, log=log)
+    log("library publish: %d object(s) %s (%.1f MB) for %d asset(s)"
+        % (sent, "uploaded" if write else "would be uploaded",
+           size / 1e6, len(chosen)))
+    if missing:
+        log("  %d expected object(s) were not on disk — run encode" % missing)
+    if held:
+        log("  %d asset(s) skipped, on hold" % len(held))
     return 0
 
 
@@ -594,7 +835,7 @@ MANIFEST = os.path.join(ROOT, "incoming", "manifest.csv")
 # `verify` asks, so a manifest that ingests cleanly cannot fail provenance
 # afterwards — the check happens once, at the door.
 MANIFEST_FIELDS = (
-    "file", "country", "category", "subject", "photographer", "origin",
+    "file", "id", "country", "category", "subject", "photographer", "origin",
     "licenceName", "licenceRef", "acquiredAt",       # licensed
     "contractRef", "shotAt", "releases",             # commissioned
     "credit", "name", "notes",
@@ -676,15 +917,31 @@ def ingest(write=False, log=print, manifest=None):
 
         country = _slug(row.get("country") or "world")
         category = _slug(row.get("category") or "general")
-        # An explicit name wins, because a photograph that has already been
-        # published must never be renamed — its object key is in 1,528 pages.
-        name = row.get("name") or "%s/%s/%s" % (
-            country, category, _slug(row.get("subject") or os.path.basename(src)))
-        name = name[:-5] if name.endswith(".avif") else name
 
         with open(full, "rb") as fh:
             blob = fh.read()
         digest = hashlib.sha256(blob).hexdigest()
+        # THE IDENTITY IS PINNED OR MINTED, NEVER DERIVED FROM THE DELIVERY.
+        # A manifest may name an identity outright — that is how a commissioned
+        # photograph REPLACES one already published, taking over its object key
+        # and every page that points at it without a single page being edited.
+        # Otherwise the checksum decides: re-ingesting the same file recognises
+        # it rather than minting a second identity for one photograph.
+        skey = source_key(origin, sha=digest)
+        pinned = (row.get("id") or row.get("name") or "").strip()
+        pinned = pinned[:-5] if pinned.endswith(".avif") else pinned
+        existing = {a.get("sourceKey"): a for a in reg["assets"].values()
+                    if a.get("sourceKey")}
+        if pinned and ID_RE.match(pinned):
+            aid = pinned
+        elif skey in existing:
+            aid = existing[skey]["id"]
+        elif pinned:
+            bad.append("row %d: id %r is not an AKL identity" % (i, pinned))
+            continue
+        else:
+            aid = new_id(reg)
+        was = reg["assets"].get(aid) or {}
         width = height = 0
         try:
             from PIL import Image
@@ -694,8 +951,13 @@ def ingest(write=False, log=print, manifest=None):
             pass
 
         entry = {
-            "name": name,
+            "id": aid,
+            "sourceKey": skey,
             "origin": origin,
+            # Editorial. Free to change; changes nothing that is published.
+            "slug": "%s/%s/%s" % (country, category,
+                                  _slug(row.get("subject")
+                                        or os.path.basename(src))),
             "photographer": row.get("photographer"),
             "credit": row.get("credit") or row.get("photographer"),
             "licence": {"name": row.get("licenceName")
@@ -715,17 +977,20 @@ def ingest(write=False, log=print, manifest=None):
             "downloadedAt": row.get("acquiredAt") or row.get("shotAt"),
             "ingestedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "notes": row.get("notes"),
-            # Empty on purpose. A library asset exists before a page uses it,
-            # and `rewrite` fills this in when one does.
-            "pages": [],
+            # Empty for a new identity. When a delivery TAKES OVER an existing
+            # one, the pages that already reference it come with it — that is
+            # the whole point of replacing a photograph in place.
+            "pages": was.get("pages") or [],
+            "originalUrl": was.get("originalUrl"),
+            "rewrittenAt": was.get("rewrittenAt"),
+            "hold": was.get("hold"),
             "widths": list(LADDER),
         }
         if write:
             os.makedirs(STAGE, exist_ok=True)
-            shutil.copyfile(full, os.path.join(
-                STAGE, name.replace("/", "__") + ".jpg"))
-            reg["assets"][name] = entry
-        taken.append((name, origin))
+            shutil.copyfile(full, staged(aid))
+            reg["assets"][aid] = entry
+        taken.append((aid, origin))
 
     for line in bad[:12]:
         log("  ! %s" % line)
@@ -854,32 +1119,28 @@ def thirdparty(log=print):
     waiting for art direction, a REVIEW waiting for a person, or a bug.
     """
     reg = register()
-    # MIGRATED MEANS REWRITTEN, AND UNTIL THE REGISTER IS LIVE NOTHING IS.
+    # MIGRATED MEANS REWRITTEN, AND IT IS NOW A FACT ABOUT ONE PHOTOGRAPH.
     #
-    # This comment said exactly that before the code did it, and the second
-    # real run is what exposed the gap: `verify` now runs after `fetch`, so
-    # 25 photographs had encodedAt for the first time, and the check called
-    # all 25 migrated and reported 228 references as having "survived the
-    # rewrite" — a rewrite that had not run and, by design, cannot run while
-    # live is false. It refuses. So the pages were pointing at providers for
-    # the only correct reason there is: nothing has replaced those URLs yet.
+    # This read `encodedAt` once, and a run where 25 photographs were encoded
+    # but no page had been touched reported 228 references as having "survived
+    # the rewrite" — a rewrite that had not run. Then it read one global
+    # `live` flag, which was right while publication was all-or-nothing and
+    # wrong the moment the library could go live a hundred photographs at a
+    # time: with a subset rewritten, a global flag can only be wrong in one
+    # direction or the other for everything else.
     #
-    # Encoding a photograph changes what is in the bucket. Only `rewrite`
-    # changes what a page asks for, and it is all-or-nothing across the
-    # register behind the live flag. So that flag is the honest gate, and
-    # before it is set the only true statement this check can make is the
-    # count of what is left.
+    # `rewrittenAt` is written per asset by `rewrite` itself, and cleared by
+    # a revert. So a leak is exactly what it should always have been: a page
+    # still asking a provider for a photograph whose pages we have already
+    # moved.
     skip = artdirected()
-    migrated = set()
-    if reg.get("live"):
-        # An art-directed photograph is encoded and deliberately left
-        # hotlinked until a second crop exists; counting it as a leak makes
-        # this permanently red for a decision rather than a fault. One
-        # definition, used by the pass that skips them and the check that
-        # measures them.
-        migrated = {a["originalUrl"] for a in reg["assets"].values()
-                    if a.get("encodedAt") and a.get("originalUrl")
-                    and a["originalUrl"].split("?")[0] not in skip}
+    # An art-directed photograph is encoded and deliberately left hotlinked
+    # until a second crop exists; counting it as a leak makes this
+    # permanently red for a decision rather than a fault. One definition,
+    # used by the pass that skips them and the check that measures them.
+    migrated = {a["originalUrl"] for a in reg["assets"].values()
+                if a.get("rewrittenAt") and a.get("originalUrl")
+                and a["originalUrl"].split("?")[0] not in skip}
     left, leaked, pages = 0, [], 0
     for base, dirs, files in os.walk(ROOT):
         dirs[:] = [d for d in dirs
@@ -908,13 +1169,14 @@ def thirdparty(log=print):
                     leaked.append(h)
 
     ok = not leaked
-    if not reg.get("live"):
+    done = sum(1 for a in reg["assets"].values() if a.get("rewrittenAt"))
+    if not done:
         # Not "nothing left behind", which would read as a clean rewrite. No
         # rewrite has happened, and saying so is the only honest PASS here.
-        note = ("the register is not live, so nothing has been rewritten yet "
-                "— every reference below is expected")
+        note = ("no asset has been rewritten yet — every reference below is "
+                "expected")
     elif ok:
-        note = "nothing left behind"
+        note = "nothing left behind by the %d asset(s) rewritten" % done
     else:
         note = "%d reference(s) survived the rewrite" % len(leaked)
     log("%s\tno migrated photograph is still fetched from a provider\t%s"
@@ -966,7 +1228,7 @@ def artdirected():
     return out
 
 
-def rewrite(write=False, revert=False, log=print):
+def rewrite(write=False, revert=False, log=print, only=None):
     """Point every migrated photograph at the library, or put it back.
 
     A rewrite before publication is 1,529 pages of broken photographs, so the
@@ -992,11 +1254,6 @@ def rewrite(write=False, revert=False, log=print):
     of the pilot and it has to work before step thirteen is allowed.
     """
     reg = register()
-    if not revert and not reg.get("live"):
-        log("library rewrite: refused. tourism/assets.json says live: false — "
-            "publish the ladder to %s and set it." % reg.get("host"))
-        return 1
-
     host = (reg.get("host") or "").rstrip("/")
     # Art direction is a property of the photograph, not of one page. An asset
     # that appears in an art-directed <picture> anywhere is excluded
@@ -1005,18 +1262,41 @@ def rewrite(write=False, revert=False, log=print):
     # two hosts and leave the leak check permanently red.
     blocked = artdirected()
 
-    ready = [a for a in reg["assets"].values()
-             if a.get("originalUrl") and a.get("encodedAt") and a.get("widths")
+    # PUBLISHED, PER ASSET — not a global flag, and not merely encoded.
+    #
+    # The gate used to be one boolean for the whole register, which meant the
+    # library could only ever go live all at once: there was no way to put the
+    # best hundred photographs in front of visitors and leave the rest
+    # hotlinked. Now a page is pointed at an asset when THAT asset has been
+    # uploaded, and publishedAt is written by `publish` only after the upload
+    # actually ran. An encoded-but-unpublished photograph is exactly the case
+    # this must refuse: the object is not in the bucket, so the page would
+    # show nothing.
+    #
+    # On revert the gate is deliberately wider — anything that was rewritten
+    # has to be undoable whatever its state is now.
+    pool = select(reg, only)
+    ready = [a for a in pool
+             if a.get("originalUrl") and a.get("widths")
+             and (a.get("rewrittenAt") if revert else a.get("publishedAt"))
+             and not a.get("hold")
              and a["originalUrl"].split("?")[0] not in blocked]
     by_url = {}
     for a in ready:
         by_url[a["originalUrl"].split("?")[0]] = a
     if not ready:
-        log("library rewrite: nothing has been encoded yet")
+        waiting = [a for a in pool if a.get("encodedAt")
+                   and not a.get("publishedAt")]
+        if waiting and not revert:
+            log("library rewrite: %d selected asset(s) are encoded but not "
+                "published — run publish first" % len(waiting))
+        else:
+            log("library rewrite: nothing selected is %s"
+                % ("rewritten" if revert else "published"))
         return 0
 
     def url_for(a, width, ext):
-        return "%s/%s" % (host, key(a["name"], width, ext))
+        return "%s/%s" % (host, key(a["id"], width, ext))
 
     def wrap(tag, a):
         sizes = HAS_SIZES_RE.search(tag)
@@ -1127,7 +1407,15 @@ def rewrite(write=False, revert=False, log=print):
                 with open(full, "w", encoding="utf-8") as fh:
                     fh.write(html)
 
-    log("library %s: %d tag(s) across %d page(s) %s"
+    if write:
+        # The asset's own record of being wired into pages, which is what
+        # makes `live` a per-photograph fact and what the leak check reads to
+        # decide whether a provider reference is a leftover or expected.
+        stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        for a in ready:
+            a["rewrittenAt"] = None if revert else stamp
+        _write_register(reg, log=log)
+    log("library %s: %d tag(s) across %d page(s) %s, %d asset(s) selected"
         % ("revert" if revert else "rewrite", changed_tags, changed_pages,
-           "written" if write else "would change"))
+           "written" if write else "would change", len(ready)))
     return 0
