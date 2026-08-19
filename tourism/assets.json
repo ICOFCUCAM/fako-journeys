@@ -77,8 +77,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-18T07:27:02Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:25Z",
+   "sha256": "8da5371ca60467f8f515187b44bf5f9b049db901c5aeab9bbe3e206cd6fd18b6",
    "slot": "chad/beaches",
    "alt": "A man on a boat washing his hand in the river, Chad",
    "width": 7952,
@@ -94,7 +94,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 166215,
+   "encodedAt": "2026-08-19T14:32:31Z"
   },
   "libya/waterfalls/a-spring-fed-pool-among-palms-in-a-libyan-desert-oasis": {
    "name": "libya/waterfalls/a-spring-fed-pool-among-palms-in-a-libyan-desert-oasis",
@@ -1763,8 +1765,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T19:17:13Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:24Z",
+   "sha256": "06a88667d4c0226d9de9ef6ce0032df870f74ebed901b50b2fcaa1c1f07fbb8b",
    "slot": "cabo-verde/beaches",
    "alt": "A rocky shore on the beach, Cabo Verde",
    "width": 7360,
@@ -1780,7 +1782,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 364739,
+   "encodedAt": "2026-08-19T14:32:33Z"
   },
   "tunisia/waterfalls/the-palm-oasis-and-waterfall-at-chebika-tunisia": {
    "name": "tunisia/waterfalls/the-palm-oasis-and-waterfall-at-chebika-tunisia",
@@ -2441,8 +2445,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-14T06:46:23Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:26Z",
+   "sha256": "e9ba88e958607e03171dc062f1e940b643cbf4d8175e548e6ee27736698e251a",
    "slot": "cote-divoire/beaches",
    "alt": "Palm tree and bushes on sunlit beach, Côte d'Ivoire",
    "width": 6879,
@@ -2458,7 +2462,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 269813,
+   "encodedAt": "2026-08-19T14:32:35Z"
   },
   "libya/safari/a-desert-track-crossing-gravel-plain-in-the-libyan-sahara": {
    "name": "libya/safari/a-desert-track-crossing-gravel-plain-in-the-libyan-sahara",
@@ -2594,8 +2600,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T23:03:59Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:27Z",
+   "sha256": "321048fa6dc829aaf3b1fb9198119249108e6d87611b6c55d1c4526076ccec7e",
    "slot": "dr-congo/culture",
    "alt": "Traffic jam on a street, DR Congo",
    "width": 8192,
@@ -2611,7 +2617,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 226285,
+   "encodedAt": "2026-08-19T14:32:36Z"
   },
   "cameroon/cities/a-street-in-the-bonapriso-quarter-of-douala-cameroon": {
    "name": "cameroon/cities/a-street-in-the-bonapriso-quarter-of-douala-cameroon",
@@ -2657,8 +2665,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-18T07:27:46Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:29Z",
+   "sha256": "70b1f093dbe4a3851cb014955262a8cdca197dd6b8570d4c09338a66a1c7fc9e",
    "slot": "guinea/beaches",
    "alt": "Palms in a tropical resort, Guinea",
    "width": 6000,
@@ -2674,7 +2682,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 568175,
+   "encodedAt": "2026-08-19T14:32:38Z"
   },
   "equatorial-guinea/luxury/a-hotel-terrace-overlooking-the-sea-at-malabo-equatorial-guinea": {
    "name": "equatorial-guinea/luxury/a-hotel-terrace-overlooking-the-sea-at-malabo-equatorial-guinea",
@@ -2870,8 +2880,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T19:15:28Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:23Z",
+   "sha256": "816b477c04be04574887de13cfe2bf65f170e3ed69b846460ad39c3363543182",
    "slot": "angola/beaches",
    "alt": "Cabo da roca with lighthouse, Angola",
    "width": 6720,
@@ -2887,7 +2897,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 245472,
+   "encodedAt": "2026-08-19T14:32:40Z"
   },
   "ethiopia/forests/a-round-church-surrounded-by-its-own-remnant-forest-ethiopia": {
    "name": "ethiopia/forests/a-round-church-surrounded-by-its-own-remnant-forest-ethiopia",
@@ -3398,8 +3410,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-14T06:46:26Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:27Z",
+   "sha256": "4d5ab6da2531e4b9478cd50fb06f16f69c3356477fdaacf4e351baa9f3bf3dc4",
    "slot": "egypt/beaches",
    "alt": "Tropical resort on a desert in egypt",
    "width": 6016,
@@ -3415,7 +3427,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 289522,
+   "encodedAt": "2026-08-19T14:32:41Z"
   },
   "egypt/outdoor/divers-entering-the-water-on-the-red-sea-coast-egypt": {
    "name": "egypt/outdoor/divers-entering-the-water-on-the-red-sea-coast-egypt",
@@ -4041,8 +4055,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-18T07:27:15Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:26Z",
+   "sha256": "7be0629127c189d884dcef759ef0233373936f4e4d7f4af8ac37153330696960",
    "slot": "djibouti/culture",
    "alt": "Man carrying bottles on his head, Djibouti",
    "width": 8333,
@@ -4058,7 +4072,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 178167,
+   "encodedAt": "2026-08-19T14:32:43Z"
   },
   "benin/traditional-people/a-somba-tata-fortified-mud-house-in-the-atakora-benin": {
    "name": "benin/traditional-people/a-somba-tata-fortified-mud-house-in-the-atakora-benin",
@@ -4472,8 +4488,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T23:05:30Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:28Z",
+   "sha256": "3340ee5598c44be278d9201767c7a1f9c6655ae693f038c5b607ce4b697793e4",
    "slot": "gabon/beaches",
    "alt": "Beach resort, Gabon",
    "width": 6138,
@@ -4489,7 +4505,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 216642,
+   "encodedAt": "2026-08-19T14:32:44Z"
   },
   "morocco/cities/jemaa-el-fnaa-square-in-marrakesh-filling-at-dusk-morocco": {
    "name": "morocco/cities/jemaa-el-fnaa-square-in-marrakesh-filling-at-dusk-morocco",
@@ -4872,8 +4890,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T23:04:45Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:28Z",
+   "sha256": "0723e108c475006c8ac5bc2a86e7751e2ab2e7af3f810c2c23f2779ded5716d3",
    "slot": "eritrea/beaches",
    "alt": "Wooden boats on the beach and moored at sea, Eritrea",
    "width": 6016,
@@ -4889,7 +4907,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 147832,
+   "encodedAt": "2026-08-19T14:32:45Z"
   },
   "madagascar/food/romazava-and-rice-served-at-a-malagasy-table-madagascar": {
    "name": "madagascar/food/romazava-and-rice-served-at-a-malagasy-table-madagascar",
@@ -5674,8 +5694,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T19:16:51Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:23Z",
+   "sha256": "dfb361664042bd8f4fd76e7e2bf93dbb5b98e58f7ab3446e56af00f0e722aa91",
    "slot": "burundi/culture",
    "alt": "Burundian traditional dance performance",
    "width": 6720,
@@ -5691,7 +5711,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 299895,
+   "encodedAt": "2026-08-19T14:32:47Z"
   },
   "gambia/festivals/the-kankurang-masked-figure-in-red-bark-and-leaves-the-gambia": {
    "name": "gambia/festivals/the-kankurang-masked-figure-in-red-bark-and-leaves-the-gambia",
@@ -6717,8 +6739,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T23:06:13Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:29Z",
+   "sha256": "88eabb4b281c28884b63f553cc12d079b5f87ebdb4537f4b089b8db0b662e3f4",
    "slot": "guinea-bissau/beaches",
    "alt": "Minimalist desert beachfront with palm trees, Guinea-Bissau",
    "width": 7008,
@@ -6734,7 +6756,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 186811,
+   "encodedAt": "2026-08-19T14:32:48Z"
   },
   "kenya/safari/wildebeest-crossing-the-mara-river-during-the-great-migration-kenya": {
    "name": "kenya/safari/wildebeest-crossing-the-mara-river-during-the-great-migration-kenya",
@@ -8496,8 +8520,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T19:15:57Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:23Z",
+   "sha256": "79ed00df27fe2f419edf1ffbf93ae96c03e060d04f21ba522357dded4dbc8176",
    "slot": "benin/culture",
    "alt": "Traditional african drumming ceremony indoors, Benin",
    "width": 6136,
@@ -8513,7 +8537,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 184490,
+   "encodedAt": "2026-08-19T14:32:49Z"
   },
   "guinea-bissau/why-visit/a-pirogue-crossing-still-water-between-two-bijagos-islands-guinea-biss": {
    "name": "guinea-bissau/why-visit/a-pirogue-crossing-still-water-between-two-bijagos-islands-guinea-biss",
@@ -10198,8 +10224,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-11T20:57:22Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:24Z",
+   "sha256": "7b5c40fd51b4a09da2e3b964de7480691ca626f71624b18240595a64dc3ba2bd",
    "slot": "cameroon/forests",
    "alt": "Remote village by the river in congo forest, Cameroon",
    "width": 6000,
@@ -10215,7 +10241,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 346275,
+   "encodedAt": "2026-08-19T14:32:51Z"
   },
   "zimbabwe/architecture/coursed-dry-stone-walling-at-great-zimbabwe": {
    "name": "zimbabwe/architecture/coursed-dry-stone-walling-at-great-zimbabwe",
@@ -10567,8 +10595,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T19:17:36Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:24Z",
+   "sha256": "34968ae0fae675be993b093177adb15db048c781da1a840ac8a433894e23bd43",
    "slot": "central-african-republic/wildlife",
    "alt": "Western lowland gorilla lying on grass, Central African Republic",
    "width": 6960,
@@ -10584,7 +10612,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 390729,
+   "encodedAt": "2026-08-19T14:32:53Z"
   },
   "malawi/architecture/the-stone-facade-of-the-blantyre-mission-church-malawi": {
    "name": "malawi/architecture/the-stone-facade-of-the-blantyre-mission-church-malawi",
@@ -10692,8 +10722,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T23:05:50Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:29Z",
+   "sha256": "54c9a28a9bb24616ff58064c3c7722486eabd84d6c2f8ce47bf16411c0c63de7",
    "slot": "gambia/beaches",
    "alt": "Colorful fishing boats on sandy beach, The Gambia",
    "width": 6000,
@@ -10709,7 +10739,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 238488,
+   "encodedAt": "2026-08-19T14:32:54Z"
   },
   "namibia/nature/the-dune-field-of-the-namib-at-first-light-namibia": {
    "name": "namibia/nature/the-dune-field-of-the-namib-at-first-light-namibia",
@@ -10942,8 +10974,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-18T07:27:30Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:28Z",
+   "sha256": "c6718eff4a51de477edc803b5806cc67f09b5fee51d2c75607090d787de65e0b",
    "slot": "eswatini/beaches",
    "alt": "Scenic river waterfall amidst rocky surroundings, Eswatini",
    "width": 6000,
@@ -10959,7 +10991,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 498669,
+   "encodedAt": "2026-08-19T14:32:56Z"
   },
   "benin/safari/a-herd-of-african-bush-elephants-drinking-at-a-waterhole-in-the-wild-b": {
    "name": "benin/safari/a-herd-of-african-bush-elephants-drinking-at-a-waterhole-in-the-wild-b",
@@ -11833,8 +11867,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T19:18:35Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:25Z",
+   "sha256": "474ba8b28881b2ff791349cb06265a77f8ca64ac998b068ca773d93a624142b5",
    "slot": "comoros/beaches",
    "alt": "Serene beach scene with boats in mauritius, Comoros",
    "width": 9284,
@@ -11850,7 +11884,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 266742,
+   "encodedAt": "2026-08-19T14:32:57Z"
   },
   "mali/food/grilled-capitaine-fish-with-rice-and-onion-sauce-on-a-plate-mali": {
    "name": "mali/food/grilled-capitaine-fish-with-rice-and-onion-sauce-on-a-plate-mali",
@@ -12941,8 +12977,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-15T19:24:05Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:26Z",
+   "sha256": "f7e07a34dfa293bb3d8bd2d81e74b9d4cd86ef2b492823d05e281c7005a19ea0",
    "slot": "congo/beaches",
    "alt": "Tropical beach scene with palm trees and waves, Congo",
    "width": 7008,
@@ -12958,7 +12994,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 372488,
+   "encodedAt": "2026-08-19T14:32:59Z"
   },
   "sao-tome-and-principe/culture/charming-tree-lined-street-with-traditional-buildings-in-a-historic-an": {
    "name": "sao-tome-and-principe/culture/charming-tree-lined-street-with-traditional-buildings-in-a-historic-an",
@@ -13251,8 +13289,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-18T07:27:33Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:28Z",
+   "sha256": "0109947be6d3d082c28ce35733d31cb6b603c09ff23c327eb54b709740220dc0",
    "slot": "ethiopia/beaches",
    "alt": "Sulfurous volcanic crater lake, Ethiopia",
    "width": 6000,
@@ -13268,7 +13306,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 363226,
+   "encodedAt": "2026-08-19T14:33:01Z"
   },
   "congo/wildlife/a-silverback-western-lowland-gorilla-in-dense-green-forest-congo": {
    "name": "congo/wildlife/a-silverback-western-lowland-gorilla-in-dense-green-forest-congo",
@@ -13716,8 +13756,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-14T06:46:31Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:29Z",
+   "sha256": "96b0546e3198c6406c73e8dafd1ef6cdf963c371910ae3c9a83cfff12a981c9a",
    "slot": "ghana/beaches",
    "alt": "Traditional fishing boat on accra beach, Ghana",
    "width": 6240,
@@ -13733,7 +13773,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 216337,
+   "encodedAt": "2026-08-19T14:33:02Z"
   },
   "kenya/beaches/white-sand-and-dhows-on-diani-beach-on-the-indian-ocean-kenya": {
    "name": "kenya/beaches/white-sand-and-dhows-on-diani-beach-on-the-indian-ocean-kenya",
@@ -17369,8 +17411,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-18T07:27:23Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:27Z",
+   "sha256": "ed537e88c5b584255dbb8e20b585a4176dd302eb9a05027b06f89719707b87fa",
    "slot": "equatorial-guinea/beaches",
    "alt": "Small turtle crawling on wet sandy beach near foamy water, Equatorial Guinea",
    "width": 6000,
@@ -17386,7 +17428,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 297794,
+   "encodedAt": "2026-08-19T14:33:03Z"
   },
   "tunisia/lakes-rivers/two-individuals-navigating-through-a-turbulent-river-crossing-during-a": {
    "name": "tunisia/lakes-rivers/two-individuals-navigating-through-a-turbulent-river-crossing-during-a",
@@ -18017,8 +18061,8 @@
     "url": "https://www.pexels.com/license/"
    },
    "chosenAt": "2026-08-18T07:26:50Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:23Z",
+   "sha256": "de65f835573d5cafe27e1eabbed59ca09322a6b934498a15b24d3ba07de873cd",
    "slot": "burkina-faso/beaches",
    "alt": "Drone shot of boats on a shore, Burkina Faso",
    "width": 8000,
@@ -18034,7 +18078,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 276402,
+   "encodedAt": "2026-08-19T14:33:05Z"
   },
   "zimbabwe/wildlife/elephants-crowding-a-pumped-waterhole-in-hwange-zimbabwe": {
    "name": "zimbabwe/wildlife/elephants-crowding-a-pumped-waterhole-in-hwange-zimbabwe",
@@ -18603,8 +18649,8 @@
     "url": "https://unsplash.com/license"
    },
    "chosenAt": "2026-08-15T19:14:41Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:22Z",
+   "sha256": "01c9e5fcfcceab3ab29732b774655f60fcd757d1fa9765811eeeff80b6451510",
    "slot": "algeria/beaches",
    "alt": "A light house sitting on top of a hill next to a body of water, Algeria",
    "width": 5498,
@@ -18620,7 +18666,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 190276,
+   "encodedAt": "2026-08-19T14:33:06Z"
   },
   "algeria/wildlife/a-fennec-fox-at-the-edge-of-dunes-in-the-algerian-sahara": {
    "name": "algeria/wildlife/a-fennec-fox-at-the-edge-of-dunes-in-the-algerian-sahara",
@@ -19221,8 +19269,8 @@
     "url": "https://unsplash.com/license"
    },
    "chosenAt": "2026-08-14T06:46:18Z",
-   "downloadedAt": null,
-   "sha256": null,
+   "downloadedAt": "2026-08-19T14:32:23Z",
+   "sha256": "9d743ed04f60f7ec1a1281061592bd2e993a2ca0e81532a51e095d89b4cb6cc3",
    "slot": "botswana/wildlife",
    "alt": "A group of elephants walking across a body of water, Botswana",
    "width": 5184,
@@ -19238,7 +19286,9 @@
     800,
     1200,
     1600
-   ]
+   ],
+   "bytes": 323600,
+   "encodedAt": "2026-08-19T14:33:07Z"
   },
   "algeria/eco-tourism/an-empty-roman-street-at-djemila-with-nobody-on-it-algeria": {
    "name": "algeria/eco-tourism/an-empty-roman-street-at-djemila-with-nobody-on-it-algeria",
