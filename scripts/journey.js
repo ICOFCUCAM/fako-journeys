@@ -301,6 +301,75 @@
     }
   }
 
+  /* ---- FLYING TO THE COUNTRY -------------------------------------------
+   * The specification's second verb. Choosing a country should not merely
+   * ring it on a continent-sized drawing where Rwanda is four pixels across;
+   * the map should go there.
+   *
+   * It is the viewBox that moves, not a transform. A transform scales the
+   * strokes with it — a 1px border becomes a 6px border at 6x — and it scales
+   * the transparent hit discs too, so the targets would drift away from the
+   * countries under them. Moving the viewBox moves the camera: the strokes
+   * are non-scaling, the discs stay on their centroids, and the drawing is
+   * resolution-independent all the way in.
+   *
+   * THE ASPECT RATIO IS HELD. The element has no height of its own — it takes
+   * it from the viewBox — so a target box of a different shape resizes the
+   * element and shifts the page under the reader. This page is measured for
+   * layout shift; a fly-to that scores 0.4 CLS is a fly-to that has to be
+   * reverted. Every target is built at the home box's own proportion.
+   */
+  var HOME = mapEl ? (mapEl.getAttribute('viewBox') || '0 0 1000 1060') : null;
+  var ASPECT = HOME ? (function (v) {
+    var n = v.split(/[ ,]+/).map(Number); return n[2] / n[3]; }(HOME)) : 1;
+  var flying = null;
+
+  function boxOf(slug) {
+    var el = mapBy[slug];
+    if (!el || !el.getBBox) return null;
+    try { return el.getBBox(); } catch (e) { return null; }
+  }
+
+  /* A box around the country, at the home proportion, never smaller than a
+     minimum and never larger than the continent. The minimum is what stops
+     Comoros filling the frame with three dots and no coastline to say where
+     they are: a country is only legible with some of its neighbours in shot. */
+  function frameFor(slug) {
+    var b = boxOf(slug);
+    if (!b) return HOME;
+    var home = HOME.split(/[ ,]+/).map(Number);
+    var pad = Math.max(b.width, b.height) * 0.55 + 40;
+    var w = Math.max(b.width + pad * 2, 300);
+    var h = w / ASPECT;
+    if (h < b.height + pad * 2) { h = b.height + pad * 2; w = h * ASPECT; }
+    if (w > home[2]) { w = home[2]; h = home[3]; }
+    var cx = b.x + b.width / 2, cy = b.y + b.height / 2;
+    var x = Math.min(Math.max(cx - w / 2, home[0]), home[0] + home[2] - w);
+    var y = Math.min(Math.max(cy - h / 2, home[1]), home[1] + home[3] - h);
+    return [x, y, w, h].map(function (n) { return Math.round(n * 10) / 10; })
+      .join(' ');
+  }
+
+  function setBox(v) { if (mapEl) mapEl.setAttribute('viewBox', v); }
+
+  function flyTo(target) {
+    if (!mapEl) return;
+    var from = (mapEl.getAttribute('viewBox') || HOME).split(/[ ,]+/).map(Number);
+    var to = String(target).split(/[ ,]+/).map(Number);
+    if (flying) { cancelAnimationFrame(flying); flying = null; }
+    /* Reduced motion gets the destination, not a slower journey to it. */
+    if (reduced.matches) { setBox(to.join(' ')); return; }
+    var t0 = performance.now(), ms = 620;
+    var tick = function (now) {
+      var k = Math.min(1, (now - t0) / ms);
+      var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      setBox(from.map(function (v, i) {
+        return Math.round((v + (to[i] - v) * e) * 10) / 10; }).join(' '));
+      if (k < 1) flying = requestAnimationFrame(tick); else flying = null;
+    };
+    flying = requestAnimationFrame(tick);
+  }
+
   /* Live, not on submit. The controls are radios and checkboxes, so `change`
      fires on the press that matters and on nothing else; `input` would fire
      for the sentence box too, and the sentence has its own button. */
@@ -384,6 +453,7 @@
     var fs = document.getElementById('jn-field');
     if (fs) fs.hidden = true;
     paintMap();
+    flyTo(frameFor(want));
     openComposer(want);
     return true;
   }
@@ -415,6 +485,10 @@
          scored the same get to take turns. It travels in the link, so a
          shared journey is still the same journey. */
       brief.seed = (brief.seed + 1) % 7;
+      /* Back to the whole continent: the questions are about all of it again. */
+      chosen = null;
+      paintMap();
+      flyTo(HOME);
       reveal.hidden = true;
       form.hidden = false;
       var fieldSec = document.getElementById('jn-field');

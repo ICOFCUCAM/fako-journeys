@@ -742,7 +742,11 @@
 .jn-atlas-in{position:relative}
 .jn-atlas .af-stamp{display:block;margin-bottom:14px}
 .jn-atlas-fig{margin:0}
-.jn-map{display:block;width:100%;height:auto;overflow:visible}
+/* Clipped, not visible. The viewBox moves when a country is chosen, and
+   anything outside it is the rest of the continent — which at 3x zoom is most
+   of the continent, drawn across the caption and down the page. `overflow` on
+   an SVG is the frame of the drawing, and this drawing has one. */
+.jn-map{display:block;width:100%;height:auto;overflow:hidden}
 
 /* The base state: an outline continent on the page's own ground. Every stroke
    is non-scaling, because this drawing is 1000 units wide and rendered at
