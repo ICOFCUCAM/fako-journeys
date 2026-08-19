@@ -157,6 +157,19 @@ def cmd_srcset(args):
     return srcset.run(write=bool(getattr(args, "fetch", False))) or rc
 
 
+def cmd_assets(args):
+    """Survey the photographs this site hotlinks. Downloads nothing.
+
+    3,585 <img> tags point at Pexels and 332 at Unsplash. This maps every one
+    of them to the pages using it, joins it to what the resolver recorded when
+    it chose the photograph, and says KEEP, REPLACE, PROVENANCE REVIEW or
+    REMOVE — with the reason in the resolver's own numbers. See
+    tourism/assets.py for the rules and why they are those rules.
+    """
+    from tourism import assets
+    return assets.run(write=bool(getattr(args, "fetch", False)))
+
+
 def cmd_modern(args):
     """AVIF and WebP beside every photograph, and a <picture> around every tag.
 
@@ -1024,7 +1037,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
