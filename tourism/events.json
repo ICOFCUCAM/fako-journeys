@@ -7,6 +7,7 @@
   "pacing": "a pacing key from journeys.json",
   "party": "a party key from journeys.json",
   "country": "a country slug",
+  "from": "which door a country was chosen through \u2014 'map' or 'grid', never a place",
   "to": "a country slug",
   "region": "a region key from regions.json",
   "strand": "a strand key from strands.json",
@@ -52,6 +53,10 @@
    "month"
   ],
   "country_chosen": [
+   "country",
+   "from"
+  ],
+  "map_widened": [
    "country"
   ],
   "stage_changed": [
