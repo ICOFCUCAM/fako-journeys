@@ -101,6 +101,45 @@ treated as a forecast.
 1,305 of the site's 1,427 audited photographs are Pexels, and Pexels originals
 are large, almost all of the overestimate was there.
 
+## Phase A — the free fix, applied
+
+`build.py bound`, 750 heroes across 750 pages, no purchase and no new asset.
+
+Each of those tags already stated its own geometry and asked for none of it:
+
+    <img src="https://images.unsplash.com/photo-1610133290889-0ed892ce5157"
+         width="1600" height="900" fetchpriority="high"
+         style="aspect-ratio:16/9">
+
+Sixteen by nine at 1600, and a src with no width, so the provider sent whatever
+the photographer uploaded and the CSS cropped it to 16:9 and threw the rest
+away. The pass gives each one the srcset its own attributes imply, at the
+ladder the library uses, with `sizes` matching the ~800px column the hero
+actually paints in. Same photograph, same crop, same page — fewer bytes.
+
+| | before | after |
+|---|---:|---:|
+| unbounded heroes | 836 | **0** |
+| estimated hero payload | 2.04 GB | **0.27 GB** |
+| median hero | ~2.6 MB | **0.32 MB** |
+
+**An 87% cut to the site's hero payload, for no money.** Nothing on this site
+now ships a full-resolution original to a phone.
+
+Two things this exposed:
+
+**The table was attributing bytes to the wrong reference.** `est_bytes` asks
+"is any use of this photograph unbounded", which is right for the acquisition
+plan — one row per photograph — and wrong for the hero table, where a row is
+one page. A hero already bounded, whose photograph also appeared as an
+unbounded lazy card three pages away, reported 2.60 MB for a reference costing
+0.32. Fixed by passing the hero's own use and nothing else.
+
+**422 unbounded references remain, all of them lazy.** Non-hero cards below the
+fold, so a phone never fetches them on arrival — but somebody who scrolls does.
+The same pass would bound them; it is held back only because the instruction
+was heroes, and because they need their own browser run.
+
 ## Why nothing moved
 
 Not because migration does not work. `/places/algeria/…` is still −98%.

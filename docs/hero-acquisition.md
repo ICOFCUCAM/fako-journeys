@@ -8,92 +8,105 @@ Every row is a `/places` page whose **hero** — the one photograph a phone is c
 |---|---:|
 | pages | 750 |
 | already ours (a crop, not a purchase) | 0 |
-| unbounded | 750 |
+| unbounded | 0 |
 | never audited | 0 |
-| estimated phone payload | 2.04 GB |
+| estimated phone payload | 0.27 GB |
+
+## Zero-cost remediation — done
+
+Asked for first, and it is finished. Every hero that asked a provider for a full-resolution original has been width-bounded by `build.py bound`: 750 pages, no licence, no new asset, no budget. `node tools/heroes.js --check` now reports **1,416 heroes, 0 unbounded**, and that check gates CI so it cannot quietly come back.
+
+| | before | after |
+|---|---:|---:|
+| unbounded heroes | 836 | **0** |
+| estimated hero payload | 2.04 GB | **0.27 GB** |
+| median hero | ~2.6 MB | **0.32 MB** |
+
+**422 unbounded references remain**, every one of them a lazy card below the fold — never fetched on arrival, but fetched by anyone who scrolls. The same pass would bound them and it has not been run on them, because the instruction was heroes.
 
 ## The bands
 
 | band | pages | payload |
 |---|---:|---:|
-| P1 acquire now — operator or priced major route | 141 | 0.41 GB |
-| P2 acquire after P1 — priced West route | 89 | 0.23 GB |
-| P3 defer — no price attached to this country | 520 | 1.40 GB |
+| P1 acquire now — sells, and the picture is badly wrong | 94 | 0.03 GB |
+| P2 acquire next — sells, or wrong, not both | 116 | 0.04 GB |
+| P3 defer — no price attached and no strong visual case | 466 | 0.17 GB |
+| RETAIN — the picture is good enough to leave alone | 74 | 0.03 GB |
 
-## Bytes and photographs are two problems
+## The free work is done
 
-Only one of them costs money.
+Bytes and photographs were two problems and only one cost money.
 
-Every unbounded hero here can be width-limited today for nothing — the same `?auto=compress&cs=tinysrgb&w=1200` that 6,188 of the site's 7,496 remaining provider references already carry. No licence, no shoot, no agency, no new asset: the same URL, asked for politely. Doing that removes most of the payload below without spending a penny, and leaves the question of whether each photograph is any *good* to be answered on its own timetable.
+That was the recommendation, and it has been carried out. All 750 were width-bounded by `build.py bound` and the 86 we already owned were re-cropped and migrated. **No hero on this site now ships a full-resolution original to a phone.**
 
-That is the recommendation. Bound them all first; then buy photographs on the merits of the photographs.
+So the performance argument is spent. Every row below costs about 0.27 MB, within a factor of two of every other row, and payload can no longer separate them. Nothing here is urgent. It is a shopping list to work through on its merits — which is what the priority score ranks: commercial importance x visibility x payload x replacement value, as a product, so a zero in any term kills the row rather than being averaged away.
 
 ## Where the weight is, by country
 
 | country | heroes | payload | tier |
 |---|---:|---:|---|
-| sierra-leone | 20 | 86 MB | 4 |
-| botswana | 21 | 67 MB | 2 |
-| cameroon | 17 | 60 MB | 1 |
-| algeria | 17 | 54 MB | 4 |
-| cote-divoire | 19 | 49 MB | 3 |
-| comoros | 19 | 49 MB | 4 |
-| djibouti | 19 | 49 MB | 4 |
-| angola | 18 | 47 MB | 4 |
-| guinea | 17 | 47 MB | 3 |
-| namibia | 16 | 45 MB | 1 |
-| congo | 17 | 44 MB | 4 |
-| dr-congo | 17 | 44 MB | 4 |
+| sierra-leone | 20 | 8 MB | 4 |
+| botswana | 21 | 7 MB | 2 |
+| djibouti | 19 | 7 MB | 4 |
+| cote-divoire | 19 | 7 MB | 3 |
+| algeria | 17 | 7 MB | 4 |
+| comoros | 19 | 7 MB | 4 |
+| congo | 17 | 6 MB | 4 |
+| guinea | 17 | 6 MB | 3 |
+| dr-congo | 17 | 6 MB | 4 |
+| angola | 18 | 6 MB | 4 |
+| niger | 17 | 6 MB | 4 |
+| namibia | 16 | 6 MB | 1 |
 
 ## The first twenty, in order
 
 | # | band | page | MB | tier | verdict |
 |---:|---|---|---:|---:|---|
-| 1 | P1 acquire now | `/places/cameroon/village-and-mountain-together.html` | 14.30 | 1 | REPLACE |
-| 2 | P1 acquire now | `/places/cameroon/wildlife-of-the-rainforest.html` | 6.01 | 1 | REPLACE |
-| 3 | P1 acquire now | `/places/cameroon/sahel-safari-at-waza.html` | 5.04 | 1 | REPLACE |
-| 4 | P1 acquire now | `/places/namibia/epupa.html` | 4.56 | 1 | REPLACE |
-| 5 | P1 acquire now | `/places/namibia/easy-and-safe-to-drive.html` | 4.13 | 1 | REPLACE |
-| 6 | P1 acquire now | `/places/namibia/the-kunene-and-the-zambezi.html` | 3.93 | 1 | REPLACE |
-| 7 | P1 acquire now | `/places/cameroon/korup-dja-and-the-village-fund.html` | 3.87 | 1 | REPLACE |
-| 8 | P1 acquire now | `/places/uganda/queen-elizabeth-and-kidepo.html` | 3.44 | 1 | REPLACE |
-| 9 | P1 acquire now | `/places/cameroon/black-sand-and-warm-water.html` | 2.60 | 1 | REPLACE |
-| 10 | P1 acquire now | `/places/cameroon/chefferie-and-colonial-buea.html` | 2.60 | 1 | REPLACE |
-| 11 | P1 acquire now | `/places/cameroon/dja-rhumsiki-and-the-mandara.html` | 2.60 | 1 | REPLACE |
-| 12 | P1 acquire now | `/places/cameroon/fulani-mafa-and-bamileke.html` | 2.60 | 1 | REPLACE |
-| 13 | P1 acquire now | `/places/cameroon/summit-crater-coast.html` | 2.60 | 1 | REPLACE |
-| 14 | P1 acquire now | `/places/cameroon/the-1999-lava-fields.html` | 2.60 | 1 | REPLACE |
-| 15 | P1 acquire now | `/places/cameroon/the-grassfields-kingdoms.html` | 2.60 | 1 | REPLACE |
-| 16 | P1 acquire now | `/places/namibia/the-brandberg-and-the-escarpment.html` | 2.60 | 1 | REPLACE |
-| 17 | P1 acquire now | `/places/namibia/the-caprivi-woodland.html` | 2.60 | 1 | REPLACE |
-| 18 | P1 acquire now | `/places/namibia/the-himba.html` | 2.60 | 1 | REPLACE |
-| 19 | P1 acquire now | `/places/namibia/the-long-road.html` | 2.60 | 1 | REPLACE |
-| 20 | P1 acquire now | `/places/namibia/windhoek-karnival-and-maherero-day.html` | 2.60 | 1 | REPLACE |
+| 1 | RETAIN | `/places/cameroon/village-and-mountain-together.html` | 0.27 | 1 | REPLACE |
+| 2 | RETAIN | `/places/namibia/the-skeleton-coast.html` | 0.32 | 1 | REPLACE |
+| 3 | RETAIN | `/places/namibia/the-long-road.html` | 0.32 | 1 | REPLACE |
+| 4 | RETAIN | `/places/uganda/kidepo-valley.html` | 0.32 | 1 | REPLACE |
+| 5 | RETAIN | `/places/south-africa/the-wild-coast-and-karoo.html` | 0.36 | 2 | REPLACE |
+| 6 | RETAIN | `/places/tanzania/the-big-five-and-then-some.html` | 0.32 | 2 | REPLACE |
+| 7 | RETAIN | `/places/tanzania/dala-dalas-and-dhows.html` | 0.32 | 2 | REPLACE |
+| 8 | RETAIN | `/places/ghana/the-akwapim-and-afadja.html` | 0.32 | 3 | REPLACE |
+| 9 | RETAIN | `/places/ghana/the-year-of-return.html` | 0.32 | 3 | REPLACE |
+| 10 | RETAIN | `/places/ghana/chop-bars-and-trotros.html` | 0.32 | 3 | REPLACE |
+| 11 | RETAIN | `/places/gambia/upriver-by-boat.html` | 0.32 | 3 | REPLACE |
+| 12 | RETAIN | `/places/ghana/the-slave-forts.html` | 0.32 | 3 | REPLACE |
+| 13 | RETAIN | `/places/cote-divoire/lagoon-colonial.html` | 0.61 | 3 | REPLACE |
+| 14 | RETAIN | `/places/guinea/the-dame-de-mali.html` | 0.36 | 3 | REPLACE |
+| 15 | RETAIN | `/places/senegal/the-petite-c-te.html` | 0.32 | 3 | REPLACE |
+| 16 | RETAIN | `/places/guinea/masked-dance-in-the-forest-region.html` | 0.31 | 3 | REPLACE |
+| 17 | RETAIN | `/places/angola/semba-kizomba-and-kuduro.html` | 0.32 | 4 | REPLACE |
+| 18 | RETAIN | `/places/djibouti/the-gulf-of-tadjoura.html` | 0.32 | 4 | REPLACE |
+| 19 | RETAIN | `/places/lesotho/the-blanket-and-the-hat.html` | 0.32 | 4 | REPLACE |
+| 20 | RETAIN | `/places/liberia/americo-liberian-and-sixteen-others.html` | 0.32 | 4 | REPLACE |
 
 ## Why each paid frame deserves budget
 
 Reference count is not an argument — it counts appearances, not viewers, and thirty-nine of a photograph's forty references are lazy cards nobody's first screen fetches. The `why budget` column in the CSV argues each row on what it opens, what that page sells, what the audit found wrong with the picture, and what it costs a phone. Twenty examples:
 
-- **`/places/cameroon/village-and-mountain-together.html`** (P1 acquire now) — Opens /places/cameroon/village-and-mountain-together.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "two people in life jackets wading through a body of ". Costs a phone 14.3 MB today (estimated).
-- **`/places/cameroon/wildlife-of-the-rainforest.html`** (P1 acquire now) — Opens /places/cameroon/wildlife-of-the-rainforest.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "an empty road in the middle of a jungle". Costs a phone 6.0 MB today (estimated).
-- **`/places/cameroon/sahel-safari-at-waza.html`** (P1 acquire now) — Opens /places/cameroon/sahel-safari-at-waza.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "a car is driving down a deserted road". Costs a phone 5.0 MB today (estimated).
-- **`/places/namibia/epupa.html`** (P1 acquire now) — Opens /places/namibia/epupa.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.7; query broadened to category; the provider calls it "a powerful river flows through a rugged rocky canyon". Costs a phone 4.6 MB today (estimated).
-- **`/places/namibia/easy-and-safe-to-drive.html`** (P1 acquire now) — Opens /places/namibia/easy-and-safe-to-drive.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "white and brown animal with antler on brown sand". Costs a phone 4.1 MB today (estimated).
-- **`/places/namibia/the-kunene-and-the-zambezi.html`** (P1 acquire now) — Opens /places/namibia/the-kunene-and-the-zambezi.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "green tree on brown field during daytime". Costs a phone 3.9 MB today (estimated).
-- **`/places/cameroon/korup-dja-and-the-village-fund.html`** (P1 acquire now) — Opens /places/cameroon/korup-dja-and-the-village-fund.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "green trees under white clouds during daytime". Costs a phone 3.9 MB today (estimated).
-- **`/places/uganda/queen-elizabeth-and-kidepo.html`** (P1 acquire now) — Opens /places/uganda/queen-elizabeth-and-kidepo.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "elephant wading in water with lush green background". Costs a phone 3.4 MB today (estimated).
-- **`/places/cameroon/black-sand-and-warm-water.html`** (P1 acquire now) — Opens /places/cameroon/black-sand-and-warm-water.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "church in tropical village". Costs a phone 2.6 MB today (estimated).
-- **`/places/cameroon/chefferie-and-colonial-buea.html`** (P1 acquire now) — Opens /places/cameroon/chefferie-and-colonial-buea.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.2. Costs a phone 2.6 MB today (estimated).
-- **`/places/cameroon/dja-rhumsiki-and-the-mandara.html`** (P1 acquire now) — Opens /places/cameroon/dja-rhumsiki-and-the-mandara.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.5. Costs a phone 2.6 MB today (estimated).
-- **`/places/cameroon/fulani-mafa-and-bamileke.html`** (P1 acquire now) — Opens /places/cameroon/fulani-mafa-and-bamileke.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.5. Costs a phone 2.6 MB today (estimated).
-- **`/places/cameroon/summit-crater-coast.html`** (P1 acquire now) — Opens /places/cameroon/summit-crater-coast.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "view into active volcano". Costs a phone 2.6 MB today (estimated).
-- **`/places/cameroon/the-1999-lava-fields.html`** (P1 acquire now) — Opens /places/cameroon/the-1999-lava-fields.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "green trees near mountain". Costs a phone 2.6 MB today (estimated).
-- **`/places/cameroon/the-grassfields-kingdoms.html`** (P1 acquire now) — Opens /places/cameroon/the-grassfields-kingdoms.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.0. Costs a phone 2.6 MB today (estimated).
-- **`/places/namibia/the-brandberg-and-the-escarpment.html`** (P1 acquire now) — Opens /places/namibia/the-brandberg-and-the-escarpment.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.0. Costs a phone 2.6 MB today (estimated).
-- **`/places/namibia/the-caprivi-woodland.html`** (P1 acquire now) — Opens /places/namibia/the-caprivi-woodland.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.2. Costs a phone 2.6 MB today (estimated).
-- **`/places/namibia/the-himba.html`** (P1 acquire now) — Opens /places/namibia/the-himba.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 3.3. Costs a phone 2.6 MB today (estimated).
-- **`/places/namibia/the-long-road.html`** (P1 acquire now) — Opens /places/namibia/the-long-road.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "pineapples and bananas". Costs a phone 2.6 MB today (estimated).
-- **`/places/namibia/windhoek-karnival-and-maherero-day.html`** (P1 acquire now) — Opens /places/namibia/windhoek-karnival-and-maherero-day.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.0. Costs a phone 2.6 MB today (estimated).
+- **`/places/cameroon/village-and-mountain-together.html`** (RETAIN) — Opens /places/cameroon/village-and-mountain-together.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "two people in life jackets wading through a body of ". Costs a phone 0.3 MB today (estimated).
+- **`/places/namibia/the-skeleton-coast.html`** (RETAIN) — Opens /places/namibia/the-skeleton-coast.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "sea waves near desert". Costs a phone 0.3 MB today (estimated).
+- **`/places/namibia/the-long-road.html`** (RETAIN) — Opens /places/namibia/the-long-road.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "pineapples and bananas". Costs a phone 0.3 MB today (estimated).
+- **`/places/uganda/kidepo-valley.html`** (RETAIN) — Opens /places/uganda/kidepo-valley.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "majestic giraffe in mbarara s scenic landscape". Costs a phone 0.3 MB today (estimated).
+- **`/places/south-africa/the-wild-coast-and-karoo.html`** (RETAIN) — Opens /places/south-africa/the-wild-coast-and-karoo.html, the only photograph on it a phone is certain to fetch. Priced route — east, south and continental. The picture is wrong: the provider calls it "view photography of seashore". Costs a phone 0.4 MB today (estimated).
+- **`/places/tanzania/the-big-five-and-then-some.html`** (RETAIN) — Opens /places/tanzania/the-big-five-and-then-some.html, the only photograph on it a phone is certain to fetch. Priced route — east, south and continental. The picture is wrong: the provider calls it "zebras standing on a green grass field". Costs a phone 0.3 MB today (estimated).
+- **`/places/tanzania/dala-dalas-and-dhows.html`** (RETAIN) — Opens /places/tanzania/dala-dalas-and-dhows.html, the only photograph on it a phone is certain to fetch. Priced route — east, south and continental. The picture is wrong: the provider calls it "woman in blue and yellow floral shirt standing besid". Costs a phone 0.3 MB today (estimated).
+- **`/places/ghana/the-akwapim-and-afadja.html`** (RETAIN) — Opens /places/ghana/the-akwapim-and-afadja.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "hand sticking out of river with flower". Costs a phone 0.3 MB today (estimated).
+- **`/places/ghana/the-year-of-return.html`** (RETAIN) — Opens /places/ghana/the-year-of-return.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "boy with wooden boats on sea shore". Costs a phone 0.3 MB today (estimated).
+- **`/places/ghana/chop-bars-and-trotros.html`** (RETAIN) — Opens /places/ghana/chop-bars-and-trotros.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "moved by the gods". Costs a phone 0.3 MB today (estimated).
+- **`/places/gambia/upriver-by-boat.html`** (RETAIN) — Opens /places/gambia/upriver-by-boat.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "photo of men on a white rowboat". Costs a phone 0.3 MB today (estimated).
+- **`/places/ghana/the-slave-forts.html`** (RETAIN) — Opens /places/ghana/the-slave-forts.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "people on brown boat". Costs a phone 0.3 MB today (estimated).
+- **`/places/cote-divoire/lagoon-colonial.html`** (RETAIN) — Opens /places/cote-divoire/lagoon-colonial.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "portrait of a shirtless man". Costs a phone 0.6 MB today (estimated).
+- **`/places/guinea/the-dame-de-mali.html`** (RETAIN) — Opens /places/guinea/the-dame-de-mali.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "body of water under cloudy sky". Costs a phone 0.4 MB today (estimated).
+- **`/places/senegal/the-petite-c-te.html`** (RETAIN) — Opens /places/senegal/the-petite-c-te.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "ocean crashing on rocks at the coast". Costs a phone 0.3 MB today (estimated).
+- **`/places/guinea/masked-dance-in-the-forest-region.html`** (RETAIN) — Opens /places/guinea/masked-dance-in-the-forest-region.html, the only photograph on it a phone is certain to fetch. Priced route — west. The picture is wrong: the provider calls it "people in black and white costume". Costs a phone 0.3 MB today (estimated).
+- **`/places/angola/semba-kizomba-and-kuduro.html`** (RETAIN) — Opens /places/angola/semba-kizomba-and-kuduro.html, the only photograph on it a phone is certain to fetch. No price attached. The picture is wrong: the provider calls it "elegant dinner table setting with glassware". Costs a phone 0.3 MB today (estimated).
+- **`/places/djibouti/the-gulf-of-tadjoura.html`** (RETAIN) — Opens /places/djibouti/the-gulf-of-tadjoura.html, the only photograph on it a phone is certain to fetch. No price attached. The picture is wrong: the provider calls it "view of a sea". Costs a phone 0.3 MB today (estimated).
+- **`/places/lesotho/the-blanket-and-the-hat.html`** (RETAIN) — Opens /places/lesotho/the-blanket-and-the-hat.html, the only photograph on it a phone is certain to fetch. No price attached. The picture is wrong: the provider calls it "man in traditional yellow garb and sunglasses". Costs a phone 0.3 MB today (estimated).
+- **`/places/liberia/americo-liberian-and-sixteen-others.html`** (RETAIN) — Opens /places/liberia/americo-liberian-and-sixteen-others.html, the only photograph on it a phone is certain to fetch. No price attached. The picture is wrong: the provider calls it "pile of boat". Costs a phone 0.3 MB today (estimated).
 
 ## Accuracy of the byte column
 

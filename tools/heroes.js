@@ -3,6 +3,7 @@
  *
  *     node tools/heroes.js            # the census
  *     node tools/heroes.js --list     # every page whose hero is still hotlinked
+ *     node tools/heroes.js --check    # fail if any hero is unbounded
  *
  * WHY THIS EXISTS
  *
@@ -120,6 +121,26 @@ for (const r of rows) {
     r.kind === "published-not-rewritten" ? s.pub++ : s.unknown++;
     if (!r.bounded) s.unbounded++;
   }
+}
+
+/* A GATE, NOW THAT THE ANSWER IS ZERO.
+ *
+ * Every hero on this site is either first-party or asks its provider for a
+ * width. That took two migrations and a bounding pass to reach, and it is one
+ * careless generator change away from being untrue again — a new page shipped
+ * with a bare provider URL puts a full-resolution original back in front of a
+ * phone, and nothing else in the suite would notice.
+ *
+ * So: --check fails if any hero is unbounded. Cheap, and it is the property
+ * every measurement in docs/weight-baseline.md turns on. */
+if (process.argv.includes("--check")) {
+  const bad = rows.filter((r) => r.kind !== "ours" && r.kind !== "none" && !r.bounded);
+  for (const r of bad.slice(0, 20)) console.log(`FAIL\t${r.rel}\t${r.url}`);
+  console.log(
+    `${bad.length ? "FAIL" : "PASS"}\tno hero asks a provider for the full original\t` +
+    `${rows.filter((r) => r.kind !== "none").length} hero(es), ${bad.length} unbounded`
+  );
+  process.exit(bad.length ? 1 : 0);
 }
 
 if (process.argv.includes("--list")) {

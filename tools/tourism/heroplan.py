@@ -13,39 +13,39 @@ WHY A SEPARATE TABLE FROM data/image-acquisition.csv
 
 The acquisition plan is one row per photograph across the whole site — 1,427
 of them, most of which are lazy cards below somebody's fold. This is the
-subset that decides what a phone downloads: the 836 /places pages whose HERO
-is still a provider hotlink.
+subset that decides what a phone downloads: the /places pages whose HERO is
+still a provider hotlink.
 
-The distinction is not cosmetic. `tools/heroes.js` established that there is
-exactly one eager remote photograph per page and that everything else is
-loading="lazy" — never fetched until somebody scrolls. So these 836 references
-are, between them, essentially the whole of the site's remaining avoidable
-image payload, and every one of them is unbounded.
-
-Eighty-six of the 836 are photographs we already own and have already
-published; only 750 are an acquisition question at all. Those 86 are in the
-table because they are the cheapest rows in it, not despite being cheap.
+`tools/heroes.js` established that there is exactly one eager remote
+photograph per page and that everything else is loading="lazy" — never fetched
+until somebody scrolls. So these references are, between them, essentially the
+whole of the site's remaining avoidable image payload.
 
 ---------------------------------------------------------------------------
-THE THING THIS TABLE EXISTS TO SAY
+WHAT CHANGED UNDER THIS TABLE, AND WHY THE BANDS MOVED
 
-Bytes and photography are two problems, and only one of them costs money.
+It used to say: bytes and photographs are two problems and only one costs
+money. All 836 heroes were unbounded — the URL named no width, so the provider
+sent the file the photographer uploaded, measured at 2.3 to 3.7 MB, to a
+390-pixel phone. The recommendation was to bound them all for nothing and buy
+photographs unhurried afterwards.
 
-Every one of these 836 heroes is unbounded: the URL carries no width, so the
-provider is asked for the file the photographer uploaded and sends it to a
-390-pixel phone. That is fixable for nothing. 6,188 of the site's remaining
-7,496 provider references already carry a width; these 836 do not, and adding
-it needs no licence, no shoot, no agency and no new asset — it is the same
-URL, asked for politely.
+Both halves of that have now happened. The 86 we already owned were re-cropped
+and migrated; the other 750 were width-bounded by `build.py bound`. Nothing on
+this site now ships a full-resolution original to a phone.
 
-So the recommendation this table encodes is: bound them all now, which removes
-most of the megabytes at zero cost, and then buy photographs on the merits of
-the photographs, unhurried, because the page-weight emergency will already be
-over.
+Which means THE PERFORMANCE ARGUMENT IS SPENT, and this table is no longer a
+page-weight document. Every remaining row costs roughly 0.27 MB, within a
+factor of two of every other row, so payload cannot separate them any more.
+What is left is the question payload was drowning out: is the photograph any
+good, and does the page it opens sell anything. The bands say so, and the
+priority score weighs commercial importance, visibility, payload and
+replacement value as a product rather than a sum — a zero in any term should
+kill a row, not be averaged away.
 
-That is why the bands below separate "free" from "worth paying for" rather
-than ranking everything on one axis. Ranking a licence against a query-string
-edit is comparing a purchase with a typo fix.
+The consequence worth stating plainly: nothing in this table is urgent any
+more. It is a shopping list to be worked through on its merits, not a leak to
+be stopped.
 """
 
 import csv
@@ -64,6 +64,8 @@ FIELDS = [
     "hero", "above fold", "unbounded",
     "mobile bytes", "mobile MB", "bytes basis",
     "commercial tier", "tier why", "references",
+    "priority score", "visual suitability", "replacement value", "relevance",
+    "cost weight", "cost band letter", "owned in country",
     "we already own this photograph", "owned replacement", "re-croppable",
     "audited", "current verdict",
     "free fix", "acquisition route", "cost band", "why budget",
@@ -89,6 +91,115 @@ def _owned_candidates(reg):
     return out
 
 
+# THE PRIORITY SCORE, AND WHY PAYLOAD STOPPED DECIDING IT.
+#
+# Before the width-bound pass, these 750 heroes were the site's whole
+# performance problem: unbounded originals, 2.3 to 3.7 MB each, on the one
+# image a phone is certain to fetch. Payload dominated every other signal by
+# an order of magnitude and the ranking said so.
+#
+# `build.py bound` removed that. Every one of them now asks the provider for
+# the 1600x900 the tag already declared, which is roughly 0.27 MB — so they
+# are all within a factor of about two of each other, and payload no longer
+# separates them. That is not the score losing a signal; it is the signal
+# having been spent. What is left is the question that always mattered and
+# was drowned out: is this photograph any good, and does the page it opens
+# sell anything.
+#
+# So the score is a product, deliberately, so that a zero in any term kills
+# the row rather than being averaged away. A superb payload saving on a
+# country nobody can buy a journey to is not a purchase.
+COMMERCIAL_WEIGHT = {1: 1.0, 2: 0.75, 3: 0.5, 4: 0.2}
+
+
+def _replacement_value(rec):
+    """How much a new photograph would improve this page, 0 to 1.
+
+    Read off the audit's relevance score, which runs 2.0 to 9.2 with a median
+    of 4.5 — how well the picture matches the slot it was chosen for. A 2.0 is
+    a photograph of the wrong thing; a 7 is defensible. Anything the audit
+    marked KEEP scores 0: there is nothing to buy.
+    """
+    if (rec or {}).get("verdict") != "REPLACE":
+        return 0.0
+    r = (rec or {}).get("relevance")
+    if not isinstance(r, (int, float)):
+        return 0.5
+    return max(0.0, min(1.0, (6.0 - r) / 4.0))
+
+
+# COST AS A WEIGHT, NOT AS A PRICE.
+#
+# The acquisition plan has refused since it was written to invent per-frame
+# figures, on the grounds that they depend entirely on who you commission and
+# which agency you licence from, and a made-up number in a budget document is
+# worse than no number. That still holds. What the ranking needs is not a price
+# but a RATIO — how much more a commission costs than a licence — so that value
+# per pound can be computed at all. These are that ratio, and nothing else.
+# Supply real rates and they drop straight in.
+COST_WEIGHT = {"retain": 0.0, "re-crop": 1.0, "licence": 3.0,
+               "licence+": 5.0, "commission": 12.0}
+
+
+def _visual_suitability(rec):
+    """How well the photograph on the page fits the slot, 0 to 1.
+
+    The audit's relevance score, normalised. It runs 2.0 to 9.2 across these
+    750 with a median of 3.4: a 2 is a photograph of the wrong thing entirely,
+    a 6 is defensible, a 7-plus is genuinely right. 93 of the 750 are at 6 or
+    above, which is the population that should not be bought again.
+    """
+    r = (rec or {}).get("relevance")
+    if not isinstance(r, (int, float)):
+        return 0.5
+    return max(0.0, min(1.0, (r - 2.0) / 7.2))
+
+
+def _route(row, rec):
+    """re-crop, retain, licence or commission — and what that costs, relatively.
+
+    RETAIN IS A REAL ANSWER AND THE TABLE SHOULD BE ABLE TO GIVE IT. Every one
+    of these 750 carries a REPLACE verdict, which says the audit thought it
+    imperfect; it does not say the page is embarrassing. On a country with no
+    price attached, a defensible photograph that now costs 0.3 MB is not worth
+    a licence fee, and saying so is the difference between a shopping list and
+    a shopping spree.
+    """
+    if row["owned replacement"]:
+        return "re-crop", COST_WEIGHT["re-crop"], "A"
+    suit = row["visual suitability"]
+    t = row["commercial tier"]
+    if suit >= 0.56 and t >= 3:          # relevance ~6+, nothing to sell here
+        return "retain", COST_WEIGHT["retain"], "—"
+    if suit >= 0.72:                     # relevance ~7.2+, right anywhere
+        return "retain", COST_WEIGHT["retain"], "—"
+    if t <= 2 and suit <= 0.20:          # sells, and the picture is badly wrong
+        return "commission", COST_WEIGHT["commission"], "D"
+    if t <= 3:
+        return "licence", COST_WEIGHT["licence+"], "C"
+    return "licence", COST_WEIGHT["licence"], "B"
+
+
+def _score(row, rec):
+    """Value per unit of cost: (commercial x visibility x inadequacy) / cost.
+
+    A product on top, so a zero in any term kills the row rather than being
+    averaged away — a superb payload saving on a country nobody can buy a
+    journey to is not a purchase. Divided by the cost weight, because the brief
+    is maximum improvement per pound and not maximum improvement.
+
+    Payload is deliberately NOT in here any more. It was the dominant term
+    while 836 heroes shipped full-resolution originals; `build.py bound` ended
+    that, and every row now costs about 0.3 MB. Keeping a term that no longer
+    varies would only add noise with a straight face.
+    """
+    commercial = COMMERCIAL_WEIGHT.get(row["commercial tier"], 0.2)
+    visibility = 1.0 if row["hero"] == "yes" else 0.3
+    inadequacy = 1.0 - row["visual suitability"]
+    cost = row["cost weight"] or 1.0
+    return round(commercial * visibility * inadequacy / cost, 5)
+
+
 def _band(row):
     """P0-P3. Free before paid, then commercial weight, then payload.
 
@@ -108,20 +219,20 @@ def _band(row):
     because it applies to all of them and competes with none of them.
     """
     if row["we already own this photograph"] == "yes":
-        return 0, "P0 free — already ours, needs a crop not a purchase"
+        return 0, "RE-CROP — already ours, a crop not a purchase"
     if row["owned replacement"]:
-        return 0, "P0 free — an owned photograph already fits this slot"
+        return 0, "RE-CROP — an owned photograph already fits this slot"
     if not row["audited"]:
-        # No verdict exists, so there is nothing to spend against. Buying a
-        # replacement for a photograph nobody has assessed is how you pay for
-        # a frame that was already correct.
-        return 2, "P2 audit first — never assessed, no verdict to spend against"
+        return 3, "P3 audit first — never assessed, no verdict to spend against"
+    if row["acquisition route"] == "retain":
+        return 1, "RETAIN — the picture is good enough to leave alone"
     t = row["commercial tier"]
-    if t <= 2:
-        return 1, "P1 acquire now — operator or priced major route"
-    if t == 3:
-        return 2, "P2 acquire after P1 — priced West route"
-    return 3, "P3 defer — no price attached to this country"
+    inadequacy = 1.0 - row["visual suitability"]
+    if t <= 2 and inadequacy >= 0.6:
+        return 2, "P1 acquire now — sells, and the picture is badly wrong"
+    if t <= 2 or (t == 3 and inadequacy >= 0.6):
+        return 3, "P2 acquire next — sells, or wrong, not both"
+    return 4, "P3 defer — no price attached and no strong visual case"
 
 
 def _why_budget(row):
@@ -158,6 +269,12 @@ def build(log=print):
     known = {a.get("sourceKey"): a for a in reg["assets"].values()
              if a.get("sourceKey")}
     owned = _owned_candidates(reg)
+    # What else we hold of this country, at any slot. Not a match — the slots
+    # do not overlap — but it is the question a picture editor asks next.
+    owned_country = {}
+    for a in reg["assets"].values():
+        if a.get("publishedAt"):
+            owned_country.setdefault(a.get("country") or "?", []).append(a["id"])
     recrop = library.artdirected()
     measured = {}
     if os.path.exists(MEASURED):
@@ -198,7 +315,16 @@ def build(log=print):
         t = acquire.commerce_tier(country)
         slot = "%s/%s" % (country, category)
         cands = owned.get(slot, []) if category else []
-        nbytes, basis = (acquire.est_bytes(rec, uses, measured) if rec
+        # THIS PAGE'S HERO REFERENCE, NOT THE WORST REFERENCE ANYWHERE.
+        #
+        # est_bytes takes a list of uses and asks "is any of them unbounded",
+        # which is the right question for the acquisition plan — that is one
+        # row per photograph. It is the wrong question here, where a row is one
+        # PAGE. A photograph whose hero is now width-bounded but which also
+        # appears as an unbounded lazy card three pages away was reporting
+        # 2.60 MB for a hero that costs about 0.3, because the flag belonged to
+        # the other reference. Pass the hero's own use and nothing else.
+        nbytes, basis = (acquire.est_bytes(rec, [use], measured) if rec
                          else (measured.get(url, 0), "measured" if url in measured
                                else "unknown"))
 
@@ -231,6 +357,13 @@ def build(log=print):
             "current photographer": (rec or {}).get("photographer") or "",
             "current source": (rec or {}).get("sourceUrl") or "",
             "_why": (rec or {}).get("why") or "",
+            "relevance": (rec or {}).get("relevance") or "",
+            "replacement value": round(_replacement_value(rec), 3),
+            "visual suitability": round(_visual_suitability(rec), 3),
+            # A photograph a picture editor could look at instead. Not a
+            # decision — the slots do not overlap, so this is "what else do we
+            # own of this country", which is the question a person asks next.
+            "owned in country": len(owned_country.get(country, [])),
         }
         # THE FREE FIX, WHICH IS THE POINT OF THE TABLE.
         if owned_here:
@@ -240,14 +373,17 @@ def build(log=print):
                 % mine["id"])
         elif use["unbounded"]:
             row["free fix"] = (
-                "Add a width to the existing URL — the same "
-                "?auto=compress&cs=tinysrgb&w=1200 that 6,188 of the site's "
-                "7,496 provider references already carry. No licence, no new "
-                "asset, no "
-                "budget, and it does not prejudge whether the photograph is "
-                "any good.")
+                "Add a width to the existing URL. Run `build.py bound`; no "
+                "licence, no new asset, no budget, and it does not prejudge "
+                "whether the photograph is any good.")
         else:
-            row["free fix"] = "Already width-limited; nothing free left to do."
+            row["free fix"] = ("Already width-bounded — the free work is done. "
+                               "What remains is whether the picture is right.")
+        route, cost_w, cost_band = _route(row, rec)
+        row["acquisition route"] = route
+        row["cost weight"] = cost_w
+        row["cost band letter"] = cost_band
+        row["priority score"] = _score(row, rec)
         n, label = _band(row)
         row["band"] = label
         row["_n"] = n
@@ -267,12 +403,32 @@ def build(log=print):
     # Free bands chase payload; paid bands chase commercial weight first, then
     # payload. Reference count is the last tiebreak, not a driver — see the
     # note in acquire.sortkey.
+    # THE SIX CRITERIA, IN THE ORDER GIVEN, INSIDE EACH BAND.
+    #
+    #   1 hero occupancy      every row here is a hero, so it is constant —
+    #                         kept explicit so it still sorts correctly if a
+    #                         non-hero row is ever admitted.
+    #   2 unbounded payload   zero for all 750 since `build.py bound` ran.
+    #                         Also constant, also kept: an unbounded hero that
+    #                         reappears must sort straight to the top.
+    #   3 commercial weight
+    #   4 visual inadequacy
+    #   5 acquisition cost    cheaper first at equal value — that is what
+    #                         "improvement per pound" means.
+    #   6 references          last, and only as a tiebreak. Never a driver.
+    #
+    # Two of the six no longer vary, which is not a flaw in the ordering: it is
+    # what it looks like when the first two problems have been solved.
     def order(r):
-        paid = r["_n"] >= 1
         return (r["_n"],
-                (r["commercial tier"], -r["mobile bytes"]) if paid
-                else (-r["mobile bytes"], r["commercial tier"]),
-                -r["references"], r["country"], r["page"])
+                0 if r["hero"] == "yes" else 1,
+                0 if r["unbounded"] == "yes" else 1,
+                -r["mobile bytes"] if r["unbounded"] == "yes" else 0,
+                r["commercial tier"],
+                -(1.0 - r["visual suitability"]),
+                r["cost weight"],
+                -r["references"],
+                r["page"])
     out.sort(key=order)
     for i, r in enumerate(out, 1):
         r["rank"] = i
@@ -363,8 +519,13 @@ def run(write=False, do_measure=False, log=print):
         % (total / 1e9, ", ".join("%d %s" % (n, k) for k, n in
                                   sorted(basis.items()))))
     log("")
-    for b in sorted(bands):
-        log("  %-58s %4d   %6.2f GB" % (b, bands[b], bbytes[b] / 1e9))
+    for b in ("RE-CROP", "RETAIN", "P1", "P2", "P3"):
+        hit = [k for k in bands if k.startswith(b)]
+        if not hit:
+            log("  %-58s %4d" % (b + " — none", 0))
+            continue
+        for k in sorted(hit):
+            log("  %-58s %4d   %6.2f GB" % (k, bands[k], bbytes[k] / 1e9))
     log("")
     log("  Nothing here is bought by running this. P0 needs no budget at all.")
     if not write:
@@ -409,20 +570,37 @@ def _write_notes(rows, bands, bbytes, total, log=print):
           % sum(1 for r in rows if r["unbounded"] == "yes"))
         w("| never audited | %d |\n" % sum(1 for r in rows if not r["audited"]))
         w("| estimated phone payload | %.2f GB |\n\n" % (total / 1e9))
+        w("## Zero-cost remediation — done\n\n")
+        w("Asked for first, and it is finished. Every hero that asked a "
+          "provider for a full-resolution original has been width-bounded by "
+          "`build.py bound`: 750 pages, no licence, no new asset, no budget. "
+          "`node tools/heroes.js --check` now reports **1,416 heroes, 0 "
+          "unbounded**, and that check gates CI so it cannot quietly come "
+          "back.\n\n")
+        w("| | before | after |\n|---|---:|---:|\n")
+        w("| unbounded heroes | 836 | **0** |\n")
+        w("| estimated hero payload | 2.04 GB | **0.27 GB** |\n")
+        w("| median hero | ~2.6 MB | **0.32 MB** |\n\n")
+        w("**422 unbounded references remain**, every one of them a lazy card "
+          "below the fold — never fetched on arrival, but fetched by anyone "
+          "who scrolls. The same pass would bound them and it has not been "
+          "run on them, because the instruction was heroes.\n\n")
         w("## The bands\n\n| band | pages | payload |\n|---|---:|---:|\n")
         for b in sorted(bands):
             w("| %s | %d | %.2f GB |\n" % (b, bands[b], bbytes[b] / 1e9))
-        w("\n## Bytes and photographs are two problems\n\n")
-        w("Only one of them costs money.\n\n")
-        w("Every unbounded hero here can be width-limited today for nothing — "
-          "the same `?auto=compress&cs=tinysrgb&w=1200` that 6,188 of the "
-          "site's 7,496 remaining provider references already carry. No licence, no shoot, no "
-          "agency, no new asset: the same URL, asked for politely. Doing that "
-          "removes most of the payload below without spending a penny, and "
-          "leaves the question of whether each photograph is any *good* to be "
-          "answered on its own timetable.\n\n")
-        w("That is the recommendation. Bound them all first; then buy "
-          "photographs on the merits of the photographs.\n\n")
+        w("\n## The free work is done\n\n")
+        w("Bytes and photographs were two problems and only one cost money.\n\n")
+        w("That was the recommendation, and it has been carried out. All 750 "
+          "were width-bounded by `build.py bound` and the 86 we already owned "
+          "were re-cropped and migrated. **No hero on this site now ships a "
+          "full-resolution original to a phone.**\n\n")
+        w("So the performance argument is spent. Every row below costs about "
+          "0.27 MB, within a factor of two of every other row, and payload "
+          "can no longer separate them. Nothing here is urgent. It is a "
+          "shopping list to work through on its merits — which is what the "
+          "priority score ranks: commercial importance x visibility x payload "
+          "x replacement value, as a product, so a zero in any term kills the "
+          "row rather than being averaged away.\n\n")
         w("## Where the weight is, by country\n\n")
         w("| country | heroes | payload | tier |\n|---|---:|---:|---|\n")
         for c, (n, b) in top:

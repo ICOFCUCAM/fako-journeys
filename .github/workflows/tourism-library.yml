@@ -50,6 +50,11 @@ on:
         type: boolean
         required: false
         default: false
+      measure_heroes:
+        description: "Ask the providers for real byte counts on every remaining hero (HEAD only, no image bytes)"
+        type: boolean
+        required: false
+        default: false
       check_host_only:
         description: "Only check the asset host: DNS, TLS, and every published object (~30s, downloads nothing)"
         type: boolean
@@ -77,7 +82,7 @@ jobs:
   # click and half a minute, which matters when the answer is "wait and try
   # again".
   host:
-    if: ${{ github.event.inputs.check_host_only == 'true' && github.event.inputs.weigh != 'true' }}
+    if: ${{ github.event.inputs.check_host_only == 'true' && github.event.inputs.weigh != 'true' && github.event.inputs.measure_heroes != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -97,7 +102,7 @@ jobs:
   # actually crossed the wire. Needs the open internet: the providers and our
   # own asset host are both unreachable from the development sandbox.
   weigh:
-    if: ${{ github.event.inputs.weigh == 'true' }}
+    if: ${{ github.event.inputs.weigh == 'true' && github.event.inputs.measure_heroes != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -115,8 +120,40 @@ jobs:
       - name: Weigh the rewritten pages
         run: node tools/weigh.js
 
+  # REAL BYTES, NOT A MODEL.
+  #
+  # The acquisition table's payload column is estimated from the original's
+  # pixel dimensions, and run 17 showed how far that can be out: it predicted
+  # 10.8 MB for the Ghana hero and the wire carried 2.33. Unsplash tracks
+  # pixels; Pexels plateaus. The cap fitted to five points is better and is
+  # still a fit.
+  #
+  # This asks each provider for content-length and nothing else — HEAD, so no
+  # image bytes move — and writes data/hero-bytes.json, which the table
+  # prefers over the estimate wherever it has an answer.
+  measure:
+    if: ${{ github.event.inputs.measure_heroes == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Ask the providers what each hero weighs
+        run: python tools/tourism/build.py heroes --measure
+      - name: Rebuild the table against measured bytes
+        run: python tools/tourism/build.py heroes --fetch
+      - name: Commit the measurements
+        run: |
+          git config user.name  "afrinkong-library"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/hero-bytes.json data/hero-acquisition.csv docs/hero-acquisition.md
+          git diff --cached --quiet && echo "nothing changed" && exit 0
+          git commit -m "Hero payload, measured rather than modelled"
+          git push
+
   library:
-    if: ${{ github.event.inputs.check_host_only != 'true' && github.event.inputs.weigh != 'true' }}
+    if: ${{ github.event.inputs.check_host_only != 'true' && github.event.inputs.weigh != 'true' && github.event.inputs.measure_heroes != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -182,6 +219,11 @@ jobs:
       # exactly why they are checked on every run from now on.
       - name: The library's own invariants
         run: node tools/library-checks.js
+
+      # One careless generator change puts a bare provider URL back in front
+      # of a phone, and nothing else in the suite would notice.
+      - name: No hero asks a provider for the full original
+        run: node tools/heroes.js --check
 
       # Provenance only, and deliberately only that: every hosted photograph
       # has a photographer, a source page and a licence. That is a question
