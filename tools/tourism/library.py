@@ -702,21 +702,59 @@ def publish(write=False, log=print, only=None):
         region_name="auto")
     bucket = os.environ["R2_BUCKET"]
 
-    sent, size, missing = 0, 0, 0
+    todo = []
     for base, _dirs, files in os.walk(root):
         for name in sorted(files):
             full = os.path.join(base, name)
             k = os.path.relpath(full, root).replace(os.sep, "/")
-            if k not in want:
-                continue
-            if write:
-                client.upload_file(full, bucket, k, ExtraArgs={
-                    "ContentType": types.get(os.path.splitext(name)[1],
-                                             "application/octet-stream"),
-                    "CacheControl": "public, max-age=31536000, immutable"})
-            sent += 1
-            size += os.path.getsize(full)
+            if k in want:
+                todo.append((full, k))
+    size = sum(os.path.getsize(f) for f, _ in todo)
+    sent = len(todo)
     missing = len(want) - sent
+
+    # CONCURRENTLY, BECAUSE THE SERIAL VERSION DOES NOT SCALE TO THE LIBRARY.
+    #
+    # Measured: 325 objects took four minutes fifteen seconds, about 0.8s
+    # each, nearly all of it waiting for a round trip rather than doing
+    # anything. That is tolerable for a pilot and not for the rest — the 604
+    # photographs still to publish are 7,852 objects, which is an hour and
+    # three quarters in one job, long enough that a single network hiccup
+    # costs the whole run.
+    #
+    # Eight at a time. Not more: the point is to overlap the waiting, and
+    # boto3's client is documented as thread-safe for this while its transfer
+    # manager is not, so each upload gets its own simple call rather than a
+    # shared multipart manager.
+    if write:
+        import concurrent.futures
+
+        def put(job):
+            full, k = job
+            client.upload_file(full, bucket, k, ExtraArgs={
+                "ContentType": types.get(os.path.splitext(full)[1],
+                                         "application/octet-stream"),
+                "CacheControl": "public, max-age=31536000, immutable"})
+
+        started = time.time()
+        failed = []
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+            futures = {pool.submit(put, j): j for j in todo}
+            for fut in concurrent.futures.as_completed(futures):
+                try:
+                    fut.result()
+                except Exception as exc:              # noqa: BLE001 — report
+                    failed.append((futures[fut][1], str(exc)[:70]))
+        if failed:
+            # publishedAt must not be written for an asset whose objects did
+            # not all arrive, or `rewrite` will point a page at a 404.
+            for k, why in failed[:8]:
+                log("  ! %s — %s" % (k, why))
+            log("library publish: %d of %d object(s) failed — nothing marked "
+                "published" % (len(failed), len(todo)))
+            return 1
+        log("  %d object(s) in %.0fs (%d at a time)"
+            % (len(todo), time.time() - started, 8))
     if write:
         # publishedAt is what `rewrite` reads. Set only after the uploads for
         # that asset actually ran, so a page can never be pointed at an object
