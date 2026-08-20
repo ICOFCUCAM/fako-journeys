@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| B1–B19 | **settled** as product and economic decisions |
-| B20 onward | not yet written |
+| B1–B22 | **settled** as product and economic decisions |
+| B23 onward | not yet written |
 | open questions | seventeen |
 | all four exposure features | now answered — **two easier, two harder**. See B17.2 |
 | awaiting your word | **B14** — `transferable: false`, one word, blocked on nothing |
@@ -1067,7 +1067,125 @@ other than the one paid, and who carries the FX movement if so. Registered.
 
 ---
 
-## B20 onward
+## B20. Stripe is the rail, not the authority
+
+**Settled. Already the architecture.**
+
+    CUSTOMER
+       │
+       ▼
+    AFRINKONG TRAVEL POINT PROGRAMME
+       │  programme rules · issuance · entitlement · travel goal
+       │  reservations · redemption · repurchase rules
+       ▼
+    POINT LEDGER
+       ▼
+    PAYMENT RAIL  (Stripe)
+
+> Stripe answers: *did the customer successfully pay?*
+> The Afrinkong ledger answers: *what Travel Points does that payment entitle
+> the customer to receive?*
+
+Nothing to change. The schema already says this in its own comments — *"Stripe is
+the payment rail and is NOT the point ledger"* — and enforces it structurally:
+`payments` records what the provider told us, `point_ledger` records what
+Afrinkong then issued, and a single reference joins them. That is what lets a
+reconciliation ask whether every settled payment has exactly one issuance and
+get an answer.
+
+B19 is the same principle seen from the currency side: money has a currency,
+points do not, and they are different records because they are different things.
+
+## B21. Stripe must never directly create points
+
+**Settled. Already enforced.**
+
+Never:
+
+    Stripe payment succeeded  →  add points
+
+Instead:
+
+    Stripe → payment event → verify webhook → settled payment
+           → economic transaction → ledger entry → Travel Points issued
+
+> If Stripe sends the webhook twice, the customer gets points once.
+
+### B21.1 Where each link is enforced
+
+| link | enforced by |
+|---|---|
+| a webhook is verified before it is believed | `payment_events.signature_ok`, recorded per event |
+| a redelivered webhook is recognised as one | `unique (provider, event_id)` — replay protection in the schema |
+| one payment is one row, ever | `unique (provider, provider_ref)` on `payments` |
+| only *settled* money issues points | `fold` ignores a `PURCHASE` whose status is not `SETTLED` |
+| a repeated economic transaction issues once | every entry carries an idempotency key; `fold` ignores a key it has seen |
+| an entry without a key is refused outright | `fold` throws rather than risk a double issuance |
+| nothing issues at all under a draft programme | `fold` throws — the gate added with `PRODUCT_STATE` |
+
+Three existing checks cover the last three directly: *a payment delivered twice
+issues points once*, *an entry without an idempotency key is refused*, and
+*folding the same history twice gives the same answer*.
+
+Worth naming the shape, because it is the same one that made B10 sound:
+**verification and idempotency are enforced at two independent layers.** The
+schema refuses a duplicate event; the fold refuses a duplicate entry. Either
+alone would be adequate on a good day. Both together survive a bad one.
+
+## B22. The Travel Wallet
+
+**Settled.**
+
+> Keep the word *Travel Wallet* in the interface — it is intuitive. But it is a
+> **record of Travel Point entitlements**, not a financial wallet.
+>
+>     Travel Wallet
+>     2,450 TP available
+>     1,200 TP reserved
+>     3,650 TP total entitlement
+>
+> **Never** *$3,650 balance*. Enforced throughout the product.
+
+### B22.1 The wallet is already clean, and now asserted to stay so
+
+`wallet()` returns ten fields and every one is a count of points:
+
+    available  reserved  redeemed  acquired  transferred
+    boughtBack expired   reservations  entriesApplied  duplicatesIgnored
+
+No `balance`, no `value`, no `amountMinor`, nothing denominated in money. That
+is B22 already satisfied, and it is now a check rather than a happy accident —
+the failure mode is somebody adding a convenience field years from now, and a
+field named `valueMinor` on a wallet is the sentence B22 forbids, shipped.
+
+### B22.2 Two functions can turn points into money, and neither is a wallet
+
+`entitlementOf(points)` and `priceOf(points)` both return money. Both are
+legitimate: the first is redemption arithmetic, the second prices an
+acquisition, and B12's repurchase quote needs one of them.
+
+B22's rule is about **where they may appear**. Neither is a wallet field and
+neither may be rendered as a balance. A repurchase quote is a specific offer
+about specific points at a moment — *"we may repurchase these 1,000 points for
+$900"* — and that is a quotation, not a statement of what a holding is worth.
+
+Note also that `entitlementOf(3650)` and `priceOf(3650)` currently return the
+identical figure, because both rates are 1. They answer different questions and
+diverge the moment a promotional programme exists — the same latent collapse as
+§A4 and B12.2, in a third place. It is a good argument for never displaying
+either as a single "your points are worth" number: there is no such number, and
+under a promotional programme there are two.
+
+---
+
+## Open questions after B20–B22
+
+None added. B20 and B21 are confirmations, and B22 is a rule the code already
+keeps.
+
+---
+
+## B23 onward
 
 Not yet written. The remaining economic model — pricing, packages, recurring
 purchase, the wallet, reservation and redemption mechanics, price protection —

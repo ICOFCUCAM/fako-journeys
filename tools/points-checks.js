@@ -441,5 +441,42 @@ report(
   "money lives in payments; the ledger records points and a programme"
 );
 
+/* ---- Section B22: a wallet holds points, never money ------------------- */
+
+/* B22: "Travel Wallet" is a record of entitlements. It may say 3,650 TP. It may
+ * never say $3,650. The wallet is already clean — this asserts it stays that
+ * way, because the failure mode is somebody adding a convenient `valueMinor`
+ * field years from now, which is the sentence B22 forbids, shipped. */
+const walletProg = L.PROGRAMS[DRAFT];
+const wSaved = walletProg.status;
+walletProg.status = "active";
+const shown = L.wallet([entry("PURCHASE", 3650), entry("RESERVE", 1200)]);
+walletProg.status = wSaved;
+
+const moneyish = Object.keys(shown).filter(
+  (k) => /minor|money|cash|usd|balance|value|amount|price|worth/i.test(k));
+report(
+  moneyish.length === 0,
+  "B22: the wallet exposes no monetary field, only counts of points",
+  moneyish.length ? moneyish.join(",") : Object.keys(shown).join(", ")
+);
+
+report(
+  shown.available === 2450 && shown.reserved === 1200 &&
+    shown.acquired === 3650,
+  "B22: the wallet reads exactly as B22's example, in points",
+  `${shown.available} available, ${shown.reserved} reserved, ${shown.acquired} total`
+);
+
+/* The two functions that DO turn points into money are legitimate but are not
+   wallet fields, and must never be rendered as a balance. Asserted here so the
+   separation is visible where somebody would look for it. */
+report(
+  typeof L.entitlementOf === "function" && typeof L.priceOf === "function" &&
+    !("entitlementOf" in shown) && !("priceOf" in shown),
+  "B22: entitlementOf and priceOf exist as arithmetic, not as wallet fields",
+  "a repurchase quote is an offer about specific points, not a statement of worth"
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
