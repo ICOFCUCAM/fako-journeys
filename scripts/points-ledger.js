@@ -174,18 +174,25 @@
       transferable: false,
       secondaryMarket: false,
 
-      /* ---- repurchase (B12, C16, C17) ------------------------------------ */
-      /* THE BASIS IS THE CONSIDERATION PAID, NOT THE ENTITLEMENT HELD.
-         "90% of what your points are worth" requires the points to be worth
-         something in cash, which B2 denies. "90% of what you paid for the ones
-         you have not used" values nothing — it reads the payment record. It is
-         also the only one of the two that cannot be gamed: under an entitlement
-         basis, any promotional bonus above 1/rate - 1 lets a customer buy
-         points and immediately repurchase them for more than they paid. */
+      /* ---- repurchase (E1-E6) --------------------------------------------
+         THE BASIS IS A PROGRAMME TERM, NOT A DEFINITION.
+         E2 is explicit that this must not be described as "90% of the money
+         you paid": deposit $5,000, wait, withdraw $4,500 is a different
+         product with a different characterisation, and a basis hard-coded to
+         the purchase price makes the product that whether or not the terms say
+         so. So `basis` names which rule THIS programme applies and the quote
+         says which it used.
+         B12.2's concern survives the change as a rail rather than as the
+         definition: `maxPayableIsConsideration` caps any quote at what the
+         customer actually paid, under EVERY basis. That closes the arbitrage —
+         a promotional bonus can never be extracted as cash — without turning
+         repurchase into a refund. */
       buyback: {
         offered: true,
         discretionary: true,      // never a contractual right of redemption
-        basis: 'consideration',   // 'consideration' | 'entitlement'
+        basis: 'consideration',   // 'consideration' | 'entitlement' | 'programme'
+        /* Never pay out more than came in, whatever the basis says. */
+        maxPayableIsConsideration: true,
         rate: 0.90,               // of eligible purchase consideration
         minHoldDays: 90,
         minPoints: 100,
@@ -311,21 +318,61 @@
    * each happened.
    */
   var COMPLIANCE_STATES = ['DRAFT', 'LEGAL_REVIEW', 'ACCOUNTING_REVIEW',
-                           'APPROVED', 'PILOT', 'ACTIVE', 'SUSPENDED', 'RETIRED'];
+                           'APPROVED', 'PILOT', 'ACTIVE',
+                           /* E10: a programme stops SELLING long before it
+                              stops OWING. Points already issued do not vanish
+                              because new ones are no longer offered, so
+                              closure is a sequence with a redemption period in
+                              it rather than an off switch. */
+                           'CLOSED_TO_NEW_PURCHASES', 'REDEMPTION_PERIOD',
+                           'CLOSED', 'SUSPENDED', 'RETIRED'];
 
   var COMPLIANCE_NEXT = {
     DRAFT:              ['LEGAL_REVIEW', 'RETIRED'],
     LEGAL_REVIEW:       ['ACCOUNTING_REVIEW', 'DRAFT', 'RETIRED'],
     ACCOUNTING_REVIEW:  ['APPROVED', 'LEGAL_REVIEW', 'DRAFT', 'RETIRED'],
     APPROVED:           ['PILOT', 'ACCOUNTING_REVIEW', 'RETIRED'],
-    PILOT:              ['ACTIVE', 'SUSPENDED', 'RETIRED'],
-    ACTIVE:             ['SUSPENDED', 'RETIRED'],
+    PILOT:              ['ACTIVE', 'CLOSED_TO_NEW_PURCHASES', 'SUSPENDED', 'RETIRED'],
+    ACTIVE:             ['CLOSED_TO_NEW_PURCHASES', 'SUSPENDED', 'RETIRED'],
+    CLOSED_TO_NEW_PURCHASES: ['REDEMPTION_PERIOD', 'ACTIVE', 'SUSPENDED'],
+    REDEMPTION_PERIOD:  ['CLOSED', 'SUSPENDED'],
+    /* CLOSED is not RETIRED. Closed means the redemption period ran and the
+       programme's own terms say what became of anything outstanding; retired
+       means it never traded. Collapsing them would lose the difference between
+       "settled" and "never happened". */
+    CLOSED:             ['RETIRED'],
     SUSPENDED:          ['ACTIVE', 'PILOT', 'RETIRED'],
     RETIRED:            []
   };
 
   /* The only two states in which a point may come into existence. */
   var ISSUING_STATES = ['PILOT', 'ACTIVE'];
+
+  /* E10: and the states in which one may still be SPENT. A programme that has
+     stopped selling still owes travel to everybody holding its points, and
+     refusing redemption the moment sales stop would be the silent deletion
+     E9 forbids. */
+  var REDEEMING_STATES = ['PILOT', 'ACTIVE', 'CLOSED_TO_NEW_PURCHASES',
+                          'REDEMPTION_PERIOD'];
+
+  function mayRedeem(id) {
+    return REDEEMING_STATES.indexOf(complianceOf(id)) !== -1;
+  }
+
+  /* E4: AND THE STATES IN WHICH A POINT MAY BE BOUGHT BACK.
+   *
+   * The same set as redemption, and that is an argument rather than a
+   * coincidence: repurchase is a way of discharging the obligation a point
+   * represents, so a programme that may still honour a point may still buy one
+   * back, and one that may not, may not.
+   *
+   * The consequence worth naming is the draft one. `AFK-TP-2026.1` is DRAFT,
+   * so `buybackQuote()` refuses outright — a draft programme cannot quote a
+   * repurchase any more than it can issue a point, and a quote is the half of
+   * this that would otherwise look harmless enough to wire to a button. */
+  function mayBuyBack(id) {
+    return REDEEMING_STATES.indexOf(complianceOf(id)) !== -1;
+  }
 
   function complianceOf(id) {
     var p = program(id);
@@ -362,6 +409,9 @@
      not on this list: a RESERVE under a draft program cannot happen anyway,
      because there is nothing to reserve. */
   var ISSUING_KINDS = ['PURCHASE', 'PROMOTION', 'TRANSFER_IN', 'ADJUST_UP'];
+
+  /* The two that move points between people rather than between pools. E8. */
+  var TRANSFER_KINDS = ['TRANSFER_IN', 'TRANSFER_OUT'];
 
   function stateOf(id) {
     if (!id) return PRODUCT_STATE.PLANNING;
@@ -550,6 +600,20 @@
           'cannot issue points: program ' + (e.programVersion || '(none)') +
           ' is ' + stateOf(e.programVersion) +
           '. Points may only be issued under an ACTIVE_PROGRAM.');
+      }
+
+      /* E8: NON-TRANSFERABILITY IS ENFORCED, NOT MERELY DECLARED.
+         `transferable: false` was a term nothing read. The kinds stay — B14
+         settled that policy is not capability, and an administrative
+         correction under a later programme still needs them — but under a
+         programme that forbids transfer, an entry that moves points between
+         customers is refused where it is written rather than where it is
+         reviewed. */
+      if (TRANSFER_KINDS.indexOf(e.kind) !== -1 &&
+          program(e.programVersion).transferable === false) {
+        throw new Error(
+          'cannot transfer points: program ' + (e.programVersion || '(none)') +
+          ' is not transferable. Person-to-person transfer is outside V1.');
       }
 
       for (var field in kind) {
@@ -768,6 +832,37 @@
     };
   }
 
+  /* ---- validity -----------------------------------------------------------
+   *
+   * E9: HOW LONG A POINT LASTS IS A PROGRAMME TERM AND DIFFERS BY LOT.
+   *
+   * `AFK-TP-2026.1` says purchased points never lapse from time alone and
+   * promotional points lapse at 24 months. One scalar could not have said
+   * that, which is why `expiry` is a block; and `null` means never rather
+   * than unset, because a term that has to distinguish "forever" from
+   * "nobody decided" cannot use the same value for both.
+   *
+   * NO CLOCK. `monthsHeld` is supplied by the caller for the same reason
+   * `daysToDeparture` is: D21.4 says no balance may grow or shrink because
+   * time passed inside this module, and a module that could read a date could
+   * expire somebody's holding without an entry. Lapsing still costs an
+   * explicit EXPIRE entry that a human or a job appended.
+   */
+  function validity(programId, lot) {
+    var e = program(programId).expiry || {};
+    var months = e[lot === 'promotional' ? 'promotional' : 'purchased'];
+    return {
+      lot: lot === 'promotional' ? 'promotional' : 'purchased',
+      months: months == null ? null : months,
+      lapses: months != null
+    };
+  }
+
+  function hasLapsed(programId, lot, monthsHeld) {
+    var v = validity(programId, lot);
+    return v.lapses && (monthsHeld || 0) >= v.months;
+  }
+
   /* ---- buyback ------------------------------------------------------------
    *
    * Deliberately hard to reach, and it returns a quote rather than performing
@@ -823,7 +918,26 @@
     return { ok: true, minor: totalMinor, currency: currency, lots: drawn };
   }
 
-  function buybackQuote(programId, entries, points, heldDays, boughtBackThisYear) {
+  /* E3: A QUOTE, NOT A SETTLEMENT.
+   *
+   *   request -> eligibility -> QUOTATION -> customer accepts -> settlement
+   *                                                           -> ledger BUYBACK
+   *
+   * This function does the first three. It removes no points and appends
+   * nothing: a customer asking what they would be offered has not sold
+   * anything, and a quote they never accept must leave no trace on a balance.
+   *
+   * E6: `commitments` is how the restricted window finally reaches this
+   * function. It is a list of { journeyRef, daysToDeparture, points } supplied
+   * by the caller, because this module has no clock and no bookings table.
+   * Until now `cancellation()` computed buybackEligible:false inside seven days
+   * and the quote could not see it — two functions holding half a rule each,
+   * which is how somebody inside the final window gets offered a quote they
+   * should never have been given. B24 rule 22, and the last of the contradicted
+   * rules.
+   */
+  function buybackQuote(programId, entries, points, heldDays, boughtBackThisYear,
+                        commitments) {
     var p = program(programId);
     var b = p.buyback;
     var w = wallet(entries);
@@ -834,6 +948,14 @@
     };
 
     if (!b || !b.offered) return refuse('this program does not offer buyback');
+    /* E4/E11: the ladder first, before any arithmetic. A draft programme that
+       computed a payable figure and only then declined to pay it would have
+       produced the number, and a number that exists gets shown. */
+    if (!mayBuyBack(programId)) {
+      return refuse('program ' + programId + ' is ' + complianceOf(programId) +
+                    '; points cannot be bought back under it',
+                    { compliance: complianceOf(programId) });
+    }
     if (points < b.minPoints) return refuse('below the minimum of ' + b.minPoints + ' points');
     /* C16: reserved points repurchase at zero — committed to a journey is not
        available to sell back. `available` already excludes them. */
@@ -841,6 +963,22 @@
     if (heldDays < b.minHoldDays) return refuse('points must be held for ' + b.minHoldDays + ' days');
     if ((boughtBackThisYear || 0) + points > b.maxPerYear) {
       return refuse('above the annual limit of ' + b.maxPerYear + ' points');
+    }
+    /* E6: points committed to a journey inside its restricted window are not
+       available to sell back, however much the wallet says is available. The
+       band is the programme's, read through cancellation(), so a programme
+       that sets a different window is obeyed without editing this. */
+    var restricted = (commitments || []).filter(function (c) {
+      var band = cancellation(programId, c.daysToDeparture, c.points || 0);
+      return band.buybackEligible === false;
+    });
+    if (restricted.length) {
+      return refuse('points committed to a journey inside its restricted ' +
+                    'period cannot be bought back',
+                    { restricted: restricted.map(function (c) {
+                        return { journeyRef: c.journeyRef,
+                                 daysToDeparture: c.daysToDeparture };
+                      }) });
     }
     /* C16: promotional points repurchase at zero. They were not paid for, so
        there is no consideration to refund — which is the consideration basis
@@ -854,6 +992,7 @@
     if (b.basis === 'consideration') {
       var c = considerationFor(programId, entries, points);
       if (!c.ok) return refuse(c.why, { currencies: c.currencies });
+      var payable = Math.round(c.minor * b.rate);
       return {
         eligible: true,
         discretionary: b.discretionary,
@@ -862,7 +1001,7 @@
         grossMinor: c.minor,
         currency: c.currency,
         rate: b.rate,
-        payableMinor: Math.round(c.minor * b.rate),
+        payableMinor: payable,
         lots: c.lots,
         note: b.discretionary
           ? 'Afrinkong may repurchase these points at ' + Math.round(b.rate * 100) +
@@ -876,15 +1015,29 @@
        because deleting it would hide that a choice was made. B12.2 records why
        this one is not the default: it is exploitable under any promotional
        bonus above 1/rate - 1. */
+    /* E2's rail. Whatever basis a programme names, a repurchase may never pay
+       out more than the customer put in — which closes B12.2's arbitrage under
+       every basis rather than only under one, and does it without describing
+       repurchase as a refund. */
+    var gross = entitlementOf(programId, points);
+    var raw = Math.round(gross * b.rate);
+    var capped = raw;
+    var cap = null;
+    if (b.maxPayableIsConsideration) {
+      var paid = considerationFor(programId, entries, points);
+      if (paid.ok) { cap = paid.minor; capped = Math.min(raw, paid.minor); }
+    }
     return {
       eligible: true,
       discretionary: b.discretionary,
       points: points,
       basis: 'entitlement',
-      grossMinor: entitlementOf(programId, points),
+      grossMinor: gross,
       rate: b.rate,
-      payableMinor: Math.round(entitlementOf(programId, points) * b.rate),
-      note: 'Quoted on the entitlement basis. See docs/travel-point-economics.md B12.2.'
+      payableMinor: capped,
+      cappedAtConsideration: cap !== null && capped < raw,
+      note: 'Quoted on the entitlement basis under this programme’s terms. ' +
+            'This is an offer, not a refund of a purchase price.'
     };
   }
 
@@ -952,6 +1105,12 @@
     COMPLIANCE_STATES: COMPLIANCE_STATES,
     COMPLIANCE_NEXT: COMPLIANCE_NEXT,
     ISSUING_STATES: ISSUING_STATES,
+    REDEEMING_STATES: REDEEMING_STATES,
+    mayRedeem: mayRedeem,
+    mayBuyBack: mayBuyBack,
+    TRANSFER_KINDS: TRANSFER_KINDS,
+    validity: validity,
+    hasLapsed: hasLapsed,
     complianceOf: complianceOf,
     mayTransition: mayTransition,
     considerationFor: considerationFor,

@@ -503,17 +503,18 @@ report(
 /* Rule 21 — reserved points cannot be repurchased. Enforced, and asserted here
  * because it is the difference between a repurchase programme and a way to
  * withdraw money you have already committed to a journey. */
-const r21Prog = L.PROGRAMS[DRAFT];
-const r21Saved = r21Prog.status;
-r21Prog.status = "active";
+/* Quoted under the fixture rather than under the draft. It used to run against
+   DRAFT with `status = "active"` assigned first — which was already a no-op
+   against a frozen programme, and became a visible failure the moment E4 gated
+   quotation on the compliance ladder: a draft programme now refuses to quote
+   at all, which is asserted in its own right in the Section E block below. */
 const booked = [
   Object.assign(entry("PURCHASE", 5000),
                 { payment: { amountMinor: 500000, currency: "USD" } }),
   entry("RESERVE", 4800),
 ];
-const onReserved = L.buybackQuote(DRAFT, booked, 4800, 100, 0);
-const onAvailable = L.buybackQuote(DRAFT, booked, 200, 100, 0);
-r21Prog.status = r21Saved;
+const onReserved = L.buybackQuote(P, booked, 4800, 100, 0);
+const onAvailable = L.buybackQuote(P, booked, 200, 100, 0);
 
 report(
   onReserved.eligible === false && onAvailable.eligible === true,
@@ -521,19 +522,26 @@ report(
   `4,800 reserved -> "${onReserved.why}"; 200 available -> eligible`
 );
 
-/* Rule 22 — no repurchase inside the final seven days. NOT enforced, and the
- * shape of the failure is the interesting part: cancellation() computes
- * buybackEligible:false and buybackQuote() has no departure date to ask about.
- * Two functions holding half a rule each, which is how somebody inside the
- * final window gets a quote they should never have been offered. */
-const ladderSaysNo = L.cancellation(DRAFT, 5, 4800).buybackEligible === false;
-const quoteCanAsk = /departure|daysTo|booking/i.test(
-  L.buybackQuote.toString().match(/\(([^)]*)\)/)[1]);
+/* Rule 22 — no repurchase inside the final seven days. THE LAST CONTRADICTED
+ * RULE IN THE B24 AUDIT, AND E6 CLOSED IT.
+ *
+ * The failure was the interesting part and is worth keeping in the record:
+ * cancellation() computed buybackEligible:false and buybackQuote() had no
+ * departure date to ask about — two functions holding half a rule each, which
+ * is how somebody inside the final window gets a quote they should never have
+ * been offered. The repair was not to re-implement the band in the quote but
+ * to give the quote the bookings, so the band stays defined in exactly one
+ * place and a programme that sets a different window is obeyed for free. */
+const commitment = [{ journeyRef: "J1", daysToDeparture: 5, points: 4800 }];
+const inWindow = L.buybackQuote(P, booked, 200, 100, 0, commitment);
+const outOfWindow = L.buybackQuote(
+  P, booked, 200, 100, 0, [{ journeyRef: "J1", daysToDeparture: 60, points: 4800 }]);
 report(
-  ladderSaysNo && !quoteCanAsk,
-  "B24 rule 22: the seven-day bar is computed in one place and ignored in another",
-  "cancellation() returns buybackEligible:false at 5 days; buybackQuote() takes " +
-  "no booking or departure date and cannot consult it. See B13.1"
+  L.cancellation(P, 5, 4800).buybackEligible === false &&
+    inWindow.eligible === false && outOfWindow.eligible === true,
+  "B24 rule 22: the seven-day bar now reaches the quote, and it is the band's",
+  `5 days -> "${inWindow.why}"; 60 days -> eligible. Was two functions holding ` +
+  `half a rule each; E6 passes the commitments in rather than restating the band`
 );
 
 /* ---- Section C: the frozen programme, and what it now refuses ---------- */
@@ -1059,6 +1067,269 @@ report(
   `available ${wAll.available} = acquired ${wAll.acquired} - reserved ` +
   `${wAll.reserved} - redeemed ${wAll.redeemed} - boughtBack ${wAll.boughtBack} ` +
   `- expired ${wAll.expired} - adjusted ${wAll.adjusted}`
+);
+
+/* ==== Section E: repurchase, cancellation, transfer and expiry =========== */
+
+const BB = require("../scripts/buyback.js");
+
+/* A customer who bought 5,000 points for $5,000 and has held them long enough
+   to be eligible. Used for the whole of Section E so that every refusal below
+   is a refusal of something that would otherwise have succeeded — a test that
+   refuses an already-impossible request proves nothing. */
+const eBought = [
+  Object.assign(entry("PURCHASE", 5000),
+                { payment: { amountMinor: 500000, currency: "USD" } }),
+];
+
+/* E1 — repurchase is an offer, not a right, and the quote says so in words a
+   customer would read rather than only in a flag. */
+const eQuote = L.buybackQuote(P, eBought, 1000, 200, 0);
+report(
+  eQuote.eligible === true && eQuote.discretionary === true &&
+    /not a guaranteed right|offer/i.test(eQuote.note),
+  "E1: a repurchase quote is discretionary and says so on its face",
+  `"${eQuote.note}"`
+);
+
+/* E2 — THE FRAMING, WHICH IS THE WHOLE OF SECTION E'S DIFFICULTY.
+ *
+ * B12 settled repurchase at "90% of the applicable purchase consideration".
+ * E2 then said the product must not be described as "90% of the money you
+ * paid" — because deposit, wait, withdraw is a different product whatever the
+ * terms call it. Those two are in tension and the resolution is recorded here
+ * rather than in a commit message: `basis` is a PROGRAMME TERM, and
+ * `maxPayableIsConsideration` is a rail that caps any quote at what the
+ * customer actually paid under EVERY basis. B12.2's arbitrage is closed
+ * without repurchase becoming a refund. */
+report(
+  L.PROGRAMS[DRAFT].buyback.maxPayableIsConsideration === true &&
+    typeof L.PROGRAMS[DRAFT].buyback.basis === "string",
+  "E2: the basis is a programme term and the consideration is a cap, not the definition",
+  `basis "${L.PROGRAMS[DRAFT].buyback.basis}", capped at consideration under every basis`
+);
+
+/* And the rail proved, not merely declared. A programme quoting on the
+   entitlement basis after a 25% bonus would otherwise pay out more than came
+   in, which is exactly B12.2's arbitrage. */
+const ENT = L.variant(
+  DRAFT,
+  {
+    compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    issueRate: 1.25,
+    buyback: Object.assign({}, L.PROGRAMS[DRAFT].buyback, { basis: "entitlement" }),
+  },
+  "TEST-ENTITLEMENT-BASIS"
+);
+const bonusLedger = [
+  Object.assign(
+    { id: "TP-E1", customerId: "C", kind: "PURCHASE", quantity: 1250,
+      idempotencyKey: "ek1", programVersion: ENT, status: "SETTLED" },
+    { payment: { amountMinor: 100000, currency: "USD" } }),
+];
+const entQuote = L.buybackQuote(ENT, bonusLedger, 1250, 200, 0);
+report(
+  entQuote.payableMinor <= 100000 && entQuote.cappedAtConsideration === true,
+  "E2: no basis can pay out more than the customer put in",
+  `$1,000 in, 1,250 points at a 25% bonus, entitlement basis -> ` +
+  `$${(entQuote.payableMinor / 100).toFixed(2)} out, capped at consideration`
+);
+
+/* E3 — the five steps, and only the last one touches a ledger. */
+const eReq = BB.request(P, eBought, 1000, { heldDays: 200 });
+const eAcc = BB.advance(eReq, "ACCEPTED", {});
+const eApp = BB.advance(eAcc.request, "APPROVED", {});
+const eSet = BB.advance(eApp.request, "SETTLED",
+  { entries: eBought, heldDays: 200, entryId: "TP-BB1", idempotencyKey: "bb1" });
+report(
+  eReq.state === "QUOTED" &&
+    eAcc.entries.length === 0 && eApp.entries.length === 0 &&
+    eSet.entries.length === 1 && eSet.entries[0].kind === "BUYBACK",
+  "E3: request, quote, accept, approve — and only settlement moves a point",
+  `QUOTED -> ACCEPTED -> APPROVED emit nothing; SETTLED emits one BUYBACK of ` +
+  `${eSet.entries[0].quantity}`
+);
+
+/* And a quote is not a hold. Between quotation and settlement the customer may
+   have committed those points to a journey, and honouring the stale quote would
+   let one set of points be both sold back and travelled on. */
+const spentSince = eBought.concat([entry("RESERVE", 4800)]);
+const staleSettle = BB.advance(eApp.request, "SETTLED",
+  { entries: spentSince, heldDays: 200 });
+report(
+  staleSettle.ok === false && /no longer eligible/.test(staleSettle.why) &&
+    BB.advance(eApp.request, "SETTLED", {}).ok === false,
+  "E3: a quote is not a hold — settlement re-checks against the ledger as it stands",
+  `points reserved after quotation -> "${staleSettle.why}"`
+);
+
+/* E1 again: a discretionary rejection is recorded with its reason, because a
+   discretion nobody has to account for reads as arbitrary. */
+const eRej = BB.advance(eAcc.request, "REJECTED", { reason: "manual review" });
+report(
+  eRej.ok === true && eRej.request.state === "REJECTED" &&
+    eRej.request.rejectedReason === "manual review" && eRej.entries.length === 0,
+  "E1: Afrinkong may decline an accepted quote, and the reason is kept",
+  `REFUSED (terms) and REJECTED (discretion) are separate states`
+);
+
+/* E5 — holding period and annual limit, both programme parameters. */
+const eEarly = L.buybackQuote(P, eBought, 1000, 30, 0);
+const eOver = L.buybackQuote(P, eBought, 1000, 200, 4500);
+report(
+  eEarly.eligible === false && /90 days/.test(eEarly.why) &&
+    eOver.eligible === false && /annual limit/.test(eOver.why),
+  "E5: the minimum holding period and the annual cap are the programme's numbers",
+  `30 days -> "${eEarly.why}"; 4,500 already sold back -> "${eOver.why}"`
+);
+
+/* E7 — promotional points are NOT automatically repurchasable. The instruction
+   said so explicitly, and the consideration basis answers it without a special
+   case: nothing was paid, so there is nothing to pay 90% of. */
+const eWithBonus = eBought.concat([entry("PROMOTION", 500)]);
+report(
+  L.PROGRAMS[DRAFT].buyback.promotionalEligible === false &&
+    L.buybackQuote(P, eWithBonus, 5200, 200, 0).eligible === false,
+  "E7: promotional points are not automatically repurchasable",
+  `5,000 purchased + 500 granted; asking for 5,200 -> ` +
+  `"${L.buybackQuote(P, eWithBonus, 5200, 200, 0).why}"`
+);
+
+/* E8 — non-transferability in V1, enforced where the entry is written. The
+   kinds survive because B14 settled that policy is not capability. */
+const transferAttempt = threw(() =>
+  L.wallet(eBought.concat([entry("TRANSFER_OUT", 100)])));
+report(
+  transferAttempt !== null && /not transferable/.test(transferAttempt),
+  "E8: a programme that forbids transfer refuses the entry, not merely the feature",
+  `"${transferAttempt}"`
+);
+
+/* E9 — cancellation and repurchase are different events, and the ledger can
+   tell them apart without inferring anything from amounts. */
+const cancelEntries = BK.advance(
+  BK.advance(BK.advance(BK.open(P, { journeyId: "J9", requirement: 1000 }),
+                        "ACCEPTED", {}).booking, "RESERVED", {}).booking,
+  "CANCELLED", { daysToDeparture: 60 }).entries;
+report(
+  cancelEntries.every((e) => e.kind !== "BUYBACK" && e.journeyRef === "J9") &&
+    eSet.entries[0].kind === "BUYBACK" && eSet.entries[0].journeyRef === null,
+  "E9: a cancellation and a repurchase are separate events, distinguishable in the ledger",
+  `cancellation -> ${cancelEntries.map((e) => e.kind).join("+")} against J9; ` +
+  `repurchase -> BUYBACK against no journey`
+);
+
+/* E9 — validity is programme-defined and differs by lot. One scalar could not
+   have said "purchased never lapses, promotional lapses at 24 months". */
+report(
+  L.validity(DRAFT, "purchased").lapses === false &&
+    L.validity(DRAFT, "promotional").months === 24 &&
+    L.hasLapsed(DRAFT, "purchased", 999) === false &&
+    L.hasLapsed(DRAFT, "promotional", 24) === true,
+  "E9: validity is a programme term per lot, and purchased points do not lapse from time",
+  `purchased: never; promotional: 24 months. Lapsing still costs an explicit ` +
+  `EXPIRE entry — no balance moves because time passed`
+);
+
+/* E10 — a programme stops SELLING long before it stops OWING. */
+const closureLadder = ["ACTIVE", "CLOSED_TO_NEW_PURCHASES", "REDEMPTION_PERIOD",
+                       "CLOSED"].map((c) => {
+  const v = L.variant(DRAFT,
+    { compliance: c, maxProgrammeExposure: 5000000 }, "TEST-CLOSURE-" + c);
+  return { c, issue: L.mayIssue(v), redeem: L.mayRedeem(v), buy: L.mayBuyBack(v) };
+});
+report(
+  closureLadder[0].issue && closureLadder[0].redeem &&
+    !closureLadder[1].issue && closureLadder[1].redeem &&
+    !closureLadder[2].issue && closureLadder[2].redeem &&
+    !closureLadder[3].issue && !closureLadder[3].redeem,
+  "E10: closing to new purchases does not close redemption",
+  closureLadder.map((r) =>
+    `${r.c}: issue ${r.issue ? "y" : "n"} redeem ${r.redeem ? "y" : "n"}`).join("; ")
+);
+
+/* ---- the four invariants Section E asks for by name --------------------- */
+
+/* E-i — A BUYBACK CANNOT EXCEED ELIGIBLE AVAILABLE POINTS.
+   Proved at both ends: the quote refuses to offer it, and the fold refuses to
+   record it even if a caller ignored the quote entirely. The second is the one
+   that matters, because a screen that bypassed the quote is exactly how this
+   would happen. */
+const overQuote = L.buybackQuote(P, eBought, 6000, 200, 0);
+const overFold = threw(() => L.wallet(eBought.concat([entry("BUYBACK", 6000)])));
+report(
+  overQuote.eligible === false && overFold !== null &&
+    /overdraw/.test(overFold),
+  "E-i: a repurchase cannot exceed the customer's eligible available points",
+  `quote refuses 6,000 of 5,000 — "${overQuote.why}"; and the fold refuses it ` +
+  `independently — "${overFold}"`
+);
+
+/* E-ii — A BUYBACK CANNOT CONSUME RESERVED POINTS.
+   Points committed to a journey are not available to sell back, and the wallet
+   already keeps the two pools apart: `available` excludes `reserved`, so this
+   is enforced by the same arithmetic that computes every balance rather than
+   by a rule beside it. */
+const eReserved = eBought.concat([entry("RESERVE", 4800)]);
+const wRes = L.wallet(eReserved);
+const onCommitted = L.buybackQuote(P, eReserved, 4800, 200, 0);
+const foldCommitted = threw(() =>
+  L.wallet(eReserved.concat([entry("BUYBACK", 4800)])));
+report(
+  wRes.reserved === 4800 && wRes.available === 200 &&
+    onCommitted.eligible === false && foldCommitted !== null,
+  "E-ii: a repurchase cannot consume reserved points",
+  `4,800 reserved, 200 available; quote -> "${onCommitted.why}"; fold -> ` +
+  `"${foldCommitted}"`
+);
+
+/* E-iii — A BUYBACK CANNOT MUTATE HISTORICAL ISSUANCE.
+   The append-only claim, tested as an equality rather than asserted. The
+   original PURCHASE entry is byte-identical before and after, the settlement
+   returned a NEW entry rather than editing one, and `acquired` — what the
+   customer has put in over the programme's life — is unchanged by selling
+   points back. Only `available` moves. */
+const beforeJson = JSON.stringify(eBought);
+const wBefore = L.wallet(eBought);
+const afterBuyback = eBought.concat(
+  [Object.assign(entry("BUYBACK", 1000), { id: "TP-BBX" })]);
+const wAfter = L.wallet(afterBuyback);
+report(
+  JSON.stringify(eBought) === beforeJson &&
+    afterBuyback.length === eBought.length + 1 &&
+    wAfter.acquired === wBefore.acquired &&
+    wAfter.available === wBefore.available - 1000 &&
+    wAfter.boughtBack === 1000,
+  "E-iii: a repurchase cannot mutate historical issuance",
+  `the PURCHASE entry is unchanged; acquired stays ${wAfter.acquired}; ` +
+  `available ${wBefore.available} -> ${wAfter.available}; boughtBack ` +
+  `${wAfter.boughtBack}. A repurchase is an entry, never an edit`
+);
+
+/* E-iv — A BUYBACK CANNOT OCCUR WHEN THE PROGRAMME IS DRAFT.
+   The shipping programme, asked directly. Refused before any arithmetic runs,
+   so no payable figure is ever computed — a number that exists is a number
+   somebody eventually renders. */
+const draftQuote = L.buybackQuote(DRAFT, eBought, 1000, 200, 0);
+const draftRequest = BB.request(DRAFT, eBought, 1000, { heldDays: 200 });
+report(
+  L.complianceOf(DRAFT) === "DRAFT" && L.mayBuyBack(DRAFT) === false &&
+    draftQuote.eligible === false && !("payableMinor" in draftQuote) &&
+    draftRequest.state === "REFUSED",
+  "E-iv: no repurchase under a draft programme, and no figure is even computed",
+  `${DRAFT} is DRAFT -> "${draftQuote.why}"; the request lands in REFUSED`
+);
+
+/* E11 — the unresolved questions are RECORDED rather than decided in code.
+   The instruction was explicit about that, and a document that quietly grew
+   answers would be the failure. Counted so that deleting one is visible. */
+const eDoc = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-buyback.md"), "utf8");
+const eOpen = (eDoc.match(/^\s*\|\s*E-[a-z]+\s*\|/gm) || []).length;
+report(
+  eOpen >= 8 && /UNRESOLVED|not decided here/i.test(eDoc),
+  "E11: the open legal and accounting questions are recorded, not answered in code",
+  `${eOpen} unresolved questions carried in docs/travel-point-buyback.md`
 );
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
