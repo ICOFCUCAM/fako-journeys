@@ -1030,6 +1030,23 @@ def cmd_all(args):
     # is what stops "offer the smaller file" being a thing somebody has to
     # remember. It is idempotent, so running it again costs a scan and changes
     # nothing.
+    # FIRST OF THE LATE PASSES, AND THE MOST EXPENSIVE ONE TO FORGET.
+    #
+    # `render` rebuilds the 54 country pages from source data, which knows
+    # nothing about the image library — so a plain `build.py render` reverted
+    # about eighteen first-party photographs PER PAGE back to Pexels hotlinks,
+    # roughly a thousand references, and every check still passed. The pages
+    # were valid; they had simply stopped being ours.
+    #
+    # rewrite was left out of this chain because it is economically
+    # significant and was run deliberately. That reasoning was right about the
+    # first migration and wrong about every build afterwards: it is gated per
+    # asset on publishedAt, so it can only ever point a page at an object that
+    # is already in the bucket, and running it again when nothing has changed
+    # now writes nothing at all.
+    from . import library as _library
+    _library.rewrite(write=True, log=lambda *a: None)
+
     # BEFORE srcset AND modern, AND FOR THE SAME REASON THEY ARE DOWN HERE.
     #
     # `bound` gives every hotlinked hero the width its own tag already

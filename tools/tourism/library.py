@@ -1917,7 +1917,13 @@ def rewrite(write=False, revert=False, log=print, only=None):
                 with open(full, "w", encoding="utf-8") as fh:
                     fh.write(html)
 
-    if write:
+    # ONLY RESTAMP WHEN SOMETHING ACTUALLY MOVED.
+    #
+    # This used to write the register on every run, so a build that changed no
+    # page still rewrote 629 timestamps and produced a diff. That matters now
+    # that this runs as part of `all`: a no-op build should be a no-op, or
+    # nobody can tell a real change from a heartbeat.
+    if write and (changed_tags or revert):
         # The asset's own record of being wired into pages, which is what
         # makes `live` a per-photograph fact and what the leak check reads to
         # decide whether a provider reference is a leftover or expected.
