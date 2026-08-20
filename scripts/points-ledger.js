@@ -165,14 +165,36 @@
       eligibleServices: ['journey', 'accommodation', 'transport', 'guiding',
                          'experience'],
 
-      /* ---- transfer (B14, B15, C21) -------------------------------------- */
-      /* Decided, not defaulted. Person-to-person transfer is one of the
-         features that moves a prepaid-access analysis, and V1 does not need it.
-         The ledger keeps TRANSFER_IN/TRANSFER_OUT because an administrative
-         correction still needs them — a programme that forbids transfer simply
-         never emits one. Policy is not capability. */
-      transferable: false,
+      /* ---- transfer (B14, B15, C21, and REVERSED BY DECISION E) ----------
+         THIS WAS `false`, AND THE REVERSAL IS DELIBERATE.
+
+         Sections B14/C9 settled non-transferability for V1 on the grounds that
+         person-to-person transfer is one of the features that moves a
+         prepaid-access analysis. Decision E reverses it: a customer who cannot
+         travel and wants their spouse to use the points has a legitimate need,
+         and "the points simply disappear" is the wrong answer to it.
+
+         What makes the reversal safe is that the two halves were already
+         separate. `transferable` governs whether points may move between
+         people at all; `secondaryMarket` governs whether they may move FOR
+         MONEY. Decision E permits the first and keeps the second closed, which
+         is exactly the split `mayTransfer()` was built with for Decision C —
+         so this is one flag, not a redesign.
+
+         The prepaid-access exposure that B14 was avoiding does not go away; it
+         moves into E-analysis, and counsel has to answer it before activation
+         as they did before. */
+      transferable: true,
       secondaryMarket: false,
+
+      /* E5: NO FEE ON AN ORDINARY PERSONAL TRANSFER, and abuse controls that
+         are programme rules rather than hidden ones. A fee is stated as a
+         number so a programme that ever wants one has to write it down; it
+         cannot arrive by omission. The two annual caps are provisional —
+         E-limits. */
+      transferFeeMinor: 0,
+      maxTransfersPerYear: 12,
+      maxTransferredPerYear: 10000,
 
       /* ---- repurchase (E1-E6) --------------------------------------------
          THE BASIS IS A PROGRAMME TERM, NOT A DEFINITION.
@@ -1630,7 +1652,26 @@
     var cap = null;
     if (b.maxPayableIsConsideration) {
       var paid = considerationFor(programId, entries, points);
-      if (paid.ok) { cap = paid.minor; capped = Math.min(raw, paid.minor); }
+      /* A CAP THAT CANNOT BE COMPUTED IS A REFUSAL, NOT A SKIP.
+       *
+       * This used to leave `capped` at the uncapped figure when consideration
+       * could not be traced, which read as "no cap applies" — and under a
+       * transferable programme that is a laundering path with a receipt: buy
+       * 5,000 TP for $5,000, gift them to somebody who paid nothing, and they
+       * are quoted $4,500 on the entitlement basis with the rail silently
+       * inactive. Decision E is what would have activated it, which is why it
+       * was found while implementing E and not while writing it.
+       *
+       * The rail says a repurchase may never pay out more than came in. If
+       * nobody can say what came in, the only answer consistent with that is
+       * no. */
+      if (!paid.ok) {
+        return refuse('these points cannot be traced to a payment, so the ' +
+                      'repurchase cap cannot be applied',
+                      { reason: paid.why, currencies: paid.currencies });
+      }
+      cap = paid.minor;
+      capped = Math.min(raw, paid.minor);
     }
     return {
       eligible: true,

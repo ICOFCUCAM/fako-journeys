@@ -67,7 +67,14 @@ create table point_programs (
   issue_rate      numeric(12,6) not null,        -- points per unit of currency
   entitlement_rate numeric(12,6) not null,       -- eligible travel entitlement per point
   min_purchase    integer not null default 0,
+  -- Decision E permits transfer, and `AFK-TP-2026.1` sets this true. The
+  -- DEFAULT stays false on purpose: a programme should have to say yes. A new
+  -- programme row that forgot to mention transferability should be the
+  -- restrictive one, not the permissive one.
   transferable    boolean not null default false,
+  -- E12: separate from `transferable`, and it is the half that must not drift.
+  -- Permitting a gift is not permitting a sale.
+  secondary_market boolean not null default false,
   -- The clause with regulatory weight. Discretionary by default; making it
   -- contractual can change what this product legally is.
   buyback         jsonb not null default '{"offered": false}'::jsonb,
@@ -187,6 +194,12 @@ create table point_ledger (
   corrects        text references point_ledger(entry_ref),
   journey_ref     text,                          -- the booking a reservation belongs to
   counterparty_id text references customers(id), -- transfers
+  -- E3/E10/E11: WHAT KIND OF TRANSFER THIS WAS, recorded at the moment it
+  -- happened. All four move points identically and differ in what
+  -- documentation was required first; reconstructing "was this a gift or an
+  -- inheritance" from a ledger three years later is not possible.
+  transfer_type   text check (transfer_type in
+                    ('GIFT', 'FAMILY_POOL', 'CORPORATE_GIFT', 'ESTATE')),
   reason          text,
   -- Exceptional adjustments require a named human. An ADJUST that nobody
   -- signed is indistinguishable from a bug that minted points.
@@ -208,6 +221,19 @@ create table point_ledger (
     check (kind not in ('RESERVE', 'RELEASE', 'REDEEM') or journey_ref is not null),
   constraint transfer_needs_counterparty
     check (kind not in ('TRANSFER_IN', 'TRANSFER_OUT') or counterparty_id is not null),
+  -- E3: NO ANONYMOUS TRANSFERS, and none to oneself. A transfer to the same
+  -- customer is either a mistake or an attempt to relabel points, and neither
+  -- should produce two rows.
+  constraint transfer_is_between_two_people
+    check (kind not in ('TRANSFER_IN', 'TRANSFER_OUT')
+           or counterparty_id <> customer_id),
+  constraint transfer_needs_type
+    check (kind not in ('TRANSFER_IN', 'TRANSFER_OUT') or transfer_type is not null),
+  -- E12/F3: only a purchase carries a payment. A transfer moves points that
+  -- already exist and a grant was never paid for, so neither may reference one
+  -- -- which is also what stops a transfer being recorded as an issuance.
+  constraint transfer_has_no_payment
+    check (kind not in ('TRANSFER_IN', 'TRANSFER_OUT') or payment_id is null),
   constraint adjustment_needs_approval
     check (kind not in ('ADJUST_UP', 'ADJUST_DOWN') or approved_by is not null)
 );
@@ -327,6 +353,23 @@ select p.*
 from payments p
 left join point_ledger l on l.payment_id = p.id and l.kind = 'PURCHASE'
 where p.status = 'settled' and l.id is null;
+
+-- E12: A TRANSFER IS NOT AN ISSUANCE, asked of the database.
+-- Per programme, the points sent must equal the points received. If they ever
+-- diverge, a gift has minted or destroyed entitlement and the programme's
+-- total supply moved because points changed hands.
+create view transfer_conservation as
+select
+  program_id,
+  sum(case when kind = 'TRANSFER_OUT' then quantity else 0 end) as sent,
+  sum(case when kind = 'TRANSFER_IN'  then quantity else 0 end) as received,
+  sum(case when kind = 'TRANSFER_IN'  then quantity else 0 end)
+    - sum(case when kind = 'TRANSFER_OUT' then quantity else 0 end) as difference
+from point_ledger
+where kind in ('TRANSFER_IN', 'TRANSFER_OUT') and status = 'SETTLED'
+group by program_id
+having sum(case when kind = 'TRANSFER_IN'  then quantity else 0 end)
+     <> sum(case when kind = 'TRANSFER_OUT' then quantity else 0 end);
 
 create view unbacked_issuance as
 select l.*

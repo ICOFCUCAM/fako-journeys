@@ -375,18 +375,20 @@ report(
 /* ---- Section B14: transferability, decided but not yet applied --------- */
 
 /* B14 settled firmly that customers may not transfer points to one another in
- * V1. The programme still says they may. This is a one-word change that is
- * blocked on nothing — it sits unmade only because programme economics are
- * under a hold, and changing a term of the economic model unprompted is what
- * that hold exists to prevent.
+ * V1, and this check asserted `transferable === false` for many commits.
+ * **DECISION E REVERSED IT.** A customer who cannot travel and wants their
+ * spouse to use the points has a legitimate need, and "the points simply
+ * disappear" is the wrong answer to it.
  *
- * When it is made, this check flips to asserting `false` and the message
- * becomes a record of when. Until then it fails loudly if anyone *relies* on
- * transferability in the meantime. */
+ * What survived the reversal is the half that mattered: B15's bar on a
+ * secondary market. Transfer and sale were always separate terms, so
+ * permitting the first did not touch the second — which is why this is one
+ * flag rather than a redesign. The check now asserts the pair. */
 report(
-  bbProg.transferable === false && bbProg.secondaryMarket === false,
-  "B14/B15: the programme forbids transfer and any secondary market",
-  `transferable ${bbProg.transferable}, secondaryMarket ${bbProg.secondaryMarket} ` +
+  bbProg.transferable === true && bbProg.secondaryMarket === false,
+  "B14/B15 as reversed by Decision E: transfer permitted, sale still forbidden",
+  `transferable ${bbProg.transferable} (was false until Decision E), ` +
+  `secondaryMarket ${bbProg.secondaryMarket} ` +
   `— decided in B14, applied by C21`
 );
 
@@ -1195,12 +1197,19 @@ report(
   `"${L.buybackQuote(P, eWithBonus, 5200, 200, 0).why}"`
 );
 
-/* E8 — non-transferability in V1, enforced where the entry is written. The
-   kinds survive because B14 settled that policy is not capability. */
-const transferAttempt = threw(() =>
-  L.wallet(eBought.concat([entry("TRANSFER_OUT", 100)])));
+/* E8 — enforced where the entry is written, on a programme that forbids it.
+   DECISION E made the shipping programme transferable, so this now runs
+   against a variant that is not — which is the better test anyway: it proves
+   the ENFORCEMENT rather than proving one programme's current flag, and it
+   keeps working whichever way that flag goes. */
+const NOTRANSFER = L.variant(
+  DRAFT, { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+           transferable: false }, "TEST-NON-TRANSFERABLE");
+const transferAttempt = threw(() => L.wallet(eBought.concat([
+  Object.assign(entry("TRANSFER_OUT", 100), { programVersion: NOTRANSFER })])));
 report(
-  transferAttempt !== null && /not transferable/.test(transferAttempt),
+  transferAttempt !== null && /not transferable/.test(transferAttempt) &&
+    L.PROGRAMS[DRAFT].transferable === true,
   "E8: a programme that forbids transfer refuses the entry, not merely the feature",
   `"${transferAttempt}"`
 );
@@ -1939,19 +1948,21 @@ report(
    that nothing consulted, which is exactly where `transferable` was before E8
    and was found the same way. */
 report(
-  L.mayTransfer(DRAFT, {}).ok === false &&
-    L.mayTransfer(DRAFT, {}).rule === "transferable" &&
-    L.mayTransfer(TRANSFERABLE, { forConsideration: true }).ok === false &&
-    L.mayTransfer(TRANSFERABLE, { forConsideration: true }).rule === "secondaryMarket",
-  "C9: no peer-to-peer transfer, and no sale even where transfer is permitted",
-  `the shipping programme refuses on "transferable"; a transferable programme ` +
-  `still refuses a sale on "secondaryMarket", which nothing read until now`
+  L.mayTransfer(NOTRANSFER, {}).ok === false &&
+    L.mayTransfer(NOTRANSFER, {}).rule === "transferable" &&
+    L.mayTransfer(DRAFT, {}).ok === true &&
+    L.mayTransfer(DRAFT, { forConsideration: true }).ok === false &&
+    L.mayTransfer(DRAFT, { forConsideration: true }).rule === "secondaryMarket",
+  "C9 as reversed by Decision E: a gift is permitted, a sale is not",
+  `the shipping programme now permits a gift and still refuses a sale on ` +
+  `"secondaryMarket". C9's ban on a RESALE MARKET survives Decision E intact; ` +
+  `what changed is that giving points away is no longer collateral damage`
 );
 
 /* And the fold still refuses the entry itself, so the gate above is a second
    line rather than the only one. */
-const cTransferFold = threw(() =>
-  L.wallet(cLedger.concat([entry("TRANSFER_OUT", 100)])));
+const cTransferFold = threw(() => L.wallet(cLedger.concat([
+  Object.assign(entry("TRANSFER_OUT", 100), { programVersion: NOTRANSFER })])));
 report(
   cTransferFold !== null && /not transferable/.test(cTransferFold),
   "C9: and a transfer entry is refused where it is written, not only where it is offered",
@@ -2192,6 +2203,221 @@ report(
   dOpen >= 4 && /UNRESOLVED|not decided here/i.test(dDoc),
   "D: the open questions Decision D raises are recorded, not answered in code",
   `${dOpen} unresolved questions carried in docs/travel-point-duration.md`
+);
+
+/* ==== Decision E: transferability, gifting and inheritance =============== */
+
+const TR = require("../scripts/transfer.js");
+
+const james = [
+  Object.assign(entry("PURCHASE", 5000),
+                { payment: { amountMinor: 500000, currency: "USD",
+                             status: "settled" } }),
+];
+
+/* E1/E2 — THE DISTINCTION THE WHOLE DECISION RESTS ON.
+   "Give my 3,000 TP to my wife" is allowed. "Sell my 3,000 TP for $2,700" is
+   not. Same movement of points, completely different products. */
+const gift = TR.propose(P, "CUST-1042", "CUST-2871", 2000,
+  { senderEntries: james, outKey: "o1", inKey: "i1" });
+const sale = TR.propose(P, "CUST-1042", "CUST-9999", 2000,
+  { senderEntries: james, forConsideration: true });
+report(
+  gift.ok === true && sale.ok === false && sale.rule === "secondaryMarket",
+  "E1/E2: a gift is permitted, a sale of the same points is not",
+  `2,000 TP to a named recipient -> allowed; the same 2,000 for money -> ` +
+  `"${sale.why}"`
+);
+
+/* E3 — NO ANONYMOUS TRANSFERS. Both ends named, and named differently: a
+   transfer to oneself is either a mistake or an attempt to relabel points. */
+report(
+  TR.propose(P, "CUST-1042", "", 2000, { senderEntries: james }).rule === "identified" &&
+    TR.propose(P, "", "CUST-2871", 2000, { senderEntries: james }).rule === "identified" &&
+    TR.propose(P, "CUST-1042", "CUST-1042", 2000, { senderEntries: james }).rule === "identified" &&
+    gift.entries[0].customerId === "CUST-1042" &&
+    gift.entries[0].counterpartyId === "CUST-2871",
+  "E3: a transfer names both parties, and they must be different people",
+  `sender and recipient are both recorded on both entries; an unnamed end or a ` +
+  `transfer to oneself is refused`
+);
+
+/* E4 — THE PROGRAMME TRAVELS WITH THE ENTITLEMENT.
+   Sarah receives 2,000 TP under Programme 2026-A, not under whatever is active
+   when she receives them. Both entries carry the sender's programme. */
+report(
+  gift.entries[0].programVersion === P &&
+    gift.entries[1].programVersion === P &&
+    gift.programId === P,
+  "E4: the recipient gets points under the SENDER's programme and terms",
+  `both TRANSFER_OUT and TRANSFER_IN carry ${P} — a recipient cannot be moved ` +
+  `onto different terms by the timing of a gift`
+);
+
+/* E5/E12 — TRANSFER IS NOT ISSUANCE. James -2,000, Sarah +2,000, supply
+   unchanged. And no fee, stated as a number rather than as an absence. */
+const conserved = TR.conserves(gift.entries);
+const minted = TR.conserves([
+  { kind: "TRANSFER_OUT", quantity: 2000 },
+  { kind: "TRANSFER_IN", quantity: 2500 }]);
+report(
+  conserved.ok === true && conserved.transferredIn === conserved.transferredOut &&
+    minted.ok === false && minted.difference === 500 &&
+    gift.entries[0].feeMinor === 0 && gift.entries[1].feeMinor === 0,
+  "E5/E12: a transfer conserves supply and costs nothing",
+  `2,000 out and 2,000 in; a mismatched pair is caught — "${minted.why}". ` +
+  `feeMinor is 0 as a stated number, so a fee cannot arrive by omission`
+);
+
+/* E6 — the original issuance is untouched. A transfer is two new entries. */
+const jamesBefore = JSON.stringify(james);
+report(
+  JSON.stringify(james) === jamesBefore && gift.entries.length === 2 &&
+    gift.entries.every((e) => e.kind !== "PURCHASE"),
+  "E6: the original purchase history is not modified by a transfer",
+  `the PURCHASE entry is byte-identical; the transfer is TRANSFER_OUT + ` +
+  `TRANSFER_IN and nothing else`
+);
+
+/* E8 — reserved points follow the booking's rules, not the wallet's. Two
+   separate refusals: the points are not available, and the window bars it. */
+const jamesCommitted = james.concat([
+  Object.assign(entry("RESERVE", 4800), { journeyRef: "J-E8" })]);
+const overCommitted = TR.propose(P, "CUST-1042", "CUST-2871", 4800,
+  { senderEntries: jamesCommitted });
+const inWindowTransfer = TR.propose(P, "CUST-1042", "CUST-2871", 200,
+  { senderEntries: jamesCommitted,
+    commitments: [{ journeyRef: "J-E8", daysToDeparture: 5, points: 4800 }] });
+report(
+  overCommitted.ok === false && overCommitted.rule === "available" &&
+    inWindowTransfer.ok === false && inWindowTransfer.rule === "restrictedWindow",
+  "E8: reserved points cannot be transferred, and the final window bars it too",
+  `4,800 reserved -> "${overCommitted.why}"; and five days out even the ` +
+  `uncommitted 200 are refused, so a customer cannot leave Afrinkong holding ` +
+  `the supplier obligations`
+);
+
+/* Promotional points are not transferable under this programme — a term that,
+   like `secondaryMarket` before Decision C, nothing read until now. */
+const withGrant = james.concat([entry("PROMOTION", 500)]);
+report(
+  L.PROGRAMS[DRAFT].promotional.transferable === false &&
+    TR.propose(P, "CUST-1042", "CUST-2871", 5200, { senderEntries: withGrant })
+      .rule === "promotionalTransferable",
+  "E: a grant that cannot be repurchased cannot be handed to a third party either",
+  `5,000 purchased + 500 granted; transferring 5,200 is refused on ` +
+  `promotional.transferable`
+);
+
+/* E9 — FAMILY POOLING. A view over points people hold separately; nothing
+   moves and no joint holding exists. */
+const family = TR.pool(P, [
+  { name: "Mother", points: 3000 }, { name: "Father", points: 4000 },
+  { name: "Brother", points: 1500 }, { name: "Child", points: 500 }], 10000);
+report(
+  family.total === 9000 && family.remaining === 1000 &&
+    family.display === "9000 / 10000 TP" && family.state === "PLANNING" &&
+    /Nothing has been transferred/.test(family.note),
+  "E9: four people can fund one journey without a joint account existing",
+  `${family.display} — a shared view, not a merged balance. Actually moving ` +
+  `the points is a FAMILY_POOL transfer per contributor, each with its own consent`
+);
+
+/* And pooling across programmes is refused, because it would silently merge
+   two sets of terms — which E4 forbids. */
+report(
+  TR.pool(P, [{ name: "A", points: 100, programId: P },
+              { name: "B", points: 100, programId: "OTHER" }], 500).ok === false,
+  "E9/E4: contributions to one pool must share one programme",
+  `pooling across programmes would merge two sets of terms into one goal`
+);
+
+/* E10/E11 — corporate gifting and estate transfer have a PLACE in the model
+   without being built, and both are marked as requiring documentation so
+   neither can be executed as an ordinary gift. */
+const estate = TR.propose(P, "CUST-1042", "CUST-3000", 2000,
+  { senderEntries: james, type: "ESTATE" });
+const estateDoc = TR.propose(P, "CUST-1042", "CUST-3000", 2000,
+  { senderEntries: james, type: "ESTATE", documentationRef: "PROBATE-99",
+    outKey: "o2", inKey: "i2" });
+report(
+  Object.keys(TR.TRANSFER_TYPES).sort().join(",") ===
+    "CORPORATE_GIFT,ESTATE,FAMILY_POOL,GIFT" &&
+    estate.ok === false && estate.rule === "documentation" &&
+    estateDoc.ok === true && estateDoc.entries[0].transferType === "ESTATE",
+  "E10/E11: estate and corporate transfers have a place, and require documentation",
+  `four types; ESTATE without a documentation reference is refused, with one ` +
+  `it proceeds and the type is recorded on the entries. Neither is built — the ` +
+  `economic model simply has room for them`
+);
+
+/* E12 — no open marketplace, restated as the hard boundary. There is no order
+   book, no price, and no way to express one: a transfer carries no amount of
+   money at all. */
+report(
+  !("priceMinor" in gift) && !("amountMinor" in gift) &&
+    gift.entries.every((e) => !("priceMinor" in e) && !("amountMinor" in e)) &&
+    L.PROGRAMS[DRAFT].secondaryMarket === false,
+  "E12: a transfer carries no price, so there is nothing an order book could quote",
+  `neither the proposal nor either entry can hold a money figure — speculative ` +
+  `trading has no representation, not merely no interface`
+);
+
+/* ---- the hole Decision E would have opened ------------------------------ */
+
+/* THE ONE THAT MATTERS MOST HERE, AND IT WAS FOUND BY IMPLEMENTING E.
+ *
+ * `maxPayableIsConsideration` is the rail that says a repurchase may never pay
+ * out more than came in. It used to SKIP silently when consideration could not
+ * be traced — and gifted points cannot be traced to a payment by definition,
+ * because the recipient never made one.
+ *
+ * So under an entitlement-basis programme: buy 5,000 TP for $5,000, gift them
+ * to somebody, and they are quoted $4,500 with the rail inactive. Buy, gift,
+ * cash out. Non-transferability was hiding it; Decision E is what would have
+ * activated it. A cap that cannot be computed is now a refusal. */
+const ENTITLEMENT_TRANSFERABLE = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000, transferable: true,
+    buyback: Object.assign({}, L.PROGRAMS[DRAFT].buyback,
+                           { basis: "entitlement" }) },
+  "TEST-LAUNDER");
+const recipient = [{
+  id: "TP-GIFT", customerId: "CUST-2871", kind: "TRANSFER_IN", quantity: 5000,
+  idempotencyKey: "gift1", programVersion: ENTITLEMENT_TRANSFERABLE,
+  status: "SETTLED", counterpartyId: "CUST-1042" }];
+const cashOut = L.buybackQuote(ENTITLEMENT_TRANSFERABLE, recipient, 5000, 200, 0);
+report(
+  cashOut.eligible === false && /cannot be traced to a payment/.test(cashOut.why) &&
+    !("payableMinor" in cashOut),
+  "E: gifted points cannot be cashed out by somebody who never paid for them",
+  `was quoting $4,500 to a recipient who paid nothing, because the ` +
+  `consideration cap SKIPPED when it could not be computed instead of ` +
+  `refusing. Buy, gift, cash out — closed`
+);
+
+/* And the schema carries the same rules, since the last time the module and
+   the schema disagreed the database simply could not store a PROMOTION. */
+report(
+  /transfer_type\s+text check/.test(schemaSrc) &&
+    /transfer_is_between_two_people/.test(schemaSrc) &&
+    /transfer_has_no_payment/.test(schemaSrc) &&
+    /create view transfer_conservation/.test(schemaSrc) &&
+    /secondary_market boolean/.test(schemaSrc),
+  "E: the schema records the transfer type and can prove conservation itself",
+  `transfer_type constrained to the four types, a transfer to oneself is ` +
+  `refused, a transfer cannot reference a payment, and transfer_conservation ` +
+  `lists any programme where sent and received disagree`
+);
+
+/* E-open — recorded, not decided. */
+const eDocE = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-transfer.md"), "utf8");
+const eOpenE = (eDocE.match(/^\s*\|\s*E-[a-z]+\s*\|/gm) || []).length;
+report(
+  eOpenE >= 4 && /UNRESOLVED|not decided here/i.test(eDocE),
+  "E: the open questions Decision E raises are recorded, not answered in code",
+  `${eOpenE} unresolved questions carried in docs/travel-point-transfer.md`
 );
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
