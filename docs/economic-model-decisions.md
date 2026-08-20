@@ -146,6 +146,11 @@ Afrinkong's own service, at least initially.
 
 ### 11. What legal structure applies before accepting customer money?
 
+> **Section B1.3** now tabulates the four features that move this analysis —
+> transferability, cash redemption, reloadability and expiry — with where each
+> lives in the programme and how it is currently set. All four sit at the
+> higher-exposure end by drafting default rather than by decision.
+
 | | |
 |---|---|
 | provisional | **none established.** No money may be taken. |
