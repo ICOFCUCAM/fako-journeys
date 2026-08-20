@@ -627,6 +627,13 @@
       purchased: w.purchased,
       promotional: w.promotional,
       transferred: w.transferred,
+      /* Administrative corrections move the balance, so a wallet that hides
+         them cannot be reconciled against its own entries — the identity
+         available = acquired - reserved - redeemed - boughtBack - expired
+         - adjusted simply would not close. The fold always tracked this; the
+         return forgot it, and a test asking the identity to hold is what
+         noticed. */
+      adjusted: w.adjusted,
       boughtBack: w.boughtBack,
       expired: w.expired,
       reservations: w.reservations,

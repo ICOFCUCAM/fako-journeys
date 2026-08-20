@@ -917,5 +917,149 @@ report(
   "a plan is an intention to buy, and stopping it cancels no entitlement"
 );
 
+/* ==== Section D (redemption): booking economics ========================== */
+
+const BK = require("../scripts/booking.js");
+const DP = L.variant(DRAFT, {
+  compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+}, "BOOKING-FIXTURE");
+let dn = 0;
+const de = (kind, q, x) => Object.assign({
+  id: "TPD-" + (++dn), kind, quantity: q, status: "SETTLED",
+  idempotencyKey: "d" + dn, programVersion: DP,
+}, x || {});
+const JOURNEY = { journeyId: "country:kenya:signature:7", requirement: 4800,
+                  rateCardVersion: "1d60cf455f9a" };
+const funded = [de("PURCHASE", 5200, {
+  payment: { amountMinor: 520000, currency: "USD" },
+})];
+
+/* D2 — the economic agreement is reconstructable: journey, programme, version,
+   points required, points redeemed. */
+const bk0 = BK.open(DP, JOURNEY);
+report(
+  bk0.programId === DP && bk0.programVersion === L.program(DP).version &&
+    bk0.pointsRequired === 4800 && bk0.journeyId === JOURNEY.journeyId,
+  "D2: a booking records the journey, the programme and its version",
+  `${bk0.journeyId} under ${bk0.programId} v${bk0.programVersion}, ` +
+  `${bk0.pointsRequired} TP required`
+);
+
+/* D3/D4 — RESERVING IS NOT REDEEMING. The points leave `available` and stay
+ * entirely the customer's; nothing is consumed. This is the whole reason a
+ * booking is two events rather than one subtraction. */
+const bkAcc = BK.advance(bk0, "ACCEPTED").booking;
+const res = BK.advance(bkAcc, "RESERVED", {});
+const resEntries = res.entries.map((e) =>
+  Object.assign({}, e, { id: "TPD-R", idempotencyKey: "dr" }));
+const afterReserve = L.wallet(funded.concat(resEntries));
+report(
+  res.entries.length === 1 && res.entries[0].kind === "RESERVE" &&
+    afterReserve.available === 400 && afterReserve.reserved === 4800 &&
+    afterReserve.redeemed === 0 && afterReserve.acquired === 5200,
+  "D3/D4: reserving moves points out of available and consumes none",
+  `total ${afterReserve.acquired}, reserved ${afterReserve.reserved}, ` +
+  `available ${afterReserve.available}, redeemed ${afterReserve.redeemed}`
+);
+
+/* THE INVARIANT ASKED FOR BY NAME: reservation and release leave the
+ * customer's economic position exactly where it started. */
+const rel = BK.advance(res.booking, "CANCELLED", { daysToDeparture: 60 });
+const relEntries = rel.entries.map((e, i) =>
+  Object.assign({}, e, { id: "TPD-L" + i, idempotencyKey: "dl" + i }));
+const afterRelease = L.wallet(funded.concat(resEntries, relEntries));
+const startWallet = L.wallet(funded);
+report(
+  afterRelease.available === startWallet.available &&
+    afterRelease.reserved === 0 && afterRelease.redeemed === 0 &&
+    afterRelease.acquired === startWallet.acquired,
+  "D5: reserve then release returns the customer exactly where they began",
+  `${startWallet.available} available before, ${afterRelease.available} after, ` +
+  `nothing redeemed — an abandoned booking costs a customer nothing`
+);
+
+/* D6/D8 — confirmed redemption consumes, and the remainder survives. */
+const conf = BK.advance(res.booking, "CONFIRMED").booking;
+const red = BK.advance(conf, "REDEEMED", {});
+const redEntries = red.entries.map((e) =>
+  Object.assign({}, e, { id: "TPD-X", idempotencyKey: "dx" }));
+const afterRedeem = L.wallet(funded.concat(resEntries, redEntries));
+report(
+  red.entries[0].kind === "REDEEM" && afterRedeem.redeemed === 4800 &&
+    afterRedeem.available === 400 && afterRedeem.reserved === 0 &&
+    red.booking.pointsRedeemed === 4800,
+  "D6/D8: confirming redeems the reservation and the remainder stays",
+  `${afterRedeem.redeemed} TP redeemed, ${afterRedeem.available} TP left under ` +
+  `the same programme`
+);
+
+/* D7 — a rejected booking never reserved anything, so there is nothing to
+   release and no entry to append. */
+const rejected = BK.advance(bk0, "REJECTED", {});
+report(
+  rejected.ok && rejected.entries.length === 0 &&
+    rejected.booking.state === "REJECTED",
+  "D7: a rejected request produces no ledger entry at all",
+  "nothing was reserved, so nothing needs releasing"
+);
+
+/* D10 — INSUFFICIENT POINTS, REPORTED IN POINTS. No conversion is offered,
+ * because D7 says the programme must define the settlement mechanism and it
+ * has not. A function that quietly returned "$1,500" would have decided it. */
+const short = BK.request(DP, { journeyId: "j", requirement: 6000 },
+                         { available: 4500 });
+report(
+  short.ok === false && short.shortfallPoints === 1500 &&
+    short.settlement.mechanism === null &&
+    !/\$|amountMinor/.test(JSON.stringify(short)),
+  "D10/D11: a shortfall is 1,500 TP and carries no money figure at all",
+  "the settlement mechanism is null and named as an undecided programme term"
+);
+
+/* D12 — eligible services are programme scope, not a universal list. */
+report(
+  BK.ineligible(DP, ["journey", "transport"]).length === 0 &&
+    BK.ineligible(DP, ["journey", "visa", "international_flight"]).join(",")
+      === "visa,international_flight",
+  "D12: what points may be spent on is read from the programme",
+  "journey and transport are inside scope; visas and flights are not, and a " +
+  "request naming one is refused rather than silently partly covered"
+);
+
+/* The state machine refuses what it should. */
+report(
+  BK.advance(bk0, "REDEEMED", {}).ok === false &&
+    BK.advance(red.booking, "CANCELLED", {}).ok === false,
+  "D: a booking cannot redeem without reserving, or change after redeeming",
+  `REQUESTED->REDEEMED refused; REDEEMED is terminal`
+);
+
+/* THE BALANCE IDENTITY, ASKED FOR BY NAME.
+ * available = acquired + released - reserved - redeemed - transferred
+ *             - boughtBack - expired - adjusted
+ * Folded over a history containing every kind, so the identity is checked
+ * against movement rather than against an empty wallet. */
+const everything = [
+  de("PURCHASE", 5000, { payment: { amountMinor: 500000, currency: "USD" } }),
+  de("PROMOTION", 500),
+  de("RESERVE", 2000, { journeyRef: "J1" }),
+  de("RELEASE", 500, { journeyRef: "J1" }),
+  de("REDEEM", 1500, { journeyRef: "J1" }),
+  de("BUYBACK", 300),
+  de("EXPIRE", 200),
+  de("ADJUST_DOWN", 100),
+];
+const wAll = L.wallet(everything);
+const identity =
+  wAll.acquired - wAll.reserved - wAll.redeemed - wAll.boughtBack -
+  wAll.expired - wAll.adjusted;
+report(
+  wAll.available === identity,
+  "D: the balance is the identity, not a stored number",
+  `available ${wAll.available} = acquired ${wAll.acquired} - reserved ` +
+  `${wAll.reserved} - redeemed ${wAll.redeemed} - boughtBack ${wAll.boughtBack} ` +
+  `- expired ${wAll.expired} - adjusted ${wAll.adjusted}`
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);

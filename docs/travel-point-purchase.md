@@ -127,3 +127,76 @@ auditor, a dispute or a repurchase quote needs.
 Buyback, refunds, transferability, expiry terms, guaranteed pricing, regulatory
 classification, accounting treatment and tax. Those belong to Sections B and D,
 several of them wait on counsel, and none is implied by anything above.
+
+---
+
+# Section D (redemption) — booking economics
+
+> **Numbering again.** An earlier Section D settled the legal and compliance
+> boundary (`docs/travel-point-compliance.md`). This is the redemption Section D.
+> Both are kept.
+
+## The one thing the booking machine exists to prevent
+
+`balance -= 4800` when somebody clicks Book.
+
+A booking is a conversation that can be rejected, abandoned or cancelled, and
+points must survive all three. So Book **reserves**; only a confirmed itinerary
+**redeems**. Two events, never one.
+
+    REQUESTED ─┬─ REJECTED                    (nothing was reserved)
+               └─ ACCEPTED ── RESERVED ─┬─ CANCELLED   (bands apply)
+                                        └─ CONFIRMED ── REDEEMED
+
+`scripts/booking.js` **appends nothing**. Every transition returns the ledger
+entries it *implies*, for a caller with the authority to append them. That
+keeps the machine testable without a ledger and makes it impossible for a
+booking screen to consume points on its own — compliance D21.2.
+
+## What each state costs the customer
+
+| transition | ledger | wallet |
+|---|---|---|
+| REQUESTED → REJECTED | **nothing** | unchanged |
+| ACCEPTED → RESERVED | `RESERVE` | 5,200 → 400 available, 4,800 reserved, **0 redeemed** |
+| RESERVED → CANCELLED | `RELEASE` (+ `REDEEM` for any forfeit) | per the programme's band |
+| CONFIRMED → REDEEMED | `REDEEM` | 4,800 consumed, 400 remains |
+
+**Reserve then release returns the customer exactly where they began** —
+proved, not asserted. An abandoned booking costs nothing.
+
+## Insufficient points
+
+Reported **in points**: 6,000 required, 4,500 held, shortfall **1,500 TP**.
+`settlement.mechanism` is `null` and says so. No money figure appears anywhere
+in the reply, because the programme has not defined a conversion and a function
+that quietly returned "$1,500" would have decided it.
+
+## Eligible services are programme scope
+
+`journey`, `accommodation`, `transport`, `guiding`, `experience` are inside.
+A request naming a visa or an international flight is **refused** rather than
+silently part-covered, and the reply names which services fell outside. The
+site already settles park fees and permits separately; this is that, as a
+programme term rather than a hard-coded list.
+
+## Cancellation is not buyback
+
+Cancellation concerns **a booking** — *I don't want this journey*. Buyback
+concerns **points** — *I don't want these any more*. Different transactions,
+different terms, and buyback remains undecided.
+
+## The invariant
+
+    available = acquired − reserved − redeemed − boughtBack − expired − adjusted
+
+Checked against a history containing every kind of movement, not an empty
+wallet. Writing that check found that `adjusted` was tracked by the fold and
+**never returned by `wallet()`** — so the identity could not be closed by any
+caller. Fixed.
+
+## Still undecided
+
+Buyback pricing, transferability, expiry, refund rights, cancellation
+penalties, the mixed-payment settlement mechanism, regulatory treatment,
+accounting and tax.
