@@ -21,7 +21,23 @@ function threw(fn) {
   try { fn(); return null; } catch (e) { return e.message; }
 }
 
-const P = "AFK-TP-2026.1";
+/* MECHANICS ARE TESTED UNDER A FIXTURE, NOT UNDER THE SHIPPING PROGRAMME.
+ *
+ * The shipping programme is a draft and the ledger refuses to issue under a
+ * draft — which is the behaviour that keeps this product from existing before
+ * counsel has signed it, and which is asserted at the bottom of this file.
+ *
+ * But the accounting still has to be tested, and it cannot be tested without
+ * issuing something. So a fixture programme exists here, in the test file,
+ * marked active. It is registered on the module's PROGRAMS map at runtime and
+ * never written to scripts/points-ledger.js — nothing that ships is active.
+ */
+const P = "TEST-ACTIVE-FIXTURE";
+L.PROGRAMS[P] = Object.assign({}, L.PROGRAMS["AFK-TP-2026.1"], {
+  id: P, name: "fixture, tests only", status: "active"
+});
+
+const DRAFT = "AFK-TP-2026.1";
 let n = 0;
 const entry = (kind, quantity, extra) => Object.assign({
   id: "TP-" + String(++n).padStart(6, "0"),
@@ -199,9 +215,38 @@ report(Math.abs(g.progress - 0.3125) < 1e-9,
 
 /* --------------------------------------------------- the program is versioned */
 
-report(L.program(P).status === "draft",
-       "the point program ships as a draft, not as live terms",
+report(L.program(DRAFT).status === "draft",
+       "the point program SHIPS as a draft, not as live terms",
        "status must not read 'active' before counsel has signed the terms");
+
+/* ------------------------------------------------ the product-state gate */
+
+report(L.stateOf(null) === "PLANNING"
+       && L.stateOf(DRAFT) === "DRAFT_PROGRAM"
+       && L.stateOf(P) === "ACTIVE_PROGRAM",
+       "three product states, and the shipping program is in the middle one",
+       `no program PLANNING, ${DRAFT} DRAFT_PROGRAM, fixture ACTIVE_PROGRAM`);
+
+report(L.mayIssue(DRAFT) === false && L.mayIssue(P) === true,
+       "only an ACTIVE_PROGRAM may issue a point",
+       "the shipping program may not");
+
+const draftIssue = threw(() => L.fold([{
+  id: "TP-D", kind: "PURCHASE", quantity: 500, status: "SETTLED",
+  idempotencyKey: "draft-1", programVersion: DRAFT
+}]));
+report(draftIssue !== null && /ACTIVE_PROGRAM/.test(draftIssue),
+       "issuing under the shipping program is refused by the fold itself",
+       draftIssue);
+
+/* Moving points a customer already holds is a different question from
+   creating them, and the gate must not confuse the two — it only guards
+   issuance. Under the fixture, a reserve still works. */
+const moves = L.wallet([entry("PURCHASE", 100),
+                        entry("RESERVE", 40, { journeyRef: "J1" })]);
+report(moves.available === 60 && moves.reserved === 40,
+       "the gate guards issuance only, not movement between pools",
+       `${moves.available} available, ${moves.reserved} reserved`);
 
 report(threw(() => L.program("AFK-TP-9999.9")) !== null,
        "an unknown program is refused rather than defaulted",

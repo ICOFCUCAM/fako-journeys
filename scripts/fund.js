@@ -52,6 +52,10 @@
   var daysAsk = document.getElementById('jf-days-ask');
   var tierAsk = document.getElementById('jf-tier-ask');
   var whereFine = document.getElementById('jf-where-fine');
+  var goalEl = document.getElementById('jf-goal');
+  var goalGrid = document.getElementById('jf-goal-grid');
+  var goalNote = document.getElementById('jf-goal-note');
+  var goalProv = document.getElementById('jf-goal-prov');
   var keepBtn = document.getElementById('jf-keep');
   var keptNote = document.getElementById('jf-kept');
   var sendLink = document.getElementById('jf-send');
@@ -198,6 +202,48 @@
       + '</b>, over ' + r.every + '.';
 
     if (r.per > F.CEILING) show(F.doors(D, p, months, s));
+
+    goal(p, months);
+  }
+
+  /* ---- the Travel Goal ----------------------------------------------------
+   *
+   * The same estimate, in the units of a draft Travel Point programme.
+   *
+   * A PLANNING CALCULATION AND NOTHING ELSE. No point is issued, nothing is
+   * bought, no account exists and Afrinkong holds nothing. The panel is not
+   * shown at all unless the arithmetic module says the product is in a
+   * planning or draft state — so the day a programme goes live, this panel
+   * stops being the place that talks about points and something built for the
+   * purpose takes over, rather than this quietly becoming a shop.
+   */
+  function goal(p, months) {
+    var G = window.AfrinkongGoal;
+    if (!G || !goalEl) return;
+
+    var total = p.band ? p.plan : p.total;
+    var g = G.build(total, months, 0, (D && D.v) || null);
+
+    /* If a programme is ever live, this panel must not be the thing that sells
+       it. Hiding rather than adapting is the conservative failure. */
+    if (g.sellable) { goalEl.hidden = true; return; }
+
+    goalGrid.innerHTML =
+        cell('Journey estimate', g.display.journeyTotal)
+      + cell('Travel Goal', g.display.target)
+      + (g.monthly ? cell('Suggested monthly target', g.display.monthly) : '')
+      + cell('Time to target', g.display.time);
+
+    goalNote.textContent = g.disclosure;
+    goalProv.textContent = 'Calculated from rate card ' + g.rateCardVersion
+      + ' against programme ' + g.programId + ' v' + g.programVersion
+      + ' (' + g.programStatus + ').';
+    goalEl.hidden = false;
+  }
+
+  function cell(label, value) {
+    return '<div class="jf-goal-cell"><span>' + label + '</span><b>'
+      + value + '</b></div>';
   }
 
   function show(doors) {

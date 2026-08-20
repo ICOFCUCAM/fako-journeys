@@ -495,6 +495,21 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
             this becomes your <b>planned monthly contribution</b> &mdash; what
             reaching that journey would take, month by month.</p>
           <div class="jf-reach" id="jf-reach" hidden></div>
+
+          <!-- THE TRAVEL GOAL. A PLANNING FIGURE, AND LABELLED AS ONE.
+               The same journey estimate above, restated in the units of a
+               draft Travel Point programme, so a reader can see the shape of
+               the commitment. Nothing is on sale, nothing is owned and no
+               account exists; the panel says so in its own heading rather
+               than in fine print underneath, because a number with a caveat
+               below it is a number people read without the caveat. -->
+          <section class="jf-goal" id="jf-goal" hidden aria-labelledby="jf-goal-h">
+            <h3 class="jf-goal-h" id="jf-goal-h">Estimated Travel Goal
+              <span class="jf-goal-tag">planning only &mdash; not for sale</span></h3>
+            <div class="jf-goal-grid" id="jf-goal-grid"></div>
+            <p class="jf-goal-note" id="jf-goal-note"></p>
+            <p class="jf-fine" id="jf-goal-prov"></p>
+          </section>
           <p class="jf-fine">Park and conservation fees, permits and entrance
             charges are settled by us at cost and are <b>not</b> in this figure.
             They depend on the itinerary, and a gorilla permit alone can be more
@@ -536,6 +551,11 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
 %(events)s
 <script type="application/json" id="jf-data">%(data)s</script>
 <script src="/scripts/fund-math.js" defer></script>
+<!-- Read-only arithmetic. Neither of these can issue, sell or hold anything:
+     the point program is a draft and points-ledger.js refuses to create a
+     point under a draft program. -->
+<script src="/scripts/points-ledger.js" defer></script>
+<script src="/scripts/travel-goal.js" defer></script>
 <script src="/scripts/fund.js" defer></script>
 </body>
 </html>

@@ -149,6 +149,47 @@
     return p;
   }
 
+  /* ---- product state ------------------------------------------------------
+   *
+   * THREE STATES, AND ONLY THE LAST ONE MAY ISSUE A POINT.
+   *
+   *   PLANNING        arithmetic only. A journey cost expressed in points so
+   *                   somebody can see what the goal looks like. No program is
+   *                   involved, nothing is owned, nothing is promised.
+   *   DRAFT_PROGRAM   a program exists and its terms are written, but they
+   *                   have not been approved. Goals may be calculated against
+   *                   it and labelled as estimates. NOTHING MAY BE ISSUED.
+   *   ACTIVE_PROGRAM  the terms are approved and the payment and ledger
+   *                   infrastructure exists. Only here does a point become a
+   *                   thing a customer holds.
+   *
+   * This is not a comment asking somebody to be careful. `fold` refuses any
+   * entry that would create points under a program that is not active, so the
+   * distinction is enforced by the same function that computes every balance.
+   * The site is in DRAFT_PROGRAM today and the test suite asserts it.
+   */
+  var PRODUCT_STATE = {
+    PLANNING: 'PLANNING',
+    DRAFT_PROGRAM: 'DRAFT_PROGRAM',
+    ACTIVE_PROGRAM: 'ACTIVE_PROGRAM'
+  };
+
+  /* Creating points. Moving points a customer already has between pools is
+     not on this list: a RESERVE under a draft program cannot happen anyway,
+     because there is nothing to reserve. */
+  var ISSUING_KINDS = ['PURCHASE', 'TRANSFER_IN', 'ADJUST_UP'];
+
+  function stateOf(id) {
+    if (!id) return PRODUCT_STATE.PLANNING;
+    return program(id).status === 'active'
+      ? PRODUCT_STATE.ACTIVE_PROGRAM
+      : PRODUCT_STATE.DRAFT_PROGRAM;
+  }
+
+  function mayIssue(id) {
+    return stateOf(id) === PRODUCT_STATE.ACTIVE_PROGRAM;
+  }
+
   /* ---- money and points ---------------------------------------------------
    *
    * Whole points only. A fraction of a unit of travel entitlement is not a
@@ -212,6 +253,18 @@
       /* Only settled money creates points. A payment that is authorised,
          pending, or merely reported by a browser is not a payment. */
       if (e.kind === 'PURCHASE' && e.status !== 'SETTLED') { w.ignored++; continue; }
+
+      /* AND ONLY AN APPROVED PROGRAM CREATES POINTS AT ALL.
+         The site is in DRAFT_PROGRAM: the terms are written and the ledger
+         works, and no customer holds anything. This refusal is what makes
+         that true rather than merely intended — including if somebody wires a
+         payment handler up before the legal answer arrives. */
+      if (ISSUING_KINDS.indexOf(e.kind) !== -1 && !mayIssue(e.programVersion)) {
+        throw new Error(
+          'cannot issue points: program ' + (e.programVersion || '(none)') +
+          ' is ' + stateOf(e.programVersion) +
+          '. Points may only be issued under an ACTIVE_PROGRAM.');
+      }
 
       for (var field in kind) {
         if (field === 'admin') continue;
@@ -373,6 +426,9 @@
     STATES: STATES,
     KINDS: KINDS,
     PROGRAMS: PROGRAMS,
+    PRODUCT_STATE: PRODUCT_STATE,
+    stateOf: stateOf,
+    mayIssue: mayIssue,
     program: program,
     pointsFor: pointsFor,
     priceOf: priceOf,

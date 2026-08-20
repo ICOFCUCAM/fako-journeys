@@ -46,10 +46,10 @@
       the journey costs, and what the months between now and then would have to
       look like to reach it.</p>
     <figure class="jf-shot">
-      <picture><source type="image/avif" srcset="/images/uploads/cross-convoy-on-the-road-800w.avif 800w, /images/uploads/cross-convoy-on-the-road-1600w.avif 1600w"><source type="image/webp" srcset="/images/uploads/cross-convoy-on-the-road-800w.webp 800w, /images/uploads/cross-convoy-on-the-road-1600w.webp 1600w"><img src="/images/uploads/cross-convoy-on-the-road-1600w.jpg" width="1600" height="1067"
+      <img src="/images/uploads/cross-convoy-on-the-road-1600w.jpg" width="1600" height="1067"
         alt="A convoy of expedition vehicles on a tarmac road at dusk, seen from inside one of them, with a family walking along the verge under acacia trees" decoding="async" fetchpriority="high"
         data-provider="upload"
-        srcset="/images/uploads/cross-convoy-on-the-road-800w.jpg 800w, /images/uploads/cross-convoy-on-the-road-1600w.jpg 1600w"></picture>
+        srcset="/images/uploads/cross-convoy-on-the-road-800w.jpg 800w, /images/uploads/cross-convoy-on-the-road-1600w.jpg 1600w">
       <figcaption>On the road, somewhere between the two countries</figcaption>
     </figure>
   </section>
@@ -113,6 +113,21 @@
             this becomes your <b>planned monthly contribution</b> &mdash; what
             reaching that journey would take, month by month.</p>
           <div class="jf-reach" id="jf-reach" hidden></div>
+
+          <!-- THE TRAVEL GOAL. A PLANNING FIGURE, AND LABELLED AS ONE.
+               The same journey estimate above, restated in the units of a
+               draft Travel Point programme, so a reader can see the shape of
+               the commitment. Nothing is on sale, nothing is owned and no
+               account exists; the panel says so in its own heading rather
+               than in fine print underneath, because a number with a caveat
+               below it is a number people read without the caveat. -->
+          <section class="jf-goal" id="jf-goal" hidden aria-labelledby="jf-goal-h">
+            <h3 class="jf-goal-h" id="jf-goal-h">Estimated Travel Goal
+              <span class="jf-goal-tag">planning only &mdash; not for sale</span></h3>
+            <div class="jf-goal-grid" id="jf-goal-grid"></div>
+            <p class="jf-goal-note" id="jf-goal-note"></p>
+            <p class="jf-fine" id="jf-goal-prov"></p>
+          </section>
           <p class="jf-fine">Park and conservation fees, permits and entrance
             charges are settled by us at cost and are <b>not</b> in this figure.
             They depend on the itinerary, and a gorilla permit alone can be more
@@ -162,6 +177,11 @@
 <script src="/scripts/events.js" defer></script>
 <script type="application/json" id="jf-data">{"arrival":200,"countries":[{"n":"Algeria","r":"north","s":"algeria"},{"n":"Angola","r":"southern","s":"angola"},{"n":"Benin","r":"central","s":"benin"},{"n":"Botswana","r":"southern","s":"botswana"},{"n":"Burkina Faso","r":"central","s":"burkina-faso"},{"n":"Burundi","r":"east","s":"burundi"},{"n":"Cabo Verde","r":"islands","s":"cabo-verde"},{"n":"Cameroon","r":"central","s":"cameroon"},{"n":"Central African Republic","r":"central","s":"central-african-republic"},{"n":"Chad","r":"central","s":"chad"},{"n":"Comoros","r":"islands","s":"comoros"},{"n":"Congo","r":"central","s":"congo"},{"n":"C\u00f4te d'Ivoire","r":"central","s":"cote-divoire"},{"n":"DR Congo","r":"central","s":"dr-congo"},{"n":"Djibouti","r":"east","s":"djibouti"},{"n":"Egypt","r":"north","s":"egypt"},{"n":"Equatorial Guinea","r":"central","s":"equatorial-guinea"},{"n":"Eritrea","r":"east","s":"eritrea"},{"n":"Eswatini","r":"southern","s":"eswatini"},{"n":"Ethiopia","r":"east","s":"ethiopia"},{"n":"Gabon","r":"central","s":"gabon"},{"n":"Ghana","r":"central","s":"ghana"},{"n":"Guinea","r":"central","s":"guinea"},{"n":"Guinea-Bissau","r":"central","s":"guinea-bissau"},{"n":"Kenya","r":"east","s":"kenya"},{"n":"Lesotho","r":"southern","s":"lesotho"},{"n":"Liberia","r":"central","s":"liberia"},{"n":"Libya","r":"north","s":"libya"},{"n":"Madagascar","r":"islands","s":"madagascar"},{"n":"Malawi","r":"southern","s":"malawi"},{"n":"Mali","r":"central","s":"mali"},{"n":"Mauritania","r":"central","s":"mauritania"},{"n":"Mauritius","r":"islands","s":"mauritius"},{"n":"Morocco","r":"north","s":"morocco"},{"n":"Mozambique","r":"southern","s":"mozambique"},{"n":"Namibia","r":"southern","s":"namibia"},{"n":"Niger","r":"central","s":"niger"},{"n":"Nigeria","r":"central","s":"nigeria"},{"n":"Rwanda","r":"east","s":"rwanda"},{"n":"Sao Tome and Principe","r":"islands","s":"sao-tome-and-principe"},{"n":"Senegal","r":"central","s":"senegal"},{"n":"Seychelles","r":"islands","s":"seychelles"},{"n":"Sierra Leone","r":"central","s":"sierra-leone"},{"n":"Somalia","r":"east","s":"somalia"},{"n":"South Africa","r":"southern","s":"south-africa"},{"n":"South Sudan","r":"east","s":"south-sudan"},{"n":"Sudan","r":"north","s":"sudan"},{"n":"Tanzania","r":"east","s":"tanzania"},{"n":"The Gambia","r":"central","s":"gambia"},{"n":"Togo","r":"central","s":"togo"},{"n":"Tunisia","r":"north","s":"tunisia"},{"n":"Uganda","r":"east","s":"uganda"},{"n":"Zambia","r":"southern","s":"zambia"},{"n":"Zimbabwe","r":"southern","s":"zimbabwe"}],"days":[3,5,7,10,14],"default":{"days":7,"tier":"signature"},"first":"uganda","routes":[{"c":4,"d":"21","hi":12000,"lo":6000,"n":"Trans Afrique \u2014 East","r":"east","s":"east"},{"c":6,"d":"24","hi":14000,"lo":7000,"n":"Trans Afrique \u2014 West","r":"central","s":"west"},{"c":5,"d":"21","hi":16000,"lo":8000,"n":"Trans Afrique \u2014 South","r":"southern","s":"south"},{"c":9,"d":"35 to 45","hi":30000,"lo":15000,"n":"Trans Afrique \u2014 The Continental Expedition","r":"east","s":"great"}],"tiers":[{"id":"private","line":"Your vehicle. Your driver. Your time.","name":"Afrinkong Private","rate":450},{"id":"signature","line":"The journey, curated as well as driven.","name":"Afrinkong Signature","rate":650},{"id":"bespoke","line":"Built entirely around you.","name":"Afrinkong Bespoke","rate":1000}],"tones":{"central":"#113222","east":"#2B6E5E","islands":"#1A5151","north":"#865A28","southern":"#672E1D"},"v":"1d60cf455f9a"}</script>
 <script src="/scripts/fund-math.js" defer></script>
+<!-- Read-only arithmetic. Neither of these can issue, sell or hold anything:
+     the point program is a draft and points-ledger.js refuses to create a
+     point under a draft program. -->
+<script src="/scripts/points-ledger.js" defer></script>
+<script src="/scripts/travel-goal.js" defer></script>
 <script src="/scripts/fund.js" defer></script>
 <script src="/scripts/explore.js" defer></script>
 </body>

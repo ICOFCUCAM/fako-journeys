@@ -251,7 +251,12 @@ Following §33's priority order. Items 1–3 are done.
 
     1. Domain model                    DONE   scripts/points-ledger.js
     2. Database schema                 DONE   tools/points/schema.sql (unapplied)
-    3. Immutable point ledger          DONE   29 checks
+    3. Immutable point ledger          DONE   33 checks
+    7. Journey Goal integration        DONE   scripts/travel-goal.js, 21 checks
+                                              — live on the Journey Fund, and
+                                              issuing nothing. Taken early
+                                              because it needs no server, no
+                                              payments and no legal sign-off.
     ───────────────────────────────────────── legal review gate ─────
     4. Point products                  needs the program terms signed
     5. Stripe payment integration      needs keys, a server, an account
