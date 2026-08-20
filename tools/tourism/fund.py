@@ -492,9 +492,23 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
           <p class="jf-when" id="jf-when">Choose a month</p>
           <div class="jf-sum" id="jf-sum" aria-live="polite">%(sum)s</div>
           <p class="jf-said" id="jf-said" aria-live="polite">With scripting on,
-            this becomes your <b>planned monthly contribution</b> &mdash; what
-            reaching that journey would take, month by month.</p>
+            this shows what reaching it would look like &mdash; <b>a pace you choose</b>, not a payment you owe.</p>
           <div class="jf-reach" id="jf-reach" hidden></div>
+
+          <!-- THE TRAVEL GOAL. A PLANNING FIGURE, AND LABELLED AS ONE.
+               The same journey estimate above, restated in the units of a
+               draft Travel Point programme, so a reader can see the shape of
+               the commitment. Nothing is on sale, nothing is owned and no
+               account exists; the panel says so in its own heading rather
+               than in fine print underneath, because a number with a caveat
+               below it is a number people read without the caveat. -->
+          <section class="jf-goal" id="jf-goal" hidden aria-labelledby="jf-goal-h">
+            <h3 class="jf-goal-h" id="jf-goal-h">Estimated Travel Goal
+              <span class="jf-goal-tag">planning only &mdash; not for sale</span></h3>
+            <div class="jf-goal-grid" id="jf-goal-grid"></div>
+            <p class="jf-goal-note" id="jf-goal-note"></p>
+            <p class="jf-fine" id="jf-goal-prov"></p>
+          </section>
           <p class="jf-fine">Park and conservation fees, permits and entrance
             charges are settled by us at cost and are <b>not</b> in this figure.
             They depend on the itinerary, and a gorilla permit alone can be more
@@ -536,6 +550,11 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
 %(events)s
 <script type="application/json" id="jf-data">%(data)s</script>
 <script src="/scripts/fund-math.js" defer></script>
+<!-- Read-only arithmetic. Neither of these can issue, sell or hold anything:
+     the point program is a draft and points-ledger.js refuses to create a
+     point under a draft program. -->
+<script src="/scripts/points-ledger.js" defer></script>
+<script src="/scripts/travel-goal.js" defer></script>
 <script src="/scripts/fund.js" defer></script>
 </body>
 </html>
@@ -568,12 +587,17 @@ HOW_TEMPLATE = """<!DOCTYPE html>
   <div class="jf-frame jf-qs" id="qs">
     <article class="jf-q">
       <h2>Where does my money sit?</h2>
-      <p><b>Nowhere near us.</b> It stays in your own bank account, exactly
-        where it is now. Afrinkong does not hold it, does not receive it, does
-        not touch it and has no way of knowing whether you have put anything
-        aside at all.</p>
-      <p>That is not a temporary arrangement pending something better. It is
-        what this is. What we give you is the arithmetic &mdash; what the
+      <p><b>In your own bank account.</b> Nothing on this page moves
+        money. The planner does arithmetic; it takes no payment, opens no
+        account and has no way of knowing whether you have put anything aside
+        at all.</p>
+      <p>Afrinkong does not operate a customer bank account or a deposit
+        account, and it will not. If Travel Points are ever offered, buying one
+        would be a <b>purchase of travel entitlement</b> under the terms of the
+        programme that issued it &mdash; a payment for something, the way any
+        purchase is, rather than money placed with us for safekeeping. The
+        difference matters and we would rather state it now than discover later
+        that a sentence written today had quietly stopped being true. What we give you is the arithmetic &mdash; what the
         journey costs, how many months there are, and therefore what each month
         would have to look like &mdash; and a calendar that tells you when your
         passport needs attention. The money is yours and stays yours until the

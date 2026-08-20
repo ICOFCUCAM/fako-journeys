@@ -92,7 +92,13 @@ ul,ol{list-style:none}
    1,097 — so the links go at 1,140, which leaves margin rather than landing on
    the number. Nothing is lost: the key that displaced them searches every one
    of those destinations and more, from the same row, and the footer still
-   lists them. */
+   lists them.
+
+   THIS LIVES HERE, IN THE SHELL, AND NOT ONLY IN styles/tourism.css.
+   render.py lifts this  block out of this file to build that one, so
+   with the fix in the generated stylesheet alone the two disagreed — 1140
+   there, 1010 here — and every render silently reverted a browser-verified
+   fix. It reverted twice in one session before anybody read the diff. */
 @media(max-width:1140px){.fj-routes,.fj-mast-tel{display:none}}
 @media(max-width:560px){
   .fj-frame{padding:0 20px}

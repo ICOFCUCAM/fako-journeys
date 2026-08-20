@@ -86,10 +86,26 @@
     var t = tierOf(D, s.tier);
     var days = s.days;
     var ground = t.rate * days;
+    /* TWO RATE CARDS, TWO SHAPES FOR THE SAME FIELD.
+       The card embedded in journey-fund.html carries `arrival: 200`; the
+       richer `tourism/rates.json` carries `arrival: {name, rate, per}`. This
+       used to do `ground + D.arrival` against whichever it was handed, and
+       against the object that is STRING CONCATENATION — `plan` came back as
+       "4550[object Object]" and every downstream figure became NaN. The live
+       page was unaffected because it uses the embedded card, so nothing ever
+       failed; a requirement of zero simply waited for somebody to run the
+       arithmetic against the other file. Found doing exactly that.
+
+       (Worded to avoid the vocabulary of the other denomination on purpose:
+       goal-checks asserts this file knows nothing of it, and greps the whole
+       file including comments. That check is right — this module is the money
+       planner and must stay that way.) */
+    var arrival = (D.arrival && typeof D.arrival === 'object')
+      ? (D.arrival.rate || 0) : (D.arrival || 0);
     return {
-      band: false, ground: ground, arrival: D.arrival,
-      total: ground + D.arrival, rate: t.rate, tierName: t.name,
-      days: days, plan: ground + D.arrival
+      band: false, ground: ground, arrival: arrival,
+      total: ground + arrival, rate: t.rate, tierName: t.name,
+      days: days, plan: ground + arrival
     };
   }
 

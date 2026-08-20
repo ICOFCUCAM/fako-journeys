@@ -209,6 +209,53 @@ def _swap(value, ext):
 DATA_SRC_RE = re.compile(r'\bdata-src="')
 
 
+PIC_RE = re.compile(r"<picture\b[^>]*>|</picture\s*>", re.I)
+
+
+def _picture_spans(html):
+    """Every (start, end) that a <picture> element covers, outermost only.
+
+    Walks the document once keeping a depth counter, which is enough to answer
+    "is this offset inside a <picture>" exactly. Not a parser and not trying to
+    be: <picture> cannot contain another <picture> in valid HTML, so a depth
+    counter over the open and close tags is the whole of the problem — and
+    where the document already has them nested, counting still returns the
+    outermost span, which is the answer this pass needs.
+
+    An unbalanced close tag cannot drive the depth negative and make the rest
+    of the file look bare; malformed markup should make this pass do less, not
+    more.
+    """
+    spans, depth, opened = [], 0, 0
+    for m in PIC_RE.finditer(html):
+        if m.group(0).startswith("</"):
+            if depth == 0:
+                continue
+            depth -= 1
+            if depth == 0:
+                spans.append((opened, m.end()))
+        else:
+            if depth == 0:
+                opened = m.start()
+            depth += 1
+    return spans
+
+
+def _within(spans, pos):
+    """Is this offset inside one of those spans? Binary search, they are sorted."""
+    lo, hi = 0, len(spans) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        start, end = spans[mid]
+        if pos < start:
+            hi = mid - 1
+        elif pos >= end:
+            lo = mid + 1
+        else:
+            return True
+    return False
+
+
 def _wrap(tag):
     """One <img> into a <picture>, or the tag unchanged.
 
@@ -265,13 +312,28 @@ def run(write=False, log=print):
                 continue
 
             # Already inside a <picture> is left alone, which is what makes
-            # this idempotent. Matched on the text immediately before the tag
-            # rather than by parsing, because the alternative is a parser.
+            # this idempotent.
+            #
+            # IT WAS NOT IDEMPOTENT, AND A FIXED LOOKBACK IS WHY.
+            #
+            # This used to read the 400 characters before the tag and decide
+            # containment from those. That works for a <picture> holding two
+            # short local sources and fails for every one the image library
+            # writes: four <source> elements full of image.afrinkong.com URLs
+            # run to eight hundred characters and more, so the opening tag sat
+            # outside the window, the <img> read as bare, and the pass wrapped
+            # it again. Every run added a layer:
+            #
+            #     <picture><picture><picture><img></picture></picture></picture>
+            #
+            # Thirty-six such blocks were sitting on main, logged as
+            # "pre-existing, invalid, mechanism unknown". This was the
+            # mechanism. Containment is now computed from the document rather
+            # than guessed from a window, so build(build(x)) == build(x).
+            spans = _picture_spans(html)
             out, cut, n = [], 0, 0
             for m in IMG_RE.finditer(html):
-                before = html[max(0, m.start() - 400):m.start()]
-                if "<picture>" in before and "</picture>" not in \
-                        before[before.rindex("<picture>"):]:
+                if _within(spans, m.start()):
                     continue
                 wrapped = _wrap(m.group(0))
                 if wrapped == m.group(0):
