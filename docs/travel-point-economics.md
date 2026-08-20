@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| B1–B22 | **settled** as product and economic decisions |
-| B23 onward | not yet written |
+| **B1–B25** | **DESIGN APPROVED — PENDING LEGAL/REGULATORY REVIEW BEFORE ACTIVATION** |
+| conformance | 21 of B24's 28 rules enforced; 7 recorded and pinned. See B24. |
 | open questions | seventeen |
 | all four exposure features | now answered — **two easier, two harder**. See B17.2 |
 | awaiting your word | **B14** — `transferable: false`, one word, blocked on nothing |
@@ -1185,7 +1185,152 @@ keeps.
 
 ---
 
-## B23 onward
+## B23. The complete economic lifecycle
+
+**Settled.**
+
+                          TRAVEL GOAL
+                        "I want Kenya"
+                              │
+                              ▼
+                     journey requirement
+                            4,800 TP
+                              │
+                              ▼
+                      BUY TRAVEL POINTS
+                              │
+                              ▼
+                           PAYMENT
+                              ▼
+                          SETTLED ✓
+                              ▼
+                        POINT LEDGER
+                              ▼
+                           1,000 TP
+                              │
+                 ┌────────────┴────────────┐
+                 ▼                         ▼
+               KEEP                     RESERVE
+                 │                         ▼
+                 │                       BOOKING
+                 │                         │
+                 │                ┌────────┴────────┐
+                 │                ▼                 ▼
+                 │             TRAVEL            CANCEL
+                 │                ▼                 ▼
+                 │             REDEEM         RELEASE / TERMS
+                 ▼
+         ELIGIBLE REPURCHASE
+                 ▼
+          AFRINKONG OFFER 90%
+
+Every arrow on that diagram already exists as a ledger kind, a programme rule or
+a documented gate. Nothing in the lifecycle is speculative — the parts that are
+missing are *distinctions within* these steps, not steps.
+
+## B24. The frozen rules, audited against the code
+
+**Settled.** Twenty-eight rules. Each checked rather than agreed with.
+
+| # | rule | decision | in the code |
+|---:|---|---|---|
+| 1 | point meaning | travel entitlement | ✅ A1a frame |
+| 2 | currency | not currency | ✅ a ledger entry carries none — asserted |
+| 3 | cash value | none | ✅ no monetary field on a wallet — asserted |
+| 4 | interest | none | ✅ asserted three ways (B7.1) |
+| 5 | yield | none | ✅ same |
+| 6 | investment | none | ✅ no growth vocabulary in live code |
+| 7 | mandatory monthly saving | no | ⚠️ **shipped copy contradicts** — *"Suggested monthly target"* (B3.1) |
+| 8 | customer chooses frequency | yes | ✅ nothing schedules or compels |
+| 9 | programme-specific terms | yes | ✅ versioned `point_programs` |
+| 10 | terms after issuance | immutable | ✅ schema trigger refuses the UPDATE |
+| 11 | payment rail | Stripe later | ✅ not integrated |
+| 12 | payment creates points | only after settlement | ✅ non-`SETTLED` purchases ignored |
+| 13 | ledger | append-only | ✅ schema trigger |
+| 14 | balance | derived | ✅ folded every time, never stored |
+| 15 | customer wallet | entitlement record | ✅ asserted (B22.1) |
+| 16 | customer-to-customer transfer | no in V1 | ❌ **`transferable: true`** (B14.1) |
+| 17 | secondary market | no in V1 | ✅ no counterparty, recipient or price anywhere |
+| 18 | redemption | Afrinkong eligible travel | ✅ A1a |
+| 19 | buyback | possible, discretionary | ✅ `discretionary: true` |
+| 20 | buyback reference | 90% | ⚠️ rate is `0.90`, **basis is wrong** (B12.2) |
+| 21 | buyback of reserved points | no | ✅ *"only available points can be bought back"* |
+| 22 | final 7 days | no buyback | ❌ `cancellation()` knows; `buybackQuote()` never asks (B13.1) |
+| 23 | purchased-point expiry | no time expiry | ⚠️ `expiryMonths: 0`, but **not differentiated** (B17.1) |
+| 24 | promotional-point expiry | possible | ❌ not expressible — no lot type (B16.2) |
+| 25 | programme changes | new programme | ✅ schema |
+| 26 | price changes | never rewrite issued terms | ✅ schema trigger |
+| 27 | automatic growth | never | ✅ no clock in the ledger |
+| 28 | investment return | never | ✅ same |
+
+**Twenty-one conform. Three are contradicted. Four are partial.** None of the
+seven is a surprise — each was found and recorded when its section was written,
+and each is pinned by a check so it cannot ship quietly.
+
+Grouped by what it would take to close them:
+
+| | rules | work |
+|---|---|---|
+| **one word** | 16 | `transferable: false` — blocked on nothing but your word |
+| **one line and one test** | 20 | repurchase on consideration rather than entitlement — B12's basis |
+| **wiring, no new concepts** | 22 | give `buybackQuote` the booking so it can consult the ladder |
+| **copy** | 7 | two prescriptive strings on the fund page |
+| **a lot type** | 24, and the differentiated halves of 23 | the promotional issuance B16 requires |
+
+That is the whole of the distance between the frozen model and the code. It is
+shorter than the section is long, which is the point of having written it down.
+
+## B25. How this is sold
+
+**Settled, and it is the most important product decision in Section B.**
+
+> **Not** *"saving money"*. That creates the wrong mental model.
+>
+> **Build your journey before you book it.**
+> **Buy your journey in Travel Points, one purchase at a time.**
+>
+> The customer's problem: *"I want to travel to Kenya, but I can't afford the
+> whole journey today."*
+>
+> Afrinkong's answer: *you don't have to pay for the whole journey today. Build
+> your Travel Point balance over time, then use it toward the journey when
+> you're ready.*
+
+Every legal distinction in Sections A and B is downstream of this sentence. A
+product sold as saving is a product a customer believes holds their money, and
+no amount of careful drafting elsewhere survives a homepage that says otherwise.
+Selling it as *buying a journey in instalments* is both truer and easier to
+defend — the customer is acquiring travel, progressively, which is exactly what
+the entitlement model says they are doing.
+
+It also settles the framing question B3.1 raised. *"Suggested monthly target"*
+is savings language: it tells the customer what they must set aside. *"You are
+projected to arrive in fourteen months"* is purchase language: it tells them how
+far along they are. The copy change and the economic model are the same decision
+wearing different clothes.
+
+---
+
+## Section B status
+
+    DESIGN APPROVED — PENDING LEGAL/REGULATORY REVIEW BEFORE ACTIVATION
+
+Not `ACTIVE`. Not `START ACCEPTING MONEY`.
+
+| | |
+|---|---|
+| the economic model | design approved, B1–B25 |
+| activation | **blocked** pending legal and regulatory review |
+| the programme | `draft`; `PRODUCT_STATE` is `DRAFT_PROGRAM` |
+| money taken to date | none, and none can be — `fold` throws on any issuing entry under a non-active programme |
+| open questions | seventeen, registered and unresolved |
+| conformance | 21 of 28 rules enforced; 7 recorded and pinned |
+
+Counsel needs, at minimum: the four exposure features and how they now sit
+(B17.2 — two easier, two harder, all deliberate), the repurchase basis and its
+discretionary character (B12), the absence of any secondary market (B14, B15),
+and the prepaid-access analysis this is all pointed at.
+
 
 Not yet written. The remaining economic model — pricing, packages, recurring
 purchase, the wallet, reservation and redemption mechanics, price protection —

@@ -478,5 +478,39 @@ report(
   "a repurchase quote is an offer about specific points, not a statement of worth"
 );
 
+/* ---- Section B24 rules 21 and 22: reserved points, and the final week -- */
+
+/* Rule 21 — reserved points cannot be repurchased. Enforced, and asserted here
+ * because it is the difference between a repurchase programme and a way to
+ * withdraw money you have already committed to a journey. */
+const r21Prog = L.PROGRAMS[DRAFT];
+const r21Saved = r21Prog.status;
+r21Prog.status = "active";
+const booked = [entry("PURCHASE", 5000), entry("RESERVE", 4800)];
+const onReserved = L.buybackQuote(DRAFT, booked, 4800, 100, 0);
+const onAvailable = L.buybackQuote(DRAFT, booked, 200, 100, 0);
+r21Prog.status = r21Saved;
+
+report(
+  onReserved.eligible === false && onAvailable.eligible === true,
+  "B24 rule 21: reserved points cannot be repurchased, available ones can",
+  `4,800 reserved -> "${onReserved.why}"; 200 available -> eligible`
+);
+
+/* Rule 22 — no repurchase inside the final seven days. NOT enforced, and the
+ * shape of the failure is the interesting part: cancellation() computes
+ * buybackEligible:false and buybackQuote() has no departure date to ask about.
+ * Two functions holding half a rule each, which is how somebody inside the
+ * final window gets a quote they should never have been offered. */
+const ladderSaysNo = L.cancellation(DRAFT, 5, 4800).buybackEligible === false;
+const quoteCanAsk = /departure|daysTo|booking/i.test(
+  L.buybackQuote.toString().match(/\(([^)]*)\)/)[1]);
+report(
+  ladderSaysNo && !quoteCanAsk,
+  "B24 rule 22: the seven-day bar is computed in one place and ignored in another",
+  "cancellation() returns buybackEligible:false at 5 days; buybackQuote() takes " +
+  "no booking or departure date and cannot consult it. See B13.1"
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
