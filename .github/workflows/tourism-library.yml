@@ -37,7 +37,7 @@ on:
         required: false
         default: true
       weigh:
-        description: "Measure page weight before/after the rewrite on six of the 76 pages (needs the open internet)"
+        description: "Measure page weight before/after on eight pages the current wave touches (needs the open internet)"
         type: boolean
         required: false
         default: false
@@ -92,8 +92,8 @@ jobs:
   # browser-checks measures four fixed pages and none of them was rewritten,
   # so it correctly reported no change and told us nothing about whether
   # first-party images are lighter than the hotlinks they replaced. This
-  # loads six of the seventy-six at a phone viewport, once from the commit
-  # before the rewrite and once from now, and counts the image bytes that
+  # loads eight pages the CURRENT wave touches at a phone viewport, once from
+  # the commit before the rewrite and once from now, counting the bytes that
   # actually crossed the wire. Needs the open internet: the providers and our
   # own asset host are both unreachable from the development sandbox.
   weigh:
