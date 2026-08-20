@@ -61,14 +61,50 @@ jobs:
       - name: Validate every country
         run: python3 tools/tourism/build.py validate
 
+      # RENDER IS NOT THE WHOLE BUILD, AND RUNNING IT ALONE BREAKS THIS JOB.
+      #
+      # `render` rebuilds the country pages from source data, which knows
+      # nothing about the image library — so on its own it reverts every
+      # migrated photograph to its provider and the staleness check below
+      # then fails against a tree that is perfectly correct. The late passes
+      # are what put the site back: rewrite first, then the rest.
+      #
+      # This mirrors the tail of cmd_all deliberately rather than calling
+      # `all`, because `all` also regenerates 1,363 place pages and this job
+      # is about the country pages it just rendered.
       - name: Rebuild pages and check the generated HTML
         run: |
           python3 tools/tourism/build.py render
+          python3 tools/tourism/build.py library rewrite --fetch
+          python3 tools/tourism/build.py company
+          python3 tools/tourism/build.py graft
+          python3 tools/tourism/build.py bound --fetch
+          python3 tools/tourism/build.py srcset --fetch
+          python3 tools/tourism/build.py sizeattr --fetch
+          python3 tools/tourism/build.py modern --fetch
           python3 tools/tourism/build.py verify
+
+      # THE TWO PROPERTIES THAT NO SINGLE-BUILD CHECK CAN SEE.
+      #
+      # Everything else here inspects one build and passes. `modern` spent
+      # weeks adding a <picture> layer per run with all of it green, because
+      # the damage only shows when you compare two builds. And a render
+      # un-migrated a thousand photographs with all of it green, because the
+      # pages were still valid — just no longer ours.
+      - name: The build is idempotent, and the library is permanent
+        run: |
+          node tools/idempotence-checks.js
+          node tools/library-permanence.js
 
       - name: Generated pages must be up to date with the data
         run: |
-          if ! git diff --quiet -- tourism/; then
+          # *.html, not tourism/ wholesale. tourism/assets.json is the image
+          # register — a record of what was downloaded and wired, not a
+          # generated page — and `library rewrite` restamps it whenever the
+          # render it repairs actually moved a tag. That is a heartbeat, not
+          # staleness, and failing the build on it teaches people to ignore
+          # this check.
+          if ! git diff --quiet -- 'tourism/*.html'; then
             echo "::error::tourism/*.html is stale — run 'npm run tourism:all' and commit the result"
             git --no-pager diff --stat -- tourism/
             exit 1
