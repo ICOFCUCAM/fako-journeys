@@ -4,9 +4,10 @@
 
 | | |
 |---|---|
-| B1–B16 | **settled** as product and economic decisions |
-| B17 onward | not yet written |
-| open questions | fifteen — two resolved by B16, one added |
+| B1–B19 | **settled** as product and economic decisions |
+| B20 onward | not yet written |
+| open questions | seventeen |
+| all four exposure features | now answered — **two easier, two harder**. See B17.2 |
 | awaiting your word | **B14** — `transferable: false`, one word, blocked on nothing |
 | larger pending work | **B16** — a promotional lot type the ledger cannot yet express |
 | resolves | **Section A1c** — repurchase is refund of consideration |
@@ -786,7 +787,10 @@ B14 decides one of them:
 | reloadability | not modelled | still open |
 | no expiry | `expiryMonths: 0` | still open |
 
-Two of four now have answers, and both moved toward the easier characterisation.
+Two of four have answers at this point in the section, and both moved toward the
+easier characterisation. **That reading did not survive B17** — B3 had already
+settled reloadability as *yes* and B17 settles expiry as *never*, both of which
+move the other way. The corrected tally is in B17.2.
 
 ---
 
@@ -922,7 +926,148 @@ Two resolved, one sharpened, one added.
 
 ---
 
-## B17 onward
+## B17. Expiry
+
+**Settled.**
+
+> **Purchased points do not expire because time passed.** They remain valid
+> under their programme until redeemed, repurchased, cancelled under programme
+> terms, or the programme is discontinued under properly disclosed rules.
+>
+> **Promotional points may carry an expiry date.**
+>
+> *The points you paid for don't disappear simply because you didn't travel
+> this year.*
+
+### B17.1 One scalar where two rules are needed
+
+`expiryMonths: 0` is programme-wide. B17 needs a *differential* rule — never for
+purchased, optionally dated for promotional — and a single number cannot carry
+it.
+
+This is the third consequence of B16 in as many sections: expiry joins
+redemption, cancellation, buyback and transfer on the list of terms that differ
+by lot type. The programme does not need a promotional flag; it needs a
+promotional **terms block**, and B17 is more evidence for open question B-xvii.
+
+The `EXPIRE` kind already exists and is correct as it stands — what is missing is
+anything that would decide *which* points it applies to.
+
+### B17.2 Expiry was the last of the four exposure features, and the tally is not what I said
+
+B1.3 listed four features that move a prepaid-access analysis, all sitting at
+the higher-exposure end by drafting default. All four now have answers:
+
+| feature | decided by | outcome | direction |
+|---|---|---|---|
+| transferability | **B14** | `false` — no customer-to-customer transfer | ↓ easier |
+| cash redemption | **B12** | discretionary, on purchase consideration | ↓ easier |
+| **reloadability** | **B3** | **yes** — buy any amount, any time, no fixed schedule | ↑ harder |
+| **expiry** | **B17** | purchased points never lapse | ↑ harder |
+
+After B14 I wrote that two of four had been answered and *"both moved toward the
+easier characterisation"*. Reading B3 and B17 properly, that is wrong twice
+over: all four are answered, and **two go each way**.
+
+Flexible accumulation is reloadability, which is a characteristic prepaid
+pattern. Points that never lapse are a more durable obligation than benefits
+that do. Both are deliberate customer-trust choices with a real regulatory cost,
+and both are the right kind of decision to have made knowingly — but counsel
+should see this table rather than the earlier, rosier one.
+
+## B18. If Afrinkong raises travel prices
+
+**Settled.**
+
+> No promise that a journey always costs the same number of points. Equally, no
+> arrangement where points already purchased are quietly devalued.
+>
+> **Programme terms are locked.** Points bought under Programme 2026-A keep
+> 2026-A's entitlement rules, identifiably. Changed economics means launching
+> **Programme 2027-B**, not silently rewriting 2026-A.
+
+The CFPB has warned that materially devaluing rewards consumers have already
+earned or purchased raises consumer-protection concerns where a programme's own
+representations create reasonable expectations of value. The defence is not a
+disclaimer; it is that the terms attached to a point cannot move.
+
+### B18.1 Already enforced, with one hole
+
+This is B6 restated with the reason attached, and the schema already does the
+work: `point_programs` economics are immutable after creation, the trigger at
+`tools/points/schema.sql:87` refuses any `UPDATE` to `issue_rate`,
+`entitlement`, `buyback` or `cancellation`, and every ledger row carries its
+`program_id`.
+
+The hole is B6.1's, and B18 makes it sharper. B18 requires that the rules for a
+customer's points remain **identifiable** — and `wallet()` folds every programme
+into one aggregate, so a customer holding 2026-A and 2027-B points cannot be
+told which are which. The history is intact; the answer is not reachable.
+
+**B18 turns B-iii from housekeeping into a requirement of the settled model.** It
+is not a decision to make, it is work the model now depends on.
+
+## B19. Currency
+
+**Settled.**
+
+> Payment may be taken in multiple currencies — USD, EUR, NOK, GBP and others.
+> **The Travel Point itself stays currency-neutral.**
+>
+> The ledger never says *1 TP = $1*. It says: *customer purchased 500 TP under
+> Programme 2026-A*, and the payment record separately says *$500 USD* or
+> *€460 EUR*. Two records.
+
+This is B1's separation of payment from entitlement doing exactly what it was
+built for, and it is why Stripe is the rail rather than the ledger.
+
+### B19.1 The payment side is ready; the programme side is not
+
+| | |
+|---|---|
+| `payments.currency` | `char(3)`, present — a payment already knows its currency |
+| `point_ledger` | records points and programme, no currency — **correct**, and B19 confirms it |
+| `programme.currency` | `'USD'`, a single value |
+| `programme.issueRate` | one number, *points per unit of that currency* |
+
+So `pointsFor(50000)` returns 500 TP whether those 50,000 minor units are
+dollars or euros. It cannot tell, because the programme binds one rate to one
+currency.
+
+B19's own example resolves it: 500 TP costs **$500 or €460** — a *published
+price per currency*, not a conversion applied at payment time. That keeps the
+point currency-neutral and avoids FX drift between purchase and redemption
+entirely. `issueRate` therefore needs to become a map from currency to rate, and
+the programme needs to declare which currencies it accepts.
+
+### B19.2 Currency plus B12 means lot order decides what a refund is paid in
+
+B12 settled repurchase as 90% of **purchase consideration**. If a customer paid
+€460, the consideration is €460, and 90% of it is €414 — in euros.
+
+A customer who bought some points in dollars and some in euros therefore holds
+lots in two currencies, and **which lot is repurchased determines the currency
+they are paid in**. That is now a third dimension of open question B-ii, which
+already spanned programme and purchased-vs-promotional.
+
+It also raises something new: whether a repurchase may be paid in a currency
+other than the one paid, and who carries the FX movement if so. Registered.
+
+---
+
+## Open questions after B17–B19
+
+| # | question | status |
+|---|---|---|
+| B-ii | which lot is consumed or repurchased first | **three dimensions now**: programme, purchased-vs-promotional, and currency |
+| B-iii | should `wallet()` return per-programme balances | **no longer optional** — B18 requires the rules to stay identifiable |
+| B-xvii | promotional terms: parallel block or overrides | more evidence from B17 — expiry joins the list of differing terms |
+| B-xviii | must `issueRate` become a per-currency map, and which currencies does a programme accept? | new, B19.1 |
+| B-xix | may a repurchase be paid in a currency other than the one paid, and who carries the FX movement? | new, B19.2 |
+
+---
+
+## B20 onward
 
 Not yet written. The remaining economic model — pricing, packages, recurring
 purchase, the wallet, reservation and redemption mechanics, price protection —

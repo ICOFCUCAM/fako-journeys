@@ -409,5 +409,37 @@ report(
   "an administrative correction and a marketing grant must not share an entry kind"
 );
 
+/* ---- Sections B17 and B19: expiry and currency, both one value short ---- */
+
+/* B17: purchased points never lapse, promotional points may. That is two rules
+ * and expiryMonths is one number. The EXPIRE kind is fine; what is missing is
+ * anything that decides which points it applies to. */
+report(
+  typeof bbProg.expiryMonths === "number" && bbProg.expiryMonths === 0,
+  "B17: expiry is one programme-wide scalar where two rules are needed",
+  `expiryMonths ${bbProg.expiryMonths} applies to every point alike — B17 needs ` +
+  `purchased:never and promotional:optional. See B17.1`
+);
+
+/* B19: the point is currency-neutral and the ledger is right to hold no
+ * currency at all. The PROGRAMME binds one rate to one currency, so pointsFor()
+ * cannot tell 50,000 cents from 50,000 euro-cents. B19's own example — 500 TP
+ * for $500 or EUR 460 — needs a published price per currency. */
+report(
+  typeof bbProg.issueRate === "number" && typeof bbProg.currency === "string",
+  "B19: issueRate is one number bound to one currency, so it cannot price in two",
+  `issueRate ${bbProg.issueRate} per 1 ${bbProg.currency}; B19 wants 500 TP for ` +
+  `$500 or EUR 460, which is a per-currency map. See B19.1`
+);
+
+/* And the part that is already right, asserted so it stays right: a ledger
+   entry carries no currency, because a Travel Point does not have one. */
+const sampleEntry = entry("PURCHASE", 100);
+report(
+  !("currency" in sampleEntry) && !("amountMinor" in sampleEntry),
+  "B19: a ledger entry carries no currency and no money, which is correct",
+  "money lives in payments; the ledger records points and a programme"
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
