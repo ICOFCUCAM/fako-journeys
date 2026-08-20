@@ -74,18 +74,23 @@ function hero(src) {
   return null;
 }
 
-function sourceKey(url) {
-  let m = url.match(/images\.pexels\.com\/photos\/(\d+)\//);
-  if (m) return "pexels:" + m[1];
-  m = url.match(/images\.unsplash\.com\/photo-([A-Za-z0-9_-]+)/);
-  if (m) return "unsplash:" + m[1];
-  return null;
-}
-
+/* MATCHED ON THE URL WE RECORDED, NOT ON A KEY REBUILT FROM THE URL.
+ *
+ * The obvious version derives a sourceKey from the page's URL — pexels:12345
+ * from /photos/12345/, unsplash:<slug> from /photo-<slug> — and looks that up
+ * in the register. It is wrong for Unsplash, silently: the register's
+ * sourceKey holds Unsplash's photo ID (JaD-db16oAE) while the URL carries a
+ * different slug (1503592687001-f8d008454cbf), so no Unsplash asset ever
+ * matches and every one of them reports as a photograph we do not own. That
+ * cost nine assets here and eighty-two in the acquisition table before it was
+ * caught.
+ *
+ * originalUrl is the URL the register itself recorded, so comparing against it
+ * needs no reconstruction and cannot drift per provider. */
 const reg = JSON.parse(fs.readFileSync(path.join(ROOT, "tourism/assets.json"), "utf-8"));
 const bySource = new Map();
 for (const [id, a] of Object.entries(reg.assets || {})) {
-  if (a.sourceKey) bySource.set(a.sourceKey, { id, ...a });
+  if (a.originalUrl) bySource.set(a.originalUrl.split("?")[0], { id, ...a });
 }
 
 const rows = [];
@@ -94,7 +99,7 @@ for (const file of pages(ROOT)) {
   const url = hero(fs.readFileSync(file, "utf-8"));
   if (!url) { rows.push({ rel, kind: "none" }); continue; }
   if (new URL(url).host === HOST) { rows.push({ rel, kind: "ours", url }); continue; }
-  const asset = bySource.get(sourceKey(url) || "");
+  const asset = bySource.get(url.split("?")[0]);
   rows.push({
     rel,
     kind: asset && asset.publishedAt ? "published-not-rewritten" : "unknown",

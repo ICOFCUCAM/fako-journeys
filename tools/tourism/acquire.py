@@ -144,7 +144,8 @@ def _pages_index(log=print):
                 width = WIDTH_RE.search(tag)
                 # UNBOUNDED: the tag asks the provider for the original at
                 # whatever size the photographer uploaded, on every device.
-                # 18.6% of the site's references do this, and they are where
+                # 17.4% of the site's remaining references do this — 1,308 of
+                # 7,496 after the first migration wave — and they are where
                 # migration is worth megabytes rather than kilobytes — the
                 # Algeria coast page went 3.76 MB to 0.07 MB on exactly this.
                 # Entities matter: the attribute holds &amp;w=800, so a search
@@ -247,6 +248,13 @@ def rows(log=print):
     reg = library.register()
     known = {a.get("sourceKey"): a["id"] for a in reg["assets"].values()
              if a.get("sourceKey")}
+    # The register's own record of what has actually happened, so a row that is
+    # finished can say so. Without this a migrated KEEP asset reads as "already
+    # width-limited and awaiting migration" — because its pages no longer carry
+    # a provider URL for _pages_index to find, so it has no uses and therefore
+    # no unbounded reference. Correct evidence, wrong conclusion.
+    state_of = {a.get("sourceKey"): library.state(a)
+                for a in reg["assets"].values() if a.get("sourceKey")}
 
     out = []
     for rec in recs:
@@ -274,6 +282,7 @@ def rows(log=print):
         skey = library.source_key("provider", rec.get("provider"),
                                   rec.get("photoId"))
         aid = known.get(skey)
+        cost_bytes, cost_basis = est_bytes(rec, uses)
         out.append({
             "class": cls,
             # The provider's own id, which is how a reserved identity is found
@@ -291,6 +300,13 @@ def rows(log=print):
             # Any reference to this photograph that names no width. One is
             # enough: that page is shipping the original to a phone.
             "unbounded": "yes" if any(u.get("unbounded") for u in uses) else "no",
+            # What this photograph costs a phone today — the ranking's leading
+            # signal after the band. See est_bytes and sortkey below.
+            "mobile bytes": cost_bytes,
+            "mobile bytes basis": cost_basis,
+            # What the register says has actually happened to it, not what the
+            # pages imply.
+            "state": state_of.get(skey, "not in the register"),
             "current reference": rec.get("imageUrl") or "",
             "priority": prio,
             "country": country,
@@ -358,6 +374,8 @@ def rows(log=print):
         if cls == "RECROP":
             return (0, "P0 owned re-crop, no acquisition")
         if cls == "KEEP":
+            if r["state"] == "live":
+                return (9, "P9 done — migrated, first-party, nothing to do")
             if r["unbounded"] == "yes":
                 return (1, "P1 migrate — approved, unbounded, megabytes")
             return (2, "P2 migrate — approved, already width-limited")
@@ -371,13 +389,50 @@ def rows(log=print):
             return (5, "P5 commission — remaining heroes")
         return (6, "P6 licence — long tail, do not spend yet")
 
+    # HERO OCCUPANCY AND PAYLOAD, AHEAD OF EVERYTHING THAT IS NOT A BAND.
+    #
+    # The old order was band, then commercial weight, then how deficient the
+    # country's set is. Nothing in it knew what a photograph costs a phone, and
+    # reference count was never in it at all — a photograph on forty pages
+    # sorted identically to one on a single page, which was right by accident:
+    # thirty-nine of those forty are lazy cards nobody's first screen fetches.
+    #
+    # `tools/heroes.js` made that concrete. There is exactly one eager remote
+    # photograph per page, and it is the only one a phone is certain to
+    # request; everything else is loading="lazy" and costs nothing until
+    # somebody scrolls. So a photograph's weight is decided by whether it is
+    # somebody's hero and whether that reference is unbounded — which is what
+    # `est_bytes` fuses into a single comparable number.
+    #
+    # Reference count survives as the last tiebreak, where it belongs: between
+    # two frames of equal payload and equal commercial weight, the one on more
+    # pages is the better buy.
+    # Free work and paid work do not rank the same way, and collapsing them
+    # into one order gets both wrong.
+    #
+    #   P0-P2 spend nothing. No dollar is being allocated, so there is no
+    #         "value per dollar" to weigh and the only question is how many
+    #         bytes the work removes. Payload leads.
+    #   P3-P6 spend money. Here commercial weight leads, because the budget
+    #         should buy the frames that sell before it buys the heaviest
+    #         ones; payload breaks ties within a tier.
+    #
+    # Worth saying plainly, because it cuts against the instruction to do the
+    # 29 commercially-live re-crops first: the largest free wins are NOT in the
+    # countries that carry a price. The heaviest re-crop on the site is
+    # Ethiopia at 15.5 MB, tier 4.
     def sortkey(r):
         n, label = band(r)
         r["wave"] = label
+        paid = n >= 3
         return (n,
-                r["commercial tier"],
+                0 if r["hero on"] else 1,
+                (r["commercial tier"], -r["mobile bytes"]) if paid
+                else (-r["mobile bytes"], r["commercial tier"]),
                 -float(r["country deficiency"].rstrip("%")),
-                r["priority"], r["country"], r["category"])
+                r["priority"],
+                -int(r["pages"] or 0),
+                r["country"], r["category"])
     out.sort(key=sortkey)
     for i, r in enumerate(out, 1):
         r["rank"] = i
@@ -431,6 +486,41 @@ COST = {
 }
 
 
+# WHAT A PHOTOGRAPH COSTS A PHONE, IN BYTES.
+#
+# Calibrated on the only reference measured end to end: the hero of
+# /places/algeria/a-thousand-kilometres-of-mediterranean, an Unsplash original
+# of 5498x3686, which put 3.70 MB on the wire at a 390px viewport. That is
+# 0.183 bytes per pixel OF THE ORIGINAL.
+#
+# One data point, and it is Unsplash. Treat the ordering as the finding and the
+# absolute figures as a model until `build.py heroes --measure` has replaced
+# them with content-length read from the providers.
+BYTES_PER_PIXEL = 0.183
+
+
+def est_bytes(rec, uses, measured=None):
+    """Bytes this photograph puts on a phone today, and how we know.
+
+    Unbounded means the provider is asked for the file the photographer
+    uploaded, so the cost is the whole original. A width-limited reference
+    costs what that width costs, which is smaller by the square of the ratio
+    and is why the same migration is worth megabytes in one case and tens of
+    kilobytes in the other.
+    """
+    url = (rec.get("imageUrl") or "").split("?")[0]
+    if measured and url in measured:
+        return measured[url], "measured"
+    w, h = rec.get("width") or 0, rec.get("height") or 0
+    if not w or not h:
+        return 0, "unknown"
+    if any(u.get("unbounded") for u in uses):
+        return int(w * h * BYTES_PER_PIXEL), "estimated"
+    asked = max([u["width"] for u in uses] or [0]) or 1200
+    asked = min(asked, w)
+    return int(asked * (asked * h / w) * BYTES_PER_PIXEL), "estimated"
+
+
 def commerce_tier(country):
     """Commercial weight 1-4. NOT the page tier above — different question.
 
@@ -464,7 +554,9 @@ def route_and_cost(cls, t, priority):
 
 
 FIELDS = ["rank", "wave", "class", "sourceKey", "commercial tier", "tier why",
-          "country deficiency", "unbounded", "priority", "country", "destination",
+          "country deficiency", "unbounded", "mobile bytes", "mobile bytes basis",
+          "state",
+          "priority", "country", "destination",
           "category", "required subject", "required composition",
           "widest display px", "action", "acquisition route", "cost band",
           "canonical asset id", "current reference", "replacement filename",

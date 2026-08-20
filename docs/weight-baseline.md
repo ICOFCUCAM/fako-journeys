@@ -73,10 +73,17 @@ register.
 
 | section | pages | ours | published, not rewritten | never registered | of these, unbounded |
 |---|---:|---:|---:|---:|---:|
-| `/places` | 1,363 | 527 | 77 | 759 | 836 |
-| `/tourism` | 52 | 0 | 14 | 38 | 0 |
+| `/places` | 1,363 | 527 | 86 | 750 | 836 |
+| `/tourism` | 52 | 0 | 16 | 36 | 0 |
 | root | 1 | 0 | 0 | 1 | 0 |
-| **total** | **1,416** | **527** | **91** | **798** | **836** |
+| **total** | **1,416** | **527** | **102** | **787** | **836** |
+
+The middle column is exactly the 102 art-directed assets, which is the check
+that the census and the register agree. It did not agree at first: matching a
+page's URL against a *rebuilt* sourceKey silently misses every Unsplash asset,
+because the register holds Unsplash's photo id (`JaD-db16oAE`) and the URL
+carries a different slug. That read 91 where the answer is 102. `heroes.js`
+now matches on the `originalUrl` the register itself recorded.
 
 A further 181 pages have no eager remote photograph at all.
 
@@ -95,7 +102,7 @@ is the whole of the remaining page-weight problem. The 52 `/tourism` heroes are
 all width-limited, which is why those pages measured −5% and −7% rather than
 −98%.
 
-**3. Ninety-one of them need no acquisition at all.** They are already published
+**3. A hundred and two of them need no acquisition at all.** They are already published
 on `image.afrinkong.com`. The page still hotlinks them because `rewrite` excludes
 art-directed assets — an asset that appears in an art-directed `<picture>`
 anywhere is excluded everywhere, so it cannot be half-migrated onto two hosts.
@@ -103,16 +110,17 @@ Checked, not assumed:
 
     published, not rewritten, not held : 102 -> art-directed: 102
 
-All 102 held-back assets are exactly the art-directed set, and 91 of them are
-somebody's hero. Seventy-seven of those 91 are unbounded.
+All 102 held-back assets are exactly the art-directed set, and every one of
+them is somebody's hero — 86 on a `/places` page and 16 on a `/tourism` page.
+All 86 of the `/places` ones are unbounded.
 
 ## What this changes
 
 The 102 re-crops were ranked P0 on commercial grounds, and deferred as a
 finishing task — a second phone crop for photographs that already look right.
-That was the wrong reading of what they are. **Ninety-one of them are heroes
-that a phone fetches on arrival, seventy-seven at full resolution**, on
-photographs we are already paying to host. The crop is not a polish item; it is
+That was the wrong reading of what they are. **All 102 are heroes that a phone
+fetches on arrival, 86 of them at full resolution**, on photographs we are
+already paying to host — an estimated 0.47 GB. The crop is not a polish item; it is
 the cheapest megabytes on the site, and it needs no budget decision, no
 licensing, and no provider.
 
@@ -125,9 +133,9 @@ reachable on `/tourism/algeria`, whose hero is width-limited, saved 0.12 MB.
 **Roughly thirty to one**, measured, and unboundedness alone is the difference
 between −98% and −7%.
 
-The 759 `/places` heroes that are not in the register at all remain the
-acquisition question, and this does not answer it. It only says which end of the
-list to read first.
+The 750 `/places` heroes that are not in the register at all remain the
+acquisition question. `docs/hero-acquisition.md` now answers it — banded P0 to
+P3, with the payload and the commercial argument on every row.
 
 ## Do not quote the −34%
 
@@ -136,7 +144,7 @@ page wearing the same disguise at 527. Of the 3.87 MB saved across six pages,
 3.69 MB is still `/places/algeria/…` alone.
 
 The honest single number is the census, not the percentage: **527 of 1,416 heroes
-are ours, and 836 of the rest are unbounded.**
+are ours, and all 836 of the rest are unbounded — an estimated 4.63 GB.**
 
 ## Re-running it
 
