@@ -159,6 +159,37 @@ payment.**
 
 ---
 
+## The build order these decisions gate
+
+Stated by the owner, recorded here so the sequence survives the conversation
+it was said in. Each step depends on the one above it being settled, and the
+first is a decision rather than a build.
+
+| | step | what it means | state |
+|---|---|---|---|
+| **A** | Product / legal definition | exactly what one Travel Point represents | **open — the eleven questions above** |
+| **B** | Programme engine | versioned programmes | **built** — `PROGRAMS`, draft, versioned |
+| **C** | Database | only when there is something to operate | **designed, not created** — schema written, no project |
+| **D** | Stripe | payment events become ledger entries | not started |
+| **E** | Customer account | the Travel Wallet | ledger and fold exist; no accounts |
+| **F** | Travel Goal | connect the planner to a real wallet | **planning-only version live** |
+| **G** | Purchase | a customer buys points | blocked by `DRAFT_PROGRAM` |
+| **H** | Redemption | points applied to a journey | blocked by G |
+| **I** | Cancellation / buyback | per the programme's rules | rules encoded, unreachable |
+| **J** | Operations | admin, reconciliation, refunds, settlement | not started |
+
+**Why the order matters more than the progress.** D is a payment rail, not the
+definition of the economy. Building it first would have made Stripe's data
+model the de facto answer to A — a Travel Point would have become "whatever a
+Stripe object can represent", decided by an integration rather than by anyone.
+Separating the economic model from the payment mechanism is what makes A
+answerable at all, and it is why B and the ledger came before D rather than
+after it.
+
+F is where the sequence currently sits, in its planning form: the planner
+states a journey in point units and issues nothing. It is the last step that
+can be taken before A is answered.
+
 ## What is safe to build before these are answered
 
 Everything currently built, and one more thing.
