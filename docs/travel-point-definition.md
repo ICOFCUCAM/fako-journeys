@@ -73,11 +73,16 @@ entitles you to. That is A1b, and it is deliberately absent.
 
 "One unit of travel purchasing entitlement" is architecturally sound and
 commercially incomplete. *One unit of what?* Five candidate answers, with what
-each commits Afrinkong to:
+each commits Afrinkong to.
+
+**Basis 1 is now closed.** Section B2 settled that a Travel Point has no
+independent cash value, which a currency-denominated unit cannot satisfy. It is
+kept in the table struck through, because a rejected option on the record is
+worth more than a missing row. **Four remain live.**
 
 | basis | 1 TP = | destination-flexible | regulatory weight | problem |
 |---|---|---|---|---|
-| **1. currency-denominated** | $1 of travel value | yes | **highest** | Denominates the entitlement in money. Every display becomes a cash figure and the product reads as stored value whatever the terms say. |
+| ~~**1. currency-denominated**~~ **CLOSED by B2** | $1 of travel value | yes | **highest** | Denominates the entitlement in money. Every display becomes a cash figure and the product reads as stored value whatever the terms say. |
 | **2. journey fraction** | 1/N of one named journey | **no** | lowest | Points bought for Kenya cannot move to Namibia without a conversion rule, which reintroduces the problem it avoided. Kills the flexibility in §8 of the brief. |
 | **3. journey percentage** | 0.01% of any eligible journey | yes | low | A point is worth more against an expensive journey than a cheap one, so the rational customer always redeems against the most expensive — an arbitrage the programme pays for. |
 | **4. rate-card unit** | one unit of the published Afrinkong rate card | yes | low–medium | Requires journeys to carry a published TP price, versioned like the money price. More machinery — but the machinery already exists. |
@@ -218,8 +223,10 @@ how early they bind.
 
 ### Immediate — the definition alone settles these
 
-**A5.1 Which rate converts a journey price to a point target.** §A4. **Blocked
-on A1b, not on A1a.** The frame does not answer it: `entitlement` is the right
+**A5.1 Which rate converts a journey price to a point target.** §A4.
+**Section B5 has since settled the rule** — a purchase bonus must not make the
+journey more expensive — so this is no longer a question of principle, only of
+derivation. **Blocked on A1b, not on A1a.** The frame does not answer it: `entitlement` is the right
 rate under bases 3, 4 and 5, while under basis 1 the question dissolves because
 the two rates are the same number by definition — which is precisely the
 collapse the frame refuses. *Touches:* `goal()`, `travel-goal.js`, the fund page,

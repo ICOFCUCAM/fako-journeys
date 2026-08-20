@@ -166,6 +166,12 @@ report(fundMath.indexOf("Point") === -1 && fundMath.indexOf("TP") === -1,
  * per dollar PAID — where the definition requires entitlement, the travel value
  * a point REDEEMS. It is invisible today because the programme sets both to 1.
  *
+ * Section B5 has since settled the rule this breaks: A PURCHASE BONUS MUST NOT
+ * MAKE THE JOURNEY MORE EXPENSIVE. So this is no longer an open question about
+ * which rate is right — it is a known violation of a stated rule, held open
+ * only because A1b still governs how a journey's entitlement requirement is
+ * derived. One line and one test, once A1b lands.
+ *
  * This is deliberately not fixed here: which rate is correct follows from which
  * definition is approved, so it is item A5.1 of docs/travel-point-definition.md
  * and not a bug to slip in beside a document. What this check does is make the
@@ -190,9 +196,11 @@ const richer = L.goal('AFK-TP-2026.1', 480000, 0, 12).target;
 prog.entitlement = saved.e;
 report(
   bonus === 5280 && richer === 4800,
-  'the defect is present and behaves as Section A records it',
-  `a purchase bonus RAISES the $4,800 goal to ${bonus} TP (should stay 4800); ` +
-  `richer entitlement leaves it at ${richer} TP (should fall to 4364)`
+  'the defect breaks the rule Section B5 settled, and by how much',
+  `B5: a purchase bonus must not make the journey more expensive. It does: ` +
+  `issueRate 1.1 RAISES the $4,800 goal to ${bonus} TP (should stay 4800). ` +
+  `Richer entitlement leaves it at ${richer} TP (should fall to 4364). ` +
+  `Blocked on A1b, not on B5 — see docs/travel-point-economics.md B5.1`
 );
 
 /* The programme must be restored exactly, or every later check in this file is
