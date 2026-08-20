@@ -103,12 +103,30 @@
         recorded: points(g.held),
         remaining: points(g.remaining),
         monthly: g.monthly === null ? null : points(g.monthly) + ' a month',
+        /* C6: the customer sees a journey they are part of the way to, not a
+           quantity of points they have collected. "16% prepared" and "4,050 TP
+           away" are the same two numbers as a progress bar and a remainder,
+           and they read as travel rather than as a balance. */
+        prepared: Math.round(g.progress * 100) + '% prepared',
+        away: points(g.remaining) + ' away',
         progress: (g.progress * 100).toFixed(g.progress >= 0.995 ? 0 : 1) + '%',
         journeyTotal: money(journeyTotal),
         time: g.months > 0
           ? g.months + (g.months === 1 ? ' month' : ' months')
           : 'no whole months left'
       },
+
+      /* C4: THE CONDITIONAL MOOD IS DOING REAL WORK.
+         "Your monthly target is 343 TP" tells the customer what they must do.
+         "If you purchase about 343 TP a month, you could reach it in 14 months"
+         tells them what would follow if they chose to. B3 settled that there is
+         no mandatory contribution, and the first sentence contradicts that
+         however true its arithmetic is. Returned assembled so no surface can
+         render the figure while dropping the mood. */
+      projection: g.monthly === null || !(g.months > 0) ? null
+        : 'If you purchase about ' + points(g.monthly) + ' a month, you could '
+          + 'reach this goal in about ' + g.months
+          + (g.months === 1 ? ' month.' : ' months.'),
 
       /* The sentence a reader must not be able to miss. Returned as data so
          the page cannot render the numbers while forgetting the caveat, and so

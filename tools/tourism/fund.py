@@ -492,8 +492,7 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
           <p class="jf-when" id="jf-when">Choose a month</p>
           <div class="jf-sum" id="jf-sum" aria-live="polite">%(sum)s</div>
           <p class="jf-said" id="jf-said" aria-live="polite">With scripting on,
-            this becomes your <b>planned monthly contribution</b> &mdash; what
-            reaching that journey would take, month by month.</p>
+            this shows what reaching it would look like &mdash; <b>a pace you choose</b>, not a payment you owe.</p>
           <div class="jf-reach" id="jf-reach" hidden></div>
 
           <!-- THE TRAVEL GOAL. A PLANNING FIGURE, AND LABELLED AS ONE.

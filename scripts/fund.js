@@ -228,13 +228,17 @@
        it. Hiding rather than adapting is the conservative failure. */
     if (g.sellable) { goalEl.hidden = true; return; }
 
+    /* C6: the journey first, the points as its measure — never a points
+       balance with a journey attached. C4/B3: no cell says "target monthly"
+       or anything else that reads as an amount the customer owes. The pace
+       appears only inside the conditional sentence below. */
     goalGrid.innerHTML =
         cell('Journey estimate', g.display.journeyTotal)
-      + cell('Travel Goal', g.display.target)
-      + (g.monthly ? cell('Suggested monthly target', g.display.monthly) : '')
-      + cell('Time to target', g.display.time);
+      + cell('Estimated Travel Goal', g.display.target)
+      + cell('Your progress', g.display.prepared)
+      + cell('Still to build', g.display.away);
 
-    goalNote.textContent = g.disclosure;
+    goalNote.textContent = (g.projection ? g.projection + ' ' : '') + g.disclosure;
     goalProv.textContent = 'Calculated from rate card ' + g.rateCardVersion
       + ' against programme ' + g.programId + ' v' + g.programVersion
       + ' (' + g.programStatus + ').';

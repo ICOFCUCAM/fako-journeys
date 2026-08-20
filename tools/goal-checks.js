@@ -326,5 +326,70 @@ report(
   "the number agreeing does not mean the price list agreed"
 );
 
+/* ---- Section C4 and C6 in the panel, and B24 rule 7 closed ------------- */
+
+const panel = G.build(4750, 14, 750, "1d60cf455f9a");
+
+/* C6: the customer sees a journey they are partway to. */
+report(
+  panel.display.prepared === "16% prepared" &&
+    panel.display.away === "4,000 TP away",
+  "C6: the goal reads as a journey in progress",
+  `${panel.display.target} goal, ${panel.display.prepared}, ${panel.display.away}`
+);
+
+/* C4/B3: THE CONDITIONAL MOOD, which is the whole of B24 rule 7.
+ * "Your monthly target is 286 TP" tells the customer what they owe.
+ * "If you purchase about 286 TP a month, you could reach this goal in about
+ * 14 months" tells them what would follow if they chose to. Same arithmetic,
+ * and only the second is true of a programme with no mandatory contribution. */
+report(
+  /^If you purchase about /.test(panel.projection) &&
+    /could reach this goal in about 14 months\.$/.test(panel.projection),
+  "C4: the pace is offered as a condition, never stated as an obligation",
+  panel.projection
+);
+
+/* And the prohibition, checked rather than trusted: no surface may describe the
+   monthly figure as something the customer must do. */
+/* The prescriptive LABELS, not the word "owe" — the replacement copy says
+   "not a payment you owe", and a check that cannot tell a denial from an
+   assertion fails on the very sentence that fixed the problem. It did, on the
+   second run. Matching the labels B24 rule 7 is actually about is both narrower
+   and more honest about what is being tested. */
+const OWING = /suggested monthly|monthly (target|contribution|commitment|payment)|required each month/i;
+/* Strip comments before scanning, and strip the BLOCK kind properly: a
+   continuation line inside a slash-star comment starts with a word, so a
+   line-prefix test does not see it as a comment. This check caught its own
+   explanation on the first run, which is at least evidence it reads the file. */
+const stripComments = (src) =>
+  src.replace(/\/\*[\s\S]*?\*\//g, " ")      // /* ... */ across lines
+     .replace(/<!--[\s\S]*?-->/g, " ")        // html
+     .split("\n")
+     .filter((l) => !/^\s*(\/\/|#)/.test(l))  // // and # line comments
+     .join("\n");
+const surfaces = [
+  "../scripts/fund.js",
+  "../scripts/travel-goal.js",
+  "../journey-fund.html",
+  "../tools/tourism/fund.py",
+].map((f) => stripComments(fs.readFileSync(path.join(__dirname, f), "utf-8")));
+const owing = surfaces
+  .map((src) => src.split("\n").filter((l) => OWING.test(l)))
+  .flat();
+report(
+  owing.length === 0,
+  "B24 rule 7: nothing on the fund surfaces states the pace as an obligation",
+  owing.length ? owing[0].trim().slice(0, 70) : "no monthly target, contribution or commitment in live copy"
+);
+
+/* A projection nobody can act on is worse than none: with no whole months
+   left there is no honest pace to name. */
+report(
+  G.build(4750, 0, 0, "x").projection === null,
+  "C4: no projection is offered when there is no time left to project over",
+  "null rather than a sentence about zero months"
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
