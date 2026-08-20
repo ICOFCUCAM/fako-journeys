@@ -229,6 +229,14 @@
       promotional: {
         offered: true,
         bonusRate: 0.05,          // C12: 5% — buy 500, receive 25
+        /* F3: AND THIS IS THE ONLY PLACE A VOLUME INCENTIVE MAY LIVE.
+           A bigger purchase may earn a bigger GRANT. It may not earn a better
+           `issueRate`, because that would give a point a different money price
+           in each tranche and a thing with a price per tranche is a currency.
+           See F2. `null` means the flat `bonusRate` applies at every size;
+           an array of { fromPoints, bonusRate } sets a ladder. Nobody has
+           decided whether a ladder is wanted — F-c. */
+        tiers: null,
         transferable: false,
         repurchasable: false,
         expiryMonths: 24,
@@ -445,6 +453,24 @@
     if (p.minPurchase > p.maxPerTransaction) {
       return { ok: false, why: 'minPurchase exceeds maxPerTransaction' };
     }
+    /* F2: ONE RATE, OR THE PROGRAMME DOES NOT GO LIVE.
+       A tiered `issueRate` — an array, a map of bands, anything but a single
+       finite number — gives a point a different money price in each tranche,
+       and that is the step that turns entitlement into currency. A volume
+       incentive belongs in `promotional.tiers`, which grants extra points
+       rather than repricing them. Checked here so it cannot be reached by
+       editing a term. */
+    if (typeof p.issueRate !== 'number' || !isFinite(p.issueRate) ||
+        p.issueRate <= 0) {
+      return { ok: false, why: 'issueRate must be a single positive number: a ' +
+                              'rate that varies by tranche gives a point a price',
+               missing: ['issueRate'] };
+    }
+    if (typeof p.entitlementRate !== 'number' || !isFinite(p.entitlementRate) ||
+        p.entitlementRate <= 0) {
+      return { ok: false, why: 'entitlementRate must be a single positive number',
+               missing: ['entitlementRate'] };
+    }
     return { ok: true };
   }
 
@@ -558,6 +584,125 @@
     }
     return { ok: true };
   }
+
+  /* ---- Section F: what the customer pays, and what they receive -----------
+   *
+   * F2: `issueRate` IS ONE NUMBER PER PROGRAMME. IT MAY NOT VARY BY TRANCHE.
+   *
+   * This is the rule that keeps a Travel Point from becoming money, and it is
+   * worth being exact about why, because the alternative looks harmless and is
+   * what most loyalty schemes do.
+   *
+   * A volume incentive can be built two ways.
+   *
+   *   (a) Move the rate. "Buy 5,000 and get them at 0.91." Now a point has a
+   *       money price, that price differs between customers and between
+   *       tranches, and a customer holding 5,000 points can reasonably ask
+   *       what theirs cost and what somebody else's cost. A thing with a spot
+   *       price per tranche is a currency, and a wallet of them is a balance,
+   *       whatever the terms call it.
+   *
+   *   (b) Grant the extra. The customer pays the same single rate for 5,000
+   *       points and RECEIVES 250 more as a promotional grant — a separate
+   *       issuance, in its own lot, that was not paid for at all, that expires,
+   *       and that cannot be repurchased.
+   *
+   * (b) is what this implements. Under it the question "what is a point worth"
+   * has one answer for purchased points — what the programme charges — and no
+   * answer at all for granted ones, because nothing was paid. The incentive is
+   * fully expressible and the point never acquires a variable price.
+   *
+   * `mayActivate()` refuses a programme whose `issueRate` is not a single
+   * finite number, so (a) cannot be reached by editing a term.
+   */
+  function bonusFor(programId, points) {
+    var p = program(programId);
+    var pr = p.promotional;
+    if (!pr || !pr.offered || !(points > 0)) return 0;
+    var rate = pr.bonusRate || 0;
+    /* A ladder, if the programme sets one. Highest matching band wins, and the
+       bands are read in the order the programme wrote them. */
+    if (pr.tiers) {
+      for (var i = 0; i < pr.tiers.length; i++) {
+        if (points >= pr.tiers[i].fromPoints) { rate = pr.tiers[i].bonusRate; break; }
+      }
+    }
+    /* Floor: a grant is whole points, and rounding a bonus up would issue
+       entitlement nobody decided to give away. */
+    return Math.floor(points * rate);
+  }
+
+  /* F1/F4: THE PURCHASE OFFER — the one screen where money and points appear
+   * together, and the shape that keeps them apart while they do.
+   *
+   * `priceMinor` is the price of THIS TRANSACTION. It is computed from
+   * `issueRate` alone and the bonus does not reduce it: the customer pays the
+   * same price for 1,000 points whether or not a promotion is running, and
+   * receives 50 more when one is. That is the difference between a discount —
+   * which reprices the point — and a grant, which does not.
+   *
+   * The two entries are returned, never one inflated one. B7.2 and C5 settled
+   * that, and this is where the second entry actually comes from: until now
+   * `promotional.bonusRate` was a term nothing computed.
+   *
+   * APPENDS NOTHING. Like booking.js and buyback.js, this returns what a
+   * purchase implies for a caller with the authority to append it — and under
+   * a draft programme the fold will refuse those entries anyway.
+   */
+  function purchaseOffer(programId, points, boughtThisYear) {
+    var p = program(programId);
+    var allowed = canPurchase(programId, points, boughtThisYear || 0);
+    if (!allowed.ok) return { ok: false, why: allowed.why };
+    var bonus = bonusFor(programId, points);
+    return {
+      ok: true,
+      programId: p.id,
+      programVersion: p.version,
+      /* What is paid, and what is received. Deliberately not one number: the
+         customer is buying 1,000 points and being given 50, and a single
+         "1,050 for $1,000" would state an effective rate that is not the
+         programme's rate and would become the number people quote. */
+      points: points,
+      bonus: bonus,
+      total: points + bonus,
+      priceMinor: priceOfPoints(programId, points),
+      currency: p.currency,
+      issueRate: p.issueRate,
+      /* F4: the only money figure here is the price of this transaction, and
+         it is named as one. There is deliberately no `valueMinor`, no
+         `worthMinor` and no per-point price — see MONEY_MOMENTS. */
+      entries: bonus > 0
+        ? [{ kind: 'PURCHASE', quantity: points },
+           { kind: 'PROMOTION', quantity: bonus }]
+        : [{ kind: 'PURCHASE', quantity: points }],
+      note: bonus > 0
+        ? 'You are purchasing ' + points + ' Travel Points and receiving ' +
+          bonus + ' more as a promotional grant. Granted points expire and ' +
+          'cannot be repurchased.'
+        : 'You are purchasing ' + points + ' Travel Points.'
+    };
+  }
+
+  /* F4: WHERE A MONEY FIGURE MAY APPEAR, AS DATA RATHER THAN AS A CONVENTION.
+   *
+   * A convention in a document is a convention somebody has not read. This is
+   * the closed list, and `tools/points-checks.js` asserts that the customer-
+   * facing surfaces show money at these three moments and nowhere else.
+   *
+   * The distinction that decides every case: money attaches to a TRANSACTION
+   * or to a JOURNEY. It never attaches to a HOLDING. "$1,000" beside a
+   * purchase button is a price; "$4,800" beside a journey is what the journey
+   * costs; "3,650 TP ($3,650)" beside a wallet is a balance, and that is the
+   * sentence that makes this a financial product.
+   */
+  var MONEY_MOMENTS = [
+    { moment: 'purchase',  shows: 'the price of this transaction',
+      why: 'the customer is being charged and must see what' },
+    { moment: 'journey',   shows: 'what the journey costs',
+      why: 'a travel price, quoted in money because travel is sold in money' },
+    { moment: 'repurchase', shows: 'what is offered for specific points',
+      why: 'an offer about identified points, not a statement of their worth' }
+  ];
 
   /* Kept under their old names so nothing that already calls them breaks. The
      new names say which question they answer, which is the entire lesson of
@@ -1117,6 +1262,9 @@
     program: program,
     variant: variant,
     pointsFor: pointsFor,
+    bonusFor: bonusFor,
+    purchaseOffer: purchaseOffer,
+    MONEY_MOMENTS: MONEY_MOMENTS,
     priceOf: priceOf,
     entitlementOf: entitlementOf,
     pointsForPurchase: pointsForPurchase,

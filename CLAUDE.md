@@ -19,6 +19,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | the legal boundary, the compliance ladder, or what counsel must answer | **`docs/travel-point-compliance.md`** — Section D. The programme is `compliance: DRAFT`; only `PILOT` or `ACTIVE` may issue, and the ladder is not skippable |
 | any question of the form "can we ship X of the points product yet?" | **`docs/economic-model-decisions.md`** — eleven open decisions, their provisional defaults, and who owns each |
 | repurchase ("buyback"), cancellation, transfer or expiry | **`docs/travel-point-buyback.md`** — Section E, including the B12/E2 contradiction and how it was reconciled |
+| pricing, bonuses, or "why can't we just give a better rate for a bigger purchase?" | **`docs/travel-point-pricing.md`** — Section F. `issueRate` is one number per programme; a volume incentive is a grant, never a rate |
 
 ## The rule that catches people out
 

@@ -1332,5 +1332,197 @@ report(
   `${eOpen} unresolved questions carried in docs/travel-point-buyback.md`
 );
 
+/* ==== Section F: what is paid, what is received, and where money appears == */
+
+/* F1 — the two rates answer different questions and are not interchangeable.
+   Proved independent in the Section B lock-in above; asserted here as a shape,
+   because the failure that started A4 was the two being confusable at the call
+   site rather than wrong in themselves. */
+report(
+  L.pointsForPurchase(P, 100000) === 1000 &&
+    L.priceOfPoints(P, 1000) === 100000 &&
+    L.goalRequirement(P, 480000) === 4800 &&
+    L.entitlementOf(P, 4800) === 480000,
+  "F1: money -> points uses issueRate; points -> travel uses entitlementRate",
+  `$1,000 buys 1,000 TP and 1,000 TP costs $1,000 (issueRate ${L.PROGRAMS[P].issueRate}); ` +
+  `a $4,800 journey needs 4,800 TP and 4,800 TP carries $4,800 of travel ` +
+  `(entitlementRate ${L.PROGRAMS[P].entitlementRate}). Two rates, two questions`
+);
+
+/* F2 — A TIERED issueRate CANNOT REACH PRODUCTION.
+ *
+ * The whole of Section F in one check. "Buy 5,000 and get them at 0.91" gives
+ * a point a different money price in each tranche, and a thing with a spot
+ * price per tranche is a currency however the terms describe it. So the
+ * activation gate refuses a programme whose rate is not a single number, and
+ * refuses it on the ladder too — a term nobody can edit into place. */
+const TIERED = L.variant(
+  DRAFT,
+  { compliance: "APPROVED", maxProgrammeExposure: 5000000,
+    issueRate: [{ from: 0, rate: 1 }, { from: 5000, rate: 1.1 }] },
+  "TEST-TIERED-RATE"
+);
+report(
+  L.mayActivate(TIERED).ok === false &&
+    /gives a point a price/.test(L.mayActivate(TIERED).why) &&
+    L.mayTransition(TIERED, "PILOT").ok === false,
+  "F2: a programme whose issueRate varies by tranche cannot go live",
+  `"${L.mayActivate(TIERED).why}" — and PILOT is refused on the ladder too`
+);
+
+/* F3 — AND THE INCENTIVE IS STILL FULLY EXPRESSIBLE, on the grant side.
+ *
+ * A volume ladder that gives 5% / 7% / 10% works exactly as a tiered price
+ * would from the customer's point of view, and `issueRate` never moves. The
+ * extra points are a grant: they expire, they cannot be repurchased, and no
+ * money was paid for them, so no price attaches to them at all. */
+const LADDER = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    promotional: Object.assign({}, L.PROGRAMS[DRAFT].promotional,
+      { tiers: [{ fromPoints: 2000, bonusRate: 0.10 },
+                { fromPoints: 1000, bonusRate: 0.07 }] }) },
+  "TEST-BONUS-LADDER"
+);
+const rungs = [500, 1000, 2500].map((n) => L.purchaseOffer(LADDER, n, 0));
+report(
+  rungs[0].bonus === 25 && rungs[1].bonus === 70 && rungs[2].bonus === 250 &&
+    rungs.every((o) => o.issueRate === 1) &&
+    rungs.every((o) => o.priceMinor === o.points * 100),
+  "F3: a volume incentive scales the grant, never the rate",
+  rungs.map((o) => `${o.points} TP for $${o.priceMinor / 100} + ${o.bonus} granted`)
+       .join("; ") + " — issueRate stays 1 at every rung"
+);
+
+/* F3 — the bonus does not reduce the price. That is the whole difference
+   between a grant and a discount: a discount reprices the point, and the
+   repriced point is the one that has a spot value. */
+const NOBONUS = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    promotional: Object.assign({}, L.PROGRAMS[DRAFT].promotional,
+                               { offered: false }) },
+  "TEST-NO-PROMOTION"
+);
+const withPromo = L.purchaseOffer(P, 1000, 0);
+const withoutPromo = L.purchaseOffer(NOBONUS, 1000, 0);
+report(
+  withPromo.priceMinor === withoutPromo.priceMinor &&
+    withPromo.bonus === 50 && withoutPromo.bonus === 0,
+  "F3: a promotion adds points, it does not discount the price",
+  `1,000 TP costs $${withPromo.priceMinor / 100} whether or not a promotion is ` +
+  `running; the promotion adds ${withPromo.bonus} granted points on top`
+);
+
+/* F3 — two entries, never one inflated one. B7.2 and C5 settled it; this is
+   where the second entry is finally produced, because until now
+   `promotional.bonusRate` was a term nothing computed. */
+report(
+  withPromo.entries.length === 2 &&
+    withPromo.entries[0].kind === "PURCHASE" && withPromo.entries[0].quantity === 1000 &&
+    withPromo.entries[1].kind === "PROMOTION" && withPromo.entries[1].quantity === 50 &&
+    withoutPromo.entries.length === 1,
+  "F3: an offer implies PURCHASE plus PROMOTION, never one inflated PURCHASE",
+  `${withPromo.entries.map((e) => `${e.kind} ${e.quantity}`).join(" + ")} — the ` +
+  `lots stay distinguishable for expiry, repurchase and cancellation`
+);
+
+/* And the grant lands in its own lot when folded, which is what makes E7's
+   "promotional points are not repurchasable" enforceable at all. */
+const offered = L.wallet([
+  entry("PURCHASE", 1000), entry("PROMOTION", 50)]);
+report(
+  offered.purchased === 1000 && offered.promotional === 50 &&
+    offered.available === 1050,
+  "F3: the customer sees one number, the ledger keeps the two lots apart",
+  `1,050 TP available = 1,000 purchased + 50 granted`
+);
+
+/* ---- F4: the cash-equivalent question, answered as a closed list -------- */
+
+/* F4 — MONEY ATTACHES TO A TRANSACTION OR A JOURNEY. NEVER TO A HOLDING.
+ *
+ * "$1,000" beside a purchase button is a price. "$4,800" beside a journey is
+ * what the journey costs. "3,650 TP ($3,650)" beside a wallet is a balance,
+ * and that one sentence is what would make this a financial product. The three
+ * permitted moments are data rather than a convention in a document, because a
+ * convention in a document is a convention somebody has not read. */
+report(
+  Array.isArray(L.MONEY_MOMENTS) && L.MONEY_MOMENTS.length === 3 &&
+    L.MONEY_MOMENTS.map((m) => m.moment).sort().join(",") ===
+      "journey,purchase,repurchase",
+  "F4: money may be shown at exactly three moments, and the list is closed",
+  L.MONEY_MOMENTS.map((m) => `${m.moment}: ${m.shows}`).join("; ")
+);
+
+/* Moment one, checked: the purchase offer's only money figure is the price of
+   the transaction, and it is named as one. No valueMinor, no worthMinor, no
+   per-point price — any of which would be a cash equivalent by another name. */
+const offerMoney = Object.keys(withPromo).filter(
+  (k) => /minor|money|cash|usd|value|worth|price/i.test(k));
+report(
+  offerMoney.length === 1 && offerMoney[0] === "priceMinor",
+  "F4: the purchase offer shows one money figure — what this transaction costs",
+  `money-bearing keys: ${offerMoney.join(", ") || "none"}`
+);
+
+/* Moment two, checked: on the goal, the ONLY money is the journey's price.
+   Every other display figure is in points, including the ones a reader is most
+   likely to mistake for a balance. */
+const GO = require("../scripts/travel-goal.js");
+const goalF = GO.build(4800, 14, 750, "v1");
+const dollarFields = Object.keys(goalF.display).filter(
+  (k) => goalF.display[k] !== null && /\$/.test(String(goalF.display[k])));
+report(
+  dollarFields.length === 1 && dollarFields[0] === "journeyTotal" &&
+    /TP$/.test(goalF.display.recorded) && /TP away$/.test(goalF.display.away),
+  "F4: on the goal, the only money figure is what the journey costs",
+  `"$" appears in ${dollarFields.join(", ")} only; the reader's own holding ` +
+  `reads "${goalF.display.recorded}" and "${goalF.display.away}"`
+);
+
+/* Moment three is the repurchase quote, and E1 already asserts it says it is
+   an offer about identified points rather than a statement of their worth.
+   What is checked here is the boundary: there is NO function that converts a
+   customer's holding into money without naming which points and under which
+   offer. `entitlementOf` and `priceOfPoints` are arithmetic about a quantity,
+   not about a wallet, and neither is a wallet field — B22 asserts that above.
+   The gap that would matter is a *wallet-shaped* one, so: */
+const wSurface = L.wallet([entry("PURCHASE", 3650)]);
+report(
+  Object.keys(wSurface).every((k) => typeof wSurface[k] !== "number" ||
+    !/minor|value|worth|cash|price/i.test(k)) &&
+    !("valueMinor" in wSurface) && !("cashEquivalent" in wSurface),
+  "F4: there is no cash equivalent of a holding, anywhere on the wallet",
+  `${Object.keys(wSurface).length} wallet fields, none of them money`
+);
+
+/* And the same asked of the pages rather than of the module, because the
+   sentence F4 forbids would be written in HTML, not in JavaScript. Any page
+   that puts a dollar figure immediately beside a TP figure is the failure. */
+const fundPages = ["journey-fund.html", "journey-fund/how-it-works.html"]
+  .map((f) => path.join(__dirname, "..", f))
+  .filter((f) => fs.existsSync(f));
+const adjacency = fundPages.flatMap((f) => {
+  const html = fs.readFileSync(f, "utf8").replace(/<!--[\s\S]*?-->/g, " ");
+  return (html.match(/[\d,]+\s*TP[^<]{0,20}\$[\d,]+|\$[\d,]+[^<]{0,20}[\d,]+\s*TP/g) || [])
+    .map((m) => `${path.basename(f)}: ${m.trim()}`);
+});
+report(
+  adjacency.length === 0,
+  "F4: no page states a points figure and a money figure as the same quantity",
+  `${fundPages.length} fund pages scanned, no "N TP ($N)" construction found`
+);
+
+/* F5 — the unresolved questions, recorded rather than decided. */
+const fDoc = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-pricing.md"), "utf8");
+const fOpen = (fDoc.match(/^\s*\|\s*F-[a-z]\s*\|/gm) || []).length;
+report(
+  fOpen >= 5 && /UNRESOLVED|not decided here/i.test(fDoc),
+  "F5: the open pricing questions are recorded, not answered in code",
+  `${fOpen} unresolved questions carried in docs/travel-point-pricing.md`
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
