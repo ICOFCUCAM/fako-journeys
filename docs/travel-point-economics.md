@@ -4,8 +4,9 @@
 
 | | |
 |---|---|
-| B1–B5 | **settled** as product and economic decisions |
-| B6 onward | not yet written |
+| B1–B8 | **settled** as product and economic decisions |
+| B9 onward | not yet written |
+| new open questions | three, raised by B6–B8 and registered below |
 | what these are not | **a legal opinion.** They do not determine the regulatory characterisation of the product. |
 | before activation | counsel must confirm the characterisation. See §B1.3. |
 | the programme | stays `draft`; `PRODUCT_STATE` stays `DRAFT_PROGRAM` |
@@ -332,7 +333,126 @@ Once A1b lands the fix is one line and one test.
 
 ---
 
-## B6 onward
+## B6. Existing points keep their programme terms
+
+**Settled.**
+
+> A customer buys 1,000 TP under Programme 2026-A. Six months later Afrinkong
+> launches Programme 2027-B with different economics. **The 2026-A points do not
+> silently become 2027-B points.** Their ledger rows record `2026-A`, and the
+> original terms remain attached to them.
+
+### B6.1 Where this is enforced, and where it is not
+
+Enforced:
+
+| | |
+|---|---|
+| every ledger row records its programme | `point_ledger.program_id`, `not null`, foreign key |
+| a programme's economics cannot be edited after creation | trigger at `tools/points/schema.sql:87` refuses any `UPDATE` to `issue_rate`, `entitlement`, `buyback` or `cancellation` |
+| history cannot be rewritten | `point_ledger` is append-only; corrections are reversing entries |
+
+**Not enforced — and this is a real gap.** The JavaScript `wallet()` folds every
+entry into one aggregate and discards the programme. Measured:
+
+    1,000 TP under AFK-TP-2026.1  +  500 TP under AFK-TP-2027.2
+      -> { available: 1500 }        with no per-programme breakdown
+
+So the *history* is programme-aware and recoverable, while the *balance* is not.
+Nothing is lost, but B6 cannot be answered from a wallet — you cannot ask "how
+many of my points are 2026-A points" and get an answer.
+
+This is not a decision to make; it is work B6 requires and which has not been
+done. It is not done here, because it is economic implementation and the
+standing instruction is to hold. Recorded so it is not mistaken for finished.
+
+## B7. No interest
+
+**Settled.**
+
+> Absolutely no interest, APY, APR, investment return, appreciation, yield,
+> dividend, or "growth". Someone who buys 1,000 TP does not wake six months
+> later with 1,050 TP because time passed.
+>
+> A balance changes only through legitimate ledger events — purchase, bonus,
+> reservation, redemption, cancellation, approved adjustment. **Not time.**
+
+### B7.1 Now enforced rather than merely absent
+
+This was true by construction — no code did it — and "true because nobody has
+written it yet" stops being true quietly. Three checks in `points-checks.js`
+make it a rule:
+
+- **no growth vocabulary in live code.** The source of the ledger, the goal and
+  the schema is read, comment lines excluded. A field named `interestRate` would
+  have been caught by nothing else in the suite, and by the time it reached a
+  balance it would be a financial product.
+- **no clock in the ledger.** No `Date`, no `now()`, no randomness. A ledger
+  that cannot read the time cannot pay for its passage — a stronger guarantee
+  than any rule about what may be done with a date once you have one.
+- **a closed set of ten kinds.** `PURCHASE`, `TRANSFER_IN`, `ADJUST_UP`,
+  `RESERVE`, `RELEASE`, `REDEEM`, `TRANSFER_OUT`, `BUYBACK`, `EXPIRE`,
+  `ADJUST_DOWN`. An eleventh fails the check, so adding one has to be said out
+  loud.
+
+### B7.2 Where "bonus" lives, which is not obvious
+
+B7 lists *bonus* among the events that change a balance, and there is no `BONUS`
+kind. Under B5 an incentive is expressed in the **quantity of the PURCHASE
+entry** — $100 at `issueRate 1.1` is one entry of 110 — rather than as a
+separate event.
+
+That is a defensible choice and it has a consequence worth naming: reconciliation
+asks "does every settled payment have exactly one issuance", and it still does,
+but the *ratio* is no longer 1:1 and an auditor reading a $100 payment against a
+110-point issuance needs the programme to explain the difference.
+
+The alternative — `PURCHASE 100` plus a separate `BONUS 10` — makes the
+incentive visible in the history at the cost of two entries per payment.
+**Open.** Added to the register below.
+
+## B8. Applying points to travel
+
+**Settled.**
+
+> When the customer is ready: Travel Goal → itinerary → quote → points applied.
+>
+>     journey price under the applicable programme    4,800 TP
+>     customer holds                                  5,200 TP
+>     applied                                         4,800 TP
+>     remaining                                         400 TP
+>
+> **The remaining 400 TP continues under its original programme terms.**
+
+### B8.1 The question B8 raises and does not answer
+
+The closing sentence is only meaningful if the remaining points *have* an
+identifiable programme — which is B6.1's gap. It also raises a question neither
+section settles:
+
+**Which points are consumed first?** A customer holding 1,000 TP under 2026-A
+and 500 TP under 2027-B who redeems 1,200 TP has spent some of each, and which
+ones determines what their remaining 300 TP is worth and what terms it carries.
+Oldest first, most-favourable-to-the-customer first, cheapest first, or
+proportional are all defensible and they give different answers.
+
+This is **not one of the seventeen** in Section A and is added to the register
+now. It cannot be answered before A1b, since "most favourable" has no meaning
+until a unit basis exists.
+
+---
+
+## New open questions raised by B6–B8
+
+| # | question | raised by | blocked on |
+|---|---|---|---|
+| B-i | Should a purchase incentive be one entry or two — `PURCHASE 110`, or `PURCHASE 100` plus `BONUS 10`? | B7.2 | reconciliation design; independent of A1b |
+| B-ii | On redemption, which lot is consumed first when a customer holds points under more than one programme? | B8.1 | A1b |
+| B-iii | Should `wallet()` return per-programme balances rather than one aggregate? | B6.1 | nothing — it is required work, not a decision |
+
+---
+
+## B9 onward
 
 Not yet written. The remaining economic model — pricing, packages, recurring
 purchase, the wallet, reservation and redemption mechanics, price protection —

@@ -11,6 +11,8 @@
  */
 
 const L = require("../scripts/points-ledger.js");
+const fs = require("fs");
+const path = require("path");
 
 let pass = 0, fail = 0;
 function report(ok, what, detail) {
@@ -251,6 +253,63 @@ report(moves.available === 60 && moves.reserved === 40,
 report(threw(() => L.program("AFK-TP-9999.9")) !== null,
        "an unknown program is refused rather than defaulted",
        "no silent fallback to 1 point = $1");
+
+/* ---- Section B7: no interest, and time is not a ledger event ------------ */
+
+/* B7 settles that a holding cannot grow because time passed. That is currently
+ * true by construction rather than by enforcement — there is simply no code
+ * that does it — and "true because nobody wrote it yet" is the kind of property
+ * that stops being true in a hurry. These three make it a rule.
+ *
+ * The vocabulary check is deliberately crude: it reads the source. A field
+ * called `interestRate` would be caught by nothing else in this suite, and by
+ * the time it reached a balance it would be a financial product. */
+const CORE = [
+  "../scripts/points-ledger.js",
+  "../scripts/travel-goal.js",
+  "../tools/points/schema.sql",
+];
+const GROWTH = /\b(interest|apy|apr|yield|dividend|appreciat\w*|accrue\w*|compound\w*|rate_of_return|maturity)\b/gi;
+const offenders = [];
+for (const rel of CORE) {
+  const src = fs.readFileSync(path.join(__dirname, rel), "utf-8");
+  for (const line of src.split("\n")) {
+    /* A line that NAMES the prohibition is the prohibition being documented,
+       not violated. Comment markers only — a comment cannot pay interest. */
+    if (/^\s*(\*|\/\/|--|#)/.test(line)) continue;
+    const hit = line.match(GROWTH);
+    if (hit) offenders.push(`${path.basename(rel)}: ${hit.join(",")}`);
+  }
+}
+report(
+  offenders.length === 0,
+  "B7: the economic core contains no growth vocabulary outside its own comments",
+  offenders.length ? offenders.join(" | ") : "no interest, apy, yield, dividend, accrual or maturity in live code"
+);
+
+/* No clock. A ledger that cannot read the time cannot pay for the passage of
+ * it, which is a stronger guarantee than any rule about what the code may do
+ * with a date once it has one. */
+const ledgerSrc = fs.readFileSync(
+  path.join(__dirname, "../scripts/points-ledger.js"), "utf-8");
+const clock = ledgerSrc.split("\n").filter(
+  (l) => !/^\s*(\*|\/\/)/.test(l) && /\bDate\b|\bnow\(\)|getTime|Math\.random/.test(l));
+report(
+  clock.length === 0,
+  "B7: the ledger has no clock, so time cannot be an input to a balance",
+  clock.length ? clock[0].trim().slice(0, 60) : "no Date, no now(), no randomness"
+);
+
+/* And the closed set. Every way a balance may move is one of these; none of
+ * them is "time passed". If somebody adds an eleventh, this fails and they
+ * have to say so out loud. */
+const KIND_NAMES = Object.keys(L.KINDS).sort().join(",");
+report(
+  KIND_NAMES === "ADJUST_DOWN,ADJUST_UP,BUYBACK,EXPIRE,PURCHASE,REDEEM,RELEASE," +
+                 "RESERVE,TRANSFER_IN,TRANSFER_OUT",
+  "B7: the ways a balance can change are a closed set of ten, and time is not one",
+  KIND_NAMES
+);
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
