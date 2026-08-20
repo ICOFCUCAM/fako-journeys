@@ -12,6 +12,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | page weight, or quoting a performance number | `docs/weight-baseline.md` |
 | deciding what photography to buy | `docs/hero-acquisition.md` |
 | the site's structure | `docs/architecture.md` |
+| Decision B — how money becomes Travel Points (canonical) | **`docs/travel-point-issuance.md`** — the nine settled rules, the rate-versus-grant distinction, and the numbering map |
 | what a Travel Point *is* | **`docs/travel-point-definition.md`** — Section A. The frame is proposed; the unit basis is open, and blocked on the buyback question first |
 | what happens economically when one is bought | **`docs/travel-point-economics.md`** — Section B, B1–B25. **DESIGN APPROVED — PENDING LEGAL/REGULATORY REVIEW BEFORE ACTIVATION.** §B24 audits all 28 frozen rules against the code: 21 enforced, 7 recorded and pinned |
 | Travel Points, the ledger, payments, or anything economic | **`docs/travel-points-architecture.md`** — audit, architecture, and the legal gate that must clear before a single payment is taken |
@@ -57,8 +58,8 @@ Run before claiming anything is done. All of these must pass.
     node tools/link-checks.js                    78,595 links
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
-    node tools/points-checks.js                  33 — the Travel Point ledger
-    node tools/goal-checks.js                    21 — the Travel Goal is planning only
+    node tools/points-checks.js                 126 — the Travel Point ledger
+    node tools/goal-checks.js                    36 — the Travel Goal is planning only
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes
 

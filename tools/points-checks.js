@@ -1524,5 +1524,243 @@ report(
   `${fOpen} unresolved questions carried in docs/travel-point-pricing.md`
 );
 
+/* ==== Decision B: how money becomes Travel Points ======================== */
+
+/* THE WORKED EXAMPLE, RUN. Not paraphrased — the numbers from the decision.
+ *
+ *   Early Planner Programme, issueRate 1.10
+ *   customer pays $1,000  ->  receives 1,100 TP
+ *   entitlementRate 1     ->  1,100 TP of travel entitlement
+ *   cash value            ->  none
+ */
+const EARLY = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000, issueRate: 1.10,
+    /* No promotional grant here: under this programme the incentive IS the
+       rate, and every point issued is a purchased point. See the rate-versus-
+       grant check below, which is the part of Decision B that needed a
+       decision rather than an implementation. */
+    promotional: Object.assign({}, L.PROGRAMS[DRAFT].promotional,
+                               { offered: false }) },
+  "EARLY-2026"
+);
+const earlyOffer = L.purchaseOffer(EARLY, 1100, 0);
+report(
+  earlyOffer.priceMinor === 100000 && earlyOffer.total === 1100 &&
+    L.entitlementOf(EARLY, 1100) === 110000 &&
+    L.mayActivate(EARLY).ok === true,
+  "B3/B4: $1,000 buys 1,100 TP at issueRate 1.10, carrying 1,100 TP of entitlement",
+  `pay $${earlyOffer.priceMinor / 100} -> ${earlyOffer.total} TP -> ` +
+  `$${L.entitlementOf(EARLY, 1100) / 100} of eligible travel. The two rates ` +
+  `moved independently and neither touched the other`
+);
+
+/* B5 — AND 1,100 TP IS NOT $1,100. The sentence Decision B forbids, checked
+   as a sentence rather than as a principle. */
+const earlyWallet = L.wallet([
+  Object.assign(entry("PURCHASE", 1100), { programVersion: EARLY })]);
+report(
+  earlyWallet.available === 1100 &&
+    Object.keys(earlyWallet).every((k) => !/minor|cash|value|worth/i.test(k)),
+  "B5: the wallet says 1,100 Travel Points and cannot say $1,100",
+  `available ${earlyWallet.available}, and no field on the wallet can hold a ` +
+  `money figure — the display rule is enforced by the shape, not by copy review`
+);
+
+/* ---- THE ONE PART OF DECISION B THAT NEEDED DECIDING -------------------- */
+
+/* B7 vs F2: A RATE AND A GRANT ARE BOTH LEGITIMATE, AND THEY ARE NOT THE SAME
+ * THING. The decision's example calls the extra 100 TP "a promotional issuance
+ * benefit" while producing them from issueRate 1.10, and those are two
+ * different mechanisms that give the points different terms.
+ *
+ *   issueRate 1.10   -> every point is PURCHASED. Repurchasable, never
+ *                       expires. The customer simply got a better price under
+ *                       a named programme. F2 permits this: the rate is still
+ *                       ONE number for the whole programme.
+ *   PROMOTION grant  -> the extra points are GRANTED. They expire at 24
+ *                       months and cannot be repurchased (E7).
+ *
+ * You cannot get grant terms from a rate: with issueRate 1.10 the ledger says
+ * PURCHASE 1,100 and nothing marks which 100 were the benefit — so B7's "their
+ * origin is recorded in the immutable ledger" is not satisfied, and E7 and E9
+ * have nothing to act on. Asserted here so the difference is not lost. */
+const GRANTED = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000, issueRate: 1,
+    promotional: Object.assign({}, L.PROGRAMS[DRAFT].promotional,
+                               { bonusRate: 0.10 }) },
+  "EARLY-2026-GRANT"
+);
+const byRate = L.issuance(EARLY, 1100,
+  { ref: "PAY-R", status: "settled" }, { purchaseKey: "kr" });
+const byGrant = L.issuance(GRANTED, 1000,
+  { ref: "PAY-G", status: "settled" }, { purchaseKey: "kg", promotionKey: "kg2" });
+report(
+  byRate.entries.length === 1 && byRate.entries[0].quantity === 1100 &&
+    byGrant.entries.length === 2 &&
+    byGrant.entries[1].kind === "PROMOTION" && byGrant.entries[1].quantity === 100 &&
+    byRate.entries[0].issueRateApplied === 1.1,
+  "B7: a better rate and a grant both deliver 1,100 TP, and the ledger tells them apart",
+  `issueRate 1.10 -> one PURCHASE of 1,100, all purchased terms; a 10% grant ` +
+  `-> PURCHASE 1,000 + PROMOTION 100, and only the second can be expired or ` +
+  `excluded from repurchase. The choice is a programme decision, not a wording one`
+);
+
+/* B7 — and the grant carries no payment, which is what E7 actually reads. */
+report(
+  byGrant.entries[0].paymentRef === "PAY-G" &&
+    !("payment" in byGrant.entries[1]) &&
+    byGrant.entries[1].grantedUnder === "flat",
+  "B7: the grant references no payment, because nothing was paid for it",
+  `PURCHASE carries paymentRef PAY-G; PROMOTION carries none — the absence is ` +
+  `what "only purchased points can be bought back" is reading`
+);
+
+/* ---- B6: issued only after settlement ---------------------------------- */
+
+/* THE BOUNDARY THAT LOOKS FINISHED AND IS NOT. An authorisation is a promise
+   the bank can withdraw. Points issued against one are entitlement created
+   against money that never arrived. */
+const stages = L.PAYMENT_STATES.map((s) => ({
+  s, issues: L.maySettleIssuance(s),
+  builds: L.issuance(EARLY, 1100, { ref: "PAY-X", status: s }, {}).ok === true,
+}));
+report(
+  stages.filter((x) => x.issues).map((x) => x.s).join(",") === "settled" &&
+    stages.every((x) => x.issues === x.builds),
+  "B6: of seven payment states, exactly one issues a point",
+  stages.map((x) => `${x.s}${x.issues ? " ✓" : ""}`).join(", ")
+);
+
+/* And the fold refuses it independently, because a caller that bypassed
+   `issuance()` is exactly how this would happen. An entry marked SETTLED
+   against an authorised payment used to fold cleanly. */
+const bAuthorised = threw(() => L.wallet([
+  Object.assign(entry("PURCHASE", 1000), { payment: { status: "authorised" } })]));
+const pendingIgnored = L.fold([
+  Object.assign(entry("PURCHASE", 1000), { status: "PENDING" })]);
+report(
+  bAuthorised !== null && /only after settlement/.test(bAuthorised) &&
+    pendingIgnored.available === 0 && pendingIgnored.ignored === 1,
+  "B6: an authorised payment cannot issue, and a pending entry issues nothing",
+  `"${bAuthorised}"; a PENDING entry folds to 0 available and is counted as ignored`
+);
+
+/* ---- B8: no interest, yield, appreciation or time-based growth ---------- */
+
+/* Asserted three ways already — no clock in the module, no growth kind, and
+   D21.4. What is checked here is the VOCABULARY, on every customer-facing
+   surface, because the failure mode for B8 is a marketing word rather than a
+   line of arithmetic. Comments are stripped first: this check has flagged its
+   own explanatory prose twice before, which is how the stripping got here. */
+const surfaces = ["scripts/points-ledger.js", "scripts/travel-goal.js",
+                  "scripts/purchase-plan.js", "scripts/buyback.js",
+                  "scripts/booking.js", "journey-fund.html",
+                  "journey-fund/how-it-works.html"]
+  .map((f) => path.join(__dirname, "..", f))
+  .filter((f) => fs.existsSync(f));
+const yieldWords = surfaces.flatMap((f) => {
+  const src = fs.readFileSync(f, "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .split("\n").filter((l) => !/^\s*\/\//.test(l)).join("\n");
+  const vocabulary = new RegExp(
+    "\\b(APR|APY|interest|yield|dividend|accrues?|accrued|accrual|" +
+    "appreciat\\w*|compound\\w*|return on)\\b", "gi");
+  return (src.match(vocabulary) || []).map((w) => `${path.basename(f)}: ${w}`);
+});
+report(
+  yieldWords.length === 0,
+  "B8: no surface offers interest, yield, accrual, appreciation or a return",
+  `${surfaces.length} customer-facing files scanned, none of the vocabulary present`
+);
+
+/* ---- B9: history is never edited ---------------------------------------- */
+
+/* A chargeback three months later does not travel back in time and un-issue
+   points. Both facts survive: the customer did buy on the third, and the
+   payment was reversed on the seventh. */
+const original = Object.assign(entry("PURCHASE", 1000),
+  { id: "TP-ORIG", payment: { amountMinor: 100000, currency: "USD",
+                              status: "settled" } });
+const beforeReversal = JSON.stringify(original);
+const rev = L.reversal(P, [original], "TP-ORIG", "chargeback CB-1");
+const afterFold = L.wallet([original,
+  Object.assign({}, rev.entries[0], { id: "TP-REV", idempotencyKey: "rev1" })]);
+report(
+  JSON.stringify(original) === beforeReversal &&
+    rev.entries[0].kind === "ADJUST_DOWN" &&
+    rev.entries[0].corrects === "TP-ORIG" &&
+    afterFold.available === 0 && afterFold.acquired === 1000,
+  "B9: a reversal is a new entry that names its cause, never an edit",
+  `the PURCHASE is untouched; ADJUST_DOWN 1,000 corrects TP-ORIG; available ` +
+  `falls to 0 while acquired still records the 1,000 that were issued`
+);
+
+/* AND THE CASE NOBODY HAS DECIDED. If the points are already committed to a
+   journey, the compensating entry would overdraw — and what follows is a legal
+   and commercial question. It is reported, not resolved. */
+const committed = [original,
+  Object.assign(entry("RESERVE", 900), { journeyRef: "J-CB" })];
+const revShort = L.reversal(P, committed, "TP-ORIG", "chargeback CB-2");
+report(
+  revShort.shortfall === 900 && revShort.recoverable === 100 &&
+    /has not been made/.test(revShort.unresolved),
+  "B9: a reversal against spent points reports the shortfall rather than deciding it",
+  `900 of 1,000 already committed to a journey; recoverable 100, shortfall 900 ` +
+  `— "${revShort.unresolved.slice(0, 60)}…"`
+);
+
+/* ---- the module and the schema must agree ------------------------------- */
+
+/* THE DRIFT THIS CHECK EXISTS BECAUSE OF. PROMOTION was added to the module as
+ * the eleventh kind and the schema's check constraint was never updated, so
+ * for several commits the database physically could not record a promotional
+ * grant — which is precisely the origin B7 requires to be IN the ledger.
+ * Nothing failed, because nothing compared the two. */
+const schemaSrc = fs.readFileSync(
+  path.join(__dirname, "points", "schema.sql"), "utf8");
+const schemaKinds = (schemaSrc.match(/kind\s+text not null check \(kind in \(([\s\S]*?)\)\)/) ||
+  [])[1] || "";
+const missingKinds = Object.keys(L.KINDS).filter(
+  (k) => !new RegExp("'" + k + "'").test(schemaKinds));
+report(
+  missingKinds.length === 0,
+  "B: every kind the module can fold, the schema can store",
+  `${Object.keys(L.KINDS).length} kinds, none missing from point_ledger's ` +
+  `constraint (PROMOTION was, for several commits, and no check noticed)`
+);
+
+const schemaPayStates = (schemaSrc.match(/status in \('pending'([\s\S]*?)\)\)/) || [])[1] || "";
+const missingPay = L.PAYMENT_STATES.filter(
+  (s) => s !== "pending" && !new RegExp("'" + s + "'").test(schemaPayStates));
+report(
+  missingPay.length === 0 && /'authorised'/.test(schemaPayStates),
+  "B6: the module's payment states and the schema's agree, authorisation included",
+  `${L.PAYMENT_STATES.length} states in both; 'authorised' is named explicitly ` +
+  `because it is the one that looks finished`
+);
+
+/* B9 — and the schema can now record what a correction corrects, which the
+   module has required since B4 and the schema had no column for. */
+report(
+  /corrects\s+text references point_ledger\(entry_ref\)/.test(schemaSrc) &&
+    /issue_rate_applied/.test(schemaSrc) &&
+    /promotion_has_no_payment/.test(schemaSrc),
+  "B7/B9: the schema records a correction's cause, the rate applied, and that a grant has no payment",
+  "three columns/constraints that the module enforced and the database could not"
+);
+
+/* B-open — recorded, not decided. */
+const bDoc = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-issuance.md"), "utf8");
+const bOpen = (bDoc.match(/^\s*\|\s*B-[a-z]+\s*\|/gm) || []).length;
+report(
+  bOpen >= 4 && /UNRESOLVED|not decided here/i.test(bDoc),
+  "B: the open questions Decision B raises are recorded, not answered in code",
+  `${bOpen} unresolved questions carried in docs/travel-point-issuance.md`
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);

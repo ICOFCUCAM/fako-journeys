@@ -585,6 +585,97 @@
     return { ok: true };
   }
 
+  /* ---- Decision B6: nothing is issued before the money has settled --------
+   *
+   * THE FIVE STAGES A PAYMENT PASSES THROUGH, AND THE ONE THAT ISSUES.
+   *
+   *   checkout session created   nothing has happened
+   *   customer clicked Pay       nothing has happened
+   *   authorised                 the bank has agreed to pay; it has not paid
+   *   requires_capture           we have not asked for the money yet
+   *   settled                    THE MONEY IS OURS.   <- points exist here
+   *   failed / refunded / charged_back   it was never ours, or is not now
+   *
+   * The interesting boundary is `authorised`, because it is the one that looks
+   * finished. An authorisation is a promise that can be withdrawn, and points
+   * issued against one are entitlement created against money that never
+   * arrived. Naming the states rather than testing `if (paid)` is what makes
+   * that distinction survive the next person to read this.
+   *
+   * Mirrors `payments.status` in tools/points/schema.sql. If one gains a state
+   * the other must, and a check asserts they agree.
+   */
+  var PAYMENT_STATES = ['pending', 'requires_capture', 'authorised', 'settled',
+                        'failed', 'refunded', 'charged_back'];
+  var ISSUING_PAYMENT_STATES = ['settled'];
+
+  function maySettleIssuance(paymentStatus) {
+    return ISSUING_PAYMENT_STATES.indexOf(String(paymentStatus)) !== -1;
+  }
+
+  /* B9: A REVERSAL IS AN ENTRY, NEVER AN EDIT.
+   *
+   * A chargeback three months after the fact does not travel back in time and
+   * un-issue points. It is a new economic event, and the history has to keep
+   * both: the customer did buy 1,100 points on 3 March, and the payment was
+   * reversed on 7 June. Editing the first to make the second true destroys the
+   * only record of what actually happened, which is the record a dispute is
+   * answered from.
+   *
+   * Returns the compensating entries a reversal implies. Appends nothing.
+   *
+   * THE HARD CASE IS REPORTED, NOT DECIDED. If the customer has already spent
+   * the points, the compensating entry would overdraw the wallet — and what
+   * should happen then (pursue the debt, void the booking, absorb it) is a
+   * legal and commercial question, not an arithmetic one. This says so and
+   * hands back the shortfall rather than picking. B-recovery in the doc.
+   */
+  function reversal(programId, entries, originalEntryId, reason) {
+    var original = null;
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].id === originalEntryId) { original = entries[i]; break; }
+    }
+    if (!original) {
+      return { ok: false, why: 'no entry ' + originalEntryId + ' in this ledger' };
+    }
+    if (ISSUING_KINDS.indexOf(original.kind) === -1) {
+      return { ok: false, why: 'only an issuance can be reversed; ' +
+                              original.kind + ' is not one' };
+    }
+    var w = wallet(entries);
+    var q = original.quantity;
+    var shortfall = Math.max(0, q - w.available);
+    return {
+      ok: true,
+      /* ADJUST_DOWN rather than a new kind. B7.1 fixed the set of kinds so
+         that adding one has to be argued for, and a reversal is an
+         administrative removal — which is exactly what ADJUST_DOWN is. The
+         `corrects` pointer is what makes it a reversal rather than an
+         unexplained deduction. */
+      entries: [{
+        kind: 'ADJUST_DOWN',
+        quantity: q,
+        status: 'SETTLED',
+        programVersion: original.programVersion,
+        corrects: original.id,
+        reason: reason || 'payment reversed',
+        /* B9: a reversal is an exceptional entry and needs a named human.
+           The schema enforces it; the caller supplies it. */
+        approvedBy: null
+      }],
+      reverses: { entry: original.id, kind: original.kind, quantity: q },
+      /* The customer spent them before the reversal arrived. */
+      recoverable: q - shortfall,
+      shortfall: shortfall,
+      unresolved: shortfall > 0
+        ? 'The customer has already committed or consumed ' + shortfall +
+          ' of these points. What follows — recovery of the debt, voiding the ' +
+          'booking, or absorbing it — is a legal and commercial decision that ' +
+          'has not been made. See B-recovery.'
+        : null
+    };
+  }
+
   /* ---- Section F: what the customer pays, and what they receive -----------
    *
    * F2: `issueRate` IS ONE NUMBER PER PROGRAMME. IT MAY NOT VARY BY TRANCHE.
@@ -683,6 +774,72 @@
     };
   }
 
+  /* B3/B7: THE ENTRIES A SETTLED PURCHASE IMPLIES, SELF-DESCRIBING.
+   *
+   * `purchaseOffer` above is what the customer is shown before they pay. This
+   * is what is written after the money settles, and it will not write anything
+   * against a payment that has not.
+   *
+   * WHAT IS STAMPED, AND WHAT IS DELIBERATELY NOT.
+   *
+   * `issueRateApplied` is stamped on the entry even though `programVersion`
+   * already determines it. Programmes are immutable, so this is not needed to
+   * reconstruct the rate — it is there so that an auditor reading one row can
+   * see the term that produced it without loading anything, and so that a
+   * disagreement between the two is detectable rather than silent. Under
+   * B7.1's spirit, a redundant fact that can be checked is worth more than a
+   * derivable one that cannot.
+   *
+   * The AMOUNT PAID is NOT stamped. B19/B22 keep money in `payments` and
+   * entitlement in the ledger, joined by a reference — and an amount recorded
+   * in two places is an amount that can disagree with itself, at which point
+   * nobody knows which is the payment. `paymentRef` carries the join.
+   *
+   * B7: the promotional grant is a SECOND ENTRY with its own lot, so its
+   * origin is in the ledger rather than inferable from a rate. That is what
+   * makes it excludable from repurchase (E7) and expirable (E9) at all.
+   */
+  function issuance(programId, points, payment, refs) {
+    var p = program(programId);
+    if (!payment || !payment.ref) {
+      return { ok: false, why: 'issuance requires a payment reference' };
+    }
+    if (!maySettleIssuance(payment.status)) {
+      return { ok: false, why: 'payment ' + payment.ref + ' is ' +
+                              payment.status + '; points are issued only ' +
+                              'after settlement',
+               paymentStatus: payment.status };
+    }
+    var offer = purchaseOffer(programId, points, (refs || {}).boughtThisYear || 0);
+    if (!offer.ok) return offer;
+    var r = refs || {};
+    var common = {
+      status: 'SETTLED',
+      programVersion: p.id,
+      paymentRef: payment.ref,
+      issueRateApplied: p.issueRate
+    };
+    var out = [Object.assign({}, common, {
+      kind: 'PURCHASE',
+      quantity: offer.points,
+      id: r.purchaseId || null,
+      idempotencyKey: r.purchaseKey || null,
+      payment: payment
+    })];
+    if (offer.bonus > 0) {
+      out.push(Object.assign({}, common, {
+        kind: 'PROMOTION',
+        quantity: offer.bonus,
+        id: r.promotionId || null,
+        idempotencyKey: r.promotionKey || null,
+        /* No payment on the grant: nothing was paid for it, and that absence
+           is what E7's "only purchased points can be bought back" reads. */
+        grantedUnder: (p.promotional && p.promotional.tiers) ? 'tier' : 'flat'
+      }));
+    }
+    return { ok: true, offer: offer, entries: out };
+  }
+
   /* F4: WHERE A MONEY FIGURE MAY APPEAR, AS DATA RATHER THAN AS A CONVENTION.
    *
    * A convention in a document is a convention somebody has not read. This is
@@ -734,6 +891,20 @@
       /* Only settled money creates points. A payment that is authorised,
          pending, or merely reported by a browser is not a payment. */
       if (e.kind === 'PURCHASE' && e.status !== 'SETTLED') { w.ignored++; continue; }
+
+      /* B6: AND THE PAYMENT'S OWN STATE, WHICH IS THE ONE THAT MATTERS.
+         The entry's status says what WE think; `payment.status` says what the
+         provider says, and only one of those is evidence. An entry marked
+         SETTLED against an authorisation is the exact failure B6 names —
+         entitlement created against money the bank has merely promised — and
+         it used to fold cleanly because nothing looked past the entry. */
+      if (ISSUING_KINDS.indexOf(e.kind) !== -1 && e.payment &&
+          e.payment.status != null && !maySettleIssuance(e.payment.status)) {
+        throw new Error(
+          'cannot issue points: entry ' + e.id + ' is marked ' + e.status +
+          ' but its payment is ' + e.payment.status +
+          '. Points are issued only after settlement.');
+      }
 
       /* AND ONLY AN APPROVED PROGRAM CREATES POINTS AT ALL.
          The site is in DRAFT_PROGRAM: the terms are written and the ledger
@@ -1264,6 +1435,11 @@
     pointsFor: pointsFor,
     bonusFor: bonusFor,
     purchaseOffer: purchaseOffer,
+    issuance: issuance,
+    reversal: reversal,
+    PAYMENT_STATES: PAYMENT_STATES,
+    ISSUING_PAYMENT_STATES: ISSUING_PAYMENT_STATES,
+    maySettleIssuance: maySettleIssuance,
     MONEY_MOMENTS: MONEY_MOMENTS,
     priceOf: priceOf,
     entitlementOf: entitlementOf,

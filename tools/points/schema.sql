@@ -116,9 +116,15 @@ create table payments (
   provider_ref    text not null,                 -- pi_xxx
   amount_minor    bigint not null check (amount_minor > 0),
   currency        char(3) not null,
+  -- B6: SEVEN STATES, AND ONLY 'settled' ISSUES A POINT.
+  -- 'authorised' is listed explicitly because it is the one that looks
+  -- finished: the bank has agreed to pay and has not paid, and an
+  -- authorisation can be withdrawn. Points issued against one are entitlement
+  -- created against money that never arrived.
   status          text not null
-                  check (status in ('pending', 'requires_capture', 'settled',
-                                    'failed', 'refunded', 'charged_back')),
+                  check (status in ('pending', 'requires_capture', 'authorised',
+                                    'settled', 'failed', 'refunded',
+                                    'charged_back')),
   -- The raw verified event, kept so a dispute can be answered from what the
   -- provider actually said rather than from our summary of it.
   provider_event  jsonb,
@@ -149,8 +155,13 @@ create table point_ledger (
   entry_ref       text not null unique,          -- TP-000001
   customer_id     text not null references customers(id),
   program_id      text not null references point_programs(id),
+  -- ELEVEN, NOT TEN. PROMOTION was added to the module as the eleventh kind
+  -- (B16, instructed by C11) and this constraint was not updated with it, so
+  -- for a while the ledger could not physically record a promotional grant --
+  -- which is precisely the origin B7 requires to be in the ledger. Found by
+  -- reading the two side by side; a check now asserts they agree.
   kind            text not null check (kind in (
-                    'PURCHASE', 'TRANSFER_IN', 'ADJUST_UP',
+                    'PURCHASE', 'PROMOTION', 'TRANSFER_IN', 'ADJUST_UP',
                     'RESERVE', 'RELEASE', 'REDEEM',
                     'TRANSFER_OUT', 'BUYBACK', 'EXPIRE', 'ADJUST_DOWN')),
   quantity        integer not null check (quantity > 0),  -- whole points, always positive;
@@ -163,6 +174,17 @@ create table point_ledger (
   -- database so no future code path can forget it.
   idempotency_key text not null unique,
   payment_id      text references payments(id),
+  -- B7: the term that produced this row, stamped so one row is readable on its
+  -- own. Redundant against program_id -- programmes are immutable, so the rate
+  -- is already determined -- and kept anyway, because a redundant fact that can
+  -- be CHECKED is worth more than a derivable one that cannot. A disagreement
+  -- between this and the programme is a bug that would otherwise be silent.
+  issue_rate_applied numeric(12,6),
+  -- B9: WHAT THIS ENTRY CORRECTS. A compensating entry that does not name its
+  -- cause leaves an auditor to infer the pairing from amounts and timing, which
+  -- is how two unrelated adjustments get read as one correction. The module has
+  -- enforced this since B4; the schema had no column for it.
+  corrects        text references point_ledger(entry_ref),
   journey_ref     text,                          -- the booking a reservation belongs to
   counterparty_id text references customers(id), -- transfers
   reason          text,
@@ -173,6 +195,15 @@ create table point_ledger (
 
   constraint purchase_needs_payment
     check (kind <> 'PURCHASE' or payment_id is not null),
+  -- F3/B7: AND A GRANT HAS NO PAYMENT, WHICH IS THE POINT OF IT.
+  -- Nothing was paid for a promotional point, so there is no consideration to
+  -- repurchase (E7) and no price attaches to it (F2). A PROMOTION row carrying
+  -- a payment_id would be a purchase wearing a grant's label.
+  constraint promotion_has_no_payment
+    check (kind <> 'PROMOTION' or payment_id is null),
+  -- B9: a correction names what it corrects, and nothing else does.
+  constraint correction_names_its_cause
+    check (corrects is null or kind in ('ADJUST_UP', 'ADJUST_DOWN')),
   constraint reservation_needs_journey
     check (kind not in ('RESERVE', 'RELEASE', 'REDEEM') or journey_ref is not null),
   constraint transfer_needs_counterparty
@@ -213,7 +244,7 @@ create trigger point_ledger_no_delete
 create view travel_wallets as
 select
   customer_id,
-  sum(case when kind in ('PURCHASE','TRANSFER_IN','ADJUST_UP') then quantity else 0 end)
+  sum(case when kind in ('PURCHASE','PROMOTION','TRANSFER_IN','ADJUST_UP') then quantity else 0 end)
     - sum(case when kind in ('RESERVE','TRANSFER_OUT','BUYBACK','EXPIRE','ADJUST_DOWN')
                then quantity else 0 end)
     + sum(case when kind = 'RELEASE' then quantity else 0 end)   as available,
@@ -223,8 +254,13 @@ select
   sum(case when kind = 'TRANSFER_OUT' then quantity else 0 end)  as transferred,
   sum(case when kind = 'BUYBACK'      then quantity else 0 end)  as bought_back,
   sum(case when kind = 'EXPIRE'       then quantity else 0 end)  as expired,
-  sum(case when kind in ('PURCHASE','TRANSFER_IN','ADJUST_UP') then quantity else 0 end)
-    as acquired
+  sum(case when kind in ('PURCHASE','PROMOTION','TRANSFER_IN','ADJUST_UP') then quantity else 0 end)
+    as acquired,
+  -- C11/B16: the two lots, kept apart in the view as they are in the fold. A
+  -- customer sees one number; expiry, repurchase and cancellation all need the
+  -- two, and neither is recoverable from the total.
+  sum(case when kind = 'PURCHASE'  then quantity else 0 end)  as purchased,
+  sum(case when kind = 'PROMOTION' then quantity else 0 end)  as granted
 from point_ledger
 where status = 'SETTLED'
 group by customer_id;
