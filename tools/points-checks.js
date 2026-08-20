@@ -1980,5 +1980,219 @@ report(
   `${cOpen} unresolved questions carried in docs/travel-point-exit.md`
 );
 
+/* ==== Decision D: expiry, programme duration, unused points ============== */
+
+const dLedger = [
+  Object.assign(entry("PURCHASE", 5000),
+                { payment: { amountMinor: 500000, currency: "USD",
+                             status: "settled" } }),
+  entry("PROMOTION", 500),
+];
+
+/* D1 — every point names its programme for the WHOLE of its life, not only at
+   issuance. Issuance already required one; a RESERVE, REDEEM or BUYBACK did
+   not, so points could move without naming the terms they moved under. */
+const noProgramme = threw(() => L.wallet([
+  { id: "TP-NP", kind: "RESERVE", quantity: 10, idempotencyKey: "np",
+    status: "SETTLED", journeyRef: "J-D1" }]));
+report(
+  noProgramme !== null && /without a programme/.test(noProgramme),
+  "D1: an entry that moves points without naming a programme is refused",
+  `"${noProgramme}" — D5 says the terms travel with the points for their whole ` +
+  `life, and only issuance was checking`
+);
+
+/* D2 — purchased points do not lapse from time alone, and this is a term
+   rather than an absence. `null` means never; it is not "unset". */
+report(
+  L.PROGRAMS[DRAFT].expiry.purchased === null &&
+    L.validity(DRAFT, "purchased").lapses === false &&
+    L.hasLapsed(DRAFT, "purchased", 120) === false,
+  "D2: purchased points do not expire, including after ten years",
+  `expiry.purchased is null — never, not unset. A customer planning 36 months ` +
+  `out is not racing a clock`
+);
+
+/* D3/D4 — CLOSING A PROGRAMME IS NOT A WAY OF CANCELLING WHAT IT OWES.
+ * **GAP CLOSED.** The run-off ladder existed; nothing stopped a programme
+ * walking to CLOSED — the one state where points can neither be redeemed nor
+ * bought back — while customers still held points. */
+const RUNOFF = L.variant(
+  DRAFT, { compliance: "REDEMPTION_PERIOD", maxProgrammeExposure: 5000000 },
+  "TEST-RUNOFF");
+report(
+  L.mayTransition(RUNOFF, "CLOSED", { outstanding: 4500 }).ok === false &&
+    L.mayTransition(RUNOFF, "CLOSED", { outstanding: 0 }).ok === true &&
+    L.mayClose(RUNOFF, null).ok === false,
+  "D4: a programme with points outstanding cannot reach CLOSED",
+  `4,500 TP outstanding -> refused; 0 outstanding -> permitted; and an ` +
+  `UNSTATED balance is refused too, because it cannot be assumed to be zero`
+);
+
+/* D3 — and the ladder itself: stop selling, run off, then close. Each step
+   keeps redemption alive until the last one, which is the whole distinction
+   between winding down and confiscating. */
+const dLadder = ["ACTIVE", "CLOSED_TO_NEW_PURCHASES", "REDEMPTION_PERIOD",
+                 "CLOSED"].map((c) => {
+  const v = L.variant(DRAFT, { compliance: c, maxProgrammeExposure: 5000000 },
+                      "TEST-D3-" + c);
+  return `${c}: redeem ${L.mayRedeem(v) ? "yes" : "no"}`;
+});
+report(
+  dLadder[0].endsWith("yes") && dLadder[1].endsWith("yes") &&
+    dLadder[2].endsWith("yes") && dLadder[3].endsWith("no"),
+  "D3: Active -> Closed to new purchases -> Run-off, and redemption survives all three",
+  dLadder.join("; ")
+);
+
+/* D5/D9 — the terms are attached to the points and cannot be rewritten. A new
+   programme with harsher terms leaves the old one untouched. */
+const HARSH = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    expiry: { purchased: 6, promotional: 6 } },
+  "TEST-2027-HARSH");
+const retro = threw(() => { L.PROGRAMS[DRAFT].expiry.purchased = 6; });
+report(
+  L.validity(HARSH, "purchased").months === 6 &&
+    L.validity(DRAFT, "purchased").months === null &&
+    L.PROGRAMS[DRAFT].expiry.purchased === null,
+  "D5/D9: a 2027 programme with six-month expiry does not touch 2026 points",
+  `the new programme lapses at 6 months; ${DRAFT} still says never, and the ` +
+  `frozen terms refused the write${retro ? " by throwing" : " silently"}`
+);
+
+/* D6 — WHEN THE JOURNEY DISAPPEARS, SOMETHING IS ALWAYS OFFERED. **NEW**
+   The ordered hierarchy, and "the points are void" is not in it at any rank. */
+const dRemedies = L.remedies(P, { equivalents: ["country:kenya:signature:7"] });
+report(
+  dRemedies.remedies.map((r) => r.remedy).join(",") ===
+    "equivalent,alternative,buyback" &&
+    dRemedies.exhausted === false &&
+    /expiring or voiding/.test(dRemedies.neverAnOption),
+  "D6: equivalent travel, then another eligible service, then buyback — never erasure",
+  dRemedies.remedies.map((r) => `${r.rank}. ${r.remedy}`).join(", ") +
+  ` — and an empty list reports "exhausted", which is a human decision rather ` +
+  `than a lapse`
+);
+
+/* Under the draft programme buyback is not reachable, so the hierarchy
+   correctly offers fewer remedies rather than pretending. */
+report(
+  L.remedies(DRAFT, {}).remedies.map((r) => r.remedy).join(",") === "alternative",
+  "D6: the hierarchy offers only what this programme can actually deliver",
+  `${DRAFT} is DRAFT, so no repurchase is offered — the list shrinks rather ` +
+  `than quoting something that cannot happen`
+);
+
+/* ---- D8: THE RULE THAT WAS SILENTLY DIFFERENT ------------------------- */
+
+/* The fold spent the promotional pool first, unconditionally. Under
+ * `AFK-TP-2026.1` that IS earliest-expiry-first — purchased never lapses — so
+ * the two rules agree, which is exactly why the difference was invisible.
+ *
+ * They diverge the moment a programme gives purchased points a shorter
+ * validity than promotional ones. "Promotional first" would then burn the
+ * longer-lived points and let the shorter-lived ones lapse, costing the
+ * customer points they had paid for. */
+const dSpend = L.wallet(dLedger.concat([
+  Object.assign(entry("RESERVE", 2000), { journeyRef: "J-D8" })]));
+const INVERTED = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    expiry: { purchased: 12, promotional: 36 } },
+  "TEST-INVERTED-EXPIRY");
+const invLedger = dLedger.map((e) =>
+  Object.assign({}, e, { programVersion: INVERTED }));
+const invSpend = L.wallet(invLedger.concat([
+  Object.assign({}, entry("RESERVE", 2000),
+                { journeyRef: "J-D8i", programVersion: INVERTED })]));
+report(
+  L.consumptionOrder(DRAFT).join(",") === "promotional,purchased" &&
+    dSpend.promotional === 0 && dSpend.purchased === 3500 &&
+    L.consumptionOrder(INVERTED).join(",") === "purchased,promotional" &&
+    invSpend.purchased === 3000 && invSpend.promotional === 500,
+  "D8: earliest expiry first, which is NOT the same rule as promotional first",
+  `${DRAFT}: promotional lapses at 24 months and purchased never, so the 500 ` +
+  `granted go first. Inverted (purchased 12, promotional 36): the purchased ` +
+  `points go first and all 500 granted survive — the old rule would have ` +
+  `spent them and let the paid-for points lapse`
+);
+
+/* D8 — and the tie-break is stable rather than incidental. */
+const NEITHER = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    expiry: { purchased: null, promotional: null } },
+  "TEST-NO-EXPIRY-EITHER");
+report(
+  L.consumptionOrder(NEITHER).join(",") === "promotional,purchased",
+  "D8: when neither pool lapses, promotional still goes first, deliberately",
+  `it is the pool that cannot be repurchased and is forfeited on cancellation, ` +
+  `so spending it first still costs the customer least — a stated tie-break, ` +
+  `not whatever the sort happened to do`
+);
+
+/* D7 — and the customer is TOLD which points expire, in sentences. **NEW** */
+const disclosure = L.expiryDisclosure(P, dLedger);
+report(
+  disclosure.pools.find((x) => x.lot === "purchased").statement ===
+    "5000 TP purchased. These do not expire." &&
+    /valid for 24 months/.test(
+      disclosure.pools.find((x) => x.lot === "promotional").statement) &&
+    /expire soonest are used first/.test(disclosure.spendNote),
+  "D7: the customer never has to guess which points expire",
+  disclosure.pools.map((x) => x.statement).filter(Boolean).join(" / ")
+);
+
+/* D10 — inactivity does nothing, which is the same fact as "no clock". */
+const idleBefore = L.wallet(dLedger).available;
+const idleAfter = L.wallet(dLedger).available;
+report(
+  idleBefore === idleAfter && idleBefore === 5500 &&
+    /not affected by how long/.test(disclosure.inactivityNote) &&
+    !/\bDate\b|\bnow\(\)/.test(
+      fs.readFileSync(path.join(__dirname, "..", "scripts", "points-ledger.js"),
+                      "utf8")
+        .replace(/\/\*[\s\S]*?\*\//g, " ")
+        .split("\n").filter((l) => !/^\s*\/\//.test(l)).join("\n")),
+  "D10: nothing happens to a holding because a customer went away",
+  `${idleBefore} TP, and the module still contains no clock at all — ` +
+  `inactivity cannot be detected, let alone punished`
+);
+
+/* D11 — reaching the target is a journey state, not an account balance. */
+const dGoal = GO.build(4800, 14, 4800, "v1");
+const dPartial = GO.build(4800, 14, 750, "v1");
+report(
+  dGoal.journeyState === "FUNDED" && dGoal.display.funded === "Journey funded" &&
+    dPartial.journeyState === "PLANNING" && dPartial.display.funded === null &&
+    dGoal.journeyStates.join(",") ===
+      "PLANNING,FUNDED,BOOKING,RESERVED,TRAVELLING,COMPLETED",
+  "D11: reaching the target says Journey funded, never Account balance",
+  `4,800 of 4,800 -> "${dGoal.display.funded}" and journeyState FUNDED; the ` +
+  `next stage is booking, not withdrawal`
+);
+
+/* And the word "balance" does not appear on the goal at the moment it would do
+   most damage — the customer has just watched a number reach a round figure. */
+report(
+  !Object.keys(dGoal.display).some(
+    (k) => /balance|account/i.test(String(dGoal.display[k]))),
+  "D11: no display field on a funded goal says balance or account",
+  `${Object.keys(dGoal.display).length} display fields, none of them financial ` +
+  `vocabulary`
+);
+
+/* D-open — recorded, not decided. */
+const dDoc = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-duration.md"), "utf8");
+const dOpen = (dDoc.match(/^\s*\|\s*D-[a-z]+\s*\|/gm) || []).length;
+report(
+  dOpen >= 4 && /UNRESOLVED|not decided here/i.test(dDoc),
+  "D: the open questions Decision D raises are recorded, not answered in code",
+  `${dOpen} unresolved questions carried in docs/travel-point-duration.md`
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);

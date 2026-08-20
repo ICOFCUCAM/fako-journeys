@@ -19,6 +19,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | how a customer acquires points over time | **`docs/travel-point-purchase.md`** — the purchase model. A plan is an intention, never a mandate; nothing charges anybody |
 | the legal boundary, the compliance ladder, or what counsel must answer | **`docs/travel-point-compliance.md`** — Section D. The programme is `compliance: DRAFT`; only `PILOT` or `ACTIVE` may issue, and the ladder is not skippable |
 | any question of the form "can we ship X of the points product yet?" | **`docs/economic-model-decisions.md`** — eleven open decisions, their provisional defaults, and who owns each |
+| Decision D — expiry, programme duration, unused points (canonical) | **`docs/travel-point-duration.md`** — eleven rules. D8 changed behaviour: earliest expiry first, not promotional first |
 | Decision C — what happens when a customer leaves (canonical) | **`docs/travel-point-exit.md`** — the ten settled rules, and the three that were holding only by accident |
 | repurchase ("buyback"), cancellation, transfer or expiry | **`docs/travel-point-buyback.md`** — Section E, including the B12/E2 contradiction and how it was reconciled |
 | pricing, bonuses, or "why can't we just give a better rate for a bigger purchase?" | **`docs/travel-point-pricing.md`** — Section F. `issueRate` is one number per programme; a volume incentive is a grant, never a rate |
@@ -59,7 +60,7 @@ Run before claiming anything is done. All of these must pass.
     node tools/link-checks.js                    78,595 links
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
-    node tools/points-checks.js                 139 — the Travel Point ledger
+    node tools/points-checks.js                 153 — the Travel Point ledger
     node tools/goal-checks.js                    36 — the Travel Goal is planning only
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes

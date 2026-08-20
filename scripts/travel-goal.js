@@ -87,6 +87,16 @@
       journeyTotal: journeyTotal,
       currency: program.currency,
 
+      /* D11: THE JOURNEY STATE, WHICH IS THE VOCABULARY THIS PRODUCT USES.
+         A financial wallet has a balance; a journey has a stage. Reaching the
+         target moves the customer from PLANNING to FUNDED — the beginning of
+         booking, not the end of saving — and everything after it belongs to
+         the booking machine rather than to a goal. Named here so that no
+         surface has to invent the word at the moment it matters most. */
+      journeyState: g.target > 0 && g.remaining === 0 ? 'FUNDED' : 'PLANNING',
+      journeyStates: ['PLANNING', 'FUNDED', 'BOOKING', 'RESERVED',
+                      'TRAVELLING', 'COMPLETED'],
+
       /* WHICH PRICES AND WHICH TERMS PRODUCED THIS.
          A reader who returns in eight months to a different number deserves to
          be able to see that the rate card moved, rather than being told the
@@ -108,6 +118,14 @@
            away" are the same two numbers as a progress bar and a remainder,
            and they read as travel rather than as a balance. */
         prepared: Math.round(g.progress * 100) + '% prepared',
+        /* D11: WHAT REACHING THE TARGET IS CALLED.
+           "Journey funded", never "Account balance: $10,000". The two are the
+           same arithmetic and completely different products, and this is the
+           moment a customer is most likely to read their holding as money —
+           they have just watched a number reach a round figure. The word is
+           chosen so the next thing they do is book rather than withdraw. */
+        funded: g.remaining === 0 && g.target > 0
+          ? 'Journey funded' : null,
         away: points(g.remaining) + ' away',
         progress: (g.progress * 100).toFixed(g.progress >= 0.995 ? 0 : 1) + '%',
         journeyTotal: money(journeyTotal),

@@ -390,13 +390,44 @@
     return REDEEMING_STATES.indexOf(complianceOf(id)) !== -1;
   }
 
+  /* D4: CLOSING A PROGRAMME MUST NEVER BE A WAY OF CANCELLING WHAT IS OWED.
+   *
+   * This is the strongest rule in Decision D and it needs to be a refusal
+   * rather than a promise. `CLOSED` is the one state in which points can
+   * neither be redeemed nor bought back — so a programme reaching it while
+   * customers still hold points is confiscation, whatever the reason given.
+   *
+   * So the transition is gated on the outstanding balance. A programme with
+   * anything outstanding may go to CLOSED_TO_NEW_PURCHASES (stop selling) and
+   * to REDEMPTION_PERIOD (run-off), which is the whole point of those two
+   * states existing — but not to CLOSED.
+   *
+   * `outstanding` is supplied by the caller because this module has no
+   * database. Passing 0 when it is not 0 is possible, and is the reason the
+   * argument is named rather than inferred: somebody has to state the number.
+   */
+  function mayClose(id, outstandingPoints) {
+    if (outstandingPoints == null) {
+      return { ok: false, why: 'the outstanding balance must be stated before ' +
+                              'a programme may close; it cannot be assumed zero' };
+    }
+    if (outstandingPoints > 0) {
+      return { ok: false,
+               why: 'programme ' + id + ' still has ' + outstandingPoints +
+                    ' TP outstanding. Closing a programme does not cancel ' +
+                    'what it owes — move to REDEMPTION_PERIOD and run off.',
+               outstanding: outstandingPoints };
+    }
+    return { ok: true };
+  }
+
   function complianceOf(id) {
     var p = program(id);
     return p.compliance || 'DRAFT';
   }
 
   /* Is this transition one the ladder allows? Checked rather than assigned. */
-  function mayTransition(id, to) {
+  function mayTransition(id, to, opts) {
     var from = complianceOf(id);
     if (COMPLIANCE_STATES.indexOf(to) === -1) {
       return { ok: false, why: 'unknown compliance state: ' + to };
@@ -411,6 +442,13 @@
     if (ISSUING_STATES.indexOf(to) !== -1) {
       var ready = mayActivate(id);
       if (!ready.ok) return { ok: false, why: ready.why, missing: ready.missing };
+    }
+    /* D4: and reaching CLOSED requires that nothing is still owed. */
+    if (to === 'CLOSED') {
+      var clear = mayClose(id, (opts || {}).outstanding);
+      if (!clear.ok) {
+        return { ok: false, why: clear.why, outstanding: clear.outstanding };
+      }
     }
     return { ok: true, from: from, to: to };
   }
@@ -919,6 +957,17 @@
          works, and no customer holds anything. This refusal is what makes
          that true rather than merely intended — including if somebody wires a
          payment handler up before the legal answer arrives. */
+      /* D1: EVERY POINT BELONGS TO A NAMED PROGRAMME, INCLUDING WHEN IT LEAVES.
+         Issuance already required one. Nothing required it of a RESERVE, a
+         REDEEM or a BUYBACK, so an entry could move points without naming the
+         terms they moved under — and D5 says the terms travel with the points
+         for their whole life, not only at the moment they are created. */
+      if (!e.programVersion) {
+        throw new Error('ledger entry without a programme: ' + e.id +
+                        ' (' + e.kind + '). Every Travel Point belongs to a ' +
+                        'named programme for the whole of its life.');
+      }
+
       if (ISSUING_KINDS.indexOf(e.kind) !== -1 && !mayIssue(e.programVersion)) {
         throw new Error(
           'cannot issue points: program ' + (e.programVersion || '(none)') +
@@ -953,13 +1002,35 @@
          ledger has already forgotten which is which. */
       if (kind.lot) w[kind.lot] += kind.acquired * q;
       if (kind.available === -1 && !kind.lot) {
-        /* Points leaving the wallet come off the promotional pool first: they
-           are the ones that expire and cannot be repurchased, so spending them
-           first is the treatment that costs the customer least. Provisional —
-           this is the promotional half of open question B-ii. */
-        var off = Math.min(w.promotional, q);
-        w.promotional -= off;
-        w.purchased -= (q - off);
+        /* D8: EARLIEST EXPIRY FIRST, WHICH IS NOT THE SAME RULE AS
+           "PROMOTIONAL FIRST".
+
+           This used to spend the promotional pool first unconditionally, and
+           under `AFK-TP-2026.1` that is the right answer — purchased points
+           never lapse, promotional ones lapse at 24 months, so promotional is
+           the earlier expiry. The two rules AGREE here, which is exactly why
+           the difference went unnoticed.
+
+           They stop agreeing the moment a programme sets a shorter validity on
+           purchased points than on promotional ones. "Promotional first" would
+           then burn the longer-lived points first and let the shorter-lived
+           ones lapse — costing the customer points they had already paid for.
+           So the order is now DERIVED from the programme's own validity terms.
+
+           Clock-free: it compares the programme's validity in MONTHS, not
+           dates, so no balance can move because time passed. `null` means
+           never lapses and sorts last, which is the whole of D2. */
+        var order = consumptionOrder(e.programVersion);
+        /* Its own remainder, NOT `q`: the reservation and correction bookkeeping
+           further down this same loop still needs the entry's full quantity,
+           and decrementing `q` here silently zeroed both. */
+        var left = q;
+        for (var oi = 0; oi < order.length && left > 0; oi++) {
+          var pool = order[oi];
+          var take = Math.min(w[pool], left);
+          w[pool] -= take;
+          left -= take;
+        }
       }
 
       /* B4: A COMPENSATING ENTRY SAYS WHAT IT COMPENSATES.
@@ -1156,6 +1227,62 @@
     };
   }
 
+  /* ---- D6: when the journey the points were meant for disappears ----------
+   *
+   * The hard case, and the one where doing nothing IS the failure. A customer
+   * who accumulated toward a journey Afrinkong no longer sells must be offered
+   * something, in a stated order, and "the points are void" is not on the list
+   * at any position.
+   *
+   *   1. equivalent travel        a comparable eligible service
+   *   2. another eligible service anything else within programme scope
+   *   3. programme buyback        if the programme's terms permit it
+   *
+   * Returned as an ordered list of remedies that are ACTUALLY AVAILABLE under
+   * this programme, so a caller cannot offer a repurchase that the programme
+   * does not offer, or an alternative service that is out of scope. If the
+   * list would ever be empty, that is itself the answer a human has to deal
+   * with — `exhausted: true` — rather than a silent zero.
+   */
+  function remedies(programId, opts) {
+    var p = program(programId);
+    var o = opts || {};
+    var out = [];
+    if ((o.equivalents || []).length) {
+      out.push({ remedy: 'equivalent', rank: 1,
+                 options: o.equivalents,
+                 note: 'A comparable eligible journey under the same programme.' });
+    }
+    var scope = (p.eligibleServices || []).filter(function (s) {
+      return (o.unavailableServices || []).indexOf(s) === -1;
+    });
+    if (scope.length) {
+      out.push({ remedy: 'alternative', rank: 2,
+                 services: scope,
+                 note: 'The points may be applied to another eligible service ' +
+                       'under this programme.' });
+    }
+    if (p.buyback && p.buyback.offered && mayBuyBack(programId)) {
+      out.push({ remedy: 'buyback', rank: 3,
+                 discretionary: !!p.buyback.discretionary,
+                 note: 'The programme’s repurchase terms may apply. This ' +
+                       'is an offer under those terms, not a refund.' });
+    }
+    return {
+      programId: p.id,
+      remedies: out,
+      exhausted: out.length === 0,
+      /* Said explicitly because the whole rule is what must NOT happen. */
+      neverAnOption: 'expiring or voiding the points because the journey ' +
+                     'is no longer offered',
+      note: out.length === 0
+        ? 'No remedy is available under this programme’s current terms. ' +
+          'This requires a human decision; it is not a case where the points ' +
+          'lapse.'
+        : null
+    };
+  }
+
   /* ---- transfer, and the two separate reasons to refuse it ----------------
    *
    * C8/C9: THE FINAL-WINDOW BAR MUST NOT DEPEND ON THE GLOBAL ONE.
@@ -1235,6 +1362,86 @@
       lot: lot === 'promotional' ? 'promotional' : 'purchased',
       months: months == null ? null : months,
       lapses: months != null
+    };
+  }
+
+  /* D8: WHICH POOL IS SPENT FIRST, DERIVED RATHER THAN ASSUMED.
+   *
+   * Answers the promotional half of long-open question B-ii, which Decision D
+   * settles: earliest expiry first, so the customer keeps what would otherwise
+   * lapse. `null` months means the pool never lapses and therefore sorts last.
+   *
+   * A stable tie-break matters: when neither pool lapses, or both lapse at the
+   * same month, the order must not depend on object key order or on a sort
+   * implementation. Promotional goes first on a tie, because it is the pool
+   * that cannot be repurchased (E7) and is forfeited on cancellation — so
+   * spending it first is still the treatment that costs the customer least.
+   */
+  function consumptionOrder(programId) {
+    var far = Infinity;
+    var months;
+    try {
+      months = {
+        promotional: validity(programId, 'promotional').months,
+        purchased: validity(programId, 'purchased').months
+      };
+    } catch (err) {
+      /* An entry with no programme cannot name a validity. D1 refuses such an
+         entry at the fold; this keeps the helper total for callers that ask
+         about one anyway. */
+      return ['promotional', 'purchased'];
+    }
+    var p = months.promotional == null ? far : months.promotional;
+    var u = months.purchased == null ? far : months.purchased;
+    return u < p ? ['purchased', 'promotional'] : ['promotional', 'purchased'];
+  }
+
+  /* D7: WHICH OF MY POINTS EXPIRE, AND WHEN — ANSWERED, NOT LEFT TO INFERENCE.
+   *
+   * "The customer should never have to guess which points are expiring." A
+   * wallet that says 5,500 TP and a footnote saying some of them lapse is
+   * exactly that guess. This returns the two pools separately, each with its
+   * own validity and the order they will be spent in, so a surface can show
+   * the sentence rather than the arithmetic.
+   *
+   * Still no clock. Months are the programme's term; a date needs an issuance
+   * date, and that belongs to whatever stores the entries.
+   */
+  function expiryDisclosure(programId, entries) {
+    var w = wallet(entries);
+    var order = consumptionOrder(programId);
+    var pools = [
+      { lot: 'purchased', points: w.purchased },
+      { lot: 'promotional', points: w.promotional }
+    ].map(function (x) {
+      var v = validity(programId, x.lot);
+      return {
+        lot: x.lot,
+        points: x.points,
+        lapses: v.lapses,
+        validityMonths: v.months,
+        spentAt: order.indexOf(x.lot) + 1,
+        /* The sentence, assembled here so every surface says the same thing
+           and none of them can render the number while dropping the terms. */
+        statement: x.points === 0 ? null
+          : v.lapses
+            ? x.points + ' TP acquired as a promotional grant, valid for ' +
+              v.months + ' months from issue.'
+            : x.points + ' TP purchased. These do not expire.'
+      };
+    });
+    return {
+      programId: program(programId).id,
+      total: w.available,
+      pools: pools,
+      /* D8 stated in words, because "which of mine gets used first" is the
+         customer's real question and the answer is reassuring. */
+      spendOrder: order,
+      spendNote: 'Points that expire soonest are used first, so nothing lapses ' +
+                 'that could have been spent.',
+      /* D2/D10 stated so a surface cannot imply the opposite by omission. */
+      inactivityNote: 'Purchased Travel Points are not affected by how long ' +
+                      'you go without using your account.'
     };
   }
 
@@ -1507,6 +1714,10 @@
     mayRedeem: mayRedeem,
     mayBuyBack: mayBuyBack,
     mayTransfer: mayTransfer,
+    mayClose: mayClose,
+    remedies: remedies,
+    consumptionOrder: consumptionOrder,
+    expiryDisclosure: expiryDisclosure,
     TRANSFER_KINDS: TRANSFER_KINDS,
     validity: validity,
     hasLapsed: hasLapsed,
