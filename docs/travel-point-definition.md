@@ -98,7 +98,7 @@ apart. That is the cheapest of the five to build correctly and the only one that
 inherits price-versioning for free. It is a recommendation about *fit*, not a
 commercial judgement, and it is not proposed for approval here.
 
-### A1c. The buyback tension, which A1b decides
+### A1c. The buyback tension — RESOLVED by Section B12
 
 The 10% buyback and the non-monetary definition pull against each other, and
 this was not visible until the two were written down together.
@@ -130,9 +130,12 @@ also changes the shape of decision 5 — whether buyback is contractual or
 discretionary — because refunding consideration is a much easier promise to
 make than guaranteeing a valuation.
 
-Not proposed for approval. Recorded because A1b cannot be decided sensibly
-without knowing which of these two buyback mechanisms is intended, and the
-question had not been asked in that form.
+**Resolved.** Section B12 chose refund of consideration: *"90% of the applicable
+purchase consideration"*. Repurchase never values a Travel Point; it refers to
+the recorded payment. A1b is unblocked to that extent, and the choice is
+supported by more than tidiness — B12.2 measures the arbitrage the other
+mechanism opens up. Any promotional bonus above 11.1% would let a customer buy
+points and immediately repurchase them for more than they paid.
 
 ## A2. Why the frame refuses to denominate in money
 

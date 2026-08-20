@@ -311,5 +311,75 @@ report(
   KIND_NAMES
 );
 
+/* ---- Section B12: the repurchase basis, and what it currently costs ----- */
+
+/* B12 settled that repurchase pays 90% of the PURCHASE CONSIDERATION — what the
+ * customer actually paid. buybackQuote() pays 90% of the ENTITLEMENT VALUE,
+ * which is the mechanism B12 rejected.
+ *
+ * Harmless while issueRate and entitlement are both 1, and exploitable the
+ * moment a promotional programme exists: profit appears when
+ * issueRate x buyback.rate > 1, i.e. any bonus above 1/0.9 - 1 = 11.1%.
+ * Buy at a bonus, wait out minHoldDays, claim more than you paid, repeat to the
+ * annual cap.
+ *
+ * Not fixed — buyback is programme economics and those are on hold. Pinned so
+ * it cannot ship silently, and so the number is on the record. */
+const bbProg = L.PROGRAMS[DRAFT];
+const bbSaved = { rate: bbProg.issueRate, status: bbProg.status };
+bbProg.status = "active";
+bbProg.issueRate = 1.25;
+const paidMinor = 100000;                                  // $1,000
+const issued = L.pointsFor(DRAFT, paidMinor);
+const quote = L.buybackQuote(
+  DRAFT,
+  [entry("PURCHASE", issued)],
+  issued, 100, 0
+);
+bbProg.issueRate = bbSaved.rate;
+bbProg.status = bbSaved.status;
+
+report(
+  issued === 1250 && quote.payableMinor === 112500,
+  "B12: the encoded repurchase basis is exploitable under a promotional programme",
+  `a 25% bonus on $1,000 issues ${issued} TP and quotes $${quote.payableMinor / 100} ` +
+  `— $${(quote.payableMinor - paidMinor) / 100} MORE than was paid. B12 says $900. ` +
+  `Break-even bonus is 1/0.9 = 11.1%. See docs/travel-point-economics.md B12.2`
+);
+
+report(
+  bbProg.issueRate === 1 && bbProg.status === "draft",
+  "B12: the demonstration restored the programme it borrowed",
+  `issueRate ${bbProg.issueRate}, status ${bbProg.status}`
+);
+
+/* ---- Section B14: transferability, decided but not yet applied --------- */
+
+/* B14 settled firmly that customers may not transfer points to one another in
+ * V1. The programme still says they may. This is a one-word change that is
+ * blocked on nothing — it sits unmade only because programme economics are
+ * under a hold, and changing a term of the economic model unprompted is what
+ * that hold exists to prevent.
+ *
+ * When it is made, this check flips to asserting `false` and the message
+ * becomes a record of when. Until then it fails loudly if anyone *relies* on
+ * transferability in the meantime. */
+report(
+  bbProg.transferable === true,
+  "B14: the programme still permits transfer, which B14 has decided against",
+  "transferable: true — B14 requires false. One word, blocked on nothing, " +
+  "awaiting confirmation. See docs/travel-point-economics.md B14.1"
+);
+
+/* The kinds stay whatever the programme decides: a programme that forbids
+   transfer simply never emits them. Deleting the capability to enforce a policy
+   would be the wrong layer. */
+report(
+  Object.keys(L.KINDS).includes("TRANSFER_IN") &&
+    Object.keys(L.KINDS).includes("TRANSFER_OUT"),
+  "B14: the ledger keeps the transfer kinds, because policy is not capability",
+  "an administrative correction or a later programme still needs them"
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);

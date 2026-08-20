@@ -4,9 +4,11 @@
 
 | | |
 |---|---|
-| B1–B10 | **settled** as product and economic decisions |
-| B11 onward | not yet written |
-| new open questions | seven, raised by B6–B9 and registered below |
+| B1–B14 | **settled** as product and economic decisions |
+| B15 onward | not yet written |
+| new open questions | sixteen, raised by B6–B13 and registered below |
+| awaiting your word | **B14** — `transferable: false`, a one-word change blocked on nothing |
+| resolves | **Section A1c** — repurchase is refund of consideration |
 | what these are not | **a legal opinion.** They do not determine the regulatory characterisation of the product. |
 | before activation | counsel must confirm the characterisation. See §B1.3. |
 | the programme | stays `draft`; `PRODUCT_STATE` stays `DRAFT_PROGRAM` |
@@ -558,7 +560,247 @@ reservations map. The code was right both times.
 
 ---
 
-## B11 onward
+## B11. Cancellation
+
+**Settled.**
+
+| window | treatment |
+|---|---|
+| **31+ days** | **Full point release.** Reserved points return to available, subject to the programme's stated cancellation terms. |
+| **8–30 days** | **Controlled release.** Points may return, but cancellation charges or non-refundable supplier costs can apply according to the booking terms. |
+| **0–7 days** | **Final commitment window.** Points become non-refundable and non-buyback-eligible **to the extent stated in the booking agreement**. |
+
+By the final week Afrinkong may already have committed money to hotels, guides,
+transport, permits, conservation fees, operators and flights. The customer's
+points cannot become an unlimited cancellation liability for Afrinkong.
+
+### B11.1 The bands match; two numbers inside them do not
+
+The day boundaries encoded in the programme are exactly B11's — 31, 8, 0. What
+sits inside two of them is not what B11 says.
+
+| window | B11 | encoded | assessment |
+|---|---|---|---|
+| 31+ | full release | `release: 1.00` | ✅ agrees |
+| 8–30 | charges *"can apply according to the booking terms"* | `release: 0.50` — a flat half, always | **a policy the code asserts and B11 does not** |
+| 0–7 | non-refundable *"to the extent stated in the booking agreement"* | `release: 0.00` — total forfeiture, always | **stricter than B11** |
+
+B11 ties the middle band to *actual* cancellation charges and supplier costs.
+The code applies a flat 50% regardless of what was actually committed — which
+will be too harsh on a journey with no supplier exposure yet and too generous on
+one already paid for. Likewise the final window: "to the extent stated" is not
+"all of it".
+
+Both numbers were placeholders, and they read as policy. Whether release should
+be a published ladder (simple, predictable, occasionally unfair in both
+directions) or driven by real incurred cost (accurate, unpredictable, needs
+supplier data at cancellation time) is a decision B11 leaves open, and it is
+registered below.
+
+Not changed — `cancellation` is programme economics, the schema's immutability
+trigger treats it as such, and the instruction is to hold.
+
+## B12. Repurchase, not withdrawal
+
+**Settled, and it resolves Section A1c.**
+
+> Afrinkong **may offer** an eligible Travel Point Repurchase at **90% of the
+> applicable purchase consideration**, subject to the Programme's repurchase
+> rules.
+>
+>     customer paid          $1,000
+>     potential repurchase     $900
+>     Afrinkong retains        $100
+>
+> This is a repurchase programme, **not a customer right to withdraw money
+> whenever they want**. Buyback stays discretionary and programme-controlled
+> rather than a guaranteed cash redemption.
+
+Cash redemption is the feature most likely to change the regulatory character of
+a prepaid arrangement, and FinCEN treats prepaid access as its own category,
+assessed on a programme's features and controls rather than on its label. Keeping
+repurchase discretionary is a control; making it a guaranteed right removes one.
+
+### B12.1 A1c is now answered
+
+Section A1c set out two mechanisms and said one had to be chosen before the unit
+basis could be. B12 chooses:
+
+> **Refund of consideration** — 90% of what the customer actually paid for the
+> points they have not used. Not "90% of what the points are worth".
+
+This is the mechanism A1c identified as consistent with B2 by construction: it
+never assigns a cash value to a Travel Point. It refers to the recorded payment,
+which `payments.amount_minor` already holds. **A1c is closed, and A1b is
+unblocked to that extent.**
+
+### B12.2 The code implements the other one, and it is exploitable
+
+`buybackQuote()` computes `entitlementOf(points) × 0.90` — 90% of the *travel
+value*. That is redemption at value: the mechanism B12 has just rejected.
+
+Invisible while `issueRate` and `entitlement` are both 1. Measured with a
+promotional programme, on a $1,000 purchase:
+
+| bonus | points issued | B12 pays | code pays | customer |
+|---:|---:|---:|---:|---|
+| 0% | 1,000 | $900 | $900 | −$100 |
+| 10% | 1,100 | $900 | $990 | −$10 |
+| **15%** | 1,150 | $900 | **$1,035** | **+$35** |
+| **25%** | 1,250 | $900 | **$1,125** | **+$125** |
+
+The break-even is `issueRate > 1 / 0.90`, so **any promotional programme
+offering more than an 11.1% bonus turns repurchase into a money-out machine**:
+buy points at a bonus, wait out `minHoldDays`, claim more than you paid, repeat
+to the annual cap.
+
+Under B12's consideration basis this is impossible by construction — 90% of what
+you paid can never exceed what you paid. That is the strongest argument for the
+choice B12 made, and it is measured rather than asserted.
+
+`points-checks.js` now pins this the way the §A4 defect is pinned: the current
+behaviour is asserted, the arbitrage is demonstrated, and the check names B12 as
+the authority. **Not fixed** — buyback is programme economics and the standing
+instruction is to hold — but it cannot now ship silently.
+
+### B12.3 What still needs deciding
+
+The three guards already encoded — `minHoldDays: 90`, `minPoints: 100`,
+`maxPerYear: 5000` — are controls in the FinCEN sense, and their values are
+placeholders. B12 settles the *basis* and the *discretion*; it does not settle
+the thresholds, whether an offer may be refused case by case or only by rule,
+or what happens to a repurchase request from a customer with an active
+reservation. Registered below.
+
+---
+
+## New open questions raised by B11–B12
+
+| # | question | raised by | blocked on |
+|---|---|---|---|
+| B-viii | Is the 8–30 day release a published ladder or driven by actual incurred supplier cost? | B11.1 | nothing — a product decision |
+| B-ix | What does "to the extent stated in the booking agreement" mean inside 7 days — is any release ever possible? | B11.1 | booking terms |
+| B-x | Are `minHoldDays`, `minPoints` and `maxPerYear` the right controls, and at what values? | B12.3 | counsel, on the prepaid-access analysis |
+| B-xi | May a repurchase offer be refused case by case, or only by published rule? | B12.3 | counsel |
+| B-xii | Can a customer with an active reservation request repurchase of their unreserved points? | B12.3 | nothing — a product decision |
+
+---
+
+## B13. Repurchase eligibility
+
+**Settled.**
+
+**Eligible** — points unused; not reserved; not attached to an active booking;
+minimum holding period passed; customer within annual repurchase limits;
+programme accepting repurchases; customer passes required identity and payment
+checks.
+
+**Not eligible** — points already redeemed; points currently reserved; points
+inside the final 7-day travel window; promotional points where the programme
+excludes repurchase; points already subject to a cancellation or settlement
+process; fraudulent or disputed transactions.
+
+### B13.1 Six of thirteen conditions are enforced; seven are not
+
+`buybackQuote(programId, entries, points, heldDays, boughtBackThisYear)` — its
+whole surface. Anything not in that signature it cannot know.
+
+| condition | enforced | how, or why not |
+|---|---|---|
+| points unused | ✅ | only `available` points qualify |
+| not reserved | ✅ | `reserved` is a separate pool and is excluded from `available` |
+| already redeemed | ✅ | redeemed points have left `available` |
+| minimum holding period | ✅ | `heldDays < minHoldDays` |
+| within annual limit | ✅ | `boughtBackThisYear + points > maxPerYear` |
+| programme accepting | ✅ | `buyback.offered` |
+| **not attached to an active booking** | ⚠️ partial | reserved points are excluded, but a booking may hold points in states the wallet does not distinguish |
+| **inside the final 7-day window** | ❌ | takes no booking or departure date. The cancellation ladder carries `buybackEligible` flags; `buybackQuote` never consults them. |
+| **promotional points excluded from repurchase** | ❌ | no per-lot promotional flag exists. B5 puts the incentive in the PURCHASE quantity (B7.2), so a bonus lot is indistinguishable afterwards — **this is the second consequence of that choice**, and it is a real cost of it. |
+| **already in cancellation or settlement** | ❌ | not modelled |
+| **fraudulent or disputed** | ❌ | `payments.status` has `charged_back`, but nothing joins it to eligibility |
+| **identity checks** | ❌ | not modelled |
+| **payment checks** | ❌ | not modelled |
+
+Two of these are worth pulling out.
+
+**The 7-day window is checked in one place and ignored in another.** The
+cancellation ladder computes `buybackEligible: false` inside 7 days, and the
+repurchase quote cannot see it. Two functions hold half the rule each, which is
+exactly how a customer inside the final window gets a quote they should never
+have been offered.
+
+**Promotional exclusion is currently impossible, and B7.2 is why.** Putting the
+incentive in the quantity of the PURCHASE entry means a bonus point is not
+distinguishable from a paid point once written. B13 requires exactly that
+distinction. This is the strongest argument yet for open question B-i — the
+`PURCHASE 100` + `BONUS 10` shape — and the two questions should be decided
+together.
+
+## B14. No customer-to-customer marketplace in V1
+
+**Settled firmly.**
+
+> Customers may **not** sell or transfer Travel Points to one another in V1.
+>
+>     ❌  James → sells 500 TP → Sarah
+>     ✅  Customer → Afrinkong, which may repurchase if eligible
+>
+> Person-to-person transfer is one of the features FinCEN identifies as relevant
+> to prepaid-access treatment. A marketplace can be revisited later.
+
+### B14.1 The encoded programme currently says the opposite
+
+| | |
+|---|---|
+| B14 | no customer-to-customer transfer |
+| `PROGRAMS['AFK-TP-2026.1'].transferable` | **`true`** |
+| ledger kinds | `TRANSFER_IN`, `TRANSFER_OUT` both exist |
+
+This is the first settled decision in Section B that requires a **code change**
+rather than future work, and it is a one-word change: `transferable: false`.
+
+It is blocked on nothing. A1b does not touch it, counsel does not need to rule
+on it — B14 *is* the decision, and it makes the programme easier to characterise
+rather than harder. It sits unmade only because programme economics have been
+under a standing hold, and flipping a term of the economic model on my own
+initiative is precisely what that hold exists to prevent.
+
+**Ready to make on your word.** The ledger kinds can stay: `TRANSFER_IN` and
+`TRANSFER_OUT` are how an administrative correction or a future programme would
+express a movement, and a programme that forbids transfer simply never emits
+them. Removing the kinds would be deleting capability to enforce a policy, which
+is the wrong layer.
+
+`points-checks.js` records the contradiction so it cannot be forgotten.
+
+### B14.2 It closes one of the four exposure features
+
+B1.3 listed four features sitting at the higher-exposure end by drafting default.
+B14 decides one of them:
+
+| feature | was | after B14 |
+|---|---|---|
+| transferability | `true` | **`false`** — decided |
+| cash redemption | offered, discretionary | discretionary confirmed by B12; basis corrected to consideration |
+| reloadability | not modelled | still open |
+| no expiry | `expiryMonths: 0` | still open |
+
+Two of four now have answers, and both moved toward the easier characterisation.
+
+---
+
+## New open questions raised by B13
+
+| # | question | raised by | blocked on |
+|---|---|---|---|
+| B-xiii | Should `buybackQuote` take the booking and departure date so the 7-day window can be enforced where the quote is produced? | B13.1 | nothing — required work |
+| B-xiv | How are promotional points marked so a programme can exclude them from repurchase? | B13.1 | decide with B-i |
+| B-xv | What identity and payment checks are required before a repurchase settles? | B13 | counsel |
+| B-xvi | How do disputed or charged-back payments propagate to repurchase eligibility? | B13.1 | reconciliation design |
+
+---
+
+## B15 onward
 
 Not yet written. The remaining economic model — pricing, packages, recurring
 purchase, the wallet, reservation and redemption mechanics, price protection —
