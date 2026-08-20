@@ -12,6 +12,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | page weight, or quoting a performance number | `docs/weight-baseline.md` |
 | deciding what photography to buy | `docs/hero-acquisition.md` |
 | the site's structure | `docs/architecture.md` |
+| Travel Points, the ledger, payments, or anything economic | **`docs/travel-points-architecture.md`** — audit, architecture, and the legal gate that must clear before a single payment is taken |
 
 ## The rule that catches people out
 
@@ -32,6 +33,7 @@ Run before claiming anything is done. All of these must pass.
     node tools/link-checks.js                    78,595 links
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
+    node tools/points-checks.js                  29 — the Travel Point ledger
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes
 
