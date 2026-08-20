@@ -196,7 +196,15 @@
         rate: 0.90,               // of eligible purchase consideration
         minHoldDays: 90,
         minPoints: 100,
+        /* C5: TWO SHAPES OF ANNUAL LIMIT, AND THEY BEHAVE DIFFERENTLY.
+           An absolute cap bites hardest on the largest holders — 5,000 TP is
+           all of a small holding and a tenth of a large one. A percentage cap
+           scales, which is what "no more than X% of their eligible unreserved
+           points" asks for. Both are supported and whichever is tighter binds;
+           `maxPctPerYear: null` means only the absolute cap applies. Neither
+           number is settled — C-limits. */
         maxPerYear: 5000,
+        maxPctPerYear: null,      // e.g. 0.25 for 25% of eligible holdings
         promotionalEligible: false, // C16: promotional points repurchase at 0
         reservedEligible: false     // C16: reserved points repurchase at 0
       },
@@ -1148,6 +1156,62 @@
     };
   }
 
+  /* ---- transfer, and the two separate reasons to refuse it ----------------
+   *
+   * C8/C9: THE FINAL-WINDOW BAR MUST NOT DEPEND ON THE GLOBAL ONE.
+   *
+   * Today `transferable: false` refuses every transfer at the fold (E8), so
+   * "reserved points cannot be transferred inside the final window" is true —
+   * but true for the wrong reason. The moment a future programme sets
+   * `transferable: true`, C8's window bar would vanish silently, because
+   * nothing else was ever enforcing it. A rule that holds only as a side
+   * effect of a different rule is a rule waiting to be lost.
+   *
+   * So there are three independent refusals here:
+   *
+   *   1. the programme forbids transfer at all              (C9, E8)
+   *   2. the transfer is a SALE and the programme forbids
+   *      a secondary market                                 (C9)
+   *   3. the points are committed to a journey inside its
+   *      restricted window                                  (C8)
+   *
+   * The second is why `secondaryMarket` finally reads. Until now it was a
+   * declared term that nothing consulted — exactly the state `transferable`
+   * was in before E8, and found the same way.
+   *
+   * NO CLOCK, so `commitments` arrives from the caller, the same shape and for
+   * the same reason as in `buybackQuote`. The fold cannot do this check: it
+   * has no departure dates and must not acquire any.
+   */
+  function mayTransfer(programId, opts) {
+    var p = program(programId);
+    var o = opts || {};
+    if (p.transferable === false) {
+      return { ok: false, why: 'this programme does not permit transfer',
+               rule: 'transferable' };
+    }
+    if (o.forConsideration && p.secondaryMarket === false) {
+      return { ok: false, why: 'this programme does not permit points to be ' +
+                              'sold to another customer',
+               rule: 'secondaryMarket' };
+    }
+    var restricted = (o.commitments || []).filter(function (c) {
+      return cancellation(programId, c.daysToDeparture, c.points || 0)
+               .buybackEligible === false;
+    });
+    if (restricted.length) {
+      return { ok: false,
+               why: 'points committed to a journey inside its restricted ' +
+                    'period cannot be transferred',
+               rule: 'restrictedWindow',
+               restricted: restricted.map(function (c) {
+                 return { journeyRef: c.journeyRef,
+                          daysToDeparture: c.daysToDeparture };
+               }) };
+    }
+    return { ok: true };
+  }
+
   /* ---- validity -----------------------------------------------------------
    *
    * E9: HOW LONG A POINT LASTS IS A PROGRAMME TERM AND DIFFERS BY LOT.
@@ -1279,6 +1343,24 @@
     if (heldDays < b.minHoldDays) return refuse('points must be held for ' + b.minHoldDays + ' days');
     if ((boughtBackThisYear || 0) + points > b.maxPerYear) {
       return refuse('above the annual limit of ' + b.maxPerYear + ' points');
+    }
+    /* C5: and the percentage cap, when the programme sets one.
+       THE BASE INCLUDES WHAT HAS ALREADY BEEN SOLD BACK THIS YEAR. Measuring
+       against the holding as it stands now would let a customer sell 25% of a
+       shrinking balance over and over — 25%, then 25% of the remainder — and
+       reach most of their holding inside a year while never once exceeding the
+       limit. The base is what they held at the start of the year's selling,
+       reconstructed as (eligible now + already sold back). */
+    if (b.maxPctPerYear != null) {
+      var eligibleNow = b.promotionalEligible === false ? w.purchased : w.available;
+      var base = eligibleNow + (boughtBackThisYear || 0);
+      var ceiling = Math.floor(base * b.maxPctPerYear);
+      if ((boughtBackThisYear || 0) + points > ceiling) {
+        return refuse('above the annual limit of ' +
+                      Math.round(b.maxPctPerYear * 100) + '% of eligible points',
+                      { annualCeiling: ceiling, base: base,
+                        alreadyBoughtBack: boughtBackThisYear || 0 });
+      }
     }
     /* E6: points committed to a journey inside its restricted window are not
        available to sell back, however much the wallet says is available. The
@@ -1424,6 +1506,7 @@
     REDEEMING_STATES: REDEEMING_STATES,
     mayRedeem: mayRedeem,
     mayBuyBack: mayBuyBack,
+    mayTransfer: mayTransfer,
     TRANSFER_KINDS: TRANSFER_KINDS,
     validity: validity,
     hasLapsed: hasLapsed,

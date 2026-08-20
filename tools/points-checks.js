@@ -1762,5 +1762,223 @@ report(
   `${bOpen} unresolved questions carried in docs/travel-point-issuance.md`
 );
 
+/* ==== Decision C: what happens when a customer wants to leave ============ */
+
+/* Ten rules, each asserted by name. Most were already built as Section E; the
+   four that were NOT are marked below, because a decision document that says
+   "enforced" about something nothing enforces is worse than one that says
+   nothing. */
+
+const cLedger = [
+  Object.assign(entry("PURCHASE", 10000),
+                { payment: { amountMinor: 1000000, currency: "USD",
+                             status: "settled" } }),
+];
+
+/* C1/C10 — REDEMPTION IS THE PRIMARY EXIT, AND THERE IS NO CASH EXIT.
+   "Primary" is a product statement, but it has one enforceable reading: no
+   code path turns points into money because a customer asked what they are
+   worth. Every route out is either travel, or a discretionary offer about
+   identified points under published terms. */
+const exits = Object.keys(L.KINDS).filter((k) => L.KINDS[k].available === -1);
+report(
+  exits.sort().join(",") === "ADJUST_DOWN,BUYBACK,EXPIRE,RESERVE,TRANSFER_OUT" &&
+    typeof L.buybackQuote === "function" &&
+    L.PROGRAMS[DRAFT].buyback.discretionary === true,
+  "C1/C10: every way out is travel, an administrative act, or a discretionary offer",
+  `points leave availability by: ${exits.join(", ")} — RESERVE leads to travel, ` +
+  `BUYBACK is discretionary and quoted, and none of them is "convert to cash on request"`
+);
+
+/* C2 — THE THREE CATEGORIES, AND THAT THEY ARE ACTUALLY DIFFERENT.
+   Unreserved -> buyback rules. Reserved -> cancellation rules. Consumed ->
+   neither. The third is the one worth asserting: once REDEEM has run there is
+   no path back at all, and the booking machine makes REDEEMED terminal. */
+const cReserved = cLedger.concat([
+  Object.assign(entry("RESERVE", 4800), { journeyRef: "J-C2" })]);
+const cConsumed = cReserved.concat([
+  Object.assign(entry("REDEEM", 4800), { journeyRef: "J-C2" })]);
+const wConsumed = L.wallet(cConsumed);
+const redeemedBooking = BK.open(P, { journeyId: "J-C2", requirement: 4800 });
+report(
+  L.buybackQuote(P, cLedger, 5000, 200, 0).eligible === true &&
+    L.buybackQuote(P, cReserved, 5000, 200, 0).eligible === true &&
+    L.buybackQuote(P, cConsumed, 5200, 200, 0).eligible === false &&
+    wConsumed.redeemed === 4800 && wConsumed.available === 5200 &&
+    BK.BOOKING_NEXT.REDEEMED.length === 0,
+  "C2: unreserved, reserved and consumed points are three different things",
+  `unreserved 5,000 quotable; with 4,800 reserved the other 5,200 are still ` +
+  `quotable; once consumed they are gone — REDEEMED is terminal and the 4,800 ` +
+  `are not quotable at any price`
+);
+
+/* C3/C6 — a programme buyback, not a withdrawal facility, and Model B. */
+report(
+  L.PROGRAMS[DRAFT].buyback.discretionary === true &&
+    typeof L.PROGRAMS[DRAFT].buyback.basis === "string" &&
+    /not a guaranteed right/i.test(
+      L.buybackQuote(P, cLedger, 1000, 200, 0).note),
+  "C3/C6: Model B — Afrinkong may offer, under published programme conditions",
+  `discretionary, basis "${L.PROGRAMS[DRAFT].buyback.basis}", and the quote ` +
+  `says on its face that it is not a guaranteed right of redemption`
+);
+
+/* C4 — the minimum holding period, and the arbitrage it exists to stop. */
+report(
+  L.PROGRAMS[DRAFT].buyback.minHoldDays === 90 &&
+    L.buybackQuote(P, cLedger, 1000, 1, 0).eligible === false &&
+    L.buybackQuote(P, cLedger, 1000, 89, 0).eligible === false &&
+    L.buybackQuote(P, cLedger, 1000, 90, 0).eligible === true,
+  "C4: buy today, sell back today is refused; 90 days is a programme term",
+  `day 1 and day 89 refused, day 90 quotable — without this the programme is ` +
+  `a deposit with an extra step`
+);
+
+/* C5 — THE PERCENTAGE CAP, WHICH DID NOT EXIST. **GAP CLOSED**
+ *
+ * `maxPerYear: 5000` is an absolute count: it is all of a small holding and a
+ * tenth of a large one. C5 asks for a percentage of eligible unreserved points,
+ * which is a different control with different behaviour, so it is now its own
+ * term and whichever is tighter binds. */
+const PCT = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    buyback: Object.assign({}, L.PROGRAMS[DRAFT].buyback,
+                           { maxPctPerYear: 0.25, maxPerYear: 1000000000 }) },
+  "TEST-PCT-LIMIT"
+);
+const pctLedger = cLedger.map((e) => Object.assign({}, e, { programVersion: PCT }));
+report(
+  "maxPctPerYear" in L.PROGRAMS[DRAFT].buyback &&
+    L.buybackQuote(PCT, pctLedger, 2500, 200, 0).eligible === true &&
+    L.buybackQuote(PCT, pctLedger, 2600, 200, 0).eligible === false,
+  "C5: an annual limit may be a percentage of eligible points, not only a count",
+  `25% of a 10,000 TP holding: 2,500 quotable, 2,601 refused. The absolute cap ` +
+  `and the percentage cap both apply and the tighter one binds`
+);
+
+/* AND THE SALAMI THE PERCENTAGE INVITES. Measured against the holding as it
+   stands, a customer sells 25%, then 25% of the remainder, and reaches most of
+   their balance inside a year without once exceeding the limit. The base
+   includes what has already been sold back this year, so it does not shrink. */
+const pctAfter = pctLedger.concat([
+  Object.assign({}, entry("BUYBACK", 2500), { programVersion: PCT })]);
+const salami = L.buybackQuote(PCT, pctAfter, 100, 200, 2500);
+report(
+  salami.eligible === false && salami.base === 10000 && salami.annualCeiling === 2500,
+  "C5: the percentage base does not shrink as points are sold back",
+  `after selling 2,500 the holding is 7,500 but the base stays ${salami.base} ` +
+  `and the ceiling stays ${salami.annualCeiling} — otherwise 25% repeated ` +
+  `reaches most of a balance inside one year`
+);
+
+/* C7 — the three bands, matched against the decision's own boundaries.
+   "More than 30 days" is 31+, so 30 falls to the middle band. Checked at the
+   boundaries rather than in the middle of each band, because that is where an
+   off-by-one would live. */
+const bands = [60, 31, 30, 8, 7, 0].map((d) => ({
+  d, c: L.cancellation(P, d, 1000) }));
+report(
+  bands[0].c.released === 1000 && bands[1].c.released === 1000 &&
+    bands[2].c.released === 500 && bands[3].c.released === 500 &&
+    bands[4].c.released === 0 && bands[5].c.released === 0,
+  "C7: cancellation is the booking's terms, at exactly the boundaries C7 names",
+  bands.map((b) => `${b.d}d -> ${b.c.released} released`).join(", ") +
+  ` — "more than 30 days" is 31+, so day 30 is already the middle band`
+);
+
+/* C7 — and it attaches to the BOOKING, not to the wallet. A customer holding
+   10,000 who reserved 4,800 and cancels inside the window still has the
+   other 5,200, which is the difference between a cancellation policy and
+   destroying somebody's accumulation. */
+const lateCancel = BK.advance(
+  BK.advance(BK.advance(BK.open(P, { journeyId: "J-C7", requirement: 4800 }),
+                        "ACCEPTED", {}).booking, "RESERVED", {}).booking,
+  "CANCELLED", { daysToDeparture: 3 });
+/* Reserved against J-C7, not against C2's journey: a RELEASE or REDEEM whose
+   journeyRef has nothing reserved is refused by the fold, which is the
+   reservation ledger working and was my fixture being wrong. */
+const c7Reserved = cLedger.concat([
+  Object.assign(entry("RESERVE", 4800), { journeyRef: "J-C7" })]);
+const afterLate = L.wallet(c7Reserved.concat(
+  lateCancel.entries.map((e, i) => Object.assign({}, e,
+    { id: "TP-LC" + i, idempotencyKey: "lc" + i, programVersion: P }))));
+report(
+  lateCancel.booking.cancellation.released === 0 &&
+    afterLate.available === 5200,
+  "C7: a cancellation attaches to the booking; the rest of the wallet is untouched",
+  `0 of 4,800 released inside three days, and the other ${afterLate.available} ` +
+  `TP are unaffected`
+);
+
+/* C8 — THE FINAL-WINDOW BAR, ON TRANSFER AS WELL AS BUYBACK. **GAP CLOSED**
+ *
+ * Buyback in the window was already refused (E6). Transfer was refused too —
+ * but only because `transferable: false` refuses every transfer, so C8's
+ * window rule held as a side effect of a different rule and would have
+ * vanished silently the moment a programme permitted transfer. */
+const TRANSFERABLE = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000, transferable: true },
+  "TEST-TRANSFERABLE"
+);
+const inFinalWeek = [{ journeyRef: "J-C8", daysToDeparture: 5, points: 4800 }];
+report(
+  L.mayTransfer(TRANSFERABLE, {}).ok === true &&
+    L.mayTransfer(TRANSFERABLE, { commitments: inFinalWeek }).ok === false &&
+    L.mayTransfer(TRANSFERABLE, { commitments: inFinalWeek }).rule === "restrictedWindow" &&
+    L.buybackQuote(P, cLedger, 1000, 200, 0, inFinalWeek).eligible === false,
+  "C8: inside the final window, reserved points are neither buyable-back nor transferable",
+  `on a programme that DOES permit transfer, the window still refuses it — the ` +
+  `rule no longer depends on transfer being globally off`
+);
+
+/* C9 — no peer-to-peer resale. Two separate refusals, because a gift and a
+   sale are different acts and a programme might one day permit one and not the
+   other. `secondaryMarket` finally reads: until now it was a declared term
+   that nothing consulted, which is exactly where `transferable` was before E8
+   and was found the same way. */
+report(
+  L.mayTransfer(DRAFT, {}).ok === false &&
+    L.mayTransfer(DRAFT, {}).rule === "transferable" &&
+    L.mayTransfer(TRANSFERABLE, { forConsideration: true }).ok === false &&
+    L.mayTransfer(TRANSFERABLE, { forConsideration: true }).rule === "secondaryMarket",
+  "C9: no peer-to-peer transfer, and no sale even where transfer is permitted",
+  `the shipping programme refuses on "transferable"; a transferable programme ` +
+  `still refuses a sale on "secondaryMarket", which nothing read until now`
+);
+
+/* And the fold still refuses the entry itself, so the gate above is a second
+   line rather than the only one. */
+const cTransferFold = threw(() =>
+  L.wallet(cLedger.concat([entry("TRANSFER_OUT", 100)])));
+report(
+  cTransferFold !== null && /not transferable/.test(cTransferFold),
+  "C9: and a transfer entry is refused where it is written, not only where it is offered",
+  `"${cTransferFold}"`
+);
+
+/* C10 — restated as the thing that must never exist: a function that answers
+   "what is my balance worth" with a number. */
+const cWallet = L.wallet(cLedger);
+report(
+  !("valueMinor" in cWallet) && !("cashValue" in cWallet) &&
+    L.MONEY_MOMENTS.every((m) => m.moment !== "balance") &&
+    L.buybackQuote(P, cLedger, 1000, 200, 0).points === 1000,
+  "C10: no point is redeemable for cash because a customer asked what it is worth",
+  `a repurchase quote is about 1,000 identified points under published terms, ` +
+  `and there is no wallet field, and no money moment, for "what this is worth"`
+);
+
+/* C-open — recorded, not decided. */
+const cDoc = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-exit.md"), "utf8");
+const cOpen = (cDoc.match(/^\s*\|\s*C-[a-z]+\s*\|/gm) || []).length;
+report(
+  cOpen >= 4 && /UNRESOLVED|not decided here/i.test(cDoc),
+  "C: the open questions Decision C raises are recorded, not answered in code",
+  `${cOpen} unresolved questions carried in docs/travel-point-exit.md`
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
