@@ -166,11 +166,15 @@ report(fundMath.indexOf("Point") === -1 && fundMath.indexOf("TP") === -1,
  * per dollar PAID — where the definition requires entitlement, the travel value
  * a point REDEEMS. It is invisible today because the programme sets both to 1.
  *
- * Section B5 has since settled the rule this breaks: A PURCHASE BONUS MUST NOT
- * MAKE THE JOURNEY MORE EXPENSIVE. So this is no longer an open question about
- * which rate is right — it is a known violation of a stated rule, held open
- * only because A1b still governs how a journey's entitlement requirement is
- * derived. One line and one test, once A1b lands.
+ * FIXED. B5 settled the rule — a purchase bonus must not make the journey more
+ * expensive — and C7 settled the derivation: a journey carries a point
+ * requirement and consumes entitlement, not dollars. goalRequirement() now
+ * divides the journey price by `entitlement` instead of multiplying it by
+ * `issueRate`, which is the inverse of entitlementOf() and what it should
+ * always have been.
+ *
+ * These checks stay, flipped from pinning the defect to asserting the fix: the
+ * two rates may now differ safely, and this is what proves it.
  *
  * This is deliberately not fixed here: which rate is correct follows from which
  * definition is approved, so it is item A5.1 of docs/travel-point-definition.md
@@ -180,9 +184,9 @@ report(fundMath.indexOf("Point") === -1 && fundMath.indexOf("TP") === -1,
 const prog = L.PROGRAMS['AFK-TP-2026.1'];
 report(
   prog.issueRate === 1 && prog.entitlement === 1,
-  'the two rates are still equal, which is the only reason goal() looks right',
-  `issueRate ${prog.issueRate}, entitlement ${prog.entitlement} — if these ever ` +
-  `differ, fix goal() per A5.1 before changing this check`
+  'the two rates are still both 1 under programme 2026-A',
+  `issueRate ${prog.issueRate}, entitlement ${prog.entitlement} — they may now ` +
+  `differ safely; the conversions no longer confuse them`
 );
 
 /* And the demonstration, so the failure above is self-explanatory rather than
@@ -195,12 +199,12 @@ prog.entitlement = 1.1;
 const richer = L.goal('AFK-TP-2026.1', 480000, 0, 12).target;
 prog.entitlement = saved.e;
 report(
-  bonus === 5280 && richer === 4800,
-  'the defect breaks the rule Section B5 settled, and by how much',
-  `B5: a purchase bonus must not make the journey more expensive. It does: ` +
-  `issueRate 1.1 RAISES the $4,800 goal to ${bonus} TP (should stay 4800). ` +
-  `Richer entitlement leaves it at ${richer} TP (should fall to 4364). ` +
-  `Blocked on A1b, not on B5 — see docs/travel-point-economics.md B5.1`
+  bonus === 4800 && richer === 4364,
+  'A5.1 fixed: a purchase bonus no longer makes the journey more expensive',
+  `issueRate 1.1 leaves the $4,800 goal at ${bonus} TP (was 5,280); richer ` +
+  `entitlement drops it to ${richer} TP (was stuck at 4,800). goalRequirement() ` +
+  `divides by entitlement instead of multiplying by issueRate — C7 settled that ` +
+  `a journey consumes entitlement, not dollars.`
 );
 
 /* The programme must be restored exactly, or every later check in this file is
@@ -209,6 +213,54 @@ report(
   prog.issueRate === 1 && prog.entitlement === 1,
   'the demonstration restored the programme it borrowed',
   `issueRate ${prog.issueRate}, entitlement ${prog.entitlement}`
+);
+
+/* ---- Section C4: the projection, which is the direction the product needs -- */
+
+/* C4's worked example, exactly. A pace goes in and a time comes out — not a
+ * deadline going in and an obligation coming out. Same arithmetic, opposite
+ * reading, and B3 settled that there is no mandatory contribution. */
+const paces = [15000, 25000, 40000].map((m) => {
+  const r = L.project('AFK-TP-2026.1', 480000, 0, m);
+  return `$${m / 100}->${r.months}mo`;
+});
+report(
+  paces.join(" ") === "$150->32mo $250->20mo $400->12mo",
+  "C4: a monthly pace projects a time to target, and matches the brief",
+  paces.join("  ")
+);
+
+/* C6's worked example, exactly. The customer sees a journey they are part of
+   the way to, not a quantity of points they have collected. */
+const c6 = L.project('AFK-TP-2026.1', 480000, 750, 15000);
+report(
+  c6.held === 750 && c6.target === 4800 &&
+    Math.round(c6.progress * 100) === 16 && c6.remaining === 4050,
+  "C6: the goal reads as a journey in progress, not a points balance",
+  `${c6.held} / ${c6.target} TP, ${Math.round(c6.progress * 100)}% prepared, ` +
+  `${c6.remaining} TP away`
+);
+
+/* Two edges that would otherwise print something useless to a customer. */
+report(
+  L.project('AFK-TP-2026.1', 480000, 0, 0).months === null &&
+    L.project('AFK-TP-2026.1', 480000, 5000, 15000).months === 0,
+  "C4: no pace named gives null, and already-there gives zero",
+  "not Infinity, and not a negative number of months"
+);
+
+/* C13/C14: purchase bounds are programme terms, and they bite. */
+const bounds = [
+  L.canPurchase('AFK-TP-2026.1', 10, 0).ok,
+  L.canPurchase('AFK-TP-2026.1', 25, 0).ok,
+  L.canPurchase('AFK-TP-2026.1', 2500, 0).ok,
+  L.canPurchase('AFK-TP-2026.1', 2501, 0).ok,
+  L.canPurchase('AFK-TP-2026.1', 1000, 9500).ok,
+];
+report(
+  bounds.join(",") === "false,true,true,false,false",
+  "C13/C14: below the floor, above the ceiling and over the annual limit all refuse",
+  "10 no, 25 yes, 2500 yes, 2501 no, 1000-on-top-of-9500 no"
 );
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);

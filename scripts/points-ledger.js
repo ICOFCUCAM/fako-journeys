@@ -306,30 +306,9 @@
    * handled in minor units (cents) for the same reason: floating-point
    * dollars do not add up.
    */
-  function pointsFor(programId, amountMinor) {
-    var p = program(programId);
-    if (!isFinite(amountMinor) || amountMinor <= 0) return 0;
-    return Math.floor((amountMinor / 100) * p.issueRate);
-  }
-
-  function priceOf(programId, points) {
-    var p = program(programId);
-    if (!isFinite(points) || points <= 0) return 0;
-    return Math.round((points / p.issueRate) * 100);
-  }
-
-  /* What a quantity of points applies toward a journey, in minor units. Named
-     `entitlementOf` and not `valueOf` on purpose: this is what the points buy
-     from Afrinkong, not what they are worth in cash. */
-  function entitlementOf(programId, points) {
-    var p = program(programId);
-    return Math.round(points * p.entitlement * 100);
-  }
-
-  /* ---- the fold -----------------------------------------------------------
-   *
-   * The whole point of the module. Entries in, wallet out, no state kept.
-   */
+  /* A wallet before anything has happened to it. Every field a fold can touch
+     starts here, so a fold over zero entries and a fold over ten thousand have
+     the same shape. */
   function blank() {
     return {
       available: 0, reserved: 0, redeemed: 0, transferred: 0,
@@ -338,6 +317,94 @@
       purchased: 0, promotional: 0
     };
   }
+
+  /* ---- the pricing engine (C2, C22 phase C2) -----------------------------
+   *
+   * FOUR FUNCTIONS, TWO RATES, AND THE PAIRING IS THE WHOLE POINT.
+   *
+   *   pointsForPurchase   money -> points        issueRate
+   *   priceOfPoints       points -> money        issueRate
+   *   entitlementOf       points -> travel value entitlement
+   *   goalRequirement     journey -> points      entitlement
+   *
+   * The left column prices ACQUIRING points. The right column prices WHAT
+   * POINTS BUY. They are different questions and a programme may answer them
+   * with different numbers — that is what lets a promotion make points cheaper
+   * to acquire without making journeys cheaper, and it is why B5 forbids the
+   * two rates collapsing into one.
+   *
+   * Both currently read 1, which is why using the wrong one was invisible for
+   * four sections. See A4 and B5.1.
+   */
+
+  /* C2: what a payment yields. $100 at issueRate 1 is 100 TP; the customer is
+     buying 100 TP for $100, not storing $100 inside Afrinkong. */
+  function pointsForPurchase(programId, amountMinor) {
+    var p = program(programId);
+    if (!isFinite(amountMinor) || amountMinor <= 0) return 0;
+    return Math.floor((amountMinor / 100) * p.issueRate);
+  }
+
+  /* What a quantity of points costs to acquire. The inverse of the above. */
+  function priceOfPoints(programId, points) {
+    var p = program(programId);
+    if (!isFinite(points) || points <= 0) return 0;
+    return Math.round((points / p.issueRate) * 100);
+  }
+
+  /* What a quantity of points applies when redeemed, in travel value. */
+  function entitlementOf(programId, points) {
+    var p = program(programId);
+    return Math.round(points * p.entitlement * 100);
+  }
+
+  /* C7: HOW MANY POINTS A JOURNEY REQUIRES — and the fix for A5.1.
+   *
+   * This used to be `journeyCost x issueRate`, which is the acquisition rate
+   * answering a redemption question. Under a promotional programme at
+   * issueRate 1.1 it raised a $4,800 goal to 5,280 TP: a purchase bonus made
+   * the journey more expensive, which is precisely what B5 forbids.
+   *
+   * The journey consumes ENTITLEMENT, not dollars — C7 — so the requirement is
+   * the journey's price divided by what one point is worth in travel. The
+   * inverse of entitlementOf, which is what it should always have been.
+   *
+   * Ceiling rather than round: a point is indivisible (A1a) and a customer
+   * one point short of a journey cannot travel.
+   */
+  function goalRequirement(programId, journeyCostMinor) {
+    var p = program(programId);
+    if (!isFinite(journeyCostMinor) || journeyCostMinor <= 0) return 0;
+    return Math.ceil((journeyCostMinor / 100) / p.entitlement);
+  }
+
+  /* C13/C14: is this purchase within the programme's bounds?
+     Programme terms rather than ledger constants — a different programme may
+     set them differently, and the ledger should not carry a policy number. */
+  function canPurchase(programId, points, boughtThisYear) {
+    var p = program(programId);
+    if (!isFinite(points) || points <= 0 || Math.floor(points) !== points) {
+      return { ok: false, why: 'points must be a positive whole number' };
+    }
+    if (p.minPurchase != null && points < p.minPurchase) {
+      return { ok: false, why: 'below the minimum purchase of ' + p.minPurchase + ' TP' };
+    }
+    if (p.maxPerTransaction != null && points > p.maxPerTransaction) {
+      return { ok: false, why: 'above the maximum of ' + p.maxPerTransaction + ' TP per transaction' };
+    }
+    if (p.maxPerCustomerPerYear != null &&
+        (boughtThisYear || 0) + points > p.maxPerCustomerPerYear) {
+      return { ok: false, why: 'above the annual limit of ' + p.maxPerCustomerPerYear + ' TP',
+               boughtThisYear: boughtThisYear || 0 };
+    }
+    return { ok: true };
+  }
+
+  /* Kept under their old names so nothing that already calls them breaks. The
+     new names say which question they answer, which is the entire lesson of
+     A4. */
+  var pointsFor = pointsForPurchase;
+  var priceOf = priceOfPoints;
 
   function fold(entries) {
     var w = blank();
@@ -617,8 +684,48 @@
     };
   }
 
+  /* C4: PACE IN, TIME OUT — which is the direction the product actually needs.
+   *
+   *   "I can manage $150 a month"  ->  150 TP a month  ->  32 months
+   *
+   * `goal()` below answers the other direction: given a deadline, what would
+   * the monthly purchase have to be. Both are the same arithmetic and they are
+   * NOT interchangeable as copy. A deadline-driven figure reads as an
+   * obligation — "your monthly target is 343 TP" — and B3 settled that there is
+   * no mandatory contribution. A pace-driven figure reads as a projection:
+   * you are here, at this rate you arrive then. B25 is the same decision seen
+   * from the marketing side: this is buying a journey in instalments, not
+   * saving to a target.
+   *
+   * Nothing here is a promise. The months are a projection from an assumption
+   * the customer supplied, and change the moment they buy differently.
+   */
+  function project(programId, journeyCostMinor, held, monthlyMoneyMinor) {
+    var target = goalRequirement(programId, journeyCostMinor);
+    var remaining = Math.max(0, target - (held || 0));
+    var monthlyPoints = pointsForPurchase(programId, monthlyMoneyMinor || 0);
+    return {
+      target: target,
+      held: held || 0,
+      remaining: remaining,
+      progress: target > 0 ? Math.min(1, (held || 0) / target) : 0,
+      monthlyPoints: monthlyPoints,
+      monthlyMoneyMinor: monthlyMoneyMinor || 0,
+      /* null rather than Infinity when the customer has not named a pace, and
+         0 when they are already there. A projection nobody can act on is worse
+         than no projection. */
+      months: remaining === 0 ? 0
+            : monthlyPoints > 0 ? Math.ceil(remaining / monthlyPoints)
+            : null
+    };
+  }
+
   function goal(programId, journeyCostMinor, held, months) {
-    var target = Math.ceil(journeyCostMinor / 100 * program(programId).issueRate);
+    /* A5.1, fixed. Was `journeyCostMinor / 100 * issueRate` — the acquisition
+       rate answering a redemption question. C7 settled that a journey carries a
+       point requirement derived from its service pricing, so the target is
+       goalRequirement() and a purchase bonus no longer inflates it. */
+    var target = goalRequirement(programId, journeyCostMinor);
     var remaining = Math.max(0, target - (held || 0));
     return {
       target: target,
@@ -643,11 +750,16 @@
     pointsFor: pointsFor,
     priceOf: priceOf,
     entitlementOf: entitlementOf,
+    pointsForPurchase: pointsForPurchase,
+    priceOfPoints: priceOfPoints,
+    goalRequirement: goalRequirement,
+    canPurchase: canPurchase,
     fold: fold,
     wallet: wallet,
     can: can,
     cancellation: cancellation,
     buybackQuote: buybackQuote,
-    goal: goal
+    goal: goal,
+    project: project
   };
 });
