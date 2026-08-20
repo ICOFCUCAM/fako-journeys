@@ -183,36 +183,34 @@ report(fundMath.indexOf("Point") === -1 && fundMath.indexOf("TP") === -1,
  * the conversion has a wrong answer in it and this fails loudly. */
 const prog = L.PROGRAMS['AFK-TP-2026.1'];
 report(
-  prog.issueRate === 1 && prog.entitlement === 1,
+  prog.issueRate === 1 && prog.entitlementRate === 1,
   'the two rates are still both 1 under programme 2026-A',
-  `issueRate ${prog.issueRate}, entitlement ${prog.entitlement} — they may now ` +
-  `differ safely; the conversions no longer confuse them`
+  `issueRate ${prog.issueRate}, entitlementRate ${prog.entitlementRate} — they ` +
+  `may now differ safely; the conversions no longer confuse them`
 );
 
-/* And the demonstration, so the failure above is self-explanatory rather than
- * a number somebody has to go and re-derive. */
-const saved = { i: prog.issueRate, e: prog.entitlement };
-prog.issueRate = 1.1;
-const bonus = L.goal('AFK-TP-2026.1', 480000, 0, 12).target;
-prog.issueRate = saved.i;
-prog.entitlement = 1.1;
-const richer = L.goal('AFK-TP-2026.1', 480000, 0, 12).target;
-prog.entitlement = saved.e;
+/* The demonstration, on VARIANTS rather than by editing the live programme —
+ * which is no longer possible, and was never a good way to ask a what-if
+ * question. A different rate means a different programme, which is what B18
+ * requires of a real change anyway. */
+const BONUS = L.variant('AFK-TP-2026.1', { issueRate: 1.1 }, 'GOAL-BONUS-FIXTURE');
+const RICHER = L.variant('AFK-TP-2026.1', { entitlementRate: 1.1 }, 'GOAL-RICH-FIXTURE');
+const bonus = L.goal(BONUS, 480000, 0, 12).target;
+const richer = L.goal(RICHER, 480000, 0, 12).target;
 report(
   bonus === 4800 && richer === 4364,
   'A5.1 fixed: a purchase bonus no longer makes the journey more expensive',
   `issueRate 1.1 leaves the $4,800 goal at ${bonus} TP (was 5,280); richer ` +
   `entitlement drops it to ${richer} TP (was stuck at 4,800). goalRequirement() ` +
-  `divides by entitlement instead of multiplying by issueRate — C7 settled that ` +
-  `a journey consumes entitlement, not dollars.`
+  `divides by entitlementRate instead of multiplying by issueRate — C7 settled ` +
+  `that a journey consumes entitlement, not dollars.`
 );
 
-/* The programme must be restored exactly, or every later check in this file is
- * measuring a programme this one edited. */
 report(
-  prog.issueRate === 1 && prog.entitlement === 1,
-  'the demonstration restored the programme it borrowed',
-  `issueRate ${prog.issueRate}, entitlement ${prog.entitlement}`
+  prog.issueRate === 1 && prog.entitlementRate === 1,
+  'the live programme was never touched to run that demonstration',
+  `2026-A still reads issueRate ${prog.issueRate}, entitlementRate ` +
+  `${prog.entitlementRate}; the variants carry the differences`
 );
 
 /* ---- Section C4: the projection, which is the direction the product needs -- */

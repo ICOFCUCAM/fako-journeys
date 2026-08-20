@@ -339,20 +339,22 @@ report(
  *
  * Not fixed — buyback is programme economics and those are on hold. Pinned so
  * it cannot ship silently, and so the number is on the record. */
+/* A promotional programme is a NEW programme, not an edited one — which is
+   both what B18 requires of a real change and, since the terms are frozen, the
+   only way this demonstration can be written at all. */
 const bbProg = L.PROGRAMS[DRAFT];
-const bbSaved = { rate: bbProg.issueRate, status: bbProg.status };
-bbProg.status = "active";
-bbProg.issueRate = 1.25;
+const PROMO = L.variant(DRAFT, {
+  issueRate: 1.25, compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+}, "PROMO-25-FIXTURE");
 const paidMinor = 100000;                                  // $1,000
-const issued = L.pointsFor(DRAFT, paidMinor);
+const issued = L.pointsFor(PROMO, paidMinor);
 const quote = L.buybackQuote(
-  DRAFT,
+  PROMO,
   [Object.assign(entry("PURCHASE", issued),
-                 { payment: { amountMinor: paidMinor, currency: "USD" } })],
+                 { programVersion: PROMO,
+                   payment: { amountMinor: paidMinor, currency: "USD" } })],
   issued, 100, 0
 );
-bbProg.issueRate = bbSaved.rate;
-bbProg.status = bbSaved.status;
 
 report(
   issued === 1250 && quote.payableMinor === 90000 &&
@@ -364,9 +366,10 @@ report(
 );
 
 report(
-  bbProg.issueRate === 1 && bbProg.status === "draft",
-  "B12: the demonstration restored the programme it borrowed",
-  `issueRate ${bbProg.issueRate}, status ${bbProg.status}`
+  bbProg.issueRate === 1 && L.program(PROMO).issueRate === 1.25,
+  "B12: the demonstration used a variant and left the real programme alone",
+  `2026-A issueRate ${bbProg.issueRate}, ${PROMO} issueRate ` +
+  `${L.program(PROMO).issueRate} — no live term was edited to run this`
 );
 
 /* ---- Section B14: transferability, decided but not yet applied --------- */
@@ -599,12 +602,11 @@ report(
 
 /* D21.1 — no programme may issue without passing the compliance ladder. */
 const dProg = L.PROGRAMS[DRAFT];
-const dSaved = { compliance: dProg.compliance, status: dProg.status,
-                 exposure: dProg.maxProgrammeExposure };
 
-dProg.status = "active";                       // the old one-word activation
-const oneWord = L.mayIssue(DRAFT);
-dProg.status = dSaved.status;
+/* The old one-word activation, attempted the only way it still can be: on a
+   variant, since the real programme cannot be edited at all. */
+const ONE_WORD = L.variant(DRAFT, { status: "active" }, "ONE-WORD-FIXTURE");
+const oneWord = L.mayIssue(ONE_WORD);
 report(
   oneWord === false,
   "D21.1: setting status to 'active' by hand no longer issues anything",
@@ -619,12 +621,13 @@ report(
   `${ladder.join("  ")} — only LEGAL_REVIEW or RETIRED are reachable from DRAFT`
 );
 
-dProg.compliance = "APPROVED";
-const needExposure = L.mayTransition(DRAFT, "PILOT");
-dProg.maxProgrammeExposure = 5000000;
-const withExposure = L.mayTransition(DRAFT, "PILOT");
-dProg.maxProgrammeExposure = dSaved.exposure;
-dProg.compliance = dSaved.compliance;
+const APPROVED_NO_CAP = L.variant(DRAFT, { compliance: "APPROVED" },
+                                  "APPROVED-NO-CAP-FIXTURE");
+const APPROVED_CAPPED = L.variant(DRAFT, {
+  compliance: "APPROVED", maxProgrammeExposure: 5000000,
+}, "APPROVED-CAPPED-FIXTURE");
+const needExposure = L.mayTransition(APPROVED_NO_CAP, "PILOT");
+const withExposure = L.mayTransition(APPROVED_CAPPED, "PILOT");
 report(
   needExposure.ok === false && withExposure.ok === true,
   "D21.1: PILOT is refused while the exposure limit is unset",
@@ -681,6 +684,108 @@ report(
   "D21.5: no customer-facing figure presents points as a cash balance",
   `the goal reads "${goalShape.display.target}", and money appears only as the ` +
   `journey's own price`
+);
+
+/* ==== Section B lock-in: the two rates, proved independent =============== */
+
+/* THE TWO TESTS THE LOCK-IN ASKS FOR BY NAME.
+ *
+ * They are not the same test twice. The first says a change to the ACQUISITION
+ * rate cannot move a REDEMPTION figure. The second says a change to the
+ * redemption rate cannot reach backwards into what was already issued. One is
+ * about the direction the rates point; the other is about time. */
+
+/* B1: changing issueRate does not alter entitlement calculations. */
+const RATE_A = L.variant(DRAFT, { issueRate: 1 }, "RATE-BASE-FIXTURE");
+const RATE_B = L.variant(DRAFT, { issueRate: 1.25 }, "RATE-BONUS-FIXTURE");
+const sameEntitlement =
+  L.entitlementOf(RATE_A, 1000) === L.entitlementOf(RATE_B, 1000) &&
+  L.goalRequirement(RATE_A, 480000) === L.goalRequirement(RATE_B, 480000);
+const differentIssuance =
+  L.pointsForPurchase(RATE_A, 100000) !== L.pointsForPurchase(RATE_B, 100000);
+report(
+  sameEntitlement && differentIssuance,
+  "B1: changing the issue rate moves issuance and leaves entitlement untouched",
+  `$1,000 buys ${L.pointsForPurchase(RATE_A, 100000)} TP at 1.0 and ` +
+  `${L.pointsForPurchase(RATE_B, 100000)} TP at 1.25, while 1,000 TP is worth ` +
+  `$${L.entitlementOf(RATE_A, 1000) / 100} under both and a $4,800 journey ` +
+  `requires ${L.goalRequirement(RATE_B, 480000)} TP under both`
+);
+
+/* B1 again, the other way: changing entitlementRate does not alter historical
+ * issuance. The quantity in an entry is a fact about the past, and a later
+ * programme cannot reach back and change how many points somebody received. */
+const ENT_A = L.variant(DRAFT, {
+  entitlementRate: 1, compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+}, "ENT-BASE-FIXTURE");
+const ENT_B = L.variant(DRAFT, {
+  entitlementRate: 1.25, compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+}, "ENT-RICH-FIXTURE");
+const historical = [Object.assign(entry("PURCHASE", 1000), {
+  programVersion: ENT_A,
+  payment: { amountMinor: 100000, currency: "USD" },
+})];
+const heldBefore = L.wallet(historical).available;
+/* The same history, read while a richer programme exists elsewhere. */
+const heldAfter = L.wallet(historical).available;
+report(
+  heldBefore === 1000 && heldAfter === 1000 &&
+    L.entitlementOf(ENT_A, 1000) === 100000 &&
+    L.entitlementOf(ENT_B, 1000) === 125000,
+  "B1: changing the entitlement rate cannot alter what was already issued",
+  `the customer holds ${heldAfter} TP either way; 1,000 TP is worth ` +
+  `$${L.entitlementOf(ENT_A, 1000) / 100} under ${ENT_A} and ` +
+  `$${L.entitlementOf(ENT_B, 1000) / 100} under a later programme, and the ` +
+  `entry keeps its own programme`
+);
+
+/* B4/B7: TERMS ARE FROZEN IN THE MODULE, not only in the schema. Until this,
+ * PROGRAMS['AFK-TP-2026.1'].entitlementRate = 99 simply worked — and the
+ * module is what runs in a browser. */
+const live = L.PROGRAMS[DRAFT];
+const beforeFreeze = { e: live.entitlementRate, b: live.buyback.rate };
+try { live.entitlementRate = 99; } catch (e) { /* strict mode throws */ }
+try { live.buyback.rate = 0.5; } catch (e) { /* deep-frozen */ }
+report(
+  live.entitlementRate === beforeFreeze.e && live.buyback.rate === beforeFreeze.b,
+  "B4: a live programme's terms cannot be edited, nested ones included",
+  `entitlementRate stayed ${live.entitlementRate} and buyback.rate stayed ` +
+  `${live.buyback.rate}; different terms mean a new programme, which is what ` +
+  `B18 requires anyway`
+);
+
+/* B4: correction by compensating entry, exactly as the lock-in writes it. */
+const CORR = L.variant(DRAFT, {
+  compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+}, "CORRECTION-FIXTURE");
+const ce = (n, kind, q, x) => Object.assign({
+  id: "TPC-" + n, kind, quantity: q, status: "SETTLED",
+  idempotencyKey: "c" + n, programVersion: CORR,
+}, x || {});
+const corrected = L.wallet([
+  ce(1, "PURCHASE", 1000, { payment: { amountMinor: 100000, currency: "USD" } }),
+  ce(2, "ADJUST_DOWN", 1000, { corrects: "TPC-1" }),
+  ce(3, "PURCHASE", 1100, { payment: { amountMinor: 100000, currency: "USD" } }),
+]);
+report(
+  corrected.available === 1100 && corrected.entriesApplied === 3 &&
+    corrected.corrections.length === 1 &&
+    corrected.corrections[0].corrects === "TPC-1",
+  "B4: a mistake is corrected by compensating entry, and all three survive",
+  `+1,000 then -1,000 correcting TPC-1 then +1,100 leaves ${corrected.available} TP ` +
+  `across ${corrected.entriesApplied} entries — nothing edited, nothing deleted`
+);
+
+/* And a correction cannot precede its cause, which is how two unrelated
+   adjustments get read as one correction. */
+let backwards = null;
+try {
+  L.wallet([ce(9, "ADJUST_DOWN", 10, { corrects: "TPC-404" })]);
+} catch (err) { backwards = err.message; }
+report(
+  backwards && /not earlier in this ledger/.test(backwards),
+  "B4: an entry cannot correct one the fold has not already seen",
+  backwards
 );
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);

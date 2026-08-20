@@ -136,7 +136,7 @@
       /* ---- the two rates, which never collapse into one (B5) ------------ */
       currency: 'USD',
       issueRate: 1,               // C2: $1 eligible purchase -> 1 TP
-      entitlement: 1,             // travel value one point applies on redemption
+      entitlementRate: 1,         // eligible travel entitlement one point provides
 
       /* ---- purchase bounds ---------------------------------------------- */
       /* C13: a floor keeps the system accessible without generating thousands
@@ -230,11 +230,49 @@
     }
   };
 
+  /* ---- B4/B7: TERMS ARE IMMUTABLE, IN THE MODULE AND NOT ONLY IN THE SCHEMA
+   *
+   * `point_programs` refuses an UPDATE to issue_rate, entitlement_rate,
+   * buyback or cancellation. That protects the database and does nothing for
+   * the module — and the module is what runs in a browser and in every test.
+   * Until this, `PROGRAMS['AFK-TP-2026.1'].entitlementRate = 99` simply worked.
+   *
+   * Frozen deeply, because the interesting terms are nested: a shallow freeze
+   * leaves buyback.rate writable, which is the one somebody would reach for.
+   *
+   * WHAT-IF WITHOUT MUTATION. Asking "what would a 25% bonus do" is a fair
+   * question and the answer must not be "edit the live programme". `variant()`
+   * registers a NEW programme built from an old one, which is also exactly what
+   * B18 requires of a real change: you do not rewrite 2026-A, you publish
+   * 2027-B. The test suite and a future promotion take the same door.
+   */
+  function deepFreeze(o) {
+    Object.getOwnPropertyNames(o).forEach(function (k) {
+      var v = o[k];
+      if (v && typeof v === 'object' && !Object.isFrozen(v)) deepFreeze(v);
+    });
+    return Object.freeze(o);
+  }
+
+  function variant(baseId, overrides, newId) {
+    var base = program(baseId);
+    var id = newId || (baseId + '~' + (Object.keys(PROGRAMS).length + 1));
+    var next = {};
+    Object.keys(base).forEach(function (k) { next[k] = base[k]; });
+    Object.keys(overrides || {}).forEach(function (k) { next[k] = overrides[k]; });
+    next.id = id;
+    PROGRAMS[id] = deepFreeze(next);
+    return id;
+  }
+
   function program(id) {
     var p = PROGRAMS[id];
     if (!p) throw new Error('unknown point program: ' + id);
     return p;
   }
+
+  /* Frozen at load. Anything that needs different terms asks for a variant. */
+  Object.keys(PROGRAMS).forEach(function (k) { deepFreeze(PROGRAMS[k]); });
 
   /* ---- product state ------------------------------------------------------
    *
@@ -384,7 +422,7 @@
     return {
       available: 0, reserved: 0, redeemed: 0, transferred: 0,
       boughtBack: 0, expired: 0, adjusted: 0, acquired: 0,
-      entries: 0, ignored: 0, reservations: {},
+      entries: 0, ignored: 0, reservations: {}, corrections: [],
       purchased: 0, promotional: 0
     };
   }
@@ -426,7 +464,7 @@
   /* What a quantity of points applies when redeemed, in travel value. */
   function entitlementOf(programId, points) {
     var p = program(programId);
-    return Math.round(points * p.entitlement * 100);
+    return Math.round(points * p.entitlementRate * 100);
   }
 
   /* C7: HOW MANY POINTS A JOURNEY REQUIRES — and the fix for A5.1.
@@ -446,7 +484,7 @@
   function goalRequirement(programId, journeyCostMinor) {
     var p = program(programId);
     if (!isFinite(journeyCostMinor) || journeyCostMinor <= 0) return 0;
-    return Math.ceil((journeyCostMinor / 100) / p.entitlement);
+    return Math.ceil((journeyCostMinor / 100) / p.entitlementRate);
   }
 
   /* C13/C14: is this purchase within the programme's bounds?
@@ -480,6 +518,7 @@
   function fold(entries) {
     var w = blank();
     var seen = Object.create(null);
+    var byId = Object.create(null);
     var list = entries || [];
     for (var i = 0; i < list.length; i++) {
       var e = list[i];
@@ -535,6 +574,23 @@
         w.purchased -= (q - off);
       }
 
+      /* B4: A COMPENSATING ENTRY SAYS WHAT IT COMPENSATES.
+         Nothing is ever edited, so a correction is a new entry — and a
+         correction that does not name the entry it corrects leaves an auditor
+         to infer the pairing from amounts and timing, which is how two
+         unrelated adjustments get read as one correction. `corrects` must
+         point at an entry the fold has already seen: a correction cannot
+         precede its cause. */
+      if (e.corrects) {
+        if (!byId[e.corrects]) {
+          throw new Error('entry ' + e.id + ' corrects ' + e.corrects +
+                          ', which is not earlier in this ledger');
+        }
+        w.corrections.push({ entry: e.id, corrects: e.corrects,
+                             kind: e.kind, quantity: q });
+      }
+      byId[e.id] = true;
+
       /* Reservations are tracked per journey so a cancellation can act on the
          booking it belongs to rather than on the wallet as a whole. */
       if (e.journeyRef) {
@@ -574,6 +630,7 @@
       boughtBack: w.boughtBack,
       expired: w.expired,
       reservations: w.reservations,
+      corrections: w.corrections,
       entriesApplied: w.entries,
       duplicatesIgnored: w.ignored
     };
@@ -823,6 +880,7 @@
     mayTransition: mayTransition,
     considerationFor: considerationFor,
     program: program,
+    variant: variant,
     pointsFor: pointsFor,
     priceOf: priceOf,
     entitlementOf: entitlementOf,

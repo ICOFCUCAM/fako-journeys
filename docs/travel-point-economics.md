@@ -1314,6 +1314,7 @@ wearing different clothes.
 ## Section B status
 
     DESIGN APPROVED — PENDING LEGAL/REGULATORY REVIEW BEFORE ACTIVATION
+    ECONOMIC AND LEDGER MODEL: LOCKED
 
 Not `ACTIVE`. Not `START ACCEPTING MONEY`.
 
@@ -1325,6 +1326,7 @@ Not `ACTIVE`. Not `START ACCEPTING MONEY`.
 | money taken to date | none, and none can be — `fold` throws on any issuing entry under a non-active programme |
 | open questions | seventeen, registered and unresolved |
 | conformance | 21 of 28 rules enforced; 7 recorded and pinned |
+| the ledger model | **locked** — the two rates are proved independent, terms are frozen in the module as well as the schema, and a correction names what it corrects |
 
 Counsel needs, at minimum: the four exposure features and how they now sit
 (B17.2 — two easier, two harder, all deliberate), the repurchase basis and its

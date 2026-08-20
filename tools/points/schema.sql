@@ -65,7 +65,7 @@ create table point_programs (
                   check (status in ('draft', 'active', 'closed', 'withdrawn')),
   currency        char(3) not null default 'USD',
   issue_rate      numeric(12,6) not null,        -- points per unit of currency
-  entitlement     numeric(12,6) not null,        -- travel value applied per point
+  entitlement_rate numeric(12,6) not null,       -- eligible travel entitlement per point
   min_purchase    integer not null default 0,
   transferable    boolean not null default false,
   -- The clause with regulatory weight. Discretionary by default; making it
@@ -85,7 +85,7 @@ create or replace function point_programs_immutable_terms()
 returns trigger language plpgsql as $$
 begin
   if new.issue_rate  is distinct from old.issue_rate
-  or new.entitlement is distinct from old.entitlement
+  or new.entitlement_rate is distinct from old.entitlement_rate
   or new.buyback     is distinct from old.buyback
   or new.cancellation is distinct from old.cancellation then
     raise exception
