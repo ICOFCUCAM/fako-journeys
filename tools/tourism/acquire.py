@@ -51,6 +51,7 @@ commissioning. The rest of the wrong ones are a licensing exercise.
 """
 
 import csv
+import html as html_mod
 import os
 import re
 
@@ -141,7 +142,16 @@ def _pages_index(log=print):
                 url = found.group(0).split("?")[0]
                 ratio = RATIO_RE.search(tag)
                 width = WIDTH_RE.search(tag)
+                # UNBOUNDED: the tag asks the provider for the original at
+                # whatever size the photographer uploaded, on every device.
+                # 18.6% of the site's references do this, and they are where
+                # migration is worth megabytes rather than kilobytes — the
+                # Algeria coast page went 3.76 MB to 0.07 MB on exactly this.
+                # Entities matter: the attribute holds &amp;w=800, so a search
+                # for &w= finds nothing and reports every reference unbounded.
+                whole = html_mod.unescape(found.group(0))
                 out.setdefault(url, []).append({
+                    "unbounded": not re.search(r"[?&]w=\d+", whole),
                     "page": page,
                     "ratio": (ratio.group(1).strip().replace(" ", "")
                               if ratio else ""),
@@ -278,6 +288,9 @@ def rows(log=print):
             # Blank here for anything not yet in the register; run() reserves
             # an identity for those so the plan can name one.
             "canonical asset id": aid or "",
+            # Any reference to this photograph that names no width. One is
+            # enough: that page is shipping the original to a phone.
+            "unbounded": "yes" if any(u.get("unbounded") for u in uses) else "no",
             "current reference": rec.get("imageUrl") or "",
             "priority": prio,
             "country": country,
@@ -299,22 +312,71 @@ def rows(log=print):
             "current photographer": rec.get("photographer") or "",
             "current source": rec.get("sourceUrl") or "",
         })
-    # THE BUY ORDER. Free work first, then the frames that open pages
-    # carrying a price, then everything else — and inside each band the
-    # countries whose photography is furthest from acceptable go first.
-    WAVE = {
-        ("RECROP", True): (1, "W1 re-crop, commercially live"),
-        ("RECROP", False): (2, "W2 re-crop, remainder"),
-        ("SIGNATURE", True): (3, "W3 commission, commercially live"),
-        ("REPLACE", True): (4, "W4 licence, commercially live"),
-        ("SIGNATURE", False): (5, "W5 commission, remainder"),
-        ("REPLACE", False): (6, "W6 licence, long tail"),
-    }
-    def sortkey(r):
+    # THE BUY ORDER, AFTER THE MEASUREMENT CHANGED IT.
+    #
+    # The first version ranked on commercial weight and where a photograph
+    # sits. Then weigh.js found the thing neither of those captures: about one
+    # reference in five asks the provider for the full-resolution original on
+    # every device, and replacing one of those took a page from 3.76 MB to
+    # 0.07 MB. The same work on an already width-limited reference was worth
+    # two to five per cent. Same acquisition cost, two orders of magnitude of
+    # difference in what it buys.
+    #
+    # So unbounded is a ranking signal now, and the order is: what costs
+    # nothing, then what is worth megabytes, then what is worth the money,
+    # then everything else.
+    #
+    #   P0  owned re-crops — no acquisition at all, files we already hold
+    #   P1  unbounded AND seen first or commercially live — megabytes
+    #   P2  opens a selling page or a country landing — the frames that sell
+    #   P3  the rest of the sixteen countries that carry a price
+    #   P4  everything else that needs replacing
+    #   P5  unbounded nowhere, seen nowhere, sold nowhere — do not spend yet
+    def band(r):
+        """WHERE THE MEGABYTES ARE IS NOT WHERE THE MONEY IS.
+
+        Ranking the ACQUISITION set on unbounded turned out to add nothing:
+        all 36 signature frames carry a width, all 750 replacements do not, so
+        the flag is a restatement of where a photograph sits. Worth knowing
+        before treating it as a new axis.
+
+        What it did find is bigger. 508 of the 527 KEEP assets are unbounded —
+        photographs the audit already approved, shipping full-resolution
+        originals to phones today, needing no licence, no shoot and no
+        decision. They are the megabyte wins, and they cost nothing but a run
+        of the pipeline that is already built and proven.
+
+        So the bands separate migration from purchase, because they are
+        different kinds of work with different budgets:
+
+          P0-P2  nothing to buy. Re-crop or migrate what is already ours.
+          P3-P6  the photography budget, in the order it should be spent.
+        """
         live = r["commercial tier"] <= 3
-        w, label = WAVE.get((r["class"], live), (9, "W9 no acquisition"))
+        seen = r["priority"] in ("P1", "P2")
+        cls = r["class"]
+        if cls == "RECROP":
+            return (0, "P0 owned re-crop, no acquisition")
+        if cls == "KEEP":
+            if r["unbounded"] == "yes":
+                return (1, "P1 migrate — approved, unbounded, megabytes")
+            return (2, "P2 migrate — approved, already width-limited")
+        if cls not in ("REPLACE", "SIGNATURE"):
+            return (9, "P9 no acquisition — a person decides")
+        if cls == "SIGNATURE" and live:
+            return (3, "P3 commission — commercially live hero")
+        if cls == "REPLACE" and (live or seen):
+            return (4, "P4 licence — commercially live or prominent")
+        if cls == "SIGNATURE":
+            return (5, "P5 commission — remaining heroes")
+        return (6, "P6 licence — long tail, do not spend yet")
+
+    def sortkey(r):
+        n, label = band(r)
         r["wave"] = label
-        return (w, r["commercial tier"], -float(r["country deficiency"].rstrip("%")),
+        return (n,
+                r["commercial tier"],
+                -float(r["country deficiency"].rstrip("%")),
                 r["priority"], r["country"], r["category"])
     out.sort(key=sortkey)
     for i, r in enumerate(out, 1):
@@ -402,7 +464,7 @@ def route_and_cost(cls, t, priority):
 
 
 FIELDS = ["rank", "wave", "class", "sourceKey", "commercial tier", "tier why",
-          "country deficiency", "priority", "country", "destination",
+          "country deficiency", "unbounded", "priority", "country", "destination",
           "category", "required subject", "required composition",
           "widest display px", "action", "acquisition route", "cost band",
           "canonical asset id", "current reference", "replacement filename",
@@ -497,10 +559,10 @@ def run(write=False, log=print):
     waves, wcost = {}, {}
     for r in data:
         w = r.get("wave") or ""
-        # W9 is the rows that need nothing bought — already ours, or waiting
+        # P9 is the rows that need nothing bought — already ours, or waiting
         # on a person. Listing it in a buy order inflates the total and gives
         # it a cost band, neither of which is true.
-        if not w.startswith("W") or w.startswith("W9"):
+        if not w.startswith("P") or w.startswith("P9"):
             continue
         waves[w] = waves.get(w, 0) + 1
         wcost.setdefault(w, set()).add(r["cost band"].split(" —")[0])
@@ -510,9 +572,14 @@ def run(write=False, log=print):
     log("")
     live = [r for r in data if r["commercial tier"] <= 3
             and r["acquisition route"] in ("commission", "licence", "re-crop")
-            and not (r.get("wave") or "").startswith("W9")]
-    log("  %d of the %d to be acquired sit in the 16 commercially live "
-        "countries" % (len(live), sum(waves.values())))
+            and not (r.get("wave") or "").startswith("P9")]
+    free = sum(n for w, n in waves.items() if w[:2] in ("P0", "P1", "P2"))
+    buy = sum(n for w, n in waves.items() if w[:2] in ("P3", "P4", "P5", "P6"))
+    log("  %d already ours — re-crop or migrate, no acquisition" % free)
+    log("  %d to acquire, of which %d are in the 16 countries that carry a "
+        "price" % (buy, len([r for r in live
+                             if (r.get("wave") or "")[:2] in
+                             ("P3", "P4", "P5", "P6")])))
     log("")
     to_source = by_class.get("SIGNATURE", 0) + by_class.get("REPLACE", 0)
     log("  %d photograph(s) to source across %d countries"
