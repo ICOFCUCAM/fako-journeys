@@ -19,6 +19,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | how a customer acquires points over time | **`docs/travel-point-purchase.md`** — the purchase model. A plan is an intention, never a mandate; nothing charges anybody |
 | the legal boundary, the compliance ladder, or what counsel must answer | **`docs/travel-point-compliance.md`** — Section D. The programme is `compliance: DRAFT`; only `PILOT` or `ACTIVE` may issue, and the ladder is not skippable |
 | any question of the form "can we ship X of the points product yet?" | **`docs/economic-model-decisions.md`** — eleven open decisions, their provisional defaults, and who owns each |
+| Decision F — what a Travel Point can buy (canonical) | **`docs/travel-point-redemption.md`** — the eligible basket, the exclusions as a list with reasons, and the redemption cap |
 | Decision E — gifting, inheritance, transferability (canonical) | **`docs/travel-point-transfer.md`** — REVERSES B14/C9: `transferable` is now true. Sale still forbidden. Records the buy-gift-cash-out hole this closed |
 | Decision D — expiry, programme duration, unused points (canonical) | **`docs/travel-point-duration.md`** — eleven rules. D8 changed behaviour: earliest expiry first, not promotional first |
 | Decision C — what happens when a customer leaves (canonical) | **`docs/travel-point-exit.md`** — the ten settled rules, and the three that were holding only by accident |
@@ -61,7 +62,7 @@ Run before claiming anything is done. All of these must pass.
     node tools/link-checks.js                    78,595 links
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
-    node tools/points-checks.js                 167 — the Travel Point ledger
+    node tools/points-checks.js                 181 — the Travel Point ledger
     node tools/goal-checks.js                    36 — the Travel Goal is planning only
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes

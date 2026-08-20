@@ -2420,5 +2420,213 @@ report(
   `${eOpenE} unresolved questions carried in docs/travel-point-transfer.md`
 );
 
+/* ==== Decision F: what a Travel Point can actually buy =================== */
+
+const JC = require("../scripts/journey-catalogue.js");
+const fCard = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "..", "journey-fund.html"), "utf8")
+    .match(/id="jf-data">([\s\S]*?)<\/script>/)[1]);
+const fSpec = { kind: "country", place: "kenya", tier: "signature", days: 7 };
+const fBreak = JC.breakdown(fCard, fSpec);
+
+/* F1 — NOT GENERAL-PURPOSE PURCHASING CREDIT. The basket is a programme term,
+   and everything outside it is refused by name so a customer can be told which
+   line of their journey the points do not reach. */
+const groceries = BK.request(P, { requirement: 100 }, { available: 5000 },
+                             ["groceries", "electronics"]);
+report(
+  groceries.ok === false && groceries.ineligible.join(",") ===
+    "groceries,electronics" &&
+    L.PROGRAMS[DRAFT].eligibleServices.indexOf("cash") === -1,
+  "F1: points redeem only against the programme's eligible services",
+  `groceries and electronics -> "${groceries.why}". The basket has ` +
+  `${L.PROGRAMS[DRAFT].eligibleServices.length} entries and none of them is cash`
+);
+
+/* F2/F3/F4 — the basket covers what Afrinkong actually arranges, INCLUDING
+   government charges it settles and its own service component. The last is the
+   one a customer would otherwise be ambushed by: accumulate a large holding,
+   then discover Afrinkong must be paid separately. */
+const basket = L.PROGRAMS[DRAFT].eligibleServices;
+report(
+  ["accommodation", "transport", "guiding", "excursion"].every(
+    (s) => basket.indexOf(s) !== -1) &&
+    ["park_fee", "conservation_fee", "permit", "government_charge"].every(
+      (s) => basket.indexOf(s) !== -1) &&
+    basket.indexOf("afrinkong_service") !== -1,
+  "F2/F3/F4: journey services, settled government charges, and Afrinkong's own fee",
+  `${basket.length} eligible services including park/conservation/permit and ` +
+  `afrinkong_service — a customer cannot accumulate a full holding and still ` +
+  `owe Afrinkong separately`
+);
+
+/* F5-F8/F12 — THE EXCLUSIONS ARE A POSITIVE LIST WITH REASONS.
+   "Not in eligibleServices" cannot be rendered. A page cannot show a list that
+   exists only as the absence of entries in another list, and F12 requires the
+   customer to see exclusions before booking. */
+const excl = L.PROGRAMS[DRAFT].excludedServices;
+report(
+  excl.length === 7 &&
+    excl.every((x) => typeof x.why === "string" && x.why.length > 20) &&
+    ["international_flight", "visa", "travel_insurance"].every(
+      (s) => excl.some((x) => x.service === s)),
+  "F5-F8/F12: exclusions are a list with reasons, not the absence of entries",
+  excl.map((x) => x.service).join(", ")
+);
+
+/* AND THEY AGREE WITH WHAT THE SITE ALREADY PUBLISHES.
+ * `tourism/rates.json` carries an `excluded` array that the pages render.
+ * Terms that disagree with the pages are worse than either, so this holds the
+ * programme against the published list rather than trusting two lists to stay
+ * in step by hand. */
+const rates = require("../tourism/rates.json");
+const published = (rates.excluded || []).join(" | ").toLowerCase();
+const unmatched = ["international flights", "visas", "insurance", "meals",
+                   "shopping", "tips"].filter((w) => !published.includes(w));
+report(
+  rates.excluded.length === 7 && unmatched.length === 0 &&
+    excl.length === rates.excluded.length,
+  "F12: the programme's exclusions and the site's published exclusions agree",
+  `both list 7: ${rates.excluded.join("; ")}`
+);
+
+/* F8/F13 — THE JOURNEY, BROKEN INTO WHAT IT IS MADE OF, DETERMINISTICALLY.
+   The components must SUM to the requirement. A table that does not add up to
+   the number beside it is decorative, which is worse than no table. */
+const fBreak2 = JC.breakdown(fCard, fSpec);
+report(
+  fBreak.total === fBreak.requirement &&
+    fBreak.components.length >= 2 &&
+    fBreak.outOfScope.length === 0 &&
+    JSON.stringify(fBreak) === JSON.stringify(fBreak2),
+  "F13: the breakdown sums to the requirement and is deterministic",
+  `${fBreak.components.map((c) => `${c.label} ${c.points} TP`).join(" + ")} = ` +
+  `${fBreak.total} TP, every component inside programme scope, and identical ` +
+  `on a second call`
+);
+
+/* F13 — and it carries what produced it, so "why 4,750?" is answerable later. */
+report(
+  fBreak.rateCardVersion === fCard.v && fBreak.programVersion != null &&
+    /Journey -> eligible components/.test(fBreak.derivation),
+  "F13: the calculation is versioned and explicable, not approximate",
+  `rate card ${fBreak.rateCardVersion}, programme ${fBreak.programId} ` +
+  `v${fBreak.programVersion}`
+);
+
+/* F3 — eligible charges that are NOT in the figure are listed, not omitted.
+   A customer who meets a $700 permit at booking has been misled by an omission
+   just as surely as by a wrong number. */
+report(
+  fBreak.eligibleNotYetPriced.length > 0 &&
+    fBreak.eligibleNotYetPriced.every((c) => /not in the figure above/.test(c.note)) &&
+    fBreak.notIncluded.length === 7,
+  "F3/F12: eligible-but-unpriced charges and excluded costs are both shown",
+  `${fBreak.eligibleNotYetPriced.length} eligible charges named as not yet ` +
+  `priced, and ${fBreak.notIncluded.length} exclusions — before booking, not ` +
+  `buried in terms`
+);
+
+/* F14 — THE REQUIREMENT IS NOT DERIVED FROM AFRINKONG'S COST.
+   8,000 TP against $6,700 of supplier cost does not mean 1 TP = $0.8375. The
+   breakdown says so in a field, and nothing in the module reads a cost. */
+/* The first version of this check searched for /costMinor/ and flagged
+   `journeyCostMinor` — which is the journey's PRICE TO THE CUSTOMER, the
+   legitimate input to goalRequirement(), and not a supplier cost at all. My
+   regex, not a defect; narrowed to the thing F14 actually forbids. The near
+   miss is worth keeping though: the parameter name does blur exactly the
+   distinction F14 draws, and F-naming records that. */
+report(
+  /not Afrinkong’s supplier cost/.test(fBreak.notDerivedFromCost) &&
+    !/supplierCost|supplier_cost|marginMinor|grossMargin/i.test(
+      fs.readFileSync(path.join(__dirname, "..", "scripts", "points-ledger.js"),
+                      "utf8")),
+  "F14: no point requirement is computed backwards from supplier cost",
+  `the module has no notion of supplier cost or margin — the programme defines ` +
+  `entitlement and commercial margin is a separate calculation`
+);
+
+/* F9/F10 — a customer 300 short is told what they may DO, and still not given
+   a conversion rate. */
+const fShort = BK.request(DRAFT, { requirement: 8000 }, { available: 7700 },
+                          ["journey"]);
+report(
+  fShort.shortfallPoints === 300 &&
+    fShort.settlement.permitted === true &&
+    fShort.settlement.mechanism === null &&
+    fShort.alternatives.length === 4 &&
+    !/\$/.test(JSON.stringify(fShort)),
+  "F9/F10: points and money may be combined, and the rate is still not invented",
+  `300 TP short -> mixed settlement permitted, mechanism null, and four ` +
+  `alternatives. No dollar figure anywhere in the response`
+);
+
+/* F — AND A PROGRAMME MAY COVER ONLY PART OF A JOURNEY.
+   "Up to 70% of the eligible journey" is a redemption rule, not a change to
+   what a point is. Applied BEFORE the sufficiency test, or a 70% programme
+   would cheerfully approve a full-point booking it does not permit. */
+const CAP70 = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    redemptionCap: { maxPortion: 0.7, appliesTo: "eligible" } },
+  "TEST-CAP-70");
+const capped = BK.request(CAP70, { requirement: 10000 }, { available: 10000 },
+                          ["journey"]);
+report(
+  capped.ok === false && capped.payableByPoints === 7000 &&
+    capped.applied === 7000 && capped.remainderPoints === 3000 &&
+    BK.request(DRAFT, { requirement: 8000 }, { available: 8000 },
+               ["journey"]).ok === true,
+  "F: a programme may cover part of a journey without redefining a point",
+  `at 70%: 10,000 TP required, 7,000 payable by points, 3,000 remainder — ` +
+  `stated in POINTS. At 100% a full-point booking is approved unchanged`
+);
+
+/* F11 — excess points stay points. Nothing converts a remainder to cash,
+   because nothing can. */
+const fAfter = L.wallet([entry("PURCHASE", 8000),
+                         Object.assign(entry("RESERVE", 7800),
+                                       { journeyRef: "J-F11" })]);
+report(
+  fAfter.available === 200 && fAfter.reserved === 7800 &&
+    Object.keys(fAfter).every((k) => !/cash|value|minor/i.test(k)),
+  "F11: 200 TP left after a 7,800 TP journey are 200 TP, not $200",
+  `they remain available for another eligible journey; there is no field on ` +
+  `the wallet that could hold a cash remainder`
+);
+
+/* F15 — a discount changes the JOURNEY's requirement, not the point.
+   The customer's holding is untouched and the difference is theirs to keep. */
+const fullPrice = L.goalRequirement(P, 1000000);
+const promoPrice = L.goalRequirement(P, 850000);
+const holder = L.wallet([entry("PURCHASE", 10000)]);
+report(
+  fullPrice === 10000 && promoPrice === 8500 &&
+    holder.available === 10000 &&
+    L.PROGRAMS[DRAFT].entitlementRate === 1,
+  "F15: a promotional journey costs fewer points; existing points are not revalued",
+  `10,000 TP normally, 8,500 on promotion — the holder still has ` +
+  `${holder.available} TP and keeps the 1,500 difference. entitlementRate ` +
+  `never moved, which is what B18 forbids moving`
+);
+
+/* And the no-retroactive-expiry reservation, named rather than assumed. */
+report(
+  L.PROGRAMS[DRAFT].expiry.reservedRightToIntroduce === false,
+  "F/D9: this programme did not reserve a right to introduce expiry later",
+  `recorded as false, so the narrow exception is something somebody had to ` +
+  `write down in advance rather than argue for afterwards`
+);
+
+/* F-open — recorded, not decided. */
+const fDocF = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-redemption.md"), "utf8");
+const fOpenF = (fDocF.match(/^\s*\|\s*F-[a-z]+\s*\|/gm) || []).length;
+report(
+  fOpenF >= 4 && /UNRESOLVED|not decided here/i.test(fDocF),
+  "F: the open questions Decision F raises are recorded, not answered in code",
+  `${fOpenF} unresolved questions carried in docs/travel-point-redemption.md`
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);

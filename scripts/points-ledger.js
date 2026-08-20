@@ -161,9 +161,74 @@
          unset limit, so this must be answered before anybody is charged. */
       maxProgrammeExposure: null, // TP. Required before activation.
 
-      /* ---- what a point may be redeemed against -------------------------- */
+      /* ---- what a point may be redeemed against (Decision F) -------------
+         F1: NOT GENERAL-PURPOSE PURCHASING CREDIT. The basket is what
+         Afrinkong actually arranges or sells, and the boundary is the whole
+         difference between a travel entitlement and a store of value.
+
+         F3: government and supplier charges are IN when Afrinkong arranges and
+         settles them. Afrinkong does not absorb the cost — the customer's
+         points cover the charge and Afrinkong settles the supplier separately.
+         These are the same charges `tourism/rates.json` already publishes as
+         `destination_charges`, and a check asserts the two agree. */
       eligibleServices: ['journey', 'accommodation', 'transport', 'guiding',
-                         'experience'],
+                         'experience', 'excursion', 'activity',
+                         'destination_service', 'domestic_transport',
+                         'park_fee', 'conservation_fee', 'permit',
+                         'entrance_fee', 'government_charge',
+                         /* F4: Afrinkong's own service component. Without it a
+                            customer could accumulate a large holding and still
+                            discover they must pay Afrinkong separately, which
+                            is the kind of surprise that makes a product feel
+                            like a trick. */
+                         'afrinkong_service'],
+
+      /* F5-F8/F12: THE EXCLUSIONS, AS A POSITIVE LIST WITH REASONS.
+         "Not in eligibleServices" is not good enough. F12 requires the customer
+         to see what is NOT included BEFORE booking, and a page cannot render a
+         list that only exists as the absence of entries in another list.
+
+         These are the same seven the site already publishes in
+         `tourism/rates.json` as `excluded` — deliberately not a second list,
+         because terms that disagree with the pages are worse than either. */
+      excludedServices: [
+        { service: 'international_flight',
+          why: 'Third-party ticketing, fare changes, airline credit and ' +
+               'chargebacks. Excluded initially — F5.' },
+        { service: 'visa',
+          why: 'Government-controlled, applicant-specific and dependent on ' +
+               'nationality. Excluded unless a programme says otherwise — F6.' },
+        { service: 'travel_insurance',
+          why: 'Personal cover the traveller arranges. Excluded initially — F7.' },
+        { service: 'personal_meals',
+          why: 'Meals outside the booked itinerary — F8.' },
+        { service: 'personal_spending',
+          why: 'Shopping, souvenirs, entertainment, alcohol, incidentals — F8.' },
+        { service: 'tips',
+          why: 'Discretionary and personal — F8.' },
+        { service: 'personal_upgrade',
+          why: 'Not part of the booked Afrinkong itinerary — F8.' }
+      ],
+
+      /* F10: POINTS AND MONEY MAY BE COMBINED, AND THE RATE IS STILL OPEN.
+         A customer 300 TP short must not be forced to buy a whole further
+         block. That the combination is PERMITTED is decided here; HOW a
+         shortfall converts is not, and `mechanism: null` is the honest record
+         of that rather than a rate somebody invented at a call site. B-iv. */
+      mixedPayment: { permitted: true, mechanism: null,
+                      pointsFirst: true },
+
+      /* F: HOW MUCH OF AN ELIGIBLE JOURNEY POINTS MAY COVER.
+         We should not promise that every journey can be paid entirely with
+         points. One programme may say up to 100% of eligible ground and
+         accommodation; another may say 70% of the eligible journey. Expressing
+         it as a portion gives that flexibility WITHOUT touching what a Travel
+         Point is — the definition is unchanged and only the redemption rule
+         moves, which is the same discipline F14 applies to cost and F15 to
+         discounts.
+         1.0 for this programme, and it is a term rather than an assumption:
+         a programme that wants 0.7 sets 0.7 and nothing else changes. */
+      redemptionCap: { maxPortion: 1.0, appliesTo: 'eligible' },
 
       /* ---- transfer (B14, B15, C21, and REVERSED BY DECISION E) ----------
          THIS WAS `false`, AND THE REVERSAL IS DELIBERATE.
@@ -249,7 +314,14 @@
          could not express two rules, which is why this is a block. */
       expiry: {
         purchased: null,          // null = never lapses from time alone
-        promotional: 24           // months, or null for never
+        promotional: 24,          // months, or null for never
+        /* NO RETROACTIVE EXPIRY, AND THE NARROW EXCEPTION NAMED RATHER THAN
+           ASSUMED. A later programme change may not introduce an expiry for
+           points already issued UNLESS the original programme expressly
+           reserved that right. This programme did not, and recording `false`
+           is what makes the reservation a thing somebody had to write down in
+           advance rather than something argued for afterwards. */
+        reservedRightToIntroduce: false
       },
 
       /* ---- promotional points (B16, C11, C12) ---------------------------- */

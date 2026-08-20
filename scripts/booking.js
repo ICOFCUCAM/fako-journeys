@@ -91,6 +91,31 @@
       return { ok: false, why: 'outside the programme’s eligible services',
                ineligible: outside, required: required };
     }
+    /* F: THE PROGRAMME MAY CAP HOW MUCH OF A JOURNEY POINTS COVER.
+       A programme saying "up to 70% of the eligible journey" means a customer
+       with enough points still settles the rest another way — so the cap is
+       applied BEFORE the sufficiency test, or a 70% programme would happily
+       report `ok` for a full-point booking it does not permit. */
+    var cap = Points.program(programId).redemptionCap || { maxPortion: 1 };
+    var payableByPoints = Math.floor(required * (cap.maxPortion == null
+                                                 ? 1 : cap.maxPortion));
+    if (payableByPoints < required) {
+      var have = Math.min(wallet.available, payableByPoints);
+      return {
+        ok: false,
+        why: 'this programme covers part of a journey with Travel Points',
+        required: required,
+        payableByPoints: payableByPoints,
+        maxPortion: cap.maxPortion,
+        available: wallet.available,
+        applied: have,
+        /* The remainder is stated IN POINTS, not converted. Same rule as the
+           shortfall below and for the same reason. */
+        remainderPoints: required - have,
+        settlement: settlementTerms(programId)
+      };
+    }
+
     if (wallet.available < required) {
       return {
         ok: false,
@@ -98,18 +123,47 @@
         required: required,
         available: wallet.available,
         shortfallPoints: required - wallet.available,
-        /* NO CONVERSION. See D7 — the programme has not defined one and this
-           is not the place to invent it. */
-        settlement: {
-          mechanism: null,
-          note: 'A shortfall may be settleable through the normal payment ' +
-                'mechanism. The conversion between Travel Points and money for ' +
-                'that purpose is a programme term and has not been defined.'
-        }
+        /* F9/F10: WHAT A CUSTOMER 300 POINTS SHORT MAY ACTUALLY DO.
+         *
+         * This used to report the shortfall and stop, which is correct about
+         * the conversion rate and unhelpful about everything else — a customer
+         * reading it would conclude they must buy another whole block of
+         * points. Decision F settles that points and money MAY be combined, so
+         * the permission is now reported.
+         *
+         * The RATE is still not invented here. Whether the combination is
+         * permitted is a programme term and is answered; how a shortfall
+         * converts to money is a different programme term, is not decided, and
+         * `mechanism: null` says so. A function that quietly returned "$1,500"
+         * would have made that decision at a call site. B-iv. */
+        settlement: settlementTerms(programId),
+        /* F9: and the other paths, so the answer is never just "no". None of
+           them is a conversion of the customer's points into cash. */
+        alternatives: ['acquire the additional Travel Points',
+                       'change the itinerary',
+                       'choose another journey',
+                       'wait — the points do not expire under this programme']
       };
     }
     return { ok: true, required: required, available: wallet.available,
              remainingAfter: wallet.available - required };
+  }
+
+  /* Shared by the cap path and the shortfall path, so the two cannot drift
+     into describing the same programme term differently. */
+  function settlementTerms(programId) {
+    var mp = Points.program(programId).mixedPayment || {};
+    return {
+      permitted: !!mp.permitted,
+      mechanism: mp.mechanism || null,
+      pointsFirst: mp.pointsFirst !== false,
+      note: mp.permitted
+        ? 'This programme permits a journey to be settled partly in Travel ' +
+          'Points and partly through an approved payment method. The ' +
+          'conversion used for the remainder is a programme term and has not ' +
+          'been defined.'
+        : 'This programme does not permit a journey to be settled partly in money.'
+    };
   }
 
   /* D2: THE ECONOMIC AGREEMENT, RECONSTRUCTABLE LATER.
