@@ -263,5 +263,68 @@ report(
   "10 no, 25 yes, 2500 yes, 2501 no, 1000-on-top-of-9500 no"
 );
 
+/* ---- Section C7 and C8: the catalogue, and what happens when prices move -- */
+
+const JC = require("../scripts/journey-catalogue.js");
+const fundHtml = fs.readFileSync(path.join(__dirname, "../journey-fund.html"), "utf-8");
+const D = JSON.parse(fundHtml.match(/id="jf-data">([\s\S]*?)<\/script>/)[1]);
+
+/* C7: derived from the rate card the site already publishes, not typed. The
+   check that matters is that the two denominations agree — if a journey costs
+   $4,750 then at entitlement 1 it requires 4,750 TP, and if somebody edits one
+   without the other this fails. */
+const cat = JC.catalogue(D);
+const catKenya = cat.find((j) => j.journeyId === "country:kenya:signature:7");
+report(
+  cat.length === 58 && catKenya &&
+    catKenya.requirement === L.goalRequirement('AFK-TP-2026.1', catKenya.priceMinor),
+  "C7: every journey carries a point requirement derived from its own price",
+  `${cat.length} journeys at rate card ${cat[0].rateCardVersion}; Kenya ` +
+  `$${catKenya.priceMinor / 100} -> ${catKenya.requirement} TP`
+);
+
+/* Identity is what was chosen, never the display name. A caption is page copy,
+   and the image library already learned what happens when an identity is
+   derived from copy somebody is free to rewrite. */
+report(
+  JC.journeyId({ kind: "country", place: "kenya", tier: "signature", days: 7 })
+    === "country:kenya:signature:7" &&
+  JC.journeyId({ kind: "crossing", place: "east" }) === "crossing:east",
+  "C7: a journey's identity is its choices, not its caption",
+  "renaming 'Trans Afrique — East' does not create a second journey"
+);
+
+/* C8: a rate card that raises the tier rate raises the requirement, and the
+   customer is shown both figures, the difference, and that their own points
+   are untouched. */
+const spec = { kind: "country", place: "kenya", tier: "signature", days: 7 };
+const before = JC.requirementFor(D, spec);
+const D2 = JSON.parse(JSON.stringify(D));
+D2.tiers.find((t) => t.id === "signature").rate = 690;
+D2.v = "9f2ab7c11e04";
+const moved = JC.compare(before, JC.requirementFor(D2, spec));
+report(
+  moved.original === 4750 && moved.current === 5030 && moved.difference === 280 &&
+    moved.direction === "increased" && moved.sameRateCard === false &&
+    moved.pointsHeldUnaffected === true,
+  "C8: a price rise is shown as a difference, not as a devaluation",
+  `${moved.original} -> ${moved.current} TP, difference ${moved.difference}, ` +
+  `rate card ${moved.originalRateCard} -> ${moved.currentRateCard}, ` +
+  `points held unaffected`
+);
+
+/* And the case that would otherwise read as "nothing happened": the same
+   requirement computed from a DIFFERENT rate card. The figure agreeing is not
+   the same as the price list agreeing. */
+const D3 = JSON.parse(JSON.stringify(D));
+D3.v = "0000deadbeef";
+const quiet = JC.compare(before, JC.requirementFor(D3, spec));
+report(
+  quiet.difference === 0 && quiet.direction === "unchanged" &&
+    quiet.sameRateCard === false,
+  "C8: an unchanged figure from a changed rate card is reported as both",
+  "the number agreeing does not mean the price list agreed"
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
