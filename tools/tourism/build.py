@@ -198,7 +198,9 @@ def cmd_library(args):
     if step == "plan":
         return library.plan(write=write)
     if step == "fetch":
-        return library.fetch(write=write, limit=int(getattr(args, "limit", 0) or 0))
+        return library.fetch(write=write,
+                             limit=int(getattr(args, "limit", 0) or 0),
+                             only=getattr(args, "only", None))
     if step == "encode":
         return library.encode(write=write)
     if step == "verify":
