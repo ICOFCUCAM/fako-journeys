@@ -6,9 +6,10 @@ wire for image responses, not decoded size. "Before" is the same page at
 `c26c33a^`, the commit before the rewrite, served from a git worktree so the
 only variable is where the photographs come from.
 
-Measured twice: once on **20 August 2026** with 19 photographs migrated, and
-again the same day with **527** migrated. The second run is the interesting one,
-and not for the reason expected.
+Measured three times on **20 August 2026**: with 19 photographs migrated, with
+527, and with 629 after the art-directed re-crops landed. The second run is the
+one that produced the hero census, because it moved almost nothing. The third
+is the one that confirmed it.
 
 ## The second measurement
 
@@ -32,6 +33,73 @@ I predicted before reading this run that all six pages would move, and that
 because four of its fourteen unbounded provider references had been migrated. It
 did not move at all. That prediction was wrong in a way worth keeping, because
 chasing why is what produced the rest of this document.
+
+## The third measurement — the re-crops
+
+Run #17, on the eight pages wave 1 actually changed. The old six-page sample was
+retired: five of the six were not `/places` pages and none had a migrated hero,
+which is why the second run reported 7.49 MB against 7.40 MB.
+
+| page | before | after | change | requests |
+|---|---:|---:|---:|---|
+| `/places/ghana/mole-and-ankasa` | 2.36 MB | 0.13 MB | **−94%** | 2 → 2 |
+| `/places/kenya/balloon-over-the-mara` | 2.78 MB | 0.22 MB | **−92%** | 2 → 2 |
+| `/places/namibia/desert-adapted-wildlife` | 2.33 MB | 0.14 MB | **−94%** | 2 → 2 |
+| `/places/namibia/self-drive-country` | 1.17 MB | 0.14 MB | **−88%** | 2 → 2 |
+| `/tourism/ghana` | 1.55 MB | 1.49 MB | −4% | 8 → 8 |
+| `/tourism/namibia` | 2.19 MB | 2.08 MB | −5% | 8 → 8 |
+| `/places/algeria/…mediterranean` *(control)* | 3.76 MB | 0.07 MB | −98% | 2 → 2 |
+| `/portrait/algeria` *(control)* | 3.58 MB | 3.58 MB | 0% | 4 → 4 |
+| **total** | **19.71 MB** | **7.85 MB** | **−60%** | |
+
+Both controls behaved. The already-migrated Algeria page is unchanged at 0.07 MB,
+and `/portrait/algeria`, which wave 1 does not touch, reads exactly 0%. Neither
+number moving is what makes the other six believable.
+
+**The unbounded-hero case reproduces, four more times.** −88% to −94%, on four
+pages that had nothing to do with each other beyond the shape of the problem.
+That is no longer one page wearing a disguise.
+
+**And the bounded case reproduces too, at −4% and −5%.** Those two `/tourism`
+pages are the same photographs as heroes of width-limited pages. Same
+acquisition cost, same migration, two orders of magnitude less benefit — which
+is the whole argument for ranking on payload rather than on count.
+
+One thing the `/tourism` rows show that is worth not misreading: our own bytes
+there (0.78 MB and 0.38 MB) are a large share of what remains. That is
+arithmetic, not a fault. The phone crop is 1200×1500 — 1.8 megapixels — where
+the landscape rung at the same width is 1200×675, or 0.81. Art direction costs
+roughly 2.2× the pixels by construction, and buys the composition somebody
+chose. It is not a saving and was never going to be.
+
+## The byte model was wrong, and this is by how much
+
+The acquisition table's payload column was estimated from the original's pixel
+dimensions at 0.183 bytes per pixel — calibrated on exactly one photograph. Five
+measured points now exist:
+
+| hero | provider | MP | predicted | measured | bytes/px |
+|---|---|---:|---:|---:|---:|
+| `ghana/mole-and-ankasa` | pexels | 58.9 | 10.78 MB | **2.33 MB** | 0.040 |
+| `kenya/balloon-over-the-mara` | pexels | 28.0 | 5.12 MB | **2.75 MB** | 0.098 |
+| `namibia/desert-adapted-wildlife` | pexels | 24.8 | 4.54 MB | **2.30 MB** | 0.093 |
+| `namibia/self-drive-country` | unsplash | 5.9 | 1.08 MB | 1.14 MB | 0.193 |
+| `algeria/…mediterranean` | unsplash | 20.3 | 3.71 MB | 3.73 MB | 0.184 |
+
+Unsplash tracks pixels almost exactly — the original calibration was sound, and
+it was an Unsplash photograph. **Pexels does not.** Three originals from 25 to 59
+megapixels all landed between 2.3 and 2.8 MB: what it serves plateaus rather
+than scaling. The model predicted 10.8 MB for the Ghana hero and the wire
+carried 2.33.
+
+`est_bytes` now caps at 2.6 MB for Pexels and leaves Unsplash on the line. Five
+for five within 13%, and still a model — `build.py heroes --measure` reads
+content-length from the providers and should be run before any of this is
+treated as a forecast.
+
+**The correction cuts the outstanding payload from 4.63 GB to 2.04 GB.** Since
+1,305 of the site's 1,427 audited photographs are Pexels, and Pexels originals
+are large, almost all of the overestimate was there.
 
 ## Why nothing moved
 
@@ -71,12 +139,15 @@ nothing because they were not among the ones the threshold reached.
 Run `node tools/heroes.js`. No network; it reads the built HTML and the
 register.
 
+As it stood when the census was written, and as it stands now that the
+re-crops have landed:
+
 | section | pages | ours | published, not rewritten | never registered | of these, unbounded |
 |---|---:|---:|---:|---:|---:|
-| `/places` | 1,363 | 527 | 86 | 750 | 836 |
-| `/tourism` | 52 | 0 | 16 | 36 | 0 |
+| `/places` | 1,363 | 527 → **613** | 86 → **0** | 750 | 836 → **750** |
+| `/tourism` | 52 | 0 → **16** | 16 → **0** | 36 | 0 |
 | root | 1 | 0 | 0 | 1 | 0 |
-| **total** | **1,416** | **527** | **102** | **787** | **836** |
+| **total** | **1,416** | **527 → 629** | **102 → 0** | **787** | **836 → 750** |
 
 The middle column is exactly the 102 art-directed assets, which is the check
 that the census and the register agree. It did not agree at first: matching a
@@ -114,15 +185,25 @@ All 102 held-back assets are exactly the art-directed set, and every one of
 them is somebody's hero — 86 on a `/places` page and 16 on a `/tourism` page.
 All 86 of the `/places` ones are unbounded.
 
-## What this changes
+## What this changed — done, and measured
 
 The 102 re-crops were ranked P0 on commercial grounds, and deferred as a
 finishing task — a second phone crop for photographs that already look right.
-That was the wrong reading of what they are. **All 102 are heroes that a phone
-fetches on arrival, 86 of them at full resolution**, on photographs we are
-already paying to host — an estimated 0.47 GB. The crop is not a polish item; it is
-the cheapest megabytes on the site, and it needs no budget decision, no
-licensing, and no provider.
+That was the wrong reading of what they are. All 102 were heroes a phone
+fetches on arrival, 86 of them at full resolution, on photographs we were
+already paying to host. The crop was not a polish item; it was the cheapest
+megabytes on the site, and it needed no budget, no licence and no provider.
+
+**They are done.** Run #16 cut all 102 crops — 91 at 4:5, 11 at 3:2, each
+around the focal point its own markup names — uploaded both ladders and
+rewrote the pages. Run #17 measured four of them at −88% to −94%. Every hero
+this site owns is now served from `image.afrinkong.com`: 629 of them, with
+nothing left published-but-hotlinked.
+
+Wave 1 was meant to be the 29 whose country carries a price; the run was
+launched without the `--only` filter and did all 102. That is the outcome the
+wave file itself recommended — same operation, same cost, 63 more unbounded
+heroes — so nothing was lost by it.
 
 For the acquisition plan, hero occupancy should outrank reference count. A
 photograph that appears forty times below the fold is worth nothing to page
@@ -137,14 +218,20 @@ The 750 `/places` heroes that are not in the register at all remain the
 acquisition question. `docs/hero-acquisition.md` now answers it — banded P0 to
 P3, with the payload and the commercial argument on every row.
 
-## Do not quote the −34%
+## Do not quote the −34%, and be careful with the −60%
 
-It was one page wearing a disguise at 19 photographs migrated and it is the same
-page wearing the same disguise at 527. Of the 3.87 MB saved across six pages,
-3.69 MB is still `/places/algeria/…` alone.
+The −34% was one page wearing a disguise at 19 photographs migrated and the same
+page wearing the same disguise at 527: of the 3.87 MB saved across those six
+pages, 3.69 MB was `/places/algeria/…` alone.
 
-The honest single number is the census, not the percentage: **527 of 1,416 heroes
-are ours, and all 836 of the rest are unbounded — an estimated 4.63 GB.**
+The −60% from run #17 is a fairer number — six of its eight pages moved, and the
+four re-crops each carried their own weight — but it is still a number about a
+sample chosen because it would move. It says the treatment works on the pages
+that get it. It does not say what the site weighs.
+
+The honest single number is the census, not the percentage: **629 of 1,416
+heroes are ours, and all 750 of the rest are unbounded — an estimated 2.04 GB,
+on a model that is now five-for-five within 13% rather than one-for-one.**
 
 ## Re-running it
 

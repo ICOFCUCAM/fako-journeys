@@ -488,15 +488,31 @@ COST = {
 
 # WHAT A PHOTOGRAPH COSTS A PHONE, IN BYTES.
 #
-# Calibrated on the only reference measured end to end: the hero of
-# /places/algeria/a-thousand-kilometres-of-mediterranean, an Unsplash original
-# of 5498x3686, which put 3.70 MB on the wire at a 390px viewport. That is
-# 0.183 bytes per pixel OF THE ORIGINAL.
+# The first version of this was one data point — the Unsplash hero of
+# /places/algeria/…, 20.3 MP for 3.70 MB, so 0.183 bytes per pixel — applied
+# to every photograph on the site. Five points now exist, and they say that
+# rule is right for one provider and badly wrong for the other:
 #
-# One data point, and it is Unsplash. Treat the ordering as the finding and the
-# absolute figures as a model until `build.py heroes --measure` has replaced
-# them with content-length read from the providers.
-BYTES_PER_PIXEL = 0.183
+#   hero                            provider     MP   real MB   B/px
+#   ghana/mole-and-ankasa           pexels     58.9      2.33  0.040
+#   kenya/balloon-over-the-mara     pexels     28.0      2.75  0.098
+#   namibia/desert-adapted-wildlife pexels     24.8      2.30  0.093
+#   namibia/self-drive-country      unsplash    5.9      1.14  0.193
+#   algeria/…mediterranean          unsplash   20.3      3.73  0.184
+#
+# Unsplash tracks pixels almost exactly. Pexels does not: three originals from
+# 25 to 59 megapixels all landed between 2.3 and 2.8 MB, so what it serves
+# plateaus rather than scaling. Pixels-times-a-constant predicted 10.8 MB for
+# the Ghana hero and the wire carried 2.33.
+#
+# So: bytes per pixel, capped per provider. Five for five within 13%, which is
+# far better than one for five within a factor of four, and still a model.
+# `build.py heroes --measure` replaces it with content-length from the
+# providers and should be run before any of this is treated as a forecast.
+BYTES_PER_PIXEL = 0.19
+# The plateau, per provider. None observed for Unsplash: its largest measured
+# original is 20.3 MP at 3.73 MB and still on the line.
+BYTE_CAP = {"pexels": 2.6e6}
 
 
 def est_bytes(rec, uses, measured=None):
@@ -515,7 +531,8 @@ def est_bytes(rec, uses, measured=None):
     if not w or not h:
         return 0, "unknown"
     if any(u.get("unbounded") for u in uses):
-        return int(w * h * BYTES_PER_PIXEL), "estimated"
+        cap = BYTE_CAP.get(rec.get("provider") or "", float("inf"))
+        return int(min(w * h * BYTES_PER_PIXEL, cap)), "estimated"
     asked = max([u["width"] for u in uses] or [0]) or 1200
     asked = min(asked, w)
     return int(asked * (asked * h / w) * BYTES_PER_PIXEL), "estimated"

@@ -6,20 +6,19 @@ Every row is a `/places` page whose **hero** — the one photograph a phone is c
 
 | | |
 |---|---:|
-| pages | 836 |
-| already ours (a crop, not a purchase) | 86 |
-| unbounded | 836 |
+| pages | 750 |
+| already ours (a crop, not a purchase) | 0 |
+| unbounded | 750 |
 | never audited | 0 |
-| estimated phone payload | 4.63 GB |
+| estimated phone payload | 2.04 GB |
 
 ## The bands
 
 | band | pages | payload |
 |---|---:|---:|
-| P0 free — already ours, needs a crop not a purchase | 86 | 0.47 GB |
-| P1 acquire now — operator or priced major route | 141 | 0.69 GB |
-| P2 acquire after P1 — priced West route | 89 | 0.49 GB |
-| P3 defer — no price attached to this country | 520 | 2.99 GB |
+| P1 acquire now — operator or priced major route | 141 | 0.41 GB |
+| P2 acquire after P1 — priced West route | 89 | 0.23 GB |
+| P3 defer — no price attached to this country | 520 | 1.40 GB |
 
 ## Bytes and photographs are two problems
 
@@ -33,68 +32,68 @@ That is the recommendation. Bound them all first; then buy photographs on the me
 
 | country | heroes | payload | tier |
 |---|---:|---:|---|
-| sierra-leone | 21 | 126 MB | 4 |
-| togo | 18 | 124 MB | 4 |
-| niger | 19 | 122 MB | 4 |
-| mozambique | 19 | 118 MB | 4 |
-| comoros | 20 | 117 MB | 4 |
-| djibouti | 20 | 117 MB | 4 |
-| congo | 19 | 111 MB | 4 |
-| angola | 19 | 108 MB | 4 |
-| cote-divoire | 20 | 107 MB | 3 |
-| sudan | 18 | 105 MB | 4 |
-| ghana | 18 | 99 MB | 3 |
-| dr-congo | 19 | 99 MB | 4 |
+| sierra-leone | 20 | 86 MB | 4 |
+| botswana | 21 | 67 MB | 2 |
+| cameroon | 17 | 60 MB | 1 |
+| algeria | 17 | 54 MB | 4 |
+| cote-divoire | 19 | 49 MB | 3 |
+| comoros | 19 | 49 MB | 4 |
+| djibouti | 19 | 49 MB | 4 |
+| angola | 18 | 47 MB | 4 |
+| guinea | 17 | 47 MB | 3 |
+| namibia | 16 | 45 MB | 1 |
+| congo | 17 | 44 MB | 4 |
+| dr-congo | 17 | 44 MB | 4 |
 
 ## The first twenty, in order
 
 | # | band | page | MB | tier | verdict |
 |---:|---|---|---:|---:|---|
-| 1 | P0 free | `/places/ethiopia/trekking-country.html` | 15.50 | 4 | KEEP |
-| 2 | P0 free | `/places/congo/western-lowland-gorillas.html` | 14.61 | 4 | KEEP |
-| 3 | P0 free | `/places/egypt/coptic-islamic-pharaonic.html` | 13.16 | 4 | KEEP |
-| 4 | P0 free | `/places/ghana/mole-and-ankasa.html` | 10.77 | 3 | KEEP |
-| 5 | P0 free | `/places/libya/desert-survivors.html` | 8.32 | 4 | KEEP |
-| 6 | P0 free | `/places/dr-congo/two-hundred-and-fifty-peoples.html` | 8.19 | 4 | KEEP |
-| 7 | P0 free | `/places/cabo-verde/turtles-and-humpbacks.html` | 7.72 | 4 | KEEP |
-| 8 | P0 free | `/places/sao-tome-and-principe/endemic-birds.html` | 7.72 | 4 | KEEP |
-| 9 | P0 free | `/places/burundi/walking-the-divide.html` | 7.72 | 4 | KEEP |
-| 10 | P0 free | `/places/sierra-leone/surfing-and-forest-walking.html` | 7.72 | 4 | KEEP |
-| 11 | P0 free | `/places/djibouti/afar-and-somali.html` | 7.02 | 4 | KEEP |
-| 12 | P0 free | `/places/togo/fazao-malfakassa.html` | 6.93 | 4 | KEEP |
-| 13 | P0 free | `/places/guinea-bissau/saltwater-hippos.html` | 6.89 | 3 | KEEP |
-| 14 | P0 free | `/places/gabon/whales-turtles-and-surf.html` | 6.62 | 4 | KEEP |
-| 15 | P0 free | `/places/mozambique/dive-sail-kayak.html` | 6.62 | 4 | KEEP |
-| 16 | P0 free | `/places/lesotho/bearded-vulture-and-eland.html` | 6.51 | 4 | KEEP |
-| 17 | P0 free | `/places/sudan/diving-and-desert-driving.html` | 6.41 | 4 | KEEP |
-| 18 | P0 free | `/places/mauritius/what-the-dodo-left.html` | 6.22 | 4 | KEEP |
-| 19 | P0 free | `/places/congo/why-congo.html` | 6.02 | 4 | KEEP |
-| 20 | P0 free | `/places/cote-divoire/ta-and-como.html` | 5.99 | 3 | KEEP |
+| 1 | P1 acquire now | `/places/cameroon/village-and-mountain-together.html` | 14.30 | 1 | REPLACE |
+| 2 | P1 acquire now | `/places/cameroon/wildlife-of-the-rainforest.html` | 6.01 | 1 | REPLACE |
+| 3 | P1 acquire now | `/places/cameroon/sahel-safari-at-waza.html` | 5.04 | 1 | REPLACE |
+| 4 | P1 acquire now | `/places/namibia/epupa.html` | 4.56 | 1 | REPLACE |
+| 5 | P1 acquire now | `/places/namibia/easy-and-safe-to-drive.html` | 4.13 | 1 | REPLACE |
+| 6 | P1 acquire now | `/places/namibia/the-kunene-and-the-zambezi.html` | 3.93 | 1 | REPLACE |
+| 7 | P1 acquire now | `/places/cameroon/korup-dja-and-the-village-fund.html` | 3.87 | 1 | REPLACE |
+| 8 | P1 acquire now | `/places/uganda/queen-elizabeth-and-kidepo.html` | 3.44 | 1 | REPLACE |
+| 9 | P1 acquire now | `/places/cameroon/black-sand-and-warm-water.html` | 2.60 | 1 | REPLACE |
+| 10 | P1 acquire now | `/places/cameroon/chefferie-and-colonial-buea.html` | 2.60 | 1 | REPLACE |
+| 11 | P1 acquire now | `/places/cameroon/dja-rhumsiki-and-the-mandara.html` | 2.60 | 1 | REPLACE |
+| 12 | P1 acquire now | `/places/cameroon/fulani-mafa-and-bamileke.html` | 2.60 | 1 | REPLACE |
+| 13 | P1 acquire now | `/places/cameroon/summit-crater-coast.html` | 2.60 | 1 | REPLACE |
+| 14 | P1 acquire now | `/places/cameroon/the-1999-lava-fields.html` | 2.60 | 1 | REPLACE |
+| 15 | P1 acquire now | `/places/cameroon/the-grassfields-kingdoms.html` | 2.60 | 1 | REPLACE |
+| 16 | P1 acquire now | `/places/namibia/the-brandberg-and-the-escarpment.html` | 2.60 | 1 | REPLACE |
+| 17 | P1 acquire now | `/places/namibia/the-caprivi-woodland.html` | 2.60 | 1 | REPLACE |
+| 18 | P1 acquire now | `/places/namibia/the-himba.html` | 2.60 | 1 | REPLACE |
+| 19 | P1 acquire now | `/places/namibia/the-long-road.html` | 2.60 | 1 | REPLACE |
+| 20 | P1 acquire now | `/places/namibia/windhoek-karnival-and-maherero-day.html` | 2.60 | 1 | REPLACE |
 
 ## Why each paid frame deserves budget
 
 Reference count is not an argument — it counts appearances, not viewers, and thirty-nine of a photograph's forty references are lazy cards nobody's first screen fetches. The `why budget` column in the CSV argues each row on what it opens, what that page sells, what the audit found wrong with the picture, and what it costs a phone. Twenty examples:
 
-- **`/places/cameroon/the-1999-lava-fields.html`** (P1 acquire now) — Opens /places/cameroon/the-1999-lava-fields.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "green trees near mountain". Costs a phone 15.2 MB today (estimated).
-- **`/places/cameroon/village-and-mountain-together.html`** (P1 acquire now) — Opens /places/cameroon/village-and-mountain-together.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "two people in life jackets wading through a body of ". Costs a phone 13.8 MB today (estimated).
-- **`/places/namibia/the-caprivi-woodland.html`** (P1 acquire now) — Opens /places/namibia/the-caprivi-woodland.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.2. Costs a phone 7.8 MB today (estimated).
-- **`/places/namibia/dune-quad-balloon.html`** (P1 acquire now) — Opens /places/namibia/dune-quad-balloon.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "single tree on desert". Costs a phone 7.1 MB today (estimated).
-- **`/places/cameroon/chefferie-and-colonial-buea.html`** (P1 acquire now) — Opens /places/cameroon/chefferie-and-colonial-buea.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.2. Costs a phone 6.0 MB today (estimated).
-- **`/places/cameroon/the-ring-road-on-foot.html`** (P1 acquire now) — Opens /places/cameroon/the-ring-road-on-foot.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.9. Costs a phone 5.8 MB today (estimated).
-- **`/places/cameroon/wildlife-of-the-rainforest.html`** (P1 acquire now) — Opens /places/cameroon/wildlife-of-the-rainforest.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "an empty road in the middle of a jungle". Costs a phone 5.8 MB today (estimated).
-- **`/places/uganda/the-kingdom-of-buganda.html`** (P1 acquire now) — Opens /places/uganda/the-kingdom-of-buganda.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 3.5; the provider calls it "music and faces". Costs a phone 5.5 MB today (estimated).
-- **`/places/uganda/crater-lakes-at-first-light.html`** (P1 acquire now) — Opens /places/uganda/crater-lakes-at-first-light.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 3.3; the provider calls it "vibrant daily life on ugandan street". Costs a phone 5.1 MB today (estimated).
-- **`/places/cameroon/everything-within-one-border.html`** (P1 acquire now) — Opens /places/cameroon/everything-within-one-border.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 3.9. Costs a phone 4.9 MB today (estimated).
-- **`/places/cameroon/sahel-safari-at-waza.html`** (P1 acquire now) — Opens /places/cameroon/sahel-safari-at-waza.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "a car is driving down a deserted road". Costs a phone 4.9 MB today (estimated).
-- **`/places/cameroon/fulani-mafa-and-bamileke.html`** (P1 acquire now) — Opens /places/cameroon/fulani-mafa-and-bamileke.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.5. Costs a phone 4.8 MB today (estimated).
-- **`/places/namibia/the-himba.html`** (P1 acquire now) — Opens /places/namibia/the-himba.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 3.3. Costs a phone 4.8 MB today (estimated).
-- **`/places/namibia/windhoek-karnival-and-maherero-day.html`** (P1 acquire now) — Opens /places/namibia/windhoek-karnival-and-maherero-day.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.0. Costs a phone 4.8 MB today (estimated).
-- **`/places/namibia/conservancies.html`** (P1 acquire now) — Opens /places/namibia/conservancies.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.7. Costs a phone 4.8 MB today (estimated).
-- **`/places/cameroon/the-grassfields-kingdoms.html`** (P1 acquire now) — Opens /places/cameroon/the-grassfields-kingdoms.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.0. Costs a phone 4.7 MB today (estimated).
-- **`/places/cameroon/summit-crater-coast.html`** (P1 acquire now) — Opens /places/cameroon/summit-crater-coast.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "view into active volcano". Costs a phone 4.4 MB today (estimated).
-- **`/places/namibia/basketry-and-ostrich-shell.html`** (P1 acquire now) — Opens /places/namibia/basketry-and-ostrich-shell.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.7. Costs a phone 4.4 MB today (estimated).
-- **`/places/cameroon/black-sand-and-warm-water.html`** (P1 acquire now) — Opens /places/cameroon/black-sand-and-warm-water.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "church in tropical village". Costs a phone 4.4 MB today (estimated).
-- **`/places/cameroon/dja-rhumsiki-and-the-mandara.html`** (P1 acquire now) — Opens /places/cameroon/dja-rhumsiki-and-the-mandara.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.5. Costs a phone 4.4 MB today (estimated).
+- **`/places/cameroon/village-and-mountain-together.html`** (P1 acquire now) — Opens /places/cameroon/village-and-mountain-together.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "two people in life jackets wading through a body of ". Costs a phone 14.3 MB today (estimated).
+- **`/places/cameroon/wildlife-of-the-rainforest.html`** (P1 acquire now) — Opens /places/cameroon/wildlife-of-the-rainforest.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "an empty road in the middle of a jungle". Costs a phone 6.0 MB today (estimated).
+- **`/places/cameroon/sahel-safari-at-waza.html`** (P1 acquire now) — Opens /places/cameroon/sahel-safari-at-waza.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "a car is driving down a deserted road". Costs a phone 5.0 MB today (estimated).
+- **`/places/namibia/epupa.html`** (P1 acquire now) — Opens /places/namibia/epupa.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.7; query broadened to category; the provider calls it "a powerful river flows through a rugged rocky canyon". Costs a phone 4.6 MB today (estimated).
+- **`/places/namibia/easy-and-safe-to-drive.html`** (P1 acquire now) — Opens /places/namibia/easy-and-safe-to-drive.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "white and brown animal with antler on brown sand". Costs a phone 4.1 MB today (estimated).
+- **`/places/namibia/the-kunene-and-the-zambezi.html`** (P1 acquire now) — Opens /places/namibia/the-kunene-and-the-zambezi.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "green tree on brown field during daytime". Costs a phone 3.9 MB today (estimated).
+- **`/places/cameroon/korup-dja-and-the-village-fund.html`** (P1 acquire now) — Opens /places/cameroon/korup-dja-and-the-village-fund.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "green trees under white clouds during daytime". Costs a phone 3.9 MB today (estimated).
+- **`/places/uganda/queen-elizabeth-and-kidepo.html`** (P1 acquire now) — Opens /places/uganda/queen-elizabeth-and-kidepo.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "elephant wading in water with lush green background". Costs a phone 3.4 MB today (estimated).
+- **`/places/cameroon/black-sand-and-warm-water.html`** (P1 acquire now) — Opens /places/cameroon/black-sand-and-warm-water.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "church in tropical village". Costs a phone 2.6 MB today (estimated).
+- **`/places/cameroon/chefferie-and-colonial-buea.html`** (P1 acquire now) — Opens /places/cameroon/chefferie-and-colonial-buea.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.2. Costs a phone 2.6 MB today (estimated).
+- **`/places/cameroon/dja-rhumsiki-and-the-mandara.html`** (P1 acquire now) — Opens /places/cameroon/dja-rhumsiki-and-the-mandara.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.5. Costs a phone 2.6 MB today (estimated).
+- **`/places/cameroon/fulani-mafa-and-bamileke.html`** (P1 acquire now) — Opens /places/cameroon/fulani-mafa-and-bamileke.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.5. Costs a phone 2.6 MB today (estimated).
+- **`/places/cameroon/summit-crater-coast.html`** (P1 acquire now) — Opens /places/cameroon/summit-crater-coast.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "view into active volcano". Costs a phone 2.6 MB today (estimated).
+- **`/places/cameroon/the-1999-lava-fields.html`** (P1 acquire now) — Opens /places/cameroon/the-1999-lava-fields.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "green trees near mountain". Costs a phone 2.6 MB today (estimated).
+- **`/places/cameroon/the-grassfields-kingdoms.html`** (P1 acquire now) — Opens /places/cameroon/the-grassfields-kingdoms.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.0. Costs a phone 2.6 MB today (estimated).
+- **`/places/namibia/the-brandberg-and-the-escarpment.html`** (P1 acquire now) — Opens /places/namibia/the-brandberg-and-the-escarpment.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.0. Costs a phone 2.6 MB today (estimated).
+- **`/places/namibia/the-caprivi-woodland.html`** (P1 acquire now) — Opens /places/namibia/the-caprivi-woodland.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.2. Costs a phone 2.6 MB today (estimated).
+- **`/places/namibia/the-himba.html`** (P1 acquire now) — Opens /places/namibia/the-himba.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 3.3. Costs a phone 2.6 MB today (estimated).
+- **`/places/namibia/the-long-road.html`** (P1 acquire now) — Opens /places/namibia/the-long-road.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: the provider calls it "pineapples and bananas". Costs a phone 2.6 MB today (estimated).
+- **`/places/namibia/windhoek-karnival-and-maherero-day.html`** (P1 acquire now) — Opens /places/namibia/windhoek-karnival-and-maherero-day.html, the only photograph on it a phone is certain to fetch. Operator — bookable today. The picture is wrong: relevance 2.0. Costs a phone 2.6 MB today (estimated).
 
 ## Accuracy of the byte column
 
