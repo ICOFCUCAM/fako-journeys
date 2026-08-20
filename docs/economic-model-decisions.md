@@ -27,6 +27,12 @@ which is arithmetic, and sells nothing.
 
 ### 1. What exactly does one Travel Point represent?
 
+> **Now written up in full as [Section A](travel-point-definition.md)** —
+> the recommended wording, the two alternatives and why they were rejected,
+> what the code has already committed to, a defect the review found in the
+> one place this definition reaches a customer, and the seventeen downstream
+> decisions that become answerable once it is approved. Still a proposal.
+
 | | |
 |---|---|
 | provisional | one unit of Afrinkong travel purchasing entitlement, `entitlement: 1` |

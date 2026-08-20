@@ -160,5 +160,48 @@ report(fundMath.indexOf("Point") === -1 && fundMath.indexOf("TP") === -1,
        "the existing fund arithmetic is unchanged and knows nothing of points",
        "the planner works exactly as it did");
 
+/* ---- the two rates, and the defect Section A found --------------------- */
+
+/* `goal()` converts a journey price to a point target using issueRate — points
+ * per dollar PAID — where the definition requires entitlement, the travel value
+ * a point REDEEMS. It is invisible today because the programme sets both to 1.
+ *
+ * This is deliberately not fixed here: which rate is correct follows from which
+ * definition is approved, so it is item A5.1 of docs/travel-point-definition.md
+ * and not a bug to slip in beside a document. What this check does is make the
+ * ambiguity impossible to ship by accident — the moment the two rates differ,
+ * the conversion has a wrong answer in it and this fails loudly. */
+const prog = L.PROGRAMS['AFK-TP-2026.1'];
+report(
+  prog.issueRate === 1 && prog.entitlement === 1,
+  'the two rates are still equal, which is the only reason goal() looks right',
+  `issueRate ${prog.issueRate}, entitlement ${prog.entitlement} — if these ever ` +
+  `differ, fix goal() per A5.1 before changing this check`
+);
+
+/* And the demonstration, so the failure above is self-explanatory rather than
+ * a number somebody has to go and re-derive. */
+const saved = { i: prog.issueRate, e: prog.entitlement };
+prog.issueRate = 1.1;
+const bonus = L.goal('AFK-TP-2026.1', 480000, 0, 12).target;
+prog.issueRate = saved.i;
+prog.entitlement = 1.1;
+const richer = L.goal('AFK-TP-2026.1', 480000, 0, 12).target;
+prog.entitlement = saved.e;
+report(
+  bonus === 5280 && richer === 4800,
+  'the defect is present and behaves as Section A records it',
+  `a purchase bonus RAISES the $4,800 goal to ${bonus} TP (should stay 4800); ` +
+  `richer entitlement leaves it at ${richer} TP (should fall to 4364)`
+);
+
+/* The programme must be restored exactly, or every later check in this file is
+ * measuring a programme this one edited. */
+report(
+  prog.issueRate === 1 && prog.entitlement === 1,
+  'the demonstration restored the programme it borrowed',
+  `issueRate ${prog.issueRate}, entitlement ${prog.entitlement}`
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
