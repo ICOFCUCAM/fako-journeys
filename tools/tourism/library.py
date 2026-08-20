@@ -1909,6 +1909,40 @@ def rewrite(write=False, revert=False, log=print, only=None):
                     out.append(html[cut:])
                     html = "".join(out)
 
+                # SVG <image href>, WHICH IS NOT AN <img> AND WAS THEREFORE
+                # NEVER MIGRATED.
+                #
+                # The country windows clip a photograph to the shape of the
+                # country, and SVG does that with <image href="...">. The tag
+                # regex above looks for <img>, so fifteen published
+                # photographs stayed on Pexels through every migration — found
+                # by tools/library-permanence.js on its first run, not by
+                # anybody reading the markup.
+                #
+                # No <picture> here: SVG has no such element, and no srcset
+                # either. One URL, the widest JPEG, which is what the deferred
+                # <img> path already uses for the same reason. Revert needs no
+                # new code — it replaces our URLs with the original wherever
+                # they appear, including here.
+                def swap_svg(m):
+                    tag = m.group(0)
+                    found = re.search(
+                        r"https://images\.(?:pexels|unsplash)\.com/[^\"\s]+",
+                        tag)
+                    if not found:
+                        return tag
+                    a = by_url.get(
+                        html_mod.unescape(found.group(0)).split("?")[0])
+                    if not a:
+                        return tag
+                    svg_moved[0] += 1
+                    return tag.replace(
+                        found.group(0), url_for(a, a["widths"][-1], ".jpg"))
+
+                svg_moved = [0]
+                html = re.sub(r"<image\b[^>]*>", swap_svg, html)
+                n += svg_moved[0]
+
             if html == before:
                 continue
             changed_pages += 1
