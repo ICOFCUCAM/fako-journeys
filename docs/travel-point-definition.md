@@ -1,9 +1,23 @@
 # Section A — the canonical commercial definition of a Travel Point
 
-**Status: PROPOSAL. Not approved, not implemented.**
+**Status — recorded 20 August 2026**
 
-This paper settles one question and deliberately settles nothing else: *what
-is one Travel Point?* Everything in `docs/economic-model-decisions.md` inherits
+| | |
+|---|---|
+| this document | **approved as the working specification** |
+| the definition itself (A1a and A1b) | **not commercially approved** |
+| the programme | stays `draft`; `PRODUCT_STATE` stays `DRAFT_PROGRAM` |
+| downstream decisions A5.1–A5.17 | none may be implemented |
+| `goal()` (the §A4 defect) | **must not be changed** until the definition and
+  the redemption question are formally decided |
+| `issueRate` / `entitlement` | the distinction is preserved and now tested |
+
+Approving the specification means this is the document the decisions are made
+*in*. It is not approval of the answers it proposes.
+
+This paper addresses one question and deliberately addresses nothing else:
+*what is one Travel Point?* Review split it in two — the **frame** (A1a), which
+is ready, and the **unit basis** (A1b), which is not. Everything in `docs/economic-model-decisions.md` inherits
 the answer, which is why it is decision 1 there and why it is worth its own
 document here.
 
@@ -15,10 +29,16 @@ downstream work in §A5 — each of those is a separate decision that becomes
 
 ---
 
-## A1. The recommended definition
+## A1. The definition, in two parts
 
-> **A Travel Point is one unit of travel purchasing entitlement issued by
-> Wankong LLC under a named Travel Point Programme, redeemable toward eligible
+Review of the first draft established that this is **two separable decisions**,
+and that presenting them as one blocks the half that is ready. They are split
+here so the frame can be settled while the unit basis stays open.
+
+### A1a. The frame — proposed, not yet commercially approved
+
+> **A Travel Point is a unit of travel purchasing entitlement issued by Wankong
+> LLC under a named Travel Point Programme, redeemable toward eligible
 > Afrinkong travel services on the terms of the programme under which it was
 > issued.**
 >
@@ -26,34 +46,112 @@ downstream work in §A5 — each of those is a separate decision that becomes
 > no interest, confers no ownership, and has no value outside the programme
 > that issued it.
 
-Three properties do the work, and each is a commitment rather than a phrasing
-preference:
+Four commitments, each load-bearing rather than a phrasing preference:
 
-**It is a unit of entitlement, not of currency.** What a point entitles you to
-is *travel*, quantified in Afrinkong travel value. It is never defined as a
-quantity of money, even when the arithmetic happens to line up.
+**Wankong LLC is the issuer; Afrinkong is the brand.** The obligation runs from
+the legal entity. Afrinkong is the trade name the customer sees. Terms,
+invoices, programme documents and disclosures must name the entity, and the
+architecture should keep the two apart everywhere rather than treating them as
+synonyms.
 
-**Its terms belong to its programme, not to the company.** A point issued under
-`AFK-TP-2026.1` keeps 2026 terms permanently. Afrinkong can offer different
-terms in 2028 by issuing a new programme; it cannot reach back and change what
-an existing point means.
+**Terms belong to the programme, not to the company.** A point issued under the
+2026 Edition keeps 2026 terms permanently. A 2027 Edition may offer different
+economics to new points without touching anybody's existing holding. This is
+what makes the versioned `point_programs` table the right shape and what stops
+a future pricing change from silently rewriting what somebody already bought.
 
-**It is indivisible and integral.** One point is the smallest unit. There are
-no fractional points. (See §A5.2 — the code currently rounds in three different
-directions and that is a consequence of this clause, not an accident.)
+**Redeemable toward eligible Afrinkong travel services.** The point stays
+attached to the thing Afrinkong actually sells. It is not money held on a
+customer's behalf.
 
-## A2. The alternatives, and why not
+**Indivisible.** One point is the smallest unit; there are no fractional points.
 
-| candidate | reading | why rejected |
-|---|---|---|
-| **1 point = $1** | a point is a dollar held on account | This is stored value. It makes the balance a monetary claim, invites the "so it's a bank account" reading, and in several jurisdictions is the definition of a regulated instrument. It also destroys the ability to price a programme differently later, because a dollar cannot be worth something else next year. |
-| **1 point = 1 dollar of Afrinkong travel** | a point is a discount voucher denominated in currency | Better, but still denominates the entitlement in money, which means every display becomes a cash figure and every price change becomes a revaluation of an existing holding. |
-| **1 point = 1 unit of travel purchasing entitlement** ✅ | a point is a contractual right against the programme | Keeps the unit non-monetary, lets `entitlement` be a programme parameter rather than an identity, and survives a change in journey pricing without changing what anybody already holds. |
+Note what A1a does *not* say: it does not say how much travel one point
+entitles you to. That is A1b, and it is deliberately absent.
 
-The distinction is not cosmetic. Under candidate 1 a customer holding 4,800
-points holds $4,800 of somebody else's money. Under the recommendation they
-hold a right to 4,800 units of Afrinkong travel, and what those units buy is a
-matter of the programme and the journey price on the day.
+### A1b. The unit basis — OPEN, not proposed for approval
+
+"One unit of travel purchasing entitlement" is architecturally sound and
+commercially incomplete. *One unit of what?* Five candidate answers, with what
+each commits Afrinkong to:
+
+| basis | 1 TP = | destination-flexible | regulatory weight | problem |
+|---|---|---|---|---|
+| **1. currency-denominated** | $1 of travel value | yes | **highest** | Denominates the entitlement in money. Every display becomes a cash figure and the product reads as stored value whatever the terms say. |
+| **2. journey fraction** | 1/N of one named journey | **no** | lowest | Points bought for Kenya cannot move to Namibia without a conversion rule, which reintroduces the problem it avoided. Kills the flexibility in §8 of the brief. |
+| **3. journey percentage** | 0.01% of any eligible journey | yes | low | A point is worth more against an expensive journey than a cheap one, so the rational customer always redeems against the most expensive — an arbitrage the programme pays for. |
+| **4. rate-card unit** | one unit of the published Afrinkong rate card | yes | low–medium | Requires journeys to carry a published TP price, versioned like the money price. More machinery — but the machinery already exists. |
+| **5. abstract, table-defined** | whatever the programme's conversion table says | yes | medium | Maximum flexibility, minimum customer comprehension. Hard to explain in a sentence, which is itself a consumer-protection problem. |
+
+**Where the existing architecture points, without deciding anything.**
+`tourism/rates.json` already prices every journey — USD, per vehicle per day, at
+three tier rates — and the fund page already carries a rate-card version hash
+(`"v":"1d60cf455f9a"`). Basis 4 would give that rate card a second column
+denominated in points and version it the same way, which means the journey price
+and the point price move together under one version stamp rather than drifting
+apart. That is the cheapest of the five to build correctly and the only one that
+inherits price-versioning for free. It is a recommendation about *fit*, not a
+commercial judgement, and it is not proposed for approval here.
+
+### A1c. The buyback tension, which A1b decides
+
+The 10% buyback and the non-monetary definition pull against each other, and
+this was not visible until the two were written down together.
+
+A cash buyback must convert points into money. If a point is *defined*
+non-monetarily, that conversion has to invent a monetary value for it — and
+inventing one is, in substance, the monetary characterisation A1a exists to
+avoid. **The stronger the non-monetary definition, the more artificial any
+buyback valuation becomes.**
+
+There is a way out, and it is worth naming because it changes what needs
+deciding. Two structurally different mechanisms both answer "the customer wants
+out":
+
+**Redemption at value** — "90% of what your points are worth." Requires a
+point-to-cash valuation to exist. Straightforward under basis 1; increasingly
+strained under 3, 4 and 5; close to meaningless under 2.
+
+**Refund of consideration** — "90% of what you actually paid for the points you
+have not used." Requires no valuation of a point whatsoever. It refers to the
+recorded payment, not to the entitlement. The schema already supports it:
+`payments.amount_minor` records what was taken and the ledger references the
+payment, so unredeemed points can be traced to the money that bought them,
+lot by lot.
+
+The second is available under **every** basis in A1b, keeps the unit
+non-monetary, and reads to a customer as a refund rather than a cash-out. It
+also changes the shape of decision 5 — whether buyback is contractual or
+discretionary — because refunding consideration is a much easier promise to
+make than guaranteeing a valuation.
+
+Not proposed for approval. Recorded because A1b cannot be decided sensibly
+without knowing which of these two buyback mechanisms is intended, and the
+question had not been asked in that form.
+
+## A2. Why the frame refuses to denominate in money
+
+A1b is open, but one thing is settled by A1a and worth stating on its own,
+because it is the constraint every candidate basis has to satisfy.
+
+A definition of the form *"a point is a dollar"* — or a dollar held on account,
+or a dollar of travel — makes the customer's holding a **monetary claim**. Three
+consequences follow immediately, and none of them is a matter of wording:
+
+- **It reads as a balance.** Whatever the terms say, "you have 4,800 points
+  worth $4,800" is a bank statement in the customer's mind. The product spends
+  the rest of its life explaining that it is not one.
+- **It fixes the economics forever.** A dollar cannot be worth something else
+  next year, so a programme cannot offer different terms later without either
+  breaking the identity or repricing what people already hold.
+- **In several jurisdictions it is the test.** A monetary claim redeemable on
+  demand is close to the statutory description of a stored-value instrument.
+  Decision 11 turns on this and it is counsel's call, not a drafting choice.
+
+So the frame commits to a non-monetary unit, and A1b picks which non-monetary
+unit. Basis 1 is listed there for completeness and because rejecting it should
+be a decision on the record rather than an omission — not because it is a live
+candidate under this frame.
 
 ## A3. What the code has already committed to
 
@@ -107,17 +205,24 @@ two rates diverge, so this cannot ship silently — see `tools/goal-checks.js`.
 
 ## A5. Downstream decisions that depend on this definition
 
+> **A note on numbering.** Review referred to the next piece of work as "A5.1 —
+> define exactly what 1 Travel Point represents when redeemed". That question is
+> **A1b** in this document; A5.1 below is the narrower coding consequence of it
+> (which of the two rates `goal()` should use). They are one chain — A1b decides
+> the meaning, A5.1 applies it — and both are blocked. The names are aligned
+> here so the two are not mistaken for each other in a later discussion.
+
 Every item below becomes answerable once §A1 is approved, and every one is
 currently unanswered. **None may be implemented before approval.** Ordered by
 how early they bind.
 
 ### Immediate — the definition alone settles these
 
-**A5.1 Which rate converts a journey price to a point target.** §A4. Under the
-recommendation the answer is `entitlement`, because the target is a quantity of
-travel value. Under "1 point = $1" the question does not arise, since the two
-rates would be the same number by definition — which is precisely the collapse
-the recommendation avoids. *Touches:* `goal()`, `travel-goal.js`, the fund page,
+**A5.1 Which rate converts a journey price to a point target.** §A4. **Blocked
+on A1b, not on A1a.** The frame does not answer it: `entitlement` is the right
+rate under bases 3, 4 and 5, while under basis 1 the question dissolves because
+the two rates are the same number by definition — which is precisely the
+collapse the frame refuses. *Touches:* `goal()`, `travel-goal.js`, the fund page,
 `goal-checks.js`.
 
 **A5.2 Rounding and granularity.** If a point is indivisible, every conversion
@@ -140,8 +245,11 @@ the admin console.
 
 ### Contractual — the definition constrains, counsel decides
 
-**A5.5 Buyback valuation basis.** `buyback.rate: 0.90` is 90% of *what*: the
-entitlement value, or the price originally paid? Under the recommendation these
+**A5.5 Buyback valuation basis.** `buyback.rate: 0.90` is 90% of *what*? See
+A1c: this is not one question but two — *which mechanism* (redemption at value
+or refund of consideration), and only then *on what basis*. The first must be
+answered before A1b can be, because it constrains which unit bases are
+workable. Under the recommendation these
 diverge as soon as a programme offers a purchasing bonus, and the difference is
 real money. Also unresolved: whether the 10% is a fee, a spread, or a
 discretionary reduction. *Depends on:* §A1 plus decisions 5 and 6.
@@ -215,18 +323,39 @@ has to infer it.
 
 ## A7. What approving this looks like
 
-Approval means answering one question — *is §A1 the definition?* — and recording
-it here with a date and who decided. It explicitly does **not** authorise
-§A5.1–A5.17, any of which may still be answered either way afterwards.
+Two decisions, recorded separately, because they are ready at different times.
+
+### A7a. The frame — ready now
+
+Answers one question: *is A1a the frame?* It authorises no downstream work. It
+does not decide what one unit is worth, and it does not release A5.1–A5.17.
 
 | | |
 |---|---|
-| decision | §A1 adopted / amended / rejected |
+| decision | A1a adopted / amended / rejected |
 | decided by | |
 | date | |
 | counsel reviewed | |
 | notes | |
 
-Once recorded, update decision 1 in `docs/economic-model-decisions.md` from
-provisional to settled, and §A5.1 becomes the first piece of work that can
-proceed — with a test, because it changes a number a customer reads.
+### A7b. The unit basis — not ready
+
+Blocked on two prior questions, in this order:
+
+1. **Which buyback mechanism is intended** — redemption at value, or refund of
+   consideration (A1c). This constrains which bases in A1b are workable.
+2. **Which basis** — one of the five in A1b, or another.
+
+| | |
+|---|---|
+| buyback mechanism | redemption at value / refund of consideration / undecided |
+| basis chosen | |
+| decided by | |
+| date | |
+| counsel reviewed | |
+
+Once A7a is recorded, update decision 1 in
+`docs/economic-model-decisions.md` from provisional to settled **as to the
+frame only**, and leave the unit basis open there. A5.1 — the defect in §A4 —
+stays blocked until A7b, because which rate converts a journey price to a point
+target is a direct consequence of what one unit is.

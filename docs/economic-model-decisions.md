@@ -31,7 +31,12 @@ which is arithmetic, and sells nothing.
 > the recommended wording, the two alternatives and why they were rejected,
 > what the code has already committed to, a defect the review found in the
 > one place this definition reaches a customer, and the seventeen downstream
-> decisions that become answerable once it is approved. Still a proposal.
+> decisions that become answerable once it is approved.
+>
+> Review split it: the **frame** — issuer, programme-bound, travel-only,
+> non-monetary, indivisible — is ready for sign-off. The **unit basis**, what
+> one unit actually is, is open, and is itself blocked on which buyback
+> mechanism is intended. Section A1c sets out why those two are entangled.
 
 | | |
 |---|---|
