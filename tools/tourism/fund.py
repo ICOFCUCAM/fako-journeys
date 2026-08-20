@@ -587,12 +587,17 @@ HOW_TEMPLATE = """<!DOCTYPE html>
   <div class="jf-frame jf-qs" id="qs">
     <article class="jf-q">
       <h2>Where does my money sit?</h2>
-      <p><b>Nowhere near us.</b> It stays in your own bank account, exactly
-        where it is now. Afrinkong does not hold it, does not receive it, does
-        not touch it and has no way of knowing whether you have put anything
-        aside at all.</p>
-      <p>That is not a temporary arrangement pending something better. It is
-        what this is. What we give you is the arithmetic &mdash; what the
+      <p><b>In your own bank account.</b> Nothing on this page moves
+        money. The planner does arithmetic; it takes no payment, opens no
+        account and has no way of knowing whether you have put anything aside
+        at all.</p>
+      <p>Afrinkong does not operate a customer bank account or a deposit
+        account, and it will not. If Travel Points are ever offered, buying one
+        would be a <b>purchase of travel entitlement</b> under the terms of the
+        programme that issued it &mdash; a payment for something, the way any
+        purchase is, rather than money placed with us for safekeeping. The
+        difference matters and we would rather state it now than discover later
+        that a sentence written today had quietly stopped being true. What we give you is the arithmetic &mdash; what the
         journey costs, how many months there are, and therefore what each month
         would have to look like &mdash; and a calendar that tells you when your
         passport needs attention. The money is yours and stays yours until the

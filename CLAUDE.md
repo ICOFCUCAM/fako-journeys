@@ -15,6 +15,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | what a Travel Point *is* | **`docs/travel-point-definition.md`** — Section A. The frame is proposed; the unit basis is open, and blocked on the buyback question first |
 | what happens economically when one is bought | **`docs/travel-point-economics.md`** — Section B, B1–B25. **DESIGN APPROVED — PENDING LEGAL/REGULATORY REVIEW BEFORE ACTIVATION.** §B24 audits all 28 frozen rules against the code: 21 enforced, 7 recorded and pinned |
 | Travel Points, the ledger, payments, or anything economic | **`docs/travel-points-architecture.md`** — audit, architecture, and the legal gate that must clear before a single payment is taken |
+| the legal boundary, the compliance ladder, or what counsel must answer | **`docs/travel-point-compliance.md`** — Section D. The programme is `compliance: DRAFT`; only `PILOT` or `ACTIVE` may issue, and the ladder is not skippable |
 | any question of the form "can we ship X of the points product yet?" | **`docs/economic-model-decisions.md`** — eleven open decisions, their provisional defaults, and who owns each |
 
 ## The rule that catches people out

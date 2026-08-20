@@ -35,8 +35,17 @@ function threw(fn) {
  * never written to scripts/points-ledger.js — nothing that ships is active.
  */
 const P = "TEST-ACTIVE-FIXTURE";
+/* The fixture has to walk the ladder like anything else. It used to set
+   status:"active" and be issuable, which is precisely the one-word activation
+   D21.1 exists to prevent — so the fixture broke the moment the gate became
+   real, which is the gate working rather than the fixture being wrong. It
+   carries an exposure limit too, because PILOT and ACTIVE both require one. */
 L.PROGRAMS[P] = Object.assign({}, L.PROGRAMS["AFK-TP-2026.1"], {
-  id: P, name: "fixture, tests only", status: "active"
+  id: P,
+  name: "fixture, tests only",
+  compliance: "ACTIVE",
+  status: "active",
+  maxProgrammeExposure: 5000000,
 });
 
 const DRAFT = "AFK-TP-2026.1";
@@ -580,6 +589,98 @@ report(
   promoQuote.eligible === false,
   "C16: a repurchase that would dip into promotional points is refused",
   `${promoQuote.why} (purchased ${promoQuote.purchased}, promotional ${promoQuote.promotional})`
+);
+
+/* ==== D21: the five permanent invariants ================================= */
+
+/* These are not tests of a feature. They are the boundary between a travel
+ * company and a financial one, and they are here so that crossing it requires
+ * deleting a check rather than forgetting one. Section D21 names all five. */
+
+/* D21.1 — no programme may issue without passing the compliance ladder. */
+const dProg = L.PROGRAMS[DRAFT];
+const dSaved = { compliance: dProg.compliance, status: dProg.status,
+                 exposure: dProg.maxProgrammeExposure };
+
+dProg.status = "active";                       // the old one-word activation
+const oneWord = L.mayIssue(DRAFT);
+dProg.status = dSaved.status;
+report(
+  oneWord === false,
+  "D21.1: setting status to 'active' by hand no longer issues anything",
+  "issuance is gated on the compliance ladder; the status string is inert"
+);
+
+const ladder = ["ACTIVE", "PILOT", "APPROVED"].map(
+  (to) => `${to}:${L.mayTransition(DRAFT, to).ok}`);
+report(
+  ladder.join(" ") === "ACTIVE:false PILOT:false APPROVED:false",
+  "D21.1: DRAFT cannot jump to APPROVED, PILOT or ACTIVE",
+  `${ladder.join("  ")} — only LEGAL_REVIEW or RETIRED are reachable from DRAFT`
+);
+
+dProg.compliance = "APPROVED";
+const needExposure = L.mayTransition(DRAFT, "PILOT");
+dProg.maxProgrammeExposure = 5000000;
+const withExposure = L.mayTransition(DRAFT, "PILOT");
+dProg.maxProgrammeExposure = dSaved.exposure;
+dProg.compliance = dSaved.compliance;
+report(
+  needExposure.ok === false && withExposure.ok === true,
+  "D21.1: PILOT is refused while the exposure limit is unset",
+  `without: ${needExposure.why}; with a limit: allowed`
+);
+
+/* D21.2 — no code path issues points from a frontend request. The customer-
+ * facing bundle must not be able to append to the ledger at all. */
+const frontend = ["../scripts/travel-goal.js", "../scripts/fund.js"]
+  .map((f) => fs.readFileSync(path.join(__dirname, f), "utf-8"));
+const appends = frontend.filter((src) =>
+  /\bfold\s*\(|\bPURCHASE\b|\bPROMOTION\b|idempotencyKey/.test(src));
+report(
+  appends.length === 0,
+  "D21.2: nothing on the customer-facing surfaces can append a ledger entry",
+  "travel-goal.js and fund.js read programme terms and do arithmetic; they " +
+  "never construct an entry, and could not issue one if they did"
+);
+
+/* D21.3 — no code path mutates history. The fold is the only reader and it
+ * takes entries by value; the schema refuses UPDATE and DELETE outright. */
+const schema = fs.readFileSync(path.join(__dirname, "../tools/points/schema.sql"), "utf-8");
+/* Two separate triggers rather than one combined clause — my first version of
+   this check looked for "before update or delete" and failed on a schema that
+   was right. Matching both forms, and counting them, so a schema that dropped
+   one of the two would still fail. */
+const updGuard = /before\s+update\s+on\s+point_ledger/i.test(schema);
+const delGuard = /before\s+delete\s+on\s+point_ledger/i.test(schema);
+report(
+  /point_ledger_append_only/.test(schema) && updGuard && delGuard,
+  "D21.3: the ledger refuses UPDATE and DELETE at the database, not in a comment",
+  `update guard ${updGuard}, delete guard ${delGuard} — corrections are ` +
+  `reversing entries, so the error and its fix both survive`
+);
+
+/* D21.4 — no growth from elapsed time. Already asserted three ways above
+ * (B7.1); restated here as one of the five so the list is complete where
+ * somebody reads it. */
+report(
+  !/\bDate\b|\bnow\(\)/.test(
+    fs.readFileSync(path.join(__dirname, "../scripts/points-ledger.js"), "utf-8")
+      .replace(/\/\*[\s\S]*?\*\//g, " ")
+      .split("\n").filter((l) => !/^\s*\/\//.test(l)).join("\n")),
+  "D21.4: the ledger has no clock, so no balance can grow with elapsed time",
+  "see also B7.1 — vocabulary, clock, and the closed set of kinds"
+);
+
+/* D21.5 — no balance is a cash balance. Asserted at B22.1 for the wallet;
+ * restated here against the whole customer-facing path. */
+const goalShape = require("../scripts/travel-goal.js").build(4750, 14, 750, "x");
+report(
+  !("balance" in goalShape) && !("valueMinor" in goalShape) &&
+    !/\$/.test(goalShape.display.target),
+  "D21.5: no customer-facing figure presents points as a cash balance",
+  `the goal reads "${goalShape.display.target}", and money appears only as the ` +
+  `journey's own price`
 );
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);

@@ -122,7 +122,14 @@
       issuer: 'Wankong LLC',      /* A1a: the obligation runs from the entity,
                                      not from the trade name. */
       brand: 'Afrinkong',
-      status: 'draft',            // never 'active' until counsel has signed it
+      /* D20: A STATE MACHINE, NOT A BOOLEAN.
+         `status: 'active'` was one word away from taking money. This is the
+         same decision expressed as a sequence that has to be walked, with
+         legal and accounting review as steps nobody can skip by editing a
+         string. See COMPLIANCE_STATES and mayActivate(). */
+      compliance: 'DRAFT',
+      complianceHistory: [],      // [{ from, to, at, by, note }] once it moves
+      status: 'draft',            // derived from compliance; kept for callers
       effectiveFrom: '2026-01-01',
       effectiveUntil: null,
 
@@ -248,6 +255,65 @@
    * distinction is enforced by the same function that computes every balance.
    * The site is in DRAFT_PROGRAM today and the test suite asserts it.
    */
+  /* ---- D20: the compliance ladder ---------------------------------------
+   *
+   *   DRAFT -> LEGAL_REVIEW -> ACCOUNTING_REVIEW -> APPROVED -> PILOT -> ACTIVE
+   *
+   * and, from anywhere live, SUSPENDED; and from anywhere, RETIRED.
+   *
+   * ONLY PILOT AND ACTIVE MAY ISSUE. That is the whole safety mechanism: a
+   * programme cannot reach either without passing through legal and accounting
+   * review, and the transitions are checked rather than assigned, so somebody
+   * who edits this file to say ACTIVE has to delete a guard rather than change
+   * a word.
+   *
+   * The ladder is deliberately not skippable. APPROVED cannot be reached from
+   * DRAFT even by an administrator: the point of naming LEGAL_REVIEW and
+   * ACCOUNTING_REVIEW as states is that somebody has to say, in a commit, that
+   * each happened.
+   */
+  var COMPLIANCE_STATES = ['DRAFT', 'LEGAL_REVIEW', 'ACCOUNTING_REVIEW',
+                           'APPROVED', 'PILOT', 'ACTIVE', 'SUSPENDED', 'RETIRED'];
+
+  var COMPLIANCE_NEXT = {
+    DRAFT:              ['LEGAL_REVIEW', 'RETIRED'],
+    LEGAL_REVIEW:       ['ACCOUNTING_REVIEW', 'DRAFT', 'RETIRED'],
+    ACCOUNTING_REVIEW:  ['APPROVED', 'LEGAL_REVIEW', 'DRAFT', 'RETIRED'],
+    APPROVED:           ['PILOT', 'ACCOUNTING_REVIEW', 'RETIRED'],
+    PILOT:              ['ACTIVE', 'SUSPENDED', 'RETIRED'],
+    ACTIVE:             ['SUSPENDED', 'RETIRED'],
+    SUSPENDED:          ['ACTIVE', 'PILOT', 'RETIRED'],
+    RETIRED:            []
+  };
+
+  /* The only two states in which a point may come into existence. */
+  var ISSUING_STATES = ['PILOT', 'ACTIVE'];
+
+  function complianceOf(id) {
+    var p = program(id);
+    return p.compliance || 'DRAFT';
+  }
+
+  /* Is this transition one the ladder allows? Checked rather than assigned. */
+  function mayTransition(id, to) {
+    var from = complianceOf(id);
+    if (COMPLIANCE_STATES.indexOf(to) === -1) {
+      return { ok: false, why: 'unknown compliance state: ' + to };
+    }
+    var allowed = COMPLIANCE_NEXT[from] || [];
+    if (allowed.indexOf(to) === -1) {
+      return { ok: false, why: from + ' cannot move straight to ' + to,
+               from: from, allowed: allowed };
+    }
+    /* Reaching an issuing state additionally requires the programme to be
+       complete — an exposure limit that nobody has set is not a limit. */
+    if (ISSUING_STATES.indexOf(to) !== -1) {
+      var ready = mayActivate(id);
+      if (!ready.ok) return { ok: false, why: ready.why, missing: ready.missing };
+    }
+    return { ok: true, from: from, to: to };
+  }
+
   var PRODUCT_STATE = {
     PLANNING: 'PLANNING',
     DRAFT_PROGRAM: 'DRAFT_PROGRAM',
@@ -261,7 +327,7 @@
 
   function stateOf(id) {
     if (!id) return PRODUCT_STATE.PLANNING;
-    return program(id).status === 'active'
+    return ISSUING_STATES.indexOf(complianceOf(id)) !== -1
       ? PRODUCT_STATE.ACTIVE_PROGRAM
       : PRODUCT_STATE.DRAFT_PROGRAM;
   }
@@ -294,8 +360,13 @@
     return { ok: true };
   }
 
+  /* D20/D21: ISSUANCE IS GATED ON THE COMPLIANCE LADDER, NOT ON A STRING.
+     `status: 'active'` no longer does anything by itself. A programme has to
+     have walked DRAFT -> LEGAL_REVIEW -> ACCOUNTING_REVIEW -> APPROVED ->
+     PILOT, and mayActivate() has to be satisfied at that last step, before a
+     single point can exist. Editing one word cannot start taking money. */
   function mayIssue(id) {
-    return stateOf(id) === PRODUCT_STATE.ACTIVE_PROGRAM;
+    return ISSUING_STATES.indexOf(complianceOf(id)) !== -1;
   }
 
   /* ---- money and points ---------------------------------------------------
@@ -745,6 +816,11 @@
     stateOf: stateOf,
     mayIssue: mayIssue,
     mayActivate: mayActivate,
+    COMPLIANCE_STATES: COMPLIANCE_STATES,
+    COMPLIANCE_NEXT: COMPLIANCE_NEXT,
+    ISSUING_STATES: ISSUING_STATES,
+    complianceOf: complianceOf,
+    mayTransition: mayTransition,
     considerationFor: considerationFor,
     program: program,
     pointsFor: pointsFor,
