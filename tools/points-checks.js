@@ -788,5 +788,134 @@ report(
   backwards
 );
 
+/* ==== Section C: the purchase and accumulation model ===================== */
+
+const PP = require("../scripts/purchase-plan.js");
+const CP = L.variant(DRAFT, {
+  compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+}, "PURCHASE-FIXTURE");
+const pe = (n, kind, q, x) => Object.assign({
+  id: "TPP-" + n, kind, quantity: q, status: "SETTLED",
+  idempotencyKey: "p" + n, programVersion: CP,
+}, x || {});
+
+/* C1/C3 — one-time and recurring, and the bounds are the programme's. */
+const once = PP.create(CP, 1000, "ONCE");
+const monthly = PP.create(CP, 1000, "MONTHLY");
+report(
+  once.ok && monthly.ok &&
+    PP.create(CP, 10, "MONTHLY").ok === false &&
+    PP.create(CP, 3000, "MONTHLY").ok === false,
+  "C1/C3: a plan may be once or monthly, within the programme's own bounds",
+  `1,000 accepted either way; 10 below the floor and 3,000 above the ceiling refused`
+);
+
+/* C3 — pause, resume, stop; and a stopped plan is finished rather than
+   reusable, so the record of what somebody meant last time survives. */
+const active = monthly.plan;
+const paused = PP.transition(active, "PAUSED").plan;
+const resumed = PP.transition(paused, "ACTIVE").plan;
+const stopped = PP.transition(active, "STOPPED").plan;
+report(
+  paused.state === "PAUSED" && resumed.state === "ACTIVE" &&
+    stopped.state === "STOPPED" &&
+    PP.transition(stopped, "ACTIVE").ok === false &&
+    PP.amend(stopped, 2000).ok === false,
+  "C3: pause and resume are reversible; stop is final and cannot be amended",
+  "a customer who paused is not told they cancelled, and a stopped plan keeps " +
+  "its history instead of being restarted in place"
+);
+
+/* C3 — THE ONE THAT MATTERS: stopping future purchases does not touch a
+ * single point already issued. A plan and a balance are different things, and
+ * this file cannot append to a ledger at all. */
+const alreadyIssued = [pe(1, "PURCHASE", 2500, {
+  payment: { amountMinor: 250000, currency: "USD" },
+})];
+const beforeStop = L.wallet(alreadyIssued).available;
+PP.transition(active, "STOPPED");
+const afterStop = L.wallet(alreadyIssued).available;
+report(
+  beforeStop === 2500 && afterStop === 2500,
+  "C3: stopping a plan cancels no points that were already issued",
+  `${afterStop} TP before and after — the plan governs future purchases and ` +
+  `nothing else`
+);
+
+/* C4 — issuance follows SETTLED payment, and nothing else does. */
+const c_pending = [Object.assign(pe(2, "PURCHASE", 2500), { status: "PENDING" })];
+const failed = [Object.assign(pe(3, "PURCHASE", 2500), { status: "FAILED" })];
+const settled = [pe(4, "PURCHASE", 2500, {
+  payment: { amountMinor: 250000, currency: "USD" },
+})];
+report(
+  L.wallet(c_pending).available === 0 && L.wallet(failed).available === 0 &&
+    L.wallet(settled).available === 2500,
+  "C4: pending and failed payments issue nothing spendable; settled issues",
+  `pending 0, failed 0, settled ${L.wallet(settled).available} — there is no ` +
+  `state in which a point exists but is not spendable, because it does not exist`
+);
+
+/* C5 — a bonus is two entries, never one inflated one. */
+const withBonus = L.wallet([
+  pe(5, "PURCHASE", 2500, { payment: { amountMinor: 250000, currency: "USD" } }),
+  pe(6, "PROMOTION", 250),
+]);
+report(
+  withBonus.available === 2750 && withBonus.purchased === 2500 &&
+    withBonus.promotional === 250,
+  "C5: buy 2,500 and receive 250 is recorded as +2,500 and +250, not +2,750",
+  `available ${withBonus.available}, of which purchased ${withBonus.purchased} ` +
+  `and promotional ${withBonus.promotional}`
+);
+
+/* C6 — accumulation to a goal, and the last month is short by construction. */
+const table = PP.accumulate(monthly.plan, 4800, 0);
+report(
+  table.rows.length === 5 && table.rows[4].purchased === 800 &&
+    table.finalHeld === 4800 && table.reaches === true,
+  "C6: 4,800 at 1,000 a month is four full months and a fifth of 800",
+  table.rows.map((r) => `${r.purchased}`).join(" + ") + " = " + table.finalHeld
+);
+
+/* A paused plan accumulates nothing, which is the only honest projection. */
+report(
+  PP.accumulate(paused, 4800, 0).rows.length === 0 &&
+    PP.accumulate(paused, 4800, 0).months === null,
+  "C6: a paused plan projects no arrival rather than pretending to one",
+  "no rows, and months is null rather than a number nobody should act on"
+);
+
+/* C8 — the nine questions, answered per lot rather than in aggregate. */
+const prov = L.lots([
+  pe(7, "PURCHASE", 2500, {
+    at: "2026-03-01",
+    payment: { amountMinor: 250000, currency: "USD", ref: "PAY-001" },
+  }),
+  pe(8, "PROMOTION", 250, { at: "2026-03-01" }),
+  pe(9, "RESERVE", 2600, { journeyRef: "JRN-1" }),
+]);
+const c_bought = prov.lots[0];
+const granted = prov.lots[1];
+report(
+  c_bought.issuedAt === "2026-03-01" && c_bought.programId === CP &&
+    c_bought.issueRate === 1 && c_bought.entitlementRate === 1 &&
+    c_bought.promotional === false && c_bought.considerationMinor === 250000 &&
+    c_bought.remaining === 0 && c_bought.spent.RESERVE === 2500 &&
+    granted.promotional === true && granted.remaining === 150,
+  "C8: every lot can say when, under which programme, at what rates, and what happened to it",
+  `TP-7 purchased 2,500 at issueRate 1 for $2,500, all reserved; TP-8 ` +
+  `promotional 250, 100 reserved, ${granted.remaining} left`
+);
+
+/* C7/C2 — nothing in the purchase model describes a savings account. */
+const purchaseSrc = fs.readFileSync(
+  path.join(__dirname, "../scripts/purchase-plan.js"), "utf-8");
+report(
+  !/\bsavings? account\b/i.test(purchaseSrc.replace(/\/\*[\s\S]*?\*\//g, " ")),
+  "C2/C7: the purchase model never describes itself as a savings account",
+  "a plan is an intention to buy, and stopping it cancels no entitlement"
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);

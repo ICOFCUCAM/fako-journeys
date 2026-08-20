@@ -642,6 +642,75 @@
    * an exception. The fold refuses too — that is the backstop — but a wallet
    * screen needs to say "no, and here is why" without throwing.
    */
+  /* ---- C8: WHERE DID THESE POINTS COME FROM ------------------------------
+   *
+   * The wallet answers "how many", which is what a customer sees and what a
+   * booking needs. C8 asks nine questions the aggregate cannot answer: when
+   * were these issued, under which programme, at what issue rate, carrying
+   * what entitlement, were they promotional, reserved, redeemed, expired,
+   * cancelled, bought back.
+   *
+   * All of it is in the ledger already — this reads it back per lot rather
+   * than folding it away. Consumption is applied in the programme's lotOrder
+   * (provisionally FIFO, open question B-ii) so a lot can say how much of it
+   * is left, and the answer is derived rather than stored, like every other
+   * figure here.
+   *
+   * Deliberately NOT part of `wallet()`. A wallet is what a customer is shown
+   * and B22 keeps it to counts of points; this is what an auditor, a dispute
+   * or a repurchase quote needs, and mixing them would put lot detail on a
+   * screen that should carry a balance.
+   */
+  function lots(entries) {
+    var open = [];
+    var consumed = [];
+
+    (entries || []).forEach(function (e) {
+      var kind = KINDS[e.kind];
+      if (!kind) return;
+      if (e.kind === 'PURCHASE' && e.status !== 'SETTLED') return;
+
+      if (kind.lot) {
+        var p = PROGRAMS[e.programVersion];
+        open.push({
+          entry: e.id,
+          issuedAt: e.at || null,          // recorded by the caller, not a clock
+          programId: e.programVersion || null,
+          programVersion: p ? p.version : null,
+          issueRate: p ? p.issueRate : null,
+          entitlementRate: p ? p.entitlementRate : null,
+          promotional: kind.lot === 'promotional',
+          quantity: e.quantity,
+          remaining: e.quantity,
+          paymentRef: e.paymentRef || (e.payment ? e.payment.ref || null : null),
+          considerationMinor: e.payment ? e.payment.amountMinor : null,
+          currency: e.payment ? e.payment.currency : null,
+          spent: {}                        // kind -> quantity taken from this lot
+        });
+        return;
+      }
+
+      /* Anything that removes points takes them from open lots in order, so
+         "have these been redeemed" has a per-lot answer rather than a
+         site-wide total. */
+      if (kind.available === -1 || kind.reserved === -1) {
+        var want = e.quantity;
+        for (var i = 0; i < open.length && want > 0; i++) {
+          var lot = open[i];
+          if (lot.remaining <= 0) continue;
+          var take = Math.min(want, lot.remaining);
+          lot.remaining -= take;
+          lot.spent[e.kind] = (lot.spent[e.kind] || 0) + take;
+          want -= take;
+        }
+        consumed.push({ entry: e.id, kind: e.kind, quantity: e.quantity,
+                        unmatched: want });
+      }
+    });
+
+    return { lots: open, movements: consumed };
+  }
+
   function can(entries, proposed) {
     var w = wallet(entries);
     var kind = KINDS[proposed.kind];
@@ -890,6 +959,7 @@
     canPurchase: canPurchase,
     fold: fold,
     wallet: wallet,
+    lots: lots,
     can: can,
     cancellation: cancellation,
     buybackQuote: buybackQuote,
