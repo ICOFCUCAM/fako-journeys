@@ -376,6 +376,59 @@ report(
   twice.first.join(",")
 );
 
+/* ------------------------------------------------- publish, when it fails */
+
+/* A partially uploaded asset must never be marked published. If it were,
+ * rewrite would point pages at objects that are not in the bucket — the exact
+ * failure the reachability check exists to catch, arriving by a different
+ * door. Uploads run eight at a time now, so a single failure among hundreds
+ * is a realistic event rather than a hypothetical one. */
+const partial = JSON.parse(
+  py(`
+import os, sys, tempfile, json
+try:
+    import boto3
+except ImportError:
+    print(json.dumps({"skip": True})); raise SystemExit
+reg = {"host": "https://image.afrinkong.com", "nextId": 3, "assets": {}}
+for i in (1, 2):
+    aid = "AKL-%06d" % i
+    reg["assets"][aid] = {"id": aid, "sourceKey": "pexels:%d" % i,
+                          "origin": "provider", "encodedAt": "2026-01-01T00:00:00Z",
+                          "widths": [480]}
+json.dump(reg, open(L.REGISTER, "w"))
+root = os.path.join(L.ROOT, "images", "library")
+made = []
+for a in reg["assets"].values():
+    keys = [L.key(a["id"])] + [L.key(a["id"], 480, e) for e in L.FORMATS]
+    for k in keys:
+        f = os.path.join(root, k)
+        os.makedirs(os.path.dirname(f), exist_ok=True)
+        open(f, "wb").write(b"x" * 100); made.append(f)
+os.environ.update(R2_ACCOUNT_ID="a", R2_ACCESS_KEY_ID="b",
+                  R2_SECRET_ACCESS_KEY="c", R2_BUCKET="d")
+class Flaky:
+    def upload_file(self, full, bucket, k, ExtraArgs=None):
+        if k.endswith("AKL-000002.webp"):
+            raise RuntimeError("simulated failure")
+boto3.client = lambda *a, **kw: Flaky()
+rc = L.publish(write=True, log=lambda *m: None)
+published = sum(1 for a in L.register()["assets"].values() if a.get("publishedAt"))
+for f in made:
+    os.remove(f)
+print(json.dumps({"skip": False, "rc": rc, "published": published}))
+`)
+);
+if (partial.skip) {
+  console.log("SKIP\ta failed upload marks nothing published\tboto3 not installed");
+} else {
+  report(
+    partial.rc === 1 && partial.published === 0,
+    "one failed upload marks nothing published",
+    `exit ${partial.rc}, ${partial.published} asset(s) published`
+  );
+}
+
 fs.rmSync(TMP, { recursive: true, force: true });
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
