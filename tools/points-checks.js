@@ -381,5 +381,33 @@ report(
   "an administrative correction or a later programme still needs them"
 );
 
+/* ---- Section B16: promotional points, which the ledger cannot yet tell apart */
+
+/* B16 settled that a purchased point and a granted one are different things and
+ * the ledger must know which is which — they may carry different expiry,
+ * redemption, cancellation, buyback and transfer rules.
+ *
+ * It cannot today. There is no promotional kind and no lot type, so once a
+ * bonus is written it is indistinguishable from a paid point. ADJUST_UP is not
+ * a substitute: it is an administrative correction and using it for marketing
+ * grants would make every promotion look like a manual intervention in an
+ * audit.
+ *
+ * Pinned rather than built — this is a ledger kind, a programme sub-structure,
+ * and everything downstream that reads a balance. */
+report(
+  !Object.keys(L.KINDS).some((k) => /PROMO|BONUS|GRANT/.test(k)),
+  "B16: the ledger still cannot distinguish a promotional point from a paid one",
+  "no PROMOTION kind and no lot type — B16 requires the distinction. " +
+  "ADJUST_UP is admin:true and is not a substitute. " +
+  "See docs/travel-point-economics.md B16.2"
+);
+
+report(
+  L.KINDS.ADJUST_UP && L.KINDS.ADJUST_UP.admin === true,
+  "B16: ADJUST_UP stays marked admin, so it cannot quietly become the bonus kind",
+  "an administrative correction and a marketing grant must not share an entry kind"
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);

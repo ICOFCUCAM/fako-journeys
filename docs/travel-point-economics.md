@@ -4,10 +4,11 @@
 
 | | |
 |---|---|
-| B1–B14 | **settled** as product and economic decisions |
-| B15 onward | not yet written |
-| new open questions | sixteen, raised by B6–B13 and registered below |
-| awaiting your word | **B14** — `transferable: false`, a one-word change blocked on nothing |
+| B1–B16 | **settled** as product and economic decisions |
+| B17 onward | not yet written |
+| open questions | fifteen — two resolved by B16, one added |
+| awaiting your word | **B14** — `transferable: false`, one word, blocked on nothing |
+| larger pending work | **B16** — a promotional lot type the ledger cannot yet express |
 | resolves | **Section A1c** — repurchase is refund of consideration |
 | what these are not | **a legal opinion.** They do not determine the regulatory characterisation of the product. |
 | before activation | counsel must confirm the characterisation. See §B1.3. |
@@ -800,7 +801,128 @@ Two of four now have answers, and both moved toward the easier characterisation.
 
 ---
 
-## B15 onward
+## B15. No secondary market
+
+**Settled.**
+
+V1 supports:
+
+    purchase  →  hold  →  redeem
+    purchase  →  hold  →  eligible Afrinkong repurchase
+
+V1 does not support:
+
+    purchase  →  speculate  →  trade  →  sell to another customer
+
+> That keeps Afrinkong a travel company, not an exchange.
+
+B15 is B14 stated as a shape rather than a prohibition, and the distinction is
+useful: B14 forbids an act, B15 describes the only flows that exist. A design
+that cannot express a trade is stronger than one that can and declines to.
+
+The ledger already matches. `TRANSFER_OUT` has no counterparty field, no
+recipient, no price — a movement out, with nothing to make it a sale. There is
+no order book, no matching, no quotation between customers, and nothing to add
+one to. **Nothing to remove; the shape is already the V1 shape.**
+
+## B16. Promotional points are a different thing
+
+**Settled, and it resolves two open questions.**
+
+> Distinguish **purchased points** — the customer paid for them — from
+> **promotional points** — Afrinkong issued them as a bonus.
+>
+>     buy       1,000 TP
+>     receive     100 TP promotional
+>
+> **The ledger must know the difference.** Promotional points may carry
+> different expiry, redemption, cancellation, buyback and transfer rules.
+>
+> A promotional point is never advertised as cash-equivalent value.
+
+### B16.1 This supersedes how I read B5
+
+B5's example — *"$100 purchase → 110 TP"* — I read as **one entry of 110**, and
+recorded the consequence in B7.2: the incentive lives in the quantity, so a
+bonus point becomes indistinguishable from a paid point the moment it is
+written.
+
+B16 says that is wrong. Buy 1,000, *receive* 100 promotional: two things, and
+the ledger must be able to tell them apart. **The correct shape is two entries**
+(or one entry carrying a lot type), not one entry of 1,100.
+
+That resolves two registered questions:
+
+| # | was | now |
+|---|---|---|
+| **B-i** | one entry of 110, or `PURCHASE 100` + `BONUS 10`? | **two.** Settled by B16. |
+| **B-xiv** | how are promotional points marked so a programme can exclude them from repurchase? | **as their own issuance**, which makes B13's promotional exclusion expressible for the first time |
+
+It also removes the cost I flagged in B13.1. Promotional exclusion from
+repurchase was *impossible* under the one-entry reading; under B16 it is simply
+a property of the lot.
+
+### B16.2 The ledger cannot express this yet
+
+| | |
+|---|---|
+| issuing kinds today | `PURCHASE`, `TRANSFER_IN`, `ADJUST_UP` |
+| any promotional kind | **none** |
+| any lot type on an entry | **none** — `fold` reads kind, quantity, status, idempotency key, programme, journey ref |
+| in the schema | no lot or promotional concept |
+
+`ADJUST_UP` is not it: that is an administrative correction, flagged `admin:
+true`, and using it for marketing grants would make every promotional issuance
+look like a manual intervention in an audit.
+
+So B16 needs an eleventh kind — `PROMOTION` — or a `lotType` field, and a
+programme block describing the rules that apply to promotional lots. Distinct
+expiry, redemption, cancellation, buyback and transfer rules per B16 means the
+programme grows a parallel set of terms, not a single flag.
+
+**Not built.** This is larger than B14's one word: a ledger kind, a programme
+sub-structure, and everything downstream that reads a balance. Blocked on
+nothing, but genuinely economic implementation.
+
+### B16.3 The closed-set check is about to fire, exactly as designed
+
+B7.1 added a check asserting that the ways a balance can change are **a closed
+set of ten**, with the stated reason: *"An eleventh fails the check, so adding
+one has to be said out loud."*
+
+B16 is the first eleventh, and this is it being said out loud. When `PROMOTION`
+is added the check will fail until somebody updates it deliberately, with B16 as
+the citation. That is the guard working rather than an obstacle to route around
+— and it is worth noting that it took four sections to catch something, which is
+about the right rate for a guard of that kind.
+
+### B16.4 One thing B16 does not settle
+
+Whether promotional points are consumed **before or after** purchased points on
+redemption. It matters: burn promotional first and the customer keeps the points
+with repurchase rights; burn purchased first and the customer is left holding
+grants that may expire and cannot be repurchased.
+
+This is open question **B-ii** — lot consumption order — which B8.1 raised for
+multiple programmes and which B16 now sharpens. The two are the same question
+and should be answered together.
+
+---
+
+## Open questions after B15–B16
+
+Two resolved, one sharpened, one added.
+
+| # | question | status |
+|---|---|---|
+| B-i | one entry or two for a bonus | ✅ **resolved by B16** — two |
+| B-xiv | how promotional points are marked | ✅ **resolved by B16** — their own issuance |
+| B-ii | which lot is consumed first | sharpened: now spans programme *and* purchased-vs-promotional |
+| B-xvii | do promotional points carry a parallel set of programme terms, or overrides on the main set? | new, raised by B16.2 |
+
+---
+
+## B17 onward
 
 Not yet written. The remaining economic model — pricing, packages, recurring
 purchase, the wallet, reservation and redemption mechanics, price protection —
