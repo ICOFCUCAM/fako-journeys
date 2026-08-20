@@ -1,0 +1,36 @@
+# Wave 1 of the art-directed re-crops: the 29 whose country carries
+# a price. Generated from data/image-acquisition.csv (class RECROP,
+# commercial tier 1-3). One identity per line; feed it to the
+# library with --only @data/recrop-wave-1.txt
+#
+# The other 73 re-crops are the same zero-cost operation and unlock
+# 63 more unbounded heroes. This file is the order, not the scope.
+AKL-000403	# tier 1  namibia
+AKL-000405	# tier 1  namibia
+AKL-000407	# tier 1  namibia
+AKL-000413	# tier 1  namibia
+AKL-000606	# tier 1  uganda
+AKL-000607	# tier 1  uganda
+AKL-000031	# tier 2  botswana
+AKL-000264	# tier 2  kenya
+AKL-000268	# tier 2  kenya
+AKL-000280	# tier 2  kenya
+AKL-000439	# tier 2  rwanda
+AKL-000441	# tier 2  rwanda
+AKL-000514	# tier 2  south-africa
+AKL-000515	# tier 2  south-africa
+AKL-000546	# tier 2  tanzania
+AKL-000550	# tier 2  tanzania
+AKL-000554	# tier 2  tanzania
+AKL-000608	# tier 2  zambia
+AKL-000620	# tier 2  zambia
+AKL-000629	# tier 2  zimbabwe
+AKL-000117	# tier 3  cote-divoire
+AKL-000223	# tier 3  gambia
+AKL-000230	# tier 3  gambia
+AKL-000231	# tier 3  ghana
+AKL-000237	# tier 3  ghana
+AKL-000241	# tier 3  ghana
+AKL-000259	# tier 3  guinea
+AKL-000254	# tier 3  guinea-bissau
+AKL-000255	# tier 3  guinea-bissau

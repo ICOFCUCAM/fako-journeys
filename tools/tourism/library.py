@@ -109,7 +109,9 @@ way round.
 
 import base64
 import hashlib
+import html as html_mod
 import json
+import math
 import os
 import re
 import time
@@ -162,7 +164,7 @@ def source_key(origin, provider=None, photo_id=None, sha=None):
     return "sha256:%s" % sha
 
 
-def key(asset_id, width=None, ext=".avif"):
+def key(asset_id, width=None, ext=".avif", crop=None):
     """The object key on R2 for one photograph at one width, or its original.
 
     THE KEY IS THE IDENTITY AND NOTHING ELSE.
@@ -181,7 +183,71 @@ def key(asset_id, width=None, ext=".avif"):
     """
     if width is None:
         return "originals/%s.jpg" % asset_id
+    if crop:
+        # A SECOND RECTANGLE OF THE SAME PHOTOGRAPH, NOT A SECOND PHOTOGRAPH.
+        #
+        # The identity does not change — AKL-000123 cropped 4:5 is still
+        # AKL-000123 — so the crop is a prefix on the width rather than a
+        # suffix on the name. Widths are digits and crop names contain an x,
+        # so "4x5/1200/AKL-000123.avif" cannot collide with "1200/...", and
+        # every object already in the bucket keeps the key it was uploaded
+        # under.
+        return "%s/%d/%s%s" % (crop, width, asset_id, ext)
     return "%d/%s%s" % (width, asset_id, ext)
+
+
+def object_keys(a):
+    """Every R2 key one asset owns: the original, the ladder, and any crop.
+
+    ONE PLACE, BECAUSE TWO PLACES DRIFT. `publish` decides what to upload and
+    `reachable` decides what to ask the public host for, and they had the same
+    six lines each. The moment `encode` started writing a second rectangle,
+    two identical lists became two different ones — a crop uploaded and never
+    checked, or checked and never uploaded, depending on which got edited.
+    """
+    keys = [key(a["id"], None)]
+    for w in a.get("widths") or LADDER:
+        for ext in FORMATS:
+            keys.append(key(a["id"], w, ext))
+    for name, spec in (a.get("crops") or {}).items():
+        for w in spec.get("widths") or []:
+            for ext in FORMATS:
+                keys.append(key(a["id"], w, ext, name))
+    return keys
+
+
+def _crop_box(width, height, aspect, fx=0.5, fy=0.5):
+    """The largest rectangle of `aspect` inside width x height, around (fx, fy).
+
+    Largest, because cutting a 4:5 out of a 3:2 already throws away most of
+    the frame and taking less than the maximum throws away resolution as well.
+    Clamped to the edges, so a focal point at 0.95 slides the box against the
+    side rather than off it — which is what the provider does and what anybody
+    looking at the result would expect.
+    """
+    aw, ah = aspect
+    box_w, box_h = width, round(width * ah / aw)
+    if box_h > height:
+        box_h, box_w = height, round(height * aw / ah)
+    left = int(round(width * fx - box_w / 2))
+    top = int(round(height * fy - box_h / 2))
+    left = max(0, min(left, width - box_w))
+    top = max(0, min(top, height - box_h))
+    return (left, top, left + box_w, top + box_h)
+
+
+def crop_name(aspect):
+    """"4x5" from (1200, 1500). The name of a rectangle, not of a device.
+
+    Named for the shape because that is what it is. `phone` would be a lie the
+    moment a layout uses the 4:5 cut anywhere else, and the bucket would then
+    hold an object whose key disagrees with its purpose.
+    """
+    if not aspect:
+        return ""
+    w, h = aspect
+    d = math.gcd(w, h)
+    return "%dx%d" % (w // d, h // d)
 
 
 def staged(asset_id):
@@ -236,8 +302,18 @@ def select(reg, only=None):
     if only.startswith("@"):
         path = only[1:]
         path = path if os.path.isabs(path) else os.path.join(ROOT, path)
+        # Comments allowed, and stripped. A list of 29 bare identities tells
+        # whoever opens it nothing about why those 29; annotated, it says
+        # which country and which tier each one is. The list is meant to be
+        # read by a person before it is fed to a machine, and a format that
+        # forbids saying why is a format that gets replaced by a note
+        # somewhere else that then goes stale.
+        want = set()
         with open(path, encoding="utf-8") as fh:
-            want = {ln.strip() for ln in fh if ln.strip()}
+            for line in fh:
+                line = line.split("#", 1)[0].strip()
+                if line:
+                    want.add(line)
         return [a for a in assets if a["id"] in want]
     if ":" in only:
         field, value = only.split(":", 1)
@@ -496,7 +572,7 @@ def pilot(reg, n):
     return out[:n]
 
 
-def fetch(write=False, log=print, limit=0):
+def fetch(write=False, log=print, limit=0, only=None):
     """Download exactly the planned set. NEEDS NETWORK — a workflow step.
 
     One original per photograph, at the largest width the ladder will use, and
@@ -504,6 +580,17 @@ def fetch(write=False, log=print, limit=0):
     replacement. Nothing outside the register is ever fetched.
     """
     reg = register()
+
+    # Which photographs a second rectangle has to be cut from, so fetch can
+    # ask for a file big enough to cut it out of. Read once, not per asset.
+    cropping = artdirected()
+
+    def owes_crop(a):
+        """Art-directed, and no crop encoded for it yet."""
+        if (a.get("originalUrl") or "").split("?")[0] not in cropping:
+            return False
+        return not (a.get("crops") and any(c.get("widths")
+                                           for c in a["crops"].values()))
 
     def needed(a):
         """Whether this run has to go and get the bytes.
@@ -524,12 +611,20 @@ def fetch(write=False, log=print, limit=0):
         provider quietly serving something else. An asset already published
         is the one case where the bytes genuinely are not needed again — it
         is in the bucket, and that is where it is served from.
+
+        WITH ONE EXCEPTION, ADDED FOR THE RE-CROPS. An asset published from a
+        w=1600 download cannot yield the phone rectangle: 4:5 out of 1600x900
+        is 720x900, and the phone would get a 480-wide source where the
+        provider currently serves 1200x1500. So a photograph that still owes a
+        crop needs its bytes again even though it is published — and `want`
+        below asks for the full original rather than w=1600, which is the file
+        the page is already sending visitors today.
         """
-        if a.get("publishedAt"):
+        if a.get("publishedAt") and not owes_crop(a):
             return False
         return not os.path.exists(staged(a["id"]))
 
-    pool = list(reg["assets"].values())
+    pool = select(reg, only)
     if limit:
         # The pilot is a sample of the library, not its first page.
         pool = pilot(reg, limit)
@@ -549,6 +644,18 @@ def fetch(write=False, log=print, limit=0):
         # Ask each provider for the widest size the ladder needs and no more.
         sep = "&" if "?" in url else "?"
         want = "%s%sw=%d" % (url, sep, LADDER[-1])
+        # EXCEPT WHERE A SECOND RECTANGLE HAS TO COME OUT OF IT.
+        #
+        # w=1600 is exactly enough for the ladder and not enough for a crop.
+        # Cutting 4:5 out of a 1600x900 file leaves 720x900, so the phone
+        # source would top out at 480 wide on a screen asking for 1170 — a
+        # visible downgrade from the 1200x1500 the provider serves today, and
+        # the migration would have made the page worse while making it ours.
+        #
+        # For the 256 art-directed photographs, take the file the page is
+        # already being sent. It is the same bytes a visitor downloads now.
+        if url.split("?")[0] in cropping:
+            want = url
         out = staged(a["id"])
         try:
             req = urllib.request.Request(want, headers={"User-Agent": "afrinkong-library"})
@@ -598,6 +705,8 @@ def encode(write=False, log=print):
         return 1
     reg = register()
     out_root = os.path.join(ROOT, "images", "library")
+    # Read once, not once per asset: this walks 1,597 files.
+    crops = artdirection()
     made, skipped, bytes_out = 0, 0, 0
     for a in reg["assets"].values():
         src = staged(a["id"])
@@ -631,6 +740,43 @@ def encode(write=False, log=print):
                     small.save(dst, **kw)
                     bytes_out += os.path.getsize(dst)
                     made += 1
+            # THE SECOND RECTANGLE, FOR THE PHOTOGRAPHS THE PAGES CROP TWICE.
+            #
+            # 256 <picture> blocks ask a provider for the same photograph at
+            # two shapes — 16:9-ish for the desktop, 4:5 or 3:2 for the phone.
+            # Until this existed, `rewrite` had to refuse all of them: migrate
+            # only the <img> and the phone still fetches from Pexels, migrate
+            # both and the phone silently gets the desktop rectangle.
+            #
+            # Cut from the original we already hold, at the aspect the markup
+            # asks for and around the focal point it names — 24 of the 256
+            # carry crop=focalpoint&fp-x&fp-y, the rest are centred and get
+            # centred. Nothing here is a judgement about composition; every
+            # number comes from the page.
+            spec = crops.get((a.get("originalUrl") or "").split("?")[0])
+            if spec and spec.get("aspect"):
+                name = crop_name(spec["aspect"])
+                cut = im.crop(_crop_box(im.width, im.height, spec["aspect"],
+                                        spec["fx"], spec["fy"]))
+                cwidths = []
+                for w in LADDER:
+                    if w > cut.width:
+                        continue
+                    cwidths.append(w)
+                    small = cut.resize((w, round(cut.height * w / cut.width)),
+                                       Image.LANCZOS)
+                    for ext, kw in ((".avif", {"quality": AVIF_Q}),
+                                    (".webp", {"quality": WEBP_Q, "method": 5}),
+                                    (".jpg", {"quality": JPEG_Q,
+                                              "optimize": True})):
+                        dst = os.path.join(out_root, key(a["id"], w, ext, name))
+                        os.makedirs(os.path.dirname(dst), exist_ok=True)
+                        small.save(dst, **kw)
+                        bytes_out += os.path.getsize(dst)
+                        made += 1
+                a["crops"] = {name: {"widths": cwidths,
+                                     "fx": spec["fx"], "fy": spec["fy"],
+                                     "media": spec["media"]}}
         a["widths"] = widths
         a["encodedAt"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     if write:
@@ -690,10 +836,7 @@ def publish(write=False, log=print, only=None):
         return 1
     want = set()
     for a in chosen:
-        want.add(key(a["id"], None))
-        for w in a.get("widths") or LADDER:
-            for ext in FORMATS:
-                want.add(key(a["id"], w, ext))
+        want.update(object_keys(a))
     client = boto3.client(
         "s3",
         endpoint_url="https://%s.r2.cloudflarestorage.com" % os.environ["R2_ACCOUNT_ID"],
@@ -900,10 +1043,7 @@ def reachable(log=print, sample=0):
     published = [a for a in reg["assets"].values() if a.get("publishedAt")]
     keys = []
     for a in published:
-        keys.append((key(a["id"], None), None))
-        for w in a.get("widths") or LADDER:
-            for ext in FORMATS:
-                keys.append((key(a["id"], w, ext), None))
+        keys.extend((k, None) for k in object_keys(a))
     if not keys:
         # Nothing published yet: fall back to whatever was just encoded, so a
         # ladder can be checked before it is uploaded.
@@ -1439,7 +1579,33 @@ def artdirected():
     102 of the 629 approved photographs are in this shape. They wait for a
     second crop to be produced, which is art direction and out of scope.
     """
-    out = set()
+    return set(artdirection())
+
+
+def artdirection():
+    """The phone crop each art-directed photograph is actually asked for.
+
+    THE SECOND CROP IS NOT A MYSTERY, IT IS IN THE MARKUP.
+
+    `artdirected` used to return a bare set of URLs to exclude, and the comment
+    beside it said a second crop "is art direction and out of scope". Reading
+    what the pages ask the providers for says otherwise. Every one of the 256
+    art-directed <picture> blocks is one photograph requested twice:
+
+        <source media="(max-width: 700px)"
+                srcset="...?fit=crop&w=1200&h=1500 1200w">
+        <img src="...?fit=crop&w=2400&h=1350">
+
+    Same file, two rectangles. The phone gets 4:5 or 3:2, the desktop gets
+    16:9 or 450:253 or 800:343, and the provider cuts both — centred, unless
+    the URL carries crop=focalpoint with fp-x/fp-y, which 43 of them do.
+
+    So the information needed to cut the phone crop ourselves is: the aspect,
+    and where to centre it. Both are here, and neither is a matter of taste.
+    Returns {url without query: {"aspect": (w, h), "fx": float, "fy": float,
+    "media": str}}.
+    """
+    out = {}
     for base, dirs, files in os.walk(ROOT):
         dirs[:] = [d for d in dirs
                    if d not in ("node_modules", ".git", "incoming", "tools")
@@ -1452,13 +1618,86 @@ def artdirected():
             if "<source media=" not in html:
                 continue
             for pm in re.finditer(r"<picture>.*?</picture>", html, re.S):
-                if "<source media=" not in pm.group(0):
+                block = pm.group(0)
+                if "<source media=" not in block:
                     continue
+                sm = re.search(r'<source media="([^"]+)"[^>]*'
+                               r'srcset="([^"]+)"', block)
+                phone = ""
+                if sm:
+                    phone = html_mod.unescape(
+                        sm.group(2).split(",")[0].strip().split()[0])
                 for u in re.findall(
                         r"https://images\.(?:pexels|unsplash)\.com/[^\"\s]+",
-                        pm.group(0)):
-                    out.add(u.split("?")[0])
+                        block):
+                    base_url = html_mod.unescape(u).split("?")[0]
+                    # First <picture> to mention this photograph wins. All 256
+                    # blocks name 256 distinct photographs, so this never
+                    # actually arbitrates between two different crops — but if
+                    # that ever changes, one photograph must still have one
+                    # crop, because the object key holds one.
+                    if base_url in out:
+                        continue
+                    spec = out.setdefault(base_url, {})
+                    w = re.search(r"[?&]w=(\d+)", phone)
+                    h = re.search(r"[?&]h=(\d+)", phone)
+                    fx = re.search(r"[?&]fp-x=([0-9.]+)", phone)
+                    fy = re.search(r"[?&]fp-y=([0-9.]+)", phone)
+                    spec.update({
+                        "media": sm.group(1) if sm else "(max-width: 700px)",
+                        "aspect": (int(w.group(1)), int(h.group(1)))
+                                  if w and h else None,
+                        # No focal point means the provider centres it, so we
+                        # centre it too. Not a default we invented.
+                        "fx": float(fx.group(1)) if fx else 0.5,
+                        "fy": float(fy.group(1)) if fy else 0.5,
+                    })
     return out
+
+
+def artdirected_picture(block, a, host):
+    """An art-directed <picture>, rebuilt on our own host. Both rectangles.
+
+    The block already IS a <picture>: a phone <source> at one aspect and an
+    <img> at another. Wrapping the <img> the way `wrap` does would nest one
+    <picture> inside another, which is invalid and which this site already
+    has nine accidental examples of.
+
+    So the whole block is replaced. The phone source comes first because
+    <picture> takes the first source whose media matches and whose type is
+    supported, and its media query is copied from the markup rather than
+    assumed — if a layout ever changes its breakpoint, this follows it.
+    """
+    crop = next(iter(a["crops"]))
+    spec = a["crops"][crop]
+    img_m = re.search(r"<img\b[^>]*>", block)
+    tag = img_m.group(0)
+    sizes = HAS_SIZES_RE.search(block)
+    sizes_attr = ' sizes="%s"' % sizes.group(1) if sizes else ""
+    out = []
+    for ext, mime in ((".avif", "image/avif"), (".webp", "image/webp")):
+        ladder = ", ".join("%s %dw" % ("%s/%s" % (host, key(a["id"], w, ext,
+                                                            crop)), w)
+                           for w in spec["widths"])
+        if ladder:
+            out.append('<source media="%s" type="%s" srcset="%s"%s>'
+                       % (spec["media"], mime, ladder, sizes_attr))
+    for ext, mime in ((".avif", "image/avif"), (".webp", "image/webp")):
+        ladder = ", ".join("%s %dw" % ("%s/%s" % (host, key(a["id"], w, ext)), w)
+                           for w in a["widths"])
+        out.append('<source type="%s" srcset="%s"%s>'
+                   % (mime, ladder, sizes_attr))
+    # data-was holds the WHOLE original block, not just the <img>, because
+    # the whole block is what was replaced. The revert regex decodes it and
+    # substitutes it for the match, so what comes back is byte-identical
+    # including the phone source it would otherwise have lost.
+    keep = base64.b64encode(block.encode("utf-8")).decode("ascii")
+    img = REAL_SRC_RE.sub(
+        lambda m: 'src="%s"' % "%s/%s" % (host, key(a["id"], a["widths"][-1], ".jpg")),
+        tag, count=1)
+    img = re.sub(r'(?<![-\w])srcset="[^"]*"\s*', "", img)
+    img = img[:-1].rstrip() + ' data-was="%s">' % keep
+    return "<picture>" + "".join(out) + img + "</picture>"
 
 
 def rewrite(write=False, revert=False, log=print, only=None):
@@ -1509,11 +1748,25 @@ def rewrite(write=False, revert=False, log=print, only=None):
     # On revert the gate is deliberately wider — anything that was rewritten
     # has to be undoable whatever its state is now.
     pool = select(reg, only)
+    # ART DIRECTION IS A REASON TO WAIT, NOT A REASON TO REFUSE FOREVER.
+    #
+    # This used to exclude every photograph that appears in an art-directed
+    # <picture>, permanently, because the library held one crop per photograph
+    # and migrating half a <picture> puts one rectangle on our host and the
+    # other on Pexels. That was right when there was one crop. `encode` now
+    # cuts the phone rectangle too, so the exclusion applies only to assets
+    # that do not yet have theirs — which is a queue, not a wall.
+    def artblocked(a):
+        if a["originalUrl"].split("?")[0] not in blocked:
+            return False
+        return not (a.get("crops") and any(c.get("widths")
+                                           for c in a["crops"].values()))
+
     ready = [a for a in pool
              if a.get("originalUrl") and a.get("widths")
              and (a.get("rewrittenAt") if revert else a.get("publishedAt"))
              and not a.get("hold")
-             and a["originalUrl"].split("?")[0] not in blocked]
+             and not artblocked(a)]
     by_url = {}
     for a in ready:
         by_url[a["originalUrl"].split("?")[0]] = a
@@ -1607,6 +1860,30 @@ def rewrite(write=False, revert=False, log=print, only=None):
                         for ext in FORMATS:
                             html = html.replace(url_for(a, w, ext), a["originalUrl"])
             else:
+                # THE ART-DIRECTED BLOCKS FIRST, AS WHOLE <picture> ELEMENTS.
+                #
+                # Before the <img> pass, because that pass wraps a bare <img>
+                # in a new <picture> and these are already inside one. Once
+                # replaced they carry no provider URL, so the <img> pass walks
+                # straight past them and cannot nest anything.
+                done = []
+
+                def redirect(m):
+                    block = m.group(0)
+                    if "<source media=" not in block:
+                        return block
+                    for u in re.findall(
+                            r"https://images\.(?:pexels|unsplash)\.com/[^\"\s]+",
+                            block):
+                        a = by_url.get(html_mod.unescape(u).split("?")[0])
+                        if a and a.get("crops"):
+                            done.append(a["id"])
+                            return artdirected_picture(block, a, host)
+                    return block
+
+                html = re.sub(r"<picture>.*?</picture>", redirect, html,
+                              flags=re.S)
+                n += len(done)
                 out, cut = [], 0
                 for m in IMG_TAG_RE.finditer(html):
                     tag = m.group(0)

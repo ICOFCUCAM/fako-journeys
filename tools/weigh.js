@@ -44,22 +44,44 @@ const ROOT = path.resolve(__dirname, "..");
 /* The commit the rewrite landed in. Its parent is "before". */
 const REWRITE = "c26c33a30f500fbd6cb386a193a84dec904b9cc3";
 
-/* Six of the seventy-six, spread evenly across the four page shapes the
- * rewrite touched — 19 root country pages, 19 /tourism, 19 /portrait, 19
- * /places — so one unusual page cannot carry the result.
+/* PICKED FOR THE WAVE BEING MEASURED, NOT FIXED FOREVER.
  *
- * These are checked against reality rather than assumed. The first list I
- * wrote included burundi.html, which was never rewritten: Burundi's culture
- * photograph is one of the six held back for a phone crop, so that page has
- * no first-party image on it at all and would have measured a change of
- * exactly zero while looking like a fair sample. */
+ * The first list sampled the four page shapes PR #22 rewrote, evenly. That was
+ * right for that wave and useless for this one: five of those six are not
+ * /places pages, and the run measured 7.49 MB against 7.40 MB — five hundred
+ * extra migrated photographs for ninety kilobytes — because none of the six
+ * had a migrated HERO. A sample that cannot see the change being made is not
+ * a conservative sample, it is a broken one.
+ *
+ * So this list is the 29 art-directed re-crops of wave 1, sampled across what
+ * actually varies between them, plus two controls:
+ *
+ *   the payload spread  ghana/mole-and-ankasa is the heaviest at an estimated
+ *                       10.8 MB; namibia/self-drive-country the lightest at
+ *                       1.1 MB. If the gain does not scale between them the
+ *                       model is wrong and I want to see that.
+ *   the commercial tier namibia is tier 1, an operator with rates; kenya tier
+ *                       2; ghana tier 3.
+ *   the bounded half    /tourism/ghana and /tourism/namibia are the same
+ *                       photographs as heroes of a width-limited page. These
+ *                       should move by tens of kilobytes, not megabytes, and
+ *                       measuring them is how the thirty-to-one ratio gets a
+ *                       second data point instead of staying an anecdote.
+ *   control, migrated   places/algeria/… is already first-party at 0.07 MB.
+ *                       If it moves, the harness changed, not the site.
+ *   control, untouched  portrait/algeria has no migrated hero and wave 1 does
+ *                       not touch it. It must read 0%.
+ *
+ * All eight exist at the "before" commit, checked rather than assumed. */
 const DEFAULT_PAGES = [
-  "algeria.html",
-  "angola.html",
-  "tourism/algeria.html",
-  "tourism/angola.html",
-  "portrait/algeria.html",
+  "places/ghana/mole-and-ankasa.html",
+  "places/kenya/balloon-over-the-mara.html",
+  "places/namibia/desert-adapted-wildlife.html",
+  "places/namibia/self-drive-country.html",
+  "tourism/ghana.html",
+  "tourism/namibia.html",
   "places/algeria/a-thousand-kilometres-of-mediterranean.html",
+  "portrait/algeria.html",
 ];
 
 function sh(cmd, args) {

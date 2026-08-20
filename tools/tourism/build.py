@@ -157,6 +157,21 @@ def cmd_srcset(args):
     return srcset.run(write=bool(getattr(args, "fetch", False))) or rc
 
 
+def cmd_bound(args):
+    """Ask the provider for the size the page paints. Free, and not a purchase.
+
+        build.py bound            what it would change
+        build.py bound --fetch    change it
+
+    750 /places heroes name no width, so the provider sends the full original
+    to a phone and the CSS throws most of it away. This gives each one the
+    srcset the tag's own width/height already imply — the same treatment the
+    /tourism heroes have carried since they were built.
+    """
+    from tourism import bound
+    return bound.run(write=bool(getattr(args, "fetch", False)))
+
+
 def cmd_library(args):
     """The Afrinkong image library: plan, fetch, encode, verify, rewrite.
 
@@ -198,7 +213,9 @@ def cmd_library(args):
     if step == "plan":
         return library.plan(write=write)
     if step == "fetch":
-        return library.fetch(write=write, limit=int(getattr(args, "limit", 0) or 0))
+        return library.fetch(write=write,
+                             limit=int(getattr(args, "limit", 0) or 0),
+                             only=getattr(args, "only", None))
     if step == "encode":
         return library.encode(write=write)
     if step == "verify":
@@ -241,6 +258,23 @@ def cmd_acquire(args):
     """
     from tourism import acquire
     return acquire.run(write=bool(getattr(args, "fetch", False)))
+
+
+def cmd_heroes(args):
+    """The hero acquisition table: the 759 /places heroes we do not own.
+
+        build.py heroes             the summary
+        build.py heroes --fetch     write data/hero-acquisition.csv
+        build.py heroes --measure   ask the providers for real byte counts
+
+    Read-only. `acquire` covers every photograph on the site, most of them
+    lazy cards nobody's first screen fetches. This covers the one photograph
+    per page a phone is certain to download, which is where the payload is and
+    where the money should be argued about.
+    """
+    from tourism import heroplan
+    return heroplan.run(write=bool(getattr(args, "fetch", False)),
+                        do_measure=bool(getattr(args, "measure", False)))
 
 
 def cmd_assets(args):
@@ -996,6 +1030,20 @@ def cmd_all(args):
     # is what stops "offer the smaller file" being a thing somebody has to
     # remember. It is idempotent, so running it again costs a scan and changes
     # nothing.
+    # BEFORE srcset AND modern, AND FOR THE SAME REASON THEY ARE DOWN HERE.
+    #
+    # `bound` gives every hotlinked hero the width its own tag already
+    # declares. cmd_places above rewrites 1,363 place pages from scratch, so
+    # without this line a single `build.py all` would put 750 full-resolution
+    # originals back in front of phones and nothing would say so. It is a late
+    # pass over built HTML exactly like the three below it, and it is
+    # idempotent — a second run scans and changes nothing.
+    #
+    # First of the four, because `modern` copies the srcset it writes onto the
+    # <source> elements it adds. Bounding after that would leave the <img>
+    # asking politely and the <source> still asking for the original.
+    from tourism import bound as _bound
+    _bound.run(write=True, log=lambda *a: None)
     from tourism import srcset as _srcset
     _srcset.run(write=True, log=lambda *a: None)
     # And after srcset, because this writes the hint that decides WHICH of the
@@ -1123,7 +1171,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "acquire": cmd_acquire, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "acquire": cmd_acquire, "heroes": cmd_heroes, "bound": cmd_bound, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
@@ -1175,6 +1223,9 @@ def main():
     p.add_argument("--fetch", action="store_true",
                    help="wondershots: actually ask the providers. Without it "
                         "the command prints the queries and sends nothing")
+    p.add_argument("--measure", action="store_true",
+                   help="heroes: ask each provider for content-length. Needs "
+                        "the open internet; HEAD only, no image bytes move")
     p.add_argument("--query", help="footage: comma-separated search terms")
     p.add_argument("--list", dest="list_only", action="store_true",
                    help="footage: show what is already staged")

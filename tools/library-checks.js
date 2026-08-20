@@ -429,6 +429,162 @@ if (partial.skip) {
   );
 }
 
+/* ------------------------------------------------------- the second crop */
+
+/* 256 <picture> blocks ask a provider for the same photograph at two shapes.
+ * Until `encode` could cut the phone rectangle, `rewrite` had to refuse every
+ * one of them, which left 102 published photographs hotlinked on the pages
+ * they were bought for. These are the properties that make cutting it safe. */
+
+const crop = JSON.parse(
+  py(`
+import json
+box = L._crop_box(3000, 2000, (1200, 1500), 0.5, 0.5)
+tall = L._crop_box(2000, 3000, (1200, 800), 0.5, 0.5)
+edge = L._crop_box(3000, 2000, (1200, 1500), 0.95, 0.5)
+print(json.dumps({
+  "box": box, "tall": tall, "edge": edge,
+  "names": [L.crop_name((1200, 1500)), L.crop_name((900, 1125)),
+            L.crop_name((1200, 800))],
+  # The keys already in the bucket must not move. 8,177 objects were uploaded
+  # under the un-cropped form and a changed key orphans every one of them.
+  "plain": [L.key("AKL-000042"), L.key("AKL-000042", 1200, ".avif")],
+  "cropped": L.key("AKL-000042", 1200, ".avif", "4x5"),
+  "objects": L.object_keys({"id": "AKL-1", "widths": [480],
+                            "crops": {"4x5": {"widths": [480]}}}),
+  "objects_plain": L.object_keys({"id": "AKL-1", "widths": [480]}),
+}))
+`)
+);
+
+const [l, t, r, b] = crop.box;
+report(
+  Math.abs((r - l) / (b - t) - 0.8) < 1e-9 && b - t === 2000,
+  "the crop is the requested aspect, and the largest one that fits",
+  `${r - l}x${b - t} from 3000x2000, ratio ${((r - l) / (b - t)).toFixed(4)}`
+);
+
+const [tl, tt, tr, tb] = crop.tall;
+/* Tolerance, because pixels are integers: the exact 3:2 box inside 2000x3000
+ * is 2000x1333.33 and the nearest whole rectangle is 2000x1333, a ratio of
+ * 1.50038. Demanding exactness here fails the arithmetic, not the code. */
+report(
+  Math.abs((tr - tl) / (tb - tt) - 1.5) < 0.001 && tr - tl === 2000,
+  "a wide crop out of a tall original is bounded by the width",
+  `${tr - tl}x${tb - tt} from 2000x3000, ratio ${((tr - tl) / (tb - tt)).toFixed(5)}`
+);
+
+const [el, , er] = crop.edge;
+report(
+  el === 3000 - (er - el) && el >= 0,
+  "a focal point near the edge slides the box, it does not run off",
+  `fp-x 0.95 -> left ${el}, box ${er - el} wide, right edge ${er} of 3000`
+);
+
+report(
+  crop.names.join(",") === "4x5,4x5,3x2",
+  "a crop is named for its shape, reduced",
+  crop.names.join(" ")
+);
+
+report(
+  crop.plain[0] === "originals/AKL-000042.jpg" &&
+    crop.plain[1] === "1200/AKL-000042.avif",
+  "adding crops did not move a single existing object key",
+  crop.plain.join("  ")
+);
+
+report(
+  crop.cropped === "4x5/1200/AKL-000042.avif",
+  "a crop is a prefix on the width, so it cannot collide with one",
+  crop.cropped
+);
+
+report(
+  crop.objects.length === crop.objects_plain.length + 3 &&
+    crop.objects.filter((k) => k.startsWith("4x5/")).length === 3,
+  "publish and reachable enumerate the crop from one shared list",
+  `${crop.objects_plain.length} keys without a crop, ${crop.objects.length} with`
+);
+
+/* THE ONE THAT MATTERS: an art-directed <picture> is REPLACED, not wrapped.
+ * The <img> is already inside a <picture>; wrapping it the way the ordinary
+ * path does nests one inside another, which is invalid — and this site has
+ * nine accidental examples of exactly that, so it is not hypothetical. */
+const art = JSON.parse(
+  py(`
+import json, re, base64
+block = ('<picture><source media="(max-width: 700px)" '
+         'srcset="https://images.pexels.com/photos/1/a.jpeg?fit=crop&amp;w=1200&amp;h=1500 1200w" '
+         'sizes="100vw">'
+         '<img src="https://images.pexels.com/photos/1/a.jpeg?fit=crop&amp;w=2400&amp;h=1350" '
+         'alt="A place" width="2400" height="1350" '
+         'style="aspect-ratio:16 / 9;object-position:50% 56%" '
+         'srcset="https://images.pexels.com/photos/1/a.jpeg?w=1200 1200w" '
+         'sizes="100vw" fetchpriority="high" decoding="async"></picture>')
+a = {"id": "AKL-000042", "widths": [480, 1200],
+     "crops": {"4x5": {"widths": [480, 1200], "fx": 0.5, "fy": 0.5,
+                       "media": "(max-width: 700px)"}}}
+out = L.artdirected_picture(block, a, "https://image.afrinkong.com")
+was = re.search(r'data-was="([A-Za-z0-9+/=]+)"', out)
+visible = re.sub(r'data-was="[^"]*"', "", out)
+print(json.dumps({
+  "opens": out.count("<picture>"), "closes": out.count("</picture>"),
+  "leaks": len(re.findall(r"images\.pexels\.com", visible)),
+  # first source wins in a <picture>, so the phone rectangle must come first
+  "first_is_phone": visible.index("4x5/") < visible.index('type="image/avif" srcset="https://image.afrinkong.com/480'),
+  "kept_alt": 'alt="A place"' in out,
+  "kept_dims": 'width="2400"' in out and 'height="1350"' in out,
+  "kept_focal": "object-position:50% 56%" in out,
+  "restores": base64.b64decode(was.group(1)).decode() == block if was else False,
+}))
+`)
+);
+
+report(art.opens === 1 && art.closes === 1,
+       "an art-directed block yields one <picture>, not a nested pair",
+       `${art.opens} open, ${art.closes} close`);
+report(art.leaks === 0,
+       "both rectangles move to our host — neither is left on the provider",
+       `${art.leaks} provider URL(s) left in the visible markup`);
+report(art.first_is_phone,
+       "the phone source is emitted first, so its media query can win",
+       "4x5 sources precede the full-frame ones");
+report(art.kept_alt && art.kept_dims && art.kept_focal,
+       "the <img> keeps its alt, its box and its focal point",
+       "alt, width/height and object-position all survive");
+report(art.restores,
+       "revert restores the whole original block, byte for byte",
+       "data-was holds the <picture>, not just the <img>");
+
+/* And the gate: art direction stops being a permanent exclusion and becomes a
+ * queue. Without a crop encoded the asset is still refused; with one it is
+ * ready. */
+const gate = JSON.parse(
+  py(`
+import json
+base = {"originalUrl": "https://images.pexels.com/photos/1/a.jpeg",
+        "widths": [480], "publishedAt": "2026-01-01T00:00:00Z"}
+def blocked(a, art):
+    if a["originalUrl"].split("?")[0] not in art:
+        return False
+    return not (a.get("crops") and any(c.get("widths") for c in a["crops"].values()))
+art = {"https://images.pexels.com/photos/1/a.jpeg"}
+print(json.dumps({
+  "without": blocked(dict(base), art),
+  "with": blocked(dict(base, crops={"4x5": {"widths": [480]}}), art),
+  "empty": blocked(dict(base, crops={"4x5": {"widths": []}}), art),
+  "unrelated": blocked(dict(base), set()),
+}))
+`)
+);
+report(
+  gate.without === true && gate.with === false && gate.empty === true &&
+    gate.unrelated === false,
+  "art direction blocks a rewrite until the crop exists, then stops blocking",
+  `no crop ${gate.without}, crop ${gate.with}, empty crop ${gate.empty}`
+);
+
 fs.rmSync(TMP, { recursive: true, force: true });
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);

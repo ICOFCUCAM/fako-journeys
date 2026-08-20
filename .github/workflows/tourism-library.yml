@@ -37,7 +37,21 @@ on:
         required: false
         default: true
       weigh:
-        description: "Measure page weight before/after the rewrite on six of the 76 pages (needs the open internet)"
+        description: "Measure page weight before/after on eight pages the current wave touches (needs the open internet)"
+        type: boolean
+        required: false
+        default: false
+      only:
+        description: "Act on a subset: AKL ids, country:kenya, state:published, or @data/recrop-wave-1.txt"
+        required: false
+        default: ""
+      rewrite:
+        description: "Point pages at the library for what is published (writes HTML)"
+        type: boolean
+        required: false
+        default: false
+      measure_heroes:
+        description: "Ask the providers for real byte counts on every remaining hero (HEAD only, no image bytes)"
         type: boolean
         required: false
         default: false
@@ -68,7 +82,7 @@ jobs:
   # click and half a minute, which matters when the answer is "wait and try
   # again".
   host:
-    if: ${{ github.event.inputs.check_host_only == 'true' && github.event.inputs.weigh != 'true' }}
+    if: ${{ github.event.inputs.check_host_only == 'true' && github.event.inputs.weigh != 'true' && github.event.inputs.measure_heroes != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -83,12 +97,12 @@ jobs:
   # browser-checks measures four fixed pages and none of them was rewritten,
   # so it correctly reported no change and told us nothing about whether
   # first-party images are lighter than the hotlinks they replaced. This
-  # loads six of the seventy-six at a phone viewport, once from the commit
-  # before the rewrite and once from now, and counts the image bytes that
+  # loads eight pages the CURRENT wave touches at a phone viewport, once from
+  # the commit before the rewrite and once from now, counting the bytes that
   # actually crossed the wire. Needs the open internet: the providers and our
   # own asset host are both unreachable from the development sandbox.
   weigh:
-    if: ${{ github.event.inputs.weigh == 'true' }}
+    if: ${{ github.event.inputs.weigh == 'true' && github.event.inputs.measure_heroes != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -106,8 +120,40 @@ jobs:
       - name: Weigh the rewritten pages
         run: node tools/weigh.js
 
+  # REAL BYTES, NOT A MODEL.
+  #
+  # The acquisition table's payload column is estimated from the original's
+  # pixel dimensions, and run 17 showed how far that can be out: it predicted
+  # 10.8 MB for the Ghana hero and the wire carried 2.33. Unsplash tracks
+  # pixels; Pexels plateaus. The cap fitted to five points is better and is
+  # still a fit.
+  #
+  # This asks each provider for content-length and nothing else — HEAD, so no
+  # image bytes move — and writes data/hero-bytes.json, which the table
+  # prefers over the estimate wherever it has an answer.
+  measure:
+    if: ${{ github.event.inputs.measure_heroes == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Ask the providers what each hero weighs
+        run: python tools/tourism/build.py heroes --measure
+      - name: Rebuild the table against measured bytes
+        run: python tools/tourism/build.py heroes --fetch
+      - name: Commit the measurements
+        run: |
+          git config user.name  "afrinkong-library"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/hero-bytes.json data/hero-acquisition.csv docs/hero-acquisition.md
+          git diff --cached --quiet && echo "nothing changed" && exit 0
+          git commit -m "Hero payload, measured rather than modelled"
+          git push
+
   library:
-    if: ${{ github.event.inputs.check_host_only != 'true' && github.event.inputs.weigh != 'true' }}
+    if: ${{ github.event.inputs.check_host_only != 'true' && github.event.inputs.weigh != 'true' && github.event.inputs.measure_heroes != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -128,7 +174,8 @@ jobs:
       - name: Download the approved set
         run: |
           python tools/tourism/build.py library fetch --fetch \
-            --limit "${{ github.event.inputs.limit }}"
+            --limit "${{ github.event.inputs.limit }}" \
+            ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }}
 
       - name: Encode the ladder
         if: ${{ github.event.inputs.encode == 'true' }}
@@ -145,7 +192,25 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
-        run: python tools/tourism/build.py library publish --fetch
+        run: |
+          python tools/tourism/build.py library publish --fetch \
+            ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }}
+
+      # POINTING THE PAGES AT WHAT IS NOW PUBLISHED. OPT-IN, AND LAST.
+      #
+      # Not part of the original workflow because the first migration was done
+      # deliberately, in a pull request somebody read. It is here now because
+      # the art-directed re-crops need it: `encode` cuts their second
+      # rectangle, `publish` uploads it, and until this runs the page is still
+      # asking Pexels for a full-resolution original it no longer needs to.
+      #
+      # Gated per asset on publishedAt, so it cannot point a page at an object
+      # that was never uploaded, and --only keeps a wave to its own wave.
+      - name: Point the pages at the library
+        if: ${{ github.event.inputs.rewrite == 'true' }}
+        run: |
+          python tools/tourism/build.py library rewrite --fetch \
+            ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }}
 
       # The two structural promises, before anything is uploaded: a caption
       # change cannot move an object key, and a subset can be published
@@ -154,6 +219,11 @@ jobs:
       # exactly why they are checked on every run from now on.
       - name: The library's own invariants
         run: node tools/library-checks.js
+
+      # One careless generator change puts a bare provider URL back in front
+      # of a phone, and nothing else in the suite would notice.
+      - name: No hero asks a provider for the full original
+        run: node tools/heroes.js --check
 
       # Provenance only, and deliberately only that: every hosted photograph
       # has a photographer, a source page and a licence. That is a question
@@ -183,8 +253,9 @@ jobs:
           git config user.name  "afrinkong-library"
           git config user.email "actions@users.noreply.github.com"
           git add tourism/assets.json data/asset-inventory.json
+          git add -A -- '*.html' 
           git diff --cached --quiet && echo "nothing changed" && exit 0
-          git commit -m "The image library: download and register the approved set"
+          git commit -m "The image library: download, register and wire the approved set"
           git push
 
       # An upload that returned 200 proves the S3 endpoint accepted it. It
