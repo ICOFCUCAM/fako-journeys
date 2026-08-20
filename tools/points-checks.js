@@ -148,7 +148,11 @@ report(afterCancel === 1500 && L.cancellation(P, 3, 3500).forfeited === 3500,
 
 /* ------------------------------------------------------------------ buyback */
 
-const rich = [entry("PURCHASE", 5000)];
+/* The consideration basis needs a payment to trace back to, so a purchase
+   fixture now carries one. That is the separation working: the ledger holds a
+   reference, the payment record holds the money. */
+const rich = [Object.assign(entry("PURCHASE", 5000),
+                            { payment: { amountMinor: 500000, currency: "USD" } })];
 const early = L.buybackQuote(P, rich, 1000, 10, 0);
 report(early.eligible === false,
        "buyback refuses inside the minimum holding period",
@@ -305,10 +309,11 @@ report(
  * have to say so out loud. */
 const KIND_NAMES = Object.keys(L.KINDS).sort().join(",");
 report(
-  KIND_NAMES === "ADJUST_DOWN,ADJUST_UP,BUYBACK,EXPIRE,PURCHASE,REDEEM,RELEASE," +
-                 "RESERVE,TRANSFER_IN,TRANSFER_OUT",
-  "B7: the ways a balance can change are a closed set of ten, and time is not one",
-  KIND_NAMES
+  KIND_NAMES === "ADJUST_DOWN,ADJUST_UP,BUYBACK,EXPIRE,PROMOTION,PURCHASE," +
+                 "REDEEM,RELEASE,RESERVE,TRANSFER_IN,TRANSFER_OUT",
+  "B7: the ways a balance can change are a closed set of eleven, and time is not one",
+  `${KIND_NAMES} — was ten; PROMOTION is the eleventh, argued for in B16 and ` +
+  `instructed by C11 before it was added, which is what this check is for`
 );
 
 /* ---- Section B12: the repurchase basis, and what it currently costs ----- */
@@ -333,18 +338,20 @@ const paidMinor = 100000;                                  // $1,000
 const issued = L.pointsFor(DRAFT, paidMinor);
 const quote = L.buybackQuote(
   DRAFT,
-  [entry("PURCHASE", issued)],
+  [Object.assign(entry("PURCHASE", issued),
+                 { payment: { amountMinor: paidMinor, currency: "USD" } })],
   issued, 100, 0
 );
 bbProg.issueRate = bbSaved.rate;
 bbProg.status = bbSaved.status;
 
 report(
-  issued === 1250 && quote.payableMinor === 112500,
-  "B12: the encoded repurchase basis is exploitable under a promotional programme",
-  `a 25% bonus on $1,000 issues ${issued} TP and quotes $${quote.payableMinor / 100} ` +
-  `— $${(quote.payableMinor - paidMinor) / 100} MORE than was paid. B12 says $900. ` +
-  `Break-even bonus is 1/0.9 = 11.1%. See docs/travel-point-economics.md B12.2`
+  issued === 1250 && quote.payableMinor === 90000 &&
+    quote.basis === "consideration",
+  "B12/C16: the arbitrage is closed — repurchase pays on what was paid",
+  `a 25% bonus on $1,000 issues ${issued} TP and quotes $${quote.payableMinor / 100}, ` +
+  `not $1,125. 90% of consideration cannot exceed consideration, so no bonus ` +
+  `rate makes buy-then-repurchase profitable. Was exploitable above an 11.1% bonus.`
 );
 
 report(
@@ -365,10 +372,10 @@ report(
  * becomes a record of when. Until then it fails loudly if anyone *relies* on
  * transferability in the meantime. */
 report(
-  bbProg.transferable === true,
-  "B14: the programme still permits transfer, which B14 has decided against",
-  "transferable: true — B14 requires false. One word, blocked on nothing, " +
-  "awaiting confirmation. See docs/travel-point-economics.md B14.1"
+  bbProg.transferable === false && bbProg.secondaryMarket === false,
+  "B14/B15: the programme forbids transfer and any secondary market",
+  `transferable ${bbProg.transferable}, secondaryMarket ${bbProg.secondaryMarket} ` +
+  `— decided in B14, applied by C21`
 );
 
 /* The kinds stay whatever the programme decides: a programme that forbids
@@ -396,11 +403,11 @@ report(
  * Pinned rather than built — this is a ledger kind, a programme sub-structure,
  * and everything downstream that reads a balance. */
 report(
-  !Object.keys(L.KINDS).some((k) => /PROMO|BONUS|GRANT/.test(k)),
-  "B16: the ledger still cannot distinguish a promotional point from a paid one",
-  "no PROMOTION kind and no lot type — B16 requires the distinction. " +
-  "ADJUST_UP is admin:true and is not a substitute. " +
-  "See docs/travel-point-economics.md B16.2"
+  L.KINDS.PROMOTION && L.KINDS.PROMOTION.lot === "promotional" &&
+    L.KINDS.PURCHASE.lot === "purchased",
+  "B16/C11: the ledger distinguishes a promotional point from a purchased one",
+  "PROMOTION carries lot:'promotional', PURCHASE carries lot:'purchased', and " +
+  "the fold keeps the two pools apart for the life of the points"
 );
 
 report(
@@ -415,10 +422,11 @@ report(
  * and expiryMonths is one number. The EXPIRE kind is fine; what is missing is
  * anything that decides which points it applies to. */
 report(
-  typeof bbProg.expiryMonths === "number" && bbProg.expiryMonths === 0,
-  "B17: expiry is one programme-wide scalar where two rules are needed",
-  `expiryMonths ${bbProg.expiryMonths} applies to every point alike — B17 needs ` +
-  `purchased:never and promotional:optional. See B17.1`
+  bbProg.expiry && bbProg.expiry.purchased === null &&
+    typeof bbProg.expiry.promotional === "number",
+  "B17: expiry is now two rules — purchased never lapses, promotional may",
+  `purchased ${bbProg.expiry.purchased} (never), promotional ` +
+  `${bbProg.expiry.promotional} months`
 );
 
 /* B19: the point is currency-neutral and the ledger is right to hold no
@@ -486,7 +494,11 @@ report(
 const r21Prog = L.PROGRAMS[DRAFT];
 const r21Saved = r21Prog.status;
 r21Prog.status = "active";
-const booked = [entry("PURCHASE", 5000), entry("RESERVE", 4800)];
+const booked = [
+  Object.assign(entry("PURCHASE", 5000),
+                { payment: { amountMinor: 500000, currency: "USD" } }),
+  entry("RESERVE", 4800),
+];
 const onReserved = L.buybackQuote(DRAFT, booked, 4800, 100, 0);
 const onAvailable = L.buybackQuote(DRAFT, booked, 200, 100, 0);
 r21Prog.status = r21Saved;
@@ -510,6 +522,64 @@ report(
   "B24 rule 22: the seven-day bar is computed in one place and ignored in another",
   "cancellation() returns buybackEligible:false at 5 days; buybackQuote() takes " +
   "no booking or departure date and cannot consult it. See B13.1"
+);
+
+/* ---- Section C: the frozen programme, and what it now refuses ---------- */
+
+/* C15: an unanswered exposure limit is not the same as no limit. A programme
+ * may not go live until somebody has decided how much future travel Afrinkong
+ * is willing to owe — ten thousand customers at $5,000 is $50m of entitlement,
+ * which is a commitment to deliver travel rather than a website feature. */
+const act = L.mayActivate(DRAFT);
+report(
+  act.ok === false && act.missing.indexOf("maxProgrammeExposure") !== -1,
+  "C15: the programme cannot be activated while its exposure limit is unset",
+  act.why
+);
+
+/* C1/C21: the terms C21 freezes are present and are the frozen values. */
+const frozen = L.PROGRAMS[DRAFT];
+report(
+  frozen.issuer === "Wankong LLC" && frozen.brand === "Afrinkong" &&
+    frozen.issueRate === 1 && frozen.minPurchase === 25 &&
+    frozen.maxPerTransaction === 2500 && frozen.maxPerCustomerPerYear === 10000 &&
+    frozen.buyback.basis === "consideration" && frozen.buyback.rate === 0.9,
+  "C21: programme 2026-A carries the frozen terms",
+  `${frozen.issuer} / ${frozen.brand}, $1->1 TP, min ${frozen.minPurchase}, ` +
+  `max ${frozen.maxPerTransaction}/txn, ${frozen.maxPerCustomerPerYear}/yr, ` +
+  `repurchase ${frozen.buyback.rate * 100}% of ${frozen.buyback.basis}`
+);
+
+/* C11: the customer sees one number; the ledger keeps two. */
+const cProg = L.PROGRAMS[DRAFT];
+const cSaved = cProg.status;
+cProg.status = "active";
+const mixed = L.wallet([
+  Object.assign(entry("PURCHASE", 500),
+                { payment: { amountMinor: 50000, currency: "USD" } }),
+  entry("PROMOTION", 25),
+]);
+const promoQuote = L.buybackQuote(
+  DRAFT,
+  [Object.assign(entry("PURCHASE", 500),
+                 { payment: { amountMinor: 50000, currency: "USD" } }),
+   entry("PROMOTION", 25)],
+  520, 100, 0
+);
+cProg.status = cSaved;
+
+report(
+  mixed.available === 525 && mixed.purchased === 500 && mixed.promotional === 25,
+  "C11: buy 500, receive 25 — the customer sees 525, the ledger knows which is which",
+  `available ${mixed.available}, purchased ${mixed.purchased}, promotional ${mixed.promotional}`
+);
+
+/* C16: promotional points repurchase at zero, and the consideration basis
+   reaches that answer by itself — there was no consideration to refund. */
+report(
+  promoQuote.eligible === false,
+  "C16: a repurchase that would dip into promotional points is refused",
+  `${promoQuote.why} (purchased ${promoQuote.purchased}, promotional ${promoQuote.promotional})`
 );
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);

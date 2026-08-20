@@ -75,8 +75,16 @@
      `reserved` are the two live pools; everything else is terminal and kept
      only so the history reads correctly. */
   var KINDS = {
-    PURCHASE:     { available: +1, reserved: 0,  acquired: +1 },
-    TRANSFER_IN:  { available: +1, reserved: 0,  acquired: +1 },
+    PURCHASE:     { available: +1, reserved: 0,  acquired: +1, lot: 'purchased' },
+    /* THE ELEVENTH KIND, AND IT WAS ARGUED FOR BEFORE IT WAS ADDED.
+       B7.1 fixed the set at ten so that adding one had to be deliberate;
+       B16 is the argument and C11 is the instruction. A promotional point is
+       not a purchased point: it may expire when a purchased one does not, it
+       cannot be repurchased, and it may be cancelled differently. Folding it
+       into PURCHASE would make those distinctions unexpressible, which is
+       exactly what B13 needed and could not have. */
+    PROMOTION:    { available: +1, reserved: 0,  acquired: +1, lot: 'promotional' },
+    TRANSFER_IN:  { available: +1, reserved: 0,  acquired: +1, lot: 'purchased' },
     ADJUST_UP:    { available: +1, reserved: 0,  acquired: +1, admin: true },
 
     RESERVE:      { available: -1, reserved: +1 },
@@ -107,39 +115,111 @@
    */
   var PROGRAMS = {
     'AFK-TP-2026.1': {
+      /* ---- identity ----------------------------------------------------- */
       id: 'AFK-TP-2026.1',
-      name: 'Afrinkong Travel Points 2026',
+      name: 'Afrinkong Travel Points Programme 2026-A',
       version: 1,
+      issuer: 'Wankong LLC',      /* A1a: the obligation runs from the entity,
+                                     not from the trade name. */
+      brand: 'Afrinkong',
       status: 'draft',            // never 'active' until counsel has signed it
+      effectiveFrom: '2026-01-01',
+      effectiveUntil: null,
+
+      /* ---- the two rates, which never collapse into one (B5) ------------ */
       currency: 'USD',
-      issueRate: 1,               // points acquired per 1 USD paid
-      entitlement: 1,             // Afrinkong travel value applied per point
-      minPurchase: 25,
-      transferable: true,
-      /* BUYBACK IS THE CLAUSE WITH REGULATORY WEIGHT.
-         A guaranteed cash redemption can change what this product legally is.
-         `discretionary` is the safe default and it is the one encoded here;
-         moving it to a contractual guarantee is a decision for counsel, not
-         for a commit. */
+      issueRate: 1,               // C2: $1 eligible purchase -> 1 TP
+      entitlement: 1,             // travel value one point applies on redemption
+
+      /* ---- purchase bounds ---------------------------------------------- */
+      /* C13: a floor keeps the system accessible without generating thousands
+         of trivial transactions. C14: a ceiling exists because Afrinkong should
+         never accept unlimited prepaid exposure merely because a card processor
+         can take the money. Both are programme terms rather than ledger
+         constants, so a different programme may set them differently. */
+      /* WHICH LOT IS SPENT FIRST. Open question B-ii, and FIFO is a provisional
+         default rather than a decision — it is here as a named programme term
+         so the choice is visible and versioned instead of buried in a loop.
+         It only changes an answer once lots differ in rate or currency. */
+      lotOrder: 'fifo',
+
+      minPurchase: 25,            // TP
+      maxPerTransaction: 2500,    // TP
+      maxPerCustomerPerYear: 10000, // TP
+
+      /* ---- exposure (C15) ------------------------------------------------ */
+      /* Ten thousand customers at $5,000 each is $50m of future travel
+         entitlement, which stops being a website feature. `null` does not mean
+         unlimited — `mayActivate()` refuses to let a programme go live with an
+         unset limit, so this must be answered before anybody is charged. */
+      maxProgrammeExposure: null, // TP. Required before activation.
+
+      /* ---- what a point may be redeemed against -------------------------- */
+      eligibleServices: ['journey', 'accommodation', 'transport', 'guiding',
+                         'experience'],
+
+      /* ---- transfer (B14, B15, C21) -------------------------------------- */
+      /* Decided, not defaulted. Person-to-person transfer is one of the
+         features that moves a prepaid-access analysis, and V1 does not need it.
+         The ledger keeps TRANSFER_IN/TRANSFER_OUT because an administrative
+         correction still needs them — a programme that forbids transfer simply
+         never emits one. Policy is not capability. */
+      transferable: false,
+      secondaryMarket: false,
+
+      /* ---- repurchase (B12, C16, C17) ------------------------------------ */
+      /* THE BASIS IS THE CONSIDERATION PAID, NOT THE ENTITLEMENT HELD.
+         "90% of what your points are worth" requires the points to be worth
+         something in cash, which B2 denies. "90% of what you paid for the ones
+         you have not used" values nothing — it reads the payment record. It is
+         also the only one of the two that cannot be gamed: under an entitlement
+         basis, any promotional bonus above 1/rate - 1 lets a customer buy
+         points and immediately repurchase them for more than they paid. */
       buyback: {
         offered: true,
-        discretionary: true,
-        rate: 0.90,               // of eligible entitlement value
+        discretionary: true,      // never a contractual right of redemption
+        basis: 'consideration',   // 'consideration' | 'entitlement'
+        rate: 0.90,               // of eligible purchase consideration
         minHoldDays: 90,
         minPoints: 100,
-        maxPerYear: 5000
+        maxPerYear: 5000,
+        promotionalEligible: false, // C16: promotional points repurchase at 0
+        reservedEligible: false     // C16: reserved points repurchase at 0
       },
-      /* Attaches to the BOOKING, not to the customer's whole holding. A
-         cancellation inside the restricted window affects the points reserved
-         against that journey and leaves the rest of the wallet alone. */
+
+      /* ---- cancellation (B11) -------------------------------------------- */
+      /* Attaches to the BOOKING, not to the customer's whole holding. The
+         middle band's 0.50 is a PLACEHOLDER: B11 ties it to actual cancellation
+         charges and supplier costs, and a flat half is too harsh where nothing
+         is committed and too generous where the journey is already paid for. */
       cancellation: [
         { fromDays: 31, release: 1.00, buybackEligible: true },
         { fromDays: 8,  release: 0.50, buybackEligible: false },
         { fromDays: 0,  release: 0.00, buybackEligible: false }
       ],
-      expiryMonths: 0,            // 0 = no expiry under this program
-      effectiveFrom: '2026-01-01',
-      effectiveUntil: null
+
+      /* ---- expiry, per lot type (B17) ------------------------------------ */
+      /* Purchased points do not lapse because time passed — that is the
+         customer-trust decision, and it makes the obligation more durable
+         rather than less, deliberately. Promotional points may. One scalar
+         could not express two rules, which is why this is a block. */
+      expiry: {
+        purchased: null,          // null = never lapses from time alone
+        promotional: 24           // months, or null for never
+      },
+
+      /* ---- promotional points (B16, C11, C12) ---------------------------- */
+      /* A marketing lever, temporary and explicitly identified — not permanent
+         economics. A standing 10-20% bonus teaches customers that the nominal
+         point price is meaningless. */
+      promotional: {
+        offered: true,
+        bonusRate: 0.05,          // C12: 5% — buy 500, receive 25
+        transferable: false,
+        repurchasable: false,
+        expiryMonths: 24,
+        cancellationTreatment: 'forfeit'
+      }
     }
   };
 
@@ -177,13 +257,41 @@
   /* Creating points. Moving points a customer already has between pools is
      not on this list: a RESERVE under a draft program cannot happen anyway,
      because there is nothing to reserve. */
-  var ISSUING_KINDS = ['PURCHASE', 'TRANSFER_IN', 'ADJUST_UP'];
+  var ISSUING_KINDS = ['PURCHASE', 'PROMOTION', 'TRANSFER_IN', 'ADJUST_UP'];
 
   function stateOf(id) {
     if (!id) return PRODUCT_STATE.PLANNING;
     return program(id).status === 'active'
       ? PRODUCT_STATE.ACTIVE_PROGRAM
       : PRODUCT_STATE.DRAFT_PROGRAM;
+  }
+
+  /* C15: A PROGRAMME MAY NOT GO LIVE WITH AN UNANSWERED EXPOSURE LIMIT.
+   *
+   * `maxProgrammeExposure: null` does not mean unlimited. It means nobody has
+   * decided, and this refuses to let that reach production — ten thousand
+   * customers at $5,000 each is $50m of future travel entitlement, which is a
+   * commitment to deliver travel rather than a website feature.
+   *
+   * Separate from `mayIssue`, deliberately. mayIssue asks "is this programme
+   * live"; this asks "should it be allowed to become live", and the answer is
+   * checked before the one-word status change rather than after it. */
+  function mayActivate(id) {
+    var p = program(id);
+    var missing = [];
+    if (p.maxProgrammeExposure == null) missing.push('maxProgrammeExposure');
+    if (p.maxPerTransaction == null) missing.push('maxPerTransaction');
+    if (p.maxPerCustomerPerYear == null) missing.push('maxPerCustomerPerYear');
+    if (!p.buyback || !p.buyback.basis) missing.push('buyback.basis');
+    if (p.minPurchase == null) missing.push('minPurchase');
+    if (missing.length) {
+      return { ok: false, why: 'unset before activation: ' + missing.join(', '),
+               missing: missing };
+    }
+    if (p.minPurchase > p.maxPerTransaction) {
+      return { ok: false, why: 'minPurchase exceeds maxPerTransaction' };
+    }
+    return { ok: true };
   }
 
   function mayIssue(id) {
@@ -226,7 +334,8 @@
     return {
       available: 0, reserved: 0, redeemed: 0, transferred: 0,
       boughtBack: 0, expired: 0, adjusted: 0, acquired: 0,
-      entries: 0, ignored: 0, reservations: {}
+      entries: 0, ignored: 0, reservations: {},
+      purchased: 0, promotional: 0
     };
   }
 
@@ -267,8 +376,25 @@
       }
 
       for (var field in kind) {
-        if (field === 'admin') continue;
+        /* `admin` and `lot` are labels, not arithmetic. Adding a string to a
+           running total gives NaN and every downstream figure inherits it. */
+        if (field === 'admin' || field === 'lot') continue;
         w[field] += kind[field] * q;
+      }
+
+      /* C11/B16: which pool the points came from, kept apart for the whole of
+         their life. A purchased point and a granted one differ on expiry,
+         repurchase and cancellation, and none of that is expressible if the
+         ledger has already forgotten which is which. */
+      if (kind.lot) w[kind.lot] += kind.acquired * q;
+      if (kind.available === -1 && !kind.lot) {
+        /* Points leaving the wallet come off the promotional pool first: they
+           are the ones that expire and cannot be repurchased, so spending them
+           first is the treatment that costs the customer least. Provisional —
+           this is the promotional half of open question B-ii. */
+        var off = Math.min(w.promotional, q);
+        w.promotional -= off;
+        w.purchased -= (q - off);
       }
 
       /* Reservations are tracked per journey so a cancellation can act on the
@@ -304,6 +430,8 @@
       reserved: w.reserved,
       redeemed: w.redeemed,
       acquired: w.acquired,
+      purchased: w.purchased,
+      promotional: w.promotional,
       transferred: w.transferred,
       boughtBack: w.boughtBack,
       expired: w.expired,
@@ -375,40 +503,120 @@
    * anything. Presenting this as "cash out any time" would be both untrue and
    * the fastest route to being a different kind of company than this one is.
    */
+  /* WHAT A REPURCHASE PAYS, AND WHERE THE MONEY FIGURE COMES FROM.
+   *
+   * B12/C16: 90% of the PURCHASE CONSIDERATION — what the customer actually
+   * paid for the points they have not used. Not 90% of what the points are
+   * worth, because B2 says they are not worth anything in cash.
+   *
+   * That means this function needs a money figure, and the ledger does not hold
+   * one: B19 and B22 are explicit that a Travel Point has no currency and a
+   * ledger entry carries no money. So an entry carries a `paymentRef` — an id,
+   * not an amount — and the amount is looked up in the payment records. The
+   * separation survives: `payments` knows about money, the ledger knows about
+   * entitlement, and a reference joins them.
+   *
+   * `payments` is a map of ref -> { amountMinor, currency }. Without it, a
+   * consideration-basis programme cannot quote, and says so rather than
+   * quietly falling back to the entitlement basis it was moved away from.
+   */
+  function considerationFor(programId, entries, points) {
+    var p = program(programId);
+    var order = entries.filter(function (e) {
+      return e.kind === 'PURCHASE' && e.status === 'SETTLED' && !e.promotional;
+    });
+    /* p.lotOrder is 'fifo' provisionally — see B-ii. Reversing here is the
+       whole of a lifo implementation, when somebody decides. */
+    if (p.lotOrder === 'lifo') order = order.slice().reverse();
+
+    var want = points, drawn = [], totalMinor = 0, currency = null, short = false;
+    for (var i = 0; i < order.length && want > 0; i++) {
+      var e = order[i];
+      var take = Math.min(want, e.quantity);
+      var pay = e.payment;                       // { amountMinor, currency }
+      if (!pay) { short = true; break; }
+      if (currency && pay.currency !== currency) {
+        /* B19.2: lots in two currencies means the lot order decides what the
+           refund is paid in. Refusing is better than picking one silently. */
+        return { ok: false, why: 'points span more than one payment currency',
+                 currencies: [currency, pay.currency] };
+      }
+      currency = pay.currency;
+      totalMinor += Math.round(pay.amountMinor * (take / e.quantity));
+      drawn.push({ entry: e.id, points: take, minor: Math.round(pay.amountMinor * (take / e.quantity)) });
+      want -= take;
+    }
+    if (short || want > 0) {
+      return { ok: false, why: 'cannot trace these points to a payment record' };
+    }
+    return { ok: true, minor: totalMinor, currency: currency, lots: drawn };
+  }
+
   function buybackQuote(programId, entries, points, heldDays, boughtBackThisYear) {
     var p = program(programId);
     var b = p.buyback;
     var w = wallet(entries);
-    var refuse = function (why) { return { eligible: false, why: why, points: points }; };
+    var refuse = function (why, extra) {
+      var r = { eligible: false, why: why, points: points };
+      if (extra) for (var k in extra) r[k] = extra[k];
+      return r;
+    };
 
     if (!b || !b.offered) return refuse('this program does not offer buyback');
     if (points < b.minPoints) return refuse('below the minimum of ' + b.minPoints + ' points');
+    /* C16: reserved points repurchase at zero — committed to a journey is not
+       available to sell back. `available` already excludes them. */
     if (points > w.available) return refuse('only available points can be bought back');
     if (heldDays < b.minHoldDays) return refuse('points must be held for ' + b.minHoldDays + ' days');
     if ((boughtBackThisYear || 0) + points > b.maxPerYear) {
       return refuse('above the annual limit of ' + b.maxPerYear + ' points');
     }
+    /* C16: promotional points repurchase at zero. They were not paid for, so
+       there is no consideration to refund — which is the consideration basis
+       answering the question by itself rather than needing a special case. */
+    if (b.promotionalEligible === false && w.promotional > 0 &&
+        points > w.purchased) {
+      return refuse('only purchased points can be bought back',
+                    { purchased: w.purchased, promotional: w.promotional });
+    }
+
+    if (b.basis === 'consideration') {
+      var c = considerationFor(programId, entries, points);
+      if (!c.ok) return refuse(c.why, { currencies: c.currencies });
+      return {
+        eligible: true,
+        discretionary: b.discretionary,
+        points: points,
+        basis: 'consideration',
+        grossMinor: c.minor,
+        currency: c.currency,
+        rate: b.rate,
+        payableMinor: Math.round(c.minor * b.rate),
+        lots: c.lots,
+        note: b.discretionary
+          ? 'Afrinkong may repurchase these points at ' + Math.round(b.rate * 100) +
+            '% of what you paid for them. This is an offer under the terms of ' +
+            'this programme, not a guaranteed right of redemption.'
+          : 'Repurchase is contractual under the terms of this programme.'
+      };
+    }
+
+    /* The entitlement basis, kept because a future programme may use it and
+       because deleting it would hide that a choice was made. B12.2 records why
+       this one is not the default: it is exploitable under any promotional
+       bonus above 1/rate - 1. */
     return {
       eligible: true,
       discretionary: b.discretionary,
       points: points,
+      basis: 'entitlement',
       grossMinor: entitlementOf(programId, points),
       rate: b.rate,
       payableMinor: Math.round(entitlementOf(programId, points) * b.rate),
-      note: b.discretionary
-        ? 'Buyback is offered at Afrinkong’s discretion under the terms of this program. It is not a guaranteed right of redemption.'
-        : 'Buyback is contractual under the terms of this program.'
+      note: 'Quoted on the entitlement basis. See docs/travel-point-economics.md B12.2.'
     };
   }
 
-  /* ---- the journey goal ---------------------------------------------------
-   *
-   * The bridge to the existing planner. scripts/fund-math.js divides a journey
-   * cost by whole months; this expresses the same arithmetic as travel
-   * purchasing power, which is the thing the customer is actually building.
-   *
-   * No projection, no growth, no assumption — the same division, in points.
-   */
   function goal(programId, journeyCostMinor, held, months) {
     var target = Math.ceil(journeyCostMinor / 100 * program(programId).issueRate);
     var remaining = Math.max(0, target - (held || 0));
@@ -429,6 +637,8 @@
     PRODUCT_STATE: PRODUCT_STATE,
     stateOf: stateOf,
     mayIssue: mayIssue,
+    mayActivate: mayActivate,
+    considerationFor: considerationFor,
     program: program,
     pointsFor: pointsFor,
     priceOf: priceOf,
