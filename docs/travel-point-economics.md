@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| B1–B8 | **settled** as product and economic decisions |
-| B9 onward | not yet written |
-| new open questions | three, raised by B6–B8 and registered below |
+| B1–B10 | **settled** as product and economic decisions |
+| B11 onward | not yet written |
+| new open questions | seven, raised by B6–B9 and registered below |
 | what these are not | **a legal opinion.** They do not determine the regulatory characterisation of the product. |
 | before activation | counsel must confirm the characterisation. See §B1.3. |
 | the programme | stays `draft`; `PRODUCT_STATE` stays `DRAFT_PROGRAM` |
@@ -452,7 +452,113 @@ until a unit basis exists.
 
 ---
 
-## B9 onward
+## B9. When the journey costs more than the customer holds
+
+**Settled.**
+
+>     journey    5,400 TP
+>     customer   4,800 TP
+>
+> Two routes:
+>
+> **A — buy additional points.** Purchase the remaining requirement.
+>
+> **B — settle an allowed balance through the normal booking process.**
+>
+> Cash is **not** automatically interchangeable with points on every screen.
+> The product stays *Travel Points first* rather than becoming a dollar wallet
+> with a different name.
+
+The last clause is the load-bearing one, and it is a design constraint rather
+than a preference. A product where every screen offers "or just pay the
+difference in cash" has taught the customer that points are a denomination of
+money, which is precisely what B2 denies. Route B exists because a real customer
+will occasionally be 600 TP short a fortnight before departure; it is a booking
+accommodation, not a payment method.
+
+### B9.1 How a mixed settlement can work without valuing a point
+
+This is the part that needs care, because the obvious implementation breaks B2.
+
+**The obvious one, which fails.** "You are 600 TP short; 600 TP costs $600, pay
+that." This assigns a cash value to a point, creating exactly the independent
+monetary value B2 says does not exist. Do this and the product has a published
+exchange rate.
+
+**One that does not.** A journey carries both a money price and a point
+requirement. The customer's points cover a *proportion of the journey*, and the
+balance is the remaining proportion, priced in money off the journey's own money
+price:
+
+    journey        5,400 TP   /   $5,400
+    points applied 4,800 TP   =   88.9% of the journey
+    balance due       11.1%   =   $600
+
+Arithmetically identical here, because the draft programme's rates are 1. But it
+values a *fraction of a journey*, never a point — and the two stop being the
+same number the moment a promotional programme exists. Only the second survives
+B2 intact.
+
+Recorded as an approach, not a decision.
+
+### B9.2 What B9 leaves open
+
+| | |
+|---|---|
+| how the shortfall is split | proportional-of-journey (B9.1) or a point-to-cash rate. The second conflicts with B2. |
+| whether points must be exhausted first | "Travel Points first" suggests a floor — apply everything available before any cash — but does not state one |
+| which journeys allow route B at all | "an allowed balance" implies not all of them |
+| whether a partial booking can be held while the customer buys the shortfall | route A takes time; a reservation may need to survive it |
+
+These are added to the register below.
+
+## B10. Reservations
+
+**Settled, and already implemented.**
+
+> Points committed to a booking become **HELD / RESERVED** and are no longer
+> available for another journey.
+>
+>     balance      5,000 TP
+>     reservation  4,800 TP
+>     available      200 TP
+>
+> This prevents double spending.
+
+This one needed no design work — it was built and is tested. Verified against
+the ledger:
+
+| B10 requires | behaviour | check |
+|---|---|---|
+| reserving moves points out of available | 5,000 → available 200, reserved 4,800 | `reserving moves points between pools without destroying any` |
+| reserved points are attributable to a booking | `reservations: {"JRN-1044": 4800}` | folded per `journeyRef` |
+| a second journey cannot claim them | refused: *not enough available points, available 200, wanted 4,800* | `can() refuses before the entry is appended, with a reason` |
+| the ledger cannot be overdrawn even by force | `fold` throws | `a wallet cannot be overdrawn` |
+
+Note the shape: `can()` answers *before* an entry is appended, and `fold` refuses
+*even if* one is appended anyway. The check and the guarantee are separate, so a
+caller that forgets to ask still cannot overdraw a wallet.
+
+Two of my own test errors are worth recording, because both looked like defects
+and neither was: `can()` takes the ledger entries rather than a folded wallet,
+and the per-journey map is keyed on `journeyRef`, not `journeyId`. Passing a
+wallet returned "unknown entry kind" and passing `journeyId` returned an empty
+reservations map. The code was right both times.
+
+---
+
+## New open questions raised by B9
+
+| # | question | raised by | blocked on |
+|---|---|---|---|
+| B-iv | Is a shortfall settled as a proportion of the journey, or at a point-to-cash rate? The latter conflicts with B2. | B9.1 | A1b |
+| B-v | Must a customer apply all available points before any cash balance? | B9 | nothing — a product decision |
+| B-vi | Which journeys permit a cash balance at all? | B9 | nothing — a commercial decision |
+| B-vii | Can a reservation be held while the customer buys the shortfall, and for how long? | B9.2 | nothing — a product decision |
+
+---
+
+## B11 onward
 
 Not yet written. The remaining economic model — pricing, packages, recurring
 purchase, the wallet, reservation and redemption mechanics, price protection —
