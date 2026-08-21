@@ -2545,19 +2545,69 @@ def main():
             # later — the halo grows and the name arrives, which is what hover
             # does — because a rectangle around a point is not where the place is.
             ".wa-map-city:focus",
+            # A country on the neighbours map. The ring is replaced two rules
+            # later by a stroke on the country's own path in the accent, which
+            # is where the place actually is — a rectangle around an irregular
+            # outline points at the bounding box rather than at Rwanda.
+            ".cm-link:focus-visible",
         )
+        # TWO PATTERNS THAT ARE CORRECT AND WERE BEING REPORTED AS FAULTS.
+        #
+        # This check listed exceptions by name, which meant every legitimate
+        # way of moving a focus ring had to be added to a tuple by hand — and
+        # three of them never were, so three genuinely accessible controls were
+        # counted as keyboard traps. An exception list that has to grow is a
+        # check that will be wrong again.
+        #
+        #   A.  X:focus { outline: none }
+        #       X:focus-visible { outline: 2px solid ... }
+        #
+        #       The textbook idiom: suppress the ring for a mouse press, keep it
+        #       for a keyboard one. Nothing is hidden — the ring is one rule
+        #       further down. .jn-map-c was failing on this.
+        #
+        #   B.  .parent:has(X:focus-visible) { outline: ... }
+        #       X:focus-visible { outline: none }
+        #
+        #       The ring moves OUTWARD to the thing the control belongs to,
+        #       which is more visible rather than less. .tf-level-go was failing
+        #       on this: the ring is drawn around the whole card.
+        #
+        # Both are detected from the stylesheet itself, so a new instance of
+        # either needs no edit here. What still needs naming is the third kind —
+        # replacing the ring with a stroke or a halo on an SVG — because there
+        # is no way to tell that from a rule alone.
+        def _base(sel):
+            return sel.split(":focus")[0].strip()
+
         killed = {}
         for path in sorted(glob.glob(os.path.join(ROOT_DIR, "styles", "*.css"))
                            + glob.glob(os.path.join(ROOT_DIR, "*.html"))):
             rel = os.path.relpath(path, ROOT_DIR)
             body = re.sub(r"/\*.*?\*/", " ", open(path).read(), flags=re.S)
-            for m in re.finditer(r"([^{}\n]*:focus[^{}\n]*)\{([^}]*)\}", body):
-                sel, decl = m.group(1).strip(), m.group(2)
+            rules = [(m.group(1).strip(), m.group(2))
+                     for m in re.finditer(r"([^{}\n]*:focus[^{}\n]*)\{([^}]*)\}", body)]
+            # every base selector that is given a real ring on :focus-visible
+            ringed = set()
+            for sel, decl in rules:
+                if ":focus-visible" not in sel:
+                    continue
+                out = re.search(r"outline:\s*([^;}]+)", decl)
+                if out and out.group(1).strip() not in ("none", "0"):
+                    ringed.add(_base(sel))
+            for sel, decl in rules:
                 if "outline:none" not in decl.replace(" ", ""):
                     continue
                 if ":not(:focus-visible)" in sel:
                     continue
                 if any(a in sel for a in ALLOWED):
+                    continue
+                base = _base(sel)
+                # A — the same control keeps its ring on :focus-visible
+                if ":focus-visible" not in sel and base in ringed:
+                    continue
+                # B — an ancestor draws the ring for it
+                if any(base in r and ":has(" in r for r in ringed):
                     continue
                 killed.setdefault(sel[:60], set()).add(rel)
         check("no control hides its focus ring without saying why", not killed,
