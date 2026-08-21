@@ -506,6 +506,32 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
             <h3 class="jf-goal-h" id="jf-goal-h">Estimated Travel Goal
               <span class="jf-goal-tag">planning only &mdash; not for sale</span></h3>
             <div class="jf-goal-grid" id="jf-goal-grid"></div>
+            <!-- D-goalinput. The panel showed zero progress forever because
+                 fund.js passed a hard-coded 0 and nothing let a reader say
+                 otherwise. (No per-cent sign in this comment on purpose:
+                 LANDING_TEMPLATE is printf-style, so a bare one breaks
+                 it -- including, on the first attempt, inside this very
+                 warning.) This is a NOTE ON THEIR OWN DEVICE: Afrinkong is
+                 told nothing, holds nothing, and no account exists. That is
+                 why it says "set aside" rather than "your Travel Points" —
+                 planning is not ownership, and the wording must not imply a
+                 holding the reader does not have. -->
+            <div class="jf-goal-set">
+              <label class="jf-goal-set-l" for="jf-goal-have">If you have
+                started setting money aside, record it here to see where you
+                are</label>
+              <span class="jf-goal-set-row">
+                <input class="jf-goal-set-i" id="jf-goal-have" type="number"
+                       min="0" step="1" inputmode="numeric"
+                       placeholder="0" aria-describedby="jf-goal-set-f">
+                <span class="jf-goal-set-u">TP</span>
+                <button class="jf-goal-set-c" id="jf-goal-clear"
+                        type="button">Clear</button>
+              </span>
+              <span class="jf-fine" id="jf-goal-set-f">Kept in this browser
+                only. Nothing is sent to Afrinkong, and nothing is
+                purchased.</span>
+            </div>
             <p class="jf-goal-note" id="jf-goal-note"></p>
             <p class="jf-fine" id="jf-goal-prov"></p>
           </section>

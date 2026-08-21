@@ -318,6 +318,21 @@
   color:var(--c-muted)}
 .jf-goal-grid{margin-top:14px;display:grid;gap:10px 20px;
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+/* D-goalinput: the reader records their own progress, on their own device.
+   Deliberately quiet — this is a note in a planner, not a balance in an
+   account, and it must not read as a deposit field. */
+.jf-goal-set{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(0,0,0,.12);display:flex;flex-direction:column;gap:.45rem}
+.jf-goal-set-l{font-size:.86rem;line-height:1.45;max-width:46ch}
+.jf-goal-set-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.jf-goal-set-i{width:8.5rem;padding:.5rem .6rem;font:inherit;font-variant-numeric:tabular-nums;border:1px solid rgba(0,0,0,.25);border-radius:.3rem;background:transparent;color:inherit}
+.jf-goal-set-i:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.jf-goal-set-u{font-size:.86rem;opacity:.75}
+.jf-goal-set-c{padding:.5rem .7rem;font:inherit;font-size:.86rem;background:transparent;border:1px solid rgba(0,0,0,.25);border-radius:.3rem;color:inherit;cursor:pointer}
+.jf-goal-set-c:hover{border-color:currentColor}
+.jf-goal-set-c:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+/* D11: reaching the target is a change of STAGE, not a bigger number. A rule,
+   not a colour — the funded state should read as arrival, not as celebration. */
+.jf-goal[data-funded="1"]{box-shadow:inset 3px 0 0 currentColor}
 .jf-goal-cell{display:flex;flex-direction:column;gap:3px}
 .jf-goal-cell span{font-size:12.5px;color:var(--c-muted)}
 .jf-goal-cell b{font-family:var(--fj-mono);font-size:17px;font-weight:500;

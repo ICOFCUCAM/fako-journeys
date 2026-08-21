@@ -55,6 +55,8 @@
   var goalEl = document.getElementById('jf-goal');
   var goalGrid = document.getElementById('jf-goal-grid');
   var goalNote = document.getElementById('jf-goal-note');
+  var goalHave = document.getElementById('jf-goal-have');
+  var goalClear = document.getElementById('jf-goal-clear');
   var goalProv = document.getElementById('jf-goal-prov');
   var keepBtn = document.getElementById('jf-keep');
   var keptNote = document.getElementById('jf-kept');
@@ -222,7 +224,12 @@
     if (!G || !goalEl) return;
 
     var total = p.band ? p.plan : p.total;
-    var g = G.build(total, months, 0, (D && D.v) || null);
+    /* D-goalinput: the reader's own note, from their own browser. This was a
+       hard-coded 0, so "Your progress" read 0% forever and the funded state
+       could never render — the panel showed somebody their progress and the
+       progress was permanently zero. `readRecorded()` has existed and been
+       called from nowhere since it was written. */
+    var g = G.build(total, months, recordedPoints(), (D && D.v) || null);
 
     /* If a programme is ever live, this panel must not be the thing that sells
        it. Hiding rather than adapting is the conservative failure. */
@@ -232,17 +239,58 @@
        balance with a journey attached. C4/B3: no cell says "target monthly"
        or anything else that reads as an amount the customer owes. The pace
        appears only inside the conditional sentence below. */
+    /* D11: when the target is reached the panel says JOURNEY FUNDED, and the
+       next step is booking rather than a balance. Until now nothing could
+       reach it. */
     goalGrid.innerHTML =
         cell('Journey estimate', g.display.journeyTotal)
       + cell('Estimated Travel Goal', g.display.target)
-      + cell('Your progress', g.display.prepared)
-      + cell('Still to build', g.display.away);
+      + cell('Your progress', g.display.funded || g.display.prepared)
+      + cell(g.display.funded ? 'Ready to plan the booking'
+                              : 'Still to build',
+             g.display.funded ? 'Nothing further to set aside'
+                              : g.display.away);
+    if (goalEl) {
+      goalEl.setAttribute('data-funded', g.journeyState === 'FUNDED' ? '1' : '0');
+    }
+    if (goalHave && goalHave.value === '') {
+      var r = recordedPoints();
+      if (r > 0) goalHave.value = String(r);
+    }
 
     goalNote.textContent = (g.projection ? g.projection + ' ' : '') + g.disclosure;
     goalProv.textContent = 'Calculated from rate card ' + g.rateCardVersion
       + ' against programme ' + g.programId + ' v' + g.programVersion
       + ' (' + g.programStatus + ').';
     goalEl.hidden = false;
+  }
+
+  /* THE READER'S NOTE, ON THE READER'S DEVICE.
+   *
+   * Afrinkong is told nothing and holds nothing; there is no account, and Z's
+   * boundary puts planning firmly on the anonymous side. localStorage can
+   * throw outright in a private window or where site data is blocked, so every
+   * read and write is wrapped — a browser that refuses to remember must still
+   * render the panel, just without a remembered figure. */
+  var GOAL_KEY = 'afk.goal.recorded';
+
+  function recordedPoints() {
+    var G = window.AfrinkongGoal;
+    if (!G) return 0;
+    try {
+      return G.readRecorded(window.localStorage.getItem(GOAL_KEY));
+    } catch (e) { return 0; }
+  }
+
+  function rememberPoints(raw) {
+    var G = window.AfrinkongGoal;
+    if (!G) return 0;
+    var n = G.readRecorded(raw);
+    try {
+      if (n > 0) window.localStorage.setItem(GOAL_KEY, String(n));
+      else window.localStorage.removeItem(GOAL_KEY);
+    } catch (e) { /* a browser that will not remember is not an error. */ }
+    return n;
   }
 
   function cell(label, value) {
@@ -393,6 +441,24 @@
   placeSel.addEventListener('change', function () { draw(); retarget(); });
   monthSel.addEventListener('change', function () { draw(); retarget(); });
   if (keepBtn) keepBtn.addEventListener('click', keep);
+
+  /* D-goalinput. `input` rather than `change` so the panel moves as the reader
+     types — the figure is theirs and the feedback should be immediate. Nothing
+     is submitted anywhere; `draw()` recomputes from the same rate card. */
+  if (goalHave) {
+    goalHave.addEventListener('input', function () {
+      rememberPoints(goalHave.value);
+      draw();
+    });
+  }
+  if (goalClear) {
+    goalClear.addEventListener('click', function () {
+      goalHave.value = '';
+      rememberPoints('');
+      draw();
+      goalHave.focus();
+    });
+  }
 
   draw();
   retarget();
