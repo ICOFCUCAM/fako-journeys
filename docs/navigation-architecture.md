@@ -1,112 +1,82 @@
-# Item 5 — navigation architecture
+# B — Navigation architecture
 
-**PROPOSED. NOT BUILT.** Nothing in this document has been applied to a page.
-It touches all 1,597 pages and is the change a visitor notices first, so it
-waits for the larger mandate rather than being assumed.
+**PROPOSED, FOR REVIEW. NOT BUILT.** Instruction 18 is explicit: the final
+navigation and page hierarchy are presented before any label changes. Nothing
+in this document has been applied to a page.
 
 ---
 
 ## The correction that produced it
 
-The first version of this was a rename:
+The first draft of this was a rename — *The Atlas → Explore, Stories → Explore,
+Meet Africa → Explore.* **That is a navigation cleanup and it is the wrong
+shape.** It flattens five named products into four generic words and calls the
+loss a simplification.
 
-```
-The Atlas      → Explore
-Trans Afrique  → Explore / Travel
-Journey Fund   → Fund
-Stories        → Explore
-Meet Africa    → Explore
-```
-
-**That is a navigation cleanup, and it is the wrong shape.** It flattens five
-named things into four generic words and calls the loss of three product
-identities a simplification. Trans Afrique, Stories and Meet Africa are not
-labels; they are products with their own character, built to a standard the
-rest of the site is measured against.
-
-The reservation recorded in `docs/information-architecture.md` was right, and
-the resolution is that **the four areas are the spine and the named products
-are first-class within them** — not a dropdown nobody opens, and not deleted.
+Trans Afrique, Stories and Meet Africa are products with their own character,
+built to a standard the rest of the site is measured against. The resolution:
+**the areas are the spine, and the named products are first-class within
+them.** One platform, multiple experiences.
 
 ---
 
-## The architecture
+## The spine
 
-### EXPLORE — discover Africa
+**EXPLORE · PLAN · TRAVEL.** Three areas, not four.
 
-```
-EXPLORE
-├── Destinations
-├── The Atlas
-├── Stories
-├── Meet Africa
-└── Trans Afrique
-```
-
-Also here, and already built: countries, places, wildlife, culture, wonders,
-cities, scale, compare. The universal index (⌘K) spans all of it.
-
-**The names survive.** "The Atlas" is what that product is called; "Explore" is
-where it lives.
-
-### PLAN — turn discovery into a journey
-
-```
-PLAN
-├── Build a Journey
-├── Journey Fund
-└── My Goals
-```
-
-Also here: itineraries, journey pricing, the rate card, the Travel Goal.
-
-The Plan → Fund edge this session repaired is the seam between the first two
-entries, and it now carries in both directions.
-
-### FUND — prepare financially
-
-```
-FUND
-├── Travel Points
-├── Travel Wallet
-└── Activity
-```
-
-Also here: programme information, point activity.
-
-**Nothing in this area may appear before it is real.** Issuance is off, the
-wallet is deliberately unwired, and four readiness blockers stand. A navigation
-entry for a Travel Wallet that cannot be opened is a promise the product cannot
-keep, so FUND's children appear as the states behind them become reachable —
-which is what the state language now makes expressible.
-
-### TRAVEL — actually go
-
-```
-TRAVEL
-├── My journeys
-├── Bookings
-├── Documents
-├── Payments
-└── Journey status
-```
-
-Also named in the brief: passport requirements, accommodation, transport,
-permits.
-
-**This area is almost entirely unbuilt, and that is correct.** `booking.js`
-holds the seven states and they have no surface. The state language now gives
-each of them a sentence and a tone, so when this area is built the words are
-already decided.
-
-### ACCOUNT
-
-Identity, security, preferences, legal. **Appears only when there is an
-account.** Planning needs no account; ownership does — item Z's rule, unchanged.
+FUND is architecturally reserved and **absent from public navigation** until the
+compliance gates clear. An area whose three children are all unreachable is a
+sign on an empty room, and Afrinkong's whole economic discipline has been about
+not making promises the product cannot keep.
 
 ---
 
-## What this preserves
+## The proposed hierarchy
+
+```
+AFRINKONG
+
+EXPLORE ─────────── discover Africa
+├── Destinations ................ /places      1,405 place pages, 54 countries
+├── The Atlas ................... /atlas       geography as interface
+├── Countries ................... /tourism/    54 country fronts
+├── Stories ..................... /stories     the story graph
+├── Meet Africa ................. /meet        seven human questions × 22
+├── Trans Afrique ............... /trans-afrique   the four crossings
+└── The Wonders ................. /wonders
+
+PLAN ────────────── turn discovery into a journey
+├── Build a Journey ............. /journey     four questions, shareable
+├── Journey Fund ................ /journey-fund   what it costs, and what it takes
+│   ├── How it works ............ /journey-fund/how-it-works
+│   └── Questions ............... /journey-fund/questions
+└── Compare ..................... /compare
+
+TRAVEL ──────────── actually go
+└── (reserved — booking.js holds seven states with no surface)
+
+──────────────────────────────────────────────────────────
+About ......... /about-afrinkong   ← does not exist yet; see §Open 5
+Trust ......... /terms /privacy /accessibility /how-it-works
+
+RESERVED, NOT SHOWN
+FUND → Travel Points → Travel Wallet → Travel Goals → redemption
+```
+
+### Per-country, the four depths
+
+Already built this session, and the model the whole IA should follow:
+
+```
+/kenya ──────── overview ──── "why here"
+   ├── /portrait/kenya ────── "the long read"
+   ├── /places#kenya ──────── "the 26 things"
+   └── /tourism/kenya ─────── "what it costs"
+```
+
+---
+
+## What survives
 
 | product | today | proposed | lost? |
 |---|---|---|---|
@@ -114,55 +84,87 @@ account.** Planning needs no account; ownership does — item Z's rule, unchange
 | Trans Afrique | top level | EXPLORE › Trans Afrique | no |
 | Stories | top level | EXPLORE › Stories | no |
 | Meet Africa | top level | EXPLORE › Meet Africa | no |
+| Every place | top level | EXPLORE › Destinations | **renamed** |
 | Journey Fund | top level | PLAN › Journey Fund | no |
-| Every place | top level | EXPLORE › Destinations | renamed |
 
-Five named products, five still named. What changes is that a visitor can see
-**Explore → Plan → Fund → Travel** exists, which today nothing tells them.
+**Five named products, five still named.** The only rename is *Every place →
+Destinations*, and it is proposed rather than assumed — see Open question 3.
 
----
-
-## The open questions
-
-These are decisions, not details, and they are the reason this is a proposal:
-
-1. **Does "Journey Fund" belong to PLAN or FUND?** The brief places it in both.
-   It is a *planner* that holds nothing, which argues for PLAN — but it is the
-   entry point people will look for under FUND. Splitting the name across two
-   areas is how a product ends up with two front doors.
-2. **"My Goals" versus "Travel Goal".** The module says Travel Goal; the
-   navigation draft says My Goals. One of them has to give.
-3. **When does FUND appear at all?** An area whose three children are all
-   unreachable is an empty room with a sign on it.
-4. **Trans Afrique's own masthead.** It has one, with its own identity. Nesting
-   it under EXPLORE in the global nav while it keeps its own chrome is either
-   right or confusing, depending on a judgement nobody has made yet.
+What changes is that a visitor can see **Explore → Plan → Travel** exists,
+which today nothing tells them.
 
 ---
 
-## The revised phase order
+## The shell, and why product identity survives it
 
-Recorded because it reframes what the remaining work is for:
+The audit found **ten mastheads and seven footers**. The proposal is **one
+shell with three levels of identity**:
 
-```
-1  Economic correctness        ─┐
-2  Technical correctness        │  make the system CORRECT
-3  Information architecture    ─┘
-4  State language              ─── make the system LEGIBLE
-5  Navigation architecture     ─┐
-6  Visual / product architecture│
-7  Interaction design           │  make the system DESIRABLE
-8  International premiumisation │
-9  Performance / accessibility  ─┘
+| level | who gets it | what it means |
+|---|---|---|
+| **platform** | every page | the Afrinkong mark, the three areas, the index (⌘K), the footer with Wankong LLC |
+| **product** | Trans Afrique, Journey Fund, the journey builder, the atlas | a product band **below** the platform bar: its own name, its own sub-navigation, its own tone |
+| **operator** | `/cameroon`, `/about`, `/pricing`, `/services`, `/contact` | **a different shell entirely.** These are the Kamerun ground operation's pages |
 
-   only then: the visual activation of the Travel Points infrastructure
-```
+The operator separation is not cosmetic. Those five pages currently share the
+`.fj-mast` class with 55 Afrinkong tourism pages while carrying a completely
+different navigation, so any change to that class changes two products at once.
 
-1–3 are done. 4 is done. **5 onward begins on the larger mandate, not on this
-document.**
+---
 
-The structural defects found on the way through — 51 dangling accessibility
-references, 53 isolated country nodes, a tier vocabulary that silently did not
-carry, a non-idempotent transform, eleven colliding state words — are the
-reason this order is right. Each was invisible, each was cheap to fix before
-the visual layer, and each would have been expensive to find underneath it.
+## The seven open questions
+
+These are decisions, not details, and they are why this is presented rather than
+applied.
+
+**1 · Does the Journey Fund belong to PLAN or FUND?**
+It is a planner that holds nothing, which argues for PLAN. But "Fund" is the
+word people will look for under FUND, and FUND does not exist yet.
+*Recommendation: PLAN, and revisit when FUND is real.* Two front doors is how a
+product loses one.
+
+**2 · "Travel Goal" or "My Goals"?**
+`travel-goal.js` says Travel Goal and the state language uses it. *"My Goals"
+implies an account, and there are no accounts.*
+*Recommendation: Travel Goal.*
+
+**3 · "Every place" or "Destinations"?**
+*Every place* is distinctive and honest — there are 1,405 of them.
+*Destinations* is what an international traveller searches for.
+*Recommendation: Destinations, with "every place we write about" as the
+sub-line.* This one is genuinely a brand decision and I would take direction.
+
+**4 · Does TRAVEL appear before anything is bookable?**
+It has no surfaces at all. Showing it is a promise; hiding it makes the spine
+invisible.
+*Recommendation: show it, unlinked, as a stated third stage on the how-it-works
+surface only — not as a clickable nav item.*
+
+**5 · There is no "About Afrinkong".**
+`/about` is the **Kamerun operator's** about page. A visitor who wants to know
+who Afrinkong is has nowhere to go. This is a gap, not a design decision.
+*Recommendation: a new surface. Needs a URL — `/about-afrinkong` is ugly.*
+
+**6 · Trans Afrique keeps its own masthead — under the platform bar, or
+instead of it?**
+Two bars costs vertical space on a phone. One bar loses the product.
+*Recommendation: platform bar collapses to a slim rule on product pages, with
+the product band beneath it.*
+
+**7 · ⌘K is currently the only thing holding the surfaces together.**
+Under the new architecture it becomes a convenience rather than the
+architecture. *No action — but worth stating, because it changes what the index
+is for.*
+
+---
+
+## What must not happen
+
+- **No area may appear whose children are unreachable.** FUND stays out.
+- **No product identity is deleted to tidy the diagram.**
+- **No navigation change ships without the shell.** Changing labels across
+  1,597 pages while ten mastheads still exist would multiply the inconsistency
+  rather than resolve it. The shell comes first; the labels come with it.
+- **The operator's five pages do not get Afrinkong's navigation.** They are a
+  different company's front door hosted on the same domain, and the footer
+  already says so.

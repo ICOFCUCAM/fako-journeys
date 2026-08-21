@@ -17,7 +17,12 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | **anything economic — Travel Points, programmes, the ledger** | **`docs/travel-point-decisions.md`** — START HERE. The canonical index: definition → decisions A–I → programme state → implementation. Every other points document hangs off it |
 | anything with photographs, R2, or the acquisition budget | **`docs/image-library-state.md`** — the handover, including a list of approaches already tried and found wrong |
 | **what a customer is shown when something is pending, held, ended or broken** | **`docs/state-language.md`** — Item 4. 72 states, 6 tones, one sentence each. GENERATED: `node tools/state-doc.js > docs/state-language.md`. ENDED is not BROKEN, and that is the load-bearing line |
-| **the navigation, the four areas, or "where does X live?"** | **`docs/navigation-architecture.md`** — Item 5. PROPOSED, NOT BUILT. Explore · Plan · Fund · Travel, with The Atlas, Trans Afrique, Stories and Meet Africa kept as named products inside them, not flattened away |
+| **the design mandate — START HERE for any visual work** | **`docs/system-audit.md`** — measured. 10 mastheads, 7 footers, 24 class prefixes, 183 type sizes, 1,529 pages with no body class. And what it found NOTHING wrong with |
+| the product as a system, or which family a page belongs to | **`docs/product-architecture.md`** — A and D. Five kinds of surface, six page families, and the disposition of all 1,597 pages |
+| **the navigation, the three areas, or "where does X live?"** | **`docs/navigation-architecture.md`** — B. PROPOSED, AWAITING REVIEW. Explore · Plan · Travel; FUND reserved and absent. Seven open questions |
+| tokens, type, components, cards, buttons, states, photography | **`docs/design-system.md`** — C and E. 24 prefixes become 11 primitives; 183 type sizes become 11; 22 shadows become 2 |
+| motion, responsive behaviour, forms, or what "premium" means here | **`docs/interaction-and-premium.md`** — F and G. Motion explains a relationship or it does not happen |
+| **how to change anything visual without breaking the build** | **`docs/migration-plan.md`** — H. Every page is generated: 1,597 pages are reachable from 21 files. Three named hazards |
 | page weight, or quoting a performance number | `docs/weight-baseline.md` |
 | deciding what photography to buy | `docs/hero-acquisition.md` |
 | the site's structure | `docs/architecture.md` |
