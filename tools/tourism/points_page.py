@@ -201,7 +201,7 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/fund.css">
 </head>
-<body class="af af--fund jf-page" data-area="plan" data-family="explain">
+<body class="af af--fund jf-page" data-area="plan">
 <a class="af-skip" href="#what">Skip to what a Travel Point is</a>
 %(mast)s
 <main>

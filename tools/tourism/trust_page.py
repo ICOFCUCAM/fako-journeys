@@ -275,7 +275,7 @@ TEMPLATE = """<!DOCTYPE html>
 %(preload)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 </head>
-<body class="af af--explain" data-family="explain">
+<body class="af af--explain">
 <a class="af-skip" href="#layers">Skip to the three layers</a>
 %(mast)s
 <main>
