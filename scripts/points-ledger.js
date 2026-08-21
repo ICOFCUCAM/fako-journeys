@@ -373,8 +373,35 @@
          field is present and empty rather than absent: a wind-down with no
          named successor falls through to redemption and repurchase, and
          `windDown()` says so rather than leaving the caller to notice. */
+      /* G: `active` IS NOT `mayIssue`. The compliance ladder says the
+         programme MAY operate; this says it IS issuing, and it is a separate
+         act. False here, and it would stay false through a completed
+         compliance review — turning it on is its own decision requiring the
+         operational readiness the ladder does not test. */
+      issuanceEnabled: false,
+
+      /* G: CESSATION — CAN AFRINKONG STILL ACTUALLY PROVIDE THE TRAVEL?
+         Distinct from the compliance state, and the distinction is the whole
+         of Decision G. A programme in REDEMPTION_PERIOD is PERMITTED to
+         redeem; a programme whose eligible travel has ceased CANNOT, whatever
+         it is permitted to do. `windDown()` used to read only the permission
+         and would have offered redemption by a company no longer able to
+         deliver it. */
+      cessation: {
+        ceased: false,          // eligible travel is no longer being provided
+        ceasedOn: null,
+        reason: null,
+        /* G: TERMINATED means the obligations were performed, not that the
+           balance reached zero. Recorded so `mayClose()` can require it. */
+        obligationsCompleted: false
+      },
+
       windDown: {
-        order: ['redeem', 'migrate', 'buyback'],
+        /* G's four steps, in the order Decision G names them. `alternative`
+           was missing: it lived in `remedies()` as its own function, which
+           meant a wind-down and a discontinued journey answered the same
+           question in two places. One list now. */
+        order: ['redeem', 'alternative', 'migrate', 'buyback'],
         successor: null,          // a programme id, when one is defined
         migrationRatio: null,     // points in the successor per point here
         consentRequired: true,    // G: migration is never automatic
@@ -586,6 +613,21 @@
                     'what it owes — move to REDEMPTION_PERIOD and run off.',
                outstanding: outstandingPoints };
     }
+    /* G: TERMINATED MEANS THE OBLIGATIONS WERE PERFORMED, NOT THAT THE BALANCE
+       REACHED ZERO. Those are different facts and only one of them was being
+       checked. A balance can reach zero because every holder was served, or
+       because something went wrong upstream and the fold is reading an empty
+       ledger; requiring an explicit record of completion means somebody has to
+       assert the first rather than the system inferring it from an absence. */
+    var c = program(id).cessation || {};
+    if (c.obligationsCompleted !== true) {
+      return { ok: false,
+               why: 'programme ' + id + ' has nothing outstanding, but its ' +
+                    'wind-down obligations have not been recorded as ' +
+                    'completed. TERMINATED means the obligations were ' +
+                    'performed, not that the balance reached zero.',
+               outstanding: 0, obligationsCompleted: false };
+    }
     return { ok: true };
   }
 
@@ -635,11 +677,16 @@
   /* The two that move points between people rather than between pools. E8. */
   var TRANSFER_KINDS = ['TRANSFER_IN', 'TRANSFER_OUT'];
 
+  /* ACTIVE_PROGRAM MEANS "MAY ISSUE", so this must agree with mayIssue().
+     It read the compliance state alone, and the moment issuance gained its
+     second condition the two disagreed — producing the genuinely absurd
+     refusal "program X is ACTIVE_PROGRAM. Points may only be issued under an
+     ACTIVE_PROGRAM." A product state that contradicts the gate it describes is
+     worse than no product state. */
   function stateOf(id) {
     if (!id) return PRODUCT_STATE.PLANNING;
-    return ISSUING_STATES.indexOf(complianceOf(id)) !== -1
-      ? PRODUCT_STATE.ACTIVE_PROGRAM
-      : PRODUCT_STATE.DRAFT_PROGRAM;
+    return mayIssue(id) ? PRODUCT_STATE.ACTIVE_PROGRAM
+                        : PRODUCT_STATE.DRAFT_PROGRAM;
   }
 
   /* C15: A PROGRAMME MAY NOT GO LIVE WITH AN UNANSWERED EXPOSURE LIMIT.
@@ -693,8 +740,24 @@
      have walked DRAFT -> LEGAL_REVIEW -> ACCOUNTING_REVIEW -> APPROVED ->
      PILOT, and mayActivate() has to be satisfied at that last step, before a
      single point can exist. Editing one word cannot start taking money. */
+  /* G: `active` IS NOT `mayIssue`, AND THAT IS NOW TWO CONDITIONS.
+   *
+   * Until this, reaching compliance ACTIVE turned issuance on by itself — so
+   * the ladder ended in a state that both meant "approved" and did "start
+   * selling", and the last rung carried two decisions at once. Somebody
+   * completing a compliance review would have enabled a shop.
+   *
+   * They are separated. The ladder says whether the programme MAY operate;
+   * `issuanceEnabled` says whether it IS issuing, and it is a distinct act
+   * requiring the operational readiness the ladder does not test. A programme
+   * can sit at ACTIVE, fully approved, issuing nothing.
+   *
+   * Both must hold. `issuanceEnabled` alone is as inert as `status: 'active'`
+   * was, and for the same reason: one flag must never be the whole gate.
+   */
   function mayIssue(id) {
-    return ISSUING_STATES.indexOf(complianceOf(id)) !== -1;
+    if (ISSUING_STATES.indexOf(complianceOf(id)) === -1) return false;
+    return program(id).issuanceEnabled === true;
   }
 
   /* ---- money and points ---------------------------------------------------
@@ -1561,12 +1624,37 @@
     var p = program(programId);
     var w = p.windDown || {};
     var steps = [];
-    (w.order || ['redeem', 'migrate', 'buyback']).forEach(function (step) {
+    var ceased = !!(p.cessation && p.cessation.ceased);
+    (w.order || ['redeem', 'alternative', 'migrate', 'buyback']).forEach(function (step) {
       if (step === 'redeem') {
+        /* G: PERMISSION IS NOT CAPABILITY. This read `mayRedeem()` alone,
+           which asks whether the compliance state ALLOWS redemption — and a
+           company that has ceased providing eligible travel is still allowed
+           to redeem and simply cannot. Offering it would have been the
+           cruellest possible answer: a step the customer takes and that
+           nobody can perform. */
         steps.push({ step: 'redeem', rank: steps.length + 1,
-                     available: mayRedeem(programId),
-                     note: 'Use the points for an eligible journey. Redemption ' +
-                           'stays open through closure and run-off.' });
+                     available: mayRedeem(programId) && !ceased,
+                     permitted: mayRedeem(programId),
+                     note: ceased
+                       ? 'Eligible travel is no longer being provided under ' +
+                         'this programme, so redemption is not available even ' +
+                         'though the programme still permits it.'
+                       : 'Use the points for an eligible journey. Redemption ' +
+                         'stays open through closure and run-off.' });
+      } else if (step === 'alternative') {
+        /* G step 2: another eligible service where the original is gone. Still
+           travel, still this programme — which is why it sits above migration
+           and well above repurchase. Unavailable only when the company has
+           ceased providing travel at all. */
+        var scope = (p.eligibleServices || []).length;
+        steps.push({ step: 'alternative', rank: steps.length + 1,
+                     available: !ceased && scope > 0,
+                     services: p.eligibleServices || [],
+                     note: ceased
+                       ? 'No eligible Afrinkong service remains available.'
+                       : 'Apply the points to another eligible service under ' +
+                         'this programme.' });
       } else if (step === 'migrate') {
         steps.push({ step: 'migrate', rank: steps.length + 1,
                      available: w.successor != null,
@@ -1591,9 +1679,12 @@
       programId: p.id,
       compliance: complianceOf(programId),
       steps: steps,
+      ceased: ceased,
       /* If every step is unavailable the programme owes points it has no way
          to honour. That is a human problem and it is reported as one rather
-         than resolving to an empty list somebody reads as "nothing to do". */
+         than resolving to an empty list somebody reads as "nothing to do".
+         Cessation is exactly the scenario that produces it, which is why G
+         exists at all. */
       exhausted: live.length === 0,
       neverAnOption: 'cancelling the points because the programme closed',
       note: live.length === 0
@@ -1601,6 +1692,93 @@
           'Points remain outstanding and this requires a human decision; it ' +
           'is not a case where they lapse.'
         : null
+    };
+  }
+
+  /* G: WHAT A WINDING-DOWN PROGRAMME MUST SHOW ITS HOLDERS.
+   *
+   * Decision G names five things, and the reason they are assembled here
+   * rather than left to a screen is that a wind-down is exactly when nobody
+   * has time to design a screen carefully. `deadline` is null because
+   * `periodMonths` is undecided (D-runoff) — null and "no deadline" are
+   * different, so it says which.
+   *
+   * NO MONEY. G is explicit that no cessation rule creates a universal cash
+   * value, so this reports the buyback MECHANISM's availability and never a
+   * figure. A quote is still per-request, about identified points — Decision I.
+   */
+  function windDownDisclosure(programId, outstandingPoints) {
+    var p = program(programId);
+    var w = p.windDown || {};
+    var plan = windDown(programId);
+    return {
+      programId: p.id,
+      compliance: complianceOf(programId),
+      ceased: plan.ceased,
+      /* 1 — what the customer still holds. */
+      outstanding: outstandingPoints == null ? null : outstandingPoints,
+      outstandingStated: outstandingPoints != null,
+      /* 2/3/4 — the options, in G's order, with what is actually available. */
+      options: plan.steps,
+      /* 5 — deadlines, honestly. */
+      deadline: null,
+      periodMonths: w.periodMonths == null ? null : w.periodMonths,
+      deadlineNote: w.periodMonths == null
+        ? 'The wind-down period has not been set for this programme. No ' +
+          'deadline applies until one is published.'
+        : 'Points may be used for ' + w.periodMonths + ' months from the ' +
+          'start of the wind-down.',
+      successor: w.successor || null,
+      buybackMechanism: !!(p.buyback && p.buyback.offered),
+      /* Decision I, restated where it is most likely to be broken: a
+         wind-down is the moment somebody reaches for a per-point figure. */
+      cashEquivalent: null,
+      note: 'Closing a programme does not cancel Travel Points already issued. ' +
+            'No cessation rule gives a Travel Point a cash value.'
+    };
+  }
+
+  /* G: "CAN WE SHIP?" AS A FUNCTION, NOT A DOCUMENT.
+   *
+   * The register drifted because "are we ready" was answered by reading prose.
+   * This answers it from the programme itself: where it sits on the ladder,
+   * whether issuance is separately enabled, and precisely what is unset.
+   *
+   * It deliberately does NOT consult `status`. That word is inert and a
+   * readiness function that read it would re-create the exact confusion the
+   * ladder was built to end.
+   */
+  function readiness(programId) {
+    var p = program(programId);
+    var at = complianceOf(programId);
+    var rung = COMPLIANCE_STATES.indexOf(at);
+    var activation = mayActivate(programId);
+    var blockers = [];
+    if (ISSUING_STATES.indexOf(at) === -1) {
+      blockers.push('compliance is ' + at + '; issuance requires ' +
+                    ISSUING_STATES.join(' or '));
+    }
+    if (!activation.ok) blockers.push(activation.why);
+    if (p.issuanceEnabled !== true) {
+      blockers.push('issuanceEnabled is not true — reaching an issuing ' +
+                    'compliance state does not by itself start issuance');
+    }
+    return {
+      programId: p.id,
+      compliance: at,
+      ladder: COMPLIANCE_STATES.slice(0, 6),
+      rung: rung,
+      issuanceEnabled: p.issuanceEnabled === true,
+      mayIssue: mayIssue(programId),
+      mayRedeem: mayRedeem(programId),
+      productState: stateOf(programId),
+      blockers: blockers,
+      ready: blockers.length === 0,
+      /* Said outright, because this is the sentence somebody will quote. */
+      note: blockers.length === 0
+        ? 'This programme may issue Travel Points.'
+        : 'This programme cannot issue Travel Points. ' + blockers.length +
+          ' condition(s) unmet.'
     };
   }
 
@@ -2140,6 +2318,8 @@
     mayTransfer: mayTransfer,
     mayClose: mayClose,
     windDown: windDown,
+    windDownDisclosure: windDownDisclosure,
+    readiness: readiness,
     migrate: migrate,
     remedies: remedies,
     consumptionOrder: consumptionOrder,
