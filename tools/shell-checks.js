@@ -237,9 +237,19 @@ check('the shell opens with no JavaScript', !jsNav.length,
  * place page is ordinary. That it also wears the operator's shell is a wrinkle
  * of one company being based in one of the countries.
  *
- * WHEN BOOKING EXISTS, extend DESK and CTA_CONTEXT — those two lists are the
- * whole rule, and a booking flow that hands payment to the operator's desk is
- * the same failure with more money attached. */
+ * THIS IS THE NARROW HALF OF THE RULE, AND IT KNOWS IT.
+ *
+ * A path list cannot tell a destination from a desk, and this one only avoids
+ * that by hand-excluding /cameroon. The general form lives in
+ * scripts/entities.js, which classifies a link by ENTITY + CONTEXT + POSITION +
+ * ACTION rather than by where it points, and tools/entity-checks.js enforces
+ * the part that matters most: every act touching a customer's money,
+ * entitlement or trip names the entity performing it.
+ *
+ * What survives here is the cheap positional check — the operator's desk must
+ * not appear in navigation, a footer nav or a primary button on an Afrinkong
+ * page. It is kept because it runs over the built HTML and catches the mistake
+ * at the place it gets made. */
 
 const DESK = ['/contact', '/about', '/pricing', '/services'];
 const OPERATOR_PAGES = new Set(
