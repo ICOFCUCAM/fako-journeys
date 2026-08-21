@@ -302,5 +302,33 @@ check('the page is reachable from the site, not merely present in it',
   `linked from ${reach} page(s) — it is in the colophon, so it is on every ` +
   'Afrinkong page rather than on none');
 
+/* TWO PAGES EXPLAIN THIS RELATIONSHIP, AND THAT IS ONLY SAFE IF ONE SENDS
+ * YOU TO THE OTHER.
+ *
+ * /about-afrinkong already carried "Afrinkong is the travel brand, Wankong LLC
+ * is the company behind it... Three parties, all of them stated" before /trust
+ * existed. Left alone, that is two accounts of the same relationship in
+ * slightly different words — the failure the shell work spent a day removing,
+ * arriving by a different door.
+ *
+ * They are allowed to coexist as summary and detail. They are not allowed to
+ * coexist as rivals, so the summary has to link to the table. */
+const ABOUT = path.join(ROOT, 'about-afrinkong.html');
+const about = fs.existsSync(ABOUT) ? fs.readFileSync(ABOUT, 'utf8') : '';
+check('the page that summarises the three parties sends you to the full set',
+  about.length > 0 && about.includes('href="/trust"'),
+  about.length
+    ? '/about-afrinkong states it in three sentences and links /trust, which ' +
+      'renders the model act by act — summary and detail, not two accounts'
+    : '/about-afrinkong is missing');
+
+/* And both must name the same contracting entity. If one of them ever says
+   the customer contracts with the trading name, they have drifted in the one
+   way that matters. */
+check('both pages name the same company as the one you contract with',
+  /Wankong LLC/.test(about) && /Wankong LLC/.test(trust) &&
+    !/contracting with[^.]{0,40}Afrinkong/i.test(about),
+  'Wankong LLC on both; neither says a customer contracts with the brand');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);
