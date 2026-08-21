@@ -102,26 +102,23 @@ class Shell:
 
 
 def masthead(country, taxonomy):
-    """Afrinkong chrome, naming the country you are actually reading about."""
-    op = country.operator
-    tel = ('<span class="fj-mast-tel">%s &middot; %s</span>'
-           % (esc(op.name), esc(op.base))) if op else ""
-    return ('<header class="fj-mast">\n'
-            '  <div class="fj-frame fj-mast-in">\n'
-            '    <a class="fj-mark" href="%s"><i>Afrinkong</i><b>%s</b>'
-            '<span>All %d categories</span></a>\n'
-            '    <nav class="fj-routes" aria-label="Primary">\n'
-            '      %s\n'
-            '      <a href="/atlas">The Atlas</a>\n'
-            '      <a href="/journey">Build a journey</a>\n'
-            '      <a href="/meet">Meet Africa</a>\n'
-            '      <a href="/tourism/">Every country</a>\n'
-            '    </nav>\n%s'
-            '    <a class="btn" href="/journey">Build a journey</a>\n'
-            '  </div>\n</header>'
-            % (esc(country.url), esc(country.name), len(taxonomy.enabled),
-               ('<a href="%s">%s home</a>' % (esc(country.url), esc(country.name)))
-               if country.slug else '<a href="/">Afrinkong</a>', tel))
+    """The shell, with this country as the product band.
+
+    WAS fj-mast, ONE OF TEN. It carried its own five-link navigation and — the
+    part that made it dangerous — the SAME CLASS NAME as the Kamerun operator's
+    five pages, which carry completely different links. One class, two
+    companies, and a change to either changed both.
+
+    The country band beneath the platform bar is the four depths the graph
+    repair built: overview, portrait, places, what it costs. The index page has
+    no country, so it gets no band.
+    """
+    if not country.slug:
+        return plate.shell(here="/tourism/", area="explore",
+                           product="Countries", product_href="/tourism/")
+    name, href, nav = plate.country_band(country.name, country.slug)
+    return plate.shell(here="/tourism/%s" % country.slug, area="explore",
+                       product=name, product_href=href, product_nav=nav)
 
 
 def footer(country, ours=None):
@@ -526,7 +523,7 @@ PAGE = """<!DOCTYPE html>
 .fj-rise{opacity:1;transform:none}
 </style></noscript>
 </head>
-<body>
+<body class="af af--tourism" data-area="explore">
 <a class="af-skip" href="#main">Skip to %(country)s</a>
 %(masthead)s
 <main id="main">

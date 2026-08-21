@@ -678,8 +678,20 @@ function serve() {
       for (let i = -6; i <= 6; i++) stops.push(Math.round(i * h / 12));
       for (const off of stops) {
         await park(off);
+        /* THE MASTHEAD, BY WHATEVER NAME IT CURRENTLY HAS.
+           This asked for `.wa-mast, .jn-mast`, and Phase 5 replaced all ten
+           masthead classes with `.af-shell`. The selector then matched nothing,
+           `mast` came back 0, and two things went wrong at once: the
+           "copy clears the masthead" test could never fire, and the contrast
+           sampler read the sticky bar's own ivory as the ground behind the
+           copy — 1.00:1, thirty times, on a page that was not broken.
+
+           A check that names a class is a check that dies when the class is
+           renamed, silently and in the direction of PASSING. `af-shell` first
+           because it is the one that exists; the two old names stay so the
+           check still works against an older tree. */
         const mast = await page.evaluate(() => {
-          const m = document.querySelector('.wa-mast, .jn-mast');
+          const m = document.querySelector('.af-shell, .wa-mast, .jn-mast');
           return m ? m.getBoundingClientRect().bottom : 0;
         });
         const rect = await page.evaluate(([bi, P]) => {

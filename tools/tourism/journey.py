@@ -365,6 +365,8 @@ def render(countries, taxonomy):
     return TEMPLATE % {
         "events": plate.events_block(),
         "explore": plate.explore_block(),
+        "mast": plate.shell(here="/journey", area="plan",
+                            product="Build a journey", product_href="/journey"),
         "foot": plate.colophon_foot("/journey"),
         "og": plate.open_graph('Build a journey — Afrinkong', 'Four questions, then one country, a journey shaped inside it, and the company that would run it.', '/journey'),
         "data": json.dumps(data, separators=(",", ":"), sort_keys=True),
@@ -411,19 +413,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/journey.css">
 </head>
-<body>
+<body class="af af--journey" data-area="plan">
 <a class="af-skip" href="#ask">Skip to the questions</a>
-<header class="jn-mast">
-  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Build a journey</b></a>
-  <nav class="jn-routes" aria-label="Primary">
-    <a href="/atlas">The Atlas</a>
-    <a href="/meet">Meet Africa</a>
-    <a href="/places">Every place</a>
-    <a href="/stories">Stories</a>
-    <a href="/how-it-works">How it works</a>
-  </nav>
-  <a class="af-btn af-btn--quiet" href="/enquire">Talk to us<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main class="jn" id="jn" data-step="1">
 

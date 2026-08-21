@@ -858,6 +858,137 @@ img[data-illustration]{height:auto}
 .af-co-brand{font-weight:700}
 .af-co-where{display:block;margin-top:5px;text-transform:none}
 
+/* ===== THE SHELL. Phase 5 + 6. ==========================================
+   One masthead for 1,597 pages, replacing ten.
+
+   Written here rather than in a new stylesheet because afrinkong.css is
+   already linked by 1,596 of the 1,597 pages, so the shell costs no extra
+   request anywhere.
+
+   TWO ROWS, AND THE SECOND IS CONTEXTUAL. Row one is the platform: the mark,
+   the two areas, About. Row two is the children of the area THIS page is in,
+   so a visitor always sees the room they are standing in. No dropdown, because
+   the shell has to work with no JavaScript and a hover menu fails touch and
+   keyboard both.
+
+   FOUR BREAKPOINTS, NOT THIRTY-ONE. 900 / 760 / 560 are three of the four
+   canonical widths from tokens.css; the shell uses no others. */
+.af-shell{position:sticky;top:0;z-index:80;background:var(--c-bg);
+  border-bottom:2px solid var(--c-primary)}
+.af-shell-in{max-width:var(--frame);margin:0 auto;padding:12px 44px;
+  display:flex;align-items:center;gap:30px}
+
+.af-shell-mark{display:flex;align-items:center;gap:10px;margin-right:auto;
+  font-family:var(--fj-display);font-size:19px;font-weight:700;
+  text-transform:uppercase;line-height:1;letter-spacing:-.01em;
+  white-space:nowrap;color:var(--c-primary)}
+.af-shell-mark span{display:none}
+
+/* The two areas. Larger and heavier than the row beneath them, because they
+   are the architecture and their children are the contents. */
+.af-shell-nav{display:flex;gap:26px}
+.af-shell-area{font-family:var(--fj-mono);font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-muted);padding:8px 0;
+  border-bottom:2px solid transparent;transition:color .18s,border-color .18s}
+.af-shell-area:hover{color:var(--c-primary)}
+.af-shell-area.is-here{color:var(--c-primary);border-bottom-color:var(--c-accent)}
+
+.af-shell-util{display:flex;gap:20px}
+.af-shell-util a{font-family:var(--fj-mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--c-muted);padding:8px 0}
+.af-shell-util a:hover{color:var(--c-accent)}
+
+/* Row two. Scrolls in its own container above 760 rather than wrapping, so the
+   masthead height never changes between two pages of the same family. */
+.af-shell-sub{max-width:var(--frame);margin:0 auto;padding:0 44px 10px;
+  display:flex;gap:22px;overflow-x:auto;scrollbar-width:none}
+.af-shell-sub::-webkit-scrollbar{display:none}
+.af-shell-sub a{font-family:var(--fj-text);font-size:14px;white-space:nowrap;
+  color:var(--c-muted);padding:2px 0;border-bottom:1px solid transparent}
+.af-shell-sub a:hover{color:var(--c-primary);border-bottom-color:var(--c-border)}
+.af-shell-sub a[aria-current="page"]{color:var(--c-primary);
+  border-bottom-color:var(--c-accent)}
+
+/* PRODUCT IDENTITY, BENEATH THE PLATFORM BAR RATHER THAN INSTEAD OF IT.
+   Trans Afrique, the Journey Fund, the builder and the atlas keep their
+   character; what they stop keeping is their own idea of what a masthead is.
+   Sand ground so the band reads as a different level rather than a second
+   navigation. */
+.af-shell-prod{background:var(--c-sand);border-top:var(--fj-rule)}
+.af-shell-prod{max-width:none;padding:0}
+.af-shell-prod{display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;
+  padding:9px 44px}
+/* 24px minimum, measured rather than assumed. This shipped at 22px tall — a
+   15px display line in a 9px-padded band — and the browser suite caught it on
+   nineteen pages. WCAG 2.2 asks 24 of anything that is not a link inside a
+   sentence, and a product name in a navigation band is not that. The band's own
+   padding does not change; the link grows into it. */
+.af-shell-prod-n{display:inline-flex;align-items:center;min-height:24px;
+  font-family:var(--fj-display);font-size:15px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.02em;color:var(--c-primary)}
+.af-shell-prod-nav{display:flex;gap:18px;flex-wrap:wrap}
+.af-shell-prod-nav a{font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--c-muted);padding:4px 0}
+.af-shell-prod-nav a:hover{color:var(--c-accent)}
+.af-shell-prod-nav a[aria-current="page"]{color:var(--c-primary)}
+
+/* THE OPERATOR'S SHELL. A different company's front door on the same domain,
+   and it must not wear Afrinkong's navigation. It used to share the .fj-mast
+   class with 55 Afrinkong tourism pages while carrying entirely different
+   links, so a change to one changed both. */
+.af-shell--operator{border-bottom-color:var(--c-accent)}
+.af-shell--operator .af-shell-nav{margin-left:auto;gap:22px}
+.af-shell--operator .af-shell-nav a{font-family:var(--fj-mono);font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--c-muted);padding:8px 0}
+.af-shell--operator .af-shell-nav a:hover{color:var(--c-accent)}
+
+/* THE PHONE MENU. <details> because it opens with no JavaScript, is keyboard
+   operable by default, and announces its own expanded state — none of which is
+   true of a button plus a class plus aria somebody has to keep in step. */
+.af-shell-menu{display:none;margin-left:auto;position:relative}
+.af-shell-menu>summary{list-style:none;cursor:pointer;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-primary);
+  padding:11px 0;min-height:44px;display:flex;align-items:center}
+.af-shell-menu>summary::-webkit-details-marker{display:none}
+.af-shell-menu[open]>summary{color:var(--c-accent)}
+.af-shell-menu-in{position:absolute;right:0;top:100%;z-index:90;
+  min-width:min(78vw,290px);background:var(--c-bg);
+  border:2px solid var(--c-primary);padding:6px 0 10px}
+.af-shell-menu-in b{display:block;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);
+  padding:14px 18px 6px}
+.af-shell-menu-in span{display:block}
+.af-shell-menu-in a{display:block;padding:11px 18px;min-height:44px;
+  font-size:15px;color:var(--c-primary);border-top:var(--fj-rule)}
+.af-shell-menu-in a:hover{background:var(--c-sand)}
+.af-shell-menu-in a[aria-current="page"]{color:var(--c-accent)}
+
+@media(max-width:900px){
+  .af-shell-in{padding:11px 26px;gap:20px}
+  .af-shell-sub{padding:0 26px 9px}
+  .af-shell-prod{padding:8px 26px}
+  .af-shell-nav{gap:20px}
+  .af-shell-util{display:none}
+}
+@media(max-width:760px){
+  .af-shell-in{padding:9px 22px}
+  .af-shell-sub{padding:0 22px 8px}
+  .af-shell-prod{padding:7px 22px;gap:14px}
+  /* One row: mark and Menu. The areas and their children all live in the
+     disclosure, as a list, because two scrolling rows on a phone is two
+     things to miss. */
+  .af-shell-nav,.af-shell-sub{display:none}
+  .af-shell-menu{display:block}
+  .af-shell-mark{font-size:17px}
+}
+@media(max-width:560px){
+  .af-shell-in{padding:8px 18px}
+  .af-shell-prod{padding:6px 18px}
+  .af-shell-mark{font-size:15px;gap:8px}
+  .af-shell-prod-n{font-size:13px}
+}
+
 /* /atlas, /meet, /journey and /places ended at </main>: no footer, no way
    onward, and no statement anywhere on the page of who the company is. Basalt
    rather than a country tone, because none of the four is about one country

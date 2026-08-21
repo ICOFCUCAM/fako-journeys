@@ -48,6 +48,7 @@ import os
 from .model import ROOT
 
 PAGES = {
+    "about-afrinkong": "about-afrinkong.html",
     "privacy": "privacy.html",
     "terms": "terms.html",
     "accessibility": "accessibility.html",
@@ -347,7 +348,79 @@ def accessibility():
 # --------------------------------------------------------------------------
 
 
+def about():
+    """Who Afrinkong is. THE PAGE THAT DID NOT EXIST.
+
+    The audit found the gap: /about belongs to the KAMERUN OPERATOR — its
+    circuits, its rates, its office in Douala — so a visitor who wanted to know
+    who Afrinkong is had nowhere to go. Fifteen hundred pages carried the
+    company line in the footer and not one of them answered the question.
+
+    That is a trust hole rather than a design preference, and it is the only
+    new page the shell architecture requires. It lives with the other three
+    statements because it is the same kind of page: what is true, said plainly,
+    with nothing to sell on it.
+
+    Every figure is read from the dataset rather than typed, so the page cannot
+    claim a country count the site does not have.
+    """
+    from .model import load_countries
+    published = [c for c in load_countries() if c.published and c.slug]
+    ours = [c for c in published if c.operator]
+    return "\n".join([
+        block("What Afrinkong is",
+              "Afrinkong is a travel company. It plans and runs journeys "
+              "across Africa, and it writes about the places it takes people "
+              "to &mdash; %d countries, in the detail a person actually needs "
+              "to choose between them." % len(published),
+              "It is not a marketplace, not a booking engine reselling "
+              "somebody else's inventory, and not a magazine with a contact "
+              "form attached."),
+        block("Who runs the ground",
+              "In %d of those countries the ground operation is ours: our "
+              "vehicles, our drivers, our people, named on the country's own "
+              "page along with where they are based and since when. "
+              "Everywhere else we work with operators we have chosen, and the "
+              "page says which." % len(ours),
+              "We would rather tell you the difference than let you assume "
+              "it is the same everywhere."),
+        block("Afrinkong and Wankong LLC",
+              "<b>Afrinkong</b> is the travel brand. <b>Wankong LLC</b> is the "
+              "company behind it, registered in Delaware, and it is the entity "
+              "you would be contracting with. The two names are not "
+              "interchangeable and this site never uses one where it means the "
+              "other &mdash; the company line at the foot of every page carries "
+              "the registration.",
+              "Where a journey is run by a local operator, that operator is "
+              "named too. Three parties, all of them stated."),
+        block("What we hold",
+              "Nothing of yours. There is no account, no balance, no card on "
+              "file and no money held by Afrinkong at any point in the "
+              "planning you can do on this site. The Journey Fund is "
+              "arithmetic and a calendar; it says so on the page.",
+              "Travel Points are a designed product that is not operating. "
+              "Nothing on this site issues, sells or holds one, and the "
+              "programme cannot until a compliance ladder that is written down "
+              "and enforced in code has been walked."),
+        block("How to reach a person",
+              "An enquiry is answered by a person, usually the same working "
+              "day. If your dates do not suit the region you have in mind we "
+              "will say so rather than sell you the wrong month.",
+              '<a class="af-go" href="/enquire">Begin a journey &rarr;</a>'),
+    ])
+
+
 SPEC = {
+    "about-afrinkong": {
+        "eyebrow": "About",
+        "h1": "Who you would be travelling with.",
+        "lede": "Afrinkong is the travel brand; Wankong LLC is the company "
+                "behind it. In three countries the ground operation is ours. "
+                "Nothing on this site holds your money.",
+        "desc": "Who Afrinkong is, who runs the ground in each country, the "
+                "relationship to Wankong LLC, and what we do and do not hold.",
+        "body": about,
+    },
     "privacy": {
         "eyebrow": "Privacy",
         "h1": "What we hold, and what we do not.",
@@ -386,6 +459,7 @@ def run(countries=(), log=print):
     out = []
     for key, spec in SPEC.items():
         html = TEMPLATE % {
+            "mast": plate.shell(here="/%s" % key),
             "og": plate.open_graph("%s — Afrinkong" % spec["eyebrow"],
                                    spec["desc"], "/%s" % key),
             "events": plate.events_block(),
@@ -418,18 +492,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/journey.css">
 <link rel="stylesheet" href="/styles/trust.css">
 </head>
-<body class="tr-body">
+<body class="af af--trust tr-body">
 <a class="af-skip" href="#main">Skip to the text</a>
-<header class="jn-mast">
-  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>%(eyebrow)s</b></a>
-  <nav class="jn-routes" aria-label="Primary">
-    <a href="/atlas">The Atlas</a>
-    <a href="/trans-afrique">Trans Afrique</a>
-    <a href="/how-it-works">How it works</a>
-    <a href="/places">Every place</a>
-  </nav>
-  <a class="af-btn af-btn--quiet" href="/enquire">Start a journey<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main id="main" class="tr-page">
   <div class="tr-open">
@@ -441,6 +506,7 @@ TEMPLATE = """<!DOCTYPE html>
        that is a dead end makes the reader go back to the footer to find its
        neighbour, and the footer is the place they were trying to leave. -->
   <nav class="tr-also" aria-label="The other statements">
+    <a href="/about-afrinkong">About Afrinkong</a>
     <a href="/privacy">Privacy</a>
     <a href="/terms">Terms</a>
     <a href="/accessibility">Accessibility</a>

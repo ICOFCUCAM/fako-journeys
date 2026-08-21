@@ -498,6 +498,19 @@ def story_row(country, region_key, arc, chapters):
     }
 
 
+
+def _mast(country):
+    """The shell for this country, with only the depths that exist.
+
+    plate.country_band asks the filesystem rather than home.NO_PAGE:
+    Uganda and Namibia have no /<slug> page, and Cameroon is in that same
+    tuple for a different reason and does. Linking all four blind put 56
+    dead links onto Namibia's place pages, which link-checks caught.
+    """
+    name, href, nav = plate.country_band(country.name, country.slug)
+    return plate.shell(here="/portrait/%s" % country.slug, area="explore",
+                       product=name, product_href=href, product_nav=nav)
+
 def portrait(country, pack, arcs, ctx):
     """-> (the page, the stories on it). Both from one walk of the arcs, so the
     index cannot describe a chapter the page does not have."""
@@ -556,6 +569,7 @@ def portrait(country, pack, arcs, ctx):
         "region": esc(country.region),
         "tagline": esc(country.tagline),
         "summary": esc(country.summary),
+        "mast": _mast(country),
         "tone": esc(tone),
         "window": window,
         "windowNote": esc("The outline of %s. No photograph is inside it yet."
@@ -650,6 +664,8 @@ def index_page(stories, ctx, countries):
                      "months": c.months} for c in countries}
 
     return INDEX % {
+        "mast": plate.shell(here="/stories", area="explore",
+                            product="Stories", product_href="/stories"),
         "when": json.dumps(when, separators=(",", ":"), sort_keys=True),
         "og": plate.open_graph("Stories &mdash; Afrinkong",
                                "%d stories across %d countries, each one built out "
@@ -736,19 +752,10 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/places.css">
 <link rel="stylesheet" href="/styles/story.css">
 </head>
-<body class="po-body" style="--tone:%(tone)s">
+<body class="af af--portrait po-body" data-area="explore" style="--tone:%(tone)s">
 <a class="af-skip" href="#main">Skip to the portrait</a>
 <div class="po-progress" id="po-progress" aria-hidden="true"><i></i></div>
-<header class="pl-mast">
-  <a class="pl-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>%(country)s</b></a>
-  <nav class="pl-routes" aria-label="Primary">
-    <a href="/stories">Stories</a>
-    <a href="/atlas#/%(slug)s">The Atlas</a>
-    <a href="/journey#/j/%(slug)s/">Build a journey</a>
-    <a href="/places#%(slug)s">Every place</a>
-  </nav>
-  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main class="po" id="main">
   <nav class="pl-where" aria-label="Where you are">
@@ -826,18 +833,9 @@ INDEX = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/places.css">
 <link rel="stylesheet" href="/styles/story.css">
 </head>
-<body class="sx-body">
+<body class="af af--index sx-body" data-area="explore">
 <a class="af-skip" href="#main">Skip to the stories</a>
-<header class="pl-mast">
-  <a class="pl-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Stories</b></a>
-  <nav class="pl-routes" aria-label="Primary">
-    <a href="/atlas">The Atlas</a>
-    <a href="/journey">Build a journey</a>
-    <a href="/meet">Meet Africa</a>
-    <a href="/places">Every place</a>
-  </nav>
-  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main class="sx" id="main">
   <section class="sx-open">

@@ -217,6 +217,8 @@ def render(countries, taxonomy):
     return TEMPLATE % {
         "events": plate.events_block(),
         "explore": plate.explore_block(),
+        "mast": plate.shell(here="/meet", area="explore",
+                            product="Meet Africa", product_href="/meet"),
         "foot": plate.colophon_foot("/meet"),
         "og": plate.open_graph('Meet Africa — Afrinkong', 'Seven questions, asked of twenty-two countries. The same question changes its answer at every border.', '/meet'),
         "doors": door_list(data),
@@ -270,18 +272,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/meet.css">
 </head>
-<body>
+<body class="af af--index" data-area="explore">
 <a class="af-skip" href="#doors">Skip to the questions</a>
-<header class="mt-mast">
-  <a class="mt-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Meet Africa</b></a>
-  <nav class="mt-routes" aria-label="Primary">
-    <a href="/atlas">The Atlas</a>
-    <a href="/journey">Build a journey</a>
-    <a href="/places">Every place</a>
-    <a href="/stories">Stories</a>
-  </nav>
-  <a class="af-btn af-btn--quiet" href="/enquire">Talk to us<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main class="mt" id="mt" data-mode="strand">
 

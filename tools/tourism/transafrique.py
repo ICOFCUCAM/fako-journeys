@@ -1062,6 +1062,9 @@ def run(countries, log=print):
     def write(path, title, desc, url, body, active, skip="Skip to the page",
               trip=None):
         html = TEMPLATE % {
+            "mast": plate.shell(here=url, area="explore",
+                                product="Trans Afrique",
+                                product_href="/trans-afrique"),
             "title": esc(title),
             # Fitted to the ~155 characters a search result shows. The
             # overview's own `say` runs to four sentences and 220 characters,
@@ -1122,18 +1125,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/journey.css">
 <link rel="stylesheet" href="/styles/transafrique.css">
 </head>
-<body class="tf-body">
+<body class="af af--crossing tf-body" data-area="explore">
 <a class="af-skip" href="#main">%(skip)s</a>
-<header class="jn-mast">
-  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Trans Afrique</b></a>
-  <nav class="jn-routes" aria-label="Primary">
-    <a href="/wonders">The Wonders</a>
-    <a href="/atlas">The Atlas</a>
-    <a href="/places">Every place</a>
-    <a href="/how-it-works">How it works</a>
-  </nav>
-  <a class="af-btn af-btn--quiet" href="/enquire">Ask about an expedition<i>&rarr;</i></a>
-</header>
+%(mast)s
 %(nav)s
 
 <main id="main">
