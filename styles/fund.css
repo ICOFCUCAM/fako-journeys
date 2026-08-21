@@ -352,6 +352,12 @@
    because it is an alternative route and not a second call to action —
    "Talk to us about it" is the only solid button on the page and should
    stay the only one. */
+/* The Travel Goal's state chip. The chip itself is styled by
+   /styles/states.css, which every surface shares; this only says where it
+   sits. Keeping placement here and appearance there is what lets the tone be
+   recognisable across the product while each panel positions it for itself. */
+.jf-goal-state{margin:0 0 16px}
+
 .jf-where-back{margin-top:12px}
 .jf-where-back a{color:var(--c-accent);text-underline-offset:2px}
 

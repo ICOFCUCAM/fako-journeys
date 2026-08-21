@@ -9,13 +9,15 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | doing | read |
 |---|---|
 | **the product as a whole — what exists, and how it connects** | **`docs/product-archaeology.md`** — Phase 1. Nine surfaces, four pages per country, and the edges missing rather than the nodes. START HERE for design work |
-| **the customer-facing product, design system or IA** | **`docs/design-audit.md`** — 39 system states, 1 expressible on screen. 15 stylesheets, 418 font sizes, 45 breakpoints, 52 tokens. The measured gap and the order to close it |
+| **the customer-facing product, design system or IA** | **`docs/design-audit.md`** — the measured gap. NOTE: its "39 system states" undercounts; the real figure is 72, counted in `docs/state-language.md`. 15 stylesheets, 418 font sizes, 45 breakpoints, 52 tokens. The measured gap and the order to close it |
 | **taking the model to counsel** | **`docs/travel-point-legal-review-package.md`** — 48 questions across nine areas, what is already decided, and the four blockers. THE CURRENT PHASE |
 | accounts, the wallet view, recovery, admin adjustments | **`docs/travel-point-wallet.md`** — item Z. Planning needs no account; ownership does. There is no admin edit balance |
 | fraud, risk holds, chargeback after travel | **`docs/travel-point-risk.md`** — item Y. A settled payment is necessary and never sufficient; absent signals HOLD, never ALLOW |
 | "is X decided / built / open?" across the whole model | **`docs/travel-point-matrix.md`** — the A–AJ coverage map. 29 enforced, 3 counsel, 4 open, 0 conflicts |
 | **anything economic — Travel Points, programmes, the ledger** | **`docs/travel-point-decisions.md`** — START HERE. The canonical index: definition → decisions A–I → programme state → implementation. Every other points document hangs off it |
 | anything with photographs, R2, or the acquisition budget | **`docs/image-library-state.md`** — the handover, including a list of approaches already tried and found wrong |
+| **what a customer is shown when something is pending, held, ended or broken** | **`docs/state-language.md`** — Item 4. 72 states, 6 tones, one sentence each. GENERATED: `node tools/state-doc.js > docs/state-language.md`. ENDED is not BROKEN, and that is the load-bearing line |
+| **the navigation, the four areas, or "where does X live?"** | **`docs/navigation-architecture.md`** — Item 5. PROPOSED, NOT BUILT. Explore · Plan · Fund · Travel, with The Atlas, Trans Afrique, Stories and Meet Africa kept as named products inside them, not flattened away |
 | page weight, or quoting a performance number | `docs/weight-baseline.md` |
 | deciding what photography to buy | `docs/hero-acquisition.md` |
 | the site's structure | `docs/architecture.md` |
@@ -67,12 +69,13 @@ Run before claiming anything is done. All of these must pass.
     python3 tools/tourism/build.py verify        55 rendered pages
     node tools/library-checks.js                 31 checks
     node tools/heroes.js --check                 no unbounded hero
-    node tools/journey-checks.js                 105
-    node tools/link-checks.js                    78,595 links
+    node tools/journey-checks.js                 112
+    node tools/link-checks.js                    80,367 links + the country graph
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
     node tools/points-checks.js                 245 — the Travel Point ledger
     node tools/goal-checks.js                    36 — the Travel Goal is planning only
+    node tools/state-checks.js                   25 — the state language vs the states
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes
 

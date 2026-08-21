@@ -416,6 +416,9 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
 %(preload)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/fund.css">
+<!-- The state language. Item 4. Only the landing links it, because the Travel
+     Goal is the only surface on this site with a live state today. -->
+<link rel="stylesheet" href="/styles/states.css">
 </head>
 <body class="jf-page">
 <a class="af-skip" href="#plan">Skip to the planner</a>
@@ -515,6 +518,29 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
           <section class="jf-goal" id="jf-goal" hidden aria-labelledby="jf-goal-h">
             <h3 class="jf-goal-h" id="jf-goal-h">Estimated Travel Goal
               <span class="jf-goal-tag">planning only &mdash; not for sale</span></h3>
+            <!-- THE STATE CHIP. Item 4's one adoption.
+                 The stage comes from travel-goal.js, which has published
+                 `journeyState` all along, and the sentence and the tone come
+                 from state-language.js. Nothing here decides either: fund.js
+                 asks the language and writes what it is told, and
+                 state-checks reads this attribute back off the built page and
+                 fails if the tone beside it is not the one the language chose.
+                 RENDERED WITH ITS OPENING STAGE RATHER THAN EMPTY. Every
+                 reader starts in PLANNING — that is what the Travel Goal is —
+                 so the chip is correct before any script runs, and fund.js
+                 only ever moves it on. An empty chip filled in by JavaScript
+                 would also have made the checks vacuous: state-checks reads
+                 the BUILT page, and a state that only exists at runtime is a
+                 state nothing static can verify.
+
+                 The tone is written here and is NOT this file's decision.
+                 state-language.js chose `neutral` for journey:PLANNING, and
+                 state-checks reads this attribute back off the built HTML and
+                 fails if the class beside it is not the tone the language
+                 picked. Copying it is safe precisely because copying it is
+                 checked. -->
+            <p class="af-state af-state--neutral jf-goal-state" id="jf-goal-state"
+               data-state="journey:PLANNING" data-domain="travel">Planning this journey</p>
             <div class="jf-goal-grid" id="jf-goal-grid"></div>
             <!-- D-goalinput. The panel showed zero progress forever because
                  fund.js passed a hard-coded 0 and nothing let a reader say
@@ -591,6 +617,7 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
      point under a draft program. -->
 <script src="/scripts/points-ledger.js" defer></script>
 <script src="/scripts/travel-goal.js" defer></script>
+<script src="/scripts/state-language.js" defer></script>
 <script src="/scripts/fund.js" defer></script>
 </body>
 </html>

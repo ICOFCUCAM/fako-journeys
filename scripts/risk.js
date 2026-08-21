@@ -240,6 +240,11 @@
     DECISIONS: DECISIONS,
     ACTIONS: ACTIONS,
     HOLD_STATES: HOLD_STATES,
+    /* Exported so state-language.js can READ the transitions rather than keep
+       a second copy of them. The other four vocabularies with a table already
+       exported theirs; this one did not, and a state language that had to
+       hand-copy one table would drift from it the first time it changed. */
+    HOLD_NEXT: HOLD_NEXT,
     assess: assess,
     advanceHold: advanceHold,
     issuanceUnderRisk: issuanceUnderRisk,

@@ -1,0 +1,156 @@
+/* The Afrinkong state language — the visual half. Item 4.
+   ==========================================================================
+   Six tones. Every one of the 69 system states resolves to one of them, and
+   scripts/state-language.js decides which; this file only says what each tone
+   looks like. A check asserts the two lists are the same six, so a tone cannot
+   be invented in CSS or dropped from it.
+
+   WHY SIX AND NOT NINE
+
+   The design audit asked for nine states — empty, loading, pending, confirmed,
+   cancelled, unavailable, restricted, error, success. Those are nine NAMES for
+   what turn out to be six SITUATIONS: "pending" and "loading" are the same
+   news to a reader (we are doing it), "cancelled" and "unavailable" are the
+   same news (it is over), and "empty" is not a state of anything — it is what
+   a list looks like with nothing in it, which is a component's problem rather
+   than the system's.
+
+   ENDED IS NOT BROKEN
+
+   The two most easily confused, and the pair that matters most. An expired
+   point, a cancelled journey, a declined quote and a closed programme are
+   ordinary endings; a failed payment and a chargeback are faults. Painting
+   both in the same warning colour teaches a customer that ordinary endings
+   are their fault, and a customer who believes that stops pressing things.
+
+   So `ended` is quiet and grey-green — finished, unremarkable, no alarm — and
+   only `broken` carries the accent. There are five broken states out of
+   sixty-nine, and they should be the only five that raise their voice.
+
+   COLOUR IS NEVER THE ONLY SIGNAL
+
+   Each tone also carries a distinct left rule weight and a dot, because about
+   one man in twelve cannot separate the sienna from the forest, and because a
+   state read aloud has no colour at all. The label text is the real carrier;
+   the tone is the thing that makes it recognisable at a glance.
+
+   NOT YET LINKED BY EVERY PAGE. Adopted so far on the Journey Fund's Travel
+   Goal, which is the only surface with live states today — issuance is off and
+   the wallet is deliberately unwired. The rest of the vocabulary exists so
+   that when a state does need showing, the sentence and the treatment are
+   already decided rather than invented under pressure. */
+
+:root {
+  /* The six tones, as ground/ink/rule triples. Built from the existing
+     palette rather than a new one: two palettes is the problem the token
+     layer was created to stop. */
+  --af-tone-neutral-ink:   var(--c-muted);
+  --af-tone-neutral-rule:  var(--c-border);
+  --af-tone-neutral-bg:    transparent;
+
+  --af-tone-working-ink:   var(--c-primary);
+  --af-tone-working-rule:  var(--c-gold);
+  --af-tone-working-bg:    transparent;
+
+  --af-tone-waiting-ink:   var(--c-primary);
+  --af-tone-waiting-rule:  var(--c-gold);
+  --af-tone-waiting-bg:    var(--c-sand);
+
+  --af-tone-done-ink:      var(--c-primary);
+  --af-tone-done-rule:     var(--c-primary);
+  --af-tone-done-bg:       transparent;
+
+  --af-tone-ended-ink:     var(--c-muted);
+  --af-tone-ended-rule:    var(--c-muted);
+  --af-tone-ended-bg:      transparent;
+
+  --af-tone-broken-ink:    var(--c-accent);
+  --af-tone-broken-rule:   var(--c-accent);
+  --af-tone-broken-bg:     transparent;
+}
+
+/* The chip. One shape for every state in the system, so that recognising it
+   once is enough. */
+.af-state {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 10px 5px 9px;
+  border-left: 2px solid var(--af-tone-neutral-rule);
+  background: var(--af-tone-neutral-bg);
+  color: var(--af-tone-neutral-ink);
+  font-family: var(--fj-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* The dot, so the tone survives greyscale, a screenshot and a colour-blind
+   reader. Shape carries what colour alone would not. */
+.af-state::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+  transform: translateY(-1px);
+}
+
+.af-state--neutral { border-left-color: var(--af-tone-neutral-rule);
+  background: var(--af-tone-neutral-bg); color: var(--af-tone-neutral-ink) }
+.af-state--working { border-left-color: var(--af-tone-working-rule);
+  background: var(--af-tone-working-bg); color: var(--af-tone-working-ink) }
+.af-state--waiting { border-left-color: var(--af-tone-waiting-rule);
+  background: var(--af-tone-waiting-bg); color: var(--af-tone-waiting-ink) }
+.af-state--done    { border-left-color: var(--af-tone-done-rule);
+  background: var(--af-tone-done-bg);    color: var(--af-tone-done-ink) }
+.af-state--ended   { border-left-color: var(--af-tone-ended-rule);
+  background: var(--af-tone-ended-bg);   color: var(--af-tone-ended-ink) }
+.af-state--broken  { border-left-color: var(--af-tone-broken-rule);
+  background: var(--af-tone-broken-bg);  color: var(--af-tone-broken-ink) }
+
+/* Each tone's dot is a different mark, and the differences are legible at
+   6px: hollow, hollow, half, solid, hollow-faded, solid. */
+.af-state--neutral::before { background: transparent }
+.af-state--working::before { background: transparent }
+.af-state--waiting::before { background: linear-gradient(
+  to right, currentColor 0 50%, transparent 50% 100%) }
+.af-state--done::before    { background: currentColor }
+.af-state--ended::before   { background: transparent; opacity: .5 }
+.af-state--broken::before  { background: currentColor }
+
+/* WORKING IS THE ONLY TONE THAT MOVES, and it moves because it is the only
+   one making a claim about the future: something is happening and will finish
+   without you. A waiting state must NOT animate — it is not progressing, and
+   a spinner over "we need you to confirm" is a lie told in motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .af-state--working::before {
+    animation: af-state-pulse 1.6s ease-in-out infinite;
+  }
+}
+@keyframes af-state-pulse {
+  0%, 100% { background: transparent }
+  50%      { background: currentColor }
+}
+
+/* The explanation. A chip says what; this says what it means for you, and it
+   is not optional on any state a customer can act on. */
+.af-state-note {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--c-muted);
+  max-width: 52ch;
+}
+
+/* On a dark ground the sand fill of `waiting` disappears and the muted ink
+   goes illegible. Both are re-stated rather than left to inherit. */
+.af-dark .af-state, .af-zone--basalt .af-state {
+  color: var(--c-bg);
+  border-left-color: var(--c-gold);
+}
+.af-dark .af-state--waiting, .af-zone--basalt .af-state--waiting {
+  background: color-mix(in srgb, var(--c-bg) 12%, transparent);
+}
+.af-dark .af-state-note, .af-zone--basalt .af-state-note { color: var(--c-gold) }

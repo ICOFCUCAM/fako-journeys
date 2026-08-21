@@ -58,6 +58,7 @@
   var goalHave = document.getElementById('jf-goal-have');
   var goalClear = document.getElementById('jf-goal-clear');
   var goalProv = document.getElementById('jf-goal-prov');
+  var goalState = document.getElementById('jf-goal-state');
   var keepBtn = document.getElementById('jf-keep');
   var keptNote = document.getElementById('jf-kept');
   var sendLink = document.getElementById('jf-send');
@@ -252,6 +253,37 @@
                               : g.display.away);
     if (goalEl) {
       goalEl.setAttribute('data-funded', g.journeyState === 'FUNDED' ? '1' : '0');
+    }
+
+    /* THE STATE CHIP. Item 4's one adoption, and the shape every other
+       surface should copy when its states come alive.
+
+       Three things this deliberately does NOT do. It does not choose the
+       words — state-language.js owns them. It does not choose the colour —
+       the tone class does, and the language picked it. It does not work out
+       the stage — travel-goal.js publishes `journeyState` and has all along.
+       This function's whole job is to ask and to write down the answer,
+       which is why it is nine lines and why a check can verify it from the
+       built page.
+
+       Degrades to nothing rather than to something wrong: no module, no
+       element or an unknown stage all leave the chip hidden, because a state
+       chip that cannot name its state is worse than no chip. */
+    if (goalState) {
+      var SL = window.AfrinkongStates;
+      var said = SL && SL.describe('journey', g.journeyState);
+      if (said) {
+        goalState.className = 'af-state jf-goal-state af-state--' + said.tone;
+        goalState.setAttribute('data-state', 'journey:' + g.journeyState);
+        goalState.setAttribute('data-domain', said.domain);
+        goalState.textContent = said.label;
+        goalState.hidden = false;
+      } else {
+        /* An unknown stage leaves the server-rendered chip exactly as it is.
+           Hiding it would be worse: the page arrives correct, and a script
+           that cannot improve on that should not subtract from it. */
+        goalState.hidden = false;
+      }
     }
     if (goalHave && goalHave.value === '') {
       var r = recordedPoints();
