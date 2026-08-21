@@ -2698,7 +2698,19 @@ def main():
                     heroes.append(rel)
                     if 'loading="lazy"' in tag:
                         nolazy.append(rel + " (urgent and lazy at once)")
-                elif "loading=" not in tag and i > 0:
+                elif ("loading=" not in tag and i > 0
+                      and re.search(r'\ssrc="', tag)):
+                    # AN <img> WITH NO src CANNOT BE EAGER.
+                    #
+                    # This tested the absence of loading= as a proxy for "the
+                    # browser will fetch this immediately", and 25 images on the
+                    # homepage carry data-src and no src at all: the motion rail
+                    # swaps them in as it reaches them, so they are the most
+                    # deferred images on the page rather than the least. They
+                    # were counted as eager for having no attribute telling them
+                    # not to be.
+                    #
+                    # The proxy is only sound where there is something to fetch.
                     nolazy.append(rel)
         # Not "every image must carry width and height". That looks like the
         # obvious rule and it is wrong here: on these five pages the CSS reserves
