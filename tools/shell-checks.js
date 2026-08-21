@@ -200,5 +200,99 @@ check('the shell opens with no JavaScript', !jsNav.length,
     : '<details> discloses the phone menu; no script, no button, no aria to '
       + 'keep in step');
 
+/* ---- 7. THE ENTITY BOUNDARY --------------------------------------------
+ *
+ * Afrinkong is the customer-facing travel brand. The Kamerun ground operation
+ * is a separate company whose own front door — its circuits, its rates, its
+ * enquiry desk in Douala — is hosted on the same domain.
+ *
+ *     Afrinkong customer experience  ->  /journey, /enquire
+ *     Kamerun operator               ->  its operational desk
+ *
+ * WHY THIS NEEDS A CHECK AND NOT A CONVENTION
+ *
+ * /contact already has a working form. That is exactly the reason somebody
+ * reaches for it: the fastest way to give a page a call to action is to point
+ * it at a form that exists. Do that once on the homepage and Afrinkong's
+ * primary conversion path is a subsidiary's contact page — which is how a
+ * brand quietly becomes a referrer to its own supplier.
+ *
+ * The suite already had a check asserting the OPPOSITE — "the primary call of
+ * the site still lands on /contact" — written when the site was substantially
+ * the operator's. It went red when the homepage stopped doing that, which is
+ * to say it went red for a correct change.
+ *
+ * WHAT IS AND IS NOT FORBIDDEN
+ *
+ * A link may point at the operator when the context is operational: "who would
+ * take you", "open Kamerun", a named partner on a country page. 26 place pages
+ * carry exactly that and they are right to.
+ *
+ * What is forbidden is the operator's desk appearing as a CUSTOMER CTA — in
+ * navigation, in the footer nav, or as a primary button — on a page that is
+ * Afrinkong's. The distinction is position, not URL.
+ *
+ * /cameroon is deliberately NOT on the desk list. It is Cameroon's country
+ * page, one of fifty-four, and linking it as a destination from the atlas or a
+ * place page is ordinary. That it also wears the operator's shell is a wrinkle
+ * of one company being based in one of the countries.
+ *
+ * WHEN BOOKING EXISTS, extend DESK and CTA_CONTEXT — those two lists are the
+ * whole rule, and a booking flow that hands payment to the operator's desk is
+ * the same failure with more money attached. */
+
+const DESK = ['/contact', '/about', '/pricing', '/services'];
+const OPERATOR_PAGES = new Set(
+  ['about.html', 'contact.html', 'pricing.html', 'services.html', 'cameroon.html']);
+const CTA_CONTEXT = [
+  ['af-shell-nav', 'the primary navigation'],
+  ['af-shell-sub', 'the area navigation'],
+  ['af-shell-prod-nav', 'a product band'],
+  ['af-foot-nav', 'the footer navigation'],
+  ['af-btn--solid', 'a primary button'],
+];
+
+const crossings = [];
+for (const [rel, html] of src) {
+  if (OPERATOR_PAGES.has(rel.split('/').pop())) continue;   /* their own pages */
+  for (const [cls, what] of CTA_CONTEXT) {
+    /* the element, or the nav that contains it */
+    const re = new RegExp(
+      '<(?:nav|div|a)[^>]*class="[^"]*' + cls + '[^"]*"[^>]*>([\\s\\S]*?)'
+      + (cls.startsWith('af-btn') ? '</a>' : '</nav>'), 'g');
+    for (const m of html.matchAll(re)) {
+      const block = cls.startsWith('af-btn') ? m[0] : m[1];
+      for (const d of DESK) {
+        if (new RegExp('href="' + d + '"').test(block)) {
+          crossings.push(rel + ' -> ' + d + ' in ' + what);
+        }
+      }
+    }
+  }
+}
+check('no Afrinkong page offers the operator’s desk as a customer CTA',
+  !crossings.length,
+  crossings.length ? crossings.slice(0, 4).join('; ')
+    : 'navigation, footer and primary buttons all stay on Afrinkong’s own '
+      + 'surfaces; an operational link in context is untouched');
+
+/* The positive half. Absence is not architecture: a homepage that calls to
+   nothing at all would pass the check above. */
+const homeHtml = src.get('index.html') || '';
+check('the homepage’s primary path is Afrinkong’s own',
+  /href="\/journey"/.test(homeHtml),
+  /href="\/journey"/.test(homeHtml)
+    ? '/journey is the conversion path, /enquire the human-assisted one'
+    : 'the homepage calls to neither /journey nor /enquire');
+
+/* And the operator keeps its own desk. The boundary runs both ways: stripping
+   /contact out of the operator's pages would leave a company with a form and
+   no way to reach it. */
+const deskless = ['contact.html', 'pricing.html', 'services.html', 'about.html']
+  .filter(p => src.has(p) && !DESK.some(d => new RegExp('href="' + d + '"').test(src.get(p))));
+check('the operator’s pages keep their own desk', !deskless.length,
+  deskless.length ? deskless.join(', ')
+    : 'the separation runs both ways — Kamerun’s pages reach Kamerun’s desk');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);
