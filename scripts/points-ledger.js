@@ -305,6 +305,14 @@
          as they did before. */
       transferable: true,
       secondaryMarket: false,
+      /* N: RETAINED FROM DECISION E, AND GATED.
+         The register later restated "restricted/non-transferable at launch",
+         which contradicts E. E wins because it was later, explicit and
+         detailed — but transferability materially increases prepaid-access
+         exposure, so it does not reach a customer on the strength of a code
+         flag. `readiness()` refuses issuance while this is unconfirmed, which
+         makes the legal review a gate rather than a reminder. */
+      transferabilityLegallyConfirmed: false,
 
       /* E5: NO FEE ON AN ORDINARY PERSONAL TRANSFER, and abuse controls that
          are programme rules rather than hidden ones. A fee is stated as a
@@ -1823,6 +1831,14 @@
     if (p.issuanceEnabled !== true) {
       blockers.push('issuanceEnabled is not true — reaching an issuing ' +
                     'compliance state does not by itself start issuance');
+    }
+    /* N: a transferable programme may not issue until counsel has confirmed
+       that transferability. Only bites when the programme actually permits
+       transfer — a non-transferable programme has nothing to confirm. */
+    if (p.transferable === true && p.transferabilityLegallyConfirmed !== true) {
+      blockers.push('transferability has not been confirmed in legal review; ' +
+                    'it materially increases prepaid-access exposure and is a ' +
+                    'gate rather than a reminder');
     }
     return {
       programId: p.id,

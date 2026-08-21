@@ -3121,10 +3121,13 @@ report(
 const ready = L.readiness(DRAFT);
 report(
   ready.ready === false && ready.mayIssue === false &&
-    ready.blockers.length === 3 &&
+    /* Four now, not three: N added the transferability confirmation gate, and
+       this check caught it — which is what a count assertion is for. */
+    ready.blockers.length === 4 &&
     ready.blockers.some((b) => /compliance is DRAFT/.test(b)) &&
     ready.blockers.some((b) => /maxProgrammeExposure/.test(b)) &&
     ready.blockers.some((b) => /issuanceEnabled/.test(b)) &&
+    ready.blockers.some((b) => /transferability/.test(b)) &&
     !/\bstatus\b/.test(JSON.stringify(ready)),
   "G: readiness is computed from the programme, and never reads `status`",
   ready.blockers.map((b, i) => `${i + 1}. ${b.slice(0, 48)}`).join(" | ")
@@ -3201,6 +3204,156 @@ report(
   "J: none of the five repaired sites has gone back to truncating",
   `purchase, grant, cancellation release, migration and the annual allowance ` +
   `all route through toCustomer() — the habit, not any one line, was the bug`
+);
+
+/* ==== N — transferability retained, and gated ============================ */
+
+/* The conflict, resolved the way it was decided: keep Decision E's design, and
+   make the legal review a GATE rather than a reminder. A code flag is not a
+   legal opinion, and transferability materially increases prepaid-access
+   exposure — so a transferable programme cannot issue until counsel has
+   confirmed that specific term. */
+const nUnconfirmed = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000 },
+  "TEST-N-UNCONFIRMED");
+const nConfirmed = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
+    transferabilityLegallyConfirmed: true },
+  "TEST-N-CONFIRMED");
+const nNonTransferable = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
+    transferable: false },
+  "TEST-N-NON-TRANSFERABLE");
+report(
+  L.PROGRAMS[DRAFT].transferable === true &&
+    L.readiness(nUnconfirmed).ready === false &&
+    L.readiness(nUnconfirmed).blockers.some((b) => /transferability/.test(b)) &&
+    L.readiness(nConfirmed).ready === true &&
+    L.readiness(nNonTransferable).ready === true,
+  "N: Decision E's design is retained, and transferability gates issuance",
+  `a transferable programme cannot issue until legal review confirms it; a ` +
+  `NON-transferable one has nothing to confirm and is unblocked. The register ` +
+  `later said "non-transferable at launch" — E won on being later, explicit ` +
+  `and detailed, and the exposure it accepts is now a gate`
+);
+
+/* ==== Y — fraud and risk ================================================= */
+
+const RK = require("../scripts/risk.js");
+const cleanSignals = { authentication: true, paymentIdentity: true,
+                       deviceSession: true, history: true };
+
+/* Y: THE DEFAULT IS HOLD, WHICH IS THE MOST IMPORTANT LINE IN THE MODULE.
+   A caller that supplies no signals gets HOLD, not ALLOW — otherwise
+   forgetting to wire up a signal silently opens the gate, and the failure
+   would look like nothing at all. Absent evidence is not favourable
+   evidence. */
+report(
+  RK.assess("ISSUE", cleanSignals).decision === "ALLOW" &&
+    RK.assess("ISSUE", {}).decision === "HOLD" &&
+    /signals not supplied/.test(RK.assess("ISSUE", {}).reasons[0]),
+  "Y: absent signals produce a HOLD, never an ALLOW",
+  `no signals -> "${RK.assess("ISSUE", {}).reasons[0]}". Forgetting to wire a ` +
+  `signal must fail closed, because that failure is invisible`
+);
+
+/* Y: THE STOLEN CARD, WHICH IS DANGEROUS BECAUSE THE MONEY LOOKS REAL.
+ * Stripe says the payment settled. Risk says the instrument does not match
+ * the account holder. NO POINTS ARE ISSUED — and the result says the payment
+ * may well have settled, because that is the whole architecture in one field:
+ * a settled payment is necessary and never sufficient. */
+const stolen = RK.issuanceUnderRisk(
+  P, 1000, { ref: "PAY-STOLEN", status: "settled" },
+  Object.assign({}, cleanSignals, { paymentIdentity: false }),
+  { purchaseKey: "y1" });
+report(
+  stolen.ok === false && stolen.entries.length === 0 &&
+    stolen.paymentMayHaveSettled === true &&
+    /does not match the account holder/.test(stolen.risk.reasons[0]),
+  "Y: a settled payment with a risk hold issues nothing",
+  `money can be refunded; points that were issued, spent on a journey and ` +
+  `flown cannot be. The hold belongs BEFORE issuance, not after it`
+);
+
+/* And the clean path still works, or the gate would be a wall. */
+const allowed = RK.issuanceUnderRisk(
+  P, 1000, { ref: "PAY-OK", status: "settled" }, cleanSignals,
+  { purchaseKey: "y2", promotionKey: "y3" });
+report(
+  allowed.ok === true && allowed.entries.length === 2 &&
+    allowed.risk.decision === "ALLOW",
+  "Y: a clean issuance passes and carries its risk verdict",
+  `PURCHASE + PROMOTION, with the verdict attached so the decision is ` +
+  `reconstructable from the entry rather than lost`
+);
+
+/* Y: ACCOUNT TAKEOVER. An attacker inside somebody's account does not need to
+   buy anything — they need to move what is already there. Each way value
+   leaves a customer needs its own decision rather than inheriting one made at
+   login, and step-up is what a session cookie cannot satisfy. */
+const sensitive = ["TRANSFER", "RESERVE", "BUYBACK", "PAYOUT_CHANGE"];
+report(
+  sensitive.every((a) => RK.ACTIONS[a].stepUp === true) &&
+    sensitive.every((a) => RK.assess(a, cleanSignals).decision === "HOLD") &&
+    sensitive.every((a) =>
+      RK.assess(a, cleanSignals, { stepUpSatisfied: true }).decision === "ALLOW") &&
+    RK.ACTIONS.ISSUE.stepUp === false,
+  "Y: transfer, reserve, buyback and payout changes each need step-up",
+  `all four HOLD on a fully clean session and ALLOW only with step-up — a ` +
+  `session is exactly what an attacker has`
+);
+
+/* Y: an unauthenticated request is REJECTED rather than held. There is nothing
+   for a reviewer to review. */
+report(
+  RK.assess("TRANSFER", Object.assign({}, cleanSignals,
+    { authentication: false })).decision === "REJECT" &&
+    RK.assess("NOT_A_REAL_ACTION", cleanSignals).decision === "REJECT",
+  "Y: unauthenticated and unknown actions are rejected, not held",
+  `a hold exists so a human can look; there is nothing to look at here`
+);
+
+/* Y: A HOLD IS A STATE SOMEBODY ENDS, AND THE ENDING NAMES THEM.
+   The difference between a reviewed release and a script that released
+   everything at three in the morning. */
+const heldReview = RK.assess("ISSUE", {}).review;
+report(
+  heldReview.state === "HELD" &&
+    RK.advanceHold(heldReview, "RELEASED", {}).ok === false &&
+    RK.advanceHold(heldReview, "RELEASED", { reviewedBy: "ops-jane" })
+      .mayProceed === true &&
+    RK.advanceHold(heldReview, "REJECTED", {}).ok === true,
+  "Y: a release must name its reviewer; a rejection need not",
+  `"${RK.advanceHold(heldReview, "RELEASED", {}).why}" — releasing is the ` +
+  `direction that costs money, so it is the one that needs a name`
+);
+
+/* Y: CHARGEBACK AFTER REDEMPTION — the case that makes this economic rather
+ * than merely a security concern. The customer flew. The ledger does not erase
+ * the redemption, because history is append-only and the journey happened. So
+ * what is created is a LIABILITY, not a negative balance. */
+const flown = [
+  Object.assign(entry("PURCHASE", 5000),
+    { id: "TP-CB", payment: { amountMinor: 500000, currency: "USD",
+                              status: "settled" } }),
+  Object.assign(entry("RESERVE", 4800), { journeyRef: "J-CB" }),
+  Object.assign(entry("REDEEM", 4800), { journeyRef: "J-CB" }),
+];
+const cb = RK.chargebackAfterRedemption(P, flown, "TP-CB",
+                                        { paymentRef: "PAY-CB" });
+report(
+  cb.ok && cb.recoverablePoints === 200 &&
+    cb.liability.points === 4800 &&
+    cb.liability.amountMinor === null &&
+    cb.entries.length === 1 && cb.entries[0].quantity === 200 &&
+    !flown.some((e) => e.kind === "REDEEM" && e.reversed),
+  "Y: a chargeback after travel creates a liability, never an erased redemption",
+  `200 TP still in the wallet are recoverable as points; the 4,800 already ` +
+  `flown become a money debt with NO amount attached — what it is worth ` +
+  `depends on the reversed payment, and Decision I forbids pricing a holding`
 );
 
 /* ==== the documents must not drift from the code ======================== */

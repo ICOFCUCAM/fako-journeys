@@ -1,9 +1,9 @@
 # The decision matrix — A to AJ, reconciled against the code
 
 The complete register, with each item's stated status checked against what is
-actually enforced. **Several items marked OPEN are already settled and tested**,
-and one contradicts a decision settled earlier — flagged below rather than
-resolved unilaterally.
+actually enforced. **Several items marked OPEN are already settled and tested.**
+The one conflict — N versus Decision E — has since been resolved: retain E, and
+make the legal review a gate.
 
 Read `travel-point-decisions.md` first for the canonical index. This is the
 coverage map.
@@ -13,21 +13,21 @@ issue.
 
 ---
 
-## ⚠ One conflict needing your word
+## N — resolved: retain E, and gate it
 
-**N — Transferability** is marked OPEN with *"Recommendation:
-restricted/non-transferable at launch."*
+The conflict is settled. **Decision E's design is retained** — `transferable:
+true`, `secondaryMarket: false`, four transfer types — because E was later,
+explicit and detailed.
 
-**Decision E settled the opposite**, in detail: `transferable: true`,
-`secondaryMarket: false`, with gift / family-pool / corporate / estate types,
-identified parties, programme-preserving terms and conservation of supply. It
-explicitly reversed B14/C9 and recorded the reversal.
+But transferability materially increases prepaid-access exposure, so it does
+not reach a customer on the strength of a code flag.
+`transferabilityLegallyConfirmed: false` is now a **blocker in
+`readiness()`**: a transferable programme cannot issue until counsel has
+confirmed that specific term.
 
-The code follows Decision E. I have **not** changed it back, because E was
-later, explicit and detailed, whereas N reads as the earlier position restated.
-If N is the current intent, say so and it is one flag — `transferable: false` —
-plus updating four checks. **The prepaid-access exposure E accepted (E-analysis)
-is the reason this matters.**
+A non-transferable programme has nothing to confirm and is unblocked, so the
+gate bites exactly where the exposure is. The legal review is a gate rather
+than a reminder.
 
 ---
 
@@ -47,11 +47,11 @@ not executable · **⬜ open**: nobody has decided · **⚖ counsel**.
 | **G** | Cessation | settled in principle | ✅ four-rung wind-down; permission ≠ capability | `travel-point-continuity.md` |
 | **H** | Redemption scope | settled in principle | ✅ basket + exclusions with reasons | `travel-point-redemption.md` |
 | **I** | Cash-equivalent | settled | ✅ four concepts, never one `value` | `travel-point-display.md` |
-| **J** | **Rounding** | open | ✅ **now settled — see below** | this commit |
+| **J** | **Rounding** | open | ✅ **settled — half-up, one exception** | below |
 | **K** | Buying points | open | ✅ limits · ⬜ journey-linked points | `travel-point-purchase.md` |
 | **L** | Buyback | open | ✅ **9 of your 10 questions answered** | `travel-point-buyback.md` |
 | **M** | Cancellation | partly defined | ✅ bands, release, forfeit, final week | `travel-point-exit.md` |
-| **N** | Transferability | open | ⚠ **conflicts with E — see above** | `travel-point-transfer.md` |
+| **N** | Transferability | open | ✅ **E retained, gated on legal confirmation** | `travel-point-transfer.md` |
 | **O** | Expiry | settled | ✅ no time-based expiry; D8 spend order | `travel-point-duration.md` |
 | **P** | Price changes | open | ✅ **settled — reserved bookings lock** | `travel-point-continuity.md` |
 | **Q** | Journey reservation | open | ✅ available→reserved→redeemed, price-locked · ⬜ reservation expiry | `booking.js` |
@@ -62,7 +62,7 @@ not executable · **⬜ open**: nobody has decided · **⚖ counsel**.
 | **V** | Accounting | counsel | 📋 five questions recorded | ⚖ |
 | **W** | Regulatory | counsel | 📋 **the gate** — question 11 | ⚖ |
 | **X** | Customer protection | open | ⬜ disclosures partly assembled | — |
-| **Y** | Fraud/abuse | open | ⬜ **nothing built** | — |
+| **Y** | Fraud/abuse | open | ✅ **architecture built** · ⬜ no model | `travel-point-risk.md` |
 | **Z** | Customer account | open | ✅ planning needs no account · ⬜ authenticated wallet | — |
 | **AA** | Identity/KYC | counsel | 📋 E-kyc recorded | ⚖ |
 | **AB** | Limits/exposure | open | ✅ **all seven exist**; `mayActivate` refuses unset | `points-ledger.js` |
@@ -75,7 +75,7 @@ not executable · **⬜ open**: nobody has decided · **⚖ counsel**.
 | **AI** | Immutable history | settled | ✅ triggers refuse UPDATE and DELETE | `schema.sql` |
 | **AJ** | Activation gate | settled in principle | ✅ **ladder + `issuanceEnabled`; `status` inert** | `readiness()` |
 
-**Count: 24 enforced, 4 recorded for counsel, 8 genuinely open, 1 conflict.**
+**Count: 26 enforced, 4 recorded for counsel, 6 genuinely open, 0 conflicts.**
 
 ---
 
@@ -127,7 +127,7 @@ says so where somebody would do it.
 | | needs | who |
 |---|---|---|
 | **W / question 11** | the legal structure. **No money may be taken until answered.** | ⚖ |
-| **Y** | fraud controls — stolen cards, chargeback-after-redemption, account takeover, promotional abuse, multiple accounts. **Nothing is built.** | risk |
+| **Y-model** | the signals and thresholds themselves — the architecture is built, the model is not | risk |
 | **X** | customer disclosures, complaint and recovery processes | product + ⚖ |
 | **Z** | the authenticated wallet — planning needs no account, holding points does | product |
 | **AC** | programme accounting currency, FX source and timestamp | finance |
@@ -135,10 +135,11 @@ says so where somebody would do it.
 | **R** | should redemption move from confirmation to completion? | product + ⚖ |
 | **G-enable** | who may set `issuanceEnabled`, on what evidence | operations |
 
-**Y is the one I would raise hardest.** Every other open item is a decision
-waiting to be made; fraud is the only one where the absence itself creates
-exposure the moment issuance is enabled, and it is the item with no
-architecture at all behind it.
+**Z is now the one I would raise hardest.** Y's architecture exists, so the
+remaining fraud work is a model that needs traffic to tune. Z — the
+authenticated Travel Wallet — is different: it is the one piece of *build* that
+must exist before any of this can be operated at all, and every risk signal Y
+defines (`authentication`, `deviceSession`) presumes it.
 
 ---
 
