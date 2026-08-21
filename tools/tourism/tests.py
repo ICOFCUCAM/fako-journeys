@@ -2321,7 +2321,25 @@ def main():
         # -- the palette says what it is ------------------------------------------
         print("\nthe palette says what it is")
         css = open(os.path.join(ROOT_DIR, "styles", "afrinkong.css")).read()
-        TOKENS = dict(re.findall(r"(--c-[a-z-]+):\s*(#[0-9A-Fa-f]{6})", css))
+        # THE SCREEN PALETTE, NOT WHICHEVER ONE COMES LAST IN THE FILE.
+        #
+        # This read the whole stylesheet into a dict, so the LAST definition of
+        # each token won — and the last block in afrinkong.css is `@media print`,
+        # which deliberately re-points six tokens for paper: the accent darkens
+        # so it does not print as mud, and --c-primary becomes #111 because on
+        # paper it is the INK on a white page rather than a dark ground.
+        #
+        # So the contrast checks were comparing the print accent against the
+        # print ink — dark on dark, 1.64:1 — and reporting the site's palette as
+        # illegible. On screen the same pair is 4.53:1 and passes. Three checks
+        # failed on this: both dark-ground inks and the fill-weight assertion,
+        # which wants the terracotta to be TOO LIGHT for type and found the
+        # darkened print value instead.
+        #
+        # Everything above the first @media is the screen palette, which is what
+        # every one of these assertions is about.
+        _screen = css.split("@media", 1)[0]
+        TOKENS = dict(re.findall(r"(--c-[a-z-]+):\s*(#[0-9A-Fa-f]{6})", _screen))
 
         def channels(hexcol):
             h = hexcol.lstrip("#")
@@ -2369,7 +2387,21 @@ def main():
             # A check that cannot see through one alias fails honest work and
             # teaches you to stop reading it, so it follows aliases now — and
             # still insists the three tones end up at three different values.
-            home = open(os.path.join(ROOT_DIR, "index.html")).read()
+            # WHERE THE HOMEPAGE'S CSS LIVES NOW.
+            #
+            # These rules read index.html alone, because the map's styles used
+            # to be in its inline <style>. They are in styles/gateway.css now —
+            # 3,501 lines of it — and the check went on reading the page, found
+            # no `wa-map-rest{fill:var(...)}` at all, and reported that the map
+            # draws the continent in nothing. Five checks failed on that: the
+            # three tones, the tier mix and the land mix.
+            #
+            # Both are read now, so it does not matter which side of the
+            # extraction a rule is on. The same fault as the browser suite's
+            # masthead selector and the operator MARK regex: a check pinned to
+            # WHERE something was rather than to what it says.
+            home = (open(os.path.join(ROOT_DIR, "index.html")).read()
+                    + open(os.path.join(ROOT_DIR, "styles", "gateway.css")).read())
             alias = dict(re.findall(r"(--c-[a-z-]+):\s*var\((--c-[a-z-]+)\)", home))
 
             def drawn_in(want):
@@ -3237,9 +3269,25 @@ def main():
                     continue
                 base, _, frag = url.partition("#")
                 base = base.split("?")[0]
-                # "#/kenya" and "#/j/kenya/" are hash routes read by atlas.js and
-                # journey.js, not anchors, and there is no element to find.
-                if frag.startswith("/"):
+                # A FRAGMENT WITH A SLASH IN IT IS A ROUTE, NOT AN ID.
+                #
+                # "#/kenya" and "#/j/kenya/" are read by atlas.js and journey.js;
+                # "#r/east" and "#w/food" are read by the homepage's own router,
+                # whose regex makes the leading slash OPTIONAL:
+                #
+                #     /^#\/?(r|w)\/([a-z-]+)$/
+                #
+                # This tested `startswith("/")`, which was right for the atlas
+                # form and had never been widened when the region and want
+                # routes were added without it. Five real links on the homepage
+                # were reported as pointing at elements that do not exist —
+                # correctly, in the sense that there is no such element, and
+                # wrongly, in the sense that there was never meant to be one.
+                #
+                # tools/link-checks.js already had the right rule and the
+                # reasoning written out: no id on this site has a slash in it.
+                # Two checks asking one question should ask it the same way.
+                if "/" in frag:
                     continue
                 target = path if base == "" else as_file(base)
                 if base and target is None:
