@@ -132,6 +132,21 @@ a licensed financial partner holding the money.
 11. What **consumer-protection obligations** arise from offering it at all?
 12. What happens to points once repurchased — extinguished, or returned to
     programme inventory?
+13. May the repurchase price be **net of actual payment and transfer costs**,
+    and must those costs be disclosed as a separate line rather than folded
+    into the rate?
+14. May a repurchase be paid **only to the original payment instrument**, and
+    what is required when that instrument has been closed?
+
+**On the rate itself:** modelling shows 0.90 nets the company about $57 on a
+$1,000 repurchase after payment costs, and 0.95 nets about $7 — and **loses
+money cross-border.** Break-even is 0.957 domestic, 0.929 with FX. The rate is
+a programme parameter; §B is about whether the *mechanism* is permissible, not
+which number is commercial.
+
+**Payout route:** funds return to the instrument that paid, which is a fraud
+control as much as a convenience. An alternative destination requires step-up
+and destination verification.
 
 **Currently modelled:** 90% of purchase consideration, `minHoldDays: 90`,
 `minPoints: 100`, `maxPerYear: 5,000`, promotional points excluded, reserved
@@ -143,7 +158,7 @@ customer actually paid, under every basis.
 
 ### C — Transferability *(a standing blocker)*
 
-13. **Can transferable Travel Points lawfully be offered under this
+15. **Can transferable Travel Points lawfully be offered under this
     structure?**
 
 Decision E retains transferability: gift, family pooling, corporate gift and
@@ -155,11 +170,11 @@ is `false`, and a transferable programme cannot reach issuance until it is
 true. A non-transferable programme is unaffected, so the gate bites exactly
 where the exposure is.
 
-14. What **identity verification** does a *recipient* require — somebody who
+16. What **identity verification** does a *recipient* require — somebody who
     may not be a customer at all until the moment they receive points?
-15. Is a **gift** a taxable event for either party, and does the answer differ
+17. Is a **gift** a taxable event for either party, and does the answer differ
     for a corporate gift?
-16. Does an unredeemed holding form part of an **estate**?
+18. Does an unredeemed holding form part of an **estate**?
 
 ---
 
@@ -173,11 +188,11 @@ Bands as implemented, attaching to the **booking** and never to the wallet:
 | 8–30 | 50% *(placeholder — tied to actual supplier cost)* | no |
 | 0–7 | 0% | no |
 
-17. Are these bands permissible, and is the final-week restriction on
+19. Are these bands permissible, and is the final-week restriction on
     repurchase and transfer enforceable?
-18. Must forfeiture inside seven days be characterised as a **cancellation
+20. Must forfeiture inside seven days be characterised as a **cancellation
     charge** rather than as a loss of entitlement?
-19. What **disclosures** are required, and at what moment — at purchase, at
+21. What **disclosures** are required, and at what moment — at purchase, at
     booking, or both?
 
 ---
@@ -188,23 +203,23 @@ Bands as implemented, attaching to the **booking** and never to the wallet:
 passage of time. Promotional grants expire at 24 months. Inactivity does
 nothing. This programme did **not** reserve a right to introduce expiry later.
 
-20. Is that treatment **permissible** in every jurisdiction concerned — and is
+22. Is that treatment **permissible** in every jurisdiction concerned — and is
     it *required* anywhere? Several US states regulate expiry under
     unclaimed-property and gift-card law, and some prohibit it outright.
-21. Purchased points that never expire are a **liability with no end date.**
+23. Purchased points that never expire are a **liability with no end date.**
     Does that create an obligation the company must provide against, and does
     it make breakage recognition impossible? *(also §H)*
-22. If points remain outstanding indefinitely, does **unclaimed-property law**
+24. If points remain outstanding indefinitely, does **unclaimed-property law**
     compel a treatment the programme cannot choose?
 
 ---
 
 ### F — Cessation and wind-down
 
-23. What obligation exists toward outstanding points if Wankong LLC stops
+25. What obligation exists toward outstanding points if Wankong LLC stops
     offering eligible travel?
-24. Must there be a **wind-down or redemption period**, and of what length?
-25. What happens if the **company ceases entirely**?
+26. Must there be a **wind-down or redemption period**, and of what length?
+27. What happens if the **company ceases entirely**?
 
 **The economic architecture is settled: no silent extinction.** Closure cannot
 by itself extinguish points, a programme cannot reach a terminal state while
@@ -215,7 +230,7 @@ migration to a named successor → repurchase. Erasure appears at no rank.
 A programme that has ceased providing travel reports redemption as
 *permitted but unavailable* and falls through to repurchase.
 
-26. **No cessation rule creates a universal cash value for a Travel Point.**
+28. **No cessation rule creates a universal cash value for a Travel Point.**
     Is that sustainable, or does an insolvency scenario force a monetary
     valuation the product otherwise refuses to state?
 
@@ -223,14 +238,14 @@ A programme that has ceased providing travel reports redemption as
 
 ### G — Customer protection
 
-27. What **disclosures** are required before purchase, and which must be
+29. What **disclosures** are required before purchase, and which must be
     acknowledged rather than merely available?
-28. What **refund and cancellation rights** attach to a purchase of points, as
+30. What **refund and cancellation rights** attach to a purchase of points, as
     distinct from a booking?
-29. What **complaint handling** is required?
-30. How must **dormant balances** be treated?
-31. What **geographic restrictions** should apply to who may buy?
-32. If a customer receives a statement or tax document, must it state a
+31. What **complaint handling** is required?
+32. How must **dormant balances** be treated?
+33. What **geographic restrictions** should apply to who may buy?
+34. If a customer receives a statement or tax document, must it state a
     **monetary value** — and would that be the cash equivalent the product
     otherwise forbids, arriving by regulatory obligation?
 
@@ -238,17 +253,17 @@ A programme that has ceased providing travel reports redemption as
 
 ### H — Accounting and tax *(accounting adviser)*
 
-33. When is **revenue recognised** — at issuance, at redemption, or at travel?
-34. How are **outstanding points** carried?
-35. How are **forfeited** points treated?
-36. How is a **repurchase** treated — derecognition, liability settlement, or
+35. When is **revenue recognised** — at issuance, at redemption, or at travel?
+36. How are **outstanding points** carried?
+37. How are **forfeited** points treated?
+38. How is a **repurchase** treated — derecognition, liability settlement, or
     contra-issuance?
-37. Is **breakage** recognisable given that purchased points do not expire?
-38. What is the **accounting currency**, and how are other collection
+39. Is **breakage** recognisable given that purchased points do not expire?
+40. What is the **accounting currency**, and how are other collection
     currencies handled?
-39. What is the **tax point of supply** — where the customer is, where Wankong
+41. What is the **tax point of supply** — where the customer is, where Wankong
     LLC is, or where the travel occurs?
-40. Is a point issued under a better *rate* recognised differently from one
+42. Is a point issued under a better *rate* recognised differently from one
     issued at the standard rate plus a *grant*? The customer's position is
     identical; the accounting may not be.
 
@@ -256,16 +271,16 @@ A programme that has ceased providing travel reports redemption as
 
 ### I — Fraud, chargebacks and recovery
 
-41. **Chargeback after redemption.** The customer travelled. The ledger does
+43. **Chargeback after redemption.** The customer travelled. The ledger does
     not erase the redemption; it records a liability. Is that treatment
     sound, and how may the debt be pursued?
-42. What obligations arise on a **stolen payment instrument** where points were
+44. What obligations arise on a **stolen payment instrument** where points were
     issued and spent?
-43. What must be done on **account takeover**?
-44. What identity assurance is required before a **repurchase pays out**?
-45. Can a repurchase already settled be **clawed back** if the original
+45. What must be done on **account takeover**?
+46. What identity assurance is required before a **repurchase pays out**?
+47. Can a repurchase already settled be **clawed back** if the original
     purchase is later charged back?
-46. What **recovery** requirements are lawful for a customer locked out of a
+48. What **recovery** requirements are lawful for a customer locked out of a
     high-value holding?
 
 ---

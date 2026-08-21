@@ -8,7 +8,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 
 | doing | read |
 |---|---|
-| **taking the model to counsel** | **`docs/travel-point-legal-review-package.md`** — 46 questions across nine areas, what is already decided, and the four blockers. THE CURRENT PHASE |
+| **taking the model to counsel** | **`docs/travel-point-legal-review-package.md`** — 48 questions across nine areas, what is already decided, and the four blockers. THE CURRENT PHASE |
 | accounts, the wallet view, recovery, admin adjustments | **`docs/travel-point-wallet.md`** — item Z. Planning needs no account; ownership does. There is no admin edit balance |
 | fraud, risk holds, chargeback after travel | **`docs/travel-point-risk.md`** — item Y. A settled payment is necessary and never sufficient; absent signals HOLD, never ALLOW |
 | "is X decided / built / open?" across the whole model | **`docs/travel-point-matrix.md`** — the A–AJ coverage map. 29 enforced, 3 counsel, 4 open, 0 conflicts |
@@ -69,7 +69,7 @@ Run before claiming anything is done. All of these must pass.
     node tools/link-checks.js                    78,595 links
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
-    node tools/points-checks.js                 239 — the Travel Point ledger
+    node tools/points-checks.js                 245 — the Travel Point ledger
     node tools/goal-checks.js                    36 — the Travel Goal is planning only
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes
