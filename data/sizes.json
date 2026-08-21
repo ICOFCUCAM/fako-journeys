@@ -33,7 +33,7 @@
  ],
  "pages": {
   "index.html": {
-   "25": {
+   "26": {
     "src": "/images/uploads/city-nairobi-night-1600w.jpg",
     "at": {
      "320": 269,
@@ -53,7 +53,7 @@
      "2560": 287
     }
    },
-   "26": {
+   "27": {
     "src": "/images/uploads/still-elephants-dry-grass-1600w.jpg",
     "at": {
      "320": 269,
@@ -73,7 +73,7 @@
      "2560": 287
     }
    },
-   "27": {
+   "28": {
     "src": "/images/uploads/site-index-foumban-bronze-caster-1600w.jpg",
     "at": {
      "320": 269,
@@ -93,28 +93,8 @@
      "2560": 287
     }
    },
-   "28": {
-    "src": "/images/uploads/swahili-coast-ngalawa-1200w.jpg",
-    "at": {
-     "320": 269,
-     "360": 303,
-     "390": 328,
-     "430": 362,
-     "560": 471,
-     "700": 305,
-     "768": 339,
-     "900": 405,
-     "1024": 467,
-     "1100": 252,
-     "1200": 277,
-     "1280": 287,
-     "1440": 287,
-     "1920": 287,
-     "2560": 287
-    }
-   },
    "29": {
-    "src": "/images/uploads/kilimanjaro-elephants-acacia-1600w.jpg",
+    "src": "/images/uploads/swahili-coast-ngalawa-1200w.jpg",
     "at": {
      "320": 269,
      "360": 303,
@@ -134,7 +114,7 @@
     }
    },
    "30": {
-    "src": "/images/uploads/culture-market-produce-1600w.jpg",
+    "src": "/images/uploads/kilimanjaro-elephants-acacia-1600w.jpg",
     "at": {
      "320": 269,
      "360": 303,
@@ -154,7 +134,7 @@
     }
    },
    "31": {
-    "src": "/images/uploads/egypt-giza-causeway-1600w.jpg",
+    "src": "/images/uploads/culture-market-produce-1600w.jpg",
     "at": {
      "320": 269,
      "360": 303,
@@ -174,7 +154,7 @@
     }
    },
    "32": {
-    "src": "/images/uploads/desert-camp-sunrise-1440w.jpg",
+    "src": "/images/uploads/egypt-giza-causeway-1600w.jpg",
     "at": {
      "320": 269,
      "360": 303,
@@ -194,6 +174,26 @@
     }
    },
    "33": {
+    "src": "/images/uploads/desert-camp-sunrise-1440w.jpg",
+    "at": {
+     "320": 269,
+     "360": 303,
+     "390": 328,
+     "430": 362,
+     "560": 471,
+     "700": 305,
+     "768": 339,
+     "900": 405,
+     "1024": 467,
+     "1100": 252,
+     "1200": 277,
+     "1280": 287,
+     "1440": 287,
+     "1920": 287,
+     "2560": 287
+    }
+   },
+   "34": {
     "src": "/images/uploads/kilimanjaro-game-drive-1600w.jpg",
     "at": {
      "320": 320,
@@ -213,7 +213,7 @@
      "2560": 2560
     }
    },
-   "34": {
+   "35": {
     "src": "/images/uploads/still-mountain-gorilla-1600w.jpg",
     "at": {
      "320": 280,
@@ -233,28 +233,8 @@
      "2560": 552
     }
    },
-   "35": {
-    "src": "/images/uploads/desert-camp-sunrise-1440w.jpg",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 612,
-     "768": 316,
-     "900": 382,
-     "1024": 444,
-     "1100": 482,
-     "1200": 532,
-     "1280": 552,
-     "1440": 552,
-     "1920": 552,
-     "2560": 552
-    }
-   },
    "36": {
-    "src": "/images/uploads/swahili-coast-ngalawa-1200w.jpg",
+    "src": "/images/uploads/desert-camp-sunrise-1440w.jpg",
     "at": {
      "320": 280,
      "360": 320,
@@ -274,7 +254,7 @@
     }
    },
    "37": {
-    "src": "/images/uploads/table-mountain-from-the-bay-1920w.jpg",
+    "src": "/images/uploads/swahili-coast-ngalawa-1200w.jpg",
     "at": {
      "320": 280,
      "360": 320,
@@ -294,6 +274,46 @@
     }
    },
    "38": {
+    "src": "/images/uploads/table-mountain-from-the-bay-1920w.jpg",
+    "at": {
+     "320": 280,
+     "360": 320,
+     "390": 350,
+     "430": 390,
+     "560": 520,
+     "700": 612,
+     "768": 316,
+     "900": 382,
+     "1024": 444,
+     "1100": 482,
+     "1200": 532,
+     "1280": 552,
+     "1440": 552,
+     "1920": 552,
+     "2560": 552
+    }
+   },
+   "39": {
+    "src": "/images/uploads/cross-convoy-on-the-road-1600w.jpg",
+    "at": {
+     "320": 320,
+     "360": 360,
+     "390": 390,
+     "430": 430,
+     "560": 560,
+     "700": 700,
+     "768": 768,
+     "900": 900,
+     "1024": 447,
+     "1100": 481,
+     "1200": 527,
+     "1280": 554,
+     "1440": 589,
+     "1920": 702,
+     "2560": 852
+    }
+   },
+   "40": {
     "src": "/images/uploads/desert-camp-sunrise-1440w.jpg",
     "at": {
      "320": 280,
@@ -313,7 +333,7 @@
      "2560": 652
     }
    },
-   "39": {
+   "41": {
     "src": "/images/uploads/falls-victoria-rainbow-1600w.jpg",
     "at": {
      "320": 280,
@@ -333,7 +353,7 @@
      "2560": 560
     }
    },
-   "41": {
+   "43": {
     "src": "/images/uploads/kilimanjaro-above-the-cloud-1080w.jpg",
     "at": {
      "320": 280,
@@ -353,7 +373,7 @@
      "2560": 371
     }
    },
-   "44": {
+   "46": {
     "src": "/images/uploads/egypt-giza-aerial-1600w.jpg",
     "at": {
      "320": 280,
@@ -373,7 +393,7 @@
      "2560": 371
     }
    },
-   "48": {
+   "50": {
     "src": "/images/uploads/table-mountain-from-the-bay-1920w.jpg",
     "at": {
      "320": 280,
@@ -393,7 +413,7 @@
      "2560": 371
     }
    },
-   "54": {
+   "56": {
     "src": "/images/uploads/city-cape-town-1080w.jpg",
     "at": {
      "320": 276,
@@ -413,7 +433,7 @@
      "2560": 573
     }
    },
-   "55": {
+   "57": {
     "src": "/images/uploads/city-marrakech-1200w.jpg",
     "at": {
      "320": 276,
@@ -433,7 +453,7 @@
      "2560": 573
     }
    },
-   "56": {
+   "58": {
     "src": "/images/uploads/city-zanzibar-waterfront-1600w.jpg",
     "at": {
      "320": 276,
@@ -453,7 +473,7 @@
      "2560": 286
     }
    },
-   "57": {
+   "59": {
     "src": "/images/uploads/city-lagos-1200w.jpg",
     "at": {
      "320": 276,
@@ -473,7 +493,7 @@
      "2560": 286
     }
    },
-   "58": {
+   "60": {
     "src": "/images/uploads/city-luanda-bay-1600w.jpg",
     "at": {
      "320": 276,
@@ -493,7 +513,7 @@
      "2560": 286
     }
    },
-   "59": {
+   "61": {
     "src": "/images/uploads/city-nairobi-1200w.jpg",
     "at": {
      "320": 276,
@@ -513,7 +533,7 @@
      "2560": 286
     }
    },
-   "60": {
+   "62": {
     "src": "/images/uploads/city-yaounde-1200w.jpg",
     "at": {
      "320": 276,
@@ -533,7 +553,7 @@
      "2560": 286
     }
    },
-   "61": {
+   "63": {
     "src": "/images/uploads/city-accra-1200w.jpg",
     "at": {
      "320": 276,
@@ -555,7 +575,7 @@
    }
   },
   "wonders.html": {
-   "0": {
+   "1": {
     "src": "/images/uploads/falls-victoria-rainbow-1600w.jpg",
     "at": {
      "320": 284,
@@ -575,7 +595,7 @@
      "2560": 273
     }
    },
-   "1": {
+   "2": {
     "src": "/images/uploads/kilimanjaro-above-the-cloud-1080w.jpg",
     "at": {
      "320": 284,
@@ -595,7 +615,7 @@
      "2560": 273
     }
    },
-   "4": {
+   "5": {
     "src": "/images/uploads/table-mountain-from-the-bay-1920w.jpg",
     "at": {
      "320": 284,
@@ -615,7 +635,7 @@
      "2560": 273
     }
    },
-   "9": {
+   "10": {
     "src": "/images/uploads/egypt-giza-aerial-1600w.jpg",
     "at": {
      "320": 284,
@@ -636,8 +656,30 @@
     }
    }
   },
+  "how-it-works.html": {
+   "1": {
+    "src": "/images/uploads/guide-elephant-on-the-track-1600w.jpg",
+    "at": {
+     "320": 280,
+     "360": 320,
+     "390": 350,
+     "430": 390,
+     "560": 520,
+     "700": 660,
+     "768": 680,
+     "900": 812,
+     "1024": 936,
+     "1100": 1012,
+     "1200": 1112,
+     "1280": 1152,
+     "1440": 1152,
+     "1920": 1152,
+     "2560": 1152
+    }
+   }
+  },
   "cameroon.html": {
-   "0": {
+   "1": {
     "src": "/images/generated/site-index-mount-ascent-walkers-1536w.jpg",
     "at": {
      "320": 280,
@@ -657,7 +699,7 @@
      "2560": 505
     }
    },
-   "3": {
+   "4": {
     "src": "/images/uploads/site-about-forest-guide-tree-1440w.jpg",
     "at": {
      "320": 139,
@@ -677,7 +719,7 @@
      "2560": 191
     }
    },
-   "4": {
+   "5": {
     "src": "/images/uploads/site-index-highlands-october-1200w.jpg",
     "at": {
      "320": 139,
@@ -697,7 +739,7 @@
      "2560": 191
     }
    },
-   "5": {
+   "6": {
     "src": "/images/uploads/site-index-foumban-bronze-caster-1600w.jpg",
     "at": {
      "320": 139,
@@ -717,7 +759,7 @@
      "2560": 191
     }
    },
-   "6": {
+   "7": {
     "src": "/images/uploads/site-index-waza-elephants-1600w.jpg",
     "at": {
      "320": 139,
@@ -737,7 +779,7 @@
      "2560": 191
     }
    },
-   "8": {
+   "9": {
     "src": "/images/generated/site-index-mount-summit-grass-1536w.jpg",
     "at": {
      "320": 280,
@@ -757,7 +799,7 @@
      "2560": 497
     }
    },
-   "9": {
+   "10": {
     "src": "/images/uploads/site-index-coast-lobe-falls-1536w.jpg",
     "at": {
      "320": 280,
@@ -777,7 +819,7 @@
      "2560": 497
     }
    },
-   "10": {
+   "11": {
     "src": "/images/uploads/site-index-waza-elephants-1600w.jpg",
     "at": {
      "320": 280,
@@ -797,7 +839,7 @@
      "2560": 497
     }
    },
-   "11": {
+   "12": {
     "src": "/images/uploads/site-index-foumban-bronze-caster-1600w.jpg",
     "at": {
      "320": 280,
@@ -817,7 +859,7 @@
      "2560": 576
     }
    },
-   "13": {
+   "14": {
     "src": "/images/uploads/site-index-mount-dry-season-1200w.jpg",
     "at": {
      "320": 280,
@@ -837,7 +879,7 @@
      "2560": 270
     }
    },
-   "14": {
+   "15": {
     "src": "https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80",
     "at": {
      "320": 280,
@@ -857,7 +899,7 @@
      "2560": 270
     }
    },
-   "15": {
+   "16": {
     "src": "/images/uploads/site-index-mount-wet-cloud-1200w.jpg",
     "at": {
      "320": 280,
@@ -877,7 +919,7 @@
      "2560": 270
     }
    },
-   "16": {
+   "17": {
     "src": "/images/uploads/site-index-highlands-october-1200w.jpg",
     "at": {
      "320": 280,
@@ -899,7 +941,7 @@
    }
   },
   "about.html": {
-   "0": {
+   "1": {
     "src": "/images/uploads/site-about-mount-trailhead-dawn-1600w.jpg",
     "at": {
      "320": 280,
@@ -919,7 +961,7 @@
      "2560": 479
     }
    },
-   "1": {
+   "2": {
     "src": "/images/generated/site-about-mount-guide-portrait-1254w.jpg",
     "at": {
      "320": 280,
@@ -939,7 +981,7 @@
      "2560": 362
     }
    },
-   "2": {
+   "3": {
     "src": "/images/uploads/site-about-forest-guide-tree-1440w.jpg",
     "at": {
      "320": 280,
@@ -959,7 +1001,7 @@
      "2560": 362
     }
    },
-   "3": {
+   "4": {
     "src": "/images/uploads/site-about-north-market-street-1440w.jpg",
     "at": {
      "320": 280,
@@ -979,7 +1021,7 @@
      "2560": 362
     }
    },
-   "4": {
+   "5": {
     "src": "/images/uploads/site-about-mount-trail-repair-1536w.jpg",
     "at": {
      "320": 280,
@@ -1001,7 +1043,7 @@
    }
   },
   "services.html": {
-   "0": {
+   "1": {
     "src": "/images/uploads/site-services-laterite-road-1600w.jpg",
     "at": {
      "320": 280,
@@ -1021,7 +1063,7 @@
      "2560": 479
     }
    },
-   "1": {
+   "2": {
     "src": "/images/generated/site-services-mount-ascent-walkers-1536w.jpg",
     "at": {
      "320": 280,
@@ -1041,7 +1083,7 @@
      "2560": 497
     }
    },
-   "2": {
+   "3": {
     "src": "/images/uploads/site-services-mount-lava-flow-1536w.jpg",
     "at": {
      "320": 280,
@@ -1061,7 +1103,7 @@
      "2560": 497
     }
    },
-   "3": {
+   "4": {
     "src": "/images/uploads/site-services-coast-lobe-falls-1536w.jpg",
     "at": {
      "320": 280,
@@ -1081,27 +1123,7 @@
      "2560": 497
     }
    },
-   "4": {
-    "src": "https://images.pexels.com/photos/34445923/pexels-photo-34445923.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 612,
-     "768": 680,
-     "900": 812,
-     "1024": 400,
-     "1100": 434,
-     "1200": 479,
-     "1280": 497,
-     "1440": 497,
-     "1920": 497,
-     "2560": 497
-    }
-   },
-   "5": {
+   "6": {
     "src": "https://images.unsplash.com/photo-1637244018403-785e7fa8707a?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.460&w=880&h=1100&q=82",
     "at": {
      "320": 280,
@@ -1121,7 +1143,7 @@
      "2560": 576
     }
    },
-   "6": {
+   "7": {
     "src": "/images/uploads/site-services-waza-elephants-1200w.jpg",
     "at": {
      "320": 280,
@@ -1141,7 +1163,7 @@
      "2560": 270
     }
    },
-   "7": {
+   "8": {
     "src": "/images/uploads/site-services-benue-river-1200w.jpg",
     "at": {
      "320": 280,
@@ -1161,7 +1183,7 @@
      "2560": 270
     }
    },
-   "8": {
+   "9": {
     "src": "/images/uploads/site-services-mandara-spires-1200w.jpg",
     "at": {
      "320": 280,
@@ -1181,7 +1203,7 @@
      "2560": 270
     }
    },
-   "9": {
+   "10": {
     "src": "/images/uploads/site-services-north-craft-stalls-1200w.jpg",
     "at": {
      "320": 280,
@@ -1203,7 +1225,7 @@
    }
   },
   "pricing.html": {
-   "0": {
+   "1": {
     "src": "/images/generated/site-pricing-park-permit-post-1536w.jpg",
     "at": {
      "320": 280,
@@ -1225,7 +1247,7 @@
    }
   },
   "contact.html": {
-   "0": {
+   "1": {
     "src": "https://images.pexels.com/photos/27291181/pexels-photo-27291181.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=960&h=1280",
     "at": {
      "320": 280,
@@ -1245,7 +1267,7 @@
      "2560": 479
     }
    },
-   "1": {
+   "2": {
     "src": "/images/uploads/site-contact-douala-office-street-1600w.jpg",
     "at": {
      "320": 280,
@@ -1265,27 +1287,7 @@
      "2560": 497
     }
    },
-   "2": {
-    "src": "https://images.pexels.com/photos/20236312/pexels-photo-20236312.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=800",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 612,
-     "768": 680,
-     "900": 812,
-     "1024": 400,
-     "1100": 434,
-     "1200": 479,
-     "1280": 497,
-     "1440": 497,
-     "1920": 497,
-     "2560": 497
-    }
-   },
-   "3": {
+   "4": {
     "src": "/images/uploads/site-contact-mount-dry-season-1200w.jpg",
     "at": {
      "320": 280,
@@ -1305,7 +1307,7 @@
      "2560": 270
     }
    },
-   "4": {
+   "5": {
     "src": "https://images.unsplash.com/photo-1682924754765-75832404fd1d?auto=format&fit=crop&crop=focalpoint&fp-x=0.480&fp-y=0.600&w=600&h=750&q=80",
     "at": {
      "320": 280,
@@ -1325,7 +1327,7 @@
      "2560": 270
     }
    },
-   "5": {
+   "6": {
     "src": "/images/uploads/site-contact-mount-wet-cloud-1200w.jpg",
     "at": {
      "320": 280,
@@ -1345,7 +1347,7 @@
      "2560": 270
     }
    },
-   "6": {
+   "7": {
     "src": "/images/uploads/site-contact-highlands-october-1200w.jpg",
     "at": {
      "320": 280,
@@ -1367,7 +1369,7 @@
    }
   },
   "tourism/kenya.html": {
-   "0": {
+   "1": {
     "src": "https://images.pexels.com/photos/30705107/pexels-photo-30705107.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400&h=1350",
     "at": {
      "320": 320,
@@ -1387,7 +1389,7 @@
      "2560": 2560
     }
    },
-   "1": {
+   "2": {
     "src": "https://images.pexels.com/photos/7734639/pexels-photo-7734639.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1407,27 +1409,7 @@
      "2560": 367
     }
    },
-   "2": {
-    "src": "https://images.pexels.com/photos/33473215/pexels-photo-33473215.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "3": {
+   "4": {
     "src": "https://images.pexels.com/photos/30980291/pexels-photo-30980291.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1447,67 +1429,7 @@
      "2560": 367
     }
    },
-   "4": {
-    "src": "https://images.pexels.com/photos/12573131/pexels-photo-12573131.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "5": {
-    "src": "https://images.pexels.com/photos/37476350/pexels-photo-37476350.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "6": {
-    "src": "https://images.pexels.com/photos/36523750/pexels-photo-36523750.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "7": {
+   "8": {
     "src": "/images/uploads/kilimanjaro-elephants-acacia-1600w.jpg",
     "at": {
      "320": 280,
@@ -1527,107 +1449,7 @@
      "2560": 554
     }
    },
-   "8": {
-    "src": "https://images.pexels.com/photos/30705108/pexels-photo-30705108.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 455,
-     "1100": 493,
-     "1200": 543,
-     "1280": 563,
-     "1440": 563,
-     "1920": 563,
-     "2560": 563
-    }
-   },
-   "9": {
-    "src": "https://images.pexels.com/photos/18000444/pexels-photo-18000444.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 455,
-     "1100": 493,
-     "1200": 543,
-     "1280": 563,
-     "1440": 563,
-     "1920": 563,
-     "2560": 563
-    }
-   },
-   "10": {
-    "src": "https://images.pexels.com/photos/31151819/pexels-photo-31151819.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1800&h=1012",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 612,
-     "768": 680,
-     "900": 812,
-     "1024": 446,
-     "1100": 484,
-     "1200": 534,
-     "1280": 554,
-     "1440": 554,
-     "1920": 554,
-     "2560": 554
-    }
-   },
-   "11": {
-    "src": "https://images.pexels.com/photos/35243817/pexels-photo-35243817.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "12": {
-    "src": "https://images.pexels.com/photos/9833512/pexels-photo-9833512.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "13": {
+   "14": {
     "src": "https://images.pexels.com/photos/5859000/pexels-photo-5859000.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1647,7 +1469,7 @@
      "2560": 367
     }
    },
-   "14": {
+   "15": {
     "src": "https://images.pexels.com/photos/6299632/pexels-photo-6299632.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1667,7 +1489,7 @@
      "2560": 367
     }
    },
-   "15": {
+   "16": {
     "src": "https://images.pexels.com/photos/27669322/pexels-photo-27669322.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1687,7 +1509,7 @@
      "2560": 367
     }
    },
-   "16": {
+   "17": {
     "src": "https://images.pexels.com/photos/4995594/pexels-photo-4995594.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1707,107 +1529,7 @@
      "2560": 367
     }
    },
-   "17": {
-    "src": "https://images.pexels.com/photos/18000433/pexels-photo-18000433.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "18": {
-    "src": "https://images.pexels.com/photos/11025240/pexels-photo-11025240.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "19": {
-    "src": "https://images.pexels.com/photos/9833517/pexels-photo-9833517.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "20": {
-    "src": "https://images.pexels.com/photos/33734692/pexels-photo-33734692.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "21": {
-    "src": "https://images.pexels.com/photos/35717988/pexels-photo-35717988.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1800&h=1012",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 612,
-     "768": 680,
-     "900": 812,
-     "1024": 446,
-     "1100": 484,
-     "1200": 534,
-     "1280": 554,
-     "1440": 554,
-     "1920": 554,
-     "2560": 554
-    }
-   },
-   "22": {
+   "23": {
     "src": "https://images.pexels.com/photos/9833514/pexels-photo-9833514.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1827,7 +1549,7 @@
      "2560": 563
     }
    },
-   "23": {
+   "24": {
     "src": "https://images.pexels.com/photos/23886628/pexels-photo-23886628.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1846,70 +1568,10 @@
      "1920": 563,
      "2560": 563
     }
-   },
-   "24": {
-    "src": "https://images.pexels.com/photos/29093739/pexels-photo-29093739.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 455,
-     "1100": 493,
-     "1200": 543,
-     "1280": 563,
-     "1440": 563,
-     "1920": 563,
-     "2560": 563
-    }
-   },
-   "25": {
-    "src": "https://images.pexels.com/photos/33473218/pexels-photo-33473218.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 455,
-     "1100": 493,
-     "1200": 543,
-     "1280": 563,
-     "1440": 563,
-     "1920": 563,
-     "2560": 563
-    }
-   },
-   "26": {
-    "src": "https://images.pexels.com/photos/23831844/pexels-photo-23831844.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=2400&h=1029",
-    "at": {
-     "320": 320,
-     "360": 360,
-     "390": 390,
-     "430": 430,
-     "560": 560,
-     "700": 700,
-     "768": 768,
-     "900": 900,
-     "1024": 1024,
-     "1100": 1100,
-     "1200": 1200,
-     "1280": 1280,
-     "1440": 1440,
-     "1920": 1920,
-     "2560": 2560
-    }
    }
   },
   "tourism/index.html": {
-   "0": {
+   "1": {
     "src": "https://images.pexels.com/photos/10327666/pexels-photo-10327666.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1929,7 +1591,7 @@
      "2560": 367
     }
    },
-   "1": {
+   "2": {
     "src": "https://images.pexels.com/photos/18240881/pexels-photo-18240881.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1949,7 +1611,7 @@
      "2560": 367
     }
    },
-   "2": {
+   "3": {
     "src": "https://images.pexels.com/photos/6729748/pexels-photo-6729748.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -1969,7 +1631,7 @@
      "2560": 367
     }
    },
-   "3": {
+   "4": {
     "src": "https://images.unsplash.com/photo-1646338127518-07d025f4fe5c?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=1000&h=750&q=80",
     "at": {
      "320": 280,
@@ -1989,47 +1651,7 @@
      "2560": 367
     }
    },
-   "4": {
-    "src": "https://images.pexels.com/photos/20574000/pexels-photo-20574000.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "5": {
-    "src": "https://images.pexels.com/photos/37090479/pexels-photo-37090479.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "6": {
+   "7": {
     "src": "https://images.pexels.com/photos/34364085/pexels-photo-34364085.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2049,7 +1671,7 @@
      "2560": 367
     }
    },
-   "7": {
+   "8": {
     "src": "https://images.unsplash.com/photo-1615463668140-d294c94ec8ef?auto=format&fit=crop&crop=focalpoint&fp-x=0.520&fp-y=0.580&w=1000&h=750&q=80",
     "at": {
      "320": 280,
@@ -2069,7 +1691,7 @@
      "2560": 367
     }
    },
-   "8": {
+   "9": {
     "src": "https://images.pexels.com/photos/16226084/pexels-photo-16226084.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2089,7 +1711,7 @@
      "2560": 367
     }
    },
-   "9": {
+   "10": {
     "src": "https://images.pexels.com/photos/8257899/pexels-photo-8257899.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2109,7 +1731,7 @@
      "2560": 367
     }
    },
-   "10": {
+   "11": {
     "src": "https://images.pexels.com/photos/36856430/pexels-photo-36856430.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2129,7 +1751,7 @@
      "2560": 367
     }
    },
-   "11": {
+   "12": {
     "src": "https://images.pexels.com/photos/1238272/pexels-photo-1238272.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2149,7 +1771,7 @@
      "2560": 367
     }
    },
-   "12": {
+   "13": {
     "src": "https://images.pexels.com/photos/17732553/pexels-photo-17732553.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2169,27 +1791,7 @@
      "2560": 367
     }
    },
-   "13": {
-    "src": "https://images.pexels.com/photos/31447433/pexels-photo-31447433.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "14": {
+   "15": {
     "src": "https://images.pexels.com/photos/9389010/pexels-photo-9389010.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2209,7 +1811,7 @@
      "2560": 367
     }
    },
-   "15": {
+   "16": {
     "src": "https://images.pexels.com/photos/3689859/pexels-photo-3689859.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2229,7 +1831,7 @@
      "2560": 367
     }
    },
-   "16": {
+   "17": {
     "src": "https://images.pexels.com/photos/19964438/pexels-photo-19964438.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2249,27 +1851,7 @@
      "2560": 367
     }
    },
-   "17": {
-    "src": "https://images.pexels.com/photos/18244876/pexels-photo-18244876.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "18": {
+   "19": {
     "src": "https://images.pexels.com/photos/33621869/pexels-photo-33621869.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2289,7 +1871,7 @@
      "2560": 367
     }
    },
-   "19": {
+   "20": {
     "src": "https://images.pexels.com/photos/4105573/pexels-photo-4105573.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2309,7 +1891,7 @@
      "2560": 367
     }
    },
-   "20": {
+   "21": {
     "src": "https://images.pexels.com/photos/24864281/pexels-photo-24864281.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2329,47 +1911,7 @@
      "2560": 367
     }
    },
-   "21": {
-    "src": "https://images.pexels.com/photos/18284888/pexels-photo-18284888.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "22": {
-    "src": "https://images.pexels.com/photos/3561167/pexels-photo-3561167.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "23": {
+   "24": {
     "src": "https://images.pexels.com/photos/31670400/pexels-photo-31670400.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2389,27 +1931,7 @@
      "2560": 367
     }
    },
-   "24": {
-    "src": "https://images.pexels.com/photos/30372869/pexels-photo-30372869.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "25": {
+   "26": {
     "src": "https://images.pexels.com/photos/30705107/pexels-photo-30705107.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2429,27 +1951,7 @@
      "2560": 367
     }
    },
-   "26": {
-    "src": "https://images.unsplash.com/photo-1654331073379-16cd78cfba96?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.480&w=1000&h=750&q=80",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "27": {
+   "28": {
     "src": "https://images.pexels.com/photos/5118570/pexels-photo-5118570.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2469,7 +1971,7 @@
      "2560": 367
     }
    },
-   "28": {
+   "29": {
     "src": "https://images.pexels.com/photos/8890586/pexels-photo-8890586.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2489,7 +1991,7 @@
      "2560": 367
     }
    },
-   "29": {
+   "30": {
     "src": "https://images.pexels.com/photos/6786048/pexels-photo-6786048.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2509,27 +2011,7 @@
      "2560": 367
     }
    },
-   "30": {
-    "src": "https://images.pexels.com/photos/36018012/pexels-photo-36018012.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "31": {
+   "32": {
     "src": "https://images.pexels.com/photos/38307877/pexels-photo-38307877.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2549,7 +2031,7 @@
      "2560": 367
     }
    },
-   "32": {
+   "33": {
     "src": "https://images.pexels.com/photos/18030919/pexels-photo-18030919.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2569,7 +2051,7 @@
      "2560": 367
     }
    },
-   "33": {
+   "34": {
     "src": "https://images.pexels.com/photos/7744992/pexels-photo-7744992.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2589,27 +2071,7 @@
      "2560": 367
     }
    },
-   "34": {
-    "src": "https://images.pexels.com/photos/37401852/pexels-photo-37401852.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "35": {
+   "36": {
     "src": "https://images.pexels.com/photos/14260224/pexels-photo-14260224.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2629,27 +2091,7 @@
      "2560": 367
     }
    },
-   "36": {
-    "src": "https://images.pexels.com/photos/32459095/pexels-photo-32459095.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "37": {
+   "38": {
     "src": "https://images.pexels.com/photos/37963275/pexels-photo-37963275.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2669,7 +2111,7 @@
      "2560": 367
     }
    },
-   "38": {
+   "39": {
     "src": "https://images.unsplash.com/photo-1708674282655-3637d492dc74?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=1000&h=750&q=80",
     "at": {
      "320": 280,
@@ -2689,7 +2131,7 @@
      "2560": 367
     }
    },
-   "39": {
+   "40": {
     "src": "https://images.pexels.com/photos/36477481/pexels-photo-36477481.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2709,7 +2151,7 @@
      "2560": 367
     }
    },
-   "40": {
+   "41": {
     "src": "https://images.pexels.com/photos/28281030/pexels-photo-28281030.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2729,27 +2171,7 @@
      "2560": 367
     }
    },
-   "41": {
-    "src": "https://images.pexels.com/photos/32544178/pexels-photo-32544178.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "42": {
+   "43": {
     "src": "https://images.unsplash.com/photo-1582617327923-41cf918104bb?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.520&w=1000&h=750&q=80",
     "at": {
      "320": 280,
@@ -2769,7 +2191,7 @@
      "2560": 367
     }
    },
-   "43": {
+   "44": {
     "src": "https://images.pexels.com/photos/12517510/pexels-photo-12517510.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2789,27 +2211,7 @@
      "2560": 367
     }
    },
-   "44": {
-    "src": "https://images.pexels.com/photos/36597753/pexels-photo-36597753.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "45": {
+   "46": {
     "src": "https://images.pexels.com/photos/16815582/pexels-photo-16815582.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2829,7 +2231,7 @@
      "2560": 367
     }
    },
-   "46": {
+   "47": {
     "src": "https://images.pexels.com/photos/18018667/pexels-photo-18018667.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2849,67 +2251,7 @@
      "2560": 367
     }
    },
-   "47": {
-    "src": "https://images.unsplash.com/photo-1616094729710-0969aae40cc0?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.600&w=1000&h=750&q=80",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "48": {
-    "src": "https://images.pexels.com/photos/36703705/pexels-photo-36703705.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "49": {
-    "src": "https://images.pexels.com/photos/35644773/pexels-photo-35644773.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
-    "at": {
-     "320": 280,
-     "360": 320,
-     "390": 350,
-     "430": 390,
-     "560": 520,
-     "700": 293,
-     "768": 327,
-     "900": 393,
-     "1024": 295,
-     "1100": 320,
-     "1200": 354,
-     "1280": 367,
-     "1440": 367,
-     "1920": 367,
-     "2560": 367
-    }
-   },
-   "50": {
+   "51": {
     "src": "https://images.unsplash.com/photo-1711198617874-e86cedbf3707?auto=format&fit=crop&crop=focalpoint&fp-x=0.500&fp-y=0.560&w=1000&h=750&q=80",
     "at": {
      "320": 280,
@@ -2929,7 +2271,7 @@
      "2560": 367
     }
    },
-   "51": {
+   "52": {
     "src": "/images/uploads/falls-victoria-lip-1600w.jpg",
     "at": {
      "320": 280,
@@ -2949,7 +2291,7 @@
      "2560": 367
     }
    },
-   "52": {
+   "53": {
     "src": "https://images.pexels.com/photos/22938560/pexels-photo-22938560.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1000&h=750",
     "at": {
      "320": 280,
@@ -2971,7 +2313,7 @@
    }
   },
   "trans-afrique/west.html": {
-   "0": {
+   "1": {
     "src": "/images/uploads/cross-camel-caravan-1600w.jpg",
     "at": {
      "320": 320,
@@ -2991,7 +2333,7 @@
      "2560": 2560
     }
    },
-   "1": {
+   "2": {
     "src": "/images/uploads/cross-leaning-out-1600w.jpg",
     "at": {
      "320": 320,
@@ -3013,7 +2355,7 @@
    }
   },
   "trans-afrique/crossings.html": {
-   "0": {
+   "1": {
     "src": "/images/uploads/cross-vehicles-on-the-pan-1200w.jpg",
     "at": {
      "320": 320,

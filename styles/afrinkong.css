@@ -918,7 +918,13 @@ img[data-illustration]{height:auto}
 .af-shell-prod{max-width:none;padding:0}
 .af-shell-prod{display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;
   padding:9px 44px}
-.af-shell-prod-n{font-family:var(--fj-display);font-size:15px;font-weight:700;
+/* 24px minimum, measured rather than assumed. This shipped at 22px tall — a
+   15px display line in a 9px-padded band — and the browser suite caught it on
+   nineteen pages. WCAG 2.2 asks 24 of anything that is not a link inside a
+   sentence, and a product name in a navigation band is not that. The band's own
+   padding does not change; the link grows into it. */
+.af-shell-prod-n{display:inline-flex;align-items:center;min-height:24px;
+  font-family:var(--fj-display);font-size:15px;font-weight:700;
   text-transform:uppercase;letter-spacing:.02em;color:var(--c-primary)}
 .af-shell-prod-nav{display:flex;gap:18px;flex-wrap:wrap}
 .af-shell-prod-nav a{font-family:var(--fj-mono);font-size:10px;
