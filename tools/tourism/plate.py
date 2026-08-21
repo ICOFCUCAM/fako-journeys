@@ -582,12 +582,48 @@ def shell(here=None, area=None, product=None, product_href=None,
             '  </div>\n'
             '</header>' % (emblem(34, "af-emblem--mast"), links))
 
+    # THE AREAS, AS DISCLOSURES RATHER THAN LINKS.
+    #
+    # THE DEFECT THIS FIXES, WHICH WAS MINE. The browser suite found the Trans
+    # Afrique band's copy sitting under a 144px masthead, and I fixed it by
+    # dropping the area row from every page that carries a product band. That
+    # is 1,584 of 1,597 — so the seven things under Explore, and the three
+    # under Plan, became reachable from NOWHERE except the phone menu. A global
+    # decision taken to fix a local problem, and it removed the discoverability
+    # the navigation exists for.
+    #
+    # Worse, the check I wrote passed the whole time: it asserted that every
+    # page shows the same primary navigation, saw "Explore|Plan" on all 1,597,
+    # and never asked whether their children could be reached.
+    #
+    # `<details>` gets both back. The children are one press away on every page
+    # at zero height, so the masthead stays at 106px and the band keeps its
+    # clearance. It opens with no JavaScript, is keyboard operable by default,
+    # and announces its own expanded state — none of which a hover menu does.
+    #
+    # `name="af-area"` makes them an exclusive accordion where the browser
+    # supports it, so opening Plan closes Explore. Where it does not, both can
+    # be open, which is untidy rather than broken.
+    #
+    # An area is not a page, so its summary is not a link. It was pointing at
+    # the first of its own children, which on /places meant "Explore" led to the
+    # page you were already standing on.
     areas = "".join(
-        '<a class="af-shell-area%s" href="%s"%s>%s</a>' % (
+        '<details class="af-shell-area%s" name="af-area">'
+        '<summary>%s</summary>'
+        # A div rather than a nested <nav>. The outer nav is already the
+        # primary landmark; a second one inside it announces a navigation
+        # region within a navigation region, which is noise to a screen reader
+        # and was also enough to make a check's non-greedy regex stop at the
+        # first inner </nav> and see only half the menu.
+        '<div class="af-shell-area-menu" aria-label="%s">%s</div>'
+        '</details>' % (
             " is-here" if key == area else "",
-            children[0][0],
-            ' aria-current="true"' if key == area else "",
-            label)
+            label, label,
+            "".join(
+                '<a href="%s"%s>%s</a>' % (
+                    h, ' aria-current="page"' if _same(h, here) else "", n)
+                for h, n in children))
         for key, label, children in AREAS)
 
     util = "".join('<a href="%s"%s>%s</a>' % (

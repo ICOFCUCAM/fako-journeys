@@ -887,11 +887,42 @@ img[data-illustration]{height:auto}
 /* The two areas. Larger and heavier than the row beneath them, because they
    are the architecture and their children are the contents. */
 .af-shell-nav{display:flex;gap:26px}
-.af-shell-area{font-family:var(--fj-mono);font-size:11px;letter-spacing:.2em;
+
+/* THE AREAS ARE DISCLOSURES, NOT LINKS.
+   An area is not a page. This used to be an anchor pointing at the first of
+   its own children, so on /places "Explore" led to the page you were already
+   standing on.
+   <details> because it opens with no JavaScript, is keyboard operable by
+   default and announces its expanded state. The panel is absolutely
+   positioned, so the seven things under Explore cost the masthead no height at
+   all — which is what lets them be present on every page without the band
+   clearance problem that removed them in the first place. */
+.af-shell-area{position:relative}
+.af-shell-area>summary{list-style:none;cursor:pointer;display:flex;
+  align-items:center;gap:6px;min-height:24px;
+  font-family:var(--fj-mono);font-size:11px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--c-muted);padding:8px 0;
   border-bottom:2px solid transparent;transition:color .18s,border-color .18s}
-.af-shell-area:hover{color:var(--c-primary)}
-.af-shell-area.is-here{color:var(--c-primary);border-bottom-color:var(--c-accent)}
+.af-shell-area>summary::-webkit-details-marker{display:none}
+/* The affordance. A caret that turns, so the control says it opens before it
+   is pressed — without it a disclosure reads as a dead label. */
+.af-shell-area>summary::after{content:"";width:5px;height:5px;
+  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);transition:transform .18s}
+.af-shell-area[open]>summary::after{transform:translateY(1px) rotate(225deg)}
+.af-shell-area>summary:hover{color:var(--c-primary)}
+.af-shell-area.is-here>summary{color:var(--c-primary);
+  border-bottom-color:var(--c-accent)}
+.af-shell-area[open]>summary{color:var(--c-primary)}
+
+.af-shell-area-menu{position:absolute;left:0;top:100%;z-index:90;
+  min-width:230px;background:var(--c-bg);border:2px solid var(--c-primary);
+  padding:4px 0;display:flex;flex-direction:column}
+.af-shell-area-menu a{padding:10px 16px;min-height:24px;font-size:15px;
+  color:var(--c-primary);border-top:var(--fj-rule)}
+.af-shell-area-menu a:first-child{border-top:0}
+.af-shell-area-menu a:hover{background:var(--c-sand)}
+.af-shell-area-menu a[aria-current="page"]{color:var(--c-accent)}
 
 .af-shell-util{display:flex;gap:20px}
 .af-shell-util a{font-family:var(--fj-mono);font-size:10px;letter-spacing:.16em;
