@@ -128,8 +128,9 @@ ACTIVE → CLOSED_TO_NEW_PURCHASES → REDEMPTION_PERIOD → CLOSED
 | `scripts/purchase-plan.js` | a plan is an intention, never a mandate |
 | `scripts/journey-catalogue.js` | requirements and the component breakdown |
 | `scripts/travel-goal.js` | the planning surface. Issues nothing |
+| `scripts/risk.js` | item Y — the risk engine, holds, and the ledger gate. No model |
 | `tools/points/schema.sql` | append-only ledger, designed and **not applied anywhere** |
-| `tools/points-checks.js` | 213 checks — the decisions above, asserted |
+| `tools/points-checks.js` | 221 checks — the decisions above, asserted |
 
 **None of it can issue a point.** Three independent refusals stand in the way:
 the fold refuses issuance under a non-issuing programme, `mayActivate()`
