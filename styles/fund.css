@@ -418,3 +418,43 @@
    in this phase there is no fund — nothing is held, and the vocabulary has to
    carry that distinction where a reader will actually meet it. */
 .jf-plan-eye{margin:0 0 10px;color:var(--c-muted)}
+
+/* THE COMPLIANCE LADDER, ON /travel-points.
+   
+   The one genuinely new component on that page. Everything else there reuses
+   the Journey Fund's existing furniture — jf-q, jf-said, jf-fine — because a
+   fourth page in a family should not arrive with its own vocabulary. I did
+   briefly give it one, a tp- prefix with five class names and no rules behind
+   any of them, which rendered as unstyled blocks and would have been a
+   twenty-fifth prefix in a system already trying to get down to eleven.
+
+   A ladder is drawn rather than listed because "not skippable" is a property
+   of a SEQUENCE, and a flat list of six words does not say sequence. The rail
+   and the marks are what carry that; the current rung is the only one filled,
+   so where the programme actually stands is visible before anything is read.
+
+   No colour-only signalling: the current rung is also the only one carrying
+   its own sentence, and it is the only one with aria-current="step". */
+.jf-ladder{list-style:none;margin:20px 0 0;padding:0 0 0 22px;
+  position:relative;max-width:64ch}
+.jf-ladder::before{content:"";position:absolute;left:4px;top:8px;bottom:8px;
+  width:1px;background:var(--c-border)}
+.jf-rung{position:relative;padding:7px 0;font-family:var(--fj-mono);
+  font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--c-muted)}
+.jf-rung::before{content:"";position:absolute;left:-22px;top:12px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--c-bg);border:1px solid var(--c-border)}
+.jf-rung.is-here{color:var(--c-primary)}
+.jf-rung.is-here::before{background:var(--c-accent);border-color:var(--c-accent)}
+.jf-rung.is-here b{font-family:var(--fj-text);font-size:14px;
+  letter-spacing:normal;text-transform:none;color:var(--c-accent);
+  font-weight:400}
+
+/* The list of things a Travel Point is not. Each item leads with the denial in
+   bold, so the five refusals are scannable without reading the sentences —
+   which is the way this particular list is actually read. */
+.jf-nots{list-style:none;margin:14px 0 0;padding:0;max-width:64ch}
+.jf-nots li{padding:11px 0;border-top:1px solid var(--c-border);
+  line-height:1.6}
+.jf-nots li:first-child{border-top:0}

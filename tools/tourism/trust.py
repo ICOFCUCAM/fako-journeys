@@ -391,8 +391,22 @@ def about():
               "interchangeable and this site never uses one where it means the "
               "other &mdash; the company line at the foot of every page carries "
               "the registration.",
+              # SUMMARY AND DETAIL, NOT TWO ACCOUNTS OF THE SAME THING.
+              #
+              # /trust renders scripts/entities.js: all ten acts, which of the
+              # three parties performs each, and the six that must name
+              # themselves where they happen. This page states the fact in
+              # three sentences and that page is the table.
+              #
+              # Without this link they are two pages explaining the same
+              # relationship in slightly different words, which is precisely
+              # the failure the shell work spent a day removing. A reader who
+              # wants the detail has to be sent to it from here, because here
+              # is where they will look first.
               "Where a journey is run by a local operator, that operator is "
-              "named too. Three parties, all of them stated."),
+              "named too. Three parties, all of them stated &mdash; and "
+              "<a href=\"/trust\">who acts, at every moment it matters</a>, "
+              "is set out act by act."),
         block("What we hold",
               "Nothing of yours. There is no account, no balance, no card on "
               "file and no money held by Afrinkong at any point in the "

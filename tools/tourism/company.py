@@ -84,7 +84,20 @@ def where(d, join=", "):
 # is not an omission — there are none, and a cookie page on a site with no
 # cookies is a page written to look compliant rather than to be read. The fact
 # lives in /privacy where somebody looking for it will actually find it.
-COLOPHON_LINKS = (("/privacy", "Privacy"),
+# "Who you are dealing with" is first because it is the question the other
+# three assume you have already answered. A privacy policy tells you what a
+# company does with your data; it does not tell you WHICH company, and this
+# product runs three of them — the experience, the company you contract with,
+# and the operation on the ground.
+#
+# It is here rather than in the primary navigation because it is the thing you
+# go looking for when it matters, not something to interrupt a visitor with.
+# But it has to be SOMEWHERE: /trust was built, rendered correctly, and was
+# reachable from exactly zero of 1,598 pages — which is the same failure as the
+# area navigation that was invisible on all of them. A page nobody can reach
+# has not been shipped.
+COLOPHON_LINKS = (("/trust", "Who you are dealing with"),
+                  ("/privacy", "Privacy"),
                   ("/terms", "Terms"),
                   ("/accessibility", "Accessibility"))
 

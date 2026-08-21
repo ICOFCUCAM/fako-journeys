@@ -225,5 +225,110 @@ check('any surface that takes a payment names Wankong LLC on itself',
     : 'no payment surface exists yet; this fails the day one appears '
       + 'without naming the payee');
 
+/* ---- /trust: the model, where a customer can read it -------------------- *
+ *
+ * entities.js was loaded by no page. Seventeen checks, a 169-line document,
+ * and no surface — a customer could not learn from this website which of three
+ * companies was acting, which is the one thing the model exists to make
+ * knowable. /trust is that surface, generated FROM the module.
+ *
+ * These guard the two ways it stops being true: it can fall behind the model,
+ * and it can become unreachable. */
+const TRUST = path.join(ROOT, 'trust.html');
+const trust = fs.existsSync(TRUST) ? fs.readFileSync(TRUST, 'utf8') : '';
+
+check('the entity model has a page a customer can read',
+  trust.length > 0,
+  trust.length ? `/trust, ${(trust.length / 1024).toFixed(1)} KB`
+    : 'MISSING — the model is enforced everywhere and stated nowhere');
+
+/* EVERY act, not most of them. The generator's first regex consumed the
+   newline the next entry needed and silently took 5 of 10 — including four of
+   the six where money is at stake. A short table reads exactly as completely
+   as a full one, so the page is checked against ACTS rather than eyeballed. */
+const actNames = Object.keys(E.ACTS);
+const missingActs = actNames.filter(
+  (a) => !new RegExp(`<th scope="row">${a}</th>`).test(trust));
+check('every act in the model appears on the page',
+  trust.length > 0 && missingActs.length === 0,
+  missingActs.length ? `missing: ${missingActs.join(', ')}`
+    : `all ${actNames.length} acts, each with the party that performs it`);
+
+/* And every act that must declare is marked as such on the page, since that
+   mark is the entire customer-facing consequence of MUST_DECLARE. */
+const rows = trust.split(/<tr/).filter((r) => r.includes('scope="row"'));
+const markedWrong = actNames.filter((a) => {
+  const row = rows.find((r) => r.includes(`>${a}</th>`));
+  if (!row) return true;
+  return E.ACTS[a].declares !== row.includes('is-declare');
+});
+check('the acts marked as declaring are exactly the ones that do',
+  trust.length > 0 && markedWrong.length === 0,
+  markedWrong.length ? `mismatched: ${markedWrong.join(', ')}`
+    : `${actNames.filter((a) => E.ACTS[a].declares).length} of ` +
+      `${actNames.length} declare; ${E.MUST_DECLARE.length} of those are the ` +
+      `money acts, the rest is the operator's desk naming itself`);
+
+/* All three layers, with the company named as the company. */
+check('the page names all three layers, and Wankong LLC as the company',
+  trust.includes('Afrinkong') && trust.includes('Wankong LLC') &&
+    /experience/i.test(trust) && /commercial/i.test(trust) &&
+    /operations/i.test(trust),
+  'experience, commercial, operations — and the money is the company');
+
+/* THE TRAP THIS PAGE IS MOST LIKELY TO FALL INTO.
+   operators.json gives Kamerun a url of /cameroon, and linking an operator to
+   the country it works in is the exact conflation this page argues against —
+   on the page that argues it. The operator's own surface, or nothing. */
+const opsBlock = (trust.match(/<ul class="af-ops">[\s\S]*?<\/ul>/) || [''])[0];
+const countryLinked = (opsBlock.match(/href="\/([a-z-]+)"/g) || [])
+  .filter((h) => !/\/(about|contact|services|pricing)"/.test(h));
+check('no ground operation is linked to the country it works in',
+  countryLinked.length === 0,
+  countryLinked.length ? `links a country: ${countryLinked.join(', ')}`
+    : "an operator is linked to its own surface or to nothing — /cameroon is " +
+      'a destination, and saying otherwise here would prove the page wrong');
+
+/* REACHABILITY, WHICH IS NOT THE SAME AS EXISTENCE.
+   /trust rendered correctly and was linked from 0 of 1,598 pages — the same
+   failure as the area navigation that was present in the markup of every page
+   and visible on none. A page nobody can reach has not been shipped. */
+let reach = 0;
+for (const f of pages(ROOT, [])) {
+  if (fs.readFileSync(f, 'utf8').includes('href="/trust"')) reach++;
+}
+check('the page is reachable from the site, not merely present in it',
+  reach > 1000,
+  `linked from ${reach} page(s) — it is in the colophon, so it is on every ` +
+  'Afrinkong page rather than on none');
+
+/* TWO PAGES EXPLAIN THIS RELATIONSHIP, AND THAT IS ONLY SAFE IF ONE SENDS
+ * YOU TO THE OTHER.
+ *
+ * /about-afrinkong already carried "Afrinkong is the travel brand, Wankong LLC
+ * is the company behind it... Three parties, all of them stated" before /trust
+ * existed. Left alone, that is two accounts of the same relationship in
+ * slightly different words — the failure the shell work spent a day removing,
+ * arriving by a different door.
+ *
+ * They are allowed to coexist as summary and detail. They are not allowed to
+ * coexist as rivals, so the summary has to link to the table. */
+const ABOUT = path.join(ROOT, 'about-afrinkong.html');
+const about = fs.existsSync(ABOUT) ? fs.readFileSync(ABOUT, 'utf8') : '';
+check('the page that summarises the three parties sends you to the full set',
+  about.length > 0 && about.includes('href="/trust"'),
+  about.length
+    ? '/about-afrinkong states it in three sentences and links /trust, which ' +
+      'renders the model act by act — summary and detail, not two accounts'
+    : '/about-afrinkong is missing');
+
+/* And both must name the same contracting entity. If one of them ever says
+   the customer contracts with the trading name, they have drifted in the one
+   way that matters. */
+check('both pages name the same company as the one you contract with',
+  /Wankong LLC/.test(about) && /Wankong LLC/.test(trust) &&
+    !/contracting with[^.]{0,40}Afrinkong/i.test(about),
+  'Wankong LLC on both; neither says a customer contracts with the brand');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);

@@ -404,10 +404,19 @@ def run(countries=None, log=print):
 # and these three pages are the first family to adopt it because they are the
 # smallest and because this is the family the state language already proved
 # things on.
+# The fourth entry is the explanatory page for the unit this family already
+# quotes. The label is a sentence, not a noun: "Travel Points" in a navigation
+# bar reads as a shelf you can buy from, and "What a Travel Point is" cannot be
+# misread as an offer while the programme is still in compliance review.
+#
+# This tuple is the ONE definition of the band. tools/tourism/points_page.py
+# imports it rather than restating it — a near-copy of a navigation list is how
+# two pages in the same family end up disagreeing about what family they are in.
 FUND_NAV = (
     ("/journey-fund", "Plan a journey"),
     ("/journey-fund/how-it-works", "How it works"),
     ("/journey-fund/questions", "Questions"),
+    ("/travel-points", "What a Travel Point is"),
 )
 
 

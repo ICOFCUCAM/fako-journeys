@@ -915,14 +915,30 @@ img[data-illustration]{height:auto}
   border-bottom-color:var(--c-accent)}
 .af-shell-area[open]>summary{color:var(--c-primary)}
 
-.af-shell-area-menu{position:absolute;left:0;top:100%;z-index:90;
-  min-width:230px;background:var(--c-bg);border:2px solid var(--c-primary);
-  padding:4px 0;display:flex;flex-direction:column}
-.af-shell-area-menu a{padding:10px 16px;min-height:24px;font-size:15px;
-  color:var(--c-primary);border-top:var(--fj-rule)}
+/* ONE DISCLOSURE PANEL, NOT TWO.
+   This and the phone menu are the same component — a list of destinations
+   dropped from a summary — so they share these rules rather than restating
+   them. They were briefly two: the desktop copy carried padding 10px/16px and
+   min-height 24px against the phone's 11px/18px and 44px, which is a smaller
+   tap target reached by the same finger on a touch laptop. Nothing rendered
+   differently, because 15px type in 20px of padding clears 24px without ever
+   consulting the minimum — so the divergence was invisible and would have
+   stayed invisible until somebody tightened the type. Two interpretations of
+   one component is the failure this shell exists to prevent; keep them here. */
+.af-shell-area-menu,.af-shell-menu-in{position:absolute;top:100%;z-index:90;
+  background:var(--c-bg);border:2px solid var(--c-primary);padding:6px 0 10px}
+.af-shell-area-menu a,.af-shell-menu-in a{display:block;padding:11px 18px;
+  min-height:44px;font-size:15px;color:var(--c-primary);
+  border-top:var(--fj-rule)}
+.af-shell-area-menu a:hover,.af-shell-menu-in a:hover{background:var(--c-sand)}
+.af-shell-area-menu a[aria-current="page"],
+.af-shell-menu-in a[aria-current="page"]{color:var(--c-accent)}
+
+/* Where they legitimately differ: which edge they hang from, and how wide.
+   Explore drops from a control in the middle of the row and holds a fixed
+   width; the phone menu hangs off the right edge and takes the viewport. */
+.af-shell-area-menu{left:0;min-width:230px}
 .af-shell-area-menu a:first-child{border-top:0}
-.af-shell-area-menu a:hover{background:var(--c-sand)}
-.af-shell-area-menu a[aria-current="page"]{color:var(--c-accent)}
 
 .af-shell-util{display:flex;gap:20px}
 .af-shell-util a{font-family:var(--fj-mono);font-size:10px;letter-spacing:.16em;
@@ -983,17 +999,13 @@ img[data-illustration]{height:auto}
   padding:11px 0;min-height:44px;display:flex;align-items:center}
 .af-shell-menu>summary::-webkit-details-marker{display:none}
 .af-shell-menu[open]>summary{color:var(--c-accent)}
-.af-shell-menu-in{position:absolute;right:0;top:100%;z-index:90;
-  min-width:min(78vw,290px);background:var(--c-bg);
-  border:2px solid var(--c-primary);padding:6px 0 10px}
+/* The shared panel rules are above, with the area menu. Only the anchoring,
+   the width and the group eyebrow are the phone menu's own. */
+.af-shell-menu-in{right:0;min-width:min(78vw,290px)}
 .af-shell-menu-in b{display:block;font-family:var(--fj-mono);font-size:9.5px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);
   padding:14px 18px 6px}
 .af-shell-menu-in span{display:block}
-.af-shell-menu-in a{display:block;padding:11px 18px;min-height:44px;
-  font-size:15px;color:var(--c-primary);border-top:var(--fj-rule)}
-.af-shell-menu-in a:hover{background:var(--c-sand)}
-.af-shell-menu-in a[aria-current="page"]{color:var(--c-accent)}
 
 @media(max-width:900px){
   .af-shell-in{padding:11px 26px;gap:20px}
@@ -1157,3 +1169,66 @@ a.af-lockup > i,a.af-lockup > b,a.af-lockup > span{grid-column:2}
    img:first-child and img:nth-*, so nothing was reaching the image as a
    direct child in the first place. */
 picture{display:contents}
+
+/* ---- the explain family: /travel-points and /trust ----------------------- */
+/* Pages whose job is to make an existing model legible rather than to sell
+   anything. They carry no photography and no call to action, because a page
+   answering "who am I dealing with" that ends in a button is answering a
+   different question.
+
+   These are af- rather than a prefix of their own. I built the first one with
+   five tp- classes and no rules behind any of them, in a system whose design
+   document is trying to get 24 prefixes down to 11; a second new prefix here
+   would have made 26. */
+.af-explain{max-width:74ch;margin:0 auto}
+.af-ex{padding:28px 0;border-top:1px solid var(--c-border)}
+.af-ex:first-child{border-top:0}
+.af-ex h2{font-size:clamp(21px,2.4vw,27px);max-width:26ch;margin:0 0 12px}
+.af-ex p{margin:0 0 14px;max-width:68ch;line-height:1.65}
+.af-ex p:last-child{margin-bottom:0}
+.af-ex-open{padding:var(--sp-4) 0 8px}
+.af-ex-open h1{font-size:clamp(34px,5.4vw,62px);max-width:16ch;margin:0}
+
+/* THE THREE LAYERS. Stacked in order of responsibility rather than numbered:
+   the experience sits on the company, and the company contracts the ground.
+   The eyebrow carries the layer's own name — experience, commercial,
+   operations — which is the information a number would only stand in for.
+
+   (This comment claimed the rows were numbered until the render showed they
+   were not. A comment describing markup that does not exist is the same
+   two-things-that-must-agree failure as everything else here, and it is worse
+   in a stylesheet, because the next person trusts it instead of looking.) */
+.af-layers{list-style:none;margin:var(--sp-4) 0 0;padding:0;display:grid;
+  gap:1px;background:var(--c-border);border:1px solid var(--c-border)}
+.af-layer{background:var(--c-bg);padding:22px 24px}
+.af-layer h3{margin:0 0 8px;font-size:20px;display:flex;flex-wrap:wrap;
+  align-items:center;gap:10px}
+.af-layer p{margin:0;max-width:60ch;line-height:1.6}
+.af-layer-n{margin:0 0 6px;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--c-accent)}
+
+/* THE ACTS. A table, because "which of three parties does this, and why" is
+   genuinely tabular and a list of ten would bury the pattern. The rows that
+   declare carry a mark as well as a weight, so the distinction survives a
+   monochrome print and a reader who cannot separate the two greys. */
+.af-scroll{overflow-x:auto;margin-top:16px}
+.af-acts{border-collapse:collapse;width:100%;font-size:14.5px}
+.af-acts caption{text-align:left;caption-side:bottom;padding-top:12px}
+.af-acts th,.af-acts td{text-align:left;vertical-align:top;padding:11px 14px 11px 0;
+  border-top:1px solid var(--c-border)}
+.af-acts thead th{border-top:0;font-family:var(--fj-mono);font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);
+  padding-bottom:8px}
+.af-acts tbody th{font-family:var(--fj-mono);font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;white-space:nowrap;font-weight:400}
+.af-acts td i{font-style:normal;color:var(--c-muted)}
+.af-acts .is-declare tbody th,.af-acts tr.is-declare th{color:var(--c-primary)}
+.af-acts tr.is-declare th::before{content:"\2022 ";color:var(--c-accent)}
+
+/* THE GROUND OPERATIONS. Named and reachable — that is the entire point of
+   the section, so the name is the link where there is somewhere to send it. */
+.af-ops{list-style:none;margin:var(--sp-4) 0 0;padding:0;display:grid;
+  gap:24px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.af-op h3{margin:0 0 4px;font-size:19px}
+.af-op p{margin:0;line-height:1.6}
+.af-op .af-note{margin:0 0 8px}
