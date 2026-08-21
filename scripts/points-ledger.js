@@ -174,14 +174,37 @@
       eligibleServices: ['journey', 'accommodation', 'transport', 'guiding',
                          'experience', 'excursion', 'activity',
                          'destination_service', 'domestic_transport',
-                         'park_fee', 'conservation_fee', 'permit',
-                         'entrance_fee', 'government_charge',
+                         /* DECISION H MOVED GOVERNMENT CHARGES OUT OF THE
+                            DEFAULT BASKET, and this is the second time this
+                            line has changed direction — worth recording both.
+
+                            The original audit said Afrinkong service only.
+                            Decision F reversed it and put park, conservation,
+                            permit, entrance and government charges IN.
+                            Decision H reverses the default again: they remain
+                            INCLUDABLE — `includableServices` below, and a
+                            programme may adopt them — but `AFK-TP-2026.1` no
+                            longer covers them, because a customer should not
+                            believe every unpredictable government charge is
+                            already paid for by points they accumulated.
+
+                            The capability and the default are different
+                            questions, and only the default moved. */
                          /* F4: Afrinkong's own service component. Without it a
                             customer could accumulate a large holding and still
                             discover they must pay Afrinkong separately, which
                             is the kind of surprise that makes a product feel
                             like a trick. */
                          'afrinkong_service'],
+
+      /* H: ELIGIBLE TO BE INCLUDED, AND NOT INCLUDED HERE.
+         Kept as a named list rather than deleted, because "a programme may
+         include these" and "this programme does" are different statements and
+         the code should be able to make the first without making the second.
+         A successor programme that wants them adopts this list into its
+         `eligibleServices`; nothing else has to change. */
+      includableServices: ['park_fee', 'conservation_fee', 'permit',
+                           'entrance_fee', 'government_charge'],
 
       /* F5-F8/F12: THE EXCLUSIONS, AS A POSITIVE LIST WITH REASONS.
          "Not in eligibleServices" is not good enough. F12 requires the customer
@@ -207,7 +230,27 @@
         { service: 'tips',
           why: 'Discretionary and personal — F8.' },
         { service: 'personal_upgrade',
-          why: 'Not part of the booked Afrinkong itinerary — F8.' }
+          why: 'Not part of the booked Afrinkong itinerary — F8.' },
+        /* H: THE ONES THAT MATTER MOST FOR WHAT THIS PRODUCT IS.
+           The five above are ordinary travel exclusions. These four are the
+           boundary itself — each is a way the unit would stop being travel
+           entitlement and start being money, so each is named rather than left
+           to follow from the basket's silence. */
+        { service: 'cash',
+          why: 'Not redeemable for cash on demand. This is the boundary — H.' },
+        { service: 'bank_deposit',
+          why: 'Not a deposit and not a claim on one — H.' },
+        { service: 'unrelated_product',
+          why: 'Other Afrinkong products are not automatically eligible; ' +
+               'eligibility is a programme term, not a company boundary — H.' },
+        { service: 'third_party_purchase',
+          why: 'Not a claim on goods or services Afrinkong does not arrange — H.' },
+        /* H moved these OUT of the default basket. They keep a reason here so
+           a customer is told, rather than discovering the gap at booking. */
+        { service: 'government_charge',
+          why: 'Park, conservation, permit, entrance and government charges ' +
+               'are settled by Afrinkong at cost and depend on the itinerary. ' +
+               'Not covered by this programme unless it says so — H.' }
       ],
 
       /* F10: POINTS AND MONEY MAY BE COMBINED, AND THE RATE IS STILL OPEN.
@@ -215,6 +258,17 @@
          block. That the combination is PERMITTED is decided here; HOW a
          shortfall converts is not, and `mechanism: null` is the honest record
          of that rather than a rate somebody invented at a call site. B-iv. */
+      /* H TIGHTENED THIS. It read `permitted: true, mechanism: null`, which is
+         precisely the thing H warns against: presenting a shortfall as
+         settleable in money when the mechanism that would settle it is not
+         defined, supported or contractually described. A permission whose
+         mechanism is null is not a permission a customer can act on, and
+         offering it invites exactly the automatic cash conversion H forbids.
+
+         `permitted` now means "this programme intends to allow it"; whether it
+         is actually AVAILABLE is `permitted && mechanism !== null`, computed by
+         `mixedSettlement()` so no caller can read the first and skip the
+         second. F-mechanism is what would flip it. */
       mixedPayment: { permitted: true, mechanism: null,
                       pointsFirst: true },
 
@@ -306,6 +360,26 @@
         { fromDays: 8,  release: 0.50, buybackEligible: false },
         { fromDays: 0,  release: 0.00, buybackEligible: false }
       ],
+
+      /* ---- G: wind-down (Decision G) -------------------------------------
+         WHERE THESE POINTS GO IF THIS PROGRAMME CLOSES.
+
+         Closure does not extinguish points — D4 refuses `CLOSED` while any are
+         outstanding — but "not extinguished" is not yet a path. Decision G
+         names the path and its order: redeem, migrate, repurchase.
+
+         `successor` is null because no successor programme exists. That is
+         different from "there will never be one", and it is the reason the
+         field is present and empty rather than absent: a wind-down with no
+         named successor falls through to redemption and repurchase, and
+         `windDown()` says so rather than leaving the caller to notice. */
+      windDown: {
+        order: ['redeem', 'migrate', 'buyback'],
+        successor: null,          // a programme id, when one is defined
+        migrationRatio: null,     // points in the successor per point here
+        consentRequired: true,    // G: migration is never automatic
+        periodMonths: null        // D-runoff: nobody has decided
+      },
 
       /* ---- expiry, per lot type (B17) ------------------------------------ */
       /* Purchased points do not lapse because time passed — that is the
@@ -980,6 +1054,31 @@
     return { ok: true, offer: offer, entries: out };
   }
 
+  /* H: IS A MIXED SETTLEMENT ACTUALLY AVAILABLE, AS OPPOSED TO INTENDED?
+   *
+   * Two conditions, and the second is the one that was being skipped. A
+   * programme may permit points and money to be combined and still have no
+   * defined mechanism for doing it — and a screen that read `permitted: true`
+   * and stopped there would offer the customer a settlement nobody can
+   * perform, or invite somebody to invent a conversion at the call site.
+   *
+   * Returned as one object so the two cannot be read apart.
+   */
+  function mixedSettlement(programId) {
+    var mp = program(programId).mixedPayment || {};
+    var available = !!mp.permitted && mp.mechanism != null;
+    return {
+      permitted: !!mp.permitted,
+      mechanism: mp.mechanism || null,
+      available: available,
+      pointsFirst: mp.pointsFirst !== false,
+      why: available ? null
+        : !mp.permitted ? 'this programme does not permit a mixed settlement'
+        : 'this programme permits a mixed settlement but has not defined the ' +
+          'mechanism, so none can be offered yet'
+    };
+  }
+
   /* F4: WHERE A MONEY FIGURE MAY APPEAR, AS DATA RATHER THAN AS A CONVENTION.
    *
    * A convention in a document is a convention somebody has not read. This is
@@ -1374,6 +1473,139 @@
           'This requires a human decision; it is not a case where the points ' +
           'lapse.'
         : null
+    };
+  }
+
+  /* ---- G: winding a programme down ----------------------------------------
+   *
+   * "Programme closed. Your points are gone." is what this exists to make
+   * impossible, and D4 already refuses `CLOSED` while anything is outstanding.
+   * What D4 did not provide is a PATH — a refusal to close is not the same as
+   * somewhere for the points to go, and a programme that cannot close and
+   * cannot honour is stuck rather than safe.
+   *
+   * The order is the programme's and it is deliberate: redeem first, because
+   * travel is what the points are for; migrate second, where a successor
+   * exists on defined terms; repurchase last, because turning entitlement back
+   * into money is the exit this product least wants to lead with.
+   *
+   * Returns what is ACTUALLY available, so a caller cannot offer a migration
+   * to a successor nobody has defined.
+   */
+  function windDown(programId) {
+    var p = program(programId);
+    var w = p.windDown || {};
+    var steps = [];
+    (w.order || ['redeem', 'migrate', 'buyback']).forEach(function (step) {
+      if (step === 'redeem') {
+        steps.push({ step: 'redeem', rank: steps.length + 1,
+                     available: mayRedeem(programId),
+                     note: 'Use the points for an eligible journey. Redemption ' +
+                           'stays open through closure and run-off.' });
+      } else if (step === 'migrate') {
+        steps.push({ step: 'migrate', rank: steps.length + 1,
+                     available: w.successor != null,
+                     successor: w.successor || null,
+                     ratio: w.migrationRatio,
+                     consentRequired: w.consentRequired !== false,
+                     note: w.successor
+                       ? 'Move the points into ' + w.successor +
+                         ' on that programme’s published terms. Never automatic.'
+                       : 'No successor programme has been defined, so there is ' +
+                         'nothing to migrate into.' });
+      } else if (step === 'buyback') {
+        steps.push({ step: 'buyback', rank: steps.length + 1,
+                     available: !!(p.buyback && p.buyback.offered &&
+                                   mayBuyBack(programId)),
+                     note: 'The programme’s repurchase terms, where they apply. ' +
+                           'An offer under those terms, not a refund.' });
+      }
+    });
+    var live = steps.filter(function (s) { return s.available; });
+    return {
+      programId: p.id,
+      compliance: complianceOf(programId),
+      steps: steps,
+      /* If every step is unavailable the programme owes points it has no way
+         to honour. That is a human problem and it is reported as one rather
+         than resolving to an empty list somebody reads as "nothing to do". */
+      exhausted: live.length === 0,
+      neverAnOption: 'cancelling the points because the programme closed',
+      note: live.length === 0
+        ? 'No wind-down step is currently available under this programme. ' +
+          'Points remain outstanding and this requires a human decision; it ' +
+          'is not a case where they lapse.'
+        : null
+    };
+  }
+
+  /* G: MIGRATION, WHICH IS THE ONLY PLACE A POINT CHANGES PROGRAMME.
+   *
+   * E4 says the programme travels with the entitlement — a gift cannot move
+   * somebody onto different terms. Migration deliberately does the opposite,
+   * which is exactly why it needs more than a gift does:
+   *
+   *   1. the successor must be the one the OLD programme named. Not any
+   *      programme, and not one chosen at the call site.
+   *   2. the customer must consent. A migration nobody agreed to is a
+   *      retroactive change of terms wearing a different word — D9.
+   *   3. the ratio is explicit, and both sides are recorded, so a migration
+   *      that changed the number of points says so.
+   *
+   * Appends nothing. Returns the pair of entries, like every other movement.
+   */
+  function migrate(programId, points, opts) {
+    var o = opts || {};
+    var p = program(programId);
+    var w = p.windDown || {};
+    if (!w.successor) {
+      return { ok: false, why: 'programme ' + p.id + ' names no successor ' +
+                              'programme; there is nothing to migrate into',
+               rule: 'successor' };
+    }
+    if (o.into && o.into !== w.successor) {
+      return { ok: false,
+               why: 'points may only migrate into the successor this programme ' +
+                    'named (' + w.successor + '), not into ' + o.into,
+               rule: 'successor' };
+    }
+    if (w.consentRequired !== false && !o.consent) {
+      return { ok: false,
+               why: 'migration requires the customer’s consent; a programme ' +
+                    'cannot move somebody onto new terms without it',
+               rule: 'consent' };
+    }
+    var target = program(w.successor);
+    var ratio = w.migrationRatio == null ? 1 : w.migrationRatio;
+    var received = Math.floor(points * ratio);
+    if (!(received > 0)) {
+      return { ok: false, why: 'the migration ratio would deliver no points',
+               rule: 'ratio', ratio: ratio };
+    }
+    return {
+      ok: true,
+      from: p.id,
+      into: target.id,
+      pointsOut: points,
+      pointsIn: received,
+      ratio: ratio,
+      /* Stated, because a migration at anything but 1:1 changes the number a
+         customer holds and that must never be something they discover. */
+      changesHolding: received !== points,
+      note: received === points
+        ? points + ' TP move to ' + target.id + ' unchanged.'
+        : points + ' TP under ' + p.id + ' become ' + received + ' TP under ' +
+          target.id + ' at the published ratio of ' + ratio + '.',
+      entries: [
+        { kind: 'TRANSFER_OUT', quantity: points, status: 'SETTLED',
+          programVersion: p.id, transferType: 'MIGRATION',
+          migratesTo: target.id,
+          id: o.outId || null, idempotencyKey: o.outKey || null },
+        { kind: 'TRANSFER_IN', quantity: received, status: 'SETTLED',
+          programVersion: target.id, transferType: 'MIGRATION',
+          migratesFrom: p.id,
+          id: o.inId || null, idempotencyKey: o.inKey || null }
+      ]
     };
   }
 
@@ -1828,6 +2060,8 @@
     mayBuyBack: mayBuyBack,
     mayTransfer: mayTransfer,
     mayClose: mayClose,
+    windDown: windDown,
+    migrate: migrate,
     remedies: remedies,
     consumptionOrder: consumptionOrder,
     expiryDisclosure: expiryDisclosure,
@@ -1848,6 +2082,7 @@
     ISSUING_PAYMENT_STATES: ISSUING_PAYMENT_STATES,
     maySettleIssuance: maySettleIssuance,
     MONEY_MOMENTS: MONEY_MOMENTS,
+    mixedSettlement: mixedSettlement,
     priceOf: priceOf,
     entitlementOf: entitlementOf,
     pointsForPurchase: pointsForPurchase,
