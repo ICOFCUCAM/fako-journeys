@@ -8,6 +8,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 
 | doing | read |
 |---|---|
+| **the product as a whole — what exists, and how it connects** | **`docs/product-archaeology.md`** — Phase 1. Nine surfaces, four pages per country, and the edges missing rather than the nodes. START HERE for design work |
 | **the customer-facing product, design system or IA** | **`docs/design-audit.md`** — 39 system states, 1 expressible on screen. 15 stylesheets, 418 font sizes, 45 breakpoints, 52 tokens. The measured gap and the order to close it |
 | **taking the model to counsel** | **`docs/travel-point-legal-review-package.md`** — 48 questions across nine areas, what is already decided, and the four blockers. THE CURRENT PHASE |
 | accounts, the wallet view, recovery, admin adjustments | **`docs/travel-point-wallet.md`** — item Z. Planning needs no account; ownership does. There is no admin edit balance |
