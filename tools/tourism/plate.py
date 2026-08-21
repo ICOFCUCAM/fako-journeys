@@ -597,15 +597,33 @@ def shell(here=None, area=None, product=None, product_href=None,
     # Row two: the children of the current area. A page with no area — the
     # homepage, the trust pages — gets no second row rather than an arbitrary
     # one.
+    #
+    # AND A PAGE WITH A PRODUCT BAND GETS NO SECOND ROW EITHER, which is the
+    # more interesting rule and was forced by a measurement.
+    #
+    # The first version stacked all three: the platform, then the area's
+    # children, then the product's own navigation. 144 pixels of masthead. The
+    # browser suite caught what that cost — on /trans-afrique the band's copy is
+    # centred in the viewport, and at three of five widths the top of it landed
+    # at 124px, underneath the bar. Three rows of navigation is also simply a
+    # lot to put above a photograph.
+    #
+    # Dropping the area row where a product band exists is better design and
+    # not merely shorter. On a Kenya place page the useful context is Kenya —
+    # overview, portrait, places, what it costs — not the six things Explore
+    # contains; and Explore is still one press away in row one. The area row
+    # earns its place exactly where there is no product to be more specific
+    # than it.
     row2 = ""
-    for key, label, children in AREAS:
-        if key != area:
-            continue
-        row2 = ('  <nav class="af-shell-sub" aria-label="%s">%s</nav>\n' % (
-            label, "".join(
-                '<a href="%s"%s>%s</a>' % (
-                    h, ' aria-current="page"' if _same(h, here) else "", n)
-                for h, n in children)))
+    if not product:
+        for key, label, children in AREAS:
+            if key != area:
+                continue
+            row2 = ('  <nav class="af-shell-sub" aria-label="%s">%s</nav>\n' % (
+                label, "".join(
+                    '<a href="%s"%s>%s</a>' % (
+                        h, ' aria-current="page"' if _same(h, here) else "", n)
+                    for h, n in children)))
 
     # The phone menu. <details> because it opens with no JavaScript, is
     # keyboard operable by default, and announces its own expanded state —
