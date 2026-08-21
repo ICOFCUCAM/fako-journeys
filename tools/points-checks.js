@@ -2448,16 +2448,24 @@ report(
    one a customer would otherwise be ambushed by: accumulate a large holding,
    then discover Afrinkong must be paid separately. */
 const basket = L.PROGRAMS[DRAFT].eligibleServices;
+/* DECISION H REVERSED THE DEFAULT ON GOVERNMENT CHARGES, and this line has now
+   changed direction twice: the original audit said Afrinkong service only,
+   Decision F put the charges in, Decision H took them back out of the DEFAULT
+   while keeping them includable. Only the default moved — the capability is
+   `includableServices` and a programme may still adopt it. Both halves are
+   asserted so neither can drift into the other. */
 report(
   ["accommodation", "transport", "guiding", "excursion"].every(
     (s) => basket.indexOf(s) !== -1) &&
+    basket.indexOf("afrinkong_service") !== -1 &&
     ["park_fee", "conservation_fee", "permit", "government_charge"].every(
-      (s) => basket.indexOf(s) !== -1) &&
-    basket.indexOf("afrinkong_service") !== -1,
-  "F2/F3/F4: journey services, settled government charges, and Afrinkong's own fee",
-  `${basket.length} eligible services including park/conservation/permit and ` +
-  `afrinkong_service — a customer cannot accumulate a full holding and still ` +
-  `owe Afrinkong separately`
+      (s) => basket.indexOf(s) === -1) &&
+    ["park_fee", "conservation_fee", "permit", "government_charge"].every(
+      (s) => L.PROGRAMS[DRAFT].includableServices.indexOf(s) !== -1),
+  "F2/F4 + H: journey services and Afrinkong's fee in; government charges includable, not included",
+  `${basket.length} eligible services; ${L.PROGRAMS[DRAFT].includableServices.length} ` +
+  `charge types a programme MAY adopt and this one does not. A customer should ` +
+  `not believe every unpredictable government charge is already paid for`
 );
 
 /* F5-F8/F12 — THE EXCLUSIONS ARE A POSITIVE LIST WITH REASONS.
@@ -2466,11 +2474,16 @@ report(
    customer to see exclusions before booking. */
 const excl = L.PROGRAMS[DRAFT].excludedServices;
 report(
-  excl.length === 7 &&
+  excl.length === 12 &&
     excl.every((x) => typeof x.why === "string" && x.why.length > 20) &&
     ["international_flight", "visa", "travel_insurance"].every(
+      (s) => excl.some((x) => x.service === s)) &&
+    /* H added the four that ARE the boundary — each is a way the unit would
+       stop being travel entitlement and start being money, so each is named
+       rather than left to follow from the basket's silence. */
+    ["cash", "bank_deposit", "unrelated_product", "third_party_purchase"].every(
       (s) => excl.some((x) => x.service === s)),
-  "F5-F8/F12: exclusions are a list with reasons, not the absence of entries",
+  "F5-F8/F12 + H: exclusions are a list with reasons, and name the money boundary",
   excl.map((x) => x.service).join(", ")
 );
 
@@ -2483,11 +2496,30 @@ const rates = require("../tourism/rates.json");
 const published = (rates.excluded || []).join(" | ").toLowerCase();
 const unmatched = ["international flights", "visas", "insurance", "meals",
                    "shopping", "tips"].filter((w) => !published.includes(w));
+/* The programme is now a SUPERSET: it excludes everything the site publishes,
+   plus the money boundary (cash, deposits, third-party purchases) and the
+   government charges H moved out. Superset rather than equality, because the
+   site's list is what a traveller needs to pack for and the programme's is
+   what the points do not reach — related, not identical. What must never
+   happen is the site publishing an exclusion the programme does not have. */
+/* Matched against the service name AND its reason text. The first version
+   searched names only and reported "shopping" missing — it is covered by
+   `personal_spending`, whose reason reads "Shopping, souvenirs, entertainment,
+   alcohol, incidentals". The reason is the half a customer actually reads, so
+   a check that ignored it was asking the wrong question. */
+const notInProgramme = ["international flights", "visas", "insurance", "meals",
+                        "shopping", "tips"].filter((w) => {
+  const needle = w.replace(/s$/, "").toLowerCase();
+  return !excl.some((x) =>
+    (x.service.replace(/_/g, " ") + " " + x.why).toLowerCase().includes(needle));
+});
 report(
   rates.excluded.length === 7 && unmatched.length === 0 &&
-    excl.length === rates.excluded.length,
-  "F12: the programme's exclusions and the site's published exclusions agree",
-  `both list 7: ${rates.excluded.join("; ")}`
+    excl.length >= rates.excluded.length && notInProgramme.length === 0,
+  "F12: everything the site publishes as excluded is excluded by the programme",
+  `the site lists ${rates.excluded.length}; the programme excludes ${excl.length} ` +
+  `— the extra ${excl.length - rates.excluded.length} are the money boundary ` +
+  `and the charges Decision H moved out`
 );
 
 /* F8/F13 — THE JOURNEY, BROKEN INTO WHAT IT IS MADE OF, DETERMINISTICALLY.
@@ -2517,14 +2549,21 @@ report(
 /* F3 — eligible charges that are NOT in the figure are listed, not omitted.
    A customer who meets a $700 permit at booking has been misled by an omission
    just as surely as by a wrong number. */
+/* After H the default programme covers no government charges, so the
+   "eligible but not yet priced" list is correctly EMPTY here — and the
+   breakdown must then show those charges as NOT INCLUDED instead. The two
+   lists together must still account for them, or a charge would vanish from
+   the customer's view by falling between the categories, which is the exact
+   failure both lists exist to prevent. */
+const chargeShown = fBreak.notIncluded.some((x) => x.service === "government_charge") ||
+                    fBreak.eligibleNotYetPriced.length > 0;
 report(
-  fBreak.eligibleNotYetPriced.length > 0 &&
-    fBreak.eligibleNotYetPriced.every((c) => /not in the figure above/.test(c.note)) &&
-    fBreak.notIncluded.length === 7,
-  "F3/F12: eligible-but-unpriced charges and excluded costs are both shown",
-  `${fBreak.eligibleNotYetPriced.length} eligible charges named as not yet ` +
-  `priced, and ${fBreak.notIncluded.length} exclusions — before booking, not ` +
-  `buried in terms`
+  chargeShown && fBreak.notIncluded.length === 12 &&
+    fBreak.eligibleNotYetPriced.every((c) => /not in the figure above/.test(c.note)),
+  "F3/F12 + H: a government charge appears in one list or the other, never neither",
+  `${fBreak.eligibleNotYetPriced.length} eligible-but-unpriced and ` +
+  `${fBreak.notIncluded.length} excluded. Under H the charges moved from the ` +
+  `first list to the second; what matters is that they left neither`
 );
 
 /* F14 — THE REQUIREMENT IS NOT DERIVED FROM AFRINKONG'S COST.
@@ -2626,6 +2665,304 @@ report(
   fOpenF >= 4 && /UNRESOLVED|not decided here/i.test(fDocF),
   "F: the open questions Decision F raises are recorded, not answered in code",
   `${fOpenF} unresolved questions carried in docs/travel-point-redemption.md`
+);
+
+/* ==== Decisions F(price) / G(discontinuation) / H(redemption scope) ====== */
+
+/* A NOTE ON THE LETTERS. These three arrived under F, G and H, and F and H
+   overlap ground already settled — my Decision F was redemption scope, and
+   Decision D covered closure. Rather than renumber anything, what follows
+   asserts the parts that are genuinely NEW, and the parts that REVERSED
+   something are marked as reversals where they sit. */
+
+/* ---- F: price changes --------------------------------------------------- */
+
+/* THE NEW RULE: A CONFIRMED BOOKING IS PRICE-LOCKED.
+   "The price increased to 6,000 TP, so give us another 1,000" is the sentence
+   this refuses. The lock was already true structurally — every branch reads
+   `booking.pointsRequired` and nothing recomputes it — but structural truth is
+   not a refusal, and a caller passing a new requirement was silently ignored
+   rather than told. Those look identical until somebody relies on the first. */
+let fpBooking = BK.open(P, { journeyId: "J-FP", requirement: 5000,
+                             rateCardVersion: "v1" });
+const beforeLock = BK.reprice(fpBooking, 6000, "v2");
+fpBooking = BK.advance(fpBooking, "ACCEPTED", {}).booking;
+fpBooking = BK.advance(fpBooking, "RESERVED", {}).booking;
+const afterLock = BK.reprice(fpBooking, 6000, "v2");
+const repricedAdvance = BK.advance(fpBooking, "CONFIRMED", { pointsRequired: 6000 });
+report(
+  beforeLock.ok === true && beforeLock.repricing.difference === 1000 &&
+    BK.isLocked(fpBooking) === true &&
+    afterLock.ok === false && afterLock.locked === true &&
+    repricedAdvance.ok === false && repricedAdvance.pointsRequired === 5000 &&
+    BK.advance(fpBooking, "CONFIRMED", {}).ok === true,
+  "F: once points are reserved, the journey's requirement is locked for that booking",
+  `before reservation a reprice is permitted and shown (5,000 -> 6,000); after ` +
+  `it, both reprice() and a repriced advance are refused, and an ordinary ` +
+  `advance still works`
+);
+
+/* And the lock records WHAT it locked, with the rate card that produced it, so
+   "why 5,000 and not 6,000" is answerable from the booking rather than from
+   somebody's memory of when the customer clicked. */
+report(
+  fpBooking.priceLocked === true &&
+    fpBooking.lockedAt.pointsRequired === 5000 &&
+    fpBooking.lockedAt.rateCardVersion === "v1" &&
+    fpBooking.lockedAt.state === "RESERVED",
+  "F: the lock records the figure, the rate card and the moment",
+  JSON.stringify(fpBooking.lockedAt)
+);
+
+/* F: a customer still SAVING is not protected, and is not told they are —
+   they get both numbers, the difference, and the fact their points did not
+   move. A requirement that changed and a balance that changed look the same on
+   a screen unless somebody says which one it was. */
+report(
+  beforeLock.repricing.was === 5000 && beforeLock.repricing.now === 6000 &&
+    beforeLock.repricing.direction === "increased" &&
+    beforeLock.repricing.pointsHeldUnaffected === true &&
+    /Travel Points you hold did not/.test(beforeLock.repricing.note),
+  "F: an unbooked requirement may move, and the customer is told their points did not",
+  `"${beforeLock.repricing.note}" — 3,000/6,000 rather than pretending the old ` +
+  `target still applies`
+);
+
+/* ---- G: discontinuation and wind-down ----------------------------------- */
+
+/* Decision D already refuses CLOSED while points are outstanding. What it did
+   not provide is a PATH — a refusal to close is not somewhere for the points to
+   go, and a programme that can neither close nor honour is stuck rather than
+   safe. G names the path and its order. */
+const GSUCC = L.variant(
+  DRAFT, { compliance: "ACTIVE", maxProgrammeExposure: 5000000 },
+  "TEST-AFK-TP-2027.1");
+const GOLD = L.variant(
+  DRAFT,
+  { compliance: "REDEMPTION_PERIOD", maxProgrammeExposure: 5000000,
+    windDown: { order: ["redeem", "migrate", "buyback"], successor: GSUCC,
+                migrationRatio: 1, consentRequired: true, periodMonths: 12 } },
+  "TEST-WINDING-DOWN");
+const wd = L.windDown(GOLD);
+report(
+  wd.steps.map((s) => s.step).join(",") === "redeem,migrate,buyback" &&
+    wd.steps.every((s) => s.available) && wd.exhausted === false &&
+    /cancelling the points because the programme closed/.test(wd.neverAnOption),
+  "G: wind-down is redeem, then migrate, then buyback — and never cancellation",
+  `redemption first because travel is what the points are for; repurchase last ` +
+  `because turning entitlement back into money is the exit this product least ` +
+  `wants to lead with`
+);
+
+/* And it reports only what is ACTUALLY available, so nobody offers a migration
+   into a successor that does not exist. */
+const noSucc = L.windDown(L.variant(
+  DRAFT, { compliance: "REDEMPTION_PERIOD", maxProgrammeExposure: 5000000 },
+  "TEST-NO-SUCCESSOR"));
+report(
+  noSucc.steps.find((s) => s.step === "migrate").available === false &&
+    /No successor programme has been defined/.test(
+      noSucc.steps.find((s) => s.step === "migrate").note) &&
+    noSucc.exhausted === false,
+  "G: a wind-down with no named successor falls through rather than pretending",
+  `migrate unavailable, redeem and buyback still open — and if every step were ` +
+  `closed it would report exhausted, which is a human decision, not a lapse`
+);
+
+/* G: MIGRATION IS THE ONLY PLACE A POINT CHANGES PROGRAMME, and it is gated
+   three ways. E4 says the programme travels with the entitlement; migration
+   deliberately does the opposite, which is precisely why it needs more than a
+   gift does. */
+report(
+  L.migrate(DRAFT, 1000, { consent: true }).rule === "successor" &&
+    L.migrate(GOLD, 1000, {}).rule === "consent" &&
+    L.migrate(GOLD, 1000, { consent: true, into: "SOMETHING-ELSE" }).rule === "successor",
+  "G: migration needs a named successor, the customer's consent, and the right target",
+  `no successor -> refused; no consent -> refused; a target the old programme ` +
+  `did not name -> refused. A migration nobody agreed to is a retroactive ` +
+  `change of terms wearing a different word`
+);
+
+const mig = L.migrate(GOLD, 5000, { consent: true, outKey: "m1", inKey: "m2" });
+const migRatio = L.migrate(
+  L.variant(DRAFT,
+    { compliance: "REDEMPTION_PERIOD", maxProgrammeExposure: 5000000,
+      windDown: { order: ["redeem", "migrate", "buyback"], successor: GSUCC,
+                  migrationRatio: 0.9, consentRequired: true } },
+    "TEST-RATIO-MIGRATION"),
+  5000, { consent: true });
+report(
+  mig.ok && mig.pointsOut === 5000 && mig.pointsIn === 5000 &&
+    mig.changesHolding === false &&
+    mig.entries[0].programVersion === GOLD &&
+    mig.entries[1].programVersion === GSUCC &&
+    migRatio.pointsIn === 4500 && migRatio.changesHolding === true,
+  "G: migration moves points between programmes and says so when the number changes",
+  `1:1 -> 5,000 unchanged; at 0.9 -> ${migRatio.pointsIn}, and changesHolding ` +
+  `is true so it can never be something a customer discovers`
+);
+
+/* G: and the schema can record it. MIGRATION is the odd transfer type — every
+   other moves points between PEOPLE and keeps the programme; this keeps the
+   person and changes the programme, so the two-people rule exempts it
+   explicitly rather than being loosened for everyone. */
+report(
+  /'MIGRATION'/.test(schemaSrc) &&
+    /transfer_type = 'MIGRATION'\s*\n\s*or counterparty_id <> customer_id/.test(schemaSrc) &&
+    /migration_needs_no_counterparty/.test(schemaSrc),
+  "G: the schema carries MIGRATION and exempts only it from the two-people rule",
+  `the ordinary case stays strict; the exemption is stated, not a loosened rule`
+);
+
+/* ---- H: redemption scope, and the money boundary ------------------------ */
+
+/* H TIGHTENED MIXED SETTLEMENT, and this is the substantive change.
+   `mixedPayment` read `permitted: true, mechanism: null` — which is exactly
+   what H warns against: presenting a shortfall as settleable in money when the
+   mechanism that would settle it is undefined. A permission whose mechanism is
+   null is not one a customer can act on. */
+const ms = L.mixedSettlement(DRAFT);
+const hShort = BK.request(DRAFT, { requirement: 8000 }, { available: 7700 },
+                          ["journey"]);
+report(
+  ms.permitted === true && ms.mechanism === null && ms.available === false &&
+    /has not defined the mechanism/.test(ms.why) &&
+    hShort.settlement.available === false &&
+    /cannot be offered yet/.test(hShort.settlement.note),
+  "H: a mixed settlement that is permitted but has no mechanism is not available",
+  `permitted and available are now computed together so no caller can read the ` +
+  `first and skip the second — which is how an undefined conversion gets ` +
+  `invented at a call site`
+);
+
+/* H: the four exclusions that ARE the boundary, each named rather than left to
+   follow from the basket's silence. */
+report(
+  ["cash", "bank_deposit", "unrelated_product", "third_party_purchase"].every(
+    (s) => excl.some((x) => x.service === s)) &&
+    BK.request(P, { requirement: 100 }, { available: 5000 },
+               ["cash"]).ineligible.join(",") === "cash",
+  "H: cash, deposits, unrelated products and third-party purchases are named exclusions",
+  `each is a way the unit would stop being travel entitlement and start being ` +
+  `money, so each is refused by name`
+);
+
+/* H: government charges are includable and not included, and the customer is
+   told which — the capability and the default are different questions. */
+report(
+  BK.request(P, { requirement: 100 }, { available: 5000 },
+             ["park_fee"]).ok === false &&
+    L.PROGRAMS[DRAFT].includableServices.indexOf("park_fee") !== -1 &&
+    excl.some((x) => x.service === "government_charge" &&
+                     /unless it says so/.test(x.why)),
+  "H: a programme MAY cover government charges; this one does not, and says so",
+  `asking to spend points on a park fee is refused, the charge type stays ` +
+  `adoptable by a successor programme, and the exclusion carries its reason`
+);
+
+/* ==== the documents must not drift from the code ======================== */
+
+/* EVERY BUG THIS SESSION FOUND HAD ONE SHAPE: two things that had to agree,
+ * and nothing compared them. PROMOTION in the module and not the schema. The
+ * consideration cap and the transferability flag. Promotional-first and
+ * earliest-expiry. Two rate cards with two shapes for `arrival`.
+ *
+ * The decision documents are the same class of hazard and had already drifted:
+ * `economic-model-decisions.md` cited `expiryMonths: 0` — a field that does not
+ * exist — described transfer as unimplemented after it was implemented, and
+ * repeated a claim about activation that stopped being true when the compliance
+ * ladder was built. Nothing failed, because nothing compared them.
+ *
+ * These three checks are that comparison. They are cheap and they are the only
+ * reason the next drift gets caught. */
+
+const DOCS = ["economic-model-decisions.md", "travel-point-issuance.md",
+              "travel-point-exit.md", "travel-point-duration.md",
+              "travel-point-transfer.md", "travel-point-redemption.md",
+              "travel-point-pricing.md", "travel-point-buyback.md"]
+  .map((f) => ({ name: f, path: path.join(__dirname, "..", "docs", f) }))
+  .filter((d) => fs.existsSync(d.path))
+  .map((d) => ({ name: d.name, text: fs.readFileSync(d.path, "utf8") }));
+
+/* 1 — NO DOCUMENT MAY CITE A PROGRAMME FIELD THAT DOES NOT EXIST.
+ *
+ * Backticked identifiers that look like programme terms are checked against the
+ * real programme. `expiryMonths` is listed explicitly as a retired name because
+ * it is the one that was actually wrong, and a retired name reappearing is
+ * exactly as bad as a misspelt new one. */
+const progFields = Object.keys(L.PROGRAMS[DRAFT]);
+const nestedFields = ["buyback", "expiry", "promotional", "mixedPayment",
+                      "redemptionCap"].flatMap(
+  (k) => Object.keys(L.PROGRAMS[DRAFT][k] || {}));
+const known = new Set(progFields.concat(nestedFields));
+const RETIRED = ["expiryMonths", "entitlement:", "expiry_months"];
+
+/* A document is allowed to QUOTE what it corrected — the house style prefers
+   recording a mistake to deleting the evidence of it — and is not allowed to
+   state it as current. So historical lines are stripped first: markdown
+   blockquotes, and lines marked `**Was:**`. Anything left is a live claim.
+   Without this the rewrite that FIXED the drift failed the check for
+   explaining the fix, which is the wrong incentive entirely. */
+const liveText = (t) => t.split("\n")
+  .filter((l) => !/^\s*>/.test(l) && !/\*\*Was:\*\*/.test(l))
+  .join("\n");
+
+const retiredCitations = DOCS.flatMap((d) =>
+  RETIRED.filter((r) => liveText(d.text).includes("`" + r))
+         .map((r) => `${d.name}: ${r}`));
+report(
+  retiredCitations.length === 0,
+  "docs: no decision document cites a retired programme field",
+  retiredCitations.length ? retiredCitations.join("; ")
+    : `${DOCS.length} documents checked against ${known.size} live programme ` +
+      `fields; \`expiryMonths\` was cited for months after it ceased to exist`
+);
+
+/* 2 — NO DOCUMENT MAY CLAIM `status` IS THE ACTIVATION GATE.
+ *
+ * The dangerous one. `status: 'active'` is inert — issuance reads `compliance`
+ * — so a reader who believed the old sentence would have been guarding the
+ * wrong word entirely, and would have thought a five-rung ladder was a
+ * one-word change. Proved inert here rather than merely asserted. */
+const statusOnly = L.variant(DRAFT, { status: "active" }, "TEST-STATUS-INERT");
+const claimsStatusActivates = DOCS.concat([
+  { name: "CLAUDE.md",
+    text: fs.readFileSync(path.join(__dirname, "..", "CLAUDE.md"), "utf8") }
+]).filter((d) =>
+  /\.status[^\n]{0,40}to\s+`?'?active'?`?[^\n]{0,60}(one-word|most consequential)/i
+    .test(d.text) ||
+  /moving\s+`?PROGRAMS\[[^\]]+\]\.status`?\s+to\s+`?'active'`?\s+is a one-word/i
+    .test(d.text)
+).map((d) => d.name);
+report(
+  L.mayIssue(statusOnly) === false &&
+    L.stateOf(statusOnly) === "DRAFT_PROGRAM" &&
+    claimsStatusActivates.length === 0,
+  "docs: nothing claims `status: 'active'` can issue a point",
+  claimsStatusActivates.length
+    ? "still claimed in: " + claimsStatusActivates.join(", ")
+    : `a programme with status 'active' and compliance DRAFT reports mayIssue ` +
+      `false and stateOf DRAFT_PROGRAM — the gate is compliance, and reaching ` +
+      `it is a five-rung ladder, not a word`
+);
+
+/* 3 — EVERY OPEN QUESTION THE REGISTER ROUTES TO MUST ACTUALLY EXIST.
+ *
+ * The register lists which document carries which open items. A pointer to an
+ * item nobody wrote is how a question quietly stops being tracked. */
+const register = DOCS.find((d) => d.name === "economic-model-decisions.md").text;
+const routed = (register.match(/\b[BCDEF]-[a-z]{3,}\b/g) || []);
+const missingItems = [...new Set(routed)].filter((item) => {
+  const letter = item[0];
+  return !DOCS.some((d) => d.name !== "economic-model-decisions.md" &&
+                           d.text.includes("| " + item + " |"));
+});
+report(
+  routed.length >= 20 && missingItems.length === 0,
+  "docs: every open question the register routes to is written down somewhere",
+  missingItems.length ? "dangling: " + missingItems.join(", ")
+    : `${[...new Set(routed)].length} named open items, all present in the ` +
+      `document the register sends you to`
 );
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);

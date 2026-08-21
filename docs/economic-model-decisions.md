@@ -1,235 +1,253 @@
-# The economic model: eleven decisions nobody has made yet
+# The economic model: what is settled, and what still gates activation
 
-Wankong LLC, trading as Afrinkong. Every question below is **open**, and each
-one is open on purpose: assuming an answer in code is how a product acquires a
-legal character nobody chose for it.
+Wankong LLC, trading as Afrinkong.
 
-Where the code needs a value to run, it takes the **most conservative** option
-and marks it as provisional. Those defaults are listed so a reader can see what
-would change, not so anybody can treat them as settled.
+**This document was the register of eleven open questions. Six decisions (A–F)
+have since been settled and it had drifted badly out of step with them** — it
+cited a programme field that no longer exists, described a feature as
+unimplemented that now is, recommended against something Decision F decided to
+do, and repeated a claim about activation that has been false since the
+compliance ladder was built.
 
-**Current product state: `DRAFT_PROGRAM`.** No point can be issued —
-`points-ledger.js` refuses any issuing entry under a non-active programme, and
-`tools/goal-checks.js` asserts that refusal. The site shows a Travel *Goal*,
-which is arithmetic, and sells nothing.
+It is now the **reconciliation register**: for each original question, whether
+it is answered, by which decision, and what remains.
 
----
-
-## How to read the tables
-
-| column | meaning |
-|---|---|
-| **provisional** | what the code does today so it can run |
-| **why it matters** | what actually turns on the answer |
-| **owner** | who has to decide — not who implements it |
+**Current product state: `DRAFT_PROGRAM`, `compliance: DRAFT`.** No point can be
+issued.
 
 ---
 
-### 1. What exactly does one Travel Point represent?
+## The correction that matters most
 
-> **Now written up in full as [Section A](travel-point-definition.md)** —
-> the recommended wording, the two alternatives and why they were rejected,
-> what the code has already committed to, a defect the review found in the
-> one place this definition reaches a customer, and the seventeen downstream
-> decisions that become answerable once it is approved.
->
-> Review split it: the **frame** — issuer, programme-bound, travel-only,
-> non-monetary, indivisible — is ready for sign-off. The **unit basis**, what
-> one unit actually is, is open, and is itself blocked on which buyback
-> mechanism is intended. Section A1c sets out why those two are entangled.
+This document, and `CLAUDE.md`, both said:
 
-| | |
-|---|---|
-| provisional | one unit of Afrinkong travel purchasing entitlement, `entitlement: 1` |
-| why it matters | this is the definition every other answer inherits. "One dollar of value" and "one unit of entitlement redeemable per the terms" are different products with different regulators. |
-| owner | legal counsel, with the founder |
+> `PROGRAMS['AFK-TP-2026.1'].status` is `'draft'`. Moving it to `'active'` is a
+> one-word change, and it is the single most consequential one-word change in
+> this repository.
 
-The code deliberately holds `issueRate` (points per dollar paid) and
-`entitlement` (travel value applied per point) as **two separate numbers**, even
-though both are currently 1. Collapsing them into one is what makes a point
-look like a dollar.
+**That has been false since Section D.** `status` is inert:
 
-### 2. Is a point's value fixed, or specific to its programme?
+```
+variant with status: 'active'  ->  mayIssue: false, stateOf: DRAFT_PROGRAM
+```
 
-| | |
-|---|---|
-| provisional | programme-specific. `point_programs` is versioned and its economic terms are immutable after creation. |
-| why it matters | a fixed universal value is close to a stored-value instrument. Programme-specific terms let a 2026 point keep 2026 rules while 2028 offers something different. |
-| owner | legal counsel |
+Issuance is gated on `compliance`, not on `status`, and reaching an issuing
+state is **not a one-word change**. It requires walking a ladder that cannot be
+skipped —
 
-The schema enforces this: a trigger refuses any UPDATE that changes
-`issue_rate`, `entitlement`, `buyback` or `cancellation` on an existing
-programme. Changing terms means issuing a new version.
+```
+DRAFT → LEGAL_REVIEW → ACCOUNTING_REVIEW → APPROVED → PILOT
+```
+
+— and `mayActivate()` refuses the final step while any of `maxProgrammeExposure`,
+`maxPerTransaction`, `maxPerCustomerPerYear`, `buyback.basis` or `minPurchase` is
+unset, or while `issueRate` is anything but a single positive number.
+
+The old sentence was more alarming and less true. Worth correcting precisely
+because a reader who believed it would have been guarding the wrong word.
+
+---
+
+## The eleven questions, reconciled
+
+| | question | state | where |
+|---|---|---|---|
+| 1 | what does one Travel Point represent? | **frame settled**, unit basis open | A, B |
+| 2 | fixed value, or programme-specific? | **settled** — programme-specific, immutable, versioned | B |
+| 3 | do points expire? | **settled** — purchased never; promotional at 24 months | D |
+| 4 | transferable to a third party? | **settled** — gift yes, sale no | E |
+| 5 | buyback contractual or discretionary? | **settled as discretionary**; *the legal characterisation is still open* | C, E |
+| 6 | buyback before/after reservation? | **settled** — available points only | C, E |
+| 7 | journey price increases? | **settled** — both numbers shown, no revaluation | F |
+| 8 | journey price decreases? | **settled** — the journey gets cheaper, the point does not change | F |
+| 9 | Afrinkong journeys only, or third-party charges? | **settled — and it went the other way** | F |
+| 10 | unused points if a programme is discontinued? | **settled** — closure is not confiscation | D |
+| 11 | what legal structure applies? | **STILL OPEN. This is the gate.** | — |
 
 ### 3. Do points expire?
 
-| | |
-|---|---|
-| provisional | **no** — `expiryMonths: 0` |
-| why it matters | expiry is regulated in many US states under unclaimed-property and gift-card law, and several prohibit it outright or set minimum periods. It is also the single most resented feature of any points scheme. |
-| owner | legal counsel |
+**Was:** *"no — `expiryMonths: 0`"*. That field does not exist and did not at
+the time of writing.
 
-### 4. Are points transferable to a third party?
+**Now:** `expiry: { purchased: null, promotional: 24,
+reservedRightToIntroduce: false }` — purchased points never lapse from time
+alone, promotional grants lapse at 24 months, and this programme did **not**
+reserve a right to introduce expiry later. Decision D, and D8 settles which
+lot is consumed first: earliest expiry.
 
-| | |
-|---|---|
-| provisional | `transferable: true` in the programme, but **no transfer is implemented** |
-| why it matters | transferability is one of the strongest signals that something is a payment instrument rather than a customer credit. A gift to a family member and an open secondary market are different things and the terms must say which is allowed. |
-| owner | legal counsel |
+### 4. Are points transferable?
 
-The ledger has `TRANSFER_IN` / `TRANSFER_OUT` kinds and the schema requires a
-counterparty, so the accounting is ready. Nothing executes them.
+**Was:** *"`transferable: true` in the programme, but no transfer is
+implemented"* — wrong in both halves at different times. The flag was `false`
+for most of the model's life, and transfer is now implemented.
 
-### 5. Is buyback contractual or discretionary?
+**Now:** `transferable: true`, `secondaryMarket: false`, and
+`scripts/transfer.js` executes gift, family-pool, corporate and estate
+transfers with identified parties, programme-preserving terms, and conservation
+of supply. Decision E — which **reversed** B14/C9.
 
-| | |
-|---|---|
-| provisional | **discretionary** — `buyback.discretionary: true` |
-| why it matters | **this is the most consequential question in the document.** A guaranteed right to convert points back to cash is close to a deposit or stored-value obligation. A discretionary programme is a commercial gesture. The difference may decide whether money-transmitter licensing applies. |
-| owner | legal counsel, before any customer money is taken |
+### 5. Contractual or discretionary?
 
-`buybackQuote()` returns the sentence *"Buyback is offered at Afrinkong's
-discretion under the terms of this program. It is not a guaranteed right of
-redemption."* and a test asserts it. If counsel makes it contractual, that
-sentence changes and so does the regulatory analysis.
+**Settled as discretionary** and enforced: `discretionary: true`, `REFUSED`
+(the terms said no) kept apart from `REJECTED` (Afrinkong chose to).
 
-### 6. Is buyback available before and after a reservation?
+The quoted sentence in the old version no longer exists verbatim. The live text
+is:
 
-| | |
-|---|---|
-| provisional | **available points only**; reserved points cannot be bought back |
-| why it matters | once points are reserved against a journey, Afrinkong may have committed to suppliers. Allowing buyback then transfers that risk to Afrinkong. |
-| owner | operations, with legal |
+> Afrinkong may repurchase these points at 90% of what you paid for them. This
+> is an offer under the terms of this programme, not a guaranteed right of
+> redemption.
 
-Implemented and tested: a buyback request covering reserved points is refused
-with *"only available points can be bought back"*.
+**The commercial decision is made; the legal one is not.** Whether a published
+discretionary offer creates a redemption right *in substance* is E-a, and it
+still feeds question 11.
 
-### 7. What happens when a journey price increases?
+### 9. Afrinkong service only? — **this one reversed**
 
-| | |
-|---|---|
-| provisional | **nothing is promised.** The goal recalculates against today's rate card, and the rate card version is displayed. |
-| why it matters | a customer accumulating for eighteen months will see the target move. Whether the earlier price is honoured is a commercial promise nobody has made, and honouring it is a real liability that must be priced. |
-| owner | founder / commercial |
+**Was:** *"Afrinkong service only — recommended, not yet decided… This is the
+recommendation the audit makes most strongly: keep redemption to Afrinkong's
+own service, at least initially."*
 
-The panel already shows *"Calculated from rate card 1d60cf455f9a"* so the change
-is explicable rather than mysterious. `journey_prices` in the schema records the
-version and the price shown, which is what a price-protection promise would need
-if one is ever made.
+**Decision F went the other way,** deliberately. Park fees, conservation fees,
+permits, entrance fees and government charges **are** eligible — when Afrinkong
+arranges and settles them. The distinction that makes this safer than the audit
+feared is that Afrinkong is not holding value against third-party obligations
+in the abstract: the charge is part of an itinerary Afrinkong is contractually
+arranging, and the customer's points cover it while Afrinkong settles the
+supplier separately.
 
-### 8. What happens when a journey price decreases?
+The audit's underlying concern survives as **F-charges**: *which* charges
+Afrinkong is actually contractually responsible for varies by destination, and
+nobody has enumerated that.
 
-| | |
-|---|---|
-| provisional | nothing — the goal simply becomes easier to reach |
-| why it matters | the symmetric case, and the easy one. Worth an explicit answer only because a price-protection promise in question 7 usually implies a floor here too. |
-| owner | founder / commercial |
+### 10. A discontinued programme
 
-### 9. Afrinkong journeys only, or third-party services too?
+**Was:** *"undecided. `point_programs.status` has a `withdrawn` state and
+nothing defines its consequences."*
 
-| | |
-|---|---|
-| provisional | **Afrinkong service only** — recommended, not yet decided |
-| why it matters | `tourism/rates.json` separates **Afrinkong service** from **destination charges** (park fees, permits, entrance charges) because the latter are settled at cost to third parties. If points redeem against those, Afrinkong is holding value against third-party obligations, which is a materially different risk and much closer to a general payment instrument. |
-| owner | legal counsel, with operations |
+**Now:** the closure ladder is defined and enforced —
 
-This is the recommendation the audit makes most strongly: keep redemption to
-Afrinkong's own service, at least initially.
+```
+ACTIVE  →  CLOSED_TO_NEW_PURCHASES  →  REDEMPTION_PERIOD  →  CLOSED
+```
 
-### 10. What happens to unused points if a programme is discontinued?
+redemption survives the first three, and **a programme cannot reach `CLOSED`
+while points are outstanding** — an unstated outstanding balance is refused
+too. D6's remedy hierarchy covers the case where the journey itself disappears:
+equivalent travel, another eligible service, then buyback, with erasure not on
+the list at any rank. Decision D.
 
-| | |
-|---|---|
-| provisional | **undecided.** `point_programs.status` has a `withdrawn` state and nothing defines its consequences. |
-| why it matters | this is the question that becomes urgent exactly when the company is least able to answer it well. It should be settled in the terms before the first point is sold, not improvised later. |
-| owner | legal counsel |
-
-### 11. What legal structure applies before accepting customer money?
-
-> **Section B1.3** now tabulates the four features that move this analysis —
-> transferability, cash redemption, reloadability and expiry — with where each
-> lives in the programme and how it is currently set. All four sit at the
-> higher-exposure end by drafting default rather than by decision.
-
-| | |
-|---|---|
-| provisional | **none established.** No money may be taken. |
-| why it matters | a product that takes money over time for redeemable units, with cash buyback, may be regulated as stored value or money transmission in the United States — federally and state by state — regardless of the name on the unit. Questions 1, 3, 4, 5 and 9 all feed this assessment. |
-| owner | legal counsel |
-
-Four possible structures were raised and the architecture keeps all four
-reachable, which is the main reason `point_programs` is versioned data rather
-than constants:
-
-| model | what it is | what would change in code |
-|---|---|---|
-| **A — Afrinkong travel credit** | credit purchased for Afrinkong services specifically | narrow `entitlement` to service only; likely drop transfer |
-| **B — Travel Points** | units with defined redemption rules — what is built | as-is, once terms are approved |
-| **C — Membership / benefit** | a recurring membership producing travel benefits | a programme whose `issueRate` is a benefit schedule rather than a purchase |
-| **D — Regulated financial partner** | a licensed institution provides the savings component; Afrinkong stays a travel company | the ledger records entitlement only; money is held elsewhere |
-
-The customer experience is close to identical across all four. The legal
-character is not. **That is precisely why the decision can be deferred without
-stalling the build — and precisely why it cannot be deferred past the first
-payment.**
+What remains is **D-outstanding**: what happens if points remain outstanding
+*indefinitely*, where unclaimed-property law may compel a treatment the
+programme cannot choose.
 
 ---
 
-## The build order these decisions gate
+## 11. The one that still gates everything
 
-Stated by the owner, recorded here so the sequence survives the conversation
-it was said in. Each step depends on the one above it being settled, and the
-first is a decision rather than a build.
+**OPEN. No money may be taken.**
 
-| | step | what it means | state |
-|---|---|---|---|
-| **A** | Product / legal definition | exactly what one Travel Point represents | **open — the eleven questions above** |
-| **B** | Programme engine | versioned programmes | **built** — `PROGRAMS`, draft, versioned |
-| **C** | Database | only when there is something to operate | **designed, not created** — schema written, no project |
-| **D** | Stripe | payment events become ledger entries | not started |
-| **E** | Customer account | the Travel Wallet | ledger and fold exist; no accounts |
-| **F** | Travel Goal | connect the planner to a real wallet | **planning-only version live** |
-| **G** | Purchase | a customer buys points | blocked by `DRAFT_PROGRAM` |
-| **H** | Redemption | points applied to a journey | blocked by G |
-| **I** | Cancellation / buyback | per the programme's rules | rules encoded, unreachable |
-| **J** | Operations | admin, reconciliation, refunds, settlement | not started |
+Questions 1, 3, 4, 5 and 9 all fed this assessment and all now have answers — but
+answering them does not answer this. Two of the answers moved the analysis
+**toward** higher exposure, on purpose and with that recorded:
 
-**Why the order matters more than the progress.** D is a payment rail, not the
-definition of the economy. Building it first would have made Stripe's data
-model the de facto answer to A — a Travel Point would have become "whatever a
-Stripe object can represent", decided by an integration rather than by anyone.
-Separating the economic model from the payment mechanism is what makes A
-answerable at all, and it is why B and the ledger came before D rather than
-after it.
+| decision | direction | recorded as |
+|---|---|---|
+| E — transferability permitted | toward | E-analysis |
+| F — third-party charges eligible | toward | F-charges |
+| D — purchased points never expire | a liability with no end date | D-liability |
+| C/E — discretionary buyback published in terms | possibly a right in substance | E-a |
 
-F is where the sequence currently sits, in its planning form: the planner
-states a journey in point units and issues nothing. It is the last step that
-can be taken before A is answered.
+The four structures remain reachable, which is still why `PROGRAMS` is
+versioned data rather than constants:
 
-## What is safe to build before these are answered
+| model | what it is | what would change |
+|---|---|---|
+| **A — Afrinkong travel credit** | credit for Afrinkong services specifically | narrow `eligibleServices`; set `transferable: false` |
+| **B — Travel Points** | units with defined redemption rules — what is built | as-is, once terms are approved |
+| **C — Membership / benefit** | recurring membership producing travel benefits | a programme whose issuance is a benefit schedule |
+| **D — Regulated financial partner** | a licensed institution holds the money | the ledger records entitlement only |
 
-Everything currently built, and one more thing.
+The customer experience is close to identical across all four. The legal
+character is not.
 
-- The **Travel Goal** panel — arithmetic over the existing rate card, issuing
-  nothing. Live now.
-- The **ledger and schema** — needed identically under models A, B and C, and
-  under D for the entitlement half.
-- **Reconciliation views** — same.
+---
 
-What is **not** safe: any purchase flow, any wallet showing a holding, any
-buyback execution, any transfer, and any language on the live site that implies
-a customer owns or can buy a Travel Point today.
+## The questions the six decisions opened
+
+Settling A–F did not reduce the open set to one. It replaced eleven broad
+questions with one gate and roughly thirty-five specific ones, which is
+progress: a specific question can be sent to counsel.
+
+| document | open items |
+|---|---|
+| `travel-point-issuance.md` | B-mechanism, B-recovery, B-clawback, B-cohort, B-recognition |
+| `travel-point-exit.md` | C-limits, C-completion, C-model, C-basis, C-window |
+| `travel-point-duration.md` | D-runoff, D-outstanding, D-equivalent, D-liability, D-promoexpiry, D-goalinput |
+| `travel-point-transfer.md` | E-analysis, E-kyc, E-limits, E-tax, E-estate, E-poolconsent |
+| `travel-point-redemption.md` | F-portion, F-mechanism, F-charges, F-newservices, F-components, F-naming |
+| `travel-point-pricing.md` | F-a … F-g |
+| `travel-point-buyback.md` | E-a … E-k |
+
+**The one blocking the most others is `C-basis` / `E-c`:** which repurchase
+basis `AFK-TP-2026.1` carries at activation. It is currently `consideration`,
+provisionally, and several downstream questions resolve once it lands.
+
+---
+
+## Build order
+
+| | step | state |
+|---|---|---|
+| A | product / legal definition | **frame settled; question 11 open** |
+| B | programme engine | **built** — versioned, deep-frozen |
+| C | database | **designed, not created** — schema written, no project |
+| D | Stripe | **not started** — deliberately |
+| E | customer account | ledger and fold exist; no accounts |
+| F | Travel Goal | **planning-only version live** |
+| G | purchase | architecture built, unreachable |
+| H | redemption | architecture built, unreachable |
+| I | cancellation / buyback / transfer | architecture built, unreachable |
+| J | operations | not started |
+
+**Why the order still matters more than the progress.** D is a payment rail,
+not the definition of the economy. Building it first would have made Stripe's
+data model the de facto answer to A — a Travel Point would have become
+"whatever a Stripe object can represent", decided by an integration rather than
+by anyone.
+
+G, H and I now have architecture and no reachable path: every one of them
+terminates in a refusal from the compliance gate.
+
+---
+
+## What is safe to build before question 11 is answered
+
+- The **Travel Goal** panel — arithmetic over the rate card, issuing nothing.
+- The **ledger, schema and reconciliation views** — needed identically under
+  models A, B and C.
+- The **economic architecture** itself, which is what A–F built: it encodes
+  rules and executes none of them.
+
+**Not safe:** any purchase flow, any wallet showing a real holding, any buyback
+or transfer execution, and any language on the live site implying a customer
+owns or can buy a Travel Point today.
+
+---
 
 ## The line the code will not let anyone cross by accident
 
     PLANNING  ->  DRAFT_PROGRAM  ->  ACTIVE_PROGRAM
                                      only here may a point be issued
 
-`PROGRAMS['AFK-TP-2026.1'].status` is `'draft'`. Moving it to `'active'` is a
-one-word change, and it is the single most consequential one-word change in
-this repository. It should not be made in the same commit as anything else, and
-it should not be made before questions 1, 3, 4, 5, 9 and 11 have answers.
+Enforced by `compliance`, not by `status`. `fold()` refuses any issuing entry
+under a non-issuing programme; `mayTransition()` refuses a skipped rung; and
+`mayActivate()` refuses a programme with an unset exposure limit or a rate that
+varies by tranche.
 
-`tools/points-checks.js` and `tools/goal-checks.js` both fail if that word
-changes without the rest of the work being done — which is the point of writing
-the boundary as a test rather than as a paragraph.
+`tools/points-checks.js` (181) and `tools/goal-checks.js` (36) both fail if that
+boundary is weakened — which is the point of writing it as a test rather than as
+a paragraph.
+
+A check now also fails if **this document** cites a programme field that does
+not exist, because that is exactly how it drifted the first time.

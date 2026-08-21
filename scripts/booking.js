@@ -149,20 +149,66 @@
              remainingAfter: wallet.available - required };
   }
 
+  /* Locked from the moment points are reserved. Not from ACCEPTED: nothing is
+     committed there and a customer who has not yet reserved should see the
+     current price, not a stale one that happens to favour them. */
+  var LOCKED_STATES = ['RESERVED', 'CONFIRMED', 'REDEEMED'];
+  function isLocked(booking) {
+    return LOCKED_STATES.indexOf(booking.state) !== -1;
+  }
+
+  /* DECISION F: BEFORE THE LOCK, A REQUIREMENT MAY MOVE — AND IS SHOWN MOVING.
+   *
+   * A customer still saving is not protected from a price change and should not
+   * be told they are. What they get instead is both numbers and the difference,
+   * which is C8's rule, and the explicit statement that their POINTS did not
+   * change — because a requirement that moved and a balance that moved look the
+   * same on a screen unless somebody says otherwise. */
+  function reprice(booking, newRequirement, rateCardVersion) {
+    if (isLocked(booking)) {
+      return { ok: false,
+               why: 'a booking whose points are reserved is price-locked',
+               locked: true, pointsRequired: booking.pointsRequired };
+    }
+    var next = JSON.parse(JSON.stringify(booking));
+    var was = booking.pointsRequired;
+    next.pointsRequired = newRequirement;
+    next.rateCardVersion = rateCardVersion || booking.rateCardVersion || null;
+    next.repricing = {
+      was: was,
+      now: newRequirement,
+      difference: newRequirement - was,
+      direction: newRequirement === was ? 'unchanged'
+               : newRequirement > was ? 'increased' : 'decreased',
+      /* B18/F, said rather than implied. */
+      pointsHeldUnaffected: true,
+      note: 'The journey\u2019s requirement changed. The Travel Points you ' +
+            'hold did not.'
+    };
+    return { ok: true, booking: next, repricing: next.repricing };
+  }
+
   /* Shared by the cap path and the shortfall path, so the two cannot drift
      into describing the same programme term differently. */
   function settlementTerms(programId) {
-    var mp = Points.program(programId).mixedPayment || {};
+    /* H: `available`, not just `permitted`. A programme may intend to allow a
+       mixed settlement and have no defined mechanism for one, and a screen
+       reading only `permitted` would offer the customer something nobody can
+       perform. mixedSettlement() computes both together so they cannot be
+       read apart. */
+    var m = Points.mixedSettlement(programId);
     return {
-      permitted: !!mp.permitted,
-      mechanism: mp.mechanism || null,
-      pointsFirst: mp.pointsFirst !== false,
-      note: mp.permitted
+      permitted: m.permitted,
+      mechanism: m.mechanism,
+      available: m.available,
+      pointsFirst: m.pointsFirst,
+      note: m.available
         ? 'This programme permits a journey to be settled partly in Travel ' +
-          'Points and partly through an approved payment method. The ' +
-          'conversion used for the remainder is a programme term and has not ' +
-          'been defined.'
-        : 'This programme does not permit a journey to be settled partly in money.'
+          'Points and partly through an approved payment method.'
+        : m.permitted
+          ? 'A mixed settlement is contemplated by this programme but the ' +
+            'mechanism has not been defined, so it cannot be offered yet.'
+          : 'This programme does not permit a journey to be settled partly in money.'
     };
   }
 
@@ -201,8 +247,41 @@
     var entries = [];
     var kind = IMPLIES[t];
 
+    /* DECISION F: A CONFIRMED BOOKING IS PRICE-LOCKED.
+     *
+     * "The price increased to 6,000 TP, so give us another 1,000" is the
+     * sentence this refuses. Once the points are reserved against a journey the
+     * requirement is fixed for that booking, and a later rate card cannot reach
+     * back into it.
+     *
+     * The lock was already true STRUCTURALLY — every branch below reads
+     * `booking.pointsRequired` and nothing recomputes it — but structural
+     * truth is not a refusal, and a caller passing a new requirement would
+     * simply have been ignored rather than told. Silently ignoring a reprice
+     * and refusing it look identical until somebody relies on the first. */
+    if (o.pointsRequired != null &&
+        o.pointsRequired !== booking.pointsRequired && isLocked(booking)) {
+      return { ok: false,
+               why: 'this booking\u2019s Travel Point requirement is locked at ' +
+                    booking.pointsRequired +
+                    '; a price change cannot be applied to a booking whose ' +
+                    'points are already reserved',
+               locked: true,
+               pointsRequired: booking.pointsRequired,
+               attempted: o.pointsRequired,
+               lockedAt: booking.lockedAt || null };
+    }
+
     if (t === 'RESERVED') {
       next.pointsReserved = booking.pointsRequired;
+      /* The moment the lock takes effect, recorded WITH the rate card that
+         produced the figure — so "why 5,000 and not 6,000" is answerable from
+         the booking rather than from somebody's memory of when they clicked. */
+      next.priceLocked = true;
+      next.lockedAt = { state: 'RESERVED',
+                        pointsRequired: booking.pointsRequired,
+                        rateCardVersion: booking.rateCardVersion || null,
+                        programVersion: booking.programVersion };
     } else if (t === 'CANCELLED') {
       /* D-cancellation: how much comes back is a PROGRAMME term read from the
          band, not a number chosen here. `daysToDeparture` is supplied by the
@@ -259,6 +338,9 @@
     ineligible: ineligible,
     request: request,
     open: open,
-    advance: advance
+    advance: advance,
+    reprice: reprice,
+    isLocked: isLocked,
+    LOCKED_STATES: LOCKED_STATES
   };
 });

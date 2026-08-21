@@ -198,8 +198,13 @@ create table point_ledger (
   -- happened. All four move points identically and differ in what
   -- documentation was required first; reconstructing "was this a gift or an
   -- inheritance" from a ledger three years later is not possible.
+  -- MIGRATION is the fifth and the odd one: every other type moves points
+  -- between PEOPLE and keeps the programme (E4). Migration moves them between
+  -- PROGRAMMES and keeps the person, which is why Decision G gates it on the
+  -- old programme naming its successor and on the customer consenting.
   transfer_type   text check (transfer_type in
-                    ('GIFT', 'FAMILY_POOL', 'CORPORATE_GIFT', 'ESTATE')),
+                    ('GIFT', 'FAMILY_POOL', 'CORPORATE_GIFT', 'ESTATE',
+                     'MIGRATION')),
   reason          text,
   -- Exceptional adjustments require a named human. An ADJUST that nobody
   -- signed is indistinguishable from a bug that minted points.
@@ -220,13 +225,20 @@ create table point_ledger (
   constraint reservation_needs_journey
     check (kind not in ('RESERVE', 'RELEASE', 'REDEEM') or journey_ref is not null),
   constraint transfer_needs_counterparty
-    check (kind not in ('TRANSFER_IN', 'TRANSFER_OUT') or counterparty_id is not null),
+    check (kind not in ('TRANSFER_IN', 'TRANSFER_OUT')
+           or transfer_type = 'MIGRATION' or counterparty_id is not null),
   -- E3: NO ANONYMOUS TRANSFERS, and none to oneself. A transfer to the same
   -- customer is either a mistake or an attempt to relabel points, and neither
   -- should produce two rows.
+  -- A migration keeps the same customer on both sides, so it is the one
+  -- transfer type exempt from the two-people rule. Stated as an exemption
+  -- rather than by loosening the rule, so the ordinary case stays strict.
   constraint transfer_is_between_two_people
     check (kind not in ('TRANSFER_IN', 'TRANSFER_OUT')
+           or transfer_type = 'MIGRATION'
            or counterparty_id <> customer_id),
+  constraint migration_needs_no_counterparty
+    check (transfer_type <> 'MIGRATION' or counterparty_id is null),
   constraint transfer_needs_type
     check (kind not in ('TRANSFER_IN', 'TRANSFER_OUT') or transfer_type is not null),
   -- E12/F3: only a purchase carries a payment. A transfer moves points that

@@ -18,7 +18,8 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | Travel Points, the ledger, payments, or anything economic | **`docs/travel-points-architecture.md`** — audit, architecture, and the legal gate that must clear before a single payment is taken |
 | how a customer acquires points over time | **`docs/travel-point-purchase.md`** — the purchase model. A plan is an intention, never a mandate; nothing charges anybody |
 | the legal boundary, the compliance ladder, or what counsel must answer | **`docs/travel-point-compliance.md`** — Section D. The programme is `compliance: DRAFT`; only `PILOT` or `ACTIVE` may issue, and the ladder is not skippable |
-| any question of the form "can we ship X of the points product yet?" | **`docs/economic-model-decisions.md`** — eleven open decisions, their provisional defaults, and who owns each |
+| any question of the form "can we ship X of the points product yet?" | **`docs/economic-model-decisions.md`** — the reconciliation register. Ten of the original eleven are now settled by Decisions A–F; question 11 (legal structure) is the gate and is still open |
+| price changes, programme discontinuation, wind-down and migration | **`docs/travel-point-continuity.md`** — Decisions F/G/H. A reserved booking is price-locked; migration needs a named successor AND consent; government charges left the default basket |
 | Decision F — what a Travel Point can buy (canonical) | **`docs/travel-point-redemption.md`** — the eligible basket, the exclusions as a list with reasons, and the redemption cap |
 | Decision E — gifting, inheritance, transferability (canonical) | **`docs/travel-point-transfer.md`** — REVERSES B14/C9: `transferable` is now true. Sale still forbidden. Records the buy-gift-cash-out hole this closed |
 | Decision D — expiry, programme duration, unused points (canonical) | **`docs/travel-point-duration.md`** — eleven rules. D8 changed behaviour: earliest expiry first, not promotional first |
@@ -62,7 +63,7 @@ Run before claiming anything is done. All of these must pass.
     node tools/link-checks.js                    78,595 links
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
-    node tools/points-checks.js                 181 — the Travel Point ledger
+    node tools/points-checks.js                 195 — the Travel Point ledger
     node tools/goal-checks.js                    36 — the Travel Goal is planning only
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes
@@ -82,10 +83,25 @@ Anything needing network is a GitHub Actions step, not a local command.
                                      only here may a point be issued
 
 The site is in **DRAFT_PROGRAM**. `scripts/points-ledger.js` refuses to create
-a point under a non-active programme, and two test files assert it. Moving
-`PROGRAMS['AFK-TP-2026.1'].status` to `'active'` is a one-word change and the
-most consequential one in this repository — it must not be made before the
-eleven decisions in `docs/economic-model-decisions.md` have answers.
+a point under a non-issuing programme, and two test files assert it.
+
+**The gate is `compliance`, NOT `status`.** This file used to say that setting
+`status` to `'active'` was a one-word change and the most consequential one in
+the repository. That stopped being true when the compliance ladder was built:
+`status: 'active'` is now inert — a programme carrying it still reports
+`mayIssue: false` and `stateOf: DRAFT_PROGRAM`. Guarding the wrong word is
+worse than guarding nothing, so the real boundary is:
+
+    DRAFT -> LEGAL_REVIEW -> ACCOUNTING_REVIEW -> APPROVED -> PILOT -> ACTIVE
+
+Not skippable, and `mayActivate()` refuses the last rung while any of
+`maxProgrammeExposure`, `maxPerTransaction`, `maxPerCustomerPerYear`,
+`buyback.basis` or `minPurchase` is unset, or while `issueRate` is anything but
+a single positive number. It must not be walked before question 11 in
+`docs/economic-model-decisions.md` has an answer.
+
+A check in `points-checks.js` fails if this file, or any decision document,
+starts claiming otherwise again.
 
 The Journey Fund shows an **Estimated Travel Goal**: the same journey estimate
 in point units. It issues nothing, sells nothing, and holds nothing.
