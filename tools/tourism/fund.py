@@ -450,6 +450,16 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
           <p class="jf-fine" id="jf-where-fine">%(n)d countries written up, %(crossings)d crossings.</p>
           <label class="af-stamp jf-lab" for="jf-place">The destination</label>
           <select id="jf-place" name="place" class="jf-select">%(places)s</select>
+          <!-- THE WAY BACK TO THE BUILDER.
+               This page could already RECEIVE a journey - fund.js has read
+               place, tier and days off the query string since the builder
+               grew a door to here - but it could not SEND anybody to compose
+               one. A reader who does not yet know where they want to go was
+               handed a dropdown of fifty-four countries and left to it.
+               One direction of an edge is not an edge. -->
+          <p class="jf-fine jf-where-back">Not sure yet?
+            <a href="/journey">Compose a journey</a> in four questions and
+            bring it back here to price.</p>
         </fieldset>
 
         <fieldset class="jf-ask">

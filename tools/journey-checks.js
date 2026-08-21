@@ -717,5 +717,122 @@ check('every position it carries is a pair of numbers', !noPos.length,
   noPos.length ? noPos.map(function (c) { return c.name; }).join(', ')
     : 'all ' + (D.cities || []).length + ' usable');
 
+/* ---- THE PLAN -> FUND HANDOFF ------------------------------------------
+ *
+ * The builder composes a journey and hands its SHAPE to /journey-fund in a
+ * query string. The Fund validates every parameter against its own inputs and
+ * silently ignores what it does not recognise — which is the right behaviour
+ * for a string anybody can type, and the reason the handoff was broken for a
+ * long time without anything failing.
+ *
+ * What was wrong: the builder sent the tier's DISPLAY NAME, "Afrinkong
+ * Signature", and the Fund was looking for its VALUE, "signature". Nothing
+ * matched, the tier was dropped, and a traveller who had chosen Private landed
+ * on a planner priced for whatever the Fund defaults to. No error, no console
+ * line, no failing test: two vocabularies that had to agree, and nothing
+ * compared them.
+ *
+ * These checks compare them. They read the two built pages rather than the two
+ * source templates, because it is the built pages that a traveller uses. */
+
+const fundPage = fs.readFileSync(path.join(ROOT, 'journey-fund.html'), 'utf8');
+const fm = fundPage.match(
+  /<script type="application\/json" id="jf-data">([\s\S]*?)<\/script>/);
+const FD = fm ? JSON.parse(fm[1]) : null;
+const journeySrc = fs.readFileSync(
+  path.join(ROOT, 'scripts', 'journey.js'), 'utf8');
+
+/* The vocabularies, taken from the markup of each page rather than from a list
+   written here — a list written here would be a third vocabulary to keep in
+   step with the other two. */
+function valuesOf(html, name) {
+  const re = new RegExp('name="' + name + '"[^>]*value="([^"]+)"', 'g');
+  const found = [];
+  let hit;
+  while ((hit = re.exec(html)) !== null) found.push(hit[1]);
+  return found;
+}
+
+const builderTiers = valuesOf(page, 'tier').filter(function (v) {
+  return v !== 'other';
+});
+const fundTiers = valuesOf(fundPage, 'jf-tier');
+
+check('the builder and the Fund name the tiers with the same words',
+  builderTiers.length > 0 && fundTiers.length > 0 &&
+  builderTiers.every(function (t) { return fundTiers.indexOf(t) >= 0; }),
+  builderTiers.length
+    ? 'builder [' + builderTiers.join(', ') + '] vs Fund ['
+      + fundTiers.join(', ') + ']'
+    : 'the builder page carries no tier inputs at all');
+
+/* The specific regression, stated as itself: the link must carry the radio's
+   value, never the card's bold text. Both fields exist on purpose — one is
+   copy and one is identity — so the check is that the LINK uses the identity
+   one. */
+const towardBlock = journeySrc.slice(
+  journeySrc.indexOf("getElementById('jn-toward')"),
+  journeySrc.indexOf("getElementById('jn-toward')") + 700);
+check('the handoff carries the tier as an identity, not as a display name',
+  /q\.push\('tier=' \+ encodeURIComponent\(t\.tierId\)\)/.test(towardBlock),
+  towardBlock.indexOf('t.tier)') >= 0
+    ? 'it is sending t.tier, the card’s bold text — the Fund cannot match it'
+    : 'sends t.tierId');
+
+check('total() still returns both the tier’s name and its identity',
+  /tierId:\s*tier \? tier\.value/.test(journeySrc) &&
+  /tier:\s*tier \?/.test(journeySrc),
+  'copy for the basis line, identity for the link');
+
+/* Every country the builder can compose has to be a country the Fund can
+   price, or the place is dropped as silently as the tier was. */
+if (FD) {
+  const fundCountries = Array.isArray(FD.countries)
+    ? FD.countries.map(function (c) { return c.s || c.slug; })
+    : Object.keys(FD.countries || {});
+  const unpriceable = slugs.filter(function (s) {
+    return fundCountries.indexOf(s) === -1;
+  });
+  check('every country the builder can compose, the Fund can price',
+    !unpriceable.length,
+    unpriceable.length ? unpriceable.join(', ')
+      : 'all ' + slugs.length + ' carried');
+}
+
+/* THE ONE ASYMMETRY, MEASURED RATHER THAN ASSERTED AWAY.
+   The builder accepts any length; the Fund prices five. This does not fail —
+   the rate card is the right authority on what is priceable — but the number
+   is printed so that a length quietly disappearing is a known quantity and not
+   a discovery. */
+if (FD && FD.days) {
+  const builderDays = valuesOf(page, 'days').filter(function (v) {
+    return v !== 'other';
+  }).map(Number);
+  const dropped = builderDays.filter(function (d) {
+    return FD.days.indexOf(d) === -1;
+  });
+  check('the lengths the builder offers as chips are lengths the Fund prices',
+    !dropped.length,
+    dropped.length ? 'dropped in the handoff: ' + dropped.join(', ')
+      : 'all ' + builderDays.length + ' priceable; a typed length outside ['
+        + FD.days.join(', ') + '] still falls back to the Fund’s default');
+}
+
+/* THE EDGE IN THE OTHER DIRECTION.
+   The Fund could receive a journey long before it could send anybody to
+   compose one. One direction of an edge is not an edge. */
+const fundBody = fundPage
+  .replace(/<header[\s\S]*?<\/header>/g, '')
+  .replace(/<footer[\s\S]*?<\/footer>/g, '')
+  .replace(/<nav class="af-foot-nav"[\s\S]*?<\/nav>/g, '');
+check('the Fund offers a way to go and compose a journey',
+  /href="\/journey"/.test(fundBody),
+  'a reader who does not know where they want to go is not left alone with a '
+    + 'list of ' + slugs.length + ' countries');
+
+check('the builder still offers its door to the Fund',
+  /id="jn-toward"/.test(page) && /\/journey-fund/.test(page),
+  'both directions present');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(function (l) { return l.indexOf('FAIL') === 0; }) ? 1 : 0);

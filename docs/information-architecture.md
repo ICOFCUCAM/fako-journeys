@@ -150,13 +150,46 @@ Phase 1 measured this: **the nodes are excellent and the graph is broken.**
 | `/tourism/kenya` | `/kenya`, `/portrait/kenya`, `/places/*` | it is a dead end |
 | `/tourism/kenya` | `/journey?place=kenya` | it has `/journey` but not seeded |
 | `/places/kenya/<place>` | `/kenya`, `/tourism/kenya` | nothing leads back up |
-| `/journey` (composed) | `/journey-fund?journey=…` | **the Plan → Fund handoff does not exist** |
-| `/journey-fund` | `/journey` | the Fund cannot start a journey |
+| `/journey` (composed) | `/journey-fund?place=…&tier=…&days=…` | ~~does not exist~~ — **built, and half of it did not carry.** Corrected below |
+| `/journey-fund` | `/journey` | the Fund could not start a journey — **added** |
 
-**The last two are the most valuable in the whole brief.** A visitor who has
-composed a journey — a real, deterministic, shareable journey — currently has
-nowhere to take it. The Fund can price a journey the builder already chose, and
-the two never meet.
+### Correction — the Plan → Fund edge existed, and was broken
+
+This document first said the handoff did not exist. **That was wrong, and the
+truth was more interesting.** Both ends were built:
+
+- `journey.js` set `jn-toward.href = '/journey-fund?place=…&tier=…&days=…'`
+- `fund.js` had a `carried()` function reading exactly those three parameters,
+  with a comment that began *"A traveller who pressed 'build toward this
+  journey' has already answered three of the five questions on this page."*
+
+**And the tier never arrived.** The builder sent the card's display name,
+`Afrinkong Signature`; the Fund validated against its own radio values and
+looked for `signature`. Nothing matched, so the tier was dropped — no error, no
+console line, no failing check.
+
+The consequence was worse than a lost parameter. `carried()` returns true if
+*any* value was taken, and a true return skips `restore()`. So the place
+carried, the tier did not, and a reader with a kept plan arrived holding
+**neither their kept tier nor the one they had just chosen**, on a page priced
+for a journey nobody picked.
+
+The cause is the one this session keeps finding: **two vocabularies that had to
+agree, and nothing compared them.** `journey-catalogue.js` had already written
+the rule down — *"a journey is identified by what was chosen, not by a display
+name"* — one file away from where it was being broken.
+
+Fixed by separating the two fields on purpose: `tier` is copy, for the basis
+line and the enquiry paragraph a person reads; `tierId` is identity, for the
+link a program reads. Seven checks in `journey-checks.js` now compare the two
+pages' vocabularies directly, and the regression reproduces as a FAIL with the
+diagnosis in the detail line.
+
+One asymmetry is left standing and is now measured rather than hidden: the
+builder accepts any length, the rate card prices five (3, 5, 7, 10, 14). A
+typed twelve days is dropped and the Fund falls back to its default. The rate
+card is the right authority on what is priceable, so this is not a bug — but it
+is a silent substitution, so the check prints it.
 
 ---
 
@@ -183,7 +216,7 @@ Two cautions, both real:
 | | | why |
 |---|---|---|
 | 1 | **token layer** | done — nothing visual, but every later phase costs 15× without it |
-| 2 | **the Plan → Fund edge** | highest value, smallest diff, no navigation change |
+| 2 | **the Plan → Fund edge** | done — the tier now carries, and the Fund can send a reader to the builder |
 | 3 | **country graph repair** | four Kenyas become one Kenya at four depths |
 | 4 | **the state language** | 39 system states, one expressible |
 | 5 | **navigation** | needs approval; touches everything |

@@ -1279,8 +1279,29 @@
       if (i.dataset.once) once += parseInt(i.dataset.once, 10) || 0;
       if (i.name === 'tier') tier = i;
     });
+    /* TWO NAMES FOR THE TIER, AND THEY ARE NOT INTERCHANGEABLE.
+       `tier` is what the card says — "Afrinkong Signature" — and it is copy:
+       it goes in the basis line and in the enquiry paragraph, where a person
+       reads it. `tierId` is the radio's own value — "signature" — and it is
+       identity: it goes in the link to the Journey Fund, where a program reads
+       it.
+
+       They used to be one field, and the display name was the one that
+       travelled. The Fund validates what it is handed against its own inputs
+       (`input[name="jf-tier"][value="signature"]`), so "Afrinkong Signature"
+       matched nothing and the tier was dropped in silence — the traveller
+       chose a journey, pressed "build toward this journey", and arrived at a
+       planner priced for a different one with no way to tell. Worse when a
+       kept plan existed: the Fund skips `restore()` as soon as ANY parameter
+       carries, so the place carried, the tier did not, and the reader ended up
+       with neither their kept tier nor the one they had just chosen.
+
+       journey-catalogue.js states the rule this broke, in its own words: a
+       journey is identified by what was chosen, not by a display name. Keep
+       both fields, and keep them named for what they are for. */
     return {days: days, sum: perDay * days + (days ? once : 0), quote: quote,
-            tier: tier ? tier.closest('.jn-card').querySelector('b').textContent : ''};
+            tier: tier ? tier.closest('.jn-card').querySelector('b').textContent : '',
+            tierId: tier ? tier.value : ''};
   }
 
   function paintGround() {
@@ -1323,11 +1344,25 @@
        sentence: the planner needs a country, a tier and a length it can price
        again, not a paragraph to read. Nothing about the traveller travels with
        it — no name, no dates typed into a box, no figure — because the page it
-       opens has no account to attach any of that to. */
+       opens has no account to attach any of that to.
+
+       IDENTITY, NOT COPY. `t.tierId` rather than `t.tier` — see total(). The
+       three words either side of this link have to be the same three words, and
+       for a long time they were not.
+
+       ONE ASYMMETRY THAT REMAINS, DELIBERATELY UNHIDDEN. The builder lets a
+       traveller name any length; the Fund's rate card prices five (3, 5, 7, 10,
+       14). Ask for twelve days and the Fund drops the parameter and falls back
+       to its own default, because it will not quote a length it has no rate
+       for. That is the correct authority — the rate card decides what is
+       priceable, not this page — but it is a silent substitution, so
+       journey-checks measures it rather than pretending it away. Sending the
+       true figure is still right: the day the card gains a length, the handoff
+       gains it too with no edit here. */
     var toward = document.getElementById('jn-toward');
     if (toward && chosen) {
       var q = ['place=' + encodeURIComponent(chosen.slug)];
-      if (t.tier) q.push('tier=' + encodeURIComponent(t.tier));
+      if (t.tierId) q.push('tier=' + encodeURIComponent(t.tierId));
       if (t.days) q.push('days=' + encodeURIComponent(t.days));
       toward.href = '/journey-fund?' + q.join('&');
     }
