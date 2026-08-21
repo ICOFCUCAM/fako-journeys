@@ -804,7 +804,15 @@
   function pointsForPurchase(programId, amountMinor) {
     var p = program(programId);
     if (!isFinite(amountMinor) || amountMinor <= 0) return 0;
-    return Math.floor((amountMinor / 100) * p.issueRate);
+    /* J: was floor — fewer points for the money paid, every time.
+       AND THIS DIRECTION MUST NEVER ISSUE. It is used by `project()` for a
+       planning projection and nowhere else. Issuance runs the other way —
+       `purchaseOffer(points)` derives `priceMinor` from the POINTS the
+       customer chose — so no rounding decision ever creates entitlement.
+       That matters: half-up here would otherwise let somebody pay $25.50 for
+       26 points, repeatedly. Wiring this into an issuance path reintroduces
+       that, so don't. */
+    return toCustomer((amountMinor / 100) * p.issueRate);
   }
 
   /* What a quantity of points costs to acquire. The inverse of the above. */
@@ -837,6 +845,10 @@
   function goalRequirement(programId, journeyCostMinor) {
     var p = program(programId);
     if (!isFinite(journeyCostMinor) || journeyCostMinor <= 0) return 0;
+    /* J's ONE knowing exception, and the only site permitted to round against
+       the customer: a point is indivisible and somebody 0.3 short cannot
+       travel. Bounded at under one point, listed in ROUNDING.exceptions, and a
+       check asserts nothing else joins it. */
     return Math.ceil((journeyCostMinor / 100) / p.entitlementRate);
   }
 
@@ -860,6 +872,52 @@
                boughtThisYear: boughtThisYear || 0 };
     }
     return { ok: true };
+  }
+
+  /* ---- Decision J: whole points, and one rounding rule --------------------
+   *
+   * THE FINDING THAT PROMPTED THIS. Before Decision J, every site that
+   * delivered a quantity TO the customer used `Math.floor`:
+   *
+   *     pointsForPurchase   floor   fewer points for the money paid
+   *     bonusFor            floor   a smaller grant
+   *     cancellation        floor   fewer points released
+   *     migrate             floor   fewer points in the successor
+   *     buyback ceiling     floor   a smaller annual allowance
+   *
+   * Not one of those was a decision. `Math.floor` is simply the obvious way to
+   * turn a fraction into a whole number, and choosing it five times in a row
+   * produced a system that rounds against the customer everywhere — which is
+   * precisely the "systematic disadvantage" J forbids, arrived at by habit
+   * rather than by intent. Each individual loss is under one point; the
+   * pattern is the problem.
+   *
+   * THE RULE. Half-up, which is neutral, and the direction of the quantity
+   * decides nothing else. Deliberately NOT "always round up in the customer's
+   * favour": ceiling on issuance would mint a whole point for a one-cent
+   * purchase, and a rule that can be gamed is not a protection.
+   *
+   * THE ONE KNOWING EXCEPTION is `goalRequirement`, which ceilings. A point is
+   * indivisible (A) and a customer 0.3 points short of a journey cannot
+   * travel, so the requirement must round up. It is the only site permitted to
+   * round against the customer, the disadvantage is bounded at under one
+   * point, and a check asserts nothing else joins it.
+   */
+  var ROUNDING = {
+    mode: 'half-up',
+    /* Sites permitted to round AGAINST the customer, with the reason. Anything
+       not on this list must use `toCustomer()`. */
+    exceptions: [
+      { site: 'goalRequirement', direction: 'up',
+        why: 'a point is indivisible and a customer fractionally short of a ' +
+             'journey cannot travel' }
+    ]
+  };
+
+  /* A quantity being delivered to the customer: points issued, points
+     released, an allowance, money paid out. Half-up, never truncated. */
+  function toCustomer(n) {
+    return Math.round(n);
   }
 
   /* ---- Decision B6: nothing is issued before the money has settled --------
@@ -997,7 +1055,8 @@
     }
     /* Floor: a grant is whole points, and rounding a bonus up would issue
        entitlement nobody decided to give away. */
-    return Math.floor(points * rate);
+    /* J: was floor — a systematically smaller grant. */
+    return toCustomer(points * rate);
   }
 
   /* F1/F4: THE PURCHASE OFFER — the one screen where money and points appear
@@ -1532,7 +1591,9 @@
       if (daysToDeparture >= p.cancellation[i].fromDays) { band = p.cancellation[i]; break; }
     }
     if (!band) band = p.cancellation[p.cancellation.length - 1];
-    var released = Math.floor(reservedPoints * band.release);
+    /* J: was floor — fewer points returned on a cancellation, which is the
+       worst site of the five to be quietly ungenerous at. */
+    var released = toCustomer(reservedPoints * band.release);
     return {
       daysToDeparture: daysToDeparture,
       released: released,
@@ -1820,7 +1881,8 @@
     }
     var target = program(w.successor);
     var ratio = w.migrationRatio == null ? 1 : w.migrationRatio;
-    var received = Math.floor(points * ratio);
+    /* J: was floor — a migration losing a fraction of a point each time. */
+    var received = toCustomer(points * ratio);
     if (!(received > 0)) {
       return { ok: false, why: 'the migration ratio would deliver no points',
                rule: 'ratio', ratio: ratio };
@@ -2130,7 +2192,8 @@
     if (b.maxPctPerYear != null) {
       var eligibleNow = b.promotionalEligible === false ? w.purchased : w.available;
       var base = eligibleNow + (boughtBackThisYear || 0);
-      var ceiling = Math.floor(base * b.maxPctPerYear);
+      /* J: was floor — a smaller annual repurchase allowance. */
+      var ceiling = toCustomer(base * b.maxPctPerYear);
       if ((boughtBackThisYear || 0) + points > ceiling) {
         return refuse('above the annual limit of ' +
                       Math.round(b.maxPctPerYear * 100) + '% of eligible points',
@@ -2341,6 +2404,8 @@
     ISSUING_PAYMENT_STATES: ISSUING_PAYMENT_STATES,
     maySettleIssuance: maySettleIssuance,
     MONEY_MOMENTS: MONEY_MOMENTS,
+    ROUNDING: ROUNDING,
+    toCustomer: toCustomer,
     CONCEPTS: CONCEPTS,
     holdingDisplay: holdingDisplay,
     mixedSettlement: mixedSettlement,
