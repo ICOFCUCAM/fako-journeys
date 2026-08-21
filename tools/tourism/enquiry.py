@@ -46,7 +46,22 @@ MARKERS = ("handoff", "reach")
 # Kamerun's, all on generic group addresses, and all reachable in one press from
 # an Afrinkong page. Only /contact needs the reach payload and the script, since
 # only /contact takes ?journey= and only /contact sends anything.
-MARK = re.compile(r'<a class="fj-mark" href="[^"]*"><b>([^<]+)</b>')
+# WHOSE NAME IS ON THE DOOR, read off the masthead rather than from a list.
+#
+# THIS BROKE ONCE AND IT BROKE QUIETLY. It was pinned to `fj-mark` with the
+# <b> immediately after the anchor. Phase 5 renamed the class to
+# `af-shell-mark` and put the emblem between the two, so this matched nothing,
+# cluster() returned an empty list, and the check that counts the operator's
+# pages went from five to zero.
+#
+# That is the third time in one session a check has been pinned to a class name
+# and died silently when the class was renamed — and every time it died toward
+# a wrong answer rather than an error. Both spellings are accepted here, and
+# anything between the anchor and the name is allowed, so the emblem or a
+# future wrapper cannot do it again.
+MARK = re.compile(
+    r'<a class="(?:af-shell-mark|fj-mark)" href="[^"]*">'
+    r'(?:<img[^>]*>|<i>[^<]*</i>|\s)*<b>([^<]+)</b>')
 
 
 def cluster(operator_name, root=None):

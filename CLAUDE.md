@@ -81,11 +81,25 @@ Run before claiming anything is done. All of these must pass.
     node tools/points-checks.js                 245 — the Travel Point ledger
     node tools/goal-checks.js                    36 — the Travel Goal is planning only
     node tools/state-checks.js                   25 — the state language vs the states
+    node tools/shell-checks.js                   10 — one shell, one navigation
+    python3 tools/tourism/build.py test         960 — THE SUITE CI RUNS. ~25 min
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes
 
 `browser-checks.js` takes 30–40 minutes and Node buffers its stdout, so an
 empty log means it is running, not hung. Run it whenever HTML changes.
+
+**`build.py test` is the suite GitHub Actions runs, and it was missing from
+this list.** Nine hundred and sixty checks, about twenty-five minutes. It was
+absent here for long enough that a whole session's work was reported as "all
+gates green" while CI was red — and because it is the FIRST step in
+`tourism-tests.yml`, its failure skips every step after it, including "Rebuild
+pages and check the generated HTML". A red suite there means CI has validated
+nothing at all.
+
+It has **25 pre-existing failures** that predate this list being corrected. They
+are real and unfixed; see the run log. The number to hold the line on is 25 —
+anything above it is new.
 
 ## This environment cannot reach the internet
 
