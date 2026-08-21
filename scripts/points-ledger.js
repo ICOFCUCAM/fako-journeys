@@ -342,7 +342,38 @@
         basis: 'consideration',   // 'consideration' | 'entitlement' | 'programme'
         /* Never pay out more than came in, whatever the basis says. */
         maxPayableIsConsideration: true,
+        /* THE THREE THINGS THAT MUST NEVER BE CONFLATED.
+           1. POINT VALUE       what the points entitle a customer to receive
+           2. REPURCHASE PRICE  what Wankong LLC is willing to pay to acquire
+                                them back — THIS number
+           3. PAYOUT COST       what it costs to actually move the money
+
+           1,000 TP being 1,000 units of travel entitlement does NOT mean
+           Wankong must pay $1,000 to repurchase them. The programme defines
+           the price, and it is a parameter rather than part of what a Travel
+           Point is. */
         rate: 0.90,               // of eligible purchase consideration
+
+        /* WHAT THE HAIRCUT ACTUALLY IS, stated because it is easy to read
+           backwards. At `rate: 0.90` the customer receives 90% and Wankong
+           RETAINS 10%. That retained margin is revenue, not a cost the company
+           absorbs — raising the rate to 0.95 halves it. The direction matters
+           when choosing the number: a higher rate is more generous to the
+           customer and leaves the company less. */
+        retainedMargin: 0.10,     // derived: 1 - rate. Kept for legibility.
+
+        /* PAYOUT COSTS ARE SEPARATE FROM THE PRICE, and are real: the original
+           processing fee is usually unrecoverable, and moving money back costs
+           again. Whether the customer bears them is a programme decision and
+           `null` means undecided — L-costs. */
+        payoutCostsBorneBy: null, // 'customer' | 'programme'
+        /* Where the money goes. Returning it to the instrument that paid is
+           both the cleanest experience and a fraud control: it removes the
+           "give us a different bank account" step that account-takeover
+           depends on. An alternative route is permitted and demands more —
+           Z's PAYOUT_CHANGE already requires step-up. */
+        payoutRoute: 'original',
+        alternativeRoutePermitted: true,
         minHoldDays: 90,
         minPoints: 100,
         /* C5: TWO SHAPES OF ANNUAL LIMIT, AND THEY BEHAVE DIFFERENTLY.
@@ -2384,6 +2415,149 @@
     };
   }
 
+  /* ---- L: the economics of a repurchase, from the company's side ----------
+   *
+   * `buybackQuote()` answers what the CUSTOMER receives. This answers what the
+   * transaction does to WANKONG LLC, and the two are different questions that
+   * were previously only asked from one side.
+   *
+   * THE DIRECTION, BECAUSE IT IS EASY TO READ BACKWARDS.
+   * At a rate of 0.90 the customer receives 90% and the company RETAINS 10%.
+   * That retained amount is revenue. It is not a cost the company absorbs, and
+   * raising the rate to 0.95 halves it. "A 10% haircut is expensive for
+   * Wankong" is the opposite of what the arithmetic does.
+   *
+   * What IS a cost is moving the money — twice. The fee on the original
+   * purchase is usually unrecoverable, and the payout costs again. Those are
+   * the numbers that decide whether a rate is sustainable, so they are inputs
+   * rather than assumptions.
+   *
+   * `costs` is supplied by the caller: { acquiringPct, acquiringFixedMinor,
+   * payoutPct, payoutFixedMinor, fxPct, adminMinor }. No default is invented,
+   * because a payment cost nobody measured is a number that will be wrong.
+   */
+  function repurchaseEconomics(programId, considerationMinor, costs) {
+    var p = program(programId);
+    var b = p.buyback || {};
+    var c = costs || {};
+    var rate = b.rate;
+    var customerReceives = Math.round(considerationMinor * rate);
+    var retained = considerationMinor - customerReceives;
+
+    var acquiring = Math.round(considerationMinor * (c.acquiringPct || 0)) +
+                    (c.acquiringFixedMinor || 0);
+    var payout = Math.round(customerReceives * (c.payoutPct || 0)) +
+                 (c.payoutFixedMinor || 0);
+    var fx = Math.round(customerReceives * (c.fxPct || 0));
+    var admin = c.adminMinor || 0;
+    var totalCost = acquiring + payout + fx + admin;
+
+    return {
+      programId: p.id,
+      considerationMinor: considerationMinor,
+      rate: rate,
+      /* 1 — what the customer gets. */
+      customerReceivesMinor: customerReceives,
+      /* 2 — what the company keeps before costs. Revenue, not expenditure. */
+      retainedMinor: retained,
+      retainedPct: considerationMinor > 0 ? retained / considerationMinor : 0,
+      /* 3 — what moving the money actually costs, itemised so a number nobody
+         can defend is visible as such. */
+      costs: { acquiring: acquiring, payout: payout, fx: fx, admin: admin,
+               total: totalCost },
+      /* The answer the decision actually turns on. */
+      netToCompanyMinor: retained - totalCost,
+      sustainable: retained - totalCost >= 0,
+      note: retained - totalCost >= 0
+        ? null
+        : 'At this rate the repurchase costs more than it retains. The rate ' +
+          'is too high for these payment costs, not too low.'
+    };
+  }
+
+  /* L: THE SAME TRANSACTION AT SEVERAL RATES, SO THE NUMBER IS CHOSEN BY
+   * ARITHMETIC RATHER THAN BY WHAT SOUNDS FAIR.
+   *
+   * Includes a cost-plus row: the rate at which the company exactly breaks
+   * even, which is the floor any chosen rate should sit below.
+   */
+  function repurchaseScenarios(programId, considerationMinor, costs, rates) {
+    var list = rates || [0.95, 0.90, 0.85, 0.80];
+    var rows = list.map(function (r) {
+      var v = variant(programId,
+        { buyback: assign({}, program(programId).buyback, { rate: r }) },
+        programId + '~scenario~' + String(r).replace('.', '_'));
+      return repurchaseEconomics(v, considerationMinor, costs);
+    });
+    /* Break-even: retained must cover the costs, and payout cost itself moves
+       with the rate, so this is solved rather than guessed. */
+    var c = costs || {};
+    var acq = Math.round(considerationMinor * (c.acquiringPct || 0)) +
+              (c.acquiringFixedMinor || 0);
+    var fixed = acq + (c.adminMinor || 0) + (c.payoutFixedMinor || 0);
+    var varPct = (c.payoutPct || 0) + (c.fxPct || 0);
+    /* consideration - r*consideration - r*consideration*varPct - fixed = 0 */
+    var breakEven = considerationMinor > 0
+      ? (considerationMinor - fixed) / (considerationMinor * (1 + varPct))
+      : 0;
+    return {
+      considerationMinor: considerationMinor,
+      rows: rows,
+      breakEvenRate: Math.floor(breakEven * 10000) / 10000,
+      note: 'The break-even rate is the highest the company could pay and lose ' +
+            'nothing. Any chosen rate should sit below it, and the gap is the ' +
+            'margin on a repurchase.'
+    };
+  }
+
+  function assign(t) {
+    for (var i = 1; i < arguments.length; i++) {
+      var s = arguments[i];
+      for (var k in s) if (Object.prototype.hasOwnProperty.call(s, k)) t[k] = s[k];
+    }
+    return t;
+  }
+
+  /* L: WHERE THE MONEY GOES, AND WHY THE DEFAULT IS THE ORIGINAL INSTRUMENT.
+   *
+   * Returning funds to the instrument that paid is the cleanest experience and
+   * — more importantly — a fraud control. "Give us a different bank account"
+   * is the step account-takeover depends on, so the default route removes it
+   * entirely. An alternative is permitted and costs more verification;
+   * `PAYOUT_CHANGE` already requires step-up in the account layer.
+   */
+  function payoutRoute(programId, opts) {
+    var p = program(programId);
+    var b = p.buyback || {};
+    var o = opts || {};
+    if (b.payoutRoute === 'original' && o.originalRouteAvailable !== false) {
+      return {
+        route: 'original',
+        paymentRef: o.originalPaymentRef || null,
+        requiresStepUp: false,
+        why: 'Funds return to the instrument that paid. Nothing new is ' +
+             'collected, so there is nothing new to compromise.'
+      };
+    }
+    if (b.alternativeRoutePermitted === false) {
+      return { route: null, ok: false,
+               why: 'the original payment route is unavailable and this ' +
+                    'programme permits no alternative' };
+    }
+    return {
+      route: 'alternative',
+      paymentRef: null,
+      requiresStepUp: true,
+      /* Not merely step-up: a payout destination the customer has just named
+         is the exact artefact of a successful takeover. */
+      requiresVerification: ['step-up verification',
+                             'payout destination verification'],
+      why: 'The original route is unavailable. A new destination is the thing ' +
+           'an account takeover exists to introduce, so it is verified rather ' +
+           'than accepted.'
+    };
+  }
+
   /* C4: PACE IN, TIME OUT — which is the direction the product actually needs.
    *
    *   "I can manage $150 a month"  ->  150 TP a month  ->  32 months
@@ -2494,6 +2668,9 @@
     can: can,
     cancellation: cancellation,
     buybackQuote: buybackQuote,
+    repurchaseEconomics: repurchaseEconomics,
+    repurchaseScenarios: repurchaseScenarios,
+    payoutRoute: payoutRoute,
     goal: goal,
     project: project
   };

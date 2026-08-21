@@ -3557,6 +3557,104 @@ report(
   `programme — no Stripe, no database, no production wallet, no live transfer`
 );
 
+/* ==== L: repurchase economics from the company's side ==================== */
+
+/* THE DIRECTION, ASSERTED, BECAUSE IT IS EASY TO READ BACKWARDS.
+ *
+ * At `rate: 0.90` the customer receives 90% and Wankong LLC RETAINS 10%. That
+ * retained amount is REVENUE, not a cost the company absorbs. Raising the rate
+ * to 0.95 halves it. "A 10% haircut is expensive for Wankong" is the opposite
+ * of what the arithmetic does, and the question was asked directly enough that
+ * the answer belongs in a test rather than only in a reply. */
+const lCosts = { acquiringPct: 0.029, acquiringFixedMinor: 30,
+                 payoutPct: 0.01, payoutFixedMinor: 25, fxPct: 0,
+                 adminMinor: 400 };
+const at90 = L.repurchaseEconomics(DRAFT, 100000, lCosts);
+const SC = L.repurchaseScenarios(DRAFT, 100000, lCosts);
+const at95 = SC.rows.find((r) => r.rate === 0.95);
+report(
+  at90.customerReceivesMinor === 90000 && at90.retainedMinor === 10000 &&
+    at95.customerReceivesMinor === 95000 && at95.retainedMinor === 5000 &&
+    at95.retainedMinor < at90.retainedMinor,
+  "L: a HIGHER repurchase rate is more generous to the customer, not less",
+  `0.90 -> customer $900, company retains $100. 0.95 -> customer $950, ` +
+  `company retains $50. The haircut is revenue the company keeps, so raising ` +
+  `the rate halves it`
+);
+
+/* AND THE NUMBER THAT DECIDES IT: what is left after the money has been moved
+   twice. The acquiring fee on the original purchase is usually unrecoverable,
+   and the payout costs again. */
+report(
+  at90.netToCompanyMinor === 5745 && at90.sustainable === true &&
+    at95.netToCompanyMinor === 695 && at95.sustainable === true &&
+    at95.netToCompanyMinor < at90.netToCompanyMinor / 5,
+  "L: on card rails, 0.90 nets $57 and 0.95 nets $7 on a $1,000 repurchase",
+  `costs are ~$43 either way — 2.9% + 30c acquiring, 1% + 25c payout, $4 ` +
+  `admin — so nearly the whole difference is the rate. 0.95 keeps about an ` +
+  `eighth of what 0.90 keeps`
+);
+
+/* THE CASE THAT SETTLES IT. Cross-border, 0.95 does not merely earn less — it
+   LOSES money on every repurchase. A rate above break-even is a facility the
+   company pays customers to use. */
+const lFx = L.repurchaseScenarios(DRAFT, 100000,
+  Object.assign({}, lCosts, { fxPct: 0.02, payoutPct: 0.02 }));
+const fx95 = lFx.rows.find((r) => r.rate === 0.95);
+const fx90 = lFx.rows.find((r) => r.rate === 0.90);
+report(
+  fx95.netToCompanyMinor < 0 && fx95.sustainable === false &&
+    fx90.netToCompanyMinor > 0 && fx90.sustainable === true &&
+    /costs more than it retains/.test(fx95.note),
+  "L: cross-border, 0.95 loses money on every repurchase and 0.90 does not",
+  `at 0.95 net is $${(fx95.netToCompanyMinor / 100).toFixed(2)}; at 0.90 it is ` +
+  `$${(fx90.netToCompanyMinor / 100).toFixed(2)}. FX and a 2% payout are what ` +
+  `move it across zero`
+);
+
+/* The break-even rate, solved rather than guessed, because payout cost itself
+   moves with the rate. Any chosen rate should sit below it and the gap is the
+   margin. */
+report(
+  SC.breakEvenRate > 0.95 && SC.breakEvenRate < 0.96 &&
+    lFx.breakEvenRate > 0.92 && lFx.breakEvenRate < 0.93 &&
+    lFx.breakEvenRate < SC.breakEvenRate,
+  "L: break-even is 0.957 domestic and 0.929 cross-border",
+  `0.95 sits 0.007 under the domestic break-even and 0.021 OVER the ` +
+  `cross-border one — which is why one number for both rails cannot be right`
+);
+
+/* L: THE THREE CONCEPTS, KEPT APART.
+   Point value, repurchase price and payout cost are different questions and
+   the module answers them separately. 1,000 TP being 1,000 units of
+   entitlement does not mean the company must pay $1,000 to buy them back. */
+report(
+  L.entitlementOf(DRAFT, 1000) === 100000 &&
+    at90.customerReceivesMinor !== L.entitlementOf(DRAFT, 1000) &&
+    at90.costs.total > 0 && at90.costs.acquiring > 0 && at90.costs.payout > 0,
+  "L: entitlement, repurchase price and payout cost are three separate figures",
+  `1,000 TP carries $1,000 of travel entitlement; the repurchase price is ` +
+  `$900; moving the money costs $${(at90.costs.total / 100).toFixed(2)}. None ` +
+  `of the three is derivable from another`
+);
+
+/* L: THE PAYOUT ROUTE IS A FRAUD CONTROL BEFORE IT IS A CONVENIENCE.
+   "Give us a different bank account" is the step account-takeover depends on,
+   so the default removes it entirely. */
+const routeOriginal = L.payoutRoute(DRAFT, { originalPaymentRef: "PAY-1" });
+const routeAlt = L.payoutRoute(DRAFT, { originalRouteAvailable: false });
+report(
+  routeOriginal.route === "original" &&
+    routeOriginal.requiresStepUp === false &&
+    routeAlt.route === "alternative" &&
+    routeAlt.requiresVerification.length === 2 &&
+    AC.ACTIONS.CHANGE_PAYOUT.auth === "STEP_UP",
+  "L: funds return to the instrument that paid; a new destination is verified",
+  `the default collects nothing new, so there is nothing new to compromise. ` +
+  `An alternative route needs step-up AND destination verification — a payout ` +
+  `destination the customer just named is the artefact of a takeover`
+);
+
 /* ==== the entity distinction, and the legal review package ============== */
 
 /* WANKONG LLC IS THE ISSUER. AFRINKONG IS THE TRADE NAME.
@@ -3602,14 +3700,23 @@ report(
 const PKG = fs.readFileSync(
   path.join(__dirname, "..", "docs", "travel-point-legal-review-package.md"),
   "utf8");
-const pkgQuestions = (PKG.match(/^\d+\. /gm) || []).length;
+/* Counted inside §4 only, and asserted SEQUENTIAL. The first version counted
+   every numbered line in the file and would not have noticed that renumbering
+   one section left duplicate numbers colliding with the next — which is
+   exactly what happened, and what a reader would have tripped over while
+   citing a question back. */
+const pkgSection4 = PKG.split("## 4 —")[1].split("## 5 —")[0];
+const pkgNums = (pkgSection4.match(/^(\d+)\. /gm) || [])
+  .map((m) => parseInt(m, 10));
+const pkgQuestions = pkgNums.length;
+const pkgSequential = pkgNums.every((n, i) => n === i + 1);
 report(
-  pkgQuestions >= 40 &&
+  pkgQuestions >= 40 && pkgSequential &&
     /No customer money has been accepted. No Travel Point exists./.test(PKG) &&
     /`compliance: DRAFT`, `issuanceEnabled: false`/.test(PKG),
   "the legal review package asks a numbered, countable set of questions",
-  `${pkgQuestions} questions across nine areas, and it opens by stating the ` +
-  `product's actual state rather than describing an intention`
+  `${pkgQuestions} questions across nine areas, numbered 1..${pkgQuestions} ` +
+  `without a gap or a repeat, so a question can be cited back unambiguously`
 );
 
 /* The blocker count it quotes must be the blocker count readiness() reports.

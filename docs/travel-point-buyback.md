@@ -255,6 +255,10 @@ answered by an implementation choice, and none may be answered by one.
 | E-g | May a repurchase be paid in a currency other than the one paid, and who carries the FX movement? (B-xix, unchanged) | counsel + finance |
 | E-h | On programme closure, what happens to points still outstanding when `REDEMPTION_PERIOD` ends — forfeiture, mandatory repurchase, or migration to a successor programme? | counsel |
 | E-i-q | Do the E5 controls (`minHoldDays` 90, `maxPerYear` 5,000) sit at defensible values, or do they read as friction designed to discourage a right? | counsel |
+| L-rate | The model says 0.90 nets $57 domestically and 0.95 nets $7, with 0.95 loss-making cross-border. Which rate does `AFK-TP-2026.1` carry, and should it differ by rail? | commercial + finance |
+| L-costs | `payoutCostsBorneBy` is null. Does the customer bear the actual transfer cost, or the programme? Deducting it at cost is transparent; absorbing it is simpler to explain. | commercial + counsel |
+| L-measured | The cost figures above are plausible rails, not measured ones. What does Wankong actually pay to acquire and to pay out, per corridor? | finance |
+| L-route | Can a repurchase lawfully be paid only to the original instrument, and what happens when that instrument is closed? | counsel |
 | E-j | Does forfeiture on cancellation inside seven days need to be characterised as a cancellation charge rather than as a loss of entitlement? | counsel |
 | E-k | Are promotional points, which expire and cannot be repurchased, a different instrument requiring separate treatment rather than a lot of the same one? (B-xvii, sharpened) | counsel + accounting |
 

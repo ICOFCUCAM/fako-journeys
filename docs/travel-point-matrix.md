@@ -60,7 +60,7 @@ not executable · **⬜ open**: nobody has decided · **⚖ counsel**.
 | **T** | Payment mechanism | do not implement | ✅ **not implemented, deliberately** | — |
 | **U** | Refunds/chargebacks | open | ✅ reversal by compensating entry · ⬜ recovery when spent | B-recovery |
 | **V** | Accounting | counsel | 📦 **in the package** — §H, eight questions | `travel-point-legal-review-package.md` |
-| **W** | Regulatory | counsel | 📦 **package delivered** — 46 questions | `travel-point-legal-review-package.md` |
+| **W** | Regulatory | counsel | 📦 **package delivered** — 48 questions | `travel-point-legal-review-package.md` |
 | **X** | Customer protection | open | ✅ recovery tiers, restriction visibility · ⬜ complaint process | `travel-point-wallet.md` |
 | **Y** | Fraud/abuse | open | ✅ **architecture built** · ⬜ no model | `travel-point-risk.md` |
 | **Z** | Customer account | open | ✅ **architecture built** — account ≠ wallet ≠ ledger | `travel-point-wallet.md` |
