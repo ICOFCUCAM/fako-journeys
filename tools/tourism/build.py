@@ -738,6 +738,21 @@ def cmd_points(args):
     return 0
 
 
+def cmd_entities(args):
+    """/trust — who you are dealing with, rendered from scripts/entities.js.
+
+        build.py entities
+
+    The entity model was loaded by no page: a customer could not learn from
+    this site which of three companies was acting. The layer descriptions and
+    the reason on every act are the module's own strings, so the page cannot
+    drift from the model it describes.
+    """
+    from tourism import trust_page
+    trust_page.run()
+    return 0
+
+
 def cmd_gateway(args):
     from tourism import gateway
     _tax, countries, _cache = dataset()
@@ -1204,7 +1219,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "acquire": cmd_acquire, "heroes": cmd_heroes, "bound": cmd_bound, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "points": cmd_points, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "acquire": cmd_acquire, "heroes": cmd_heroes, "bound": cmd_bound, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "points": cmd_points, "entities": cmd_entities, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,
