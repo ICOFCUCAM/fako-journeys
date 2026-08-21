@@ -742,6 +742,25 @@ HOW_TEMPLATE = """<!DOCTYPE html>
         do involve money can be answered properly by people qualified to answer
         them rather than quickly by us.</p>
     </article>
+
+    <!-- A PAGE A READER COULD NOT LEAVE.
+         The page inventory found this one with ZERO outbound links inside
+         <main>: four answers, and then nothing. A reader who had just been
+         told where their money sits had no way onward except the navigation
+         they arrived by — on a surface whose whole proposition is a journey
+         from an idea to an intention. Its three siblings all continue
+         somewhere. This one stopped. -->
+    <article class="jf-q">
+      <h2>Then the useful next thing</h2>
+      <p>None of this means much until it is about a particular journey: the
+        arithmetic needs a number, and the number comes from a destination.
+        <a href="/journey-fund">Price one and plan toward it</a>, or read
+        <a href="/journey-fund/questions">the questions people actually
+        ask</a> before they start.</p>
+      <p>If it is the unit rather than the plan you are wondering about,
+        <a href="/travel-points">what a Travel Point is</a> says so plainly,
+        including what it is not.</p>
+    </article>
   </div>
 </main>
 %(foot)s
