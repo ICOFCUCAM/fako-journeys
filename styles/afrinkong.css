@@ -915,14 +915,30 @@ img[data-illustration]{height:auto}
   border-bottom-color:var(--c-accent)}
 .af-shell-area[open]>summary{color:var(--c-primary)}
 
-.af-shell-area-menu{position:absolute;left:0;top:100%;z-index:90;
-  min-width:230px;background:var(--c-bg);border:2px solid var(--c-primary);
-  padding:4px 0;display:flex;flex-direction:column}
-.af-shell-area-menu a{padding:10px 16px;min-height:24px;font-size:15px;
-  color:var(--c-primary);border-top:var(--fj-rule)}
+/* ONE DISCLOSURE PANEL, NOT TWO.
+   This and the phone menu are the same component — a list of destinations
+   dropped from a summary — so they share these rules rather than restating
+   them. They were briefly two: the desktop copy carried padding 10px/16px and
+   min-height 24px against the phone's 11px/18px and 44px, which is a smaller
+   tap target reached by the same finger on a touch laptop. Nothing rendered
+   differently, because 15px type in 20px of padding clears 24px without ever
+   consulting the minimum — so the divergence was invisible and would have
+   stayed invisible until somebody tightened the type. Two interpretations of
+   one component is the failure this shell exists to prevent; keep them here. */
+.af-shell-area-menu,.af-shell-menu-in{position:absolute;top:100%;z-index:90;
+  background:var(--c-bg);border:2px solid var(--c-primary);padding:6px 0 10px}
+.af-shell-area-menu a,.af-shell-menu-in a{display:block;padding:11px 18px;
+  min-height:44px;font-size:15px;color:var(--c-primary);
+  border-top:var(--fj-rule)}
+.af-shell-area-menu a:hover,.af-shell-menu-in a:hover{background:var(--c-sand)}
+.af-shell-area-menu a[aria-current="page"],
+.af-shell-menu-in a[aria-current="page"]{color:var(--c-accent)}
+
+/* Where they legitimately differ: which edge they hang from, and how wide.
+   Explore drops from a control in the middle of the row and holds a fixed
+   width; the phone menu hangs off the right edge and takes the viewport. */
+.af-shell-area-menu{left:0;min-width:230px}
 .af-shell-area-menu a:first-child{border-top:0}
-.af-shell-area-menu a:hover{background:var(--c-sand)}
-.af-shell-area-menu a[aria-current="page"]{color:var(--c-accent)}
 
 .af-shell-util{display:flex;gap:20px}
 .af-shell-util a{font-family:var(--fj-mono);font-size:10px;letter-spacing:.16em;
@@ -983,17 +999,13 @@ img[data-illustration]{height:auto}
   padding:11px 0;min-height:44px;display:flex;align-items:center}
 .af-shell-menu>summary::-webkit-details-marker{display:none}
 .af-shell-menu[open]>summary{color:var(--c-accent)}
-.af-shell-menu-in{position:absolute;right:0;top:100%;z-index:90;
-  min-width:min(78vw,290px);background:var(--c-bg);
-  border:2px solid var(--c-primary);padding:6px 0 10px}
+/* The shared panel rules are above, with the area menu. Only the anchoring,
+   the width and the group eyebrow are the phone menu's own. */
+.af-shell-menu-in{right:0;min-width:min(78vw,290px)}
 .af-shell-menu-in b{display:block;font-family:var(--fj-mono);font-size:9.5px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--c-accent);
   padding:14px 18px 6px}
 .af-shell-menu-in span{display:block}
-.af-shell-menu-in a{display:block;padding:11px 18px;min-height:44px;
-  font-size:15px;color:var(--c-primary);border-top:var(--fj-rule)}
-.af-shell-menu-in a:hover{background:var(--c-sand)}
-.af-shell-menu-in a[aria-current="page"]{color:var(--c-accent)}
 
 @media(max-width:900px){
   .af-shell-in{padding:11px 26px;gap:20px}
