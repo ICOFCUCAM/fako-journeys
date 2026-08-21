@@ -8,6 +8,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 
 | doing | read |
 |---|---|
+| **anything economic — Travel Points, programmes, the ledger** | **`docs/travel-point-decisions.md`** — START HERE. The canonical index: definition → decisions A–I → programme state → implementation. Every other points document hangs off it |
 | anything with photographs, R2, or the acquisition budget | **`docs/image-library-state.md`** — the handover, including a list of approaches already tried and found wrong |
 | page weight, or quoting a performance number | `docs/weight-baseline.md` |
 | deciding what photography to buy | `docs/hero-acquisition.md` |
@@ -18,7 +19,7 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 | Travel Points, the ledger, payments, or anything economic | **`docs/travel-points-architecture.md`** — audit, architecture, and the legal gate that must clear before a single payment is taken |
 | how a customer acquires points over time | **`docs/travel-point-purchase.md`** — the purchase model. A plan is an intention, never a mandate; nothing charges anybody |
 | the legal boundary, the compliance ladder, or what counsel must answer | **`docs/travel-point-compliance.md`** — Section D. The programme is `compliance: DRAFT`; only `PILOT` or `ACTIVE` may issue, and the ladder is not skippable |
-| any question of the form "can we ship X of the points product yet?" | **`docs/economic-model-decisions.md`** — the reconciliation register. Ten of the original eleven are now settled by Decisions A–F; question 11 (legal structure) is the gate and is still open |
+| any question of the form "can we ship X of the points product yet?" | ask `readiness(programId)`, not a document. **`docs/economic-model-decisions.md`** is the reconciliation register — ten of eleven settled by Decisions A–I; question 11 (legal structure) is the gate and is still open |
 | whether a Travel Point may ever show a cash value | **`docs/travel-point-display.md`** — Decision I. No. Four concepts, never one field called `value`; a buyback quote is `standing: false` |
 | price changes, discontinuation, **cessation of travel**, or the activation gate | **`docs/travel-point-continuity.md`** — Decisions F/G/H. A reserved booking is price-locked; cessation makes redemption unavailable though still permitted; `active` is NOT `mayIssue` |
 | Decision F — what a Travel Point can buy (canonical) | **`docs/travel-point-redemption.md`** — the eligible basket, the exclusions as a list with reasons, and the redemption cap |
@@ -64,7 +65,7 @@ Run before claiming anything is done. All of these must pass.
     node tools/link-checks.js                    78,595 links
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
-    node tools/points-checks.js                 208 — the Travel Point ledger
+    node tools/points-checks.js                 209 — the Travel Point ledger
     node tools/goal-checks.js                    36 — the Travel Goal is planning only
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes
