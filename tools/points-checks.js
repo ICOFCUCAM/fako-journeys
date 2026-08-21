@@ -43,9 +43,16 @@ const P = "TEST-ACTIVE-FIXTURE";
 L.PROGRAMS[P] = Object.assign({}, L.PROGRAMS["AFK-TP-2026.1"], {
   id: P,
   name: "fixture, tests only",
-  compliance: "ACTIVE",
+  compliance: "ACTIVE", issuanceEnabled: true,
   status: "active",
   maxProgrammeExposure: 5000000,
+  /* Decision G separated `active` from `mayIssue`, and this fixture broke the
+     moment it did — reaching an issuing compliance state no longer starts
+     issuance by itself. That is the gate working, and it is the third time a
+     fixture has broken because a guard became real. Both conditions are now
+     set explicitly, which is also the honest shape: a programme that issues
+     has been approved AND switched on, by two different decisions. */
+  issuanceEnabled: true,
 });
 
 const DRAFT = "AFK-TP-2026.1";
@@ -344,7 +351,7 @@ report(
    only way this demonstration can be written at all. */
 const bbProg = L.PROGRAMS[DRAFT];
 const PROMO = L.variant(DRAFT, {
-  issueRate: 1.25, compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  issueRate: 1.25, compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
 }, "PROMO-25-FIXTURE");
 const paidMinor = 100000;                                  // $1,000
 const issued = L.pointsFor(PROMO, paidMinor);
@@ -726,10 +733,10 @@ report(
  * issuance. The quantity in an entry is a fact about the past, and a later
  * programme cannot reach back and change how many points somebody received. */
 const ENT_A = L.variant(DRAFT, {
-  entitlementRate: 1, compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  entitlementRate: 1, compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
 }, "ENT-BASE-FIXTURE");
 const ENT_B = L.variant(DRAFT, {
-  entitlementRate: 1.25, compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  entitlementRate: 1.25, compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
 }, "ENT-RICH-FIXTURE");
 const historical = [Object.assign(entry("PURCHASE", 1000), {
   programVersion: ENT_A,
@@ -766,7 +773,7 @@ report(
 
 /* B4: correction by compensating entry, exactly as the lock-in writes it. */
 const CORR = L.variant(DRAFT, {
-  compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
 }, "CORRECTION-FIXTURE");
 const ce = (n, kind, q, x) => Object.assign({
   id: "TPC-" + n, kind, quantity: q, status: "SETTLED",
@@ -802,7 +809,7 @@ report(
 
 const PP = require("../scripts/purchase-plan.js");
 const CP = L.variant(DRAFT, {
-  compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
 }, "PURCHASE-FIXTURE");
 const pe = (n, kind, q, x) => Object.assign({
   id: "TPP-" + n, kind, quantity: q, status: "SETTLED",
@@ -931,7 +938,7 @@ report(
 
 const BK = require("../scripts/booking.js");
 const DP = L.variant(DRAFT, {
-  compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
 }, "BOOKING-FIXTURE");
 let dn = 0;
 const de = (kind, q, x) => Object.assign({
@@ -1117,7 +1124,7 @@ report(
 const ENT = L.variant(
   DRAFT,
   {
-    compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+    compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
     issueRate: 1.25,
     buyback: Object.assign({}, L.PROGRAMS[DRAFT].buyback, { basis: "entitlement" }),
   },
@@ -1203,7 +1210,7 @@ report(
    the ENFORCEMENT rather than proving one programme's current flag, and it
    keeps working whichever way that flag goes. */
 const NOTRANSFER = L.variant(
-  DRAFT, { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  DRAFT, { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
            transferable: false }, "TEST-NON-TRANSFERABLE");
 const transferAttempt = threw(() => L.wallet(eBought.concat([
   Object.assign(entry("TRANSFER_OUT", 100), { programVersion: NOTRANSFER })])));
@@ -1243,8 +1250,12 @@ report(
 /* E10 — a programme stops SELLING long before it stops OWING. */
 const closureLadder = ["ACTIVE", "CLOSED_TO_NEW_PURCHASES", "REDEMPTION_PERIOD",
                        "CLOSED"].map((c) => {
+  /* issuanceEnabled true throughout, so this measures the LADDER's effect on
+     issuance rather than the separate switch Decision G added. Without it
+     every rung would read "issue n" and the check would prove nothing. */
   const v = L.variant(DRAFT,
-    { compliance: c, maxProgrammeExposure: 5000000 }, "TEST-CLOSURE-" + c);
+    { compliance: c, issuanceEnabled: true, maxProgrammeExposure: 5000000 },
+    "TEST-CLOSURE-" + c);
   return { c, issue: L.mayIssue(v), redeem: L.mayRedeem(v), buy: L.mayBuyBack(v) };
 });
 report(
@@ -1387,7 +1398,7 @@ report(
  * money was paid for them, so no price attaches to them at all. */
 const LADDER = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
     promotional: Object.assign({}, L.PROGRAMS[DRAFT].promotional,
       { tiers: [{ fromPoints: 2000, bonusRate: 0.10 },
                 { fromPoints: 1000, bonusRate: 0.07 }] }) },
@@ -1408,7 +1419,7 @@ report(
    repriced point is the one that has a spot value. */
 const NOBONUS = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
     promotional: Object.assign({}, L.PROGRAMS[DRAFT].promotional,
                                { offered: false }) },
   "TEST-NO-PROMOTION"
@@ -1544,7 +1555,7 @@ report(
  */
 const EARLY = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000, issueRate: 1.10,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000, issueRate: 1.10,
     /* No promotional grant here: under this programme the incentive IS the
        rate, and every point issued is a purchased point. See the rate-versus-
        grant check below, which is the part of Decision B that needed a
@@ -1596,7 +1607,7 @@ report(
  * have nothing to act on. Asserted here so the difference is not lost. */
 const GRANTED = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000, issueRate: 1,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000, issueRate: 1,
     promotional: Object.assign({}, L.PROGRAMS[DRAFT].promotional,
                                { bonusRate: 0.10 }) },
   "EARLY-2026-GRANT"
@@ -1851,7 +1862,7 @@ report(
  * term and whichever is tighter binds. */
 const PCT = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
     buyback: Object.assign({}, L.PROGRAMS[DRAFT].buyback,
                            { maxPctPerYear: 0.25, maxPerYear: 1000000000 }) },
   "TEST-PCT-LIMIT"
@@ -1928,7 +1939,7 @@ report(
  * vanished silently the moment a programme permitted transfer. */
 const TRANSFERABLE = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000, transferable: true },
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000, transferable: true },
   "TEST-TRANSFERABLE"
 );
 const inFinalWeek = [{ journeyRef: "J-C8", daysToDeparture: 5, points: 4800 }];
@@ -2031,13 +2042,28 @@ report(
 const RUNOFF = L.variant(
   DRAFT, { compliance: "REDEMPTION_PERIOD", maxProgrammeExposure: 5000000 },
   "TEST-RUNOFF");
+/* DECISION G ADDED A SECOND CONDITION, and this check caught it: a zero
+   balance is no longer enough to close. TERMINATED means the wind-down
+   obligations were PERFORMED, and a balance can reach zero either because
+   every holder was served or because something upstream went wrong and the
+   fold is reading an empty ledger. Requiring an explicit record of completion
+   makes somebody assert the first rather than the system infer it from an
+   absence. */
+const RUNOFF_DONE = L.variant(
+  DRAFT,
+  { compliance: "REDEMPTION_PERIOD", maxProgrammeExposure: 5000000,
+    cessation: { ceased: true, ceasedOn: "2029-01-01", reason: "test",
+                 obligationsCompleted: true } },
+  "TEST-RUNOFF-COMPLETE");
 report(
   L.mayTransition(RUNOFF, "CLOSED", { outstanding: 4500 }).ok === false &&
-    L.mayTransition(RUNOFF, "CLOSED", { outstanding: 0 }).ok === true &&
+    L.mayTransition(RUNOFF, "CLOSED", { outstanding: 0 }).ok === false &&
+    L.mayTransition(RUNOFF_DONE, "CLOSED", { outstanding: 0 }).ok === true &&
     L.mayClose(RUNOFF, null).ok === false,
-  "D4: a programme with points outstanding cannot reach CLOSED",
-  `4,500 TP outstanding -> refused; 0 outstanding -> permitted; and an ` +
-  `UNSTATED balance is refused too, because it cannot be assumed to be zero`
+  "D4 + G: closing needs nothing outstanding AND the obligations recorded complete",
+  `4,500 outstanding -> refused; 0 outstanding but obligations not recorded -> ` +
+  `still refused; 0 and obligations complete -> permitted; an UNSTATED balance ` +
+  `-> refused, because it cannot be assumed to be zero`
 );
 
 /* D3 — and the ladder itself: stop selling, run off, then close. Each step
@@ -2060,7 +2086,7 @@ report(
    programme with harsher terms leaves the old one untouched. */
 const HARSH = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
     expiry: { purchased: 6, promotional: 6 } },
   "TEST-2027-HARSH");
 const retro = threw(() => { L.PROGRAMS[DRAFT].expiry.purchased = 6; });
@@ -2110,7 +2136,7 @@ const dSpend = L.wallet(dLedger.concat([
   Object.assign(entry("RESERVE", 2000), { journeyRef: "J-D8" })]));
 const INVERTED = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
     expiry: { purchased: 12, promotional: 36 } },
   "TEST-INVERTED-EXPIRY");
 const invLedger = dLedger.map((e) =>
@@ -2133,7 +2159,7 @@ report(
 /* D8 — and the tie-break is stable rather than incidental. */
 const NEITHER = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
     expiry: { purchased: null, promotional: null } },
   "TEST-NO-EXPIRY-EITHER");
 report(
@@ -2378,7 +2404,7 @@ report(
  * activated it. A cap that cannot be computed is now a refusal. */
 const ENTITLEMENT_TRANSFERABLE = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000, transferable: true,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000, transferable: true,
     buyback: Object.assign({}, L.PROGRAMS[DRAFT].buyback,
                            { basis: "entitlement" }) },
   "TEST-LAUNDER");
@@ -2606,7 +2632,7 @@ report(
    would cheerfully approve a full-point booking it does not permit. */
 const CAP70 = L.variant(
   DRAFT,
-  { compliance: "ACTIVE", maxProgrammeExposure: 5000000,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
     redemptionCap: { maxPortion: 0.7, appliesTo: "eligible" } },
   "TEST-CAP-70");
 const capped = BK.request(CAP70, { requirement: 10000 }, { available: 10000 },
@@ -2735,7 +2761,7 @@ report(
    go, and a programme that can neither close nor honour is stuck rather than
    safe. G names the path and its order. */
 const GSUCC = L.variant(
-  DRAFT, { compliance: "ACTIVE", maxProgrammeExposure: 5000000 },
+  DRAFT, { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000 },
   "TEST-AFK-TP-2027.1");
 const GOLD = L.variant(
   DRAFT,
@@ -2964,6 +2990,139 @@ report(
   "I: no caller passes a holding into the points-to-money arithmetic",
   `${iScripts.length} scripts scanned — entitlementOf and priceOfPoints are ` +
   `only ever asked about a quantity, never about what somebody has`
+);
+
+/* ==== Decision G — cessation of eligible travel ========================== */
+
+/* THE ASSUMPTION THIS DECISION BREAKS.
+ *
+ * Everything before it assumed Afrinkong would keep providing eligible travel.
+ * `windDown()` read `mayRedeem()` alone — which asks whether the compliance
+ * state PERMITS redemption — and a company that has ceased providing travel is
+ * still permitted to redeem and simply cannot. Offering that step would have
+ * been the cruellest possible answer: one the customer takes and nobody can
+ * perform. Permission is not capability. */
+const CEASED = L.variant(
+  DRAFT,
+  { compliance: "REDEMPTION_PERIOD", maxProgrammeExposure: 5000000,
+    cessation: { ceased: true, ceasedOn: "2029-01-01",
+                 reason: "no longer operating eligible travel",
+                 obligationsCompleted: false } },
+  "TEST-CEASED");
+const STILL_TRADING = L.variant(
+  DRAFT, { compliance: "REDEMPTION_PERIOD", maxProgrammeExposure: 5000000 },
+  "TEST-STILL-TRADING");
+const ceasedPlan = L.windDown(CEASED);
+const tradingPlan = L.windDown(STILL_TRADING);
+report(
+  ceasedPlan.ceased === true &&
+    ceasedPlan.steps.find((s) => s.step === "redeem").available === false &&
+    ceasedPlan.steps.find((s) => s.step === "redeem").permitted === true &&
+    tradingPlan.steps.find((s) => s.step === "redeem").available === true,
+  "G: cessation makes redemption unavailable even where the state still permits it",
+  `ceased -> redeem permitted:true available:false; still trading -> available. ` +
+  `Permission is not capability, and the wind-down read only the permission`
+);
+
+/* G's FOUR STEPS, in the order the decision names them. `alternative` was
+   missing entirely — it lived in `remedies()` as a separate function, so a
+   wind-down and a discontinued journey answered the same question in two
+   places. One list now. */
+report(
+  tradingPlan.steps.map((s) => s.step).join(",") ===
+    "redeem,alternative,migrate,buyback" &&
+    /cancelling the points because the programme closed/.test(
+      tradingPlan.neverAnOption),
+  "G: redeem, then alternative eligible services, then migrate, then buyback",
+  `four steps; alternative sits above migration because it is still travel ` +
+  `under this programme, and repurchase stays last`
+);
+
+/* G: AND WHEN EVERYTHING ELSE IS GONE, THE HIERARCHY FALLS THROUGH RATHER THAN
+   COLLAPSING. A ceased programme with no successor still reaches repurchase —
+   which is the whole point of the order having four rungs. */
+report(
+  ceasedPlan.steps.filter((s) => s.available).map((s) => s.step).join(",") ===
+    "buyback" && ceasedPlan.exhausted === false,
+  "G: a ceased programme falls through to the repurchase mechanism, not to nothing",
+  `redeem, alternative and migrate all unavailable; buyback remains. Business ` +
+  `cessation is not an economic event that destroys accumulated entitlement`
+);
+
+/* G: AND NO CESSATION RULE CREATES A UNIVERSAL CASH VALUE. Decision I's rule,
+   restated where it is most likely to be broken — a wind-down is exactly the
+   moment somebody reaches for a per-point figure. */
+const gDisclosure = L.windDownDisclosure(CEASED, 4500);
+report(
+  gDisclosure.outstanding === 4500 && gDisclosure.cashEquivalent === null &&
+    gDisclosure.buybackMechanism === true &&
+    !/\$/.test(JSON.stringify(gDisclosure)) &&
+    /No cessation rule gives a Travel Point a cash value/.test(gDisclosure.note),
+  "G: a wind-down discloses the mechanism and never a per-point figure",
+  `outstanding, options, deadline, successor and the buyback MECHANISM — ` +
+  `no dollar sign anywhere in the gDisclosure`
+);
+
+/* G: deadlines stated honestly. `periodMonths` is unset, and null is different
+   from "no deadline", so the gDisclosure says which rather than implying one. */
+report(
+  gDisclosure.deadline === null && gDisclosure.periodMonths === null &&
+    /has not been set/.test(gDisclosure.deadlineNote),
+  "G: an unset wind-down period is reported as unset, not as no deadline",
+  `"${gDisclosure.deadlineNote}"`
+);
+
+/* ---- G: `active` is not `mayIssue` ------------------------------------- */
+
+/* THE SECOND HALF OF DECISION G, AND THE MORE CONSEQUENTIAL ONE.
+ *
+ * Reaching compliance ACTIVE used to turn issuance on by itself, so the last
+ * rung of the ladder carried two decisions at once — somebody completing a
+ * compliance review would have enabled a shop. They are now separate
+ * conditions and BOTH must hold, so neither flag is ever the whole gate. */
+const gActive = L.variant(
+  DRAFT, { compliance: "ACTIVE", maxProgrammeExposure: 5000000 },
+  "TEST-G-ACTIVE-ONLY");
+const gEnabledOnly = L.variant(
+  DRAFT, { issuanceEnabled: true }, "TEST-G-ENABLED-ONLY");
+const gBoth = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000 },
+  "TEST-G-BOTH");
+report(
+  L.mayIssue(gActive) === false && L.mayIssue(gEnabledOnly) === false &&
+    L.mayIssue(gBoth) === true &&
+    L.PROGRAMS[DRAFT].issuanceEnabled === false,
+  "G: active is not mayIssue — approval and switching on are two decisions",
+  `compliance ACTIVE alone -> false; issuanceEnabled alone -> false; both -> ` +
+  `true. One flag is never the whole gate, which is what status:'active' was`
+);
+
+/* And the product state must AGREE with the gate. It read the compliance state
+   alone, so the moment issuance gained a second condition the two disagreed and
+   produced the genuinely absurd refusal "program X is ACTIVE_PROGRAM. Points
+   may only be issued under an ACTIVE_PROGRAM." */
+report(
+  L.stateOf(gActive) === "DRAFT_PROGRAM" &&
+    L.stateOf(gBoth) === "ACTIVE_PROGRAM",
+  "G: the product state agrees with the gate it describes",
+  `an approved-but-not-issuing programme reads DRAFT_PROGRAM — a product state ` +
+  `that contradicts its own gate is worse than none`
+);
+
+/* G: "CAN WE SHIP?" IS A FUNCTION NOW, NOT A DOCUMENT.
+   The register drifted because readiness was answered by reading prose. This
+   answers it from the programme, and deliberately does not consult `status`. */
+const ready = L.readiness(DRAFT);
+report(
+  ready.ready === false && ready.mayIssue === false &&
+    ready.blockers.length === 3 &&
+    ready.blockers.some((b) => /compliance is DRAFT/.test(b)) &&
+    ready.blockers.some((b) => /maxProgrammeExposure/.test(b)) &&
+    ready.blockers.some((b) => /issuanceEnabled/.test(b)) &&
+    !/\bstatus\b/.test(JSON.stringify(ready)),
+  "G: readiness is computed from the programme, and never reads `status`",
+  ready.blockers.map((b, i) => `${i + 1}. ${b.slice(0, 48)}`).join(" | ")
 );
 
 /* ==== the documents must not drift from the code ======================== */
