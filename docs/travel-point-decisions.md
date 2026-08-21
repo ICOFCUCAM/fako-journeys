@@ -131,11 +131,25 @@ ACTIVE → CLOSED_TO_NEW_PURCHASES → REDEMPTION_PERIOD → CLOSED
 | `scripts/risk.js` | item Y — the risk engine, holds, and the ledger gate. No model |
 | `scripts/account.js` | item Z — account, wallet view, recovery tiers, admin adjustments. No session, no database |
 | `tools/points/schema.sql` | append-only ledger, designed and **not applied anywhere** |
-| `tools/points-checks.js` | 234 checks — the decisions above, asserted |
+| `tools/points-checks.js` | 239 checks — the decisions above, asserted |
 
 **None of it can issue a point.** Three independent refusals stand in the way:
 the fold refuses issuance under a non-issuing programme, `mayActivate()`
 refuses an incomplete programme, and `issuanceEnabled` is false.
+
+---
+
+## The current phase — legal review
+
+**`travel-point-legal-review-package.md`** is the deliverable for counsel: what
+Travel Points are, what happens to customer money, 46 numbered questions, and
+what has already been decided and should not be re-opened.
+
+    Define → Implement → Test → **Legal/Compliance Review** → Operational Controls → Activate
+
+The engineering foundation is substantially complete. Further financial
+functionality should wait for counsel's answers rather than be built because it
+can be.
 
 ---
 
