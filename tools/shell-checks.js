@@ -82,10 +82,13 @@ check('every page wears the shell and nothing else', !stragglers.length,
    its own version of the nav inside the shell would pass check 1 and fail
    this one, which is the failure mode worth catching. */
 
+/* The AREAS, by their summaries — Explore and Plan — rather than by whatever
+   links happen to sit inside them. The signature is the shape of the
+   navigation, and the shape is the two areas. */
 const navSig = (html) => {
-  const m = html.match(/<nav class="af-shell-nav"[^>]*>([\s\S]*?)<\/nav>/);
+  const m = html.match(/<nav class="af-shell-nav"[^>]*>([\s\S]*?)<\/nav>\s*<div class="af-shell-util"/);
   if (!m) return null;
-  return (m[1].match(/>([^<]+)<\/a>/g) || []).join('|');
+  return (m[1].match(/<summary>([^<]+)<\/summary>/g) || []).join('|');
 };
 const sigs = {};
 for (const [rel, html] of src) {
@@ -107,6 +110,49 @@ check('every page on the shell shows the same primary navigation',
       + onShell + ' page(s)'
     : distinct.length + ' different primary navigations: '
       + distinct.map(s => sigs[s].length + '× ' + sigs[s][0]).join(' | '));
+
+/* ---- 2b. AND THE AREAS' CHILDREN ARE REACHABLE ------------------------
+ *
+ * THE CHECK ABOVE PASSED WHILE THE NAVIGATION WAS BROKEN, and that is why this
+ * one exists.
+ *
+ * A browser-suite failure — the Trans Afrique band's copy under a 144px
+ * masthead — was fixed by dropping the area row from every page carrying a
+ * product band. That is 1,584 of 1,597, so Destinations, The Atlas, Countries,
+ * Stories, Meet Africa, Trans Afrique and The Wonders became reachable from
+ * nowhere but the phone menu.
+ *
+ * The check above saw "Explore|Plan" on all 1,597 pages and passed. It was
+ * asserting that the two labels were consistent, which they were, and never
+ * asked the question the navigation exists to answer: can a visitor get to the
+ * things inside them.
+ *
+ * Consistency is not reachability. This asserts the second. */
+const unreachable = [];
+for (const [rel, html] of src) {
+  if (mastOf(html) !== 'af-shell') continue;
+  if (/af-shell--operator/.test(html)) continue;
+  /* IN THE DESKTOP NAVIGATION, NOT MERELY IN THE MARKUP.
+     The first version of this searched the whole <header> and passed on the
+     broken tree — because the phone menu lives inside the header and lists
+     every child, while being display:none above 760px. Present is not
+     reachable, and measuring presence is the same mistake as the check this
+     one was written to replace.
+     `af-shell-nav` is the desktop navigation; `af-shell-sub` is the area row
+     where a page has one. Those two are what a visitor on a laptop can use. */
+  const navOnly = (html.match(
+    /<nav class="af-shell-nav"[\s\S]*?<\/nav>\s*<div class="af-shell-util"/) || [''])[0]
+    + (html.match(/<nav class="af-shell-sub"[\s\S]*?<\/nav>/g) || []).join('');
+  const missing = ['/places', '/atlas', '/stories', '/meet', '/trans-afrique',
+                   '/journey', '/journey-fund']
+    .filter(h => !new RegExp('href="' + h + '(?:[#"])').test(navOnly));
+  if (missing.length) unreachable.push(rel + ' cannot reach ' + missing.join(' '));
+}
+check('every area’s children are reachable from every page', !unreachable.length,
+  unreachable.length
+    ? unreachable.length + ' page(s), e.g. ' + unreachable[0]
+    : 'the ten destinations under Explore and Plan are one press away on all '
+      + onShell + ' pages');
 
 /* ---- 3. the settled decisions ----------------------------------------- */
 
