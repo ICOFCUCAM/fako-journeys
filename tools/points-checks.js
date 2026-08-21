@@ -205,9 +205,14 @@ report(L.priceOf(P, 100) === 10000,
        "and the price of points is the inverse",
        "100 points -> $100.00");
 
-report(L.pointsFor(P, 12550) === 125,
+/* Was `=== 125`, asserting FLOOR. Decision J changed the rule to half-up, so
+   $125.50 now projects 126 rather than 125 — still whole, which is what this
+   check is actually for. Safe because this direction never issues: it feeds
+   `project()`, and issuance runs points -> money instead. */
+report(L.pointsFor(P, 12550) === 126 &&
+       Number.isInteger(L.pointsFor(P, 12550)),
        "fractional points are never issued",
-       "$125.50 -> 125 points, not 125.5");
+       "$125.50 -> 126 points under half-up, not 125.5 — whole either way");
 
 report(threw(() => L.fold([entry("PURCHASE", 12.5)])) !== null,
        "a fractional quantity is refused by the ledger",
@@ -3123,6 +3128,79 @@ report(
     !/\bstatus\b/.test(JSON.stringify(ready)),
   "G: readiness is computed from the programme, and never reads `status`",
   ready.blockers.map((b, i) => `${i + 1}. ${b.slice(0, 48)}`).join(" | ")
+);
+
+/* ==== Decision J — fractional points and rounding ======================= */
+
+/* THE FINDING. Every site delivering a quantity TO the customer used
+ * `Math.floor` — purchase, bonus, cancellation release, migration, buyback
+ * allowance. Not one was a decision: floor is simply the obvious way to make a
+ * fraction whole, and choosing it five times produced a system that rounds
+ * against the customer everywhere. Each loss is under a point; the PATTERN is
+ * what J forbids. */
+const JP = L.variant(
+  DRAFT,
+  { compliance: "ACTIVE", issuanceEnabled: true, maxProgrammeExposure: 5000000,
+    issueRate: 1.075,
+    promotional: Object.assign({}, L.PROGRAMS[DRAFT].promotional,
+                               { bonusRate: 0.07 }) },
+  "TEST-ROUNDING");
+report(
+  L.pointsForPurchase(JP, 99900) === 1074 &&   // exact 1073.925, floor 1073
+    L.bonusFor(JP, 999) === 70 &&              // exact   69.93,  floor   69
+    L.cancellation(JP, 15, 4801).released === 2401,  // exact 2400.5
+  "J: quantities delivered to the customer round half-up, not down",
+  `$999 at 1.075 -> 1,074 TP (floor gave 1,073); a 7% grant on 999 -> 70 ` +
+  `(floor gave 69); half of 4,801 reserved -> 2,401 released (floor gave 2,400)`
+);
+
+/* J: WHOLE UNITS, ENFORCED AT THE LEDGER. A fractional entry is refused
+   outright, so no decimal can reach a customer-facing balance however the
+   arithmetic upstream behaved. */
+const fractional = threw(() => L.wallet([
+  Object.assign(entry("PURCHASE", 100), { quantity: 4364.7 })]));
+report(
+  fractional !== null && /positive whole number/.test(fractional) &&
+    L.canPurchase(DRAFT, 100.5, 0).ok === false,
+  "J: the ledger refuses a fractional point, and so does a purchase",
+  `"${fractional}" — internal arithmetic may be fractional; what is recorded ` +
+  `and what a customer sees are whole units`
+);
+
+/* J: AND EXACTLY ONE SITE MAY ROUND AGAINST THE CUSTOMER.
+   `goalRequirement` ceilings because a point is indivisible and somebody 0.3
+   short cannot travel. It is listed, the disadvantage is bounded under one
+   point, and this check exists so a second exception cannot be added in
+   silence. */
+report(
+  L.ROUNDING.exceptions.length === 1 &&
+    L.ROUNDING.exceptions[0].site === "goalRequirement" &&
+    L.ROUNDING.mode === "half-up" &&
+    L.goalRequirement(DRAFT, 480050) === 4801,
+  "J: one documented exception rounds against the customer, and only one",
+  `goalRequirement ceilings — a $4,800.50 journey needs 4,801 TP — because a ` +
+  `point is indivisible. Every other site uses toCustomer()`
+);
+
+/* And the pattern cannot come back. A bare Math.floor on a quantity the
+   customer receives is the exact habit that produced the finding, so the five
+   repaired sites are checked to still route through `toCustomer`. */
+const ledgerNoComments = fs.readFileSync(
+  path.join(__dirname, "..", "scripts", "points-ledger.js"), "utf8")
+  .replace(/\/\*[\s\S]*?\*\//g, " ")
+  .split("\n").filter((l) => !/^\s*\/\//.test(l)).join("\n");
+const floorsOnDelivery = [
+  /Math\.floor\([^)]*amountMinor[^)]*issueRate/,
+  /Math\.floor\(points \* rate\)/,
+  /Math\.floor\(reservedPoints/,
+  /Math\.floor\(points \* ratio\)/,
+  /Math\.floor\(base \* b\.maxPctPerYear\)/,
+].filter((re) => re.test(ledgerNoComments));
+report(
+  floorsOnDelivery.length === 0,
+  "J: none of the five repaired sites has gone back to truncating",
+  `purchase, grant, cancellation release, migration and the annual allowance ` +
+  `all route through toCustomer() — the habit, not any one line, was the bug`
 );
 
 /* ==== the documents must not drift from the code ======================== */

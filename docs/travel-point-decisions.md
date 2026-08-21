@@ -129,11 +129,19 @@ ACTIVE → CLOSED_TO_NEW_PURCHASES → REDEMPTION_PERIOD → CLOSED
 | `scripts/journey-catalogue.js` | requirements and the component breakdown |
 | `scripts/travel-goal.js` | the planning surface. Issues nothing |
 | `tools/points/schema.sql` | append-only ledger, designed and **not applied anywhere** |
-| `tools/points-checks.js` | 208 checks — the decisions above, asserted |
+| `tools/points-checks.js` | 213 checks — the decisions above, asserted |
 
 **None of it can issue a point.** Three independent refusals stand in the way:
 the fold refuses issuance under a non-issuing programme, `mayActivate()`
 refuses an incomplete programme, and `issuanceEnabled` is false.
+
+---
+
+## The full coverage map
+
+**`travel-point-matrix.md`** reconciles the complete A–AJ register against the
+code: 24 items enforced, 4 with counsel, 8 genuinely open, and one conflict
+(item N versus Decision E) that needs a word rather than a commit.
 
 ---
 
