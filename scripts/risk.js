@@ -190,8 +190,9 @@
    * The case that makes this an economic problem rather than a security one.
    * The customer flew. The ledger does not erase the redemption — history is
    * append-only and the journey happened — so what is created is a LIABILITY:
-   * a record that Afrinkong is owed for travel it delivered against a payment
-   * that was reversed.
+   * a record that WANKONG LLC is owed for travel Afrinkong delivered against a
+   * payment that was reversed. The entity distinction is load-bearing: the
+   * brand provided the journey, the legal entity carries the debt.
    *
    * Deliberately not a points adjustment. The points are gone, correctly, and
    * inventing a negative balance would misstate what the customer holds. The

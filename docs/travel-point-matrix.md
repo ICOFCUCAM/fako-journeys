@@ -59,12 +59,12 @@ not executable · **⬜ open**: nobody has decided · **⚖ counsel**.
 | **S** | Supplier costs | open | ✅ **settled by H** — includable, not included | `travel-point-redemption.md` |
 | **T** | Payment mechanism | do not implement | ✅ **not implemented, deliberately** | — |
 | **U** | Refunds/chargebacks | open | ✅ reversal by compensating entry · ⬜ recovery when spent | B-recovery |
-| **V** | Accounting | counsel | 📋 five questions recorded | ⚖ |
-| **W** | Regulatory | counsel | 📋 **the gate** — question 11 | ⚖ |
+| **V** | Accounting | counsel | 📦 **in the package** — §H, eight questions | `travel-point-legal-review-package.md` |
+| **W** | Regulatory | counsel | 📦 **package delivered** — 46 questions | `travel-point-legal-review-package.md` |
 | **X** | Customer protection | open | ✅ recovery tiers, restriction visibility · ⬜ complaint process | `travel-point-wallet.md` |
 | **Y** | Fraud/abuse | open | ✅ **architecture built** · ⬜ no model | `travel-point-risk.md` |
 | **Z** | Customer account | open | ✅ **architecture built** — account ≠ wallet ≠ ledger | `travel-point-wallet.md` |
-| **AA** | Identity/KYC | counsel | ✅ verification levels shaped · 📋 E-kyc, Z-auth | `travel-point-wallet.md` |
+| **AA** | Identity/KYC | counsel | ✅ levels shaped · 📦 in the package §C, §I | `travel-point-legal-review-package.md` |
 | **AB** | Limits/exposure | open | ✅ **all seven exist**; `mayActivate` refuses unset | `points-ledger.js` |
 | **AC** | Multi-currency | open | ⬜ single currency; B-xviii/F-e recorded | — |
 | **AD** | Programme changes | open | ✅ versioned; old points keep old terms | `points-ledger.js` |

@@ -2316,7 +2316,15 @@
         quotedFor: points,
         deductionPct: Math.round((1 - b.rate) * 100),
         note: b.discretionary
-          ? 'Afrinkong may repurchase these points at ' + Math.round(b.rate * 100) +
+          /* THE ENTITY MATTERS HERE MORE THAN ANYWHERE ELSE.
+             This said "Afrinkong may repurchase", and repurchase is a
+             financial act by the ISSUER. Afrinkong is the travel brand — it
+             arranges journeys, it does not buy back entitlement. Wankong LLC
+             issues the points and repurchases them, and this is the one
+             sentence a customer reads at the moment money is offered, so it
+             is the one that must name the right party. */
+          ? p.issuer + ' may repurchase these points at ' +
+            Math.round(b.rate * 100) +
             '% of what you paid for them. This is an offer under the terms of ' +
             'this programme, not a guaranteed right of redemption.'
           : 'Repurchase is contractual under the terms of this programme.'

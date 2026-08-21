@@ -3557,6 +3557,88 @@ report(
   `programme — no Stripe, no database, no production wallet, no live transfer`
 );
 
+/* ==== the entity distinction, and the legal review package ============== */
+
+/* WANKONG LLC IS THE ISSUER. AFRINKONG IS THE TRADE NAME.
+ *
+ * Not branding hygiene: a Travel Point is an obligation of Wankong LLC, and a
+ * customer must never be left believing their counterparty is a travel brand
+ * rather than a company. The distinction was WRONG in the one sentence where
+ * it mattered most — the repurchase quote read "Afrinkong may repurchase these
+ * points", and repurchase is a financial act by the issuer. */
+const ledgerSrcFull = fs.readFileSync(
+  path.join(__dirname, "..", "scripts", "points-ledger.js"), "utf8");
+const entityQuote = L.buybackQuote(
+  P, [Object.assign(entry("PURCHASE", 5000),
+      { payment: { amountMinor: 500000, currency: "USD", status: "settled" } })],
+  1000, 200, 0);
+report(
+  L.PROGRAMS[DRAFT].issuer === "Wankong LLC" &&
+    L.PROGRAMS[DRAFT].brand === "Afrinkong" &&
+    /^Wankong LLC may repurchase/.test(entityQuote.note) &&
+    !/Afrinkong may repurchase/.test(entityQuote.note),
+  "the issuer is named as the issuer where money is offered",
+  `"${entityQuote.note.slice(0, 62)}…" — the brand arranges journeys; the ` +
+  `legal entity issues points and repurchases them`
+);
+
+/* And the brand keeps the acts that ARE the brand's. Afrinkong arranges and
+   delivers travel; that usage is correct and must not be over-corrected into
+   naming the LLC as a tour operator. */
+report(
+  /settled by Afrinkong at cost/.test(ledgerSrcFull) &&
+    /by Afrinkong; nothing was reserved/.test(
+      fs.readFileSync(path.join(__dirname, "..", "scripts", "booking.js"), "utf8")),
+  "the brand keeps the acts that belong to the brand",
+  `Afrinkong settles supplier charges and rejects a booking — those are ` +
+  `travel operations, not financial ones. Only the financial acts moved`
+);
+
+/* THE LEGAL REVIEW PACKAGE MUST MATCH THE PRODUCT IT DESCRIBES.
+ *
+ * A package that has drifted from the code is worse than none: counsel would
+ * rule on a product that does not exist. So the figures it quotes are checked
+ * against the programme, not trusted. */
+const PKG = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-legal-review-package.md"),
+  "utf8");
+const pkgQuestions = (PKG.match(/^\d+\. /gm) || []).length;
+report(
+  pkgQuestions >= 40 &&
+    /No customer money has been accepted. No Travel Point exists./.test(PKG) &&
+    /`compliance: DRAFT`, `issuanceEnabled: false`/.test(PKG),
+  "the legal review package asks a numbered, countable set of questions",
+  `${pkgQuestions} questions across nine areas, and it opens by stating the ` +
+  `product's actual state rather than describing an intention`
+);
+
+/* The blocker count it quotes must be the blocker count readiness() reports.
+   This is the number counsel will rely on, and the one most likely to fall
+   out of step as the gate gains conditions — it has gained two already. */
+const pkgBlockers = (PKG.match(/reports \*\*(\w+) unmet conditions\*\*/) || [])[1];
+const wordToNumber = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
+report(
+  wordToNumber[pkgBlockers] === L.readiness(DRAFT).blockers.length,
+  "the package's blocker count is the one readiness() actually reports",
+  `both say ${L.readiness(DRAFT).blockers.length}. The gate has gained two ` +
+  `conditions since it was first written, so this is exactly the figure that ` +
+  `goes stale quietly`
+);
+
+/* And the terms it quotes are the programme's terms. */
+report(
+  new RegExp("`minHoldDays: " + L.PROGRAMS[DRAFT].buyback.minHoldDays + "`").test(PKG) &&
+    new RegExp("`minPoints: " + L.PROGRAMS[DRAFT].buyback.minPoints + "`").test(PKG) &&
+    PKG.includes(L.PROGRAMS[DRAFT].buyback.maxPerYear.toLocaleString("en-US")) &&
+    PKG.includes(String(L.PROGRAMS[DRAFT].expiry.promotional) + " months"),
+  "the package quotes the programme's real repurchase and expiry terms",
+  `minHoldDays ${L.PROGRAMS[DRAFT].buyback.minHoldDays}, minPoints ` +
+  `${L.PROGRAMS[DRAFT].buyback.minPoints}, maxPerYear ` +
+  `${L.PROGRAMS[DRAFT].buyback.maxPerYear}, promotional expiry ` +
+  `${L.PROGRAMS[DRAFT].expiry.promotional} months — counsel must rule on the ` +
+  `product that exists`
+);
+
 /* ==== the documents must not drift from the code ======================== */
 
 /* EVERY BUG THIS SESSION FOUND HAD ONE SHAPE: two things that had to agree,
