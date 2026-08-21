@@ -1,0 +1,112 @@
+/* The Afrinkong token layer.
+ * ===========================================================================
+ * PHASE 4, THE SUBSTRATE. This file changes nothing on screen.
+ *
+ * It declares the scale the site is ALREADY USING, so that fifteen stylesheets
+ * can be migrated onto one vocabulary a file at a time without a redesign in
+ * the middle. Nothing here is applied to a selector; adding it to a page is
+ * inert until a rule opts in.
+ *
+ * WHY THESE NUMBERS AND NOT NICER ONES
+ *
+ * Every value below was measured out of the existing CSS rather than invented.
+ * 840 font-size declarations across 15 stylesheets fall into six clusters, and
+ * the clusters are the scale — a "cleaner" ladder would have required changing
+ * hundreds of rules to match a table nobody had a reason to prefer.
+ *
+ *     label    <= 11px   395 declarations   47%
+ *     small   12-13px      28
+ *     body    14-17px     263               31%
+ *     lead    18-24px     119
+ *     display 25-40px      34
+ *     hero      > 40px      1  (the rest are clamp())
+ *
+ * The display sizes are the clamp() expressions already in the stylesheets,
+ * copied exactly. They are named here, not changed.
+ *
+ * THE PALETTE IS ALSO NOT NEW. `--fj-basalt`, `--fj-canopy`, `--fj-ember`,
+ * `--fj-raffia`, `--fj-dust`, `--fj-sand`, `--fj-gold` were already in use and
+ * are a genuine material vocabulary. This adopts them rather than inventing a
+ * rival set, because two palettes is exactly the problem being fixed.
+ */
+
+:root {
+  /* ---- type: the six clusters, named ------------------------------------
+     `label` carries 47% of all declarations and is one thing: mono, 10px,
+     tracked, uppercase. It was a de-facto token long before this file. */
+  --fj-t-label: 10px;
+  --fj-t-label-tracking: .14em;
+  --fj-t-micro: 12px;
+  --fj-t-small: 13.5px;
+  --fj-t-body: 15px;
+  --fj-t-body-lg: 17px;
+
+  /* Fluid from here. These four clamp() expressions are the most-used ones in
+     the existing CSS, reproduced verbatim so that adopting a token cannot
+     change a rendered size. */
+  --fj-t-lead: clamp(19px, 1.9vw, 25px);
+  --fj-t-title: clamp(21px, 2.4vw, 30px);
+  --fj-t-display: clamp(28px, 3.6vw, 48px);
+  --fj-t-hero: clamp(30px, 4vw, 54px);
+  --fj-t-mega: clamp(48px, 7vw, 88px);
+
+  /* ---- line height ------------------------------------------------------
+     Tight for display, open for reading. Two values, because the site does
+     not need seven. */
+  --fj-lh-tight: 1.06;
+  --fj-lh-title: 1.18;
+  --fj-lh-body: 1.6;
+
+  /* ---- measure ----------------------------------------------------------
+     Running text stays near 65 characters. Stated once so no page has to
+     rediscover it. */
+  --fj-measure: 65ch;
+  --fj-measure-narrow: 46ch;
+
+  /* ---- space: a 4px base, which is what the existing gaps round to ------ */
+  --fj-s-1: 4px;
+  --fj-s-2: 8px;
+  --fj-s-3: 12px;
+  --fj-s-4: 16px;
+  --fj-s-5: 24px;
+  --fj-s-6: 32px;
+  --fj-s-7: 48px;
+  --fj-s-8: 64px;
+  --fj-s-9: 96px;
+  --fj-s-10: 144px;
+
+  /* ---- the breakpoint ladder -------------------------------------------
+     45 distinct breakpoints exist. Three carry 92 of 246 declarations:
+     900px (43), 760px (25), 560px (24). The other 42 are within a few pixels
+     of one of those three and were almost all local decisions nobody meant to
+     make permanent.
+
+     A CAVEAT THAT MATTERS: custom properties DO NOT WORK inside a media
+     query — `@media (max-width: var(--fj-bp-m))` is invalid CSS and fails
+     silently, which is worse than not trying. These four are therefore the
+     CANON rather than the mechanism: a stylesheet writes the literal, and a
+     check asserts the literal is one of these four. */
+  --fj-bp-s: 560px;
+  --fj-bp-m: 760px;
+  --fj-bp-l: 900px;
+  --fj-bp-xl: 1100px;
+
+  /* ---- rules and radii --------------------------------------------------- */
+  --fj-radius: 3px;
+  --fj-radius-lg: 6px;
+
+  /* ---- motion -----------------------------------------------------------
+     One duration and one easing for interface movement. Editorial motion —
+     a section revealing, a map settling — is its own decision and is not
+     tokenised here, because it is composition rather than a control
+     responding to a press. */
+  --fj-dur: 180ms;
+  --fj-dur-slow: 420ms;
+  --fj-ease: cubic-bezier(.2, .6, .2, 1);
+}
+
+/* Every control that moves must stop moving on request. Stated in the token
+   layer so a component cannot forget it. */
+@media (prefers-reduced-motion: reduce) {
+  :root { --fj-dur: 1ms; --fj-dur-slow: 1ms; }
+}
