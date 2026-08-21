@@ -1390,9 +1390,27 @@ def main():
         # It was not in that order. The picker whose copy says "the grid below
         # narrows" sat three thousand pixels below that grid, so the promise was
         # false and clicking it scrolled the reader backwards.
+        # TWO SECTIONS WERE ADDED AND THIS LIST WAS NOT.
+        #
+        # `before` is the Journey Fund door — "Your journey can start long
+        # before you leave" — placed a third of the way down deliberately, and
+        # `wonders` is a desire section: "Some places don't need explaining.
+        # You just need to stand there." Both are real, both were put there on
+        # purpose, and the spine either side of them is untouched.
+        #
+        # The list is what makes this check useful and also what makes it rot:
+        # it fails on any change, including the intended ones, so it has to be
+        # updated as part of making one. It was not, and it has been red ever
+        # since — which is worse than useless, because a check nobody can
+        # satisfy is a check everybody learns to scroll past.
+        #
+        # The invariant this exists to protect is the one below rather than the
+        # literal sequence: `experiences` promises "the grid below narrows", so
+        # it must come before `destinations`. That is asserted separately and
+        # still holds.
         WANT_ORDER = ["window", "motion", "feel", "moments", "scale", "experiences",
-                      "destinations", "cities", "year", "now", "plan",
-                      "stories", "decide", "begin"]
+                      "before", "wonders", "destinations", "cities", "year", "now",
+                      "plan", "stories", "decide", "begin"]
         got = re.findall(r'<section[^>]*id="([a-z]+)"', home_src)
         check("the homepage still argues in the order it was built to",
               got == WANT_ORDER,
@@ -2321,7 +2339,25 @@ def main():
         # -- the palette says what it is ------------------------------------------
         print("\nthe palette says what it is")
         css = open(os.path.join(ROOT_DIR, "styles", "afrinkong.css")).read()
-        TOKENS = dict(re.findall(r"(--c-[a-z-]+):\s*(#[0-9A-Fa-f]{6})", css))
+        # THE SCREEN PALETTE, NOT WHICHEVER ONE COMES LAST IN THE FILE.
+        #
+        # This read the whole stylesheet into a dict, so the LAST definition of
+        # each token won — and the last block in afrinkong.css is `@media print`,
+        # which deliberately re-points six tokens for paper: the accent darkens
+        # so it does not print as mud, and --c-primary becomes #111 because on
+        # paper it is the INK on a white page rather than a dark ground.
+        #
+        # So the contrast checks were comparing the print accent against the
+        # print ink — dark on dark, 1.64:1 — and reporting the site's palette as
+        # illegible. On screen the same pair is 4.53:1 and passes. Three checks
+        # failed on this: both dark-ground inks and the fill-weight assertion,
+        # which wants the terracotta to be TOO LIGHT for type and found the
+        # darkened print value instead.
+        #
+        # Everything above the first @media is the screen palette, which is what
+        # every one of these assertions is about.
+        _screen = css.split("@media", 1)[0]
+        TOKENS = dict(re.findall(r"(--c-[a-z-]+):\s*(#[0-9A-Fa-f]{6})", _screen))
 
         def channels(hexcol):
             h = hexcol.lstrip("#")
@@ -2369,7 +2405,21 @@ def main():
             # A check that cannot see through one alias fails honest work and
             # teaches you to stop reading it, so it follows aliases now — and
             # still insists the three tones end up at three different values.
-            home = open(os.path.join(ROOT_DIR, "index.html")).read()
+            # WHERE THE HOMEPAGE'S CSS LIVES NOW.
+            #
+            # These rules read index.html alone, because the map's styles used
+            # to be in its inline <style>. They are in styles/gateway.css now —
+            # 3,501 lines of it — and the check went on reading the page, found
+            # no `wa-map-rest{fill:var(...)}` at all, and reported that the map
+            # draws the continent in nothing. Five checks failed on that: the
+            # three tones, the tier mix and the land mix.
+            #
+            # Both are read now, so it does not matter which side of the
+            # extraction a rule is on. The same fault as the browser suite's
+            # masthead selector and the operator MARK regex: a check pinned to
+            # WHERE something was rather than to what it says.
+            home = (open(os.path.join(ROOT_DIR, "index.html")).read()
+                    + open(os.path.join(ROOT_DIR, "styles", "gateway.css")).read())
             alias = dict(re.findall(r"(--c-[a-z-]+):\s*var\((--c-[a-z-]+)\)", home))
 
             def drawn_in(want):
@@ -2505,7 +2555,12 @@ def main():
         # from regions.json while being typed by hand, so it kept printing the
         # previous set after the tones were re-cut. It is generated now, and this
         # is the check that says so.
-        home = open(os.path.join(ROOT_DIR, "index.html")).read()
+        # THE SAME MOVE AS THE MAP TONES. These five rules were written into
+        # index.html's inline <style> and live in styles/gateway.css now, so the
+        # check found nothing and reported that the hero window draws none of
+        # the five regions. It draws all five. Read both, as the map check does.
+        home = (open(os.path.join(ROOT_DIR, "index.html")).read()
+                + open(os.path.join(ROOT_DIR, "styles", "gateway.css")).read())
         fills = dict(re.findall(
             r'\.wa-win-state\[data-region="([a-z]+)"\] \.af-window-fill\{fill:(#[0-9A-Fa-f]{6})\}',
             home))
@@ -2545,19 +2600,69 @@ def main():
             # later — the halo grows and the name arrives, which is what hover
             # does — because a rectangle around a point is not where the place is.
             ".wa-map-city:focus",
+            # A country on the neighbours map. The ring is replaced two rules
+            # later by a stroke on the country's own path in the accent, which
+            # is where the place actually is — a rectangle around an irregular
+            # outline points at the bounding box rather than at Rwanda.
+            ".cm-link:focus-visible",
         )
+        # TWO PATTERNS THAT ARE CORRECT AND WERE BEING REPORTED AS FAULTS.
+        #
+        # This check listed exceptions by name, which meant every legitimate
+        # way of moving a focus ring had to be added to a tuple by hand — and
+        # three of them never were, so three genuinely accessible controls were
+        # counted as keyboard traps. An exception list that has to grow is a
+        # check that will be wrong again.
+        #
+        #   A.  X:focus { outline: none }
+        #       X:focus-visible { outline: 2px solid ... }
+        #
+        #       The textbook idiom: suppress the ring for a mouse press, keep it
+        #       for a keyboard one. Nothing is hidden — the ring is one rule
+        #       further down. .jn-map-c was failing on this.
+        #
+        #   B.  .parent:has(X:focus-visible) { outline: ... }
+        #       X:focus-visible { outline: none }
+        #
+        #       The ring moves OUTWARD to the thing the control belongs to,
+        #       which is more visible rather than less. .tf-level-go was failing
+        #       on this: the ring is drawn around the whole card.
+        #
+        # Both are detected from the stylesheet itself, so a new instance of
+        # either needs no edit here. What still needs naming is the third kind —
+        # replacing the ring with a stroke or a halo on an SVG — because there
+        # is no way to tell that from a rule alone.
+        def _base(sel):
+            return sel.split(":focus")[0].strip()
+
         killed = {}
         for path in sorted(glob.glob(os.path.join(ROOT_DIR, "styles", "*.css"))
                            + glob.glob(os.path.join(ROOT_DIR, "*.html"))):
             rel = os.path.relpath(path, ROOT_DIR)
             body = re.sub(r"/\*.*?\*/", " ", open(path).read(), flags=re.S)
-            for m in re.finditer(r"([^{}\n]*:focus[^{}\n]*)\{([^}]*)\}", body):
-                sel, decl = m.group(1).strip(), m.group(2)
+            rules = [(m.group(1).strip(), m.group(2))
+                     for m in re.finditer(r"([^{}\n]*:focus[^{}\n]*)\{([^}]*)\}", body)]
+            # every base selector that is given a real ring on :focus-visible
+            ringed = set()
+            for sel, decl in rules:
+                if ":focus-visible" not in sel:
+                    continue
+                out = re.search(r"outline:\s*([^;}]+)", decl)
+                if out and out.group(1).strip() not in ("none", "0"):
+                    ringed.add(_base(sel))
+            for sel, decl in rules:
                 if "outline:none" not in decl.replace(" ", ""):
                     continue
                 if ":not(:focus-visible)" in sel:
                     continue
                 if any(a in sel for a in ALLOWED):
+                    continue
+                base = _base(sel)
+                # A — the same control keeps its ring on :focus-visible
+                if ":focus-visible" not in sel and base in ringed:
+                    continue
+                # B — an ancestor draws the ring for it
+                if any(base in r and ":has(" in r for r in ringed):
                     continue
                 killed.setdefault(sel[:60], set()).add(rel)
         check("no control hides its focus ring without saying why", not killed,
@@ -2616,7 +2721,19 @@ def main():
                     heroes.append(rel)
                     if 'loading="lazy"' in tag:
                         nolazy.append(rel + " (urgent and lazy at once)")
-                elif "loading=" not in tag and i > 0:
+                elif ("loading=" not in tag and i > 0
+                      and re.search(r'\ssrc="', tag)):
+                    # AN <img> WITH NO src CANNOT BE EAGER.
+                    #
+                    # This tested the absence of loading= as a proxy for "the
+                    # browser will fetch this immediately", and 25 images on the
+                    # homepage carry data-src and no src at all: the motion rail
+                    # swaps them in as it reaches them, so they are the most
+                    # deferred images on the page rather than the least. They
+                    # were counted as eager for having no attribute telling them
+                    # not to be.
+                    #
+                    # The proxy is only sound where there is something to fetch.
                     nolazy.append(rel)
         # Not "every image must carry width and height". That looks like the
         # obvious rule and it is wrong here: on these five pages the CSS reserves
@@ -3119,8 +3236,32 @@ def main():
               ", ".join(unlisted))
 
         bar = re.search(r'<div class="fj-from"[^>]*>(.*?)</div>\s*</div>', con, re.S)
-        check("the primary call of the site still lands on /contact",
-              'href="/contact"' in open(os.path.join(ROOT_DIR, "index.html")).read())
+        # THIS ASSERTED THE OPPOSITE OF WHAT THE ARCHITECTURE NOW REQUIRES.
+        #
+        # /contact is the KAMERUN OPERATOR'S desk — the same five pages this
+        # block is about, with its own masthead and its own form mailing its own
+        # office in Douala. The assertion was written when the site was
+        # substantially that operator's, and it says the front page of Afrinkong
+        # should send its visitors there.
+        #
+        # It should not, and it no longer does. The homepage calls to /journey
+        # five times over plus eleven seeded variants, with /enquire behind it —
+        # Afrinkong's own builder and Afrinkong's own desk. Handing a visitor who
+        # asked about Africa to a subsidiary's contact form is precisely the
+        # confusion the shell work separated.
+        #
+        # So the check is turned around: the homepage must call to something of
+        # Afrinkong's, and must NOT call to the operator's desk. That is a
+        # stronger statement than the one it replaces, and it fails if either
+        # half stops being true.
+        home_html = open(os.path.join(ROOT_DIR, "index.html")).read()
+        check("the primary call of the site is Afrinkong's own",
+              ('href="/journey"' in home_html or 'href="/enquire"' in home_html),
+              "/journey and /enquire")
+        check("the homepage does not hand its visitors to the operator's desk",
+              'href="/contact"' not in home_html,
+              "/contact belongs to %s, and is reached from their pages"
+              % host.operator.name)
         check("/contact says whose desk it is, in the HTML, without a script",
               bool(bar) and host.operator.name in bar.group(1),
               (host.operator.name if bar else "no bar"))
@@ -3187,9 +3328,25 @@ def main():
                     continue
                 base, _, frag = url.partition("#")
                 base = base.split("?")[0]
-                # "#/kenya" and "#/j/kenya/" are hash routes read by atlas.js and
-                # journey.js, not anchors, and there is no element to find.
-                if frag.startswith("/"):
+                # A FRAGMENT WITH A SLASH IN IT IS A ROUTE, NOT AN ID.
+                #
+                # "#/kenya" and "#/j/kenya/" are read by atlas.js and journey.js;
+                # "#r/east" and "#w/food" are read by the homepage's own router,
+                # whose regex makes the leading slash OPTIONAL:
+                #
+                #     /^#\/?(r|w)\/([a-z-]+)$/
+                #
+                # This tested `startswith("/")`, which was right for the atlas
+                # form and had never been widened when the region and want
+                # routes were added without it. Five real links on the homepage
+                # were reported as pointing at elements that do not exist —
+                # correctly, in the sense that there is no such element, and
+                # wrongly, in the sense that there was never meant to be one.
+                #
+                # tools/link-checks.js already had the right rule and the
+                # reasoning written out: no id on this site has a slash in it.
+                # Two checks asking one question should ask it the same way.
+                if "/" in frag:
                     continue
                 target = path if base == "" else as_file(base)
                 if base and target is None:
