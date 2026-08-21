@@ -1390,9 +1390,27 @@ def main():
         # It was not in that order. The picker whose copy says "the grid below
         # narrows" sat three thousand pixels below that grid, so the promise was
         # false and clicking it scrolled the reader backwards.
+        # TWO SECTIONS WERE ADDED AND THIS LIST WAS NOT.
+        #
+        # `before` is the Journey Fund door — "Your journey can start long
+        # before you leave" — placed a third of the way down deliberately, and
+        # `wonders` is a desire section: "Some places don't need explaining.
+        # You just need to stand there." Both are real, both were put there on
+        # purpose, and the spine either side of them is untouched.
+        #
+        # The list is what makes this check useful and also what makes it rot:
+        # it fails on any change, including the intended ones, so it has to be
+        # updated as part of making one. It was not, and it has been red ever
+        # since — which is worse than useless, because a check nobody can
+        # satisfy is a check everybody learns to scroll past.
+        #
+        # The invariant this exists to protect is the one below rather than the
+        # literal sequence: `experiences` promises "the grid below narrows", so
+        # it must come before `destinations`. That is asserted separately and
+        # still holds.
         WANT_ORDER = ["window", "motion", "feel", "moments", "scale", "experiences",
-                      "destinations", "cities", "year", "now", "plan",
-                      "stories", "decide", "begin"]
+                      "before", "wonders", "destinations", "cities", "year", "now",
+                      "plan", "stories", "decide", "begin"]
         got = re.findall(r'<section[^>]*id="([a-z]+)"', home_src)
         check("the homepage still argues in the order it was built to",
               got == WANT_ORDER,
@@ -2537,7 +2555,12 @@ def main():
         # from regions.json while being typed by hand, so it kept printing the
         # previous set after the tones were re-cut. It is generated now, and this
         # is the check that says so.
-        home = open(os.path.join(ROOT_DIR, "index.html")).read()
+        # THE SAME MOVE AS THE MAP TONES. These five rules were written into
+        # index.html's inline <style> and live in styles/gateway.css now, so the
+        # check found nothing and reported that the hero window draws none of
+        # the five regions. It draws all five. Read both, as the map check does.
+        home = (open(os.path.join(ROOT_DIR, "index.html")).read()
+                + open(os.path.join(ROOT_DIR, "styles", "gateway.css")).read())
         fills = dict(re.findall(
             r'\.wa-win-state\[data-region="([a-z]+)"\] \.af-window-fill\{fill:(#[0-9A-Fa-f]{6})\}',
             home))
@@ -3213,8 +3236,32 @@ def main():
               ", ".join(unlisted))
 
         bar = re.search(r'<div class="fj-from"[^>]*>(.*?)</div>\s*</div>', con, re.S)
-        check("the primary call of the site still lands on /contact",
-              'href="/contact"' in open(os.path.join(ROOT_DIR, "index.html")).read())
+        # THIS ASSERTED THE OPPOSITE OF WHAT THE ARCHITECTURE NOW REQUIRES.
+        #
+        # /contact is the KAMERUN OPERATOR'S desk — the same five pages this
+        # block is about, with its own masthead and its own form mailing its own
+        # office in Douala. The assertion was written when the site was
+        # substantially that operator's, and it says the front page of Afrinkong
+        # should send its visitors there.
+        #
+        # It should not, and it no longer does. The homepage calls to /journey
+        # five times over plus eleven seeded variants, with /enquire behind it —
+        # Afrinkong's own builder and Afrinkong's own desk. Handing a visitor who
+        # asked about Africa to a subsidiary's contact form is precisely the
+        # confusion the shell work separated.
+        #
+        # So the check is turned around: the homepage must call to something of
+        # Afrinkong's, and must NOT call to the operator's desk. That is a
+        # stronger statement than the one it replaces, and it fails if either
+        # half stops being true.
+        home_html = open(os.path.join(ROOT_DIR, "index.html")).read()
+        check("the primary call of the site is Afrinkong's own",
+              ('href="/journey"' in home_html or 'href="/enquire"' in home_html),
+              "/journey and /enquire")
+        check("the homepage does not hand its visitors to the operator's desk",
+              'href="/contact"' not in home_html,
+              "/contact belongs to %s, and is reached from their pages"
+              % host.operator.name)
         check("/contact says whose desk it is, in the HTML, without a script",
               bool(bar) and host.operator.name in bar.group(1),
               (host.operator.name if bar else "no bar"))
