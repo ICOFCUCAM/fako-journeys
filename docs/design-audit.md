@@ -8,6 +8,15 @@ The conclusion first, because it is the whole finding:
 > **The economic system can express 39 distinct states. The website can express
 > one, and it is "empty".**
 
+> **CORRECTION (Item 4).** The 39 was an undercount. Enumerated from the code
+> rather than from this table, the real figure is **72 states across twelve
+> vocabularies** — this section missed account states, auth levels, the buyback
+> request lifecycle, risk holds, purchase plans, product state, transfer kinds,
+> and the journey's own six stages. Eleven words already carry more than one
+> meaning internally; `SETTLED`, `REJECTED` and `RESERVED` each mean three
+> different things. See `docs/state-language.md`, which is generated from the
+> module and cannot drift from it. The finding stands and was understated.
+
 ---
 
 ## 1 — The state gap
