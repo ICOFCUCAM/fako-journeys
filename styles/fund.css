@@ -345,6 +345,16 @@
 }
 .jf-fine + .jf-fine{margin-top:9px}
 
+/* THE WAY BACK TO THE BUILDER, under the destination dropdown.
+   Quiet on purpose. A reader who already knows where they are going should
+   pass straight over it; it exists for the one who opened a list of
+   fifty-four countries and did not know which. Accented rather than bold,
+   because it is an alternative route and not a second call to action —
+   "Talk to us about it" is the only solid button on the page and should
+   stay the only one. */
+.jf-where-back{margin-top:12px}
+.jf-where-back a{color:var(--c-accent);text-underline-offset:2px}
+
 /* The four doors offered when the arithmetic cannot reach the chosen month.
    Never red, never called invalid — the honest answer is that this journey is
    further away than this rhythm reaches, and here is what would reach it. */

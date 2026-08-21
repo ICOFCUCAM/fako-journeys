@@ -989,6 +989,32 @@ ul,ol{list-style:none}
   </div>
 </section>
 
+<!-- THE REST OF CAMEROON.
+     Cameroon's page is hand-built rather than generated, so the "four depths"
+     block that tools/tourism/home.py now writes into the other 51 country
+     pages does not reach it. The graph check in tools/link-checks.js found
+     exactly that: 53 of 54 passed and Cameroon failed alone, which is the
+     whole reason the check asks about every country rather than sampling one.
+
+     Written with .fj-acts / .fj-act, which this page already defines. The
+     generated pages use .ct-depths from country.css and the tourism pages use
+     .tq-else from tourism.css; neither stylesheet is linked here, and adding
+     a third copy of the same rules to this page's inline <style> would put
+     them into tourism.css too, since render.py builds that file out of this
+     block. Same three destinations, this page's own vocabulary. -->
+<section class="fj-zone" id="more">
+  <div class="fj-frame">
+    <span class="fj-stamp">More of Cameroon</span>
+    <h2>The rest of <em>Cameroon</em>.</h2>
+    <p class="fj-note">This page is the journey we run. The portrait is the long read, the places are the individual things, and the experiences page is what each of them costs.</p>
+    <div class="fj-acts">
+      <a class="fj-act" href="/portrait/cameroon">Read the portrait</a>
+      <a class="fj-act" href="/places#cameroon">Every place in Cameroon</a>
+      <a class="fj-act" href="/tourism/cameroon">What a journey costs</a>
+    </div>
+  </div>
+</section>
+
 <!-- quote -->
 <section class="fj-zone dust" id="quote">
   <div class="fj-frame">
