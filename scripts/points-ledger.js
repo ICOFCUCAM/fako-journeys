@@ -1091,6 +1091,71 @@
    * costs; "3,650 TP ($3,650)" beside a wallet is a balance, and that is the
    * sentence that makes this a financial product.
    */
+  /* DECISION I: FOUR CONCEPTS THAT MUST NEVER COLLAPSE INTO ONE FIELD.
+   *
+   * The failure this prevents is a single field called `value`. Each of these
+   * is a different economic fact about a different thing, and each is true at a
+   * different moment; a screen that merges any two of them has told the
+   * customer that their points are money, whatever word is on the label.
+   *
+   *   money paid          a completed transaction   $
+   *   travel points       what the customer holds   TP
+   *   journey requirement what a journey needs      TP
+   *   buyback quote       a specific offer, on request, about identified
+   *                       points                    $
+   *
+   * Note which denomination each carries. Money appears twice and both times
+   * it is attached to a TRANSACTION — one that happened, one that is being
+   * offered. Neither is attached to a holding, and a holding has no money
+   * denomination at all. That asymmetry is the whole decision.
+   */
+  var CONCEPTS = [
+    { concept: 'moneyPaid', denomination: 'money', attachesTo: 'a transaction',
+      note: 'What the customer paid Wankong LLC to acquire points.' },
+    { concept: 'travelPoints', denomination: 'points', attachesTo: 'a holding',
+      note: 'Entitlement issued under a named programme. Has no cash value.' },
+    { concept: 'journeyRequirement', denomination: 'points',
+      attachesTo: 'a journey',
+      note: 'How many points an eligible journey requires.' },
+    { concept: 'buybackQuote', denomination: 'money',
+      attachesTo: 'a specific offer',
+      note: 'A quote for identified points at a moment, on request. Never a ' +
+            'standing valuation of a holding.' }
+  ];
+
+  /* I: THE WORDS A SURFACE USES, DECIDED ONCE.
+   *
+   * Returned assembled rather than left to each page, because the failure mode
+   * is a well-meaning label — "Balance", "Value", "Worth" — written by
+   * somebody who never read this file. Every figure here is in points except
+   * the ones that are not shown at all.
+   */
+  function holdingDisplay(held, requirement) {
+    var remaining = Math.max(0, (requirement || 0) - (held || 0));
+    var pct = requirement > 0
+      ? Math.min(100, (held / requirement) * 100) : 0;
+    return {
+      /* The labels, not just the numbers. "Your Travel Points", never "Your
+         Balance"; "Journey target", never "Amount needed". */
+      heldLabel: 'Your Travel Points',
+      heldValue: fmtPoints(held || 0),
+      targetLabel: 'Journey target',
+      targetValue: fmtPoints(requirement || 0),
+      progressLabel: 'Progress',
+      progressValue: (Math.round(pct * 10) / 10) + '%',
+      remainingLabel: 'Remaining',
+      remainingValue: fmtPoints(remaining) + ' remaining to your journey',
+      /* Said explicitly so a surface cannot add one by omission. */
+      cashEquivalent: null,
+      note: 'Travel Points are travel purchasing entitlement. They are not a ' +
+            'cash balance and have no monetary value on their own.'
+    };
+  }
+
+  function fmtPoints(n) {
+    return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' TP';
+  }
+
   var MONEY_MOMENTS = [
     { moment: 'purchase',  shows: 'the price of this transaction',
       why: 'the customer is being charged and must see what' },
@@ -1934,6 +1999,16 @@
         rate: b.rate,
         payableMinor: payable,
         lots: c.lots,
+        /* DECISION I: A QUOTE, NOT A VALUATION.
+           "2,000 TP = $400" displayed permanently would BE the definition of
+           the point, whatever the terms say. This is an offer for these
+           identified points, made because somebody asked, and these three
+           fields exist so a surface cannot render the figure as a standing
+           worth. `deductionPct` is the programme's deduction stated the way a
+           customer reads it rather than as a rate they have to invert. */
+        standing: false,
+        quotedFor: points,
+        deductionPct: Math.round((1 - b.rate) * 100),
         note: b.discretionary
           ? 'Afrinkong may repurchase these points at ' + Math.round(b.rate * 100) +
             '% of what you paid for them. This is an offer under the terms of ' +
@@ -1986,6 +2061,10 @@
       rate: b.rate,
       payableMinor: capped,
       cappedAtConsideration: cap !== null && capped < raw,
+      /* I, as above: an offer about identified points, never a valuation. */
+      standing: false,
+      quotedFor: points,
+      deductionPct: Math.round((1 - b.rate) * 100),
       note: 'Quoted on the entitlement basis under this programme’s terms. ' +
             'This is an offer, not a refund of a purchase price.'
     };
@@ -2082,6 +2161,8 @@
     ISSUING_PAYMENT_STATES: ISSUING_PAYMENT_STATES,
     maySettleIssuance: maySettleIssuance,
     MONEY_MOMENTS: MONEY_MOMENTS,
+    CONCEPTS: CONCEPTS,
+    holdingDisplay: holdingDisplay,
     mixedSettlement: mixedSettlement,
     priceOf: priceOf,
     entitlementOf: entitlementOf,

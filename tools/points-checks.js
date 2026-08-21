@@ -2860,6 +2860,112 @@ report(
   `adoptable by a successor programme, and the exclusion carries its reason`
 );
 
+/* ==== Decision I: no cash-equivalent display ============================= */
+
+/* Mostly reinforcement — F4 settled that money attaches to a transaction or a
+   journey and never to a holding, and MONEY_MOMENTS is a closed list. Three
+   things in Decision I are new: the FOUR CONCEPTS and the rule that they never
+   collapse; the buyback quote as a specific non-standing offer; and the words
+   a surface uses, decided once. */
+
+/* I: THE FOUR CONCEPTS, AND THE ASYMMETRY THAT IS THE WHOLE DECISION.
+   Money appears twice and both times attached to a transaction — one that
+   happened, one being offered. Neither attaches to a holding, and a holding
+   has no money denomination at all. */
+const byDenom = L.CONCEPTS.reduce((m, c) => {
+  (m[c.denomination] = m[c.denomination] || []).push(c.concept); return m;
+}, {});
+report(
+  L.CONCEPTS.length === 4 &&
+    byDenom.money.join(",") === "moneyPaid,buybackQuote" &&
+    byDenom.points.join(",") === "travelPoints,journeyRequirement" &&
+    L.CONCEPTS.filter((c) => c.attachesTo === "a holding")
+      .every((c) => c.denomination === "points"),
+  "I: four concepts, and nothing denominated in money attaches to a holding",
+  L.CONCEPTS.map((c) => `${c.concept}: ${c.denomination} on ${c.attachesTo}`)
+    .join("; ")
+);
+
+/* And they must never collapse into one field called `value`. Asserted against
+   every object a customer-facing path actually produces, because the failure is
+   a well-meaning label written by somebody who never read the rule. */
+const iSurfaces = {
+  wallet: L.wallet([entry("PURCHASE", 5000)]),
+  holding: L.holdingDisplay(5000, 7500),
+  offer: L.purchaseOffer(P, 1000, 0),
+  goal: GO.build(4800, 14, 750, "v1").display,
+};
+const collapsed = Object.keys(iSurfaces).flatMap((k) =>
+  Object.keys(iSurfaces[k])
+    .filter((f) => /^(value|worth|balance|cash|equivalent)$/i.test(f))
+    .map((f) => `${k}.${f}`));
+report(
+  collapsed.length === 0,
+  "I: no customer-facing object carries a field called value, worth or balance",
+  `${Object.keys(iSurfaces).length} surfaces checked — ` +
+  `${Object.keys(iSurfaces).map((k) => `${k}(${Object.keys(iSurfaces[k]).length})`).join(", ")}`
+);
+
+/* I: THE BUYBACK QUOTE IS AN OFFER, NOT A VALUATION.
+   "2,000 TP = $400" displayed permanently would BE the definition of the
+   point, whatever the terms say. The quote is made because somebody asked,
+   about identified points, and says so in its own fields. */
+const iQuote = L.buybackQuote(
+  P, [Object.assign(entry("PURCHASE", 5000),
+      { payment: { amountMinor: 400000, currency: "USD", status: "settled" } })],
+  2000, 200, 0);
+report(
+  iQuote.standing === false && iQuote.quotedFor === 2000 &&
+    iQuote.deductionPct === 10 &&
+    /* $4,000 bought 5,000 TP, so 2,000 of them trace to $1,600, and the
+       programme pays 90% of that. Written out because a bare 144000 is a
+       number nobody can check. */
+    iQuote.grossMinor === 160000 && iQuote.payableMinor === 144000,
+  "I: a repurchase quote is a specific, non-standing offer about identified points",
+  `2,000 TP quoted at $${iQuote.payableMinor / 100} with a ` +
+  `${iQuote.deductionPct}% programme deduction — standing:false, so no surface ` +
+  `can render it as what the points are worth`
+);
+
+/* I: THE WORDS, DECIDED ONCE — and they are Decision I's own example verbatim.
+   Every figure is in points, and `cashEquivalent` is present and null so a
+   surface cannot add one by omission. */
+const iDisp = L.holdingDisplay(5000, 7500);
+report(
+  iDisp.heldLabel === "Your Travel Points" && iDisp.heldValue === "5,000 TP" &&
+    iDisp.targetLabel === "Journey target" && iDisp.targetValue === "7,500 TP" &&
+    iDisp.progressValue === "66.7%" &&
+    iDisp.remainingValue === "2,500 TP remaining to your journey" &&
+    iDisp.cashEquivalent === null &&
+    !/\$/.test(JSON.stringify(iDisp)),
+  "I: the customer-facing wording is assembled here, in points, with no dollar sign",
+  `"${iDisp.heldLabel}: ${iDisp.heldValue}" / "${iDisp.targetLabel}: ` +
+  `${iDisp.targetValue}" / "${iDisp.progressValue}" / "${iDisp.remainingValue}"`
+);
+
+/* I: AND NOTHING CONVERTS A HOLDING INTO MONEY.
+ *
+ * `entitlementOf()` and `priceOfPoints()` are arithmetic about a QUANTITY and
+ * are legitimate — F4 argued that. The dangerous thing is a caller passing a
+ * WALLET FIGURE into one of them, which is how "your 5,000 TP are worth
+ * $5,000" gets written without anybody deciding to write it. Scanned across
+ * every script rather than reasoned about. */
+const iScripts = fs.readdirSync(path.join(__dirname, "..", "scripts"))
+  .filter((f) => f.endsWith(".js"));
+const holdingToMoney = iScripts.flatMap((f) => {
+  const src = fs.readFileSync(path.join(__dirname, "..", "scripts", f), "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, " ");
+  const bad = src.match(
+    /(entitlementOf|priceOfPoints)\s*\([^)]*\b(available|held|balance|acquired|purchased)\b/g);
+  return (bad || []).map((m) => `${f}: ${m}`);
+});
+report(
+  holdingToMoney.length === 0,
+  "I: no caller passes a holding into the points-to-money arithmetic",
+  `${iScripts.length} scripts scanned — entitlementOf and priceOfPoints are ` +
+  `only ever asked about a quantity, never about what somebody has`
+);
+
 /* ==== the documents must not drift from the code ======================== */
 
 /* EVERY BUG THIS SESSION FOUND HAD ONE SHAPE: two things that had to agree,
