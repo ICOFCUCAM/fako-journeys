@@ -2628,5 +2628,110 @@ report(
   `${fOpenF} unresolved questions carried in docs/travel-point-redemption.md`
 );
 
+/* ==== the documents must not drift from the code ======================== */
+
+/* EVERY BUG THIS SESSION FOUND HAD ONE SHAPE: two things that had to agree,
+ * and nothing compared them. PROMOTION in the module and not the schema. The
+ * consideration cap and the transferability flag. Promotional-first and
+ * earliest-expiry. Two rate cards with two shapes for `arrival`.
+ *
+ * The decision documents are the same class of hazard and had already drifted:
+ * `economic-model-decisions.md` cited `expiryMonths: 0` — a field that does not
+ * exist — described transfer as unimplemented after it was implemented, and
+ * repeated a claim about activation that stopped being true when the compliance
+ * ladder was built. Nothing failed, because nothing compared them.
+ *
+ * These three checks are that comparison. They are cheap and they are the only
+ * reason the next drift gets caught. */
+
+const DOCS = ["economic-model-decisions.md", "travel-point-issuance.md",
+              "travel-point-exit.md", "travel-point-duration.md",
+              "travel-point-transfer.md", "travel-point-redemption.md",
+              "travel-point-pricing.md", "travel-point-buyback.md"]
+  .map((f) => ({ name: f, path: path.join(__dirname, "..", "docs", f) }))
+  .filter((d) => fs.existsSync(d.path))
+  .map((d) => ({ name: d.name, text: fs.readFileSync(d.path, "utf8") }));
+
+/* 1 — NO DOCUMENT MAY CITE A PROGRAMME FIELD THAT DOES NOT EXIST.
+ *
+ * Backticked identifiers that look like programme terms are checked against the
+ * real programme. `expiryMonths` is listed explicitly as a retired name because
+ * it is the one that was actually wrong, and a retired name reappearing is
+ * exactly as bad as a misspelt new one. */
+const progFields = Object.keys(L.PROGRAMS[DRAFT]);
+const nestedFields = ["buyback", "expiry", "promotional", "mixedPayment",
+                      "redemptionCap"].flatMap(
+  (k) => Object.keys(L.PROGRAMS[DRAFT][k] || {}));
+const known = new Set(progFields.concat(nestedFields));
+const RETIRED = ["expiryMonths", "entitlement:", "expiry_months"];
+
+/* A document is allowed to QUOTE what it corrected — the house style prefers
+   recording a mistake to deleting the evidence of it — and is not allowed to
+   state it as current. So historical lines are stripped first: markdown
+   blockquotes, and lines marked `**Was:**`. Anything left is a live claim.
+   Without this the rewrite that FIXED the drift failed the check for
+   explaining the fix, which is the wrong incentive entirely. */
+const liveText = (t) => t.split("\n")
+  .filter((l) => !/^\s*>/.test(l) && !/\*\*Was:\*\*/.test(l))
+  .join("\n");
+
+const retiredCitations = DOCS.flatMap((d) =>
+  RETIRED.filter((r) => liveText(d.text).includes("`" + r))
+         .map((r) => `${d.name}: ${r}`));
+report(
+  retiredCitations.length === 0,
+  "docs: no decision document cites a retired programme field",
+  retiredCitations.length ? retiredCitations.join("; ")
+    : `${DOCS.length} documents checked against ${known.size} live programme ` +
+      `fields; \`expiryMonths\` was cited for months after it ceased to exist`
+);
+
+/* 2 — NO DOCUMENT MAY CLAIM `status` IS THE ACTIVATION GATE.
+ *
+ * The dangerous one. `status: 'active'` is inert — issuance reads `compliance`
+ * — so a reader who believed the old sentence would have been guarding the
+ * wrong word entirely, and would have thought a five-rung ladder was a
+ * one-word change. Proved inert here rather than merely asserted. */
+const statusOnly = L.variant(DRAFT, { status: "active" }, "TEST-STATUS-INERT");
+const claimsStatusActivates = DOCS.concat([
+  { name: "CLAUDE.md",
+    text: fs.readFileSync(path.join(__dirname, "..", "CLAUDE.md"), "utf8") }
+]).filter((d) =>
+  /\.status[^\n]{0,40}to\s+`?'?active'?`?[^\n]{0,60}(one-word|most consequential)/i
+    .test(d.text) ||
+  /moving\s+`?PROGRAMS\[[^\]]+\]\.status`?\s+to\s+`?'active'`?\s+is a one-word/i
+    .test(d.text)
+).map((d) => d.name);
+report(
+  L.mayIssue(statusOnly) === false &&
+    L.stateOf(statusOnly) === "DRAFT_PROGRAM" &&
+    claimsStatusActivates.length === 0,
+  "docs: nothing claims `status: 'active'` can issue a point",
+  claimsStatusActivates.length
+    ? "still claimed in: " + claimsStatusActivates.join(", ")
+    : `a programme with status 'active' and compliance DRAFT reports mayIssue ` +
+      `false and stateOf DRAFT_PROGRAM — the gate is compliance, and reaching ` +
+      `it is a five-rung ladder, not a word`
+);
+
+/* 3 — EVERY OPEN QUESTION THE REGISTER ROUTES TO MUST ACTUALLY EXIST.
+ *
+ * The register lists which document carries which open items. A pointer to an
+ * item nobody wrote is how a question quietly stops being tracked. */
+const register = DOCS.find((d) => d.name === "economic-model-decisions.md").text;
+const routed = (register.match(/\b[BCDEF]-[a-z]{3,}\b/g) || []);
+const missingItems = [...new Set(routed)].filter((item) => {
+  const letter = item[0];
+  return !DOCS.some((d) => d.name !== "economic-model-decisions.md" &&
+                           d.text.includes("| " + item + " |"));
+});
+report(
+  routed.length >= 20 && missingItems.length === 0,
+  "docs: every open question the register routes to is written down somewhere",
+  missingItems.length ? "dangling: " + missingItems.join(", ")
+    : `${[...new Set(routed)].length} named open items, all present in the ` +
+      `document the register sends you to`
+);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
