@@ -786,7 +786,11 @@ const ce = (n, kind, q, x) => Object.assign({
 }, x || {});
 const corrected = L.wallet([
   ce(1, "PURCHASE", 1000, { payment: { amountMinor: 100000, currency: "USD" } }),
-  ce(2, "ADJUST_DOWN", 1000, { corrects: "TPC-1" }),
+  /* Z now requires an approver and a reason on any administrative entry, so
+     the correction fixtures carry them. That is the gate working: an ADJUST
+     nobody signed is indistinguishable from a bug that minted points. */
+  ce(2, "ADJUST_DOWN", 1000, { corrects: "TPC-1", approvedBy: "ops-test",
+                               reason: "compensating entry, B4" }),
   ce(3, "PURCHASE", 1100, { payment: { amountMinor: 100000, currency: "USD" } }),
 ]);
 report(
@@ -802,7 +806,9 @@ report(
    adjustments get read as one correction. */
 let backwards = null;
 try {
-  L.wallet([ce(9, "ADJUST_DOWN", 10, { corrects: "TPC-404" })]);
+  L.wallet([ce(9, "ADJUST_DOWN", 10, { corrects: "TPC-404",
+                                       approvedBy: "ops-test",
+                                       reason: "correction pointing nowhere" })]);
 } catch (err) { backwards = err.message; }
 report(
   backwards && /not earlier in this ledger/.test(backwards),
@@ -1069,7 +1075,7 @@ const everything = [
   de("REDEEM", 1500, { journeyRef: "J1" }),
   de("BUYBACK", 300),
   de("EXPIRE", 200),
-  de("ADJUST_DOWN", 100),
+  de("ADJUST_DOWN", 100, { approvedBy: "ops-test", reason: "identity fixture" }),
 ];
 const wAll = L.wallet(everything);
 const identity =
@@ -1710,7 +1716,11 @@ const original = Object.assign(entry("PURCHASE", 1000),
   { id: "TP-ORIG", payment: { amountMinor: 100000, currency: "USD",
                               status: "settled" } });
 const beforeReversal = JSON.stringify(original);
-const rev = L.reversal(P, [original], "TP-ORIG", "chargeback CB-1");
+/* Z: a reversal is an administrative entry and now names a human, because the
+   fold refuses an unsigned one. reversal() used to hand back approvedBy:null
+   with a comment saying the caller supplies it; nothing made them. */
+const rev = L.reversal(P, [original], "TP-ORIG", "chargeback CB-1",
+                       { approvedBy: "ops-test" });
 const afterFold = L.wallet([original,
   Object.assign({}, rev.entries[0], { id: "TP-REV", idempotencyKey: "rev1" })]);
 report(
@@ -1728,7 +1738,8 @@ report(
    and commercial question. It is reported, not resolved. */
 const committed = [original,
   Object.assign(entry("RESERVE", 900), { journeyRef: "J-CB" })];
-const revShort = L.reversal(P, committed, "TP-ORIG", "chargeback CB-2");
+const revShort = L.reversal(P, committed, "TP-ORIG", "chargeback CB-2",
+                            { approvedBy: "ops-test" });
 report(
   revShort.shortfall === 900 && revShort.recoverable === 100 &&
     /has not been made/.test(revShort.unresolved),
@@ -3343,7 +3354,8 @@ const flown = [
   Object.assign(entry("REDEEM", 4800), { journeyRef: "J-CB" }),
 ];
 const cb = RK.chargebackAfterRedemption(P, flown, "TP-CB",
-                                        { paymentRef: "PAY-CB" });
+                                        { paymentRef: "PAY-CB",
+                                          approvedBy: "ops-test" });
 report(
   cb.ok && cb.recoverablePoints === 200 &&
     cb.liability.points === 4800 &&
@@ -3354,6 +3366,195 @@ report(
   `200 TP still in the wallet are recoverable as points; the 4,800 already ` +
   `flown become a money debt with NO amount attached — what it is worth ` +
   `depends on the reversed payment, and Decision I forbids pricing a holding`
+);
+
+/* ==== Z — the authenticated Travel Wallet =============================== */
+
+const AC = require("../scripts/account.js");
+
+/* Z: THE BOUNDARY. Planning does not require an account; ownership does.
+   Asserted as a list rather than trusted, because the failure mode is somebody
+   putting a sign-in wall in front of the product's front door and nothing
+   noticing. */
+report(
+  ["EXPLORE", "PRICE_JOURNEY", "CREATE_GOAL"].every(
+    (a) => AC.requiresAccount(a).requiresAccount === false) &&
+    ["BUY_POINTS", "TRANSFER_POINTS", "REQUEST_BUYBACK", "RESERVE_JOURNEY",
+     "CHANGE_PAYOUT"].every((a) => AC.requiresAccount(a).requiresAccount === true) &&
+    AC.mayPerform("CREATE_GOAL", {}).ok === true,
+  "Z: planning needs no account; owning, moving or selling points does",
+  `a visitor explores, prices a journey and sets a goal with no session at ` +
+  `all — Afrinkong has no financial relationship with them`
+);
+
+/* An unknown action requires an account, because the safe answer is yes. */
+report(
+  AC.requiresAccount("SOMETHING_NEW").requiresAccount === true &&
+    AC.requiresAccount("SOMETHING_NEW").known === false &&
+    AC.mayPerform("SOMETHING_NEW", { accountId: "C1", authenticated: true }).ok === false,
+  "Z: an action nobody has classified requires an account and is refused",
+  `fails closed, the same rule as risk.js — a new action must be added ` +
+  `deliberately rather than inheriting permission`
+);
+
+/* Z + Y: A STOLEN SESSION IS NOT AUTHORITY TO MOVE ENTITLEMENT.
+   Z's security table, enforced. `auth` and `stepUp` are separate inputs
+   precisely so that having a session does not imply having authority. */
+const zSession = { accountId: "C1", authenticated: true, state: "VERIFIED" };
+const zAllow = { decision: "ALLOW" };
+report(
+  ["TRANSFER_POINTS", "REQUEST_BUYBACK", "CHANGE_IDENTITY",
+   "CHANGE_PAYOUT"].every((a) =>
+    AC.ACTIONS[a].auth === "STEP_UP" &&
+    AC.mayPerform(a, zSession, zAllow).ok === false &&
+    AC.mayPerform(a, Object.assign({ stepUp: true }, zSession), zAllow).ok === true) &&
+    AC.ACTIONS.VIEW_POINTS.auth === "NORMAL",
+  "Z: transfer, buyback and identity or payout changes each need step-up",
+  `all four refused on a fully authenticated session — "${AC.mayPerform(
+    "TRANSFER_POINTS", zSession, zAllow).why.slice(0, 70)}…"`
+);
+
+/* And a risk-gated action refused without a verdict — absent evidence is not
+   favourable evidence, the same rule risk.js applies. */
+report(
+  AC.mayPerform("BUY_POINTS", zSession).ok === false &&
+    /requires a risk decision and none was supplied/.test(
+      AC.mayPerform("BUY_POINTS", zSession).why) &&
+    AC.mayPerform("BUY_POINTS", zSession, { decision: "HOLD" }).ok === false,
+  "Z: an action needing a risk decision is refused when none was supplied",
+  `two modules, one rule — forgetting to consult risk must fail closed`
+);
+
+/* Z: A RESTRICTED ACCOUNT MAY STILL LOOK. Freezing somebody out of seeing what
+   they hold, during a recovery or a dispute, is its own harm. */
+const zRestricted = Object.assign({}, zSession, { state: "RESTRICTED",
+                                                  stepUp: true });
+report(
+  AC.mayPerform("VIEW_POINTS", zRestricted).ok === true &&
+    AC.mayPerform("VIEW_LEDGER", zRestricted).ok === true &&
+    AC.mayPerform("TRANSFER_POINTS", zRestricted, zAllow).ok === false,
+  "Z: a restricted account can see everything and move nothing",
+  `viewing stays available throughout — being unable to see what you hold ` +
+  `while under review is a second injury`
+);
+
+/* Z: THE WALLET IS A VIEW AND HOLDS NOTHING. Assembled from ledger entries
+   every time, so there is no stored figure to drift. */
+const zLedger = [
+  Object.assign(entry("PURCHASE", 6250),
+    { payment: { amountMinor: 625000, currency: "USD", status: "settled" } }),
+  Object.assign(entry("RESERVE", 2000), { journeyRef: "J-Z" }),
+  Object.assign(entry("PURCHASE", 500), { status: "PENDING" }),
+];
+const zWallet = AC.wallet(zLedger, { state: "VERIFIED", target: 7500 });
+report(
+  zWallet.available === 4250 && zWallet.reserved === 2000 &&
+    zWallet.totalHeld === 6250 && zWallet.pending === 500 &&
+    zWallet.restricted === 0 && zWallet.cashEquivalent === null,
+  "Z: the wallet reads exactly as Z specifies, and carries no cash equivalent",
+  `available 4,250 · reserved 2,000 · total held 6,250 · pending 500 · ` +
+  `restricted 0 — five figures, all in points`
+);
+
+/* Z/B6: PENDING SITS BESIDE THE BALANCE, NEVER INSIDE IT. A payment that has
+   not settled has issued nothing, so the 500 pending are shown and are not
+   part of any total. */
+report(
+  zWallet.totalHeld === 6250 &&
+    zWallet.available + zWallet.reserved === zWallet.totalHeld &&
+    zWallet.pending === 500,
+  "Z: pending points are shown and are in no total",
+  `4,250 + 2,000 = 6,250 held; the 500 pending are excluded because B6 says ` +
+  `nothing is issued before settlement — "I paid, where are my points" is a ` +
+  `fair question with an honest answer`
+);
+
+/* Z: restriction comes from the ACCOUNT, not the ledger. A restriction is a
+   fact about a person under review, not a movement of points — inventing a
+   ledger kind for it would have broken B7's closed set for something that is
+   not an economic event. */
+const zUnderReview = AC.wallet(zLedger, { state: "RESTRICTED" });
+report(
+  zUnderReview.restricted === 4250 && zUnderReview.available === 0 &&
+    /remain yours and nothing has been removed/.test(zUnderReview.note) &&
+    Object.keys(L.KINDS).length === 11,
+  "Z: a restriction is an account fact, and adds no ledger kind",
+  `the eleven kinds are unchanged; the points are restricted, not removed, ` +
+  `and the customer is told so`
+);
+
+/* Z: RECOVERY SCALES WITH WHAT IS AT STAKE.
+   "We'll reset the account" can move thousands of points to whoever asked most
+   convincingly. */
+report(
+  AC.recoveryRequirements(500).tier === "LOW" &&
+    AC.recoveryRequirements(500).requires.length === 1 &&
+    AC.recoveryRequirements(50000).tier === "HIGH" &&
+    AC.recoveryRequirements(50000).requires.length === 4 &&
+    /does not by itself restore authority/.test(
+      AC.recoveryRequirements(50000).note),
+  "Z: recovery requirements scale with the holding, not with the request",
+  `500 TP -> contact verification; 50,000 TP -> identity, manual review and a ` +
+  `cooling-off period. Stated in advance so the answer is the same every time`
+);
+
+/* And recovering the ACCOUNT is not recovering the authority to empty it. */
+report(
+  AC.recoveryRequirements(50000, { restoringAuthority: true })
+    .requires.includes("restriction period before transfer or buyback"),
+  "Z: restoring access is not restoring the authority to move points out",
+  `somebody who just proved their identity to a support agent should not ` +
+  `immediately be able to transfer or sell`
+);
+
+/* ---- Z: THERE IS NO ADMIN EDIT BALANCE --------------------------------- */
+
+/* THE GAP THIS FOUND. The schema has required `approved_by` on an adjustment
+ * since it was written — `adjustment_needs_approval`. The MODULE did not, so
+ * an ADJUST_UP naming nobody folded cleanly and created 2,000 points, in the
+ * browser and in every test. The same class as PROMOTION being absent from the
+ * schema: two things that had to agree, and nothing compared them. */
+const unsigned = threw(() => L.wallet([
+  Object.assign(entry("ADJUST_UP", 2000), { id: "TP-UNSIGNED" })]));
+const unreasoned = threw(() => L.wallet([
+  Object.assign(entry("ADJUST_UP", 2000),
+    { id: "TP-NOREASON", approvedBy: "ops-jane" })]));
+const signed = L.wallet([
+  Object.assign(entry("ADJUST_UP", 2000),
+    { id: "TP-OK", approvedBy: "ops-jane", reason: "goodwill, ticket 4471" })]);
+report(
+  unsigned !== null && /names no approver/.test(unsigned) &&
+    unreasoned !== null && /gives no reason/.test(unreasoned) &&
+    signed.available === 2000,
+  "Z: an administrative adjustment must name a human and a reason",
+  `"${unsigned.slice(0, 78)}…" — the schema said so and the module did not, ` +
+  `so an unsigned adjustment minted points wherever the code actually ran`
+);
+
+/* And what an administrator gets INSTEAD of an edit: a proposed entry. */
+const zAdj = AC.adjustment(P, 2000,
+  { approvedBy: "ops-jane", reason: "goodwill, ticket 4471",
+    reference: "SUP-4471", idempotencyKey: "zadj" });
+report(
+  AC.adjustment(P, 2000, { reason: "x" }).ok === false &&
+    AC.adjustment(P, 2000, { approvedBy: "x" }).ok === false &&
+    zAdj.entries[0].kind === "ADJUST_UP" &&
+    zAdj.entries[0].approvedBy === "ops-jane" &&
+    /entry, not an edit/.test(zAdj.note),
+  "Z: an administrator proposes an entry; there is no balance to edit",
+  `"${zAdj.note}" — the previous history is untouched, which is what makes ` +
+  `the audit trail worth having`
+);
+
+/* Z: AND NONE OF THIS CAN ISSUE ANYTHING. The whole layer terminates in the
+   readiness gates, which is the discipline Z asks for: design the wallet,
+   do not wire the money. */
+report(
+  L.readiness(DRAFT).ready === false && L.readiness(DRAFT).blockers.length === 4 &&
+    L.mayIssue(DRAFT) === false,
+  "Z: the account layer is designed and cannot issue a single point",
+  `${L.readiness(DRAFT).blockers.length} unmet conditions on the shipping ` +
+  `programme — no Stripe, no database, no production wallet, no live transfer`
 );
 
 /* ==== the documents must not drift from the code ======================== */

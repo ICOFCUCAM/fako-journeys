@@ -61,10 +61,10 @@ not executable · **⬜ open**: nobody has decided · **⚖ counsel**.
 | **U** | Refunds/chargebacks | open | ✅ reversal by compensating entry · ⬜ recovery when spent | B-recovery |
 | **V** | Accounting | counsel | 📋 five questions recorded | ⚖ |
 | **W** | Regulatory | counsel | 📋 **the gate** — question 11 | ⚖ |
-| **X** | Customer protection | open | ⬜ disclosures partly assembled | — |
+| **X** | Customer protection | open | ✅ recovery tiers, restriction visibility · ⬜ complaint process | `travel-point-wallet.md` |
 | **Y** | Fraud/abuse | open | ✅ **architecture built** · ⬜ no model | `travel-point-risk.md` |
-| **Z** | Customer account | open | ✅ planning needs no account · ⬜ authenticated wallet | — |
-| **AA** | Identity/KYC | counsel | 📋 E-kyc recorded | ⚖ |
+| **Z** | Customer account | open | ✅ **architecture built** — account ≠ wallet ≠ ledger | `travel-point-wallet.md` |
+| **AA** | Identity/KYC | counsel | ✅ verification levels shaped · 📋 E-kyc, Z-auth | `travel-point-wallet.md` |
 | **AB** | Limits/exposure | open | ✅ **all seven exist**; `mayActivate` refuses unset | `points-ledger.js` |
 | **AC** | Multi-currency | open | ⬜ single currency; B-xviii/F-e recorded | — |
 | **AD** | Programme changes | open | ✅ versioned; old points keep old terms | `points-ledger.js` |
@@ -129,17 +129,18 @@ says so where somebody would do it.
 | **W / question 11** | the legal structure. **No money may be taken until answered.** | ⚖ |
 | **Y-model** | the signals and thresholds themselves — the architecture is built, the model is not | risk |
 | **X** | customer disclosures, complaint and recovery processes | product + ⚖ |
-| **Z** | the authenticated wallet — planning needs no account, holding points does | product |
+| **Z-auth** | the authentication mechanism, and what step-up actually is | security |
 | **AC** | programme accounting currency, FX source and timestamp | finance |
 | **K** | journey-linked versus general points, kept separable in the ledger | commercial |
 | **R** | should redemption move from confirmation to completion? | product + ⚖ |
 | **G-enable** | who may set `issuanceEnabled`, on what evidence | operations |
 
-**Z is now the one I would raise hardest.** Y's architecture exists, so the
-remaining fraud work is a model that needs traffic to tune. Z — the
-authenticated Travel Wallet — is different: it is the one piece of *build* that
-must exist before any of this can be operated at all, and every risk signal Y
-defines (`authentication`, `deviceSession`) presumes it.
+**W / question 11 is now the only thing left that blocks everything.** Every
+engineering item on this matrix has an architecture; what remains of each is
+either a decision somebody must make or an implementation that cannot begin
+until the legal characterisation lands. The sequence Z asked for —
+define → implement → test → legal review → operational controls → activate —
+has reached the fourth step.
 
 ---
 

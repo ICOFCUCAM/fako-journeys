@@ -199,8 +199,12 @@
    * record rather than resolving it — B-recovery is still open.
    */
   function chargebackAfterRedemption(programId, entries, originalEntryId, ctx) {
+    /* Z: a chargeback reversal is an administrative entry, so it names a
+       human like every other one. A reversal nobody signed is exactly what
+       that rule guards against. */
     var reversal = Points.reversal(programId, entries, originalEntryId,
-                                   'chargeback after redemption');
+                                   'chargeback after redemption',
+                                   { approvedBy: (ctx || {}).approvedBy });
     if (!reversal.ok) return reversal;
     var o = ctx || {};
     var consumed = reversal.shortfall;

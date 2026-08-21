@@ -685,6 +685,10 @@
   /* The two that move points between people rather than between pools. E8. */
   var TRANSFER_KINDS = ['TRANSFER_IN', 'TRANSFER_OUT'];
 
+  /* Z: the two a human can author directly, and therefore the two that need a
+     human's name on them. */
+  var ADMIN_KINDS = ['ADJUST_UP', 'ADJUST_DOWN'];
+
   /* ACTIVE_PROGRAM MEANS "MAY ISSUE", so this must agree with mayIssue().
      It read the compliance state alone, and the moment issuance gained its
      second condition the two disagreed — producing the genuinely absurd
@@ -783,7 +787,7 @@
     return {
       available: 0, reserved: 0, redeemed: 0, transferred: 0,
       boughtBack: 0, expired: 0, adjusted: 0, acquired: 0,
-      entries: 0, ignored: 0, reservations: {}, corrections: [],
+      entries: 0, ignored: 0, pending: 0, reservations: {}, corrections: [],
       purchased: 0, promotional: 0
     };
   }
@@ -973,7 +977,7 @@
    * legal and commercial question, not an arithmetic one. This says so and
    * hands back the shortfall rather than picking. B-recovery in the doc.
    */
-  function reversal(programId, entries, originalEntryId, reason) {
+  function reversal(programId, entries, originalEntryId, reason, opts) {
     var original = null;
     for (var i = 0; i < entries.length; i++) {
       if (entries[i].id === originalEntryId) { original = entries[i]; break; }
@@ -984,6 +988,10 @@
     if (ISSUING_KINDS.indexOf(original.kind) === -1) {
       return { ok: false, why: 'only an issuance can be reversed; ' +
                               original.kind + ' is not one' };
+    }
+    if (!(opts || {}).approvedBy) {
+      return { ok: false, why: 'a reversal must name the person who approved ' +
+                              'it; the ledger refuses an unsigned adjustment' };
     }
     var w = wallet(entries);
     var q = original.quantity;
@@ -1002,9 +1010,12 @@
         programVersion: original.programVersion,
         corrects: original.id,
         reason: reason || 'payment reversed',
-        /* B9: a reversal is an exceptional entry and needs a named human.
-           The schema enforces it; the caller supplies it. */
-        approvedBy: null
+        /* B9/Z: a reversal is an exceptional entry and needs a named human.
+           This used to hand back `approvedBy: null` and leave it to the
+           caller — and once Z made the fold refuse an unsigned adjustment,
+           every reversal produced an entry the ledger would not accept. The
+           comment said "the caller supplies it"; nothing made them. */
+        approvedBy: (opts || {}).approvedBy
       }],
       reverses: { entry: original.id, kind: original.kind, quantity: q },
       /* The customer spent them before the reversal arrived. */
@@ -1324,7 +1335,16 @@
 
       /* Only settled money creates points. A payment that is authorised,
          pending, or merely reported by a browser is not a payment. */
-      if (e.kind === 'PURCHASE' && e.status !== 'SETTLED') { w.ignored++; continue; }
+      if (e.kind === 'PURCHASE' && e.status !== 'SETTLED') {
+        /* Z: PENDING IS A NUMBER THE CUSTOMER SHOULD SEE, not merely something
+           the fold skips. "500 TP pending" is the honest answer to "I paid,
+           where are my points" — and it is emphatically NOT part of any
+           balance, because the payment has not settled and B6 says nothing is
+           issued before it does. */
+        if (e.status === 'PENDING') w.pending += q;
+        w.ignored++;
+        continue;
+      }
 
       /* B6: AND THE PAYMENT'S OWN STATE, WHICH IS THE ONE THAT MATTERS.
          The entry's status says what WE think; `payment.status` says what the
@@ -1345,6 +1365,31 @@
          works, and no customer holds anything. This refusal is what makes
          that true rather than merely intended — including if somebody wires a
          payment handler up before the legal answer arrives. */
+      /* Z: AN ADJUSTMENT NOBODY SIGNED IS A BUG THAT MINTED POINTS.
+         The schema has said so since it was written — `adjustment_needs_approval`
+         refuses a row without `approved_by`. The MODULE did not, so an
+         ADJUST_UP with no approver folded cleanly and created 2,000 points in
+         the browser and in every test. The same class of gap as PROMOTION
+         being absent from the schema, found the same way: two things that had
+         to agree, and nothing compared them.
+
+         "No admin edit balance" is the rule Z asks for, and this is where it
+         is actually enforced: there is no balance to edit, and the only way to
+         change one is an entry that names a human and a reason. */
+      if (ADMIN_KINDS.indexOf(e.kind) !== -1) {
+        if (!e.approvedBy) {
+          throw new Error(
+            'administrative adjustment ' + e.id + ' names no approver. An ' +
+            'ADJUST that nobody signed is indistinguishable from a bug that ' +
+            'minted points.');
+        }
+        if (!e.reason) {
+          throw new Error(
+            'administrative adjustment ' + e.id + ' gives no reason. An ' +
+            'adjustment a reviewer cannot explain is one nobody can audit.');
+        }
+      }
+
       /* D1: EVERY POINT BELONGS TO A NAMED PROGRAMME, INCLUDING WHEN IT LEAVES.
          Issuance already required one. Nothing required it of a RESERVE, a
          REDEEM or a BUYBACK, so an entry could move points without naming the
@@ -1469,6 +1514,10 @@
     return {
       available: w.available,
       reserved: w.reserved,
+      /* Z: shown, and deliberately NOT added into any total. A payment that
+         has not settled has issued nothing — B6 — so `pending` sits beside the
+         balance rather than inside it. */
+      pending: w.pending,
       redeemed: w.redeemed,
       acquired: w.acquired,
       purchased: w.purchased,

@@ -8,8 +8,9 @@ data by `tools/tourism/build.py` and then edited in place by late passes.
 
 | doing | read |
 |---|---|
+| accounts, the wallet view, recovery, admin adjustments | **`docs/travel-point-wallet.md`** — item Z. Planning needs no account; ownership does. There is no admin edit balance |
 | fraud, risk holds, chargeback after travel | **`docs/travel-point-risk.md`** — item Y. A settled payment is necessary and never sufficient; absent signals HOLD, never ALLOW |
-| "is X decided / built / open?" across the whole model | **`docs/travel-point-matrix.md`** — the A–AJ coverage map. 26 enforced, 4 counsel, 6 open, 0 conflicts |
+| "is X decided / built / open?" across the whole model | **`docs/travel-point-matrix.md`** — the A–AJ coverage map. 29 enforced, 3 counsel, 4 open, 0 conflicts |
 | **anything economic — Travel Points, programmes, the ledger** | **`docs/travel-point-decisions.md`** — START HERE. The canonical index: definition → decisions A–I → programme state → implementation. Every other points document hangs off it |
 | anything with photographs, R2, or the acquisition budget | **`docs/image-library-state.md`** — the handover, including a list of approaches already tried and found wrong |
 | page weight, or quoting a performance number | `docs/weight-baseline.md` |
@@ -67,7 +68,7 @@ Run before claiming anything is done. All of these must pass.
     node tools/link-checks.js                    78,595 links
     node tools/fund-checks.js                    64
     node tools/design-checks.js                  17
-    node tools/points-checks.js                 221 — the Travel Point ledger
+    node tools/points-checks.js                 234 — the Travel Point ledger
     node tools/goal-checks.js                    36 — the Travel Goal is planning only
     python3 tools/tourism/build.py library provenance
     node tools/browser-checks.js                 259 — 30-40 minutes
