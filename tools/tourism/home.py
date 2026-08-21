@@ -486,6 +486,48 @@ COUNTRY_CSS = """/* Tokens, reset, type scale and primitives are in /styles/afri
 .ct-mon.is-on b{color:var(--c-bg);font-weight:700}
 .ct-cal-note{margin-top:12px;font-size:15px;color:var(--c-muted);max-width:52em}
 
+/* THE FOUR DEPTHS. One country, four questions, and until now three of them
+   were unreachable from here.
+
+   Four equal cells rather than a hierarchy: the reader knows which question
+   they are asking and the page should not rank the answers for them. Rules
+   instead of cards — a box around each would make four small brochures out of
+   what is really one table of contents, and the site already has twelve card
+   classes without inventing a thirteenth.
+
+   The cell for the page you are on stays in the row rather than being dropped.
+   Four depths with one missing reads as three depths; four with one marked
+   reads as a position. */
+.ct-depths{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--c-accent)}
+.ct-depth{display:flex;flex-direction:column;gap:8px;padding:26px 26px 30px 0;
+  border-right:var(--fj-rule);transition:background .2s}
+.ct-depth:last-child{border-right:0;padding-right:0}
+.ct-depth:not(:first-child){padding-left:26px}
+.ct-depth:hover{background:var(--c-sand)}
+.ct-depth-k{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-accent)}
+.ct-depth b{font-family:var(--fj-display);font-size:clamp(17px,1.7vw,21px);
+  font-weight:700;line-height:1.15;color:var(--c-primary)}
+.ct-depth-n{font-size:14px;line-height:1.5;color:var(--c-muted)}
+/* You are here: readable, unclickable-looking, still in the row. */
+.ct-depth.is-here{opacity:.55}
+.ct-depth.is-here:hover{background:none}
+.ct-depth.is-here .ct-depth-n{font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase}
+/* Two-up before one-up: four columns of fourteen-pixel prose stop working long
+   before the screen is phone-width. */
+@media(max-width:900px){
+  .ct-depths{grid-template-columns:repeat(2,1fr)}
+  .ct-depth:nth-child(2n){border-right:0;padding-right:0}
+  .ct-depth:nth-child(2n+1){padding-left:0}
+  .ct-depth:nth-child(n+3){border-top:var(--fj-rule);padding-top:26px}
+}
+@media(max-width:560px){
+  .ct-depths{grid-template-columns:1fr}
+  .ct-depth{border-right:0;padding:22px 0}
+  .ct-depth:not(:first-child){border-top:var(--fj-rule);padding-left:0}
+}
+
 /* Who runs this country. The platform's whole claim is that somebody local
    does, so the page says which company, from where, and since when. */
 .ct-close{padding-bottom:8px}
@@ -821,6 +863,55 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="reasons">
 %(reasons)s
     </div>
+  </div>
+</section>
+
+<!-- ONE COUNTRY AT FOUR DEPTHS.
+     Measured before it was written: 53 of 53 country pages linked to neither
+     their own portrait nor their own places. The portrait is the richest page
+     on the site — sixteen sections of long-form — and it was reachable from
+     nowhere except the atlas. The places went one way only: a place page links
+     UP to here and to the portrait, and nothing here went back down.
+
+     So this is not a "related links" strip. It is the country's own table of
+     contents, and the four cells are four different questions rather than four
+     destinations: why here, the long read, the individual things, what it
+     costs. A reader who wants one of them should not have to guess that the
+     other three exist.
+
+     Placed before "Begin" on purpose. Reading more about a country and
+     starting a journey are different intentions, and putting them in one row
+     would make the quiet one compete with the loud one. -->
+<section class="af-zone af-zone--depths" id="more" aria-labelledby="ct-depths-h">
+  <div class="af-frame">
+    <div class="af-head">
+      <div class="af-head-no"><b>04</b><span>Go deeper</span></div>
+      <div>
+        <h2 id="ct-depths-h">All of <em>%(name)s</em>, four ways in.</h2>
+      </div>
+    </div>
+    <nav class="ct-depths" aria-label="More of %(name)s">
+      <a class="ct-depth is-here" href="/%(slug)s" aria-current="page">
+        <span class="ct-depth-k">Overview</span>
+        <b>Why %(name)s</b>
+        <span class="ct-depth-n">You are here</span>
+      </a>
+      <a class="ct-depth" href="/portrait/%(slug)s">
+        <span class="ct-depth-k">Portrait</span>
+        <b>The long read</b>
+        <span class="ct-depth-n">Sixteen sections, start to finish</span>
+      </a>
+      <a class="ct-depth" href="/places#%(slug)s">
+        <span class="ct-depth-k">Places</span>
+        <b>The individual things</b>
+        <span class="ct-depth-n">Every place we write about, one page each</span>
+      </a>
+      <a class="ct-depth" href="/tourism/%(slug)s">
+        <span class="ct-depth-k">Experiences</span>
+        <b>All %(count)d, and what they cost</b>
+        <span class="ct-depth-n">The same categories in every country</span>
+      </a>
+    </nav>
   </div>
 </section>
 

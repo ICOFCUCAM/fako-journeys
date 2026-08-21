@@ -77,6 +77,48 @@
 .ct-mon.is-on b{color:var(--c-bg);font-weight:700}
 .ct-cal-note{margin-top:12px;font-size:15px;color:var(--c-muted);max-width:52em}
 
+/* THE FOUR DEPTHS. One country, four questions, and until now three of them
+   were unreachable from here.
+
+   Four equal cells rather than a hierarchy: the reader knows which question
+   they are asking and the page should not rank the answers for them. Rules
+   instead of cards — a box around each would make four small brochures out of
+   what is really one table of contents, and the site already has twelve card
+   classes without inventing a thirteenth.
+
+   The cell for the page you are on stays in the row rather than being dropped.
+   Four depths with one missing reads as three depths; four with one marked
+   reads as a position. */
+.ct-depths{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--c-accent)}
+.ct-depth{display:flex;flex-direction:column;gap:8px;padding:26px 26px 30px 0;
+  border-right:var(--fj-rule);transition:background .2s}
+.ct-depth:last-child{border-right:0;padding-right:0}
+.ct-depth:not(:first-child){padding-left:26px}
+.ct-depth:hover{background:var(--c-sand)}
+.ct-depth-k{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-accent)}
+.ct-depth b{font-family:var(--fj-display);font-size:clamp(17px,1.7vw,21px);
+  font-weight:700;line-height:1.15;color:var(--c-primary)}
+.ct-depth-n{font-size:14px;line-height:1.5;color:var(--c-muted)}
+/* You are here: readable, unclickable-looking, still in the row. */
+.ct-depth.is-here{opacity:.55}
+.ct-depth.is-here:hover{background:none}
+.ct-depth.is-here .ct-depth-n{font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.18em;text-transform:uppercase}
+/* Two-up before one-up: four columns of fourteen-pixel prose stop working long
+   before the screen is phone-width. */
+@media(max-width:900px){
+  .ct-depths{grid-template-columns:repeat(2,1fr)}
+  .ct-depth:nth-child(2n){border-right:0;padding-right:0}
+  .ct-depth:nth-child(2n+1){padding-left:0}
+  .ct-depth:nth-child(n+3){border-top:var(--fj-rule);padding-top:26px}
+}
+@media(max-width:560px){
+  .ct-depths{grid-template-columns:1fr}
+  .ct-depth{border-right:0;padding:22px 0}
+  .ct-depth:not(:first-child){border-top:var(--fj-rule);padding-left:0}
+}
+
 /* Who runs this country. The platform's whole claim is that somebody local
    does, so the page says which company, from where, and since when. */
 .ct-close{padding-bottom:8px}

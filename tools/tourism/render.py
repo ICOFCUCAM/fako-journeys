@@ -253,6 +253,31 @@ TOURISM_CSS = """
 .tq-cta h2{font-size:clamp(28px,4vw,54px);max-width:16em;margin:0 auto}
 .tq-cta p{margin:16px auto 0;color:var(--c-muted);max-width:40em}
 .tq-cta .btn{margin-top:28px;display:inline-block}
+/* THE WAY OUT. This page had one real outbound link and it went to /journey;
+   everything else on it was a font. Deliberately below the button and quieter
+   than it — "build a journey" is still what this page is for, and these are
+   for the reader who is not ready to and would otherwise close the tab.
+   Centred because the section is, rules rather than boxes because the site has
+   twelve card classes already. */
+.tq-else{margin:56px auto 0;max-width:60em;border-top:var(--fj-rule);
+  display:grid;grid-template-columns:repeat(3,1fr);text-align:left}
+.tq-else-h{grid-column:1/-1;font-family:var(--fj-mono);font-size:9.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--c-muted);
+  margin:18px 0 4px;text-align:left}
+.tq-else-a{display:flex;flex-direction:column;gap:6px;padding:18px 22px 22px 0;
+  border-right:var(--fj-rule)}
+.tq-else-a:last-child{border-right:0}
+.tq-else-a + .tq-else-a{padding-left:22px}
+.tq-else-a span{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--c-accent)}
+.tq-else-a b{font-family:var(--fj-display);font-size:18px;font-weight:700;
+  line-height:1.2;color:var(--c-primary)}
+.tq-else-a:hover b{color:var(--c-accent)}
+@media(max-width:760px){
+  .tq-else{grid-template-columns:1fr}
+  .tq-else-a,.tq-else-a + .tq-else-a{border-right:0;padding:16px 0}
+  .tq-else-a + .tq-else-a{border-top:var(--fj-rule)}
+}
 
 .tq-countries{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .tq-countries a{display:block}
@@ -514,6 +539,51 @@ PAGE = """<!DOCTYPE html>
 """
 
 
+def elsewhere(country):
+    """The rest of this country, from the page that had nowhere to send anybody.
+
+    THE MEASUREMENT THAT PROMPTED THIS. Every /tourism/<country> page carried
+    eight in-body links, of which seven were fonts, icons and stylesheets. One
+    real outbound link, /journey. Fifty-three pages out of fifty-three, and the
+    page is titled "all 27 experiences" — the closest thing the site has to a
+    planning surface was the only surface you could not leave.
+
+    Meanwhile a place page links UP to its country and its portrait, and none of
+    the 1,363 of them links here. So this page was unreachable from below and
+    a dead end from above: the one genuinely isolated node in the graph.
+
+    WHAT IT MAY LINK TO, AND WHY THAT IS NOT OBVIOUS.
+    /<slug> does not exist for every country. home.NO_PAGE is the single place
+    that decides, and its comment says it plainly: "nothing on any page may link
+    to them." Uganda and Namibia have operator sites of their own instead.
+    Cameroon is in that tuple for a different reason — its page is hand-built at
+    cameroon.html rather than generated — so it IS linkable, and treating the
+    tuple as one list would silently drop a real page.
+
+    That distinction is why this reads the filesystem: the question is not "is
+    this country skipped by the generator" but "is there a page there", and only
+    one of those is what a link needs to be true.
+    """
+    rows = []
+    if os.path.exists(os.path.join(ROOT, "%s.html" % country.slug)):
+        rows.append(('/%s' % country.slug, 'The overview',
+                     'Why %s, in short' % country.name))
+    if os.path.exists(os.path.join(ROOT, "portrait", "%s.html" % country.slug)):
+        rows.append(('/portrait/%s' % country.slug, 'The portrait',
+                     'Sixteen sections, start to finish'))
+    if os.path.isdir(os.path.join(ROOT, "places", country.slug)):
+        rows.append(('/places#%s' % country.slug, 'The places',
+                     'Every place we write about, one page each'))
+    if not rows:
+        return ""
+    cells = "".join(
+        '      <a class="tq-else-a" href="%s"><span>%s</span><b>%s</b></a>\n'
+        % (esc(href), esc(kind), esc(line)) for href, kind, line in rows)
+    return ('    <nav class="tq-else" aria-label="The rest of %s">\n'
+            '      <p class="tq-else-h">The rest of %s</p>\n'
+            '%s    </nav>\n' % (esc(country.name), esc(country.name), cells))
+
+
 def render_country(country, taxonomy, shell):
     parts = []
     n = 0
@@ -543,8 +613,9 @@ def render_country(country, taxonomy, shell):
     <h2>%s</h2>
     <p>%s</p>
     <a class="btn" href="/journey">Build a journey</a>
-  </div>
-</section>""" % (esc(entry.caption), esc(entry.description)))
+%s  </div>
+</section>""" % (esc(entry.caption), esc(entry.description),
+                 elsewhere(country)))
             continue
         n += 1
         parts.append(render_section(country, taxonomy, n, layout, title, blurb, ids))

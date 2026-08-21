@@ -159,5 +159,138 @@ check('every fragment names an id that exists', !deadFragments.length,
   deadFragments.length ? deadFragments.slice(0, 3).join(' | ') + (deadFragments.length > 3
     ? ' (+' + (deadFragments.length - 3) + ' more)' : '') : 'every #anchor resolves');
 
+/* ---- REFERENCES THAT ARE NOT HREFS -------------------------------------
+ *
+ * `aria-labelledby` names an id exactly the way `href="#x"` does, and until now
+ * only the href form was checked. The difference is that a dead fragment lands
+ * a sighted reader at the top of the page, while a dead aria-labelledby makes a
+ * section nameless to a screen reader and shows nothing at all to anybody else.
+ * Strictly worse, and strictly less visible.
+ *
+ * Found by writing one: a section added to 51 country pages in this session
+ * carried aria-labelledby="ct-depths-h" pointing at an h2 that had never been
+ * given the id. The rest of the site's references were clean — 130 of them —
+ * so this check exists to keep it that way rather than to fix a backlog. */
+/* Reuses `bodies` and `idsOf`, both already built above. Re-reading 1,597
+   files to ask a second question about them is the kind of thing that turns a
+   four-second check suite into a forty-second one. */
+const danglingAria = [];
+let ariaSeen = 0;
+for (const [rel, src] of bodies) {
+  const ids = idsOf.get(rel) || new Set();
+  for (const m of src.matchAll(/aria-(?:labelledby|describedby)="([^"]+)"/g)) {
+    for (const ref of m[1].split(/\s+/).filter(Boolean)) {
+      ariaSeen++;
+      if (!ids.has(ref)) danglingAria.push(rel + ' -> ' + ref);
+    }
+  }
+}
+check('every aria-labelledby names an id that exists', !danglingAria.length,
+  danglingAria.length
+    ? danglingAria.length + ' dangling, e.g. ' + danglingAria.slice(0, 3).join(' | ')
+    : ariaSeen + ' references, every one naming something on its own page');
+
+/* ---- THE COUNTRY GRAPH -------------------------------------------------
+ *
+ * Everything above asks whether a link that exists resolves. This asks the
+ * opposite question: whether a link that SHOULD exist is there.
+ *
+ * That is a different kind of failure and nothing was looking for it. Every
+ * link on the site resolved perfectly while 53 of 53 country pages linked to
+ * neither their own portrait nor their own places, and 53 of 53
+ * /tourism/<country> pages had exactly one real outbound link. Valid, and
+ * disconnected. A link checker that only validates hrefs will pass a site made
+ * of islands.
+ *
+ * Each country has four surfaces. This asserts the edges between them that
+ * ought to hold in every direction, so that adding a fifty-fifth country
+ * cannot quietly reintroduce the hole.
+ *
+ * WHAT IS DELIBERATELY NOT ASSERTED: /uganda and /namibia do not exist —
+ * home.NO_PAGE skips them because both have operator sites of their own — so
+ * no page may link there and the check must not demand it. Read from disk
+ * rather than from a list copied into this file, which would be a third
+ * vocabulary to keep in step. */
+
+const inBody = (html) => html
+  .replace(/<header[\s\S]*?<\/header>/g, '')
+  .replace(/<footer[\s\S]*?<\/footer>/g, '')
+  .replace(/<nav class="af-foot-nav"[\s\S]*?<\/nav>/g, '');
+
+const hrefsIn = (html) => new Set(
+  (inBody(html).match(/href="(\/[^"]*)"/g) || [])
+    .map(h => h.slice(6, -1).split(/[?#]/)[0] || '/'));
+
+const has = (p) => fs.existsSync(path.join(ROOT, p));
+const readIf = (p) => has(p) ? fs.readFileSync(path.join(ROOT, p), 'utf8') : null;
+
+const tourismDir = path.join(ROOT, 'tourism');
+const countries = fs.existsSync(tourismDir)
+  ? fs.readdirSync(tourismDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html')
+      .map(f => f.slice(0, -5))
+      .filter(s => has(path.join('portrait', s + '.html')))
+  : [];
+
+/* 1 — the country page reaches its own depths. */
+const noPortrait = [], noPlaces = [];
+countries.forEach(s => {
+  const html = readIf(s + '.html');
+  if (html === null) return;               /* uganda, namibia: no page at all */
+  const L = hrefsIn(html);
+  if (!L.has('/portrait/' + s)) noPortrait.push(s);
+  if (![...L].some(h => h === '/places' || h.startsWith('/places/' + s))) {
+    noPlaces.push(s);
+  }
+});
+const withHome = countries.filter(s => has(s + '.html'));
+check('every country page reaches its own portrait', !noPortrait.length,
+  noPortrait.length ? noPortrait.slice(0, 5).join(', ')
+    : withHome.length + ' of ' + withHome.length + '; it is the richest page '
+      + 'on the site and used to be linked from none of them');
+check('every country page reaches its own places', !noPlaces.length,
+  noPlaces.length ? noPlaces.slice(0, 5).join(', ')
+    : withHome.length + ' of ' + withHome.length);
+
+/* 2 — the experiences page is not a dead end. This is the one that was
+   isolated in both directions: nothing arrived from a place, nothing left. */
+const deadEnds = [];
+countries.forEach(s => {
+  const html = readIf(path.join('tourism', s + '.html'));
+  if (html === null) return;
+  const L = [...hrefsIn(html)].filter(h => !/\.(woff2?|png|jpe?g|svg|css|js|webmanifest|ico)$/.test(h));
+  /* Its own country's other surfaces, not merely "some links". */
+  const reaches = L.some(h => h === '/' + s
+    || h === '/portrait/' + s || h.startsWith('/places'));
+  if (!reaches) deadEnds.push(s + ' (' + L.length + ' real links)');
+});
+check('no experiences page is a dead end', !deadEnds.length,
+  deadEnds.length ? deadEnds.slice(0, 5).join(', ')
+    : countries.length + ' of ' + countries.length + ' reach the rest of their '
+      + 'own country; all 53 once had one outbound link, to /journey');
+
+/* 3 — a place page reaches the page that prices its country. The other upward
+   edges were already there; this was the only one missing, on all 1,363. */
+const placeMisses = [];
+countries.forEach(s => {
+  const dir = path.join(ROOT, 'places', s);
+  if (!fs.existsSync(dir)) return;
+  const files = fs.readdirSync(dir).filter(f => f.endsWith('.html'));
+  files.forEach(f => {
+    const L = hrefsIn(fs.readFileSync(path.join(dir, f), 'utf8'));
+    if (!L.has('/tourism/' + s)) placeMisses.push(s + '/' + f.slice(0, -5));
+  });
+});
+const placeTotal = countries.reduce((n, s) => {
+  const d = path.join(ROOT, 'places', s);
+  return n + (fs.existsSync(d)
+    ? fs.readdirSync(d).filter(f => f.endsWith('.html')).length : 0);
+}, 0);
+check('every place page reaches what a journey to its country costs',
+  !placeMisses.length,
+  placeMisses.length
+    ? placeMisses.length + ' without it, e.g. ' + placeMisses.slice(0, 3).join(', ')
+    : placeTotal + ' place pages');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);
