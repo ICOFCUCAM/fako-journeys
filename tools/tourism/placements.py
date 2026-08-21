@@ -41,7 +41,29 @@ ATTR_RE = adopt.ATTR_RE
 def wrapper_for(html, position):
     """The nearest preceding wrapper class — the same lookup adopt uses to pick
     a delivery shape, returned by name so the manifest can show it."""
-    before = html[max(0, position - 400):position]
+    # FOUR HUNDRED CHARACTERS WAS A GUESS, AND `modern` OUTGREW IT.
+    #
+    # This looked back a fixed 400 bytes. Then the `modern` late pass began
+    # wrapping every photograph in <picture><source srcset="..."> — four URLs
+    # and their widths per source, several hundred characters — which pushed
+    # the wrapper class out of the window. Measured on cameroon.html, the three
+    # real fj-slip-pic slots sit 402, 506 and 634 characters before their
+    # <img>. All three missed by a margin of two.
+    #
+    # Nothing failed loudly. `spec` fell through to DEFAULT_SPEC, so 37 of 45
+    # slots reported a 3:2 shape that appears in no spec, the 5:4 shape
+    # vanished from the manifest entirely, and three checks that describe the
+    # generation pipeline went red for a reason none of them names.
+    #
+    # So the bound is derived instead of guessed: a slot's wrapper is the last
+    # wrapper class mentioned since the PREVIOUS image, because that is exactly
+    # the region that can belong to this one. The 4,000-character ceiling is
+    # only a leash for the first image on a page, where there is no previous
+    # <img> to stop at and a class named in a <style> block could otherwise
+    # match from far above.
+    prev = html.rfind("<img", 0, position)
+    floor = max(0, position - 4000, prev + 1 if prev != -1 else 0)
+    before = html[floor:position]
     best, best_at = None, -1
     for cls, _spec in adopt.SLOT_SPECS:
         at = before.rfind(cls)

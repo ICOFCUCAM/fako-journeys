@@ -1294,8 +1294,23 @@ def main():
                 ours.add(str(op.since))
             # Text only. An outline's path data is full of four-digit numbers
             # and none of them is a date.
-            visible = re.sub(r"<[^>]+>", " ", re.sub(
-                r"<(svg|script|style)\b.*?</\1>", " ", pages[slug], flags=re.S))
+            # A PHOTOGRAPHER'S NAME IS NOT PROSE, AND SOME OF THEM CONTAIN
+            # NUMBERS. South Sudan's page credits "Photograph sadness 1225" —
+            # a provider handle — and this read 1225 as a date the dataset
+            # could not account for. The existing exclusion list (km, kg, mm,
+            # m, ft) is a list of guesses about what a four-figure number might
+            # be, and a sixth guess would have been the next thing to go stale.
+            #
+            # The credit is structurally distinct: it is the <i> inside a
+            # <figcaption>. So it is removed the same way svg, script and style
+            # are — by what it IS, not by what it happens to say.
+            body = re.sub(r"<(svg|script|style)\b.*?</\1>", " ",
+                          pages[slug], flags=re.S)
+            body = re.sub(r"(<figcaption[^>]*>.*?</figcaption>)",
+                          lambda m: re.sub(r"<i>.*?</i>", " ", m.group(1),
+                                           flags=re.S),
+                          body, flags=re.S)
+            visible = re.sub(r"<[^>]+>", " ", body)
             # A four-figure number followed by a unit is a distance, not a date:
             # this page prints straight-line kilometres and peak heights.
             for year in set(re.findall(
@@ -1343,6 +1358,18 @@ def main():
         # -- what the homepage claims about itself ---------------------------------
         print("\nwhat the homepage claims about itself")
         home_src = open(os.path.join(ROOT_DIR, "index.html")).read()
+        # THE HOMEPAGE IS TWO FILES, AND A CHECK THAT READS ONE OF THEM LIES.
+        #
+        # index.html used to carry its rules in an inline <style>; they live in
+        # styles/gateway.css now. Three checks were pinned to where the rules
+        # WERE rather than to what they say — the map's palette, the hero
+        # window's five region fills, and the step grid below. Each of the
+        # first two grew its own `home = index + gateway.css` when it was
+        # fixed, which is a third of the same line waiting to be written, so
+        # here it is once. Markup comes from home_src; anything asking about a
+        # CSS rule reads home_all.
+        home_all = home_src + open(
+            os.path.join(ROOT_DIR, "styles", "gateway.css")).read()
         WORD = {"three": 3, "five": 5, "six": 6, "nine": 9, "nineteen": 19,
                 "twenty-two": 22, "twenty-seven": 27, "sixty-six": 66,
                 "fifty-four": 54}
@@ -1461,21 +1488,42 @@ def main():
                            home_src, re.S)
         check("the year is generated rather than typed", bool(sblock))
         if sblock:
-            cells = re.findall(r'<div class="wa-season" data-month="(\d+)">'
-                               r'<b>([A-Za-z]+)</b><span class="wa-season-n">([A-Za-z-]+)</span>',
-                               sblock.group(1))
+            # The cell gained a numeral: the count is now written twice, as
+            # `Thirty-six<i>36</i>`, so that a reader sees the word and a
+            # screen reader is not made to parse one. This regex ended at
+            # `([A-Za-z-]+)</span>` and therefore matched none of the twelve,
+            # reporting "0 months" — not a month with nowhere to go, which is
+            # what it is for, but a check that had not been told about the <i>.
+            #
+            # Read BOTH now. The spelled word still has to be what _spell()
+            # produces, and the numeral has to be the same number, so the two
+            # halves of the same fact cannot disagree with each other either.
+            cells = []
+            for cell in re.findall(r'<div class="wa-season" data-month="(\d+)">'
+                                   r'<b>([A-Za-z]+)</b>'
+                                   r'<span class="wa-season-n">(.*?)</span>',
+                                   sblock.group(1), re.S):
+                num, mon, inner = cell
+                said = re.match(r'([A-Za-z-]+)', inner)
+                figure = re.search(r'<i>(\d+)</i>', inner)
+                cells.append((num, mon, said.group(1) if said else "",
+                              int(figure.group(1)) if figure else None))
             check("every month with somewhere to go is drawn",
                   len(cells) == len([i for i, w in per_month.items() if w]),
                   "%d months" % len(cells))
             wrong = []
-            for num, mon, said in cells:
-                want = gateway._spell(len(per_month[int(num)]))
+            for num, mon, said, figure in cells:
+                have = len(per_month[int(num)])
+                want = gateway._spell(have)
                 if said != want:
                     wrong.append("%s says %s, files say %s" % (mon, said, want))
+                elif figure is not None and figure != have:
+                    wrong.append("%s spells %s but prints %d, files say %d"
+                                 % (mon, said, figure, have))
             check("the count on a month is the count in the files",
                   not wrong, "; ".join(wrong) or "all %d agree" % len(cells))
             check("no month is offered with nothing in it",
-                  all(per_month[int(n)] for n, _m, _s in cells),
+                  all(per_month[int(c[0])] for c in cells),
                   "%d months, smallest %d"
                   % (len(cells), min(len(w) for w in per_month.values() if w)))
             urls = set(re.findall(r'<a href="([^"]+)">', sblock.group(1)))
@@ -1890,12 +1938,27 @@ def main():
             # not. Pinned to the exact old markup, this silently matched nothing
             # the day the cards grew an <img> and a wrapper, and reported "0
             # cards" rather than the eight that were there.
-            cards = re.findall(
-                r'<a class="wa-feel(?:[^"]*)" href="([^"]+)" data-lens="([a-z]+)"'
-                r'[^>]*>(?:<img[^>]*>)?(?:<span class="wa-feel-in">)?'
-                r'<span class="wa-feel-say">([^<]+)</span>'
-                r'<span class="wa-feel-what">[^<]*</span>'
-                r'<span class="wa-feel-n">([^<]+)</span>', body)
+            # AND IT BROKE AGAIN, THE SAME WAY, FOR THE SAME REASON.
+            #
+            # The comment above records this regex being widened once, when the
+            # cards grew an <img>. It then reported "0 cards" a second time,
+            # because `build.py modern` — a LATE PASS over built HTML — wraps
+            # that <img> in <picture><source>. Widening a sequence is not a
+            # fix; it is a shorter list of shapes that happen to be allowed
+            # today, and the next late pass writes a shape that is not on it.
+            #
+            # So this stops describing the markup between the parts. Find each
+            # card, then ask that card for its own four values by their own
+            # names. Any wrapper, any media element, any order.
+            cards = []
+            for block in re.findall(r'<a class="wa-feel[^>]*>.*?</a>', body, re.S):
+                href = re.search(r'href="([^"]+)"', block)
+                lens = re.search(r'data-lens="([a-z]+)"', block)
+                say = re.search(r'<span class="wa-feel-say">([^<]+)</span>', block)
+                num = re.search(r'<span class="wa-feel-n">([^<]+)</span>', block)
+                if href and lens and say and num:
+                    cards.append((href.group(1), lens.group(1),
+                                  say.group(1), num.group(1)))
             # And the photograph, where there is one, is a file that is here and
             # says what is in it — the same two questions asked of every own
             # photograph on a country page.
@@ -2075,7 +2138,12 @@ def main():
         check("the journey section is still there", bool(plan))
         if plan:
             steps = len(re.findall(r'class="wa-step[ "]', plan.group(0)))
-            cols = re.search(r"\.wa-steps\{[^}]*repeat\((\d+),", home_src)
+            # home_all, not home_src: this rule lives in styles/gateway.css.
+            # It reported "? columns, 4 steps" — not a disagreement between the
+            # grid and the steps, which is what it is for, but a check looking
+            # in a file the rule had moved out of. The grid says repeat(4,1fr)
+            # and there are four steps; they have agreed all along.
+            cols = re.search(r"\.wa-steps\{[^}]*repeat\((\d+),", home_all)
             check("the step grid has as many columns as there are steps",
                   bool(cols) and int(cols.group(1)) == steps,
                   "%s columns, %d steps" % (cols.group(1) if cols else "?", steps))
@@ -2087,7 +2155,13 @@ def main():
         cards = len(re.findall(r'class="wa-now[ "]', strip.group(1))) if strip else 0
         said_n = None
         if note:
-            m = re.search(r'\b(\w+(?:-\w+)?) of them here', note.group(1))
+            # Read the marked count rather than a phrase. The sentence is
+            # generated from the same rows the strip is, so the two cannot
+            # drift — but this check exists because a TYPED number over a
+            # generated block once did, and it should go on being able to say
+            # so if anybody types one again.
+            m = re.search(r'<span data-count="strip">([A-Za-z-]+)</span>',
+                          note.group(1))
             said_n = WORD.get((m.group(1) or "").lower()) if m else None
         check("the contemporary strip has cards in it", cards > 0, "%d" % cards)
         check("the sentence beside the strip counts the cards the strip has",
@@ -2953,9 +3027,27 @@ def main():
         # as every other one permitted here, and without it the sentence cannot
         # say how quiet the quiet month is.
         per_month = {sum(1 for c in countries if i in c.months) for i in range(1, 13)}
+        crossing_lengths = {
+            len(r.get("countries") or [])
+            for r in (read_json_file(os.path.join(
+                ROOT_DIR, "tourism", "transafrique.json")).get("routes") or [])}
         OK = {
+            # A CROSSING COUNTS COUNTRIES TOO, AND NOTHING TOLD THIS SET SO.
+            #
+            # /trans-afrique/crossings says "Six countries down the Atlantic,
+            # and the food changes at every border" beside a list of exactly
+            # six: Senegal, The Gambia, Guinea-Bissau, Guinea, Cote d'Ivoire,
+            # Ghana. The sentence is true and the page proves it in the line
+            # above. This check called it wrong because the only country counts
+            # it knew about were the dataset total, the operator split, the
+            # regions, the neighbour counts and the per-month figures — a route
+            # length was simply not a kind of number it had heard of.
+            #
+            # Read from the routes rather than added as a literal, so a route
+            # that gains or loses a country does not make a true sentence fail.
             "countries": ({len(countries), len(countries) - ops, ops, 5}
-                          | neighbours | set(leads.values()) | per_month),
+                          | neighbours | set(leads.values()) | per_month
+                          | crossing_lengths),
             "destinations": {len(countries)},
             "portraits": {len(countries)},
             "categories": {len(ids), len(strand_cats)},
@@ -2981,8 +3073,26 @@ def main():
             rel = os.path.relpath(path, ROOT_DIR)
             if "/incoming/" in path or rel == "tourism/compare.html":
                 continue
+            # HTML COMMENTS ARE NOT PROSE, AND TWO OF THE THREE COMPLAINTS
+            # THIS CHECK MADE CAME OUT OF THEM.
+            #
+            # `<[^>]+>` does not remove a comment that contains a `>`, and the
+            # long explanatory comments this codebase is written in are full of
+            # them. So developer notes were being read as page copy:
+            #
+            #   cameroon.html      "Same three destinations, this page's own
+            #                       vocabulary" — a note about a CSS block
+            #   1,404 place pages  "the page that says what the twenty-\n
+            #                       seven categories cost" — a note, AND
+            #                       line-wrapped, so `twenty-` was separated
+            #                       and the check read a bare "seven"
+            #
+            # Neither is a sentence a reader ever sees. Comments go first, and
+            # by their own syntax rather than by hoping a tag pattern catches
+            # them.
+            raw = re.sub(r"<!--.*?-->", " ", open(path).read(), flags=re.S)
             body = re.sub(r"<(script|style|svg)\b.*?</\1>", " ",
-                          open(path).read(), flags=re.S)
+                          raw, flags=re.S)
             text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", body)).lower()
             text = text.replace("&mdash;", " ").replace("&middot;", " ")
             # One pass per page rather than 99 words x 9 nouns of them: at 650

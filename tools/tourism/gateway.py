@@ -2033,7 +2033,19 @@ def block_nownote(countries):
     shot = sum(len(d) for d in table_deck(countries))
     return ('        <p class="wa-note">%s chapters on what this continent eats, one '
             'for every country, and %s more on what it makes and builds this decade '
-            'rather than what is behind glass. %s tables at a time here, turning '
+            # THE COUNT, MARKED SO A CHECK CAN READ IT.
+            #
+            # tests.py looked for the literal phrase "N of them here", which
+            # this sentence stopped using, so it reported `says None, shows 6`
+            # — not a sentence disagreeing with its strip, which is the rule it
+            # enforces, but a check pinned to wording. Pinning it to "tables at
+            # a time" instead would only move the pin.
+            #
+            # The span carries no styling and changes no words. It states, in a
+            # form that survives a rewrite of the sentence around it, which
+            # number in this paragraph is the claim about the strip.
+            'rather than what is behind glass. <span data-count="strip">%s</span> '
+            'tables at a time here, turning '
             'through the %s that have been photographed, and the rest of each '
             'country is on its own portrait. Not a feed and not an events calendar '
             '&mdash; this site holds no dates and will not invent any; these are '
