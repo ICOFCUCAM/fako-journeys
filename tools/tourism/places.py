@@ -151,6 +151,8 @@ def page(country, place, pack, order, tax, ctx):
         "description": esc(place["text"]),
         "og": plate.open_graph(esc(title), esc(place["text"]),
                                "/places/%s/%s" % (country.slug, mine), kind="article"),
+        "mast": mast(country.name, country.slug,
+                     "/places/%s/%s" % (country.slug, mine)),
         "country": esc(country.name),
         "slug": esc(country.slug),
         "regionKey": esc(key),
@@ -206,7 +208,10 @@ def index(rows, ctx):
         % (esc(country.slug), esc(country.name), len(pack["places"]))
         for country, pack, _o in rows)
     total = sum(len(p["places"]) for _c, p, _o in rows)
-    return INDEX % {"blocks": "\n".join(blocks), "n": total, "countries": len(rows),
+    return INDEX % {"mast": plate.shell(here="/places", area="explore",
+                                        product="Destinations",
+                                        product_href="/places"),
+                    "blocks": "\n".join(blocks), "n": total, "countries": len(rows),
                     "jump": ('<nav class="pi-jump" aria-label="Jump to a country">%s</nav>'
                              % jump),
                     "explore": plate.explore_block(),
@@ -324,16 +329,19 @@ def run(countries, taxonomy, log=print):
     return written
 
 
-CHROME = """<header class="pl-mast">
-  <a class="pl-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>%(country)s</b></a>
-  <nav class="pl-routes" aria-label="Primary">
-    <a href="/portrait/%(slug)s">Portrait</a>
-    <a href="/atlas#/%(slug)s">The Atlas</a>
-    <a href="/journey#/j/%(slug)s/">Build a journey</a>
-    <a href="/places">Every place</a>
-  </nav>
-  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
-</header>"""
+def mast(country_name, slug, here):
+    """The shell, with the country as the product band.
+
+    THIS REPLACED pl-mast, WHICH 1,461 PAGES WORE — the largest of the ten
+    mastheads the audit found. The country band is not decoration: on a place
+    page it is the way back up, and the four links in it are the four depths
+    the graph repair built.
+    """
+    from . import plate
+    name, href, nav = plate.country_band(country_name, slug)
+    return plate.shell(here=here, area="explore", product=name,
+                       product_href=href, product_nav=nav)
+
 
 TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
@@ -346,9 +354,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/places.css">
 </head>
-<body>
+<body class="af af--place" data-area="explore">
 <a class="af-skip" href="#main">Skip to the place</a>
-""" + CHROME + """
+%(mast)s
 
 <main class="pl" id="main">
   <nav class="pl-where" aria-label="Where you are">
@@ -429,18 +437,9 @@ INDEX = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/places.css">
 </head>
-<body>
+<body class="af af--index" data-area="explore">
 <a class="af-skip" href="#main">Skip to the list</a>
-<header class="pl-mast">
-  <a class="pl-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Every place</b></a>
-  <nav class="pl-routes" aria-label="Primary">
-    <a href="/stories">Stories</a>
-    <a href="/atlas">The Atlas</a>
-    <a href="/journey">Build a journey</a>
-    <a href="/meet">Meet Africa</a>
-  </nav>
-  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main class="pi" id="main">
   <section class="pi-open">

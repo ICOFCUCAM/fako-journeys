@@ -24,7 +24,7 @@
 <meta name="theme-color" content="#10251F">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TravelAgency","@id":"https://afrinkong.com/#org","name":"Afrinkong","legalName":"Wankong LLC","url":"https://afrinkong.com/","logo":"https://afrinkong.com/images/brand/mark-512.png","image":"https://afrinkong.com/images/brand/share.jpg","description":"Afrinkong arranges journeys across Africa: time in one country, priced per day, and crossings of several, priced whole.","identifier":{"@type":"PropertyValue","name":"Registration number","value":"10588061"},"address":{"@type":"PostalAddress","streetAddress":"8 The Green, Suite B","addressLocality":"Dover","addressRegion":"Delaware","postalCode":"19901","addressCountry":"US"},"areaServed":{"@type":"Place","name":"Africa"},"knowsAbout":["Travel in Africa","Safari","Overland journeys","African cities","African cuisine"]},{"@type":"WebSite","@id":"https://afrinkong.com/#site","url":"https://afrinkong.com/","name":"Afrinkong","publisher":{"@id":"https://afrinkong.com/#org"},"inLanguage":"en"}]}</script>
 </head>
-<body>
+<body class="af af--home">
 <a class="af-skip" href="#main">Skip to content</a>
 <script>
 /* The page collects an answer as the visitor moves down it — a destination from
@@ -45,40 +45,15 @@ window.AF = {
 </script>
 
 <!-- nav -->
-<header class="wa-mast">
-  <div class="wa-frame wa-mast-in">
-    <a class="wa-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><b>Afrinkong</b><span>Journeys across Africa</span></a>
-    <!-- "Build a journey" was in the nav AND "Begin a journey" was the button,
-         which a visitor reads as the same invitation twice — except they went
-         to different places. The nav item opened the tunnel at /journey; the
-         button scrolled to #plan, which is the section headed "What happens
-         after you choose Africa?" and explains the process rather than
-         starting one. Two synonyms, two destinations, no way to tell from the
-         labels which was which.
-         The button now does the thing it says, the nav loses the duplicate,
-         and the verb matches the page it opens — /journey calls itself Build a
-         journey. #plan is still there to scroll to; a section on this page does
-         not need a masthead entry to be found. -->
-    <nav class="wa-routes" aria-label="Primary">
-      <a href="/atlas">The Atlas</a>
-      <!-- Trans Afrique earns a route of its own. It is the most expensive
-           thing Afrinkong sells and the only product that is not a country, so
-           reaching it by scrolling past six sections would have been the wrong
-           kind of discreet. -->
-      <a href="/trans-afrique">Trans Afrique</a>
-      <!-- And the Journey Fund earns one for the opposite reason. Trans
-           Afrique is here because it is the largest thing we sell; this is
-           here because it is the only one a visitor cannot guess exists. Every
-           other route on this bar names something the reader already has a
-           word for — an atlas, a story, a place. Nobody arrives knowing they
-           can begin a journey two years before taking it, so the only way they
-           find out is if the page says so before they have scrolled. -->
-      <a href="/journey-fund">Journey Fund</a>
-      <a href="/stories">Stories</a>
-      <a href="/meet">Meet Africa</a>
-      <a href="/places">Every place</a>
-    </nav>
-    <a class="btn" href="/journey">Build a journey</a>
+<header class="af-shell">
+  <div class="af-shell-in">
+    <a class="af-shell-mark" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" loading="eager" decoding="async" style="--af-emblem:34px"><b>Afrinkong</b><span>Journeys across Africa</span></a>
+    <nav class="af-shell-nav" aria-label="Primary"><a class="af-shell-area" href="/places">Explore</a><a class="af-shell-area" href="/journey">Plan</a></nav>
+    <div class="af-shell-util"><a href="/about-afrinkong">About Afrinkong</a></div>
+    <details class="af-shell-menu">
+      <summary>Menu</summary>
+      <div class="af-shell-menu-in"><b>Explore</b><span><a href="/places">Destinations</a><a href="/tourism/">Countries</a><a href="/atlas">The Atlas</a><a href="/stories">Stories</a><a href="/meet">Meet Africa</a><a href="/trans-afrique">Trans Afrique</a></span><b>Plan</b><span><a href="/journey">Journey Planner</a><a href="/journey-fund">Journey Fund</a><a href="/journey-fund#jf-goal">Travel Goal</a></span><a href="/about-afrinkong">About Afrinkong</a></div>
+    </details>
   </div>
 </header>
 
@@ -1876,7 +1851,7 @@ window.AF = {
     } else {
       html += '<p class="wa-none-p">Loosening any one of the three still finds '
         + 'nothing, which means this combination is not in the dataset at all. '
-        + '<a href="/places">Every place</a> is the plain list.</p>';
+        + '<a href="/places">Destinations</a> is the plain list.</p>';
     }
     if (!none) {
       none = document.createElement('div');
@@ -2289,7 +2264,7 @@ window.AF = {
       <b>The Atlas</b>
       <a href="/atlas">The atlas of Africa</a>
       <a href="/#window">The five regions</a>
-      <a href="/places">Every place</a>
+      <a href="/places">Destinations</a>
       <a href="/wonders">The wonders of Africa</a>
       <a href="/trans-afrique">Trans Afrique</a>
       <a href="/compare">Compare two countries</a>

@@ -52,6 +52,7 @@ def render():
     q = d["enquiries"]
     o = d["office"]
     return TEMPLATE % {
+        "mast": plate.shell(here="/enquire"),
         "og": plate.open_graph(
             "Begin your journey — Afrinkong",
             "Send the journey you built. We arrange the ground wherever it goes.",
@@ -92,19 +93,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/journey.css">
 <noscript><style>.fj-rise{opacity:1;transform:none}</style></noscript>
 </head>
-<body>
+<body class="af af--index">
 <a class="af-skip" href="#say">Skip to the form</a>
-<header class="jn-mast">
-  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Begin your journey</b></a>
-  <nav class="jn-routes" aria-label="Primary">
-    <a href="/journey">Build a journey</a>
-    <a href="/atlas">The Atlas</a>
-    <a href="/meet">Meet Africa</a>
-    <a href="/places">Every place</a>
-    <a href="/stories">Stories</a>
-  </nav>
-  <a class="af-btn af-btn--quiet" href="/journey">Build a journey<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main class="jn jn-enq" id="main">
   <div class="jn-enq-grid">

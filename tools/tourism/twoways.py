@@ -47,6 +47,7 @@ import html as html_mod
 import json
 import os
 
+from . import plate
 from .model import ROOT
 
 PAGE = os.path.join(ROOT, "how-it-works.html")
@@ -101,6 +102,7 @@ def build():
     lowest_band = min(r["low"] for r in tf["routes"])
 
     return TEMPLATE % {
+        "mast": plate.shell(here="/how-it-works"),
         "country_ladder": ladder(
             "Travelling in one country", rates["unit"], country_rows,
             "Park entrance, conservation and permit charges are arranged by "
@@ -156,18 +158,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/journey.css">
 <link rel="stylesheet" href="/styles/howitworks.css">
 </head>
-<body class="hw-body">
+<body class="af af--trust hw-body">
 <a class="af-skip" href="#main">Skip to how it works</a>
-<header class="jn-mast">
-  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>How it works</b></a>
-  <nav class="jn-routes" aria-label="Primary">
-    <a href="/atlas">The Atlas</a>
-    <a href="/trans-afrique">Trans Afrique</a>
-    <a href="/wonders">The Wonders</a>
-    <a href="/places">Every place</a>
-  </nav>
-  <a class="af-btn af-btn--quiet" href="/enquire">Start a journey<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main id="main" class="hw-page">
   <div class="hw-open">

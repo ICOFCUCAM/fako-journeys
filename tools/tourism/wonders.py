@@ -369,6 +369,8 @@ def run(countries, log=print):
         if [w for w in d["wonders"] if w["strand"] == st["id"]])
 
     html = TEMPLATE % {
+        "mast": plate.shell(here="/wonders", area="explore",
+                            product="The Wonders", product_href="/wonders"),
         "index": "".join(index),
         "bar": bar,
         "og": plate.open_graph(
@@ -402,18 +404,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/journey.css">
 <link rel="stylesheet" href="/styles/wonders.css">
 </head>
-<body class="wo-body">
+<body class="af af--index wo-body" data-area="explore">
 <a class="af-skip" href="#main">Skip to the wonders</a>
-<header class="jn-mast">
-  <a class="jn-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>The Wonders of Africa</b></a>
-  <nav class="jn-routes" aria-label="Primary">
-    <a href="/atlas">The Atlas</a>
-    <a href="/places">Every place</a>
-    <a href="/meet">Meet Africa</a>
-    <a href="/stories">Stories</a>
-  </nav>
-  <a class="af-btn af-btn--quiet" href="/journey">Build a journey<i>&rarr;</i></a>
-</header>
+%(mast)s
 
 <main class="wo-page" id="main">
   <!-- THE OPENING IS TWO COLUMNS, AND IT HAD TO BECOME TWO.

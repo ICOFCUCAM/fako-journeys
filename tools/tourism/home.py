@@ -281,6 +281,19 @@ def picture(entry, role):
                w, h, imaging.object_position(entry.focal)))
 
 
+
+def _mast(country):
+    """The shell for this country, with only the depths that exist.
+
+    plate.country_band asks the filesystem rather than home.NO_PAGE:
+    Uganda and Namibia have no /<slug> page, and Cameroon is in that same
+    tuple for a different reason and does. Linking all four blind put 56
+    dead links onto Namibia's place pages, which link-checks caught.
+    """
+    name, href, nav = plate.country_band(country.name, country.slug)
+    return plate.shell(here="/%s" % country.slug, area="explore",
+                       product=name, product_href=href, product_nav=nav)
+
 def build(country, taxonomy, countries=()):
     """-> the full HTML for one country's home page."""
     def entry(cat_id):
@@ -405,6 +418,7 @@ def build(country, taxonomy, countries=()):
         "highlights": "\n".join(highlights),
         "reasons": "\n".join(reasons),
         "groups": "\n".join(groups),
+        "mast": _mast(country),
         "count": len(taxonomy.enabled),
         "listed": listed,
         "resolved": resolved,
@@ -784,21 +798,9 @@ TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/country.css">
 </head>
-<body>
+<body class="af af--country" data-area="explore">
 <a class="af-skip" href="#main">Skip to content</a>
-<header class="mast">
-  <div class="af-frame mast-in">
-    <a class="mark" href="/%(slug)s"><span class="mark-up">Afrinkong</span><b>%(name)s</b><span>%(tagline)s</span></a>
-    <nav class="routes" aria-label="Primary">
-      <a href="/atlas#/%(slug)s">The Atlas</a>
-      <a href="/journey">Build a journey</a>
-      <a href="/meet#/%(slug)s">Meet %(name)s</a>
-      <a href="/tourism/%(slug)s">All %(count)d</a>
-      <a href="/how-it-works">How it works</a>
-    </nav>
-    <a class="af-btn af-btn--solid" href="/journey">Build a journey</a>
-  </div>
-</header>
+%(mast)s
 
 <main id="main">
 <section class="open">
@@ -904,7 +906,7 @@ TEMPLATE = """<!DOCTYPE html>
       <a class="ct-depth" href="/places#%(slug)s">
         <span class="ct-depth-k">Places</span>
         <b>The individual things</b>
-        <span class="ct-depth-n">Every place we write about, one page each</span>
+        <span class="ct-depth-n">Every place we write up, one page each</span>
       </a>
       <a class="ct-depth" href="/tourism/%(slug)s">
         <span class="ct-depth-k">Experiences</span>
@@ -961,7 +963,7 @@ TEMPLATE = """<!DOCTYPE html>
         <b>Elsewhere</b>
         <a href="/">Afrinkong</a>
         <a href="/atlas">The atlas of Africa</a>
-        <a href="/places">Every place</a>
+        <a href="/places">Destinations</a>
         <a href="/enquire">Begin a journey</a>
       </div>
     </div>

@@ -303,6 +303,7 @@ def render_landing(countries, regions, crossings, money, co):
             "We hold no money and charge nothing.",
             "/journey-fund"),
         "preload": plate.PRELOAD,
+        "mast": mast("/journey-fund"),
         "foot": plate.colophon_foot("/journey-fund"),
         "events": plate.events_block(),
         "data": json.dumps(data, separators=(",", ":"), sort_keys=True),
@@ -328,6 +329,7 @@ def render_how(money, co):
             "you change your mind, and what happens if the price moves.",
             "/journey-fund/how-it-works"),
         "preload": plate.PRELOAD,
+        "mast": mast("/journey-fund/how-it-works"),
         "foot": plate.colophon_foot("/journey-fund/how-it-works"),
         "events": plate.events_block(),
     }
@@ -341,6 +343,7 @@ def render_questions(money, co):
             "journey a year or two ahead, answered plainly.",
             "/journey-fund/questions"),
         "preload": plate.PRELOAD,
+        "mast": mast("/journey-fund/questions"),
         "foot": plate.colophon_foot("/journey-fund/questions"),
         "events": plate.events_block(),
     }
@@ -393,16 +396,25 @@ def run(countries=None, log=print):
 
 # --- the templates -----------------------------------------------------------
 
-MAST = """<header class="jf-mast">
-  <a class="jf-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>The Journey Fund</b></a>
-  <nav class="jf-routes" aria-label="Primary">
-    <a href="/journey-fund">Plan a journey</a>
-    <a href="/journey-fund/how-it-works">How it works</a>
-    <a href="/journey-fund/questions">Questions</a>
-    <a href="/journey">Build a journey</a>
-    <a href="/trans-afrique">Trans Afrique</a>
-  </nav>
-</header>"""
+# THE SHELL, NOT A MASTHEAD OF ITS OWN. Phase 5 + 6.
+#
+# This used to be one of ten mastheads. The Journey Fund keeps its identity —
+# it gets a product band with its own name and its own three links — but it
+# stops having its own idea of what a masthead IS. plate.shell() owns that now,
+# and these three pages are the first family to adopt it because they are the
+# smallest and because this is the family the state language already proved
+# things on.
+FUND_NAV = (
+    ("/journey-fund", "Plan a journey"),
+    ("/journey-fund/how-it-works", "How it works"),
+    ("/journey-fund/questions", "Questions"),
+)
+
+
+def mast(here):
+    from . import plate
+    return plate.shell(here=here, area="plan", product="The Journey Fund",
+                       product_href="/journey-fund", product_nav=FUND_NAV)
 
 LANDING_TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
@@ -420,9 +432,9 @@ LANDING_TEMPLATE = """<!DOCTYPE html>
      Goal is the only surface on this site with a live state today. -->
 <link rel="stylesheet" href="/styles/states.css">
 </head>
-<body class="jf-page">
+<body class="af af--fund jf-page" data-area="plan">
 <a class="af-skip" href="#plan">Skip to the planner</a>
-""" + MAST + """
+%(mast)s
 <main>
   <section class="jf-frame jf-open jf-move" id="dream" aria-labelledby="m1">
     <p class="af-stamp jf-move-n"><b>01</b> Dream</p>
@@ -636,9 +648,9 @@ HOW_TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/fund.css">
 </head>
-<body class="jf-page">
+<body class="af af--fund jf-page" data-area="plan">
 <a class="af-skip" href="#qs">Skip to the answers</a>
-""" + MAST + """
+%(mast)s
 <main>
   <section class="jf-frame jf-open jf-open--short">
     <h1>How it works</h1>
@@ -742,9 +754,9 @@ ASKED_TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/fund.css">
 </head>
-<body class="jf-page">
+<body class="af af--fund jf-page" data-area="plan">
 <a class="af-skip" href="#qs">Skip to the questions</a>
-""" + MAST + """
+%(mast)s
 <main>
   <section class="jf-frame jf-open jf-open--short">
     <h1>Questions</h1>

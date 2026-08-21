@@ -459,13 +459,251 @@ def trail(path, title):
     }
 
 
+# =========================================================================
+# THE SHELL. Phase 5 + 6.
+#
+# One navigation system, one shell, one visual language, and product identity
+# on top of it rather than instead of it.
+#
+# WHAT THIS REPLACES
+#
+# Ten masthead classes across 1,597 pages — pl-mast (1,461), fj-mast (60),
+# mast (52), jn-mast (17), jf-mast (3), wa-mast, mt-mast, at-mast, top. Ten
+# interpretations of the same idea, none of which knew about the others, and
+# one of which (fj-mast) was worn by two DIFFERENT companies: Afrinkong's 55
+# tourism pages and the Kamerun operator's five own pages, which carry
+# completely different navigation. A change to that one class changed two
+# products at once.
+#
+# THE SPINE IS EXPLORE -> PLAN -> TRAVEL. THE NAVIGATION SHOWS TWO.
+#
+# TRAVEL is not here because bookable travel is not operational, and FUND is
+# not here because issuance and the wallet are gated. A navigation item that
+# says "click here to do something you cannot do" is the one failure this
+# programme has spent its whole life avoiding. Both join the moment they are
+# real, and nothing in this file has to be redesigned when they do — they are
+# two more entries in AREAS.
+#
+# WHY TWO ROWS AND NOT A DROPDOWN
+#
+# The shell must work with no JavaScript. portrait.js states the site's rule in
+# its own header — the page is complete before the script arrives — and 1,596
+# pages satisfy it today. A hover menu fails that, fails touch, and fails the
+# keyboard without work a two-row bar simply does not need.
+#
+# The second row is also more useful than a dropdown: it shows the children of
+# the area THIS page belongs to, always visible, so the area's contents are
+# discovered rather than hunted for.
+# =========================================================================
+
+AREAS = (
+    ("explore", "Explore", (
+        ("/places", "Destinations"),
+        ("/tourism/", "Countries"),
+        ("/atlas", "The Atlas"),
+        ("/stories", "Stories"),
+        ("/meet", "Meet Africa"),
+        ("/trans-afrique", "Trans Afrique"),
+    )),
+    ("plan", "Plan", (
+        ("/journey", "Journey Planner"),
+        ("/journey-fund", "Journey Fund"),
+        # A section of the Fund today rather than a page, and linked as one.
+        # It becomes its own surface when there are accounts to hold goals,
+        # and then this line changes and nothing else does.
+        ("/journey-fund#jf-goal", "Travel Goal"),
+    )),
+)
+
+UTILITY = (
+    ("/about-afrinkong", "About Afrinkong"),
+)
+
+# The operator's own front door. NOT Afrinkong's navigation: these five pages
+# belong to the Kamerun ground operation, and the footer already says so. They
+# are listed here so that the one place that decides navigation decides this
+# too, rather than leaving five pages to keep their own copy by accident.
+OPERATOR_NAV = (
+    ("/services", "Circuits"),
+    ("/pricing", "Rates &amp; Fees"),
+    ("/about", "The Operator"),
+    ("/contact", "Enquire"),
+)
+
+
+def _same(a, b):
+    """Is `a` the page we are on — not merely a section of it.
+
+    A FRAGMENT LINK IS NOT THE PAGE. The first version of this stripped the
+    fragment from both sides, which meant /journey-fund and
+    /journey-fund#jf-goal both came back true and the rendered nav carried
+    aria-current="page" TWICE on one page. Only one element may, and a screen
+    reader given two has been told the reader is in two places.
+
+    So a link that names a fragment is never "the current page": it is a link
+    into the current page, which is a different thing and correctly gets no
+    marker at all. Travel Goal is a section of the Journey Fund today, and this
+    is the line that keeps that honest.
+    """
+    if "#" in (a or ""):
+        return False
+    return (a or "").rstrip("/") == (b or "").split("#")[0].rstrip("/")
+
+
+def shell(here=None, area=None, product=None, product_href=None,
+          product_nav=(), operator=False):
+    """The masthead every page wears.
+
+    here          the path of the page being rendered, so it can mark itself
+                  and so it never offers a link back to itself
+    area          "explore" | "plan" | None — which row two shows
+    product       an optional product band beneath: Trans Afrique, the Journey
+                  Fund, a country name. This is where identity lives, and most
+                  of the 1,405 place pages have none because they are Afrinkong
+                  plainly
+    operator      render the Kamerun operator's shell instead. A different
+                  company, a different navigation, deliberately not this one
+
+    Active state is derived, never authored per page: aria-current="page" on
+    the exact page, `is-here` on the area, and data-area on the <body> so the
+    area row can render without a script.
+    """
+    if operator:
+        links = "".join(
+            '<a href="%s"%s>%s</a>' % (
+                h, ' aria-current="page"' if _same(h, here) else "", n)
+            for h, n in OPERATOR_NAV)
+        return (
+            '<header class="af-shell af-shell--operator">\n'
+            '  <div class="af-shell-in">\n'
+            '    <a class="af-shell-mark" href="/cameroon">%s'
+            '<b>Kamerun</b><span>Afrinkong in Cameroon</span></a>\n'
+            '    <nav class="af-shell-nav" aria-label="Primary">%s</nav>\n'
+            '  </div>\n'
+            '</header>' % (emblem(34, "af-emblem--mast"), links))
+
+    areas = "".join(
+        '<a class="af-shell-area%s" href="%s"%s>%s</a>' % (
+            " is-here" if key == area else "",
+            children[0][0],
+            ' aria-current="true"' if key == area else "",
+            label)
+        for key, label, children in AREAS)
+
+    util = "".join('<a href="%s"%s>%s</a>' % (
+        h, ' aria-current="page"' if _same(h, here) else "", n)
+        for h, n in UTILITY)
+
+    # Row two: the children of the current area. A page with no area — the
+    # homepage, the trust pages — gets no second row rather than an arbitrary
+    # one.
+    row2 = ""
+    for key, label, children in AREAS:
+        if key != area:
+            continue
+        row2 = ('  <nav class="af-shell-sub" aria-label="%s">%s</nav>\n' % (
+            label, "".join(
+                '<a href="%s"%s>%s</a>' % (
+                    h, ' aria-current="page"' if _same(h, here) else "", n)
+                for h, n in children)))
+
+    # The phone menu. <details> because it opens with no JavaScript, is
+    # keyboard operable by default, and announces its own expanded state —
+    # none of which is true of a button plus a class plus aria that somebody
+    # has to keep in step.
+    menu = "".join(
+        '<b>%s</b><span>%s</span>' % (label, "".join(
+            '<a href="%s"%s>%s</a>' % (
+                h, ' aria-current="page"' if _same(h, here) else "", n)
+            for h, n in children))
+        for _key, label, children in AREAS)
+
+    return (
+        '<header class="af-shell">\n'
+        '  <div class="af-shell-in">\n'
+        '    <a class="af-shell-mark" href="/">%s<b>Afrinkong</b>'
+        '<span>Journeys across Africa</span></a>\n'
+        '    <nav class="af-shell-nav" aria-label="Primary">%s</nav>\n'
+        '    <div class="af-shell-util">%s</div>\n'
+        '    <details class="af-shell-menu">\n'
+        '      <summary>Menu</summary>\n'
+        '      <div class="af-shell-menu-in">%s%s</div>\n'
+        '    </details>\n'
+        '  </div>\n'
+        '%s'
+        '%s'
+        '</header>' % (
+            emblem(34, "af-emblem--mast"), areas, util, menu,
+            "".join('<a href="%s">%s</a>' % (h, n) for h, n in UTILITY),
+            row2,
+            _product_band(product, product_href, product_nav, here)))
+
+
+def country_band(name, slug):
+    """The four depths, as a product band — and only the ones that exist.
+
+    -> (product, product_href, product_nav) for shell().
+
+    THE HAZARD THIS EXISTS FOR, WHICH I WALKED INTO HAVING WRITTEN IT DOWN.
+    /<slug> does not exist for every country: home.NO_PAGE skips Uganda and
+    Namibia because both have operator sites of their own, and its comment says
+    plainly that nothing on any page may link to them. The first version of the
+    shell linked the Overview unconditionally and put 56 dead links onto
+    Namibia's place pages — caught by link-checks, which is what it is for.
+
+    Cameroon is in that same tuple for a DIFFERENT reason: its page is
+    hand-built rather than generated, so it is perfectly linkable. Treating the
+    tuple as one list would silently drop a real page, which is why this asks
+    the filesystem "is there a page there" rather than the generator "do you
+    skip this one". They are different questions and only one of them is what a
+    link needs to be true.
+
+    Written once here so that the four callers — places, tourism, country and
+    portrait — cannot each get it right or wrong separately.
+    """
+    nav = []
+    if os.path.exists(os.path.join(ROOT, "%s.html" % slug)):
+        nav.append(("/%s" % slug, "Overview"))
+    if os.path.exists(os.path.join(ROOT, "portrait", "%s.html" % slug)):
+        nav.append(("/portrait/%s" % slug, "Portrait"))
+    if os.path.isdir(os.path.join(ROOT, "places", slug)):
+        nav.append(("/places#%s" % slug, "Places"))
+    if os.path.exists(os.path.join(ROOT, "tourism", "%s.html" % slug)):
+        nav.append(("/tourism/%s" % slug, "What it costs"))
+    # The band's own title links the overview where there is one, and is plain
+    # text where there is not — a heading that goes nowhere beats a 404.
+    href = ("/%s" % slug) if nav and nav[0][1] == "Overview" else None
+    return name, href, tuple(nav)
+
+
+def _product_band(name, href, nav, here):
+    """Product identity, BENEATH the platform bar rather than instead of it.
+
+    Trans Afrique, the Journey Fund, the journey builder and the atlas are
+    products with their own character, and instruction 5 is explicit that they
+    keep it. What they must not keep is their own idea of what a masthead is.
+    """
+    if not name:
+        return ""
+    links = "".join(
+        '<a href="%s"%s>%s</a>' % (
+            h, ' aria-current="page"' if _same(h, here) else "", n)
+        for h, n in (nav or ()))
+    title = ('<a class="af-shell-prod-n" href="%s">%s</a>' % (href, name)
+             if href else '<b class="af-shell-prod-n">%s</b>' % name)
+    return ('  <div class="af-shell-prod">%s%s</div>\n' % (
+        title, ('<nav class="af-shell-prod-nav" aria-label="%s">%s</nav>'
+                % (name, links)) if links else ""))
+
+
 FOOT_LINKS = (
-    ("/atlas", "The atlas"),
-    ("/places", "Every place"),
+    ("/atlas", "The Atlas"),
+    ("/places", "Destinations"),
     ("/stories", "Stories"),
-    ("/tourism/", "Every country"),
-    ("/journey", "Build a journey"),
-    ("/journey-fund", "The Journey Fund"),
+    ("/tourism/", "Countries"),
+    ("/journey", "Journey Planner"),
+    ("/journey-fund", "Journey Fund"),
+    ("/about-afrinkong", "About Afrinkong"),
     ("/enquire", "Begin a journey"),
 )
 
@@ -494,9 +732,16 @@ def emblem(px=56, extra=""):
     everywhere it appears without a srcset to keep in step with a layout. One
     file, 26 KB, cached once for the whole site.
     """
+    # LAZY EVERYWHERE EXCEPT THE MASTHEAD. The mark in the shell is the first
+    # thing above the fold on all 1,597 pages, and loading="lazy" on it asks the
+    # browser to defer the one image that is certainly visible — which delays
+    # the brand and costs a layout shift for nothing. The footer's copy stays
+    # lazy, because it genuinely is below the fold.
+    mast = "af-emblem--mast" in (extra or "")
     return ('<img class="af-emblem%s" src="/images/brand/mark-128.png" '
-            'width="128" height="128" alt="" loading="lazy" decoding="async" '
-            'style="--af-emblem:%dpx">' % ((" " + extra) if extra else "", px))
+            'width="128" height="128" alt="" loading="%s" decoding="async" '
+            'style="--af-emblem:%dpx">'
+            % ((" " + extra) if extra else "", "eager" if mast else "lazy", px))
 
 
 def colophon_foot(here=None):

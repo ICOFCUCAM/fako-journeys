@@ -69,6 +69,8 @@ def build(countries, taxonomy):
     cats = [{"id": c["id"], "title": c["title"].split("/")[0].strip()} for c in taxonomy.enabled]
     opts = "".join('<option value="%s">%s</option>' % (esc(s), esc(data[s]["name"])) for s in slugs)
     return TEMPLATE % {
+        "mast": plate.shell(here="/compare", area="explore",
+                            product="Compare", product_href="/compare"),
         "options_a": opts.replace('value="%s"' % esc(slugs[0]),
                                   'value="%s" selected' % esc(slugs[0]), 1),
         "options_b": opts.replace('value="%s"' % esc(slugs[1]),
@@ -202,19 +204,9 @@ TEMPLATE = """<!DOCTYPE html>
 #cp-body{min-height:0}
 </style></noscript>
 </head>
-<body>
+<body class="af af--index" data-area="explore">
 <a class="af-skip" href="#main">Skip to content</a>
-<header class="mast">
-  <div class="af-frame mast-in">
-    <a class="mark" href="/"><i>Afrinkong</i><b>Compare</b></a>
-    <nav class="routes" aria-label="Primary">
-      <a href="/#window">The map</a>
-      <a href="/#destinations">Destinations</a>
-      <a href="/tourism/">Every country</a>
-      <a href="/journey">Build a journey</a>
-    </nav>
-  </div>
-</header>
+%(mast)s
 
 <main id="main">
 <section class="open">

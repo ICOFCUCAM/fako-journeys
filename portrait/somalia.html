@@ -27,18 +27,21 @@
 <link rel="stylesheet" href="/styles/places.css">
 <link rel="stylesheet" href="/styles/story.css">
 </head>
-<body class="po-body" style="--tone:#2B6E5E">
+<body class="af af--portrait po-body" data-area="explore" style="--tone:#2B6E5E">
 <a class="af-skip" href="#main">Skip to the portrait</a>
 <div class="po-progress" id="po-progress" aria-hidden="true"><i></i></div>
-<header class="pl-mast">
-  <a class="pl-mark af-lockup" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" decoding="async" style="--af-emblem:34px"><i>Afrinkong</i><b>Somalia</b></a>
-  <nav class="pl-routes" aria-label="Primary">
-    <a href="/stories">Stories</a>
-    <a href="/atlas#/somalia">The Atlas</a>
-    <a href="/journey#/j/somalia/">Build a journey</a>
-    <a href="/places#somalia">Every place</a>
-  </nav>
-  <a class="af-btn af-btn--solid" href="/journey">Build a journey<i>&rarr;</i></a>
+<header class="af-shell">
+  <div class="af-shell-in">
+    <a class="af-shell-mark" href="/"><img class="af-emblem af-emblem--mast" src="/images/brand/mark-128.png" width="128" height="128" alt="" loading="eager" decoding="async" style="--af-emblem:34px"><b>Afrinkong</b><span>Journeys across Africa</span></a>
+    <nav class="af-shell-nav" aria-label="Primary"><a class="af-shell-area is-here" href="/places" aria-current="true">Explore</a><a class="af-shell-area" href="/journey">Plan</a></nav>
+    <div class="af-shell-util"><a href="/about-afrinkong">About Afrinkong</a></div>
+    <details class="af-shell-menu">
+      <summary>Menu</summary>
+      <div class="af-shell-menu-in"><b>Explore</b><span><a href="/places">Destinations</a><a href="/tourism/">Countries</a><a href="/atlas">The Atlas</a><a href="/stories">Stories</a><a href="/meet">Meet Africa</a><a href="/trans-afrique">Trans Afrique</a></span><b>Plan</b><span><a href="/journey">Journey Planner</a><a href="/journey-fund">Journey Fund</a><a href="/journey-fund#jf-goal">Travel Goal</a></span><a href="/about-afrinkong">About Afrinkong</a></div>
+    </details>
+  </div>
+  <nav class="af-shell-sub" aria-label="Explore"><a href="/places">Destinations</a><a href="/tourism/">Countries</a><a href="/atlas">The Atlas</a><a href="/stories">Stories</a><a href="/meet">Meet Africa</a><a href="/trans-afrique">Trans Afrique</a></nav>
+  <div class="af-shell-prod"><a class="af-shell-prod-n" href="/somalia">Somalia</a><nav class="af-shell-prod-nav" aria-label="Somalia"><a href="/somalia">Overview</a><a href="/portrait/somalia" aria-current="page">Portrait</a><a href="/places#somalia">Places</a><a href="/tourism/somalia">What it costs</a></nav></div>
 </header>
 
 <main class="po" id="main">
