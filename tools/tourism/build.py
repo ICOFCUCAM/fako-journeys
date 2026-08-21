@@ -722,6 +722,22 @@ def cmd_fund(args):
     return 0
 
 
+def cmd_points(args):
+    """/travel-points — what a Travel Point is, and what it is not.
+
+        build.py points
+
+    The explanatory half of the Travel Point layer. It states the definition,
+    the issuer, the programme and the compliance rung, and it sells nothing:
+    there is no price, no basket and no button on it. The facts come out of
+    scripts/points-ledger.js at build time so the page cannot go on saying
+    DRAFT after the ladder has moved.
+    """
+    from tourism import points_page
+    points_page.run()
+    return 0
+
+
 def cmd_gateway(args):
     from tourism import gateway
     _tax, countries, _cache = dataset()
@@ -1188,7 +1204,7 @@ COMMANDS = {
     "resolve": cmd_resolve, "render": cmd_render, "verify": cmd_verify,
     "test": cmd_test, "scaffold": cmd_scaffold, "report": cmd_report,
     "company": cmd_company, "audit": cmd_audit, "enquire": cmd_enquire, "wonders": cmd_wonders, "transafrique": cmd_transafrique, "twoways": cmd_twoways,
-    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "acquire": cmd_acquire, "heroes": cmd_heroes, "bound": cmd_bound, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
+    "srcset": cmd_srcset, "sizeattr": cmd_sizeattr, "modern": cmd_modern, "assets": cmd_assets, "library": cmd_library, "acquire": cmd_acquire, "heroes": cmd_heroes, "bound": cmd_bound, "focal": cmd_focal, "trust": cmd_trust, "graft": cmd_graft, "trails": cmd_graft, "wondershots": cmd_wondershots, "geo": cmd_geo, "grade": cmd_grade, "sizes": cmd_sizes, "gateway": cmd_gateway, "enquiry": cmd_enquiry, "sidebyside": cmd_sidebyside, "atlas": cmd_atlas, "journey": cmd_journey, "fund": cmd_fund, "points": cmd_points, "meet": cmd_meet, "links": cmd_links, "places": cmd_places,
     "graph": cmd_graph, "story": cmd_story,
     "adopt": cmd_adopt, "all": cmd_all,
     "placements": cmd_placements, "prompts": cmd_prompts, "generate": cmd_generate,

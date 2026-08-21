@@ -1531,9 +1531,30 @@ report(
 /* And the same asked of the pages rather than of the module, because the
    sentence F4 forbids would be written in HTML, not in JavaScript. Any page
    that puts a dollar figure immediately beside a TP figure is the failure. */
-const fundPages = ["journey-fund.html", "journey-fund/how-it-works.html"]
-  .map((f) => path.join(__dirname, "..", f))
-  .filter((f) => fs.existsSync(f));
+/* THIS WAS A LIST OF TWO FILENAMES, AND THE HOLE WAS ALREADY OPEN.
+ *
+ *   ["journey-fund.html", "journey-fund/how-it-works.html"]
+ *
+ * journey-fund/questions.html is in the same family, was never in the list,
+ * and was therefore never scanned. Nothing failed — the check went on
+ * reporting "2 fund pages scanned, no construction found", which is true and
+ * says nothing about the third page. A new page in the family (/travel-points)
+ * would have escaped it the same way, silently, for the same reason.
+ *
+ * F4 is a rule about PAGES, not about a family, so the guard now sweeps every
+ * page on the site. A dollar figure printed beside a TP figure is the failure
+ * wherever it is written, and a scan that has to be remembered is a scan that
+ * eventually is not. */
+const fundPages = (function sweep(dir, out) {
+  for (const name of fs.readdirSync(dir)) {
+    if (name === "node_modules" || name === ".git" || name[0] === ".") continue;
+    const full = path.join(dir, name);
+    const st = fs.statSync(full);
+    if (st.isDirectory()) sweep(full, out);
+    else if (name.endsWith(".html")) out.push(full);
+  }
+  return out;
+})(path.join(__dirname, ".."), []);
 const adjacency = fundPages.flatMap((f) => {
   const html = fs.readFileSync(f, "utf8").replace(/<!--[\s\S]*?-->/g, " ");
   return (html.match(/[\d,]+\s*TP[^<]{0,20}\$[\d,]+|\$[\d,]+[^<]{0,20}[\d,]+\s*TP/g) || [])
@@ -1542,7 +1563,9 @@ const adjacency = fundPages.flatMap((f) => {
 report(
   adjacency.length === 0,
   "F4: no page states a points figure and a money figure as the same quantity",
-  `${fundPages.length} fund pages scanned, no "N TP ($N)" construction found`
+  `${fundPages.length} pages scanned site-wide, no "N TP ($N)" construction ` +
+  `found — this was a hand-written list of two and missed a third page in ` +
+  `the same family`
 );
 
 /* F5 — the unresolved questions, recorded rather than decided. */
@@ -3879,6 +3902,93 @@ report(
   missingItems.length ? "dangling: " + missingItems.join(", ")
     : `${[...new Set(routed)].length} named open items, all present in the ` +
       `document the register sends you to`
+);
+
+/* ---- /travel-points: the explanatory surface ---------------------------- *
+ *
+ * THE PAGE EXISTS BECAUSE THE SITE ALREADY PRINTS THE UNIT.
+ *
+ * The Journey Fund shows an Estimated Travel Goal denominated in Travel
+ * Points, so a customer meets "TP" before anything on this site has told them
+ * what one is. Ten thousand lines of economic model, nine thousand lines of
+ * checks, and until now no page a person could open to find the definition.
+ *
+ * These checks guard the two ways that page can go wrong. It can drift from
+ * the model it describes — the ladder moves and the page goes on saying DRAFT
+ * — and it can quietly become an offer. */
+const TP_PAGE = path.join(__dirname, "..", "travel-points.html");
+const tp = fs.existsSync(TP_PAGE) ? fs.readFileSync(TP_PAGE, "utf8") : "";
+const tpText = tp.replace(/<!--[\s\S]*?-->/g, " ");
+
+report(
+  tp.length > 0,
+  "the unit the Journey Fund quotes has a page that defines it",
+  tp.length ? `/travel-points, ${(tp.length / 1024).toFixed(1)} KB`
+            : "MISSING — the site prints TP and defines it nowhere"
+);
+
+/* Drift. The page states the programme's identity, its issuer and the rung it
+   is standing on; all three come out of scripts/points-ledger.js at build time
+   and all three are asserted against the module here. A page that describes a
+   state machine in prose is the classic two-things-that-must-agree, and this
+   is the thing that compares them. */
+/* Read from the ledger's SOURCE rather than from the required module. This
+   file mutates L.PROGRAMS — it grafts a second test programme on at line 43 —
+   and several checks walk a programme up the compliance ladder to prove the
+   rungs cannot be skipped. By the time this runs, the in-memory object is not
+   a witness to what ships. The file on disk is, and it is also exactly what
+   tools/tourism/points_page.py read when it generated the page. */
+/* `ledgerSrc` is already read at the top of this file, and `ledgerSrcFull`
+   further down — a third copy is both a redeclaration and the same duplication
+   this page's own generator was written to avoid. Reuse the one that exists. */
+const tpBlock = (ledgerSrc.match(/'AFK-TP-2026\.1':\s*\{[\s\S]*?\n {4}\}/) || [""])[0];
+const tpField = (k) => ((tpBlock.match(new RegExp(`\\b${k}:\\s*'([^']*)'`)) || [])[1]);
+const tpWant = {
+  id: tpField("id"), issuer: tpField("issuer"), compliance: tpField("compliance"),
+};
+report(
+  tp.length > 0 && Object.values(tpWant).every(Boolean) &&
+    tp.includes(tpWant.id) && tp.includes(tpWant.issuer) &&
+    tp.includes(tpWant.compliance),
+  "the page states the programme the ledger actually holds",
+  `id ${tpWant.id}, issuer ${tpWant.issuer}, compliance ${tpWant.compliance}` +
+  ` — read from the ledger source, none of them typed into the page`
+);
+
+/* The issuer is the company, never the trading name. Decision I as an entity
+   rule: a trading name issues nothing, so no sentence may say it does. */
+report(
+  tp.length > 0 && !/\bAfrinkong\s+issues\b/i.test(tpText) &&
+    tpText.includes("issues nothing"),
+  "the page says the trading name issues nothing, and never that it issues",
+  "the obligation runs from Wankong LLC; Afrinkong is the experience"
+);
+
+/* It must not become an offer. No price, no card field, no purchase control —
+   the programme is in compliance review and a page that looks like a shop is
+   the failure whether or not the button is wired to anything. */
+const tpOffer = [
+  [/<\s*input[^>]*type=["']?(?:number|tel)["']?[^>]*>/i, "an input that takes a quantity"],
+  [/<\s*(?:button|a)[^>]*>[^<]*\b(?:buy|purchase|pay|checkout|add to)\b/i, "a purchase control"],
+  [/\bcard number\b|\bcvv\b|\bexpiry\b/i, "a card field"],
+  [/\$\s?[\d,]+/, "a money figure"],
+].filter(([re]) => re.test(tpText)).map(([, what]) => what);
+report(
+  tp.length > 0 && tpOffer.length === 0,
+  "the page explains the unit without offering it",
+  tpOffer.length ? "FOUND: " + tpOffer.join(", ")
+    : "no price, no quantity field, no purchase control, no card field — " +
+      "explanatory manifestation, which nothing gates, without the " +
+      "operational manifestation, which compliance does"
+);
+
+/* And it must say so in words, not merely by omission. A customer should not
+   have to infer from the absence of a button that nothing is for sale. */
+report(
+  /\bNothing on this site sells them today\b/i.test(tpText) ||
+    /\bWhat is live today: nothing\b/i.test(tpText),
+  "the page says plainly that nothing is on sale",
+  "stated, rather than left to be inferred from an absent button"
 );
 
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
