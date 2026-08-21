@@ -3141,13 +3141,43 @@ report(
  * These three checks are that comparison. They are cheap and they are the only
  * reason the next drift gets caught. */
 
-const DOCS = ["economic-model-decisions.md", "travel-point-issuance.md",
+const DOCS = ["economic-model-decisions.md", "travel-point-decisions.md",
+              "travel-point-issuance.md",
               "travel-point-exit.md", "travel-point-duration.md",
               "travel-point-transfer.md", "travel-point-redemption.md",
               "travel-point-pricing.md", "travel-point-buyback.md"]
   .map((f) => ({ name: f, path: path.join(__dirname, "..", "docs", f) }))
   .filter((d) => fs.existsSync(d.path))
   .map((d) => ({ name: d.name, text: fs.readFileSync(d.path, "utf8") }));
+
+/* 0 — THE CANONICAL INDEX MUST LIST EVERY DECISION THAT EXISTS.
+ *
+ * The entry point is `travel-point-decisions.md`, in the order the model is
+ * built: definition -> decisions -> programme state -> implementation. An
+ * index that has fallen behind is worse than no index, because it is the one
+ * document a reader trusts — so every canonical decision document must be
+ * named in it, and every module the implementation section lists must exist. */
+const INDEX = fs.readFileSync(
+  path.join(__dirname, "..", "docs", "travel-point-decisions.md"), "utf8");
+const canonicalDocs = ["travel-point-definition.md", "travel-point-issuance.md",
+                       "travel-point-exit.md", "travel-point-duration.md",
+                       "travel-point-transfer.md", "travel-point-redemption.md",
+                       "travel-point-continuity.md", "travel-point-display.md"];
+const unlisted = canonicalDocs.filter((d) => !INDEX.includes(d));
+const indexedModules = (INDEX.match(/`(scripts|tools)\/[a-z-]+\/?[a-z-]*\.(js|sql)`/g) || [])
+  .map((m) => m.replace(/`/g, ""));
+const missingModules = indexedModules.filter(
+  (m) => !fs.existsSync(path.join(__dirname, "..", m)));
+report(
+  unlisted.length === 0 && missingModules.length === 0 &&
+    indexedModules.length >= 8,
+  "docs: the canonical index lists every decision document and no module that is gone",
+  unlisted.length ? "unlisted: " + unlisted.join(", ")
+    : missingModules.length ? "missing: " + missingModules.join(", ")
+    : `${canonicalDocs.length} decision documents and ${indexedModules.length} ` +
+      `modules, all present. The index is the one document a reader trusts, so ` +
+      `it is the one that must not fall behind`
+);
 
 /* 1 — NO DOCUMENT MAY CITE A PROGRAMME FIELD THAT DOES NOT EXIST.
  *

@@ -1,8 +1,12 @@
 # The economic model: what is settled, and what still gates activation
 
+> **The canonical entry point is [`travel-point-decisions.md`](travel-point-decisions.md).**
+> This document is the reconciliation register — the original eleven questions
+> and what became of each. Read the index first.
+
 Wankong LLC, trading as Afrinkong.
 
-**This document was the register of eleven open questions. Six decisions (A–F)
+**This document was the register of eleven open questions. Nine decisions (A–I)
 have since been settled and it had drifted badly out of step with them** — it
 cited a programme field that no longer exists, described a feature as
 unimplemented that now is, recommended against something Decision F decided to
@@ -43,6 +47,15 @@ DRAFT → LEGAL_REVIEW → ACCOUNTING_REVIEW → APPROVED → PILOT
 `maxPerTransaction`, `maxPerCustomerPerYear`, `buyback.basis` or `minPurchase` is
 unset, or while `issueRate` is anything but a single positive number.
 
+**Decision G then added a second condition**, because reaching `ACTIVE` was
+still turning issuance on by itself — so the last rung carried two decisions at
+once. `mayIssue` now requires an issuing compliance state **and**
+`issuanceEnabled === true`. Either alone is inert, which is the same failure
+`status` was: one flag must never be the whole gate.
+
+Ask `readiness(programId)`. It reports the rung, both conditions and every
+unmet one, and never consults `status`.
+
 The old sentence was more alarming and less true. Worth correcting precisely
 because a reader who believed it would have been guarding the wrong word.
 
@@ -60,8 +73,8 @@ because a reader who believed it would have been guarding the wrong word.
 | 6 | buyback before/after reservation? | **settled** — available points only | C, E |
 | 7 | journey price increases? | **settled** — both numbers shown, no revaluation | F |
 | 8 | journey price decreases? | **settled** — the journey gets cheaper, the point does not change | F |
-| 9 | Afrinkong journeys only, or third-party charges? | **settled — and it went the other way** | F |
-| 10 | unused points if a programme is discontinued? | **settled** — closure is not confiscation | D |
+| 9 | Afrinkong journeys only, or third-party charges? | **settled twice — F said in, H said includable-but-not-included** | F, H |
+| 10 | unused points if a programme is discontinued? | **settled** — closure is not confiscation; **cessation** handled too | D, G |
 | 11 | what legal structure applies? | **STILL OPEN. This is the gate.** | — |
 
 ### 3. Do points expire?
@@ -116,6 +129,14 @@ in the abstract: the charge is part of an itinerary Afrinkong is contractually
 arranging, and the customer's points cover it while Afrinkong settles the
 supplier separately.
 
+**Then Decision H moved the default back.** The charges remain *includable* —
+`includableServices`, adoptable by any programme — and `AFK-TP-2026.1` no
+longer covers them, because a customer should not believe every unpredictable
+government charge is already paid for. The capability and the default are
+different questions and only the default moved. This line has now changed
+direction twice and all three positions are recorded in
+`travel-point-continuity.md`.
+
 The audit's underlying concern survives as **F-charges**: *which* charges
 Afrinkong is actually contractually responsible for varies by destination, and
 nobody has enumerated that.
@@ -136,6 +157,14 @@ while points are outstanding** — an unstated outstanding balance is refused
 too. D6's remedy hierarchy covers the case where the journey itself disappears:
 equivalent travel, another eligible service, then buyback, with erasure not on
 the list at any rank. Decision D.
+
+**Decision G then answered the harder case**: what if Afrinkong can no longer
+*provide* the travel? `windDown()` read only whether the compliance state
+permitted redemption — and a ceased company is permitted to redeem and simply
+cannot. Permission is not capability. Cessation is now its own programme term,
+the hierarchy has four rungs and falls through to repurchase, and `CLOSED`
+requires the obligations to be recorded as performed rather than the balance
+merely reaching zero.
 
 What remains is **D-outstanding**: what happens if points remain outstanding
 *indefinitely*, where unclaimed-property law may compel a treatment the
