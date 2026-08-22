@@ -570,7 +570,7 @@ def elsewhere(country):
                      'Sixteen sections, start to finish'))
     if os.path.isdir(os.path.join(ROOT, "places", country.slug)):
         rows.append(('/places#%s' % country.slug, 'The places',
-                     'Every place we write about, one page each'))
+                     'Destinations \u2014 every one we write about, one page each'))
     if not rows:
         return ""
     cells = "".join(

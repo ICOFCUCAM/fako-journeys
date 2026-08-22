@@ -216,7 +216,7 @@ def index(rows, ctx):
                              % jump),
                     "explore": plate.explore_block(),
                     "foot": plate.colophon_foot("/places"),
-                    "og": plate.open_graph("Every place — Afrinkong",
+                    "og": plate.open_graph("Destinations — Afrinkong",
                                            "%d places across %d countries, each with its "
                                            "own page." % (total, len(rows)), "/places")}
 
@@ -415,7 +415,13 @@ addEventListener('DOMContentLoaded',function(){
   <div class="pl-foot-in">
     %(near)s
     <p class="pl-foot-bar"><a class="pl-foot-mark" href="/">%(emblem)s<b>Afrinkong</b></a> &middot; %(country)s &middot;
-      <a href="/places">every place</a> &middot;
+      <!-- "Destinations", not "every place". The rename went through the shell
+           and stopped there: shell-checks.js asserts the label on the primary
+           navigation, and this trail — on 1,404 place pages — went on calling
+           the same surface something else. One product, two names, and the
+           check that was meant to prevent exactly that was pinned to one of
+           the places the name appears. -->
+      <a href="/places">Destinations</a> &middot;
       <a href="/journey-fund">the journey fund</a> &middot;
       <a href="/enquire">enquire</a></p>
     <p class="pl-foot-co"><!-- gen:company -->
@@ -431,8 +437,8 @@ INDEX = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Every place &mdash; Afrinkong</title>
-<meta name="description" content="Every place written up across twenty-two African countries, each with its own page.">
+<title>Destinations &mdash; Afrinkong</title>
+<meta name="description" content="Every destination written up across fifty-four African countries, each with its own page.">
 %(og)s
 <link rel="stylesheet" href="/styles/afrinkong.css">
 <link rel="stylesheet" href="/styles/places.css">

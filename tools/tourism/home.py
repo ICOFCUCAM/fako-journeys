@@ -906,7 +906,7 @@ TEMPLATE = """<!DOCTYPE html>
       <a class="ct-depth" href="/places#%(slug)s">
         <span class="ct-depth-k">Places</span>
         <b>The individual things</b>
-        <span class="ct-depth-n">Every place we write up, one page each</span>
+        <span class="ct-depth-n">Destinations &mdash; every one we write up, one page each</span>
       </a>
       <a class="ct-depth" href="/tourism/%(slug)s">
         <span class="ct-depth-k">Experiences</span>

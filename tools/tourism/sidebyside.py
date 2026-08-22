@@ -231,7 +231,7 @@ TEMPLATE = """<!DOCTYPE html>
       <p>Every country here has its own page, written through the same
         %(count)d categories in the same order, so two of them read side by side
         in two tabs say exactly what this table would have said.</p>
-      <p class="cp-nojs-go"><a href="/places">Every place, country by country</a>
+      <p class="cp-nojs-go"><a href="/places">Destinations, country by country</a>
         <a href="/atlas">The atlas</a>
         <a href="/stories">The portraits</a></p>
     </div>

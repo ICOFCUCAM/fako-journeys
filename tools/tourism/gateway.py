@@ -1394,7 +1394,7 @@ def block_operators(countries):
         'up to the same twenty-seven categories by the same hands, so any two '
         'countries here can be compared on the same terms &mdash; and travelled '
         'the same way, with a vehicle, a driver and a coordinator of ours.</p>'
-        '<span class="wa-op-go">Every place, all %s countries &rarr;</span></a>'
+        '<span class="wa-op-go">Destinations, all %s countries &rarr;</span></a>'
         % (_spell(rest), _and_list([c.name for c in ours]),
            _spell(rest).lower(), _spell(len(countries)).lower()))
     return "\n".join(cards)

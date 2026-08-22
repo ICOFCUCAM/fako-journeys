@@ -329,7 +329,12 @@ def open_graph(title, description, path, kind="website", image=None,
 
 CRUMB_SECTIONS = {
     "tourism": ("Every country", "/tourism/"),
-    "places": ("Every place", "/places"),
+    # THE SHARED LINK TABLE, AND THE COPY THAT MATTERED MOST.
+    # Six generators named this surface, and this one is the table the others
+    # were supposed to defer to. The rename to "Destinations" reached the
+    # primary navigation and stopped, because the check that guarded it was
+    # pinned to the navigation.
+    "places": ("Destinations", "/places"),
     "portrait": ("Stories", "/stories"),
     "trans-afrique": ("Trans Afrique", "/trans-afrique"),
     "journey-fund": ("The Journey Fund", "/journey-fund"),

@@ -356,9 +356,9 @@ def season(country):
     return ('<section class="po-season" id="when">'
             '<span class="af-stamp">%s &middot; When</span>'
             '<h2 class="po-h2">The months this country is good in</h2>'
-            '<p class="po-lede">Out of the country file, not out of a weather API. '
-            'These are the months %s is written up as good in, which is a coarser '
-            'and more honest thing than a forecast.</p>'
+            '<p class="po-lede">These are the months %s is written up as good in &mdash; '
+            'a coarser and more honest thing than a forecast, and not one. We do '
+            'not predict the weather; we say when this country is at its best.</p>'
             '<ol class="po-months" aria-label="Months">%s</ol>%s'
             '<p class="po-now" id="po-now" role="status"></p></section>'
             % (esc(country.name), esc(country.name), chips, when))
@@ -422,11 +422,19 @@ def trust_block(country, pack, ops, arcs_used):
             '<span class="af-stamp">Provenance</span>'
             '<h2 class="po-h2">Who is telling you this</h2>'
             '<dl class="po-dl">'
-            '<div><dt>The writing</dt><dd>Afrinkong editorial. Every headline and '
-            'paragraph on this page is a caption and a description from '
-            '<code>tourism/countries/%s.json</code>, printed here unchanged. There '
-            'is no second copy that could drift from it: this page is generated '
-            'from that file on every build.</dd></div>'
+            # A REPOSITORY PATH, SHOWN TO A CUSTOMER, ON 54 PAGES.
+            #
+            # This read "a caption and a description from
+            # tourism/countries/<slug>.json, printed here unchanged". The point
+            # it is making is a good one and worth keeping — the writing is not
+            # rewritten for display, so what you read is what was filed — but a
+            # reader does not need the file's name on disk to be told that, and
+            # a customer-facing page is not the place to name it.
+            '<div><dt>The writing</dt><dd>Afrinkong editorial. Every headline '
+            'and paragraph on this page is written once, in the same country '
+            'file the rest of the site is built from, and printed here '
+            'unchanged. There is no second copy that could drift from it.'
+            '</dd></div>'
             '<div><dt>What it is not</dt><dd>Not sourced reporting. These are '
             'summaries written for a travel site, not claims with citations behind '
             'them, and they should be read as the former. Where a fact matters to '
@@ -443,8 +451,11 @@ def trust_block(country, pack, ops, arcs_used):
             '<div><dt>The reading</dt><dd>%d chapters, cut from the %d write-ups '
             'this country has. The cut is editorial; the words are not.</dd></div>'
             '</dl></section>'
-            % (esc(country.slug),
-               ("%d of the %d slots on this page have a photograph." % (shot, total))
+            # esc(country.slug) used to be the first argument, filling the
+            # `%s` in "tourism/countries/%s.json". That sentence is gone — a
+            # repository path is not something to show a customer — and so is
+            # its argument. Leaving it behind fed a string to the next `%d`.
+            % (("%d of the %d slots on this page have a photograph." % (shot, total))
                if shot else
                ("None of the %d photographs for %s has been placed yet." % (total, country.name)),
                esc(country.name),
@@ -810,7 +821,7 @@ TEMPLATE = """<!DOCTYPE html>
   <div class="pl-foot-in">
     <p class="pl-foot-bar"><a href="/">Afrinkong</a> &middot; %(country)s &middot;
       <a href="/stories">every story</a> &middot;
-      <a href="/places">every place</a> &middot;
+      <a href="/places">Destinations</a> &middot;
       <a href="/enquire">enquire</a></p>
     <p class="pl-foot-co"><!-- gen:company -->
     <!-- /gen:company --></p>
@@ -891,7 +902,7 @@ INDEX = """<!DOCTYPE html>
 <footer class="pl-foot">
   <div class="pl-foot-in">
     <p class="pl-foot-bar"><a href="/">Afrinkong</a> &middot;
-      <a href="/places">every place</a> &middot;
+      <a href="/places">Destinations</a> &middot;
       <a href="/atlas">the atlas</a> &middot;
       <a href="/enquire">enquire</a></p>
     <p class="pl-foot-co"><!-- gen:company -->
