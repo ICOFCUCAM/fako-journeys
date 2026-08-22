@@ -1,4 +1,6 @@
 /* The long read — /portrait/<country>.
+ *
+ * @product: live | @gate: none | @surface: /portrait/*
  * ---------------------------------------------------------------------------
  * The page is already complete before this file arrives. Every chapter, every
  * picture, every link and every anchor is in the HTML, which is the whole point

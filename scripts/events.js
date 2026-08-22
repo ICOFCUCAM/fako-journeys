@@ -1,4 +1,6 @@
 /* Product events, counted without following anybody around.
+ *
+ * @product: live | @gate: none | @surface: 1,484 pages
  * ---------------------------------------------------------------------------
  * There is no analytics vendor on this site, no cookie, no identifier and no
  * network call. This is the layer that would send events if somebody chose a

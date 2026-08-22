@@ -1,4 +1,6 @@
 /* Explore Africa — the universal index. Cmd/Ctrl-K, or / , or the button.
+ *
+ * @product: live | @gate: none | @surface: every page
  * ---------------------------------------------------------------------------
  * Nine prompts built nine surfaces: a map, a builder, seven human doors, five
  * hundred and seventy-two addresses, twenty-two long reads. Each one was a good

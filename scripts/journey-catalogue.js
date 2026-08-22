@@ -1,4 +1,6 @@
 /* What a journey requires, in Travel Points. Section C phase C3.
+ *
+ * @product: gated | @gate: programme-compliance | @surface: none
  * ===========================================================================
  * C7: "Each journey should have a Travel Point requirement, calculated from the
  * applicable itinerary/service pricing." And: "the journey consumes

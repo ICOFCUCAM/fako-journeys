@@ -1,4 +1,6 @@
 /* Fraud and risk. Item Y.
+ *
+ * @product: gated | @gate: payments-not-live | @surface: none
  * ===========================================================================
  * THE PRINCIPLE THIS FILE EXISTS FOR
  *

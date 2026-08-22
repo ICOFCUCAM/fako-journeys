@@ -1,4 +1,6 @@
 /* The Travel Goal: a journey estimate, restated as travel purchasing power.
+ *
+ * @product: live | @gate: none | @surface: /journey-fund
  * ===========================================================================
  * Pure arithmetic. No DOM, no storage, no network, no dependencies — the same
  * shape as scripts/fund-math.js, and for the same reason.

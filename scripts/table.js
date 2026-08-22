@@ -1,4 +1,6 @@
 /* The table strip, turning over.
+ *
+ * @product: live | @gate: none | @surface: / (the homepage strip)
  * ---------------------------------------------------------------------------
  * PROGRESSIVE, NOT REQUIRED. The six cards the server sends are the six
  * NOW_PICK names, already photographed, already linked, already legible. What

@@ -1,4 +1,6 @@
 /* Repurchase, as a sequence of decisions rather than a button. Section E.
+ *
+ * @product: gated | @gate: programme-compliance | @surface: none
  * ===========================================================================
  * WHAT THIS IS NOT
  *

@@ -1,4 +1,6 @@
 /* Who is acting, and why. The three-layer entity model.
+ *
+ * @product: live | @gate: none | @surface: /trust (rendered at build time by tools/tourism/trust_page.py)
  * ===========================================================================
  * Three companies' worth of responsibility run through this product, and a
  * customer is entitled to know which one they are dealing with at any moment.

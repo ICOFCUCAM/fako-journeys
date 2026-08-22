@@ -1,4 +1,6 @@
 /* The Afrinkong state language. Item 4 of the design order.
+ *
+ * @product: live | @gate: none | @surface: /journey-fund
  * ===========================================================================
  * WHAT THIS IS FOR
  *

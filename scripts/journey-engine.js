@@ -1,4 +1,6 @@
 /* The journey engine — the reasoning, with no interface attached to it.
+ *
+ * @product: live | @gate: none | @surface: /journey
  * ---------------------------------------------------------------------------
  * Pure functions over the dataset: no DOM, no fetch, no clock, no randomness
  * that is not seeded. The same inputs always produce the same journey, which is

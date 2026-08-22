@@ -1,4 +1,6 @@
 /* The Travel Point ledger, with no interface and no database attached to it.
+ *
+ * @product: live | @gate: none | @surface: /journey-fund, /travel-points
  * ===========================================================================
  * Split out for the same reason scripts/fund-math.js is split out of the fund
  * page: this is the part that has to be right, and a function that needs a

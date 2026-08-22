@@ -1,4 +1,6 @@
 /* The Journey Fund estimator — the interface. /journey-fund.
+ *
+ * @product: live | @gate: none | @surface: /journey-fund
  * ===========================================================================
  * The arithmetic is in scripts/fund-math.js and is tested there. This file is
  * the part that reads a form, writes a paragraph and remembers a choice: no

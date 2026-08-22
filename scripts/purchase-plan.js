@@ -1,4 +1,6 @@
 /* How somebody acquires Travel Points over time. Section C, purchase model.
+ *
+ * @product: gated | @gate: programme-compliance | @surface: none
  * ===========================================================================
  * A PLAN IS AN INTENTION, NOT A MANDATE.
  *

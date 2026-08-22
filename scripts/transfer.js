@@ -1,4 +1,6 @@
 /* Giving Travel Points to somebody else. Decision E.
+ *
+ * @product: gated | @gate: programme-compliance | @surface: none
  * ===========================================================================
  * THE DISTINCTION THE WHOLE OF THIS FILE EXISTS TO HOLD
  *

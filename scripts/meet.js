@@ -1,4 +1,6 @@
 /* The human layer — two ways of asking the same seven questions.
+ *
+ * @product: live | @gate: none | @surface: /meet
  * ---------------------------------------------------------------------------
  *   one door,  twenty-two countries   #/food
  *   one country, seven doors          #/cameroon

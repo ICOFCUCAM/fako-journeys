@@ -1,4 +1,6 @@
 /* The atlas — the geography as the interface.
+ *
+ * @product: live | @gate: none | @surface: /atlas
  * ---------------------------------------------------------------------------
  * One state object, one render. Everything the visitor can do — press a region,
  * press a country on the map, pick a place, choose a lens, choose a month, ask

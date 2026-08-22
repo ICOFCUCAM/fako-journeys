@@ -1,4 +1,6 @@
 /* The journey engine's interface.
+ *
+ * @product: live | @gate: none | @surface: /journey
  * ---------------------------------------------------------------------------
  * The reasoning lives in journey-engine.js and is not touched here. This file
  * does three things: it moves through four questions one at a time, it puts the

@@ -1,4 +1,6 @@
 /* The authenticated Travel Wallet. Item Z.
+ *
+ * @product: gated | @gate: accounts-not-built | @surface: none
  * ===========================================================================
  * THE BOUNDARY THIS FILE EXISTS TO DRAW
  *

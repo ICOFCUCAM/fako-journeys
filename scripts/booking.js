@@ -1,4 +1,6 @@
 /* Booking and redemption economics. Section D (redemption).
+ *
+ * @product: gated | @gate: booking-not-built | @surface: none
  * ===========================================================================
  * A note on numbering: an earlier Section D settled the legal and compliance
  * boundary and lives in `docs/travel-point-compliance.md`. This is a second

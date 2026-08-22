@@ -1,4 +1,6 @@
 /* The Journey Fund's arithmetic, with no interface attached to it.
+ *
+ * @product: live | @gate: none | @surface: /journey-fund
  * ===========================================================================
  * Split out of scripts/fund.js for the same reason the journey engine is split
  * out of the journey builder: this is the part that has to be right, and a

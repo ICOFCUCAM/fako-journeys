@@ -1,4 +1,6 @@
 /* The reading room — /stories.
+ *
+ * @product: live | @gate: none | @surface: /stories
  * ---------------------------------------------------------------------------
  * The page is whole before this loads: every rail, every portrait and the whole
  * contemporary panel are in the HTML. Two things need a browser and only two.

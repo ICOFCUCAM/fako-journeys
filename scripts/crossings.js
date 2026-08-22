@@ -1,4 +1,6 @@
 /* The crossings plate — choosing which road is lit.
+ *
+ * @product: live | @gate: none | @surface: /trans-afrique/*
  * ---------------------------------------------------------------------------
  * PROGRESSIVE, NOT REQUIRED. Everything this file touches is already on the
  * page and already legible: the plate draws all four roads, every country name

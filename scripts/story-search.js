@@ -1,4 +1,6 @@
 /* Search over the story graph. No index server, no fuzzy matching, no model.
+ *
+ * @product: live | @gate: none | @surface: 1,522 pages
  * ---------------------------------------------------------------------------
  * "food in Cameroon", "heritage in Ethiopia", "Kampala", "mountains".
  *

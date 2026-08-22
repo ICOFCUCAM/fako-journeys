@@ -1,4 +1,6 @@
 /* The country window — one definition, for the browser.
+ *
+ * @product: live | @gate: none | @surface: / and /trans-afrique
  * ---------------------------------------------------------------------------
  * A country's outline with a photograph masked into it. The same path draws the
  * border and clips the picture, so the photograph arrives inside the exact
