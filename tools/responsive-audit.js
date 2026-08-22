@@ -145,6 +145,74 @@ function chromiumPath() {
     }
     await page.close();
   }
+  /* ---- FOCUS THAT CAN BE SEEN -----------------------------------------
+   *
+   * browser-checks.js PASS SEVEN asserts that focus does not land on an
+   * INVISIBLE control. It does not assert that focus itself is visible, and
+   * those are different questions: a control can be perfectly on screen and
+   * give no sign at all that the keyboard has reached it.
+   *
+   * Six rules in this codebase set `outline:none` inside a focus selector, and
+   * every one of them turns out to be legitimate — three are
+   * :focus:not(:focus-visible), which removes the ring for a MOUSE and keeps
+   * it for a keyboard; .tf-level-go moves the ring to the card around it with
+   * :has(); .cm-link indicates focus by changing an SVG path fill. I checked
+   * all six by reading them, which is exactly the method that does not scale
+   * and does not survive a seventh being added.
+   *
+   * So this focuses controls and looks. The indicator may appear on the
+   * element, on an ANCESTOR (the :has() case) or on a DESCENDANT (the SVG fill
+   * case) — all three are real techniques and all three are legitimate, so all
+   * three count. What does not count is nothing changing.
+   */
+  const invisibleFocus = [];
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 860 } });
+    for (const url of PAGES) {
+      await page.goto('http://127.0.0.1:8213' + url, { waitUntil: 'networkidle' })
+        .catch(() => {});
+      /* DRIVEN BY THE TAB KEY, NOT BY el.focus().
+         Nearly every indicator on this site is written as :focus-visible, and
+         a programmatic focus() does not reliably match it — Chromium decides
+         from how the element was reached. A script that calls focus() and sees
+         nothing change is measuring its own method. Pressing Tab is what a
+         keyboard user does, and it is the only way this answer is worth
+         anything. */
+      const bad = await page.evaluate(() => { window.__seen = []; });
+      for (let i = 0; i < 30; i++) {
+        await page.keyboard.press('Tab');
+        const r = await page.evaluate(() => {
+          const el = document.activeElement;
+          if (!el || el === document.body) return null;
+          const WATCH = ['outline', 'outlineColor', 'outlineWidth', 'outlineStyle',
+                         'boxShadow', 'backgroundColor', 'color', 'borderColor',
+                         'borderBottomColor', 'textDecorationLine', 'fill',
+                         'stroke', 'strokeWidth', 'opacity', 'transform'];
+          const snap = () => {
+            const nodes = [el, el.parentElement, ...el.querySelectorAll('*')].slice(0, 8);
+            return nodes.map((n) => n ? WATCH.map((k) => getComputedStyle(n)[k]).join('|') : '')
+              .join('#');
+          };
+          const focused = snap();
+          /* The same element with focus taken away, for comparison. Blur and
+             re-read, then hand focus back so the tab order is not disturbed. */
+          el.blur();
+          const blurred = snap();
+          el.focus();
+          const name = (String(el.className).split(' ')[0] || el.tagName)
+            + '[' + (el.textContent || '').trim().slice(0, 16) + ']';
+          return { same: focused === blurred, name };
+        });
+        if (r && r.same) {
+          if (!invisibleFocus.some((x) => x.startsWith(url + ':') && x.includes(r.name))) {
+            invisibleFocus.push(`${url}: ${r.name}`);
+          }
+        }
+      }
+    }
+    await page.close();
+  }
+
   await browser.close();
   server.close();
 
@@ -159,5 +227,11 @@ function chromiumPath() {
                  : `${checked} page-widths; SVG map shapes and prose links are ` +
                    'exempt under the criterion itself, not by convenience');
 
-  process.exit(overflow.length || small.length ? 1 : 0);
+  say(invisibleFocus.length === 0, 'focus can be seen when it lands',
+    invisibleFocus.length ? invisibleFocus.slice(0, 5).join(' | ')
+      : `every control on ${PAGES.length} families changes something visible ` +
+        'when focused \u2014 on itself, an ancestor or a descendant, all three ' +
+        'being real techniques this site uses');
+
+  process.exit(overflow.length || small.length || invisibleFocus.length ? 1 : 0);
 }());
