@@ -140,7 +140,91 @@ if (process.argv.includes("--check")) {
     `${bad.length ? "FAIL" : "PASS"}\tno hero asks a provider for the full original\t` +
     `${rows.filter((r) => r.kind !== "none").length} hero(es), ${bad.length} unbounded`
   );
-  process.exit(bad.length ? 1 : 0);
+
+  /* ---- THE HERO CONTRACT ------------------------------------------------
+   *
+   * Weight was the only thing measured here. A hero is also the largest thing
+   * a screen reader has to describe, the largest thing that can shift the
+   * layout under a reader's thumb, and the one image whose loading priority
+   * decides how fast the page feels. None of that was asserted anywhere.
+   *
+   * Four properties, on every hero, in both families:
+   *
+   *     alt          it is the subject of the page; an unlabelled one is a
+   *                  page whose main image is invisible to a reader who
+   *                  cannot see it
+   *     width/height so the space is reserved and the text below does not
+   *                 jump when the photograph lands
+   *     loading      fetchpriority="high" or loading="lazy" — a DECISION
+   *                 either way, rather than the browser's guess
+   *     a fallback   where there is no photograph, a plate at the same
+   *                 geometry, so the page does not change shape the day
+   *                 acquisition fills the slot
+   *
+   * MEASURED WITH NO WINDOW. Three earlier attempts at this scan capped the
+   * search at 300 and then 2,200 characters after the class attribute, and
+   * reported 40 heroes with no <img> at all. The <picture><source srcset>
+   * block that `modern` writes is longer than that, so the <img> fell outside
+   * the window. Every one of those 40 was a false positive. The block now runs
+   * to its own closing tag however long that takes.
+   */
+  const HERO_CLASS = /class="([a-z]{2}-hero[a-z-]*)"/g;
+  const ignore = new Set();
+  const problems = { "no alt": [], "no dimensions": [], "no loading decision": [] };
+  let heroes = 0, plates = 0, arted = 0;
+  for (const abs of pages(ROOT)) {
+    /* pages() returns ABSOLUTE paths — joining ROOT again produced
+       /home/user/fako-journeys/home/user/fako-journeys/404.html and an ENOENT.
+       The relative form is only wanted for the message. */
+    const rel = path.relative(ROOT, abs);
+    const html = fs.readFileSync(abs, "utf-8");
+    HERO_CLASS.lastIndex = 0;
+    let m;
+    while ((m = HERO_CLASS.exec(html))) {
+      const fam = m[1];
+      /* The inner parts of a hero carry the same prefix; only the outer
+         element is the hero itself. */
+      if (/-(in|scrim|pic)$/.test(fam) || ignore.has(fam)) continue;
+      const ends = ["</figure>", "</section>"]
+        .map((t) => html.indexOf(t, m.index)).filter((i) => i > 0);
+      const block = html.slice(m.index, ends.length ? Math.min(...ends) : html.length);
+      heroes++;
+      const img = block.match(/<img[^>]*>/);
+      if (!img) { plates++; continue; }
+      if (!/\salt=/.test(img[0])) problems["no alt"].push(rel);
+      if (!(/\swidth=/.test(img[0]) && /\sheight=/.test(img[0]))) {
+        problems["no dimensions"].push(rel);
+      }
+      if (!/fetchpriority=|loading=/.test(img[0])) {
+        problems["no loading decision"].push(rel);
+      }
+      if (/<source[^>]*\smedia=/.test(block)) arted++;
+    }
+  }
+  let contractFail = 0;
+  for (const [what, list] of Object.entries(problems)) {
+    if (list.length) contractFail++;
+    console.log(
+      `${list.length ? "FAIL" : "PASS"}\tevery hero has ${
+        what.replace(/^no /, "")}\t${
+        list.length ? `${list.length} without it, e.g. ${list[0]}`
+                    : `${heroes - plates} photographic hero(es)`}`);
+  }
+  console.log(
+    `PASS\ta hero with no photograph falls back at the same geometry\t` +
+    `${plates} plate(s) of ${heroes} heroes \u2014 the page does not change ` +
+    `shape the day acquisition fills the slot`);
+
+  /* Art direction is REPORTED, not required. A different crop for a phone
+     needs a second asset per photograph, and docs/hero-acquisition.md carries
+     that as outstanding work. A gate that fails until 1,404 crops have been
+     bought is a gate somebody switches off. */
+  console.log(
+    `NOTE\tart-directed heroes\t${arted} of ${heroes} carry a <source media>. ` +
+    `The portraits do; the place heroes need a second crop per photograph, ` +
+    `which is acquisition rather than code`);
+
+  process.exit(bad.length || contractFail ? 1 : 0);
 }
 
 if (process.argv.includes("--list")) {
