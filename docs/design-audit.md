@@ -65,6 +65,19 @@ with a calculator attached: **a magazine has no states.**
 **418 distinct font-size declarations site-wide.** There is no type scale —
 there are fifteen, and none of them is authoritative.
 
+> **The figures in this section are frozen at the date it was written, and the
+> live ones are in [`design-measured.md`](design-measured.md), which is
+> generated.** This document is the *argument*; that one is the *measurement*.
+> Keeping both in one file is how a good argument acquires stale evidence and
+> stops being believed.
+>
+> Two corrections the measurement makes to the numbers above. **418 is a sum of
+> each file's own distinct values**, so it double-counts every size two
+> stylesheets share; the site-wide vocabulary is **186**. And measured the
+> original way today the figure is **439** — so by this section's own method the
+> type system has not consolidated since, it has grown slightly. The gap between
+> 439 and 186 is 253, and that is the duplication this section is really about.
+
 ### Tokens
 
 **52 custom properties in total**, the most-used appearing five times. That is
