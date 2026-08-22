@@ -330,5 +330,45 @@ check('both pages name the same company as the one you contract with',
     !/contracting with[^.]{0,40}Afrinkong/i.test(about),
   'Wankong LLC on both; neither says a customer contracts with the brand');
 
+/* ---- AN AFRINKONG OBLIGATION IS NOT ROUTED TO A SUPPLIER ---------------
+ *
+ * /privacy told a reader to "write to us" about a data-deletion request, and
+ * /accessibility told them to report a broken page, and BOTH linked /contact
+ * — the Kamerun ground operation's enquiry form.
+ *
+ * Those are Wankong LLC's obligations under its own privacy notice, being
+ * handed to a supplier. It is the cheapest version of the wrong turn
+ * docs/entity-architecture.md warns about: the desk already exists, the form
+ * already works, and pointing at it saves five minutes. It was failing on the
+ * two pages whose whole purpose is to state the obligation.
+ *
+ * The existing check above covers navigation, footers and primary buttons. A
+ * link inside a sentence in the body is none of those, which is exactly why it
+ * survived — so this one reads <main> and asks a different question: does an
+ * AFRINKONG page send a customer to the operator for something Afrinkong owes
+ * them.
+ */
+const OPERATOR_OWN = new Set(['about.html', 'contact.html', 'pricing.html',
+                              'services.html', 'cameroon.html']);
+const OWED_PAGES = ['privacy.html', 'accessibility.html', 'terms.html',
+                    'about-afrinkong.html', 'trust.html'];
+const routed = [];
+for (const rel of OWED_PAGES) {
+  const f = path.join(ROOT, rel);
+  if (!fs.existsSync(f)) continue;
+  const html = fs.readFileSync(f, 'utf8');
+  const main = (html.match(/<main[\s\S]*?<\/main>/) || [''])[0];
+  /* /about is the operator's own page and IS legitimate in context — /trust
+     names the ground operations and links each to its own surface. The desk,
+     /contact, is the one that must never take an Afrinkong obligation. */
+  if (main.includes('href="/contact"')) routed.push(rel);
+}
+check('no page that states an Afrinkong obligation routes it to the operator',
+  routed.length === 0,
+  routed.length
+    ? `${routed.join(', ')} send the reader to /contact, the operator's desk`
+    : "privacy, accessibility and terms write to Afrinkong's own address, " +
+      'read from tourism/company.json rather than typed');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);

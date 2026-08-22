@@ -55,6 +55,22 @@ PAGES = {
 }
 
 
+
+def _own_email():
+    """Afrinkong's own address, from the file that holds it.
+
+    Typing it here would be a second copy of a fact tourism/company.json
+    already owns, and the two would disagree the first time it changed.
+    """
+    from . import company
+    email = (company.load().get("enquiries") or {}).get("email")
+    if not email:
+        raise ValueError(
+            "trust: tourism/company.json has no enquiries.email, and these "
+            "pages must not fall back to the operator's desk.")
+    return email
+
+
 def esc(v):
     return html_mod.escape(str(v if v is not None else ""), quote=True)
 
@@ -173,8 +189,19 @@ def privacy():
             "is the email you sent us, “delete it” means we delete "
             "the correspondence, and it is a request we will action rather "
             "than argue with.",
-            "Write to <a href=\"/contact\">us</a> and say what you want done. "
-            "You do not need to give a reason."),
+            # THE OPERATOR'S DESK IS NOT WHERE A PRIVACY REQUEST GOES.
+            #
+            # This linked /contact — the Kamerun ground operation's enquiry
+            # form. A data-deletion request is Wankong LLC's obligation under
+            # ITS OWN privacy policy, and it was being handed to a supplier.
+            # That is the boundary docs/entity-architecture.md exists to hold,
+            # failing on the page that states the obligation.
+            #
+            # The address is Afrinkong's own, read from tourism/company.json
+            # rather than typed, so it cannot drift from the one the enquiry
+            # surface uses.
+            ("Write to <a href=\"mailto:%s\">us</a> and say what you want "
+             "done. You do not need to give a reason." % _own_email())),
         block(
             "How long anything is kept",
             "Enquiry correspondence is kept while a journey is being arranged "
@@ -341,7 +368,10 @@ def accessibility():
             "Tell us, and be as specific as you can bear to be — which "
             "page, which browser, what you were trying to do. We will fix it "
             "and we will tell you when it is fixed. Write to us at "
-            "<a href=\"/contact\">contact</a>."),
+            # Same correction as the privacy page: an accessibility complaint
+            # about an Afrinkong page is Afrinkong's to answer, not the ground
+            # operation's to field.
+            "<a href=\"mailto:%s\">%s</a>." % (_own_email(), _own_email())),
     ])
 
 
