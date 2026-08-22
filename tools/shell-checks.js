@@ -186,6 +186,47 @@ check('no navigation area is offered that a visitor cannot use',
     : 'Explore and Plan only; Travel joins when travel is bookable and Fund '
       + 'when issuance is ungated');
 
+/* ---- THE GATE, NOT THE BAN ---------------------------------------------
+ *
+ * The check above forbids the words Travel and Fund in the primary
+ * navigation. That was the whole mechanism, and it expressed the wrong thing:
+ * it said "do not add these" where the truth is "these exist, and something
+ * specific is holding them shut".
+ *
+ * plate.AREAS now declares all four areas, each with a gate, and shell()
+ * renders only the ungated ones through plate.open_areas(). These checks
+ * assert the consequence rather than the prohibition: an area whose gate is
+ * shut appears NOWHERE — not in the desktop navigation, not in the phone
+ * menu, not in a footer — and its children do not either.
+ *
+ * The phone menu matters here. It is display:none on a desktop and contains
+ * every link, which is exactly how the area navigation was invisible on 1,584
+ * pages while a check reported it consistent. A ban that only reads the
+ * desktop bar would miss a gated area leaking into the drawer.
+ */
+const gatedAreas = [
+  { label: 'Fund', gate: 'programme-compliance',
+    kids: ['/wallet', '/goals', '/activity'] },
+  { label: 'Travel', gate: 'booking-not-built',
+    kids: ['/journeys', '/bookings', '/itinerary', '/documents', '/support'] },
+];
+
+for (const area of gatedAreas) {
+  const leaked = [];
+  for (const [rel, html] of src) {
+    const head = (html.match(/<header[\s\S]*?<\/header>/) || [''])[0];
+    if (new RegExp(`<summary[^>]*>\\s*${area.label}\\b`).test(head)) leaked.push(rel);
+    else if (area.kids.some((k) => head.includes(`href="${k}"`))) leaked.push(rel);
+  }
+  check(`the ${area.label} area is held shut, and appears nowhere`,
+    leaked.length === 0,
+    leaked.length
+      ? `leaked onto ${leaked.length} page(s), e.g. ${leaked[0]}`
+      : `gate: ${area.gate}. Declared in plate.AREAS with its children, ` +
+        `rendered by nothing — a promise deferred rather than omitted`);
+}
+
+
 /* ---- 4. active state --------------------------------------------------- */
 
 const doubled = [];

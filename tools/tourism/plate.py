@@ -501,8 +501,26 @@ def trail(path, title):
 # discovered rather than hunted for.
 # =========================================================================
 
+# FOUR AREAS, EACH WITH A GATE, AND THE GATE IS WHY YOU CANNOT SEE TWO OF THEM.
+#
+# This tuple used to hold two entries. Travel and Fund were kept out of it, and
+# a check in shell-checks.js forbade the words appearing — a ban rather than an
+# architecture. It worked, and it expressed the wrong thing: it said "do not
+# add these" where the truth is "these exist, and something specific is holding
+# them shut".
+#
+# The fourth field is the gate. `None` means open. Anything else names the
+# condition, in the SAME vocabulary tools/product-map.py uses for the modules
+# behind that area — so `fund` and `buyback.js` are held by one named thing and
+# not by two descriptions of it.
+#
+# shell() renders only the ungated areas. Fund and Travel therefore appear
+# nowhere, on any page, in any menu, and they will appear the moment their gate
+# is set to None and not one moment before. That is the difference between a
+# promise deferred and a promise omitted: this file can now show a reader what
+# is coming without the navigation offering it.
 AREAS = (
-    ("explore", "Explore", (
+    ("explore", "Explore", None, (
         ("/places", "Destinations"),
         ("/tourism/", "Countries"),
         ("/atlas", "The Atlas"),
@@ -510,7 +528,7 @@ AREAS = (
         ("/meet", "Meet Africa"),
         ("/trans-afrique", "Trans Afrique"),
     )),
-    ("plan", "Plan", (
+    ("plan", "Plan", None, (
         ("/journey", "Journey Planner"),
         ("/journey-fund", "Journey Fund"),
         # A section of the Fund today rather than a page, and linked as one.
@@ -518,7 +536,38 @@ AREAS = (
         # and then this line changes and nothing else does.
         ("/journey-fund#jf-goal", "Travel Goal"),
     )),
+    # HELD SHUT. Neither of these renders. The children are written down so the
+    # shape of the product is legible in one place — which is what the
+    # integration mandate asked for — and so that opening a gate is a decision
+    # about a gate rather than an act of invention.
+    ("fund", "Fund", "programme-compliance", (
+        ("/travel-points", "Travel Points"),
+        ("/wallet", "Travel Wallet"),
+        ("/goals", "Travel Goals"),
+        ("/activity", "Point activity"),
+    )),
+    ("travel", "Travel", "booking-not-built", (
+        ("/journeys", "My Journeys"),
+        ("/bookings", "Bookings"),
+        ("/itinerary", "Itinerary"),
+        ("/documents", "Travel Documents"),
+        ("/support", "Travel Support"),
+    )),
 )
+
+
+def open_areas():
+    """The areas a visitor may actually be offered.
+
+    Every render path goes through this rather than through AREAS directly, so
+    a gated area cannot reach a page by somebody iterating the wrong tuple.
+    """
+    return tuple((k, label, kids) for k, label, gate, kids in AREAS if gate is None)
+
+
+def gated_areas():
+    """The areas that exist and are held shut, with what is holding them."""
+    return tuple((k, label, gate, kids) for k, label, gate, kids in AREAS if gate)
 
 UTILITY = (
     ("/about-afrinkong", "About Afrinkong"),
@@ -629,7 +678,7 @@ def shell(here=None, area=None, product=None, product_href=None,
                 '<a href="%s"%s>%s</a>' % (
                     h, ' aria-current="page"' if _same(h, here) else "", n)
                 for h, n in children))
-        for key, label, children in AREAS)
+        for key, label, children in open_areas())
 
     util = "".join('<a href="%s"%s>%s</a>' % (
         h, ' aria-current="page"' if _same(h, here) else "", n)
@@ -657,7 +706,7 @@ def shell(here=None, area=None, product=None, product_href=None,
     # than it.
     row2 = ""
     if not product:
-        for key, label, children in AREAS:
+        for key, label, children in open_areas():
             if key != area:
                 continue
             row2 = ('  <nav class="af-shell-sub" aria-label="%s">%s</nav>\n' % (
@@ -675,7 +724,7 @@ def shell(here=None, area=None, product=None, product_href=None,
             '<a href="%s"%s>%s</a>' % (
                 h, ' aria-current="page"' if _same(h, here) else "", n)
             for h, n in children))
-        for _key, label, children in AREAS)
+        for _key, label, children in open_areas())
 
     return (
         '<header class="af-shell">\n'

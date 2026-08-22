@@ -16,13 +16,12 @@ wrong afterwards — and trusted anyway, because it looks authoritative.
 | `country` | 52 |
 | `crossing` | 10 |
 | `index` | 7 |
-| `trust` | 5 |
+| `trust` | 6 |
 | `operator` | 5 |
 | `fund` | 4 |
 | `atlas` | 1 |
 | `home` | 1 |
 | `journey` | 1 |
-| `explain` | 1 |
 | **total** | **1600** |
 
 1599 pages declare their own family in the body class `af--<family>`; 1
@@ -42,10 +41,10 @@ references it at all*.
 | `account.js` | 0 | 2 |
 | `atlas.js` | 1 | 1 |
 | `booking.js` | 0 | 9 |
-| `buyback.js` | 0 | 7 |
+| `buyback.js` | 0 | 8 |
 | `crossings.js` | 10 | 0 |
 | `enquiry.js` | 5 | 0 |
-| `entities.js` | 0 | 10 |
+| `entities.js` | 0 | 12 |
 | `events.js` | 1484 | 13 |
 | `explore.js` | 1600 | 6 |
 | `fund-math.js` | 1 | 9 |
@@ -245,6 +244,25 @@ be edited casually.
 | `tourism/voices.json` | 2 | 3 |
 | `tourism/wonders.json` | 2 | 16 |
 
+## The navigation architecture
+
+Four areas, each with a gate. `None` means open; anything else names the
+condition holding it shut, in the same vocabulary `tools/product-map.py`
+uses for the modules behind it. `plate.shell()` renders only the open
+ones, so a held area appears on no page — in no menu, on no phone
+drawer, in no footer — until its gate is set to `None`.
+
+| area | gate | children |
+|---|---|---|
+| **Explore** | open | Destinations, Countries, The Atlas, Stories, Meet Africa, Trans Afrique |
+| **Plan** | open | Journey Planner, Journey Fund, Travel Goal |
+| **Fund** | `programme-compliance` | Travel Points, Travel Wallet, Travel Goals, Point activity |
+| **Travel** | `booking-not-built` | My Journeys, Bookings, Itinerary, Travel Documents, Travel Support |
+
+That is the difference between a promise deferred and a promise
+omitted: the shape of the product is written down in one place, and the
+navigation still offers nothing it cannot honour.
+
 ## Generators
 
 `build.py` exposes **58 commands**. Every page on this site is generated;
@@ -270,6 +288,7 @@ behind `company` and `graft`. A single generator run does not execute it.
 | suite | lines |
 |---|---|
 | `tools/browser-checks.js` | 1567 |
+| `tools/content-checks.js` | 148 |
 | `tools/design-checks.js` | 525 |
 | `tools/entity-checks.js` | 334 |
 | `tools/fund-checks.js` | 542 |
@@ -279,22 +298,22 @@ behind `company` and `graft`. A single generator run does not execute it.
 | `tools/library-checks.js` | 591 |
 | `tools/link-checks.js` | 296 |
 | `tools/points-checks.js` | 3995 |
-| `tools/shell-checks.js` | 354 |
+| `tools/shell-checks.js` | 395 |
 | `tools/state-checks.js` | 457 |
 | `tools/tourism/tests.py` (the suite CI runs) | 3799 |
-| **total** | **13833** |
+| **total** | **14022** |
 
 ## Documentation
 
-39 documents, 10061 lines.
+42 documents, 10255 lines.
 
 ## The ratio
 
 | | |
 |---|---|
-| product and economic JavaScript | 10901 lines |
-| gates | 13833 lines |
-| documentation | 10061 lines |
+| product and economic JavaScript | 10953 lines |
+| gates | 14022 lines |
+| documentation | 10255 lines |
 | modules a browser never loads | 8 |
 
 This is the figure the integration mandate exists to close. Architecture

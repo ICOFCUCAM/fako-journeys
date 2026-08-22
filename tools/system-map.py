@@ -36,6 +36,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tools"))
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKIP_DIRS = {"node_modules", ".git", "incoming", ".vercel"}
 
@@ -202,6 +205,29 @@ def main():
         except Exception:
             size = "?"
         w("| `%s` | %s | %s |" % (rel(dp), readers, size))
+    w("")
+
+    # ---- the four areas ---------------------------------------------------
+    w("## The navigation architecture")
+    w("")
+    w("Four areas, each with a gate. `None` means open; anything else names the")
+    w("condition holding it shut, in the same vocabulary `tools/product-map.py`")
+    w("uses for the modules behind it. `plate.shell()` renders only the open")
+    w("ones, so a held area appears on no page — in no menu, on no phone")
+    w("drawer, in no footer — until its gate is set to `None`.")
+    w("")
+    w("| area | gate | children |")
+    w("|---|---|---|")
+    import importlib
+    plate = importlib.import_module("tourism.plate")
+    for key, label, gate, kids in plate.AREAS:
+        w("| **%s** | %s | %s |"
+          % (label, "open" if gate is None else "`%s`" % gate,
+             ", ".join(name for _href, name in kids)))
+    w("")
+    w("That is the difference between a promise deferred and a promise")
+    w("omitted: the shape of the product is written down in one place, and the")
+    w("navigation still offers nothing it cannot honour.")
     w("")
 
     # ---- generators -------------------------------------------------------
