@@ -359,5 +359,34 @@ check('a place reaches an experience and a journey',
     : `${countries.length} countries sampled; the chain Africa \u2192 country ` +
       '\u2192 place \u2192 experience \u2192 journey \u2192 plan has no gap');
 
+/* ---- EXPLORE MUST OFFER PLAN FROM ITS OWN CONTENT -----------------------
+ *
+ * Destinations, the Atlas, Stories and Meet Africa each linked /journey two or
+ * three times, and every one of those links was in the shell or the colophon.
+ * A link that appears on all 1,599 pages says nothing about THIS page; it is
+ * furniture. A reader who has just finished the atlas is at the exact moment
+ * the product exists for, and the page offered them nothing.
+ *
+ * So the assertion is deliberately about <main>, not about the document. The
+ * masthead already links the planner everywhere and always will; that is not
+ * what this is measuring.
+ */
+const EXPLORE_SURFACES = [
+  ['places/index.html', '/places'],
+  ['atlas.html', '/atlas'],
+  ['stories.html', '/stories'],
+  ['meet.html', '/meet'],
+];
+const noPlan = EXPLORE_SURFACES.filter(([rel]) => {
+  const L = outbound(rel);
+  return ![...L].some((h) => h.startsWith('/journey'));
+});
+check('every Explore surface offers the journey from its own content',
+  noPlan.length === 0,
+  noPlan.length
+    ? `${noPlan.map(([, u]) => u).join(', ')} link it only from the shell`
+    : 'Destinations, the Atlas, Stories and Meet Africa each close with the ' +
+      'same block from plate.onward() \u2014 one component, not four');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);

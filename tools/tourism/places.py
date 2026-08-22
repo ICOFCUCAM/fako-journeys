@@ -208,7 +208,8 @@ def index(rows, ctx):
         % (esc(country.slug), esc(country.name), len(pack["places"]))
         for country, pack, _o in rows)
     total = sum(len(p["places"]) for _c, p, _o in rows)
-    return INDEX % {"mast": plate.shell(here="/places", area="explore",
+    return INDEX % {"onward": plate.onward("/places"),
+                    "mast": plate.shell(here="/places", area="explore",
                                         product="Destinations",
                                         product_href="/places"),
                     "blocks": "\n".join(blocks), "n": total, "countries": len(rows),
@@ -458,6 +459,7 @@ INDEX = """<!DOCTYPE html>
   </section>
 %(jump)s
 %(blocks)s
+%(onward)s
 </main>
 %(explore)s
 %(foot)s

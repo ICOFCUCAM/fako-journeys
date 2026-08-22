@@ -1232,3 +1232,24 @@ picture{display:contents}
 .af-op h3{margin:0 0 4px;font-size:19px}
 .af-op p{margin:0;line-height:1.6}
 .af-op .af-note{margin:0 0 8px}
+
+/* The close every discovery surface shares. See plate.onward().
+   Sand ground so it reads as a different level from the content above it —
+   the design system's z-axis is ground colour and rule, never a shadow. */
+.af-onward{background:var(--c-sand);margin-top:var(--sp-5);padding:var(--sp-4) 0}
+.af-onward>*{max-width:var(--frame);margin-left:auto;margin-right:auto;
+  padding-left:44px;padding-right:44px}
+/* The heading reuses .af-ex h2's clamp rather than choosing a new one.
+   Written first as clamp(24px,3vw,38px), which raised this file's own
+   distinct-size count from 29 to 30 and tripped the design ratchet — the
+   site-wide total did not move, so it was a size that already existed
+   somewhere, restated here. That is precisely the duplication the metric
+   was added to catch, and it caught the commit that added the metric's
+   author. Reuse, not a higher ceiling. */
+.af-onward h2{font-size:clamp(21px,2.4vw,27px);max-width:20ch;margin:0 0 10px}
+.af-onward p{margin:0 0 14px;max-width:60ch;line-height:1.6}
+.af-onward-eye{font-family:var(--fj-mono);font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-accent);margin:0 0 8px}
+.af-onward-do{display:flex;flex-wrap:wrap;gap:12px;margin:0}
+@media(max-width:900px){.af-onward>*{padding-left:26px;padding-right:26px}}
+@media(max-width:640px){.af-onward>*{padding-left:22px;padding-right:22px}}

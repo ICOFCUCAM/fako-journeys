@@ -339,6 +339,7 @@ def render(countries, taxonomy):
     return TEMPLATE % {
         "events": plate.events_block(),
         "explore": plate.explore_block(),
+        "onward": plate.onward("/atlas"),
         "mast": plate.shell(here="/atlas", area="explore",
                             product="The Atlas", product_href="/atlas"),
         "foot": plate.colophon_foot("/atlas"),
@@ -450,6 +451,7 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="at-pane" data-pane="country"></div>
     <div class="at-pane" data-pane="place"></div>
   </aside>
+%(onward)s
 </main>
 %(foot)s
 

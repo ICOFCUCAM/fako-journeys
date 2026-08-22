@@ -852,6 +852,38 @@ def emblem(px=56, extra=""):
             % ((" " + extra) if extra else "", "eager" if mast else "lazy", px))
 
 
+def onward(here=None):
+    """The close every Explore surface shares: the next step, from the content.
+
+    THE MASTHEAD IS NOT A CONTINUATION.
+
+    Destinations, the Atlas, Stories and Meet Africa each linked /journey two
+    or three times — every one of those links in the shell or the colophon,
+    none in <main>. A link that appears on all 1,599 pages carries no signal
+    about THIS page; it is furniture. A reader who has just finished the atlas
+    is at the exact moment the product is for, and the page said nothing.
+
+    So the four discovery surfaces close with the same block, from one
+    function. Four generators writing four similar closes is how a site ends
+    up with ten mastheads, and that argument does not stop applying because
+    the component is smaller.
+
+    No new prefix: af-onward joins the af- primitives in afrinkong.css.
+    """
+    return (
+        '<section class="af-onward">'
+        '<p class="af-onward-eye">The next step</p>'
+        '<h2>Turn any of this into a journey</h2>'
+        '<p>Everything on this page is somewhere you could actually go. The '
+        'planner asks four questions and prices a journey against the same '
+        'rate card the rest of the site quotes \u2014 no account, and nothing '
+        'held.</p>'
+        '<p class="af-onward-do">'
+        '<a class="af-btn af-btn--solid" href="/journey">Build a journey</a>'
+        '<a class="af-btn" href="/journey-fund">Plan toward one</a>'
+        '</p></section>')
+
+
 def colophon_foot(here=None):
     """The last thing on a page: where else to go, and who this is.
 

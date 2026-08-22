@@ -217,6 +217,7 @@ def render(countries, taxonomy):
     return TEMPLATE % {
         "events": plate.events_block(),
         "explore": plate.explore_block(),
+        "onward": plate.onward("/meet"),
         "mast": plate.shell(here="/meet", area="explore",
                             product="Meet Africa", product_href="/meet"),
         "foot": plate.colophon_foot("/meet"),
@@ -318,6 +319,7 @@ TEMPLATE = """<!DOCTYPE html>
       answered by all %(n)d countries. Every country name is a link to its own
       page, where all twenty-seven headings are written out in full.</p>
   </noscript>
+%(onward)s
 </main>
 %(foot)s
 

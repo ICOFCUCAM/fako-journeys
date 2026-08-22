@@ -675,6 +675,7 @@ def index_page(stories, ctx, countries):
                      "months": c.months} for c in countries}
 
     return INDEX % {
+        "onward": plate.onward("/stories"),
         "mast": plate.shell(here="/stories", area="explore",
                             product="Stories", product_href="/stories"),
         "when": json.dumps(when, separators=(",", ":"), sort_keys=True),
@@ -892,6 +893,7 @@ INDEX = """<!DOCTYPE html>
   </section>
 
 %(rails)s
+%(onward)s
 </main>
 
 <script type="application/json" id="sx-boot">{"data":"/data/stories.json","graph":"/data/graph.json","when":%(when)s}</script>
