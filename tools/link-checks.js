@@ -233,10 +233,17 @@ const countries = fs.existsSync(tourismDir)
   : [];
 
 /* 1 — the country page reaches its own depths. */
-const noPortrait = [], noPlaces = [];
+const noPortrait = [], noPlaces = [], noRootPage = [];
 countries.forEach(s => {
   const html = readIf(s + '.html');
-  if (html === null) return;               /* uganda, namibia: no page at all */
+  /* NAMED, NOT SILENTLY DROPPED.
+     This was a bare `return`. Uganda and Namibia have no root country page —
+     they are sister-company sites — so the check ran over 52 of 54 countries
+     and reported "52 of 52", which reads as complete. It was complete over a
+     population it had quietly narrowed, and that is how an exemption becomes
+     invisible. page-inventory.py names its operator exemption in the result
+     line; so does this now. */
+  if (html === null) { noRootPage.push(s); return; }
   const L = hrefsIn(html);
   if (!L.has('/portrait/' + s)) noPortrait.push(s);
   if (![...L].some(h => h === '/places' || h.startsWith('/places/' + s))) {
@@ -244,13 +251,17 @@ countries.forEach(s => {
   }
 });
 const withHome = countries.filter(s => has(s + '.html'));
+const exempt = noRootPage.length
+  ? ` \u2014 ${noRootPage.length} exempt (${noRootPage.join(', ')}): no root ` +
+    'country page, they are sister-company sites'
+  : '';
 check('every country page reaches its own portrait', !noPortrait.length,
   noPortrait.length ? noPortrait.slice(0, 5).join(', ')
-    : withHome.length + ' of ' + withHome.length + '; it is the richest page '
+    : withHome.length + ' of ' + countries.length + exempt + '; it is the richest page '
       + 'on the site and used to be linked from none of them');
 check('every country page reaches its own places', !noPlaces.length,
   noPlaces.length ? noPlaces.slice(0, 5).join(', ')
-    : withHome.length + ' of ' + withHome.length);
+    : withHome.length + ' of ' + countries.length + exempt);
 
 /* 2 — the experiences page is not a dead end. This is the one that was
    isolated in both directions: nothing arrived from a place, nothing left. */
@@ -291,6 +302,62 @@ check('every place page reaches what a journey to its country costs',
   placeMisses.length
     ? placeMisses.length + ' without it, e.g. ' + placeMisses.slice(0, 3).join(', ')
     : placeTotal + ' place pages');
+
+/* ---- THE DISCOVERY CHAIN, HOP BY HOP -----------------------------------
+ *
+ * Africa -> Country -> Place -> Experience -> Journey -> Plan. The mandate's
+ * requirement is "no islands", and the checks above test three of those hops
+ * on the ROOT country pages. The /tourism/<country> surface — 55 pages, the
+ * one the navigation calls "Countries" — was tested by none of them.
+ *
+ * TWO FALSE ALARMS BEFORE THIS WAS WRITTEN, both from the same bug. Parsing
+ * hrefs with /href="(\/[^"#?]*)"/ requires the quote to follow the path, so
+ * `/places#algeria` matched nothing and the scan reported that all 55 country
+ * pages failed to reach their destinations. They all reach them. A fragment
+ * has to be STRIPPED, not excluded, and getting that wrong turns a healthy
+ * graph into a five-alarm finding.
+ */
+function outbound(rel) {
+  const html = readIf(rel);
+  if (html === null) return new Set();
+  const main = (html.match(/<main[\s\S]*?<\/main>/) || [html])[0];
+  const out = new Set();
+  for (const m of main.matchAll(/href="([^"]+)"/g)) {
+    if (m[1][0] === '/') out.add(m[1].split('#')[0].split('?')[0] || '/');
+  }
+  return out;
+}
+
+const HOPS = [
+  ['a country reaches its portrait', (c, L) => L.has('/portrait/' + c)],
+  ['a country reaches its destinations',
+   (c, L) => [...L].some((h) => h === '/places' || h.startsWith('/places/'))],
+  ['a country reaches the journey planner',
+   (c, L) => [...L].some((h) => h.startsWith('/journey'))],
+];
+for (const [label, ok] of HOPS) {
+  const bad = countries.filter((c) => !ok(c, outbound(path.join('tourism', c + '.html'))));
+  check(`on the Countries surface, ${label}`,
+    bad.length === 0,
+    bad.length ? `${bad.length} without it: ${bad.slice(0, 5).join(', ')}`
+               : `${countries.length} of ${countries.length}`);
+}
+
+const placeHops = [];
+for (const c of countries) {
+  const dir = path.join(ROOT, 'places', c);
+  if (!fs.existsSync(dir)) continue;
+  const first = fs.readdirSync(dir).filter((f) => f.endsWith('.html')).sort()[0];
+  if (!first) continue;
+  const L = outbound(path.join('places', c, first));
+  if (![...L].some((h) => h.startsWith('/atlas'))) placeHops.push(c + ':experience');
+  if (![...L].some((h) => h.startsWith('/journey'))) placeHops.push(c + ':journey');
+}
+check('a place reaches an experience and a journey',
+  placeHops.length === 0,
+  placeHops.length ? placeHops.slice(0, 6).join(', ')
+    : `${countries.length} countries sampled; the chain Africa \u2192 country ` +
+      '\u2192 place \u2192 experience \u2192 journey \u2192 plan has no gap');
 
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);
