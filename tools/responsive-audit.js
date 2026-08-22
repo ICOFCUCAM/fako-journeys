@@ -65,9 +65,17 @@ function serve() {
     let rel = decodeURIComponent(req.url.split('?')[0]);
     if (rel.endsWith('/')) rel += 'index.html';
     let file = path.join(ROOT, rel);
-    if (!fs.existsSync(file) && fs.existsSync(file + '.html')) file += '.html';
-    if (fs.existsSync(file) && fs.statSync(file).isDirectory()
-        && fs.existsSync(path.join(file, 'index.html'))) {
+    /* THE .html FILE WINS OVER A DIRECTORY OF THE SAME NAME, BECAUSE THAT IS
+       WHAT VERCEL DOES.
+       /journey-fund and /trans-afrique are BOTH a page and a folder:
+       journey-fund.html beside journey-fund/how-it-works.html. The first
+       version of this server tested existsSync(file) first, matched the
+       DIRECTORY, found no index.html inside it and returned 404 — so every
+       measurement of those two pages was taken against an error page, and
+       reported PASS. cleanUrls resolves the file; so does this now. */
+    if (fs.existsSync(file + '.html')) file += '.html';
+    else if (fs.existsSync(file) && fs.statSync(file).isDirectory()
+             && fs.existsSync(path.join(file, 'index.html'))) {
       file = path.join(file, 'index.html');
     }
     if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) {
@@ -259,6 +267,51 @@ function chromiumPath() {
     await page.close();
   }
 
+  /* ---- HEADINGS, AS THEY ARE EXPOSED --------------------------------
+   *
+   * Counting <h1> in the source says journey.html has SEVEN of them, which
+   * looks like a serious defect and is not one: four are inside
+   * <section class="jn-step" hidden> — one question shown at a time — and a
+   * hidden element is out of the accessibility tree entirely. A screen reader
+   * meets one.
+   *
+   * The static audit that found this also reported five "extra" h1 elements on
+   * the homepage. All five were the text "<h1>" inside prose comments in an
+   * inline <script>. And it reported two unlabelled inputs which are wrapped in
+   * <label> and sit in a role="group" with an aria-label.
+   *
+   * Three false positives from one method. Headings are an accessibility
+   * question, the accessibility tree is the thing being asked about, and only a
+   * browser can answer it — so this asks the browser what is actually exposed.
+   */
+  const headings = [];
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 860 } });
+    for (const url of PAGES) {
+      await page.goto('http://127.0.0.1:8213' + url, { waitUntil: 'networkidle' })
+        .catch(() => {});
+      const r = await page.evaluate(() => {
+        const shown = [];
+        for (const el of document.querySelectorAll('h1,h2,h3,h4,h5,h6')) {
+          if (el.closest('[hidden],[aria-hidden="true"]')) continue;
+          const cs = getComputedStyle(el);
+          if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+          shown.push(Number(el.tagName[1]));
+        }
+        return shown;
+      });
+      const ones = r.filter((n) => n === 1).length;
+      if (ones !== 1) headings.push(`${url}: ${ones} exposed <h1>`);
+      for (let i = 1; i < r.length; i++) {
+        if (r[i] > r[i - 1] + 1) {
+          headings.push(`${url}: h${r[i - 1]} -> h${r[i]}`);
+          break;
+        }
+      }
+    }
+    await page.close();
+  }
+
   await browser.close();
   server.close();
 
@@ -285,6 +338,11 @@ function chromiumPath() {
         'transitions, animates or smooth-scrolls \u2014 including the four ' +
         'stylesheets that carry motion and no reduced-motion block of their own');
 
+  say(headings.length === 0, 'one exposed <h1>, and no level skipped',
+    headings.length ? headings.slice(0, 5).join(' | ')
+      : `${PAGES.length} families, measured in the accessibility tree rather ` +
+        'than by counting tags in the source');
+
   process.exit(overflow.length || small.length || invisibleFocus.length
-    || stillMoving.length ? 1 : 0);
+    || stillMoving.length || headings.length ? 1 : 0);
 }());

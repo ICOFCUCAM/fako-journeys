@@ -220,7 +220,9 @@ def support_grid(d):
         out.append(
             '<article class="tf-sup" data-support="%s">'
             '<p class="tf-sup-no"><b>%02d</b><i aria-hidden="true"></i></p>'
-            '<h3 class="tf-sup-name">%s</h3>'
+            # h2: on /trans-afrique/support this is the first heading after the
+        # <h1>, so h3 skipped a level. Styling is on the class, not the tag.
+        '<h2 class="tf-sup-name">%s</h2>'
             '<p class="tf-sup-say">%s</p>'
             '<ul class="tf-sup-roles">%s</ul></article>'
             % (esc(s_["id"]), i, esc(s_["name"]), esc(s_["say"]), roles))
@@ -586,7 +588,8 @@ def close_block(d, r=None, by_slug=None):
 
 def money_lists(d):
     def ul(key, title, cls=""):
-        return ('<div class="tf-money-col%s"><h3 class="tf-money-h">%s</h3>'
+        return (# h2: first heading after the <h1> on /trans-afrique/fee.
+        '<div class="tf-money-col%s"><h2 class="tf-money-h">%s</h2>'
                 '<ul class="tf-money-list">%s</ul></div>'
                 % (cls, esc(title),
                    "".join("<li>%s</li>" % esc(x) for x in d[key])))

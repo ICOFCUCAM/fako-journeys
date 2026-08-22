@@ -288,6 +288,13 @@ TEMPLATE = """<!DOCTYPE html>
   </section>
 
   <div class="af-frame" id="layers">
+    <!-- THE SECTION HAD NO HEADING, WHICH WAS TWO FAULTS IN ONE.
+         The three layer cards were <h3> directly under the page's <h1>, so a
+         screen reader heard "heading level one, heading level three" and was
+         told a section had gone missing. And the first block of the page —
+         the whole three-layer model — was the only one with nothing naming
+         it. One h2 answers both. -->
+    <h2 class="af-layers-h">The three layers</h2>
     <ul class="af-layers">
       %(layers)s
     </ul>

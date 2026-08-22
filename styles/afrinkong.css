@@ -1401,3 +1401,8 @@ picture{display:contents}
 .af-onward-do{display:flex;flex-wrap:wrap;gap:12px;margin:0}
 @media(max-width:900px){.af-onward>*{padding-left:26px;padding-right:26px}}
 @media(max-width:640px){.af-onward>*{padding-left:22px;padding-right:22px}}
+
+/* The heading over the three layers on /trust. Sized with .af-ex h2's clamp
+   rather than a new value — the design ratchet catches a fresh literal here,
+   and it was right to when it caught one in Commit 09. */
+.af-layers-h{font-size:clamp(21px,2.4vw,27px);max-width:26ch;margin:0}

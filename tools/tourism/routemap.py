@@ -507,7 +507,14 @@ def build(d, by_slug=None, only=None, act=None, title=None, say=None):
     head = ''
     if title or say:
         head = ('<div class="tf-atlas-head">%s%s</div>'
-                % ('<h3 class="tf-atlas-h">%s</h3>' % _esc(title) if title else "",
+                # h2, NOT h3. On the seven Trans Afrique pages this is the
+                # first heading after the <h1> — "East" followed by "East, on
+                # the continent" — so an h3 here skips a level, and a screen
+                # reader announcing "heading level three" straight after
+                # "heading level one" tells its user a section is missing.
+                # Nothing about the styling depends on the tag; .tf-atlas-h
+                # carries all of it.
+                % ('<h2 class="tf-atlas-h">%s</h2>' % _esc(title) if title else "",
                    '<p class="tf-atlas-say">%s</p>' % _esc(say) if say else ""))
     return ('<figure class="tf-atlas" data-crossings>'
             '<div class="tf-atlas-art">%s</div>'
