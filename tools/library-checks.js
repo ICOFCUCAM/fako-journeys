@@ -657,5 +657,62 @@ report(regressed.length === 0,
       `has acquired yet, which is legitimate; ${hosted.size} registered ` +
       `photographs are served from our own host, and none is also hotlinked`);
 
+/* ---- ONE PHOTOGRAPH, ONE FOCAL POINT (UNLESS IT IS A DIFFERENT CROP) ----
+ *
+ * A focal point is art direction: it says which part of a photograph survives
+ * when the frame is a different shape from the file. 1,453 images carry one.
+ *
+ * Three photographs carried TWO different values, and the reason matters:
+ *
+ *   foumban-bronze-caster    50% 55% on the homepage, 46% 50% on
+ *                            cameroon.html. The homepage reads photo_pos out
+ *                            of tourism/lenses.json; cameroon.html is
+ *                            hand-authored and had its own. Four percentage
+ *                            points apart, which is not a decision anybody
+ *                            made — it is one file drifting from the dataset.
+ *                            FIXED: cameroon.html now uses the dataset value.
+ *
+ *   kilimanjaro-elephants    50% 58% and 48% 56%. Two points apart, across a
+ *                            dataset boundary (lenses.json and the country
+ *                            record). Suspected drift, not fixed here: the two
+ *                            stores are both legitimate authors and choosing
+ *                            between them is a data-architecture decision that
+ *                            belongs with Commit 44, not a quiet edit.
+ *
+ *   kilimanjaro-above-cloud  50% 8% and 50% 24%. SIXTEEN points apart, which
+ *                            is a different composition for a different frame
+ *                            — exactly the "intentional art direction" the
+ *                            mandate says not to optimise away. Left alone.
+ *
+ * So this does not demand one value per photograph. It ratchets the COUNT of
+ * photographs carrying more than one, which is 2 after the fix. A third
+ * appearing is either a new deliberate crop — in which case lower the ceiling
+ * deliberately — or the drift this exists to catch.
+ */
+const MULTI_FOCAL_CEILING = 2;
+const focal = new Map();
+for (const f of everyPage(ROOT, [])) {
+  const html = fs.readFileSync(f, "utf-8");
+  for (const m of html.matchAll(/<img[^>]*>/g)) {
+    const tag = m[0];
+    const src = /src="([^"]+)"/.exec(tag);
+    const pos = /(?:--fj-feel-pos|object-position):\s*([^";]+)/.exec(tag);
+    if (!src || !pos) continue;
+    const id = (/(AKL-\d+)/.exec(src[1]) || [])[1]
+      || src[1].split("/").pop().split("?")[0];
+    if (!focal.has(id)) focal.set(id, new Set());
+    focal.get(id).add(pos[1].trim());
+  }
+}
+const multi = [...focal.entries()].filter(([, v]) => v.size > 1);
+report(multi.length <= MULTI_FOCAL_CEILING,
+  "a photograph does not quietly acquire a second focal point",
+  multi.length > MULTI_FOCAL_CEILING
+    ? `${multi.length} photographs carry more than one, ceiling ` +
+      `${MULTI_FOCAL_CEILING}: ${multi.slice(0, 3).map(([k, v]) =>
+        `${k} (${[...v].join(" / ")})`).join("; ")}`
+    : `${focal.size} photographs carry a focal point; ${multi.length} carry ` +
+      `two, both recorded and reasoned about in this file`);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
