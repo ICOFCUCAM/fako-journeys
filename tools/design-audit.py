@@ -158,10 +158,33 @@ PATTERNS = {
 }
 
 
+def resolve_tokens(screen):
+    """Replace var(--x) with the value --x is declared as, once.
+
+    WITHOUT THIS, MIGRATING A RULE ONTO A TOKEN MAKES THE NUMBERS WORSE.
+
+    Rewriting `font-size:15px` as `font-size:var(--fj-t-body)` renders exactly
+    the same pixel and, to a scanner comparing strings, invents a 187th type
+    size. Adopting the token layer moved the count from 186 to 190 and tripped
+    the ratchet — punishing the consolidation the ratchet exists to encourage.
+
+    A metric that penalises the fix is worse than no metric. So a var() is
+    resolved to what it stands for before anything is counted: the migration is
+    NEUTRAL while both forms coexist, and the count falls when the last literal
+    goes. One pass only — a token defined in terms of another token is rare
+    here and resolving recursively would risk a loop for no gain.
+    """
+    values = dict(re.findall(r"(--[a-z0-9-]+):\s*([^;{}]+);", screen))
+    return re.sub(r"var\((--[a-z0-9-]+)\)",
+                  lambda m: values.get(m.group(1), m.group(0)).strip(), screen)
+
+
 def measure(screen):
     got = {}
+    resolved = resolve_tokens(screen)
     for key, pat in PATTERNS.items():
-        vals = [v.strip() for v in re.findall(pat, screen)]
+        src = resolved if key in ("font-size", "box-shadow", "border-radius") else screen
+        vals = [v.strip() for v in re.findall(pat, src)]
         got[key] = (len(vals), len(set(vals)), sorted(set(vals)))
     prefixes = collections.Counter(re.findall(r"\.([a-z]{2,3})-[a-z-]+", screen))
 
@@ -181,10 +204,25 @@ def per_file_font_sizes():
     """
     total, rows = 0, []
     d = os.path.join(ROOT, "styles")
+    all_css = "".join(open(os.path.join(d, n2), encoding="utf-8").read()
+                      for n2 in sorted(os.listdir(d)) if n2.endswith(".css"))
+    token_values = dict(re.findall(r"(--[a-z0-9-]+):\s*([^;{}]+);", all_css))
     for name in sorted(os.listdir(d)):
         if not name.endswith(".css"):
             continue
         css = strip_print(open(os.path.join(d, name), encoding="utf-8").read())
+        # Resolved against the WHOLE stylesheet set, because a file may use a
+        # token another file declares — which is the entire point of a token.
+        #
+        # An earlier version concatenated all_css in front and sliced the
+        # result back off by length. Resolution changes the length, so the
+        # slice landed mid-text and the count jumped from 439 to 454 — a
+        # measurement artefact that looked exactly like sprawl. Substituting
+        # into this file alone, with a map built from all of them, has no such
+        # arithmetic in it.
+        css = re.sub(r"var\((--[a-z0-9-]+)\)",
+                     lambda m: token_values.get(m.group(1), m.group(0)).strip(),
+                     css)
         n = len({v.strip() for v in re.findall(PATTERNS["font-size"], css)})
         total += n
         rows.append((name, n))

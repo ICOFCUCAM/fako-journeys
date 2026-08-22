@@ -83,7 +83,6 @@ references it at all*.
 | `places.css` | 1461 | no |
 | `states.css` | 1 | no |
 | `story.css` | 56 | no |
-| `tokens.css` | 0 | no |
 | `tourism.css` | 56 | yes |
 | `transafrique.css` | 10 | no |
 | `trust.css` | 4 | no |
@@ -290,18 +289,18 @@ behind `company` and `graft`. A single generator run does not execute it.
 | `tools/browser-checks.js` | 1567 |
 | `tools/content-checks.js` | 148 |
 | `tools/design-checks.js` | 525 |
-| `tools/entity-checks.js` | 334 |
+| `tools/entity-checks.js` | 374 |
 | `tools/fund-checks.js` | 542 |
 | `tools/goal-checks.js` | 393 |
 | `tools/idempotence-checks.js` | 142 |
 | `tools/journey-checks.js` | 838 |
 | `tools/library-checks.js` | 591 |
-| `tools/link-checks.js` | 296 |
+| `tools/link-checks.js` | 392 |
 | `tools/points-checks.js` | 3995 |
-| `tools/shell-checks.js` | 395 |
+| `tools/shell-checks.js` | 448 |
 | `tools/state-checks.js` | 457 |
 | `tools/tourism/tests.py` (the suite CI runs) | 3799 |
-| **total** | **14022** |
+| **total** | **14211** |
 
 ## Documentation
 
@@ -312,7 +311,7 @@ behind `company` and `graft`. A single generator run does not execute it.
 | | |
 |---|---|
 | product and economic JavaScript | 10953 lines |
-| gates | 14022 lines |
+| gates | 14211 lines |
 | documentation | 10255 lines |
 | modules a browser never loads | 8 |
 
