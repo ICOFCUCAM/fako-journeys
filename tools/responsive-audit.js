@@ -213,6 +213,52 @@ function chromiumPath() {
     await page.close();
   }
 
+  /* ---- REDUCED MOTION, MEASURED IN THE RENDERED PAGE -------------------
+   *
+   * Counting @media(prefers-reduced-motion) blocks per stylesheet says
+   * nothing useful. Four sheets — meet, places, trust, wonders — carry eleven
+   * motion declarations between them and no such block, which looks like a gap
+   * and is not one: afrinkong.css loads on every page and carries a global
+   *
+   *     *,*::before,*::after{transition-duration:.001ms!important; ...}
+   *
+   * so the four are covered by something they never mention. A per-file audit
+   * would have raised four false alarms and, worse, invited somebody to "fix"
+   * them by adding four more blocks.
+   *
+   * So ask the browser instead. Under reduce, nothing may still be animating
+   * and nothing may still be smooth-scrolling — including elements other than
+   * <html>, which the global rule handles by name and only by name.
+   */
+  const stillMoving = [];
+  {
+    const page = await browser.newPage({
+      viewport: { width: 1280, height: 860 },
+      reducedMotion: 'reduce',
+    });
+    for (const url of PAGES) {
+      await page.goto('http://127.0.0.1:8213' + url, { waitUntil: 'networkidle' })
+        .catch(() => {});
+      const bad = await page.evaluate(() => {
+        const out = [];
+        for (const el of [...document.querySelectorAll('*')].slice(0, 4000)) {
+          const cs = getComputedStyle(el);
+          const dur = (v) => Math.max(...String(v).split(',')
+            .map((x) => parseFloat(x) * (x.includes('ms') ? 1 : 1000) || 0));
+          if (dur(cs.transitionDuration) > 1 || dur(cs.animationDuration) > 1) {
+            out.push('moves:' + (String(el.className).split(' ')[0] || el.tagName));
+          }
+          if (cs.scrollBehavior === 'smooth') {
+            out.push('smooth:' + (String(el.className).split(' ')[0] || el.tagName));
+          }
+        }
+        return [...new Set(out)].slice(0, 3);
+      });
+      if (bad.length) stillMoving.push(`${url}: ${bad.join(' | ')}`);
+    }
+    await page.close();
+  }
+
   await browser.close();
   server.close();
 
@@ -233,5 +279,12 @@ function chromiumPath() {
         'when focused \u2014 on itself, an ancestor or a descendant, all three ' +
         'being real techniques this site uses');
 
-  process.exit(overflow.length || small.length || invisibleFocus.length ? 1 : 0);
+  say(stillMoving.length === 0, 'reduce means reduce, in the rendered page',
+    stillMoving.length ? stillMoving.slice(0, 5).join(' | ')
+      : `${PAGES.length} families under prefers-reduced-motion: nothing still ` +
+        'transitions, animates or smooth-scrolls \u2014 including the four ' +
+        'stylesheets that carry motion and no reduced-motion block of their own');
+
+  process.exit(overflow.length || small.length || invisibleFocus.length
+    || stillMoving.length ? 1 : 0);
 }());
