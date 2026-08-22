@@ -10,11 +10,11 @@ small.
 
 | | declarations | distinct | target |
 |---|---|---|---|
-| font-size | 1276 | **186** | 11 |
+| font-size | 1277 | **186** | 11 |
 | box-shadow | 31 | **22** | 2 |
 | border-radius | 15 | **4** | — |
 | breakpoint | 287 | **32** | 4 |
-| prefix | 5335 | **26** | 11 |
+| prefix | 5338 | **26** | 11 |
 | custom-property | 152 | **112** | — |
 
 ## The duplication, which is the number to drive down first
@@ -42,7 +42,7 @@ own method the type system has not consolidated — it has grown.
 | `story.css` | 27 |
 | `country.css` | 26 |
 
-Declarations and distinct values answer different questions. 1276 font-size
+Declarations and distinct values answer different questions. 1277 font-size
 declarations drawn from 186 distinct values is a system with 186 type sizes;
 the same declarations drawn from 11 would be a system with a type scale.
 

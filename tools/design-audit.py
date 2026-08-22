@@ -79,6 +79,39 @@ CEILING = {
     # GAP between them, 253, is the duplication, and it is the number the
     # consolidation work should be driving down first.
     "font-size-per-file-sum": 439,
+
+    # ---- COMPONENT SPRAWL, COMMIT 16 ------------------------------------
+    #
+    # The mandate asks for canonical buttons, cards, badges, frames and forms.
+    # Measured, the site has 27 button-ish base components, 11 cards, 32
+    # badges, 55 frames and 11 form components across 26 prefixes.
+    #
+    # (27/11/32/56/11 as this tool counts them, which includes inline <style>.)
+    # Consolidating those is not one commit. It is a refactor across 17
+    # stylesheets and 1,599 pages with real visual-regression risk, and doing
+    # it in a hurry is how a design system acquires its SECOND set of
+    # canonical components. What can be done now, and is worth more than a
+    # hasty merge, is stopping the number growing.
+    #
+    # Each of these is today's count. They may only be lowered.
+    "component:button": 27,
+    "component:card": 11,
+    "component:badge": 32,
+    "component:frame": 56,
+    "component:form": 11,
+
+    # Rule bodies of 40+ characters written out under two or more different
+    # selectors. Some are legitimate shared idioms — object-fit:cover on an
+    # image, a focus ring — and some are a card invented three times. The
+    # figure does not distinguish them and is not meant to: it is a direction
+    # of travel, and the direction must be down.
+    #
+    # SET FROM THE TOOL'S OWN MEASUREMENT, NOT FROM THE SCAN THAT FOUND THEM.
+    # My exploratory scan read styles/*.css and reported 55 frames and 127
+    # duplicate bodies; this tool also reads the <style> blocks on 66 published
+    # pages, and sees 56 and 133. A ceiling copied from a narrower scope fails
+    # on the first run and teaches whoever meets it that the gate is noise.
+    "duplicate rule bodies": 133,
 }
 
 # Where the design system is going. Recorded so the gap is visible on every
@@ -190,6 +223,31 @@ def measure(screen):
 
     got["prefix"] = (sum(prefixes.values()), len(prefixes),
                      [k for k, _ in prefixes.most_common()])
+    COMPONENTS = {
+        "button": r"\.([a-z]{2,3}-[a-z-]*(?:btn|button|act|cta)[a-z-]*)\b",
+        "card": r"\.([a-z]{2,3}-[a-z-]*card[a-z-]*)\b",
+        "badge": r"\.([a-z]{2,3}-[a-z-]*(?:badge|stamp|chip|tag|pill)[a-z-]*)\b",
+        "frame": r"\.([a-z]{2,3}-[a-z-]*(?:frame|figure|shot|pic|hero)[a-z-]*)\b",
+        "form": r"\.([a-z]{2,3}-[a-z-]*(?:field|input|form|select)[a-z-]*)\b",
+    }
+    for kind, pat in COMPONENTS.items():
+        names = set(re.findall(pat, screen))
+        # A modifier is not a component: .af-btn--solid belongs to .af-btn.
+        base = sorted({n.split("--")[0] for n in names})
+        got["component:" + kind] = (len(names), len(base), base)
+
+    # Provable duplication: the same declarations, written out twice, under
+    # different selectors. Short bodies are excluded because two rules
+    # coinciding on `display:block` is not duplication, it is CSS.
+    seen = {}
+    for m in re.finditer(r"([^{}@]+)\{([^{}]+)\}", screen):
+        sel, body = m.group(1).strip(), re.sub(r"\s+", "", m.group(2)).rstrip(";")
+        if len(body) < 40 or sel.startswith(("@", ":root")):
+            continue
+        seen.setdefault(body, set()).add(sel)
+    dupes = [b for b, sels in seen.items() if len(sels) > 1]
+    got["duplicate rule bodies"] = (len(seen), len(dupes), [])
+
     props = sorted(set(re.findall(r"(--[a-z0-9-]+):", screen)))
     got["custom-property"] = (len(re.findall(r"--[a-z0-9-]+:", screen)),
                               len(props), props)
