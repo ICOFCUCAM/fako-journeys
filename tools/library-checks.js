@@ -587,5 +587,75 @@ report(
 
 fs.rmSync(TMP, { recursive: true, force: true });
 
+/* ---- THE HOTLINK REGRESSION -------------------------------------------
+ *
+ * THIS HAPPENED, THIS SESSION, AND NOTHING CAUGHT IT.
+ *
+ * Rebuilding the place family wiped `library rewrite` — a late pass — and 1,363
+ * place heroes silently reverted from image.afrinkong.com to the Pexels and
+ * Unsplash originals they had been migrated off. Every gate stayed green. It
+ * was found by eye, in a diff, because the hero census happened to be run.
+ *
+ * Had it shipped, 1,363 pages would have sent every phone the full-resolution
+ * original from a third party — the exact payload the whole library exists to
+ * stop — while the register went on saying we host those photographs.
+ *
+ * WHAT MAKES A HOTLINK A REGRESSION RATHER THAN MERELY A HOTLINK.
+ *
+ * 9,342 provider URLs are on this site legitimately: photographs nobody has
+ * acquired yet, carried while acquisition runs. Failing on those would fail
+ * every day for months, and a gate that always fails is a gate switched off.
+ *
+ * The regression is narrower and unambiguous: a page pointing at a provider
+ * for a photograph THE REGISTER SAYS WE ALREADY HOST. There is no reading of
+ * that which is correct. It is zero today, which is what makes it a ratchet.
+ */
+const HOTLINK = /images\.(pexels|unsplash)\.com\/(?:photos\/)?(?:photo-)?(\d+|[A-Za-z0-9_-]{11,})/;
+/* The REAL register from disk. `reg` inside this file is a local rebound to a
+   fixture in a temp directory by the tests above; using it here would ask a
+   sandbox what the site hosts. */
+const liveRegister = JSON.parse(
+  fs.readFileSync(path.join(ROOT, "tourism", "assets.json"), "utf-8"));
+const hosted = new Map();
+for (const [id, a] of Object.entries(liveRegister.assets || {})) {
+  if (a.provider && a.photoId) hosted.set(`${a.provider}:${a.photoId}`, id);
+}
+
+function everyPage(dir, acc) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (e.name.startsWith(".") || e.name === "node_modules"
+        || e.name === "incoming") continue;
+    const f = path.join(dir, e.name);
+    if (e.isDirectory()) everyPage(f, acc);
+    else if (e.name.endsWith(".html")) acc.push(f);
+  }
+  return acc;
+}
+
+const regressed = [];
+let providerUrls = 0;
+for (const f of everyPage(ROOT, [])) {
+  const html = fs.readFileSync(f, "utf-8");
+  for (const m of html.matchAll(/(?:src|srcset)="([^"]+)"/g)) {
+    for (const part of m[1].split(",")) {
+      const url = part.trim().split(" ")[0];
+      const hit = HOTLINK.exec(url);
+      if (!hit) continue;
+      providerUrls++;
+      const key = `${hit[1]}:${hit[2]}`;
+      if (hosted.has(key)) {
+        regressed.push(`${path.relative(ROOT, f)} -> ${key} (we host ${hosted.get(key)})`);
+      }
+    }
+  }
+}
+report(regressed.length === 0,
+  "no page hotlinks a photograph the register says we already host",
+  regressed.length
+    ? `${regressed.length} regression(s), e.g. ${regressed[0]}`
+    : `${providerUrls} provider URLs are on the site for photographs nobody ` +
+      `has acquired yet, which is legitimate; ${hosted.size} registered ` +
+      `photographs are served from our own host, and none is also hotlinked`);
+
 console.log(`\n${pass} passed, ${fail} failed, ${pass + fail} checks`);
 process.exit(fail ? 1 : 0);
