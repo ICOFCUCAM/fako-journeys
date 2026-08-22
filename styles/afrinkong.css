@@ -470,8 +470,16 @@ textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
 .af-btn--quiet:hover{background:var(--c-primary);color:var(--c-bg)}
 
 /* The underlined onward link, used wherever a block leads somewhere. */
+/* 24px TALL FOR EVERY POINTER, NOT ONLY A COARSE ONE.
+   Measured at 23.4px with a mouse: 10.5px mono, 4px of padding and a 2px rule.
+   The @media(pointer:coarse) block below grew it for touch and left the
+   desktop box six tenths of a pixel short — and WCAG 2.5.8 is binary and says
+   nothing about pointer type, so 23.4 fails for a mouse user exactly as it
+   would for a thumb. One pixel of padding, and the underline sits a hair
+   further from the word. */
 .af-go{display:inline-block;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;
-  text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px;
+  text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:5px;
+  min-height:24px;box-sizing:border-box;
   transition:color var(--t-fast) var(--ease)}
 .af-go:hover{color:var(--c-accent)}
 

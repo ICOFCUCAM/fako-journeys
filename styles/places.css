@@ -138,7 +138,14 @@
 /* The hierarchy is name against count, and it is made with weight and size
    rather than by fading the count out: mixing it 62% toward the page ground
    put it at 2.64:1, which the contrast pass caught on the first run. */
-.pi-jump a{font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;
+/* THE WORST TAP TARGET ON THE SITE, AND THE ONLY ONE THAT FAILED ON A PHONE.
+   Fifty-four country jump-links at 22.8px tall on a 390px screen — a sticky
+   row of them, which is to say the control a visitor is most likely to reach
+   for while scrolling with a thumb. WCAG 2.5.8 wants 24. inline-flex so the
+   minimum applies and the label stays vertically centred inside it. */
+.pi-jump a{display:inline-flex;align-items:center;min-height:24px;
+  box-sizing:border-box;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--c-primary);white-space:nowrap;
   border-bottom:1px solid transparent;padding:3px 0}
 .pi-jump a i{font-style:normal;margin-left:5px;font-size:8.5px;

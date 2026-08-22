@@ -2455,7 +2455,10 @@ a.wa-op:hover{background:color-mix(in srgb,var(--c-bg) 92%,var(--c-accent))}
   letter-spacing:0;text-transform:none;padding-bottom:0;color:var(--c-ink);
   border-bottom:1px solid var(--c-border);transition:color .2s,border-color .2s}
 .wa-dest .wa-dest-near a:hover{color:var(--c-accent);border-color:var(--c-accent)}
-.wa-dest a{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:4px;transition:color .2s}
+/* The same 23.4px box as .af-go, and for the same reason: this rule is a
+   copy of that one, which is how one measurement failure turns up in two
+   places. It is one of the 133 duplicate rule bodies Commit 16 counted. */
+.wa-dest a{display:inline-block;margin-top:16px;font-family:var(--fj-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;border-bottom:2px solid var(--c-accent);padding-bottom:5px;min-height:24px;box-sizing:border-box;transition:color .2s}
 .wa-dest a:hover{color:var(--c-accent)}
 .wa-dest .soon{font-family:var(--fj-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--c-muted);display:inline-block;margin-top:16px;border-bottom:2px solid var(--c-border);padding-bottom:4px}
 @media(max-width:900px){.wa-dests{grid-template-columns:1fr 1fr}.wa-dest:nth-child(3n){border-right:var(--fj-rule);padding-right:28px}.wa-dest:nth-child(2n){border-right:0;padding-right:0}}

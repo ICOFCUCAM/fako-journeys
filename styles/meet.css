@@ -73,7 +73,11 @@
    it reads as a list of places and takes a third of the space a row of chips
    would. */
 .mt-strip{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:12px}
-.mt-flag{font-family:var(--fj-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+/* 23.6px measured with a mouse — four tenths short of WCAG 2.5.8's 24, which
+   applies to every pointer and not only to a thumb. inline-block so the
+   minimum can apply at all; a plain inline element ignores min-height. */
+.mt-flag{display:inline-block;min-height:24px;box-sizing:border-box;
+  font-family:var(--fj-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--c-muted);border-bottom:1px solid transparent;padding:3px 0;
   transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
 .mt-flag:hover{color:var(--c-primary);border-color:var(--c-accent)}
