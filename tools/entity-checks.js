@@ -370,5 +370,25 @@ check('no page that states an Afrinkong obligation routes it to the operator',
     : "privacy, accessibility and terms write to Afrinkong's own address, " +
       'read from tourism/company.json rather than typed');
 
+/* ---- THE HOMEPAGE SAYS WHO IT IS ---------------------------------------
+ *
+ * index.html named Kamerun, Pearl Trails Uganda and Namib Skyline in its own
+ * content, and named the company nowhere. /trust and /about-afrinkong appeared
+ * only in the colophon.
+ *
+ * That is the wrong way round. A visitor can learn from the homepage that
+ * somebody else runs the days, and not who they would be contracting with —
+ * on the page whose closing act is "begin your journey". The colophon is on
+ * all 1,599 pages and therefore says nothing about this one.
+ */
+const homeMain = (fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')
+  .match(/<main[\s\S]*?<\/main>/) || [''])[0];
+check('the homepage names the company in its own content, not only its footer',
+  /Wankong LLC/.test(homeMain) && homeMain.includes('href="/trust"'),
+  /Wankong LLC/.test(homeMain)
+    ? 'the closing section names Wankong LLC as the contracting party and ' +
+      'links /trust, beside the three named ground operations'
+    : 'the homepage names three operators and no company');
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);

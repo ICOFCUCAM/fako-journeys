@@ -3499,3 +3499,14 @@ button.wa-exp{width:100%;text-align:left;background:none;font:inherit;color:inhe
   .wa-fund-go i{transition:none}
   .wa-fund-go:hover i{transform:none}
 }
+
+/* The trust line in the closing section. See the comment in index.html:
+   the homepage named three operators and never named the company, and both
+   /trust and /about-afrinkong lived only in the colophon.
+   Set as supporting information, because that is what it is — a reader who
+   wants it will find it, and one who does not is not being sold to. */
+.wa-end-who{margin:26px auto 0;max-width:56ch;font-size:var(--fj-t-small);
+  line-height:1.6;color:var(--c-muted);padding-top:18px;
+  border-top:1px solid var(--c-border)}
+.wa-end-who b{color:var(--c-primary);font-weight:600}
+.wa-end-who a{color:var(--c-accent)}
