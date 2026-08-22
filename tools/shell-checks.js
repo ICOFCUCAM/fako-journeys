@@ -391,5 +391,58 @@ check('the operator’s pages keep their own desk', !deskless.length,
   deskless.length ? deskless.join(', ')
     : 'the separation runs both ways — Kamerun’s pages reach Kamerun’s desk');
 
+/* ---- ONE SHELL, PROVED BY HASHING IT -----------------------------------
+ *
+ * "One masthead class site-wide" is asserted above, and a class is a weak
+ * thing to prove a template with: ten mastheads all wearing `af-shell` would
+ * pass it. What actually matters is that there is ONE header markup, not ten
+ * similar ones — the state this repository was in before the shell existed.
+ *
+ * So the header of every published page is normalised and hashed. Normalising
+ * removes the four things that SHOULD differ per page — aria-current, the
+ * is-here marker, the product band and the product nav — and nothing else. Two
+ * pages whose headers differ by anything more than that produce two hashes.
+ *
+ * The expected answer is exactly TWO shapes: Afrinkong's shell, and the
+ * operator's, which is a different company's navigation and deliberately not
+ * this one.
+ *
+ * Getting the normalisation right matters more than the check. A first pass
+ * left a trailing space behind where `is-here` had been removed and reported
+ * four shapes, three of which were phantoms of its own making — which would
+ * have sent somebody hunting for drift that did not exist.
+ */
+function shellShape(html) {
+  const m = html.match(/<header[\s\S]*?<\/header>/);
+  if (!m) return null;
+  return m[0]
+    .replace(/\saria-current="[^"]*"/g, '')
+    .replace(/\bis-here\b/g, '')
+    .replace(/<div class="af-shell-prod[\s\S]*?<\/div>/g, '')
+    .replace(/<nav class="af-shell-prod-nav"[\s\S]*?<\/nav>/g, '')
+    .replace(/class="\s*([^"]*?)\s*"/g, (_, c) => `class="${c.replace(/\s+/g, ' ')}"`)
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const shapes = new Map();
+for (const [rel, html] of src) {
+  const shape = shellShape(html);
+  if (shape === null) continue;
+  if (!shapes.has(shape)) shapes.set(shape, []);
+  shapes.get(shape).push(rel);
+}
+const groups = [...shapes.values()].sort((a, b) => b.length - a.length);
+const operatorGroup = groups.find(
+  (g) => g.every((r) => /^(about|contact|pricing|services|cameroon)\.html$/.test(r)));
+check('there is one shell, not ten mastheads that resemble each other',
+  groups.length === 2 && !!operatorGroup,
+  groups.length === 2 && operatorGroup
+    ? `${groups[0].length} Afrinkong pages share one byte-identical header; ` +
+      `the operator's ${operatorGroup.length} have their own, which is a ` +
+      `different company's navigation and deliberately not this one`
+    : `${groups.length} distinct header shapes: ` +
+      groups.map((g) => `${g.length}\u00d7 ${g[0]}`).join(' | '));
+
 process.stdout.write(out.join('\n') + '\n');
 process.exit(out.some(l => l.indexOf('FAIL') === 0) ? 1 : 0);
